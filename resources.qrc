@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/Header.qml</file>
+        <file>qml/Status.qml</file>
+        <file>qml/DeviceBox.qml</file>
+        <file>qml/DeviceExtended.qml</file>
+        <file>qml/ChartBox.qml</file>
+        <file>assets/tray_icon.svg</file>
+        <file>assets/app_icon.svg</file>
+        <file>assets/app_background.png</file>
+        <file>assets/menu_back.svg</file>
+        <file>assets/menu_refresh.svg</file>
+        <file>assets/delete_button.svg</file>
+        <file>assets/edit_button.svg</file>
+        <file>assets/ble.svg</file>
+        <file>assets/ble_err.svg</file>
+        <file>assets/stats.svg</file>
+        <file>assets/plant.svg</file>
+        <file>assets/fw.svg</file>
+        <file>assets/battery_low.svg</file>
+        <file>assets/battery.svg</file>
+        <file>assets/battery_full.svg</file>
+        <file>assets/temp.svg</file>
+        <file>assets/hygro.svg</file>
+        <file>assets/day.svg</file>
+        <file>assets/night.svg</file>
+        <file>assets/conductivity.svg</file>
+    </qresource>
+</RCC>

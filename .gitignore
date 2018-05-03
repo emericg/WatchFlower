@@ -1,32 +1,19 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# Binaries and build artifacts
+build/*
+bin/*
 *.o
-*.obj
+qrc_resources.cpp
 
-# Precompiled Headers
-*.gch
-*.pch
+# QtCreator temporary project files
+WatchFlower.config
+WatchFlower.creator*
+WatchFlower.files
+WatchFlower.includes
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# QMake temporary project files
+WatchFlower.pro*
+Makefile
+.qmake.stash
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# Others
+stash/*
