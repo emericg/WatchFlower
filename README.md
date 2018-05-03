@@ -13,7 +13,6 @@ It works with all versions of the device, and doesn't require GPS or other any o
 
 It's still a bit early in development but it should work on all Qt platforms, meaning Linux, macOS, windows, but also android and iOS.
 
-
 ### Special thanks
 
 * This repository for the inspiration and protocol RE https://github.com/open-homeautomation/miflora
@@ -31,9 +30,9 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 
 ### Building WatchFlower
 
-> $ cd WatchFlower/
-> $ qmake
-> $ make
+> $ cd WatchFlower/  
+> $ qmake  
+> $ make  
 
 
 ## Get involved!
