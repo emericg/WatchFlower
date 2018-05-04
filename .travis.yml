@@ -11,7 +11,7 @@ before_install:
   - sudo apt-get update -q
 
 install:
-  - sudo apt-get install qt510-meta-full -y
+  - sudo apt-get install qt510base qt510quickcontrols2 qt510connectivity qt510svg qt510imageformats qt510tools qt510charts-no-lgpl -y
 
 before_script:
   - source /opt/qt510/bin/qt510-env.sh

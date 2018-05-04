@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-// Qt 5.10
+// Qt 5.10 needed here
 import QtQuick 2.10
 import QtCharts 2.2
 
