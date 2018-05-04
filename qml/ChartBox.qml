@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-// Qt 5.10 needed here
+// Qt 5.10 needed here...
 import QtQuick 2.10
 import QtCharts 2.2
 
@@ -251,15 +251,19 @@ Rectangle {
         if (graphDataSelected == "temp") {
             axisY0.min = 0
             axisY0.max = 40
+            myBarSet.color = "#87d241"
         } else if (graphDataSelected == "hygro") {
             axisY0.min = 0
             axisY0.max = 75
+            myBarSet.color = "#31a3ec"
         } else if (graphDataSelected == "luminosity") {
             axisY0.min = 0
             axisY0.max = 3000
+            myBarSet.color = "#f1ec5c"
         } else if (graphDataSelected == "conductivity") {
             axisY0.min = 0
             axisY0.max = 1000
+            myBarSet.color = "#e19c2f"
         }
 
         if (graphModeSelected == "daily")
@@ -287,18 +291,23 @@ Rectangle {
 
         antialiasing: true
         legend.visible: false
+        backgroundRoundness: 0
+
         //animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand
 
         BarSeries {
             id: myBarSeries
+
+            barWidth: 0.9
             labelsVisible: false
 
             axisY: ValueAxis { id: axisY0; max: 40; visible: true; }
-            axisX: BarCategoryAxis { id: axisX0; visible:true; categories: myDevice.getDays() }
+            axisX: BarCategoryAxis { id: axisX0; visible:true; categories: myDevice.getDays(); }
 
             BarSet {
                 id: myBarSet
+                color: "#87d241"
                 values: myDevice.getDatasDaily("temp")
             }
         }

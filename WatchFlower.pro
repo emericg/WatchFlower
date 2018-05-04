@@ -1,5 +1,5 @@
-TARGET       = WatchFlower
-CONFIG      += c++11
+TARGET      = WatchFlower
+CONFIG     += c++11
 
 QT += core gui widgets sql
 QT += quick charts bluetooth

@@ -3,7 +3,7 @@ WatchFlower
 
 [![Travis](https://img.shields.io/travis/emericg/WatchFlower.svg?style=flat-square)](https://travis-ci.org/emericg/WatchFlower)
 [![AppVeyor](https://img.shields.io/appveyor/ci/emericg/WatchFlower.svg?style=flat-square)](https://ci.appveyor.com/project/emericg/watchflower)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-brightgreen.svg&style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg&style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
 ## Introduction
@@ -44,10 +44,10 @@ Emeric Grange <emeric.grange@gmail.com>
 
 ## Special thanks
 
-* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices
-* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository for the inspiration and protocol reverse engineering 
-* App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme 
-* Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes
+* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices!
+* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the inspiration and protocol reverse engineering.
+* App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme.
+* Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes.
 
 
 ## Get involved!

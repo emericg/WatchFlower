@@ -341,7 +341,7 @@ QVariantList Device::getDatasDaily(QString dataName)
     }
 /*
     // debug
-    qDebug() << "Datas (" << datatype << "/" << datas.size() << ") : ";
+    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
     for (auto d: datas)
         qDebug() << d;
 */
@@ -359,7 +359,6 @@ QVariantList Device::getHours()
     dataPerHours.prepare("SELECT strftime('%H', ts) as 'hours' " \
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
                          "ORDER BY ts ASC;");
     dataPerHours.bindValue(":deviceAddr", getMacAddress());
 
@@ -415,10 +414,9 @@ QVariantList Device::getDatasHourly(QString dataName)
 
     QSqlQuery datasPerHour;
     datasPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                        "GROUP BY cast(strftime('%d', ts) as datetime) " \
-                        "ORDER BY ts ASC;");
+                         "FROM datas " \
+                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                         "ORDER BY ts ASC;");
     datasPerHour.bindValue(":deviceAddr", getMacAddress());
 
     if (datasPerHour.exec() == false)
@@ -454,7 +452,7 @@ QVariantList Device::getDatasHourly(QString dataName)
     }
 /*
     // debug
-    qDebug() << "Datas (" << datatype << "/" << datas.size() << ") : ";
+    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
     for (auto d: datas)
         qDebug() << d;
 */
