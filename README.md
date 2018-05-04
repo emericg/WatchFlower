@@ -13,13 +13,6 @@ It works with all versions of the device, and doesn't require GPS or other any o
 
 It's still a bit early in development but it should work on all Qt platforms, meaning Linux, macOS, windows, but also android and iOS.
 
-### Special thanks
-
-* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices
-* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository for the inspiration and protocol reverse engineering 
-* App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme 
-* Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes
-
 ### Screenshots!
 
 ![GUI1](https://i.imgur.com/84DvqWc.png)
@@ -41,6 +34,22 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 > $ make  
 
 
+## Licensing
+
+WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+[Consult the licence on the FSF website](http://www.gnu.org/licenses/gpl-3.0.txt).
+
+Emeric Grange <emeric.grange@gmail.com>
+
+
+## Special thanks
+
+* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices
+* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository for the inspiration and protocol reverse engineering 
+* App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme 
+* Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes
+
+
 ## Get involved!
 
 ### Developers
@@ -51,10 +60,3 @@ You can browse the code here on GitHub, submit patches and pull requests! Your h
 
 You can help us finding bugs, proposing new features and more! Visit the "Issues" section in the GitHub menu to start.
 
-
-## Licensing
-
-WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
-[Consult the licence on the FSF website](http://www.gnu.org/licenses/gpl-3.0.txt).
-
-Emeric Grange <emeric.grange@gmail.com>
