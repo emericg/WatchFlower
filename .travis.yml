@@ -6,12 +6,17 @@ compiler:
 os:
   - linux
 
-install:
+before_install:
+  - sudo apt-add-repository ppa:beineri/opt-qt-5.10.1-trusty
   - sudo apt-get update
-  - sudo apt-get install qt5-default qttools5-dev-tools
+
+install:
+  - sudo apt-get install qt510base qt510quickcontrols2 qt510charts-no-lgpl qt510connectivity qt510imageformats 
 
 before_script:
+  - source /opt/qt510/bin/qt510-env.sh
   - qmake
 
 script:
    - make
+

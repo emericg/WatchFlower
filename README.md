@@ -1,9 +1,9 @@
 WatchFlower
 ===========
 
-[![Build Status](https://travis-ci.org/emericg/WatchFlower.svg?branch=master)](https://travis-ci.org/emericg/WatchFlower)
-[![Build status](https://ci.appveyor.com/api/projects/status/fb5eelagau71jm6t?svg=true)](https://ci.appveyor.com/project/emericg/watchflower)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-green.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![Travis](https://img.shields.io/travis/emericg/WatchFlower.svg?style=flat-square)](https://travis-ci.org/emericg/WatchFlower)
+[![AppVeyor](https://img.shields.io/appveyor/ci/emericg/WatchFlower.svg?style=flat-square)](https://ci.appveyor.com/project/emericg/watchflower)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-green.svg&style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
 ## Introduction
@@ -15,18 +15,24 @@ It's still a bit early in development but it should work on all Qt platforms, me
 
 ### Special thanks
 
-* This repository for the inspiration and protocol RE https://github.com/open-homeautomation/miflora
-* App icon is from Boston Icons theme (https://diazchris.deviantart.com/art/Boston-Icons-558741523)
-* Other icons are from Faience and Adwaita icons themes (http://tiheum.deviantart.com/art/Faience-icon-theme-255099649 & https://github.com/GNOME/adwaita-icon-theme)
+* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices
+* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository for the inspiration and protocol reverse engineering 
+* App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme 
+* Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes
+
+### Screenshots!
+
+![GUI1](https://i.imgur.com/84DvqWc.png)
+
+![GUI2](https://i.imgur.com/4KzPEgT.png)
 
 
 ## Documentation
 
 ### Dependencies
 
-You will need a C++11 capable compiler and Qt 5.7+ (version 5.10 is recommended).
+You will need a C++11 capable compiler and Qt 5.7+ (versions 5.10+ are recommended).
 WatchFlower will take advantages of sqlite if it's available on your system.
-
 
 ### Building WatchFlower
 
@@ -44,6 +50,7 @@ You can browse the code here on GitHub, submit patches and pull requests! Your h
 ### Users
 
 You can help us finding bugs, proposing new features and more! Visit the "Issues" section in the GitHub menu to start.
+
 
 ## Licensing
 
