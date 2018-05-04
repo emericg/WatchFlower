@@ -7,11 +7,11 @@ os:
   - linux
 
 before_install:
-  - sudo apt-add-repository ppa:beineri/opt-qt-5.10.1-trusty
-  - sudo apt-get update
+  - sudo apt-add-repository ppa:beineri/opt-qt-5.10.1-trusty -y
+  - sudo apt-get update -q
 
 install:
-  - sudo apt-get install qt510-meta-full 
+  - sudo apt-get install qt510-meta-full -y
 
 before_script:
   - source /opt/qt510/bin/qt510-env.sh
