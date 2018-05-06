@@ -205,7 +205,7 @@ QString Device::getDataString() const
 
     dataString += QString::number(m_temp, 'f', 1) + "°C  ";
     dataString += QString::number(m_hygro) + "%  ";
-    dataString += QString::number(m_luminosity) + " lux";
+    dataString += QString::number(m_luminosity) + " lm";
 
     return dataString;
 }
@@ -592,7 +592,7 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             m_hygro = data[7];
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
-
+#ifndef NDEBUG
             qDebug() << "* Device:" << getMacAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
@@ -600,7 +600,7 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             qDebug() << "- m_hygro:" << m_hygro;
             qDebug() << "- m_luminosity:" << m_luminosity;
             qDebug() << "- m_conductivity:" << m_conductivity;
-
+#endif // NDEBUG
             refreshDatasFinished();
             controller->disconnectFromDevice();
 

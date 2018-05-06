@@ -338,8 +338,8 @@ Rectangle {
 
             Rectangle {
                 id: barHygro_high
-                x: 338
-                y: 34
+                x: 156
+                y: 36
                 width: 23
                 height: 8
                 color: "#e4e4e4"
@@ -349,8 +349,8 @@ Rectangle {
 
             Rectangle {
                 id: barHygro_good
-                x: 284
-                y: 34
+                x: 102
+                y: 36
                 width: 48
                 height: 8
                 color: "#e4e4e4"
@@ -360,8 +360,8 @@ Rectangle {
 
             Rectangle {
                 id: barHygro_low
-                x: 254
-                y: 34
+                x: 72
+                y: 36
                 width: 24
                 height: 8
                 color: "#e4e4e4"
@@ -404,8 +404,8 @@ Rectangle {
 
             Rectangle {
                 id: barTemp_high
-                x: 155
-                y: 34
+                x: 338
+                y: 36
                 width: 23
                 height: 8
                 color: "#e4e4e4"
@@ -415,8 +415,8 @@ Rectangle {
 
             Rectangle {
                 id: barTemp_good
-                x: 101
-                y: 34
+                x: 284
+                y: 36
                 width: 48
                 height: 8
                 color: "#e4e4e4"
@@ -426,8 +426,8 @@ Rectangle {
 
             Rectangle {
                 id: barTemp_low
-                x: 71
-                y: 34
+                x: 254
+                y: 36
                 width: 24
                 height: 8
                 color: "#e4e4e4"
@@ -439,14 +439,14 @@ Rectangle {
                 id: textConductivity
                 x: 254
                 y: 62
-                text: myDevice.deviceConductivity
+                text: myDevice.deviceConductivity + " µS/cm"
                 font.pixelSize: 13
             }
 
             Text {
                 id: textHygro
-                x: 254
-                y: 15
+                x: 72
+                y: 17
                 width: 69
                 height: 15
                 text: myDevice.deviceHygro + "%"
@@ -457,14 +457,14 @@ Rectangle {
                 id: textLuminosity
                 x: 71
                 y: 62
-                text: myDevice.deviceLuminosity + " lumen"
+                text: myDevice.deviceLuminosity + " lumens"
                 font.pixelSize: 13
             }
 
             Text {
                 id: textTemp
-                x: 71
-                y: 15
+                x: 254
+                y: 17
                 width: 108
                 height: 15
                 text: myDevice.deviceTemp.toFixed(1) + "°C"
@@ -491,8 +491,8 @@ Rectangle {
 
             Image {
                 id: imageTemp1
-                x: 207
-                y: 10
+                x: 25
+                y: 12
                 width: 40
                 height: 40
                 source: "qrc:/assets/hygro.svg"
@@ -500,8 +500,8 @@ Rectangle {
 
             Image {
                 id: imageTemp
-                x: 25
-                y: 10
+                x: 208
+                y: 12
                 width: 40
                 height: 40
                 source: "qrc:/assets/temp.svg" // FIXME svg error

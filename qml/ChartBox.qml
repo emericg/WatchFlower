@@ -27,7 +27,7 @@ Rectangle {
     id: chartBox
     //color: "red" // FIXME too much borders !!!
 
-    property string graphDataSelected: "temp"
+    property string graphDataSelected: "hygro"
     property string graphModeSelected: "weekly"
 
     width: parent.width
@@ -46,42 +46,11 @@ Rectangle {
             height: parent.height
 
             Rectangle {
-                id: dT
-                color: "#f2f2f2"
-                width: parent.width / 4
-                height: parent.height
-                anchors.left: parent.left
-
-                Text {
-                    id: textTemp
-                    x: 21
-                    y: 9
-                    text: qsTr("Temp")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
-                    font.bold: true
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphDataSelected = "temp"
-                        textTemp.font.bold = true
-                        textHygro.font.bold = false
-                        textLumi.font.bold = false
-                        textCondu.font.bold = false
-
-                        updateGraph()
-                    }
-                }
-            }
-            Rectangle {
                 id: dH
                 color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
-                anchors.left: dT.right
+                anchors.left: parent.left
 
                 Text {
                     id: textHygro
@@ -92,13 +61,44 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 14
+                    font.bold: true
                 }
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "hygro"
-                        textTemp.font.bold = false
                         textHygro.font.bold = true
+                        textTemp.font.bold = false
+                        textLumi.font.bold = false
+                        textCondu.font.bold = false
+
+                        updateGraph()
+                    }
+                }
+            }
+            Rectangle {
+                id: dT
+                color: "#f2f2f2"
+                width: parent.width / 4
+                height: parent.height
+                anchors.left: dH.right
+
+                Text {
+                    id: textTemp
+                    x: 21
+                    y: 9
+                    text: qsTr("Temp")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 14
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphDataSelected = "temp"
+                        textHygro.font.bold = false
+                        textTemp.font.bold = true
                         textLumi.font.bold = false
                         textCondu.font.bold = false
 
@@ -111,7 +111,7 @@ Rectangle {
                 color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
-                anchors.left: dH.right
+                anchors.left: dT.right
 
                 Text {
                     id: textLumi
@@ -127,8 +127,8 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "luminosity"
-                        textTemp.font.bold = false
                         textHygro.font.bold = false
+                        textTemp.font.bold = false
                         textLumi.font.bold = true
                         textCondu.font.bold = false
 
@@ -157,8 +157,8 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "conductivity"
-                        textTemp.font.bold = false
                         textHygro.font.bold = false
+                        textTemp.font.bold = false
                         textLumi.font.bold = false
                         textCondu.font.bold = true
 
@@ -248,14 +248,14 @@ Rectangle {
         /// min:  Math.floor(((minCategory + sb.position *
         //                   (maxCategory - minCategory - category)) + 9)/10)*10
 
-        if (graphDataSelected == "temp") {
-            axisY0.min = 0
-            axisY0.max = 40
-            myBarSet.color = "#87d241"
-        } else if (graphDataSelected == "hygro") {
+        if (graphDataSelected == "hygro") {
             axisY0.min = 0
             axisY0.max = 75
             myBarSet.color = "#31a3ec"
+        } else if (graphDataSelected == "temp") {
+            axisY0.min = 0
+            axisY0.max = 40
+            myBarSet.color = "#87d241"
         } else if (graphDataSelected == "luminosity") {
             axisY0.min = 0
             axisY0.max = 3000
@@ -266,15 +266,13 @@ Rectangle {
             myBarSet.color = "#e19c2f"
         }
 
-        if (graphModeSelected == "daily")
-        {
-            axisX0.categories = myDevice.getDays()
-            myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
-        }
-        else if (graphModeSelected == "hourly")
+        if (graphModeSelected == "hourly")
         {
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
+        } else {
+            axisX0.categories = myDevice.getDays()
+            myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
         }
     }
 
@@ -293,23 +291,21 @@ Rectangle {
         legend.visible: false
         backgroundRoundness: 0
 
+        Component.onCompleted: updateGraph()
+
         //animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand
 
         BarSeries {
             id: myBarSeries
 
-            barWidth: 0.9
+            barWidth: 0.95
             labelsVisible: false
 
-            axisY: ValueAxis { id: axisY0; max: 40; visible: true; }
-            axisX: BarCategoryAxis { id: axisX0; visible:true; categories: myDevice.getDays(); }
+            axisY: ValueAxis { id: axisY0; visible: true; max: 40; gridVisible: false; }
+            axisX: BarCategoryAxis { id: axisX0; visible:true; gridVisible: true; }
 
-            BarSet {
-                id: myBarSet
-                color: "#87d241"
-                values: myDevice.getDatasDaily("temp")
-            }
+            BarSet { id: myBarSet; }
         }
     }
 }
