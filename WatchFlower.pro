@@ -21,9 +21,8 @@ OTHER_FILES += qml/*.qml
 RESOURCES += resources.qrc
 
 # OS icons (macOS and Windows)
-#ICON         = resources/icon.icns
-#RC_ICONS     = resources/icon.ico
-#QMAKE_INFO_PLIST = resources/Info.plist
 
 #target.path = WatchFlower/
 #INSTALLS += target
+ICON         = assets/app/icon.icns
+RC_ICONS     = assets/app/icon.ico

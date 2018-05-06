@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QIcon appIcon(":/assets/app_icon.svg");
+    QIcon appIcon(":/assets/app/icon.svg");
     app.setWindowIcon(appIcon);
 
     bool trayEnabled = false;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
         sysTray = new QSystemTrayIcon(&app);
         if (sysTray)
         {
-            QIcon trayIcon(":/assets/tray_icon.svg");
+            QIcon trayIcon(":/assets/app/icon_tray.svg");
             sysTray->setIcon(trayIcon);
             sysTray->setContextMenu(sysTrayMenu);
             sysTray->show();

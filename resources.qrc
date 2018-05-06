@@ -6,8 +6,9 @@
         <file>qml/DeviceBox.qml</file>
         <file>qml/DeviceExtended.qml</file>
         <file>qml/ChartBox.qml</file>
-        <file>assets/tray_icon.svg</file>
-        <file>assets/app_icon.svg</file>
+        <file>assets/app/icon.svg</file>
+        <file>assets/app/icon.png</file>
+        <file>assets/app/icon_tray.svg</file>
         <file>assets/app_background.png</file>
         <file>assets/menu_back.svg</file>
         <file>assets/menu_refresh.svg</file>
