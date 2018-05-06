@@ -34,6 +34,9 @@
 QT_FORWARD_DECLARE_CLASS (QBluetoothDeviceInfo)
 QT_FORWARD_DECLARE_CLASS (QSqlDatabase)
 
+/*!
+ * \brief The DeviceManager class
+ */
 class DeviceManager: public QObject
 {
     Q_OBJECT

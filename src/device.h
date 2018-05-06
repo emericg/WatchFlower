@@ -29,6 +29,9 @@
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
+/*!
+ * \brief The Device class
+ */
 class Device: public QObject
 {
     Q_OBJECT

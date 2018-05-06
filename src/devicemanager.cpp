@@ -96,6 +96,18 @@ DeviceManager::~DeviceManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DeviceManager::hasBluetooth() const
+{
+    return m_bt;
+}
+
+bool DeviceManager::hasDatabase() const
+{
+    return m_db;
+}
+
+/* ************************************************************************** */
+
 void DeviceManager::loadBluetooth()
 {
     // We check the "first" available BLE adapter only
@@ -237,6 +249,8 @@ void DeviceManager::changeBluetoothMode(QBluetoothLocalDevice::HostMode state)
     emit bluetoothChanged();
 }
 
+/* ************************************************************************** */
+
 bool DeviceManager::isScanning() const
 {
     return m_scanning;
@@ -371,25 +385,3 @@ QVariant DeviceManager::getDevices() const
 }
 
 /* ************************************************************************** */
-
-bool DeviceManager::hasBluetooth() const
-{
-    return m_bt;
-}
-
-bool DeviceManager::hasDatabase() const
-{
-    return m_db;
-}
-/*
-QString DeviceManager::getMessage()
-{
-    return m_message;
-}
-
-void DeviceManager::setMessage(QString message)
-{
-    m_message = message;
-    emit messageChanged();
-}
-*/
