@@ -28,6 +28,8 @@ Rectangle {
     width: 400
     height: 640
 
+    property var mySettings
+
     Header {
         id: header
         anchors.top: parent.top
@@ -133,6 +135,7 @@ Rectangle {
                 anchors.topMargin: 12
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+                checked: mySettings.systray
             }
 
             SpinBox {
@@ -141,7 +144,7 @@ Rectangle {
                 width: 128
                 height: 40
                 from: 30
-                value: 30
+                value: mySettings.interval
                 stepSize: 30
                 to: 120
                 anchors.left: parent.left

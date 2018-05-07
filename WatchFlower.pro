@@ -23,10 +23,12 @@ DESTDIR     = bin/
 
 # Project files
 SOURCES  += src/main.cpp \
+            src/settingsmanager.cpp \
             src/devicemanager.cpp \
             src/device.cpp
 
-HEADERS  += src/devicemanager.h \
+HEADERS  += src/settingsmanager.h \
+            src/devicemanager.h \
             src/device.h
 
 OTHER_FILES += qml/*.qml

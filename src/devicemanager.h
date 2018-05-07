@@ -26,13 +26,11 @@
 #include <QVariant>
 #include <QList>
 
-#include <QBluetoothServiceDiscoveryAgent>
-#include <QBluetoothDeviceDiscoveryAgent>
 #include <QBluetoothLocalDevice>
-#include <QLowEnergyController>
+#include <QBluetoothDeviceDiscoveryAgent>
 
 QT_FORWARD_DECLARE_CLASS (QBluetoothDeviceInfo)
-QT_FORWARD_DECLARE_CLASS (QSqlDatabase)
+QT_FORWARD_DECLARE_CLASS (QLowEnergyController)
 
 /*!
  * \brief The DeviceManager class

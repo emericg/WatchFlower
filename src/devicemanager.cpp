@@ -39,8 +39,6 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-#include <iostream>
-
 /* ************************************************************************** */
 
 DeviceManager::DeviceManager()

@@ -69,7 +69,8 @@ Rectangle {
         id: header
         anchors.top: parent.top
 
-        backAvailable.visible: false
+        backAvailable.visible: true
+        backImg.source: "qrc:/assets/menu_settings.svg"
         scanAvailable.visible: {
             if (deviceManager.bluetooth) {
                 header.scanAvailable.visible = true;
@@ -83,6 +84,10 @@ Rectangle {
             }
         }
 
+        onBackClicked: {
+            pageLoader.setSource("Settings.qml",
+                                 { mySettings: settingsManager });
+        }
         onRefreshClicked: {
             deviceManager.startDeviceDiscovery();
         }

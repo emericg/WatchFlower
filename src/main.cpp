@@ -27,6 +27,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 
+#include "settingsmanager.h"
 #include "devicemanager.h"
 
 /* ************************************************************************** */
@@ -35,10 +36,13 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QIcon appIcon(":/assets/app/icon.svg");
+    QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
 
-    bool trayEnabled = false;
+    DeviceManager dm;
+
+    SettingsManager sm;
+    bool trayEnabled = sm.getSysTray();
 
     QSystemTrayIcon *sysTray = nullptr;
     QMenu *sysTrayMenu = nullptr;
@@ -61,7 +65,7 @@ int main(int argc, char *argv[])
         sysTray = new QSystemTrayIcon(&app);
         if (sysTray)
         {
-            QIcon trayIcon(":/assets/app/icon_tray.svg");
+            QIcon trayIcon(":/assets/app/watchflower_tray.svg");
             sysTray->setIcon(trayIcon);
             sysTray->setContextMenu(sysTrayMenu);
             sysTray->show();
@@ -69,9 +73,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    DeviceManager d;
     QQuickView *view = new QQuickView;
-    view->rootContext()->setContextProperty("deviceManager", &d);
+    view->rootContext()->setContextProperty("deviceManager", &dm);
+    view->rootContext()->setContextProperty("settingsManager", &sm);
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
@@ -85,9 +89,9 @@ int main(int argc, char *argv[])
     }
 
     // Run a first scan, but only if we have no saved devices
-    if (d.areDevicesAvailable() == false)
+    if (dm.areDevicesAvailable() == false)
     {
-        d.startDeviceDiscovery();
+        dm.startDeviceDiscovery();
     }
 
     return app.exec();
