@@ -19,9 +19,11 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-// Qt 5.10 needed here...
-import QtQuick 2.10
-import QtCharts 2.2
+import QtQuick 2.7
+import QtCharts 2.2 // Qt 5.10 needed here...
+
+// You can change v2.2 into 2.1 but you'll need to comment the
+// ChartView / "legend.visible" line at the bottom of this file
 
 Rectangle {
     id: chartBox
@@ -288,7 +290,7 @@ Rectangle {
         anchors.rightMargin: -16
 
         antialiasing: true
-        legend.visible: false
+        legend.visible: false // this will only work with Qt 5.10+
         backgroundRoundness: 0
 
         Component.onCompleted: updateGraph()

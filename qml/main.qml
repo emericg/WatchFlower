@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.0
+import QtQuick 2.7
 
 Rectangle {
     id: background
