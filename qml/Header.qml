@@ -29,6 +29,7 @@ Rectangle {
     //color: "#41d289"
 
     property alias backAvailable: backRect
+    property alias backImg: backImg
     property alias scanAvailable: refreshRect
     property alias scanAnimation: refreshRotation
 
