@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Emeric Grange <emeric.grange@gmail.com> -->
+<component type="desktop">
+ <id>watchflower.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0+</project_license>
+ <name>WatchFlower</name>
+ <summary>WatchFlower helps you read and plot datas from your Xiaomi "Flower Care" devices!</summary>
+ <description>
+   <p>
+   WatchFlower is a small application to help you read and plot datas from your
+   Xiaomi "Flower Care" devices. It works with all versions of the device, and
+   doesn't require GPS or other any other private datas from you.
+   </p>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://i.imgur.com/84DvqWc.png</image>
+   <caption>Main screen</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://i.imgur.com/4KzPEgT.png</image>
+   <caption>Device screen</caption>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">https://github.com/emericg/WatchFlower</url>
+ <updatecontact>emeric.grange@gmail.com</updatecontact>
+ <keywords>
+   <keyword>xiaomi</keyword>
+   <keyword>flower care</keyword>
+ </keywords>
+</component>

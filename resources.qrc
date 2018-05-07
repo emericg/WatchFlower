@@ -6,12 +6,14 @@
         <file>qml/DeviceBox.qml</file>
         <file>qml/DeviceExtended.qml</file>
         <file>qml/ChartBox.qml</file>
-        <file>assets/app/icon.svg</file>
-        <file>assets/app/icon.png</file>
-        <file>assets/app/icon_tray.svg</file>
+        <file>qml/Settings.qml</file>
+        <file>assets/app/watchflower.svg</file>
+        <file>assets/app/watchflower.png</file>
+        <file>assets/app/watchflower_tray.svg</file>
         <file>assets/app_background.png</file>
         <file>assets/menu_back.svg</file>
         <file>assets/menu_refresh.svg</file>
+        <file>assets/menu_settings.svg</file>
         <file>assets/delete_button.svg</file>
         <file>assets/edit_button.svg</file>
         <file>assets/ble.svg</file>
@@ -29,3 +31,4 @@
         <file>assets/conductivity.svg</file>
     </qresource>
 </RCC>
+
