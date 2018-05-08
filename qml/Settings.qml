@@ -123,14 +123,14 @@ Rectangle {
                 anchors.topMargin: 12
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                source: "../assets/app/icon_tray.svg"
+                source: "../assets/app/watchflower_tray.svg"
             }
 
             CheckBox {
                 id: checkBox_systray
                 width: 332
                 height: 32
-                text: qsTr("Enables tray icon")
+                text: qsTr("Enable system tray icon")
                 anchors.top: parent.top
                 anchors.topMargin: 12
                 anchors.left: parent.left
