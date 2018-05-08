@@ -79,19 +79,16 @@ macx {
 
 win32 {
     # Application packaging
-    #system(windeployqt $$OUT_PWD/$${DESTDIR}/)
+    #system(windeployqt $$OUT_PWD/$${DESTDIR}/ --qmldir qml/)
 
     # Automatic application packaging
-    deploy.commands = $$quote(windeployqt $$OUT_PWD/$${DESTDIR}/)
+    deploy.commands = $$quote(windeployqt $$OUT_PWD/$${DESTDIR}/ --qmldir qml/)
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
     # Installation
-    # TODO
+    # TODO?
 
     # Clean bin/ directory
-    #binclean.commands = rm $${OUT_PWD}/${DESTDIR}
-    #clean.depends = binclean
-    #QMAKE_EXTRA_TARGETS += clean binclean
-    #QMAKE_DISTCLEAN += -r $${OUT_PWD}/${DESTDIR}
+    # TODO
 }

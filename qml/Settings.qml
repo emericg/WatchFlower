@@ -136,6 +136,10 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 8
                 checked: mySettings.systray
+
+                onCheckStateChanged: {
+                    mySettings.systray = checked
+                }
             }
 
             SpinBox {
@@ -144,13 +148,17 @@ Rectangle {
                 width: 128
                 height: 40
                 from: 30
-                value: mySettings.interval
                 stepSize: 30
                 to: 120
                 anchors.left: parent.left
                 anchors.leftMargin: 12
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 12
+                value: mySettings.interval
+
+                onValueChanged: {
+                    mySettings.interval = value
+                }
             }
 
             Text {

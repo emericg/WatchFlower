@@ -108,9 +108,22 @@ bool DeviceManager::hasDatabase() const
 
 void DeviceManager::loadBluetooth()
 {
-    // We check the "first" available BLE adapter only
-    //QList<QBluetoothHostInfo> QBluetoothLocalDevice::allDevices()
+    // List bluetooth adapters
+    QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
+    if (adaptersList.size() > 0)
+    {
+        for (QBluetoothHostInfo a: adaptersList)
+        {
+            //qDebug() << "- Bluetooth adapter:" << a.name();
+        }
+    }
+    else
+    {
+        qDebug() << "> No bluetooth adapter found...";
+        return;
+    }
 
+    // TODO // We only try the "first" available bluetooth adapter
     if (m_bluetoothAdapter.isValid())
     {
         // Make sure its powered on
@@ -123,10 +136,10 @@ void DeviceManager::loadBluetooth()
         if (m_bluetoothAdapter.hostMode() > 0)
         {
             m_bt = true;
-            qDebug() << "> Bluetooth available";
+            qDebug() << "> Bluetooth adapter available";
         }
         else
-            qDebug() << "Bluetooth host mode:" << m_bluetoothAdapter.hostMode();
+            qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter.hostMode();
     }
 
     emit bluetoothChanged();
@@ -256,17 +269,20 @@ bool DeviceManager::isScanning() const
 
 void DeviceManager::startDeviceDiscovery()
 {
-    qDeleteAll(m_devices);
-    m_devices.clear();
-    emit devicesUpdated();
-
-    qDebug() << "Scanning (bluetooth) for devices...";
-
-    m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-    if (m_discoveryAgent->isActive())
+    if (m_bt)
     {
-        m_scanning = true;
-        Q_EMIT scanningChanged();
+        qDeleteAll(m_devices);
+        m_devices.clear();
+        emit devicesUpdated();
+
+        qDebug() << "Scanning (bluetooth) for devices...";
+
+        m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+        if (m_discoveryAgent->isActive())
+        {
+            m_scanning = true;
+            Q_EMIT scanningChanged();
+        }
     }
 }
 
