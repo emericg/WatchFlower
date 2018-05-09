@@ -103,7 +103,6 @@ int main(int argc, char *argv[])
 
 // cache data from last 30min
 // limits editor
-// settings panel
 // handle nights
 // disable graph when no database
 // graph auto min/max

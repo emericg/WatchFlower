@@ -42,34 +42,33 @@ RC_ICONS     = assets/app/watchflower.ico
 # Application deployment and installation steps
 linux {
     # Installation
-    DEFAULT_INSTALL_PATH = /usr/local
-    target_app.extra    = cp $$OUT_PWD/$${DESTDIR}/$${TARGET} $$OUT_PWD/$${DESTDIR}/$$lower($${TARGET})
-    target_app.files   += $$OUT_PWD/$${DESTDIR}/$$lower($${TARGET})
-    target_app.path     = $${DEFAULT_INSTALL_PATH}/bin/
-    target_icon.files  += $$OUT_PWD/assets/app/watchflower.svg
-    target_icon.path    = $${DEFAULT_INSTALL_PATH}/share/pixmaps/
-    target_appentry.files  += $$OUT_PWD/assets/app/watchflower.desktop
-    target_appentry.path    = $${DEFAULT_INSTALL_PATH}/share/applications
-    target_appdata.files   += $$OUT_PWD/assets/app/watchflower.appdata.xml
-    target_appdata.path     = $${DEFAULT_INSTALL_PATH}/share/appdata
+    isEmpty(PREFIX) { PREFIX = /usr/local }
+    target_app.extra    = cp $${OUT_PWD}/$${DESTDIR}/$${TARGET} $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    target_app.path     = $${PREFIX}/bin/
+    target_icon.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).svg
+    target_icon.path    = $${PREFIX}/share/pixmaps/
+    target_appentry.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).desktop
+    target_appentry.path    = $${PREFIX}/share/applications
+    target_appdata.files   += $${OUT_PWD}/assets/app/$$lower($${TARGET}).appdata.xml
+    target_appdata.path     = $${PREFIX}/share/appdata
     INSTALLS += target_app target_icon target_appentry target_appdata
 
     # Clean bin/ directory
-    QMAKE_CLEAN += $$OUT_PWD/$${DESTDIR}/$$lower($${TARGET})
+    QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
 }
 
 macx {
     # Bundle packaging
-    #system(macdeployqt $$OUT_PWD/$${DESTDIR}/$${TARGET}.app)
+    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app)
 
     # Automatic bundle packaging
-    deploy.commands = macdeployqt $$OUT_PWD/$${DESTDIR}/$${TARGET}.app
+    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
     # Installation
     target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
-    target.path = /User/$$(USER)/Applications
     target.path = $$(HOME)/Applications
     INSTALLS += target
 
@@ -79,10 +78,10 @@ macx {
 
 win32 {
     # Application packaging
-    #system(windeployqt $$OUT_PWD/$${DESTDIR}/ --qmldir qml/)
+    #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
 
     # Automatic application packaging
-    deploy.commands = $$quote(windeployqt $$OUT_PWD/$${DESTDIR}/ --qmldir qml/)
+    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
