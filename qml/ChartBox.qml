@@ -37,7 +37,7 @@ Rectangle {
 
     Connections {
         target: myDevice
-        onDatasUpdated: myBarGraph.updateGraph()
+        onDatasUpdated: updateGraph()
     }
 
     Rectangle {

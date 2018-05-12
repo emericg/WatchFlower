@@ -330,53 +330,57 @@ QVariantList Device::getDatasDaily(QString dataName)
 
 /* ************************************************************************** */
 
+/*!
+ * \brief Device::getHours
+ * \return List of hours
+ *
+ * Two possibilities:
+ * - We don't have datas, so we go from current hour to +24
+ * - We have datas, so we go from last data available +24
+ */
 QVariantList Device::getHours()
 {
     QVariantList lastTwentyfourHours;
-    int lastHour = -1;
+    int firstHour = -1;
 
-    QSqlQuery dataPerHours;
-    dataPerHours.prepare("SELECT strftime('%H', ts) as 'hours' " \
+    QSqlQuery datasPerHour;
+    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                          "ORDER BY ts ASC;");
-    dataPerHours.bindValue(":deviceAddr", getMacAddress());
+    datasPerHour.bindValue(":deviceAddr", getMacAddress());
 
-    if (dataPerHours.exec() == false)
-        qDebug() << "> dataPerHours.exec() ERROR" << dataPerHours.lastError().type() << ":"  << dataPerHours.lastError().text();
+    if (datasPerHour.exec() == false)
+        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
-    while (dataPerHours.next())
+    while (datasPerHour.next())
     {
-        int currentHour = dataPerHours.value(0).toInt();
-
-        // fill holes
-        if (lastHour != -1)
+        if (firstHour == -1)
         {
-            while (lastHour > currentHour && (lastTwentyfourHours.size() < 24)) // front
-            {
-                lastHour = (++lastHour % 24);
-                lastTwentyfourHours.append(lastHour);
-            }
-            while ((currentHour - 1) > lastHour && (lastTwentyfourHours.size() < 24)) // back
-            {
-                lastHour++;
-                lastTwentyfourHours.append(lastHour);
-            }
+            firstHour = datasPerHour.value(0).toInt();
         }
-        lastHour = currentHour;
-
-        lastTwentyfourHours.append(currentHour);
     }
 
-    // add front padding (if we don't have 24H)
-    while (lastTwentyfourHours.size() < 24)
+    if (firstHour == -1)
     {
-        int h = 0;
-        if (lastTwentyfourHours.size() > 0)
-            h = lastTwentyfourHours.at(0).toInt() - 1;
-        if (h < 0)
-            h += 24;
-        lastTwentyfourHours.prepend(h);
+        // We don't have datas, so we go from current hour to +24
+        QTime now = QTime::currentTime();
+        while (lastTwentyfourHours.size() < 24)
+        {
+            lastTwentyfourHours.append(now.hour());
+            now = now.addSecs(3600);
+        }
+    }
+    else
+    {
+        // We have datas, so we go from last data available +24
+        // We don't have datas, so we go from current hour to +24
+        QTime now(firstHour, 0);
+        while (lastTwentyfourHours.size() < 24)
+        {
+            lastTwentyfourHours.append(now.hour());
+            now = now.addSecs(3600);
+        }
     }
 /*
     // debug
@@ -390,7 +394,7 @@ QVariantList Device::getHours()
 QVariantList Device::getDatasHourly(QString dataName)
 {
     QVariantList datas;
-    int lastHour = -1;
+    QTime nexHourToHandle = QTime::currentTime();
 
     QSqlQuery datasPerHour;
     datasPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
@@ -407,22 +411,14 @@ QVariantList Device::getDatasHourly(QString dataName)
         int currentHour = datasPerHour.value(0).toInt();
 
         // fill holes
-        if (lastHour != -1)
+        while (currentHour != nexHourToHandle.hour() && (datas.size() < 24))
         {
-            while (lastHour > currentHour && (datas.size() < 24)) // front
-            {
-                lastHour = (++lastHour % 24);
-                datas.append(0);
-            }
-            while ((currentHour - 1) > lastHour && (datas.size() < 24)) // back
-            {
-                lastHour++;
-                datas.append(0);
-            }
+            datas.prepend(0);
+            nexHourToHandle = nexHourToHandle.addSecs(3600);
         }
-        lastHour = currentHour;
+        nexHourToHandle = nexHourToHandle.addSecs(3600);
 
-        datas.append(datasPerHour.value(1));
+        datas.prepend(datasPerHour.value(1));
     }
 
     // add front padding (if we don't have 24H)
