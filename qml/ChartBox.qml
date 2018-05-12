@@ -35,6 +35,11 @@ Rectangle {
     width: parent.width
     anchors.margins: 0
 
+    Connections {
+        target: myDevice
+        onDatasUpdated: myBarGraph.updateGraph()
+    }
+
     Rectangle {
         id: rectangleSettings
         width: parent.width

@@ -243,74 +243,54 @@ void Device::setPlantName(QString name)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+/*!
+ * \brief Device::getDays
+ * \return List of days of the week
+ *
+ * First day is always today, then fill it up with the previous 6 days
+ */
 QVariantList Device::getDays()
 {
     QVariantList lastSevenDays;
 
-    QDate firstDay;
-    int lastDay = -1;
+    // first day is always today
+    QDate currentDay = QDate::currentDate();
+    lastSevenDays.prepend(currentDay.toString("dddd"));
 
-    QSqlQuery dataPerDay;
-    dataPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day' " \
-                       "FROM datas WHERE deviceAddr = :deviceAddr " \
-                       "GROUP BY cast(strftime('%d', ts) as datetime) " \
-                       "ORDER BY ts ASC;");
-    dataPerDay.bindValue(":deviceAddr", getMacAddress());
-
-    if (dataPerDay.exec() == false)
-        qDebug() << "> dataPerDay.exec() ERROR" << dataPerDay.lastError().type() << ":"  << dataPerDay.lastError().text();
-
-    while (dataPerDay.next())
-    {
-        QDate date = QDate::fromString(dataPerDay.value(0).toString(), "yyyy-MM-dd");
-        int currentDay = dataPerDay.value(1).toInt();
-
-        // get first day
-        if (lastDay == -1)
-            firstDay = date;
-
-        // fill holes
-        if (lastDay != -1)
-        {
-            while (((currentDay - 1) > lastDay) && (lastSevenDays.size() < 7))
-            {
-                QDate dateHole = date.addDays(-1);
-
-                if (lastSevenDays.last() != dateHole.toString("dddd"))
-                    lastSevenDays.append(dateHole.toString("dddd"));
-                lastDay++;
-            }
-        }
-        lastDay = currentDay;
-
-        lastSevenDays.append(date.toString("dddd"));
-    }
-
-    // add front padding if we don't have 7 days
+    // then fill the 6 days before that
     while (lastSevenDays.size() < 7)
     {
-        firstDay = firstDay.addDays(-1);
-        lastSevenDays.prepend(firstDay.toString("dddd"));
+        currentDay = currentDay.addDays(-1);
+        lastSevenDays.prepend(currentDay.toString("dddd"));
+    }
+
+    // format days (ex: "mon.")
+    QVariantList lastSevenDaysFormated;
+    for (int i = 0; i < lastSevenDays.size(); i++)
+    {
+        QString day = qvariant_cast<QString>(lastSevenDays.at(i));
+        day.truncate(3);
+        day += ".";
+        lastSevenDaysFormated.append(day);
     }
 /*
-    // debug
-    qDebug() << "Days (" << lastSevenDays.size() << ") : ";
-    for (auto d: lastSevenDays)
+    qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
+    for (auto d: lastSevenDaysFormated)
         qDebug() << d;
 */
-    return lastSevenDays;
+    return lastSevenDaysFormated;
 }
 
 QVariantList Device::getDatasDaily(QString dataName)
 {
     QVariantList datas;
-    int lastDay = -1;
+    QDate nextDayToHandle = QDate::currentDate();
 
     QSqlQuery datasPerDay;
     datasPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
                         "FROM datas WHERE deviceAddr = :deviceAddr " \
                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
-                        "ORDER BY ts ASC;");
+                        "ORDER BY ts DESC;");
     datasPerDay.bindValue(":deviceAddr", getMacAddress());
 
     if (datasPerDay.exec() == false)
@@ -321,17 +301,17 @@ QVariantList Device::getDatasDaily(QString dataName)
         int currentDay = datasPerDay.value(1).toInt();
 
         // fill holes
-        if (lastDay != -1)
+        while (currentDay != nextDayToHandle.day() && (datas.size() < 7))
         {
-            while (((currentDay - 1) > lastDay) && (datas.size() < 7))
-            {
-                datas.append(0);
-                lastDay++;
-            }
-        }
-        lastDay = currentDay;
+            datas.prepend(0);
+            //qDebug() << "> filling hole for day" << nextDayToHandle.day();
 
-        datas.append(datasPerDay.value(2));
+            nextDayToHandle = nextDayToHandle.addDays(-1);
+        }
+        nextDayToHandle = nextDayToHandle.addDays(-1);
+
+        datas.prepend(datasPerDay.value(2));
+        //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
     }
 
     // add front padding if we don't have 7 days
