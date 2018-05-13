@@ -10,7 +10,9 @@
         <file>assets/app/watchflower.svg</file>
         <file>assets/app/watchflower.png</file>
         <file>assets/app/watchflower_tray.svg</file>
-        <file>assets/app_background.png</file>
+        <file>assets/background1.png</file>
+        <file>assets/background2.png</file>
+        <file>assets/background3.png</file>
         <file>assets/menu_back.svg</file>
         <file>assets/menu_refresh.svg</file>
         <file>assets/menu_settings.svg</file>
@@ -22,7 +24,7 @@
         <file>assets/plant.svg</file>
         <file>assets/fw.svg</file>
         <file>assets/battery_low.svg</file>
-        <file>assets/battery.svg</file>
+        <file>assets/battery_mid.svg</file>
         <file>assets/battery_full.svg</file>
         <file>assets/temp.svg</file>
         <file>assets/hygro.svg</file>

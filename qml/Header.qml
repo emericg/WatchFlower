@@ -24,8 +24,8 @@ import QtQuick 2.7
 Rectangle {
     width: parent.width
     height: 64
-    //color: "#1dcb58"
-    color: "#87d241"
+    color: "#1dcb58"
+    //color: "#87d241"
     //color: "#41d289"
 
     property alias backAvailable: backRect
@@ -76,10 +76,14 @@ Rectangle {
             anchors.fill: parent
 
             onPressed: {
+                backImg.anchors.topMargin += 2
+                backImg.anchors.leftMargin += 2
                 backImg.width = backImg.width - 4
                 backImg.height = backImg.height - 4
             }
             onReleased: {
+                backImg.anchors.topMargin -= 2
+                backImg.anchors.leftMargin -= 2
                 backImg.width = backImg.width + 4
                 backImg.height = backImg.height + 4
             }
@@ -124,16 +128,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-/*
-            onPressed: {
-                refreshImg.width = refreshImg.width - 4
-                refreshImg.height = refreshImg.height - 4
-            }
-            onReleased: {
-                refreshImg.width = refreshImg.width + 4
-                refreshImg.height = refreshImg.height + 4
-            }
-*/
+
             onClicked: {
                 refreshClicked()
             }

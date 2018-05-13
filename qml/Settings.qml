@@ -55,6 +55,53 @@ Rectangle {
         MouseArea {
             id: mouseArea // so the underlying stuff doesn't hijack clicks
             anchors.fill: parent
+
+            Rectangle {
+                id: rectangleReset
+                height: 58
+                color: "#f75a5a"
+
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+
+                Text {
+                    id: textReset
+                    anchors.fill: parent
+                    color: "#ffffff"
+                    text: qsTr("Reset everything")
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 20
+                }
+                MouseArea {
+                    anchors.fill: parent
+
+                    onPressed: {
+                        rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin + 4
+                        rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin + 4
+                        rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin + 4
+                        rectangleReset.width = rectangleReset.width - 8
+                        rectangleReset.height = rectangleReset.height - 8
+                    }
+                    onReleased: {
+                        rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin - 4
+                        rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin - 4
+                        rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin - 4
+                        rectangleReset.width = rectangleReset.width + 8
+                        rectangleReset.height = rectangleReset.height + 8
+                    }
+                    onClicked: {
+                        mySettings.reset()
+                    }
+                }
+            }
         }
 
         Rectangle {
@@ -102,10 +149,10 @@ Rectangle {
         }
 
         Rectangle {
-            id: rectanglePlant
+            id: rectangleSettings
             y: 41
             width: 368
-            height: 110
+            height: 180
             color: "#f2f2f2"
             border.width: 0
             anchors.top:rectangleHeader.bottom
@@ -116,11 +163,11 @@ Rectangle {
             anchors.rightMargin: 0
 
             Image {
-                id: imagePlant
+                id: image_systray
                 width: 32
                 height: 32
                 anchors.top: parent.top
-                anchors.topMargin: 12
+                anchors.topMargin: 16
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 source: "../assets/app/watchflower_tray.svg"
@@ -129,10 +176,10 @@ Rectangle {
             CheckBox {
                 id: checkBox_systray
                 width: 332
-                height: 32
+                height: 40
                 text: qsTr("Enable system tray icon")
                 anchors.top: parent.top
-                anchors.topMargin: 12
+                anchors.topMargin: 16
                 anchors.left: parent.left
                 anchors.leftMargin: 8
                 checked: mySettings.systray
@@ -144,16 +191,15 @@ Rectangle {
 
             SpinBox {
                 id: spinBox_update
-                y: 71
                 width: 128
                 height: 40
+                anchors.top: checkBox_systray.bottom
+                anchors.topMargin: 16
                 from: 30
                 stepSize: 30
                 to: 120
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 12
                 value: mySettings.interval
 
                 onValueChanged: {
@@ -163,17 +209,38 @@ Rectangle {
 
             Text {
                 id: text2
-                y: 58
                 width: 234
                 height: 40
                 text: qsTr("Update interval in minutes")
+                anchors.top: spinBox_update.top
+                anchors.topMargin: 0
                 renderType: Text.QtRendering
                 font.pointSize: 12
                 verticalAlignment: Text.AlignVCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 12
                 anchors.left: spinBox_update.right
-                anchors.leftMargin: 14
+                anchors.leftMargin: 16
+            }
+
+            RadioDelegate {
+                id: radioDelegate
+                height: 40
+                text: qsTr("Use °C")
+                anchors.left: parent.left
+                anchors.leftMargin: 8
+                anchors.top: spinBox_update.bottom
+                anchors.topMargin: 16
+                checked: true
+            }
+
+            RadioDelegate {
+                id: radioDelegate1
+                height: 40
+                text: qsTr("Use °F")
+                checkable: false
+                anchors.left: radioDelegate.right
+                anchors.leftMargin: 16
+                anchors.top: spinBox_update.bottom
+                anchors.topMargin: 16
             }
         }
 

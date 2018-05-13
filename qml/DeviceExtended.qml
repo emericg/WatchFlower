@@ -200,7 +200,7 @@ Rectangle {
                     } else if (myDevice.deviceBattery > 75) {
                         source = "qrc:/assets/battery_full.svg";
                     } else {
-                        source = "qrc:/assets/battery.svg";
+                        source = "qrc:/assets/battery_mid.svg";
                     }
                 }
             }
@@ -481,7 +481,7 @@ Rectangle {
             }
 
             Image {
-                id: imageTemp2
+                id: imageLuminosity
                 x: 25
                 y: 58
                 width: 40
@@ -490,7 +490,7 @@ Rectangle {
             }
 
             Image {
-                id: imageTemp1
+                id: imageHygro
                 x: 25
                 y: 12
                 width: 40
@@ -514,7 +514,14 @@ Rectangle {
                 } else if (myDevice.deviceBattery > 75) {
                     imageBatt.source = "qrc:/assets/battery_full.svg";
                 } else {
-                    imageBatt.source = "qrc:/assets/battery.svg";
+                    imageBatt.source = "qrc:/assets/battery_mid.svg";
+                }
+
+                var hours = Qt.formatDateTime (new Date(), "hh");
+                if (hours > 22 || hours < 8) {
+                    imageLuminosity.source = "qrc:/assets/night.svg";
+                } else {
+                    imageLuminosity.source = "qrc:/assets/day.svg";
                 }
 
                 // Temp

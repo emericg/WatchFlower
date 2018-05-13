@@ -257,7 +257,7 @@ Rectangle {
 
         if (graphDataSelected == "hygro") {
             axisY0.min = 0
-            axisY0.max = 75
+            axisY0.max = 66
             myBarSet.color = "#31a3ec"
         } else if (graphDataSelected == "temp") {
             axisY0.min = 0
@@ -265,11 +265,11 @@ Rectangle {
             myBarSet.color = "#87d241"
         } else if (graphDataSelected == "luminosity") {
             axisY0.min = 0
-            axisY0.max = 3000
+            axisY0.max = 2000
             myBarSet.color = "#f1ec5c"
         } else if (graphDataSelected == "conductivity") {
             axisY0.min = 0
-            axisY0.max = 1000
+            axisY0.max = 750
             myBarSet.color = "#e19c2f"
         }
 

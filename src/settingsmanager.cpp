@@ -93,6 +93,13 @@ bool SettingsManager::writeSettings()
 
 /* ************************************************************************** */
 
+bool SettingsManager::reset()
+{
+    return false;
+}
+
+/* ************************************************************************** */
+
 bool SettingsManager::readDevices()
 {
     return false;

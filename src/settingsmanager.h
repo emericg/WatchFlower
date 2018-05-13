@@ -40,6 +40,8 @@ class SettingsManager: public QObject
     bool readSettings();
     bool writeSettings();
 
+    bool reset();
+
     bool readDevices();
 
 Q_SIGNALS:

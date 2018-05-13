@@ -12,7 +12,7 @@
    viewBox="0 0 48 48"
    version="1.1"
    id="svg4"
-   sodipodi:docname="back_button.svg"
+   sodipodi:docname="menu_back.svg"
    inkscape:version="0.92.2 2405546, 2018-03-11">
   <metadata
      id="metadata10">
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -38,12 +38,12 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1055"
+     inkscape:window-height="1056"
      id="namedview6"
      showgrid="true"
-     inkscape:zoom="19.666667"
-     inkscape:cx="23.502874"
-     inkscape:cy="25.595753"
+     inkscape:zoom="9.8333335"
+     inkscape:cx="-3.6523919"
+     inkscape:cy="23.039889"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -54,9 +54,9 @@
        id="grid812" />
   </sodipodi:namedview>
   <path
-     d="M 23.650846,38.159322 V 30.484747 H 39 V 18.972881 H 23.650846 V 11.298306 L 10.220339,24.728814 Z"
+     d="M 23.517512,40.025989 V 31.284747 H 41 V 18.172881 H 23.517512 V 9.4316394 L 8.220339,24.728814 Z"
      id="path2"
-     style="fill:#e6e6e6;fill-opacity:0.90196079;stroke:none;stroke-width:0.95932204;stroke-opacity:1"
+     style="fill:#e6e6e6;fill-opacity:0.90196078;stroke:none;stroke-width:1.09265542;stroke-opacity:1"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cccccccc" />
 </svg>

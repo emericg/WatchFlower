@@ -38,7 +38,7 @@
      bordercolor="#666666"
      borderopacity="1"
      inkscape:current-layer="layer9"
-     inkscape:cx="-28.258072"
+     inkscape:cx="-74.883072"
      inkscape:cy="4.069286"
      inkscape:document-units="px"
      gridtolerance="10"
@@ -63,10 +63,10 @@
      inkscape:snap-nodes="true"
      inkscape:snap-others="false"
      inkscape:snap-to-guides="true"
-     inkscape:window-height="1023"
+     inkscape:window-height="1056"
      inkscape:window-maximized="1"
      inkscape:window-width="1920"
-     inkscape:window-x="1920"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:zoom="4"
      inkscape:pagecheckerboard="true">
@@ -105,9 +105,9 @@
      transform="translate(-201,-265)">
     <path
        inkscape:connector-curvature="0"
-       d="M 225.0987,269.10156 A 20.598648,20.598648 0 0 0 208.0002,289.40135 20.598648,20.598648 0 0 0 228.59885,310 a 20.598648,20.598648 0 0 0 13.51786,-5.08645 25.886248,25.886248 0 0 1 -19.40319,-25.02989 25.886248,25.886248 0 0 1 2.38518,-10.7821 z"
+       d="m 225.09132,272.85156 a 16.821246,16.821246 0 0 0 -13.96296,16.57719 16.821246,16.821246 0 0 0 16.82125,16.82125 16.821246,16.821246 0 0 0 11.03894,-4.15369 21.1392,21.1392 0 0 1 -15.84501,-20.43988 21.1392,21.1392 0 0 1 1.94778,-8.80487 z"
        id="path17621"
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.94266415;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:normal;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.40303516;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;paint-order:normal;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
   </g>
   <g
      inkscape:groupmode="layer"

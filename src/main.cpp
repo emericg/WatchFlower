@@ -103,12 +103,12 @@ int main(int argc, char *argv[])
 
 // cache data from last 30min
 // limits editor
-// handle nights
+
+// plant db (???)
+
 // disable graph when no database
 // graph auto min/max
 // graph stacked bar (prettier?)
-// graph query limits (no +7d, no +24h)
-// plant db (???)
 
 /* ************************************************************************** */
 

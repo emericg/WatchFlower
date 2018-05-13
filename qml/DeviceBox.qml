@@ -70,7 +70,7 @@ Rectangle {
                 } else if (myDevice.deviceBattery > 75) {
                     imageBattery.source = "qrc:/assets/battery_full.svg";
                 } else {
-                    imageBattery.source = "qrc:/assets/battery.svg";
+                    imageBattery.source = "qrc:/assets/battery_mid.svg";
                 }
                 textBattery.text = myDevice.deviceBattery + "%"
             }
@@ -125,7 +125,7 @@ Rectangle {
         x: 0
         y: 80
         height: 48
-        color: "#ccf3f3f3"
+        color: "#aaf3f3f3"
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -176,7 +176,7 @@ Rectangle {
                 } else if (myDevice.deviceBattery > 75) {
                     source = "qrc:/assets/battery_full.svg";
                 } else {
-                    source = "qrc:/assets/battery.svg";
+                    source = "qrc:/assets/battery_mid.svg";
                 }
             }
         }

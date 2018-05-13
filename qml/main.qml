@@ -23,9 +23,9 @@ import QtQuick 2.7
 
 Rectangle {
     id: background
-    color: "#eefbdb"
-    width: 400
-    height: 640
+    color: "#e5fed8"
+    width: 450
+    height: 700
 
     //minimumWidth: 400
     //minimumHeight: 640
@@ -59,7 +59,7 @@ Rectangle {
         } else {
             header.scanAvailable.visible = false;
 
-            status.statusText = "OMG no bluetooth!";
+            status.statusText = "No bluetooth :-(";
             status.visible = true;
             bluetooth_img.visible = true;
         }
@@ -78,7 +78,7 @@ Rectangle {
             } else {
                 header.scanAvailable.visible = false;
 
-                status.statusText = "OMG no bluetooth!";
+                status.statusText = "No bluetooth :-(";
                 status.visible = true;
                 bluetooth_img.visible = true;
             }
@@ -93,26 +93,43 @@ Rectangle {
         }
     }
 
+    Status {
+        id: status
+        statusText: "Click refresh to scan!"
+        visible: true
+    }
+
     Image {
         id: background_img
+        y: 314
+        width: 256
+        height: 256
+        opacity: 0.9
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 70
-        anchors.verticalCenterOffset: 122
+        anchors.bottomMargin: 77
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/app_background.png"
+        source: {
+            var a = Math.floor(Math.random() * 2);
+            if (a === 2)
+                source = "qrc:/assets/background3.png";
+            else if (a === 1)
+                source = "qrc:/assets/background2.png";
+            else
+                source = "qrc:/assets/background1.png";
+        }
         fillMode: Image.PreserveAspectFit
 
         Image {
             id: bluetooth_img
             x: 108
-            y: 189
+            y: 191
             width: 40
             height: 40
+            anchors.horizontalCenterOffset: 84
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 28
+            anchors.bottomMargin: 24
             anchors.horizontalCenter: background_img.horizontalCenter
             source: "qrc:/assets/ble_err.svg"
             fillMode: Image.PreserveAspectFit
@@ -124,12 +141,6 @@ Rectangle {
                     visible = true;
             }
         }
-    }
-
-    Status {
-        id: status
-        statusText: "Click refresh to scan!"
-        visible: true
     }
 
     ListView {

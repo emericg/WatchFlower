@@ -25,7 +25,7 @@ Rectangle {
     width: parent.width
     height: 64
     anchors.bottom: parent.bottom
-    color: "#ffbf66"
+    color: "#ffb854"
 
     property string statusText: ""
     signal statusClick()
