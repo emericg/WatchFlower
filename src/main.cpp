@@ -101,14 +101,17 @@ int main(int argc, char *argv[])
 
 // TODOs
 
-// cache data from last 30min
+// 0.1
 // limits editor
+// cache data from last 30min
 
-// plant db (???)
-
-// disable graph when no database
+// 0.2
 // graph auto min/max
 // graph stacked bar (prettier?)
+// disable graph when no database
+
+// NEXT
+// plant db (???)
 
 /* ************************************************************************** */
 
