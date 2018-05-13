@@ -335,8 +335,8 @@ QVariantList Device::getDatasDaily(QString dataName)
  * \return List of hours
  *
  * Two possibilities:
- * - We don't have datas, so we go from current hour to +24
  * - We have datas, so we go from last data available +24
+ * - We don't have datas, so we go from current hour to +24
  */
 QVariantList Device::getHours()
 {
@@ -361,9 +361,8 @@ QVariantList Device::getHours()
         }
     }
 
-    if (firstHour == -1)
+    if (firstHour == -1) // We don't have datas
     {
-        // We don't have datas, so we go from current hour to +24
         QTime now = QTime::currentTime();
         while (lastTwentyfourHours.size() < 24)
         {
@@ -371,10 +370,8 @@ QVariantList Device::getHours()
             now = now.addSecs(3600);
         }
     }
-    else
+    else // We have datas
     {
-        // We have datas, so we go from last data available +24
-        // We don't have datas, so we go from current hour to +24
         QTime now(firstHour, 0);
         while (lastTwentyfourHours.size() < 24)
         {
@@ -395,6 +392,7 @@ QVariantList Device::getDatasHourly(QString dataName)
 {
     QVariantList datas;
     QTime nexHourToHandle = QTime::currentTime();
+    int firstHour = -1;
 
     QSqlQuery datasPerHour;
     datasPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
@@ -410,21 +408,30 @@ QVariantList Device::getDatasHourly(QString dataName)
     {
         int currentHour = datasPerHour.value(0).toInt();
 
+        if (firstHour == -1)
+        {
+            firstHour = datasPerHour.value(0).toInt();
+            nexHourToHandle = QTime(firstHour, 0);
+        }
+
         // fill holes
         while (currentHour != nexHourToHandle.hour() && (datas.size() < 24))
         {
-            datas.prepend(0);
+            datas.append(0);
+            //qDebug() << "> filling hole for hour" << nexHourToHandle.hour();
+
             nexHourToHandle = nexHourToHandle.addSecs(3600);
         }
         nexHourToHandle = nexHourToHandle.addSecs(3600);
 
-        datas.prepend(datasPerHour.value(1));
+        datas.append(datasPerHour.value(1));
+        //qDebug() << "> we have data for hour" << currentHour << ", next hour to handle is" << nexHourToHandle.hour();
     }
 
     // add front padding (if we don't have 24H)
     while (datas.size() < 24)
     {
-        datas.prepend(0);
+        datas.append(0);
     }
 /*
     // debug
