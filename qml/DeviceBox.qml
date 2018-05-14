@@ -35,7 +35,6 @@ Rectangle {
     Component.onCompleted: updateBoxDatas();
 
     onMyDeviceUpdatingChanged: {
-        console.log("onMyDeviceUpdatingChanged DEVICE ", myDevice.deviceAddress);
         updateBoxDatas();
     }
 

@@ -41,10 +41,12 @@
 
 /* ************************************************************************** */
 
-DeviceManager::DeviceManager()
+DeviceManager::DeviceManager(int updateInterval)
 {
     loadBluetooth();
     loadDatabase();
+
+    m_updateInterval = updateInterval;
 
     // BLE discovery agent
     m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
@@ -77,7 +79,7 @@ DeviceManager::DeviceManager()
 
             qDebug() << "- device: " << deviceName << "/" << deviceAddr;
 
-            Device *d = new Device(deviceAddr, deviceName);
+            Device *d = new Device(deviceAddr, deviceName, m_updateInterval);
             m_devices.append(d);
         }
     }
@@ -151,93 +153,10 @@ void DeviceManager::loadDatabase()
     {
         qDebug() << "> SQLite available";
 
-        QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-
-        if (dbPath.isEmpty() == false)
+        QSqlDatabase db = QSqlDatabase::database();
+        if (db.isValid())
         {
-            QDir dbDirectory(dbPath);
-            if (dbDirectory.exists() == false)
-            {
-                if (dbDirectory.mkpath(dbPath) == false)
-                    qWarning() << "Cannot create dbDirectory...";
-            }
-
-            if (dbDirectory.exists() == true)
-            {
-                dbPath += "/datas.db";
-
-                QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
-                //db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
-                dbFile.setDatabaseName(dbPath); // or use ":memory:"
-
-                if (dbFile.open())
-                {
-                    m_db = true;
-
-                    // Check if our tables exists //////////////////////////////
-
-                    QSqlQuery checkDevices;
-                    checkDevices.exec("PRAGMA table_info(devices);");
-                    if (!checkDevices.next())
-                    {
-                        qDebug() << "+ Adding 'devices' table to local database";
-
-                        QSqlQuery createDevices;
-                        createDevices.prepare("CREATE TABLE devices (" \
-                                                "deviceAddr CHAR(17) PRIMARY KEY," \
-                                                "deviceName VARCHAR(255)," \
-                                                "customName VARCHAR(255)," \
-                                                "plantName VARCHAR(255)" \
-                                                ");");
-
-                        if (createDevices.exec() == false)
-                            qDebug() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
-                    }
-
-                    QSqlQuery checkDatas;
-                    checkDatas.exec("PRAGMA table_info(datas);");
-                    if (!checkDatas.next())
-                    {
-                        qDebug() << "+ Adding 'datas' table to local database";
-
-                        QSqlQuery createDatas;
-                        createDatas.prepare("CREATE TABLE datas (" \
-                                            "deviceAddr CHAR(17)," \
-                                            "ts DATETIME," \
-                                              "temp FLOAT," \
-                                              "hygro INT," \
-                                              "luminosity INT," \
-                                              "conductivity INT," \
-                                            " PRIMARY KEY(deviceAddr, ts) " \
-                                            " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
-                                            ");");
-
-                        if (createDatas.exec() == false)
-                            qDebug() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":"  << createDatas.lastError().text();
-                    }
-
-                    // Delete everything 7+ days old ///////////////////////////
-                    // DATETIME: YYY-MM-JJ HH:MM:SS
-
-                    QSqlQuery sanitizeDatas;
-                    sanitizeDatas.exec("DELETE FROM datas WHERE ts <  DATE('now', '-7 days')");
-
-                    if (sanitizeDatas.exec() == false)
-                        qDebug() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
-                }
-                else
-                {
-                    qWarning() << "Cannot open cache database... Error:" << dbFile.lastError();
-                }
-            }
-            else
-            {
-                qWarning() << "Cannot create nor open dbDirectory...";
-            }
-        }
-        else
-        {
-            qWarning() << "Cannot find QStandardPaths::AppDataLocation directory...";
+            m_db = true;
         }
     }
 }
@@ -313,7 +232,7 @@ void DeviceManager::deviceDiscoveryFinished()
             }
             if (found == false)
             {
-                Device *d = new Device(deviceAddr, deviceName);
+                Device *d = new Device(deviceAddr, deviceName, m_updateInterval);
                 m_devices.append(d);
             }
         }
@@ -354,7 +273,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate")
         {
-            Device *d = new Device(info);
+            Device *d = new Device(info, m_updateInterval);
             m_devices.append(d);
 
             qDebug() << "Last device added: " << d->getName() << "/" << d->getMacAddress();

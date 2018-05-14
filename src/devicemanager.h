@@ -22,6 +22,8 @@
 #ifndef DEVICE_MANAGER_H
 #define DEVICE_MANAGER_H
 
+#include "settingsmanager.h"
+
 #include <QObject>
 #include <QVariant>
 #include <QList>
@@ -44,7 +46,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
 
 public:
-    DeviceManager();
+    DeviceManager(int updateInterval = UPDATE_INTERVAL);
     ~DeviceManager();
 
     QVariant getDevices() const;
@@ -78,6 +80,7 @@ private:
     bool m_bt = false;
     bool m_db = false;
     bool m_scanning = false;
+    int m_updateInterval = UPDATE_INTERVAL;
 
     void loadBluetooth();
     void loadDatabase();

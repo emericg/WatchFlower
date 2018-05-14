@@ -169,4 +169,3 @@ Rectangle {
         anchors.fill: parent
     }
 }
-

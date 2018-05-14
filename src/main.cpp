@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
     QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
 
-    DeviceManager dm;
-
     SettingsManager sm;
     bool trayEnabled = sm.getSysTray();
+
+    DeviceManager dm(sm.getUpdateInterval());
 
     QSystemTrayIcon *sysTray = nullptr;
     QMenu *sysTrayMenu = nullptr;
@@ -103,15 +103,16 @@ int main(int argc, char *argv[])
 
 // 0.1
 // limits editor
-// cache data from last 30min
+// handle °Fahrenheit
 
 // 0.2
 // graph auto min/max
-// graph stacked bar (prettier?)
+// graph stacked bar + night bars (prettier?)
 // disable graph when no database
 
 // NEXT
 // plant db (???)
+// handle multiple bluetooth adapters (???)
 
 /* ************************************************************************** */
 

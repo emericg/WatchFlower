@@ -52,16 +52,38 @@ class Device: public QObject
 
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
 
+    QString m_deviceName;
+    QString m_deviceAddress;
+    QBluetoothDeviceInfo bleDevice;
+
+    bool m_available = false;
+    bool m_updating = false;
+    QTimer m_updateTimer;
+
+    // bt device datas
+    QString m_firmware = "UNKN";
+    int m_battery = -1;
+    float m_temp = -1;
+    int m_hygro = -1;
+    int m_luminosity = -1;
+    int m_conductivity = -1;
+
+    // associated datas
+    QString m_customName;
+    QString m_plantName;
+
+    // TODO limits
+
 public:
-    Device();
-    Device(QString &deviceAddr, QString &deviceName);
-    Device(const QBluetoothDeviceInfo &d);
+    Device(QString &deviceAddr, QString &deviceName, int updateInterval);
+    Device(const QBluetoothDeviceInfo &d, int updateInterval);
     ~Device();
 
 public slots:
     bool refreshDatas();
     void refreshDatasStarted();
     bool getSqlDatas();
+    bool getSqlCachedDatas();
     bool getBleDatas();
     void refreshDatasFinished();
 
@@ -125,29 +147,6 @@ private:
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-
-private:
-    QString m_deviceName;
-    QString m_deviceAddress;
-    QBluetoothDeviceInfo bleDevice;
-
-    bool m_available = false;
-    bool m_updating = false;
-    QTimer updateTimer;
-
-    // bt device datas
-    QString m_firmware = "UNKN";
-    int m_battery = -1;
-    float m_temp = -1;
-    int m_hygro = -1;
-    int m_luminosity = -1;
-    int m_conductivity = -1;
-
-    // associated datas
-    QString m_customName;
-    QString m_plantName;
-
-    // TODO limits
 };
 
 #endif // DEVICE_H

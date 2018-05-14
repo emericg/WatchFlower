@@ -22,6 +22,8 @@
 #ifndef SETTINGS_MANAGER_H
 #define SETTINGS_MANAGER_H
 
+#define UPDATE_INTERVAL 60
+
 #include <QObject>
 
 /*!
@@ -33,20 +35,26 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
+    Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
 
     bool m_trayEnabled = false;
-    unsigned m_updateInterval = 30;
+    unsigned m_updateInterval = UPDATE_INTERVAL;
+    QString m_tempUnit = "C";
 
     bool readSettings();
     bool writeSettings();
 
-    bool reset();
+    bool m_db = false;
+    bool loadDatabase();
+    void closeDatabase();
+    void resetDatabase();
 
     bool readDevices();
 
 Q_SIGNALS:
     void systrayChanged();
     void intervalChanged();
+    void tempunitChanged();
 
 public:
     SettingsManager();
@@ -57,6 +65,12 @@ public:
 
     unsigned getUpdateInterval() const { return m_updateInterval; }
     void setUpdateInterval(unsigned value) { m_updateInterval = value; writeSettings(); }
+
+    QString getTempUnit() const { return m_tempUnit; }
+    void setTempUnit(QString value) { m_tempUnit = value; writeSettings(); }
+
+public slots:
+    void reset();
 };
 
 #endif // SETTINGS_MANAGER_H

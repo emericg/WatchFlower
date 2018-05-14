@@ -20,6 +20,7 @@
  */
 
 #include "device.h"
+#include "settingsmanager.h"
 
 #include <QBluetoothUuid>
 #include <QBluetoothAddress>
@@ -35,12 +36,7 @@
 
 /* ************************************************************************** */
 
-Device::Device()
-{
-    //
-}
-
-Device::Device(QString &deviceAddr, QString &deviceName)
+Device::Device(QString &deviceAddr, QString &deviceName, int updateInterval)
 {
     if (deviceAddr.size() != 17)
         qWarning() << "DeviceInfo() '" << deviceAddr << "' is an invalid mac address...";
@@ -60,12 +56,13 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     refreshDatas();
 
     // Timer update
-    updateTimer.setInterval(30*60*1000); // 30mins
-    connect(&updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    updateTimer.start();
+    if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
+    m_updateTimer.setInterval(updateInterval*60*1000);
+    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
+    m_updateTimer.start();
 }
 
-Device::Device(const QBluetoothDeviceInfo &d)
+Device::Device(const QBluetoothDeviceInfo &d, int updateInterval)
 {
     bleDevice = d;
     m_deviceAddress = bleDevice.address().toString();
@@ -80,9 +77,10 @@ Device::Device(const QBluetoothDeviceInfo &d)
     refreshDatas();
 
     // Timer update
-    updateTimer.setInterval(30*60*1000); // 30mins
-    connect(&updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    updateTimer.start();
+    if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
+    m_updateTimer.setInterval(updateInterval*60*1000);
+    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
+    m_updateTimer.start();
 }
 
 Device::~Device()
@@ -107,14 +105,17 @@ bool Device::refreshDatas()
 
     refreshDatasStarted();
 
-    if (getBleDatas())
+    if (getSqlCachedDatas() == false)
     {
-        //
-    }
-    else
-    {
-        m_available = false;
-        refreshDatasFinished();
+        if (getBleDatas())
+        {
+            //
+        }
+        else
+        {
+            m_available = false;
+            refreshDatasFinished();
+        }
     }
 
     return status;
@@ -134,6 +135,26 @@ bool Device::getSqlDatas()
     //qDebug() << "DeviceInfo::getSqlDatas(" << m_deviceAddress << ")";
     bool status = false;
 
+    QSqlQuery getFirmware;
+    getFirmware.prepare("SELECT deviceFirmware FROM devices WHERE deviceAddr = :deviceAddr");
+    getFirmware.bindValue(":deviceAddr", getMacAddress());
+    getFirmware.exec();
+    while (getFirmware.next())
+    {
+        m_firmware = getFirmware.value(0).toString();
+        status = true;
+    }
+
+    QSqlQuery getBattery;
+    getBattery.prepare("SELECT deviceBattery FROM devices WHERE deviceAddr = :deviceAddr");
+    getBattery.bindValue(":deviceAddr", getMacAddress());
+    getBattery.exec();
+    while (getBattery.next())
+    {
+        m_battery = getBattery.value(0).toInt();
+        status = true;
+    }
+
     QSqlQuery getCustomName;
     getCustomName.prepare("SELECT customName FROM devices WHERE deviceAddr = :deviceAddr");
     getCustomName.bindValue(":deviceAddr", getMacAddress());
@@ -152,6 +173,38 @@ bool Device::getSqlDatas()
     {
         m_plantName = getPlantName.value(0).toString();
         status = true;
+    }
+
+    return status;
+}
+
+bool Device::getSqlCachedDatas()
+{
+    //qDebug() << "DeviceInfo::getSqlCachedDatas(" << m_deviceAddress << ")";
+    bool status = false;
+
+    QSqlQuery cachedDatas;
+    cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity " \
+                        "FROM datas " \
+                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-5 minutes');");
+    cachedDatas.bindValue(":deviceAddr", getMacAddress());
+
+    if (cachedDatas.exec() == false)
+        qDebug() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
+
+    while (cachedDatas.next())
+    {
+        qDebug() << "Using cachedDatas";
+        status = true;
+
+        m_temp = cachedDatas.value(0).toInt();
+        m_hygro =  cachedDatas.value(1).toInt();
+        m_luminosity =  cachedDatas.value(2).toInt();
+        m_conductivity = cachedDatas.value(3).toInt();
+
+        m_available = true;
+
+        refreshDatasFinished();
     }
 
     return status;
@@ -575,6 +628,7 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             m_hygro = data[7];
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
+
 #ifndef NDEBUG
             qDebug() << "* Device:" << getMacAddress();
             qDebug() << "- m_firmware:" << m_firmware;
@@ -584,6 +638,7 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             qDebug() << "- m_luminosity:" << m_luminosity;
             qDebug() << "- m_conductivity:" << m_conductivity;
 #endif // NDEBUG
+
             refreshDatasFinished();
             controller->disconnectFromDevice();
 
@@ -591,17 +646,27 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
+                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addDatas;
-                //addDatas.prepare("INSERT INTO datas (deviceAddr, ts, temp, hygro, luminosity, conductivity) VALUES (:deviceAddr, :ts, :temp, :hygro, :luminosity, :conductivity) ON DUPLICATE KEY UPDATE");
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, temp, hygro, luminosity, conductivity) VALUES (:deviceAddr, :ts, :temp, :hygro, :luminosity, :conductivity)");
+                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity) VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
                 addDatas.bindValue(":deviceAddr", getMacAddress());
                 addDatas.bindValue(":ts", tsStr);
+                addDatas.bindValue(":ts_full", tsFullStr);
                 addDatas.bindValue(":temp", m_temp);
                 addDatas.bindValue(":hygro", m_hygro);
                 addDatas.bindValue(":luminosity", m_luminosity);
                 addDatas.bindValue(":conductivity", m_conductivity);
-                addDatas.exec();
+                if (addDatas.exec() == false)
+                    qDebug() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":"  << addDatas.lastError().text();
+
+                QSqlQuery updateDevice;
+                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":deviceAddr", getMacAddress());
+                if (updateDevice.exec() == false)
+                    qDebug() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
             }
         }
     }

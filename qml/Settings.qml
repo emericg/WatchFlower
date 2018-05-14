@@ -211,38 +211,80 @@ Rectangle {
                 id: text2
                 width: 234
                 height: 40
-                text: qsTr("Update interval in minutes")
                 anchors.top: spinBox_update.top
                 anchors.topMargin: 0
-                renderType: Text.QtRendering
-                font.pointSize: 12
-                verticalAlignment: Text.AlignVCenter
                 anchors.left: spinBox_update.right
                 anchors.leftMargin: 16
+
+                font.pointSize: 12
+                verticalAlignment: Text.AlignVCenter
+
+                text: qsTr("Update interval in minutes")
             }
 
-            RadioDelegate {
-                id: radioDelegate
+            Text {
+                id: text3
+                x: 3
+                y: 128
                 height: 40
-                text: qsTr("Use °C")
+                text: qsTr("Temperature unit:")
+                font.pointSize: 12
+                anchors.top: spinBox_update.bottom
+                anchors.topMargin: 16
                 anchors.left: parent.left
-                anchors.leftMargin: 8
-                anchors.top: spinBox_update.bottom
-                anchors.topMargin: 16
-                checked: true
+                anchors.leftMargin: 12
+                verticalAlignment: Text.AlignVCenter
             }
 
             RadioDelegate {
-                id: radioDelegate1
+                id: radioDelegateCelsius
                 height: 40
-                text: qsTr("Use °F")
-                checkable: false
-                anchors.left: radioDelegate.right
-                anchors.leftMargin: 16
-                anchors.top: spinBox_update.bottom
-                anchors.topMargin: 16
+                text: qsTr("°C")
+                anchors.left: text3.right
+                anchors.leftMargin: 8
+                anchors.top: text3.top
+                anchors.topMargin: 0
+
+                checked: {
+                    if (mySettings.tempunit === 'C') {
+                        radioDelegateCelsius.checked = true;
+                        radioDelegateFahrenheit.checked = false;
+                    } else {
+                        radioDelegateCelsius.checked = false;
+                        radioDelegateFahrenheit.checked = true;
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked == true)
+                        mySettings.tempunit = 'C';
+                }
+            }
+
+            RadioDelegate {
+                id: radioDelegateFahrenheit
+                height: 40
+                text: qsTr("°F")
+                anchors.left: radioDelegateCelsius.right
+                anchors.leftMargin: 0
+                anchors.top: text3.top
+                anchors.topMargin: 0
+
+                checked: {
+                    if (mySettings.tempunit === 'F') {
+                        radioDelegateCelsius.checked = false;
+                        radioDelegateFahrenheit.checked = true;
+                    } else {
+                        radioDelegateFahrenheit.checked = false;
+                        radioDelegateCelsius.checked = true;
+                    }
+                }
+
+                onCheckedChanged: {
+                    if (checked === true)
+                        mySettings.tempunit = 'F';
+                }
             }
         }
-
     }
 }
