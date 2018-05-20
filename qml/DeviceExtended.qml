@@ -24,8 +24,8 @@ import QtQuick 2.7
 Rectangle {
     id: deviceExtendedRectangle
     color: "#eefbdb"
-    width: 400
-    height: 640
+    width: 450
+    height: 700
 
     property var myDevice
     property bool myDeviceUpdating: myDevice.updating
@@ -148,18 +148,93 @@ Rectangle {
                     source: "qrc:/assets/edit_button.svg"
                 }
             }
+
+            //            Rectangle {
+            //                id: rectangleDevice
+            //                x: 349
+            //                width: 101
+            //                color: "#00000000"
+            //                anchors.bottom: parent.bottom
+            //                anchors.bottomMargin: 0
+            //                anchors.top: parent.top
+            //                anchors.topMargin: 0
+            //                anchors.right: parent.right
+            //                anchors.rightMargin: 0
+            //                border.width: 0
+
+            //                Image {
+            //                    id: imageFw
+            //                    x: 399
+            //                    width: 30
+            //                    height: 30
+            //                    anchors.verticalCenterOffset: -16
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    anchors.right: parent.right
+            //                    anchors.rightMargin: 8
+            //                    source: "qrc:/assets/fw.svg"
+            //                }
+            //                Text {
+            //                    id: textFw
+            //                    y: 13
+            //                    width: 64
+            //                    height: 30
+            //                    text: "v" + myDevice.deviceFirmware
+            //                    horizontalAlignment: Text.AlignRight
+            //                    anchors.right: imageFw.left
+            //                    anchors.rightMargin: 8
+            //                    verticalAlignment: Text.AlignVCenter
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    anchors.verticalCenterOffset: -16
+            //                    font.pixelSize: 14
+            //                }
+
+            //                Image {
+            //                    id: imageBatt
+            //                    x: 205
+            //                    width: 30
+            //                    height: 30
+            //                    anchors.right: parent.right
+            //                    anchors.rightMargin: 8
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    anchors.verticalCenterOffset: 16
+            //                    source: {
+            //                        if (myDevice.deviceBattery < 15) {
+            //                            source = "qrc:/assets/battery_low.svg";
+            //                        } else if (myDevice.deviceBattery > 75) {
+            //                            source = "qrc:/assets/battery_full.svg";
+            //                        } else {
+            //                            source = "qrc:/assets/battery_mid.svg";
+            //                        }
+            //                    }
+            //                }
+            //                Text {
+            //                    id: textBatt
+            //                    x: 260
+            //                    y: 10
+            //                    width: 64
+            //                    height: 30
+            //                    text: myDevice.deviceBattery + "%"
+            //                    horizontalAlignment: Text.AlignRight
+            //                    anchors.right: imageBatt.left
+            //                    anchors.rightMargin: 8
+            //                    verticalAlignment: Text.AlignVCenter
+            //                    anchors.verticalCenterOffset: 16
+            //                    anchors.verticalCenter: parent.verticalCenter
+            //                    font.pixelSize: 14
+            //                }
+            //            }
         }
 
         Rectangle {
             id: rectangleDevice
             height: 40
-            color: "#f9f9f9"
+            color: "#f1f1f1"
             border.width: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
             anchors.rightMargin: 0
-            anchors.top: rectanglePlant.bottom
+            anchors.top: rectangleHeader.bottom
             anchors.topMargin: 0
 
             Image {
@@ -176,6 +251,7 @@ Rectangle {
                 y: 13
                 width: 72
                 height: 30
+
                 text: "v" + myDevice.deviceFirmware
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageFw.right
@@ -184,7 +260,6 @@ Rectangle {
                 anchors.verticalCenterOffset: 0
                 font.pixelSize: 14
             }
-
             Image {
                 id: imageBatt
                 x: 205
@@ -196,7 +271,7 @@ Rectangle {
                 anchors.verticalCenterOffset: 0
                 source: {
                     if (myDevice.deviceBattery < 15) {
-                       source = "qrc:/assets/battery_low.svg";
+                        source = "qrc:/assets/battery_low.svg";
                     } else if (myDevice.deviceBattery > 75) {
                         source = "qrc:/assets/battery_full.svg";
                     } else {
@@ -215,6 +290,7 @@ Rectangle {
                 anchors.leftMargin: 4
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: parent.verticalCenter
+
                 font.pixelSize: 14
             }
         }
@@ -224,9 +300,9 @@ Rectangle {
             y: 41
             width: 368
             height: 40
-            color: "#f2f2f2"
+            color: "#f9f9f9"
             border.width: 0
-            anchors.top:rectangleHeader.bottom
+            anchors.top:rectangleDevice.bottom
             anchors.topMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -293,224 +369,20 @@ Rectangle {
 
         Rectangle {
             id: rectangleDeviceDatas
-            height: 108
+            height: 100
             anchors.rightMargin: 0
             anchors.leftMargin: 0
             anchors.topMargin: 0
             border.width: 0
 
-            anchors.top: rectangleDevice.bottom
+            anchors.top: rectanglePlant.bottom
             anchors.right: parent.right
             anchors.left: parent.left
-
-            Rectangle {
-                id: barCond_high
-                x: 338
-                y: 81
-                width: 23
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barCond_good
-                x: 284
-                y: 81
-                width: 48
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barCond_low
-                x: 254
-                y: 81
-                width: 24
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barHygro_high
-                x: 156
-                y: 36
-                width: 23
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barHygro_good
-                x: 102
-                y: 36
-                width: 48
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barHygro_low
-                x: 72
-                y: 36
-                width: 24
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barLux_high
-                x: 155
-                y: 81
-                width: 23
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barLux_good
-                x: 101
-                y: 81
-                width: 48
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barLux_low
-                x: 71
-                y: 81
-                width: 24
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barTemp_high
-                x: 338
-                y: 36
-                width: 23
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barTemp_good
-                x: 284
-                y: 36
-                width: 48
-                height: 8
-                color: "#e4e4e4"
-                border.width: 0
-                border.color: "#00000000"
-            }
-
-            Rectangle {
-                id: barTemp_low
-                x: 254
-                y: 36
-                width: 24
-                height: 8
-                color: "#e4e4e4"
-                border.color: "#00000000"
-                border.width: 0
-            }
-
-            Text {
-                id: textConductivity
-                x: 254
-                y: 62
-                text: myDevice.deviceConductivity + " µS/cm"
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: textHygro
-                x: 72
-                y: 17
-                width: 69
-                height: 15
-                text: myDevice.deviceHygro + "%"
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: textLuminosity
-                x: 71
-                y: 62
-                text: myDevice.deviceLuminosity + " lumens"
-                font.pixelSize: 13
-            }
-
-            Text {
-                id: textTemp
-                x: 254
-                y: 17
-                width: 108
-                height: 15
-                text: myDevice.deviceTemp.toFixed(1) + "°C"
-                font.pixelSize: 13
-            }
-
-            Image {
-                id: imageConductivity
-                x: 207
-                y: 58
-                width: 40
-                height: 40
-                source: "qrc:/assets/conductivity.svg"
-            }
-
-            Image {
-                id: imageLuminosity
-                x: 25
-                y: 58
-                width: 40
-                height: 40
-                source: "qrc:/assets/day.svg"
-            }
-
-            Image {
-                id: imageHygro
-                x: 25
-                y: 12
-                width: 40
-                height: 40
-                source: "qrc:/assets/hygro.svg"
-            }
-
-            Image {
-                id: imageTemp
-                x: 208
-                y: 12
-                width: 40
-                height: 40
-                source: "qrc:/assets/temp.svg" // FIXME svg error
-            }
 
             function setDatas() {
 
                 if (myDevice.deviceBattery < 15) {
-                   imageBatt.source = "qrc:/assets/battery_low.svg";
+                    imageBatt.source = "qrc:/assets/battery_low.svg";
                 } else if (myDevice.deviceBattery > 75) {
                     imageBatt.source = "qrc:/assets/battery_full.svg";
                 } else {
@@ -602,6 +474,243 @@ Rectangle {
                     barCond_low.color = "#e4e4e4"
                     barCond_good.color = "#87d241"
                     barCond_high.color = "#e4e4e4"
+                }
+            }
+
+            Flow {
+                id: flow1
+                anchors.fill: parent
+
+                Rectangle {
+                    id: rectangle
+                    width: 200
+                    height: 48
+                    color: "#ffffff"
+
+                    Image {
+                        id: imageHygro
+                        x: 16
+                        y: 3
+                        width: 40
+                        height: 40
+                        source: "qrc:/assets/hygro.svg"
+                    }
+
+                    Text {
+                        id: textHygro
+                        x: 63
+                        y: 8
+                        width: 69
+                        height: 15
+                        text: myDevice.deviceHygro + "%"
+                        font.pixelSize: 13
+                    }
+
+                    Rectangle {
+                        id: barHygro_low
+                        x: 63
+                        y: 27
+                        width: 24
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barHygro_good
+                        x: 93
+                        y: 27
+                        width: 48
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barHygro_high
+                        x: 147
+                        y: 27
+                        width: 23
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+                }
+
+                Rectangle {
+                    id: rectangle1
+                    width: 200
+                    height: 48
+                    color: "#ffffff"
+
+                    Image {
+                        id: imageTemp
+                        x: 8
+                        y: 6
+                        width: 40
+                        height: 40
+                        source: "qrc:/assets/temp.svg" // FIXME svg error
+                    }
+
+                    Text {
+                        id: textTemp
+                        x: 54
+                        y: 8
+                        width: 108
+                        height: 15
+                        text: myDevice.getTempString()
+                        font.pixelSize: 13
+                    }
+
+                    Rectangle {
+                        id: barTemp_low
+                        x: 54
+                        y: 27
+                        width: 24
+                        height: 8
+                        color: "#e4e4e4"
+                        border.color: "#00000000"
+                        border.width: 0
+                    }
+
+                    Rectangle {
+                        id: barTemp_good
+                        x: 84
+                        y: 27
+                        width: 48
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barTemp_high
+                        x: 138
+                        y: 27
+                        width: 23
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+                }
+
+                Rectangle {
+                    id: rectangle2
+                    width: 200
+                    height: 48
+                    color: "#ffffff"
+
+                    Image {
+                        id: imageLuminosity
+                        x: 16
+                        y: 4
+                        width: 40
+                        height: 40
+                        source: "qrc:/assets/day.svg"
+                    }
+
+                    Text {
+                        id: textLuminosity
+                        x: 62
+                        y: 8
+                        text: myDevice.deviceLuminosity + " lumens"
+                        font.pixelSize: 13
+                    }
+
+                    Rectangle {
+                        id: barLux_low
+                        x: 62
+                        y: 27
+                        width: 24
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barLux_good
+                        x: 92
+                        y: 27
+                        width: 48
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barLux_high
+                        x: 146
+                        y: 27
+                        width: 23
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+                }
+
+                Rectangle {
+                    id: rectangle3
+                    width: 200
+                    height: 48
+                    color: "#ffffff"
+
+                    Image {
+                        id: imageConductivity
+                        x: 8
+                        y: 4
+                        width: 40
+                        height: 40
+                        source: "qrc:/assets/conductivity.svg"
+                    }
+
+                    Text {
+                        id: textConductivity
+                        x: 55
+                        y: 8
+                        text: myDevice.deviceConductivity + " µS/cm"
+                        font.pixelSize: 13
+                    }
+
+                    Rectangle {
+                        id: barCond_low
+                        x: 55
+                        y: 27
+                        width: 24
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barCond_good
+                        x: 85
+                        y: 27
+                        width: 48
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
+
+                    Rectangle {
+                        id: barCond_high
+                        x: 139
+                        y: 27
+                        width: 23
+                        height: 8
+                        color: "#e4e4e4"
+                        border.width: 0
+                        border.color: "#00000000"
+                    }
                 }
             }
         }

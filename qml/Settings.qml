@@ -25,8 +25,8 @@ import QtQuick.Controls 2.0
 Rectangle {
     id: settingsRectangle
     color: "#eefbdb"
-    width: 400
-    height: 640
+    width: 450
+    height: 700
 
     property var mySettings
 

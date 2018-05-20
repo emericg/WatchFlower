@@ -155,7 +155,7 @@ Rectangle {
 
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: imageDatas.right
-            anchors.leftMargin: 4
+            anchors.leftMargin: 8
         }
 
         Image {
