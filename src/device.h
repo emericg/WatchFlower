@@ -40,7 +40,7 @@ class Device: public QObject
 
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
-    Q_PROPERTY(float deviceTemp READ getTemp NOTIFY datasUpdated)
+    Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
     Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
@@ -75,8 +75,8 @@ class Device: public QObject
     // TODO limits
 
 public:
-    Device(QString &deviceAddr, QString &deviceName, int updateInterval);
-    Device(const QBluetoothDeviceInfo &d, int updateInterval);
+    Device(QString &deviceAddr, QString &deviceName);
+    Device(const QBluetoothDeviceInfo &d);
     ~Device();
 
 public slots:
@@ -97,11 +97,14 @@ public slots:
     // bt device datas
     QString getFirmware() const { return m_firmware; }
     int getBattery() const { return m_battery; }
-    float getTemp() const { return m_temp; }
+    float getTemp() const;
+    float getTempC() const { return m_temp; }
+    float getTempF() const { return (m_temp * 9.0/5.0 + 32.0); }
     int getHygro() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
 
+    QString getTempString() const;
     QString getDataString() const;
 
     // associated datas

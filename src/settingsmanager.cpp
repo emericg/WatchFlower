@@ -31,6 +31,21 @@
 
 /* ************************************************************************** */
 
+SettingsManager *SettingsManager::instance = nullptr;
+
+SettingsManager *SettingsManager::getInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new SettingsManager();
+        return instance;
+    }
+    else
+    {
+        return instance;
+    }
+}
+
 SettingsManager::SettingsManager()
 {
     readSettings();

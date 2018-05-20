@@ -46,7 +46,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
 
 public:
-    DeviceManager(int updateInterval = UPDATE_INTERVAL);
+    DeviceManager();
     ~DeviceManager();
 
     QVariant getDevices() const;
@@ -80,7 +80,6 @@ private:
     bool m_bt = false;
     bool m_db = false;
     bool m_scanning = false;
-    int m_updateInterval = UPDATE_INTERVAL;
 
     void loadBluetooth();
     void loadDatabase();

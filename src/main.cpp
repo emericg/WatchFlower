@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
     QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
 
-    SettingsManager sm;
-    bool trayEnabled = sm.getSysTray();
+    SettingsManager *sm = SettingsManager::getInstance();
+    bool trayEnabled = sm->getSysTray();
 
-    DeviceManager dm(sm.getUpdateInterval());
+    DeviceManager dm;
 
     QSystemTrayIcon *sysTray = nullptr;
     QMenu *sysTrayMenu = nullptr;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
     QQuickView *view = new QQuickView;
     view->rootContext()->setContextProperty("deviceManager", &dm);
-    view->rootContext()->setContextProperty("settingsManager", &sm);
+    view->rootContext()->setContextProperty("settingsManager", sm);
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
@@ -103,11 +103,15 @@ int main(int argc, char *argv[])
 
 // 0.1
 // limits editor
-// handle °Fahrenheit
 
 // 0.2
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
+// firmware upgrade advice
+
+// 0.3
+// android port
+// macOS port
 // disable graph when no database
 
 // NEXT

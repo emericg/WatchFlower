@@ -36,7 +36,7 @@
 
 /* ************************************************************************** */
 
-Device::Device(QString &deviceAddr, QString &deviceName, int updateInterval)
+Device::Device(QString &deviceAddr, QString &deviceName)
 {
     if (deviceAddr.size() != 17)
         qWarning() << "DeviceInfo() '" << deviceAddr << "' is an invalid mac address...";
@@ -56,13 +56,16 @@ Device::Device(QString &deviceAddr, QString &deviceName, int updateInterval)
     refreshDatas();
 
     // Timer update
+    SettingsManager *sm = SettingsManager::getInstance();
+    int updateInterval = sm->getUpdateInterval();
     if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
+
     m_updateTimer.setInterval(updateInterval*60*1000);
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
     m_updateTimer.start();
 }
 
-Device::Device(const QBluetoothDeviceInfo &d, int updateInterval)
+Device::Device(const QBluetoothDeviceInfo &d)
 {
     bleDevice = d;
     m_deviceAddress = bleDevice.address().toString();
@@ -77,7 +80,10 @@ Device::Device(const QBluetoothDeviceInfo &d, int updateInterval)
     refreshDatas();
 
     // Timer update
+    SettingsManager *sm = SettingsManager::getInstance();
+    int updateInterval = sm->getUpdateInterval();
     if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
+
     m_updateTimer.setInterval(updateInterval*60*1000);
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
     m_updateTimer.start();
@@ -252,11 +258,33 @@ bool Device::getBleDatas()
 
 /* ************************************************************************** */
 
+float Device::getTemp() const
+{
+    SettingsManager *s = SettingsManager::getInstance();
+    if (s->getTempUnit() == "F")
+        return (m_temp * 9.0/5.0 + 32.0);
+    else
+        return m_temp;
+}
+
+QString Device::getTempString() const
+{
+    QString tempString;
+
+    SettingsManager *s = SettingsManager::getInstance();
+    if (s->getTempUnit() == "F")
+        tempString = QString::number((m_temp * 9.0/5.0 + 32.0), 'f', 1) + "°F";
+    else
+        tempString = QString::number(m_temp, 'f', 1) + "°C";
+
+    return tempString;
+}
+
 QString Device::getDataString() const
 {
     QString dataString;
 
-    dataString += QString::number(m_temp, 'f', 1) + "°C  ";
+    dataString += getTempString() + "  ";
     dataString += QString::number(m_hygro) + "%  ";
     dataString += QString::number(m_luminosity) + " lm";
 

@@ -525,13 +525,13 @@ Rectangle {
                 }
 
                 // Temp
-                if (myDevice.deviceTemp < 8)
+                if (myDevice.deviceTempC < 8)
                 {
                     barTemp_low.color = "#ffbf66"
                     barTemp_good.color = "#e4e4e4"
                     barTemp_high.color = "#e4e4e4"
                 }
-                else if (myDevice.deviceTemp > 32)
+                else if (myDevice.deviceTempC > 32)
                 {
                     barTemp_low.color = "#e4e4e4"
                     barTemp_good.color = "#e4e4e4"

@@ -51,14 +51,20 @@ class SettingsManager: public QObject
 
     bool readDevices();
 
+    static SettingsManager *instance;
+
+    SettingsManager();
+    ~SettingsManager();
+
 Q_SIGNALS:
     void systrayChanged();
     void intervalChanged();
     void tempunitChanged();
 
 public:
-    SettingsManager();
-    ~SettingsManager();
+    static SettingsManager *getInstance();
+
+    bool hasDatabase() const { return m_db; }
 
     bool getSysTray() const { return m_trayEnabled; }
     void setSysTray(bool value) { m_trayEnabled = value; writeSettings(); }

@@ -41,12 +41,10 @@
 
 /* ************************************************************************** */
 
-DeviceManager::DeviceManager(int updateInterval)
+DeviceManager::DeviceManager()
 {
     loadBluetooth();
     loadDatabase();
-
-    m_updateInterval = updateInterval;
 
     // BLE discovery agent
     m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
@@ -79,7 +77,7 @@ DeviceManager::DeviceManager(int updateInterval)
 
             qDebug() << "- device: " << deviceName << "/" << deviceAddr;
 
-            Device *d = new Device(deviceAddr, deviceName, m_updateInterval);
+            Device *d = new Device(deviceAddr, deviceName);
             m_devices.append(d);
         }
     }
@@ -232,7 +230,7 @@ void DeviceManager::deviceDiscoveryFinished()
             }
             if (found == false)
             {
-                Device *d = new Device(deviceAddr, deviceName, m_updateInterval);
+                Device *d = new Device(deviceAddr, deviceName);
                 m_devices.append(d);
             }
         }
@@ -273,7 +271,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate")
         {
-            Device *d = new Device(info, m_updateInterval);
+            Device *d = new Device(info);
             m_devices.append(d);
 
             qDebug() << "Last device added: " << d->getName() << "/" << d->getMacAddress();
