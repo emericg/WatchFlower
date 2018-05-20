@@ -399,7 +399,7 @@ QVariantList Device::getHours()
     QSqlQuery datasPerHour;
     datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
                          "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+1 hour') " \
                          "ORDER BY ts ASC;");
     datasPerHour.bindValue(":deviceAddr", getMacAddress());
 
@@ -450,7 +450,7 @@ QVariantList Device::getDatasHourly(QString dataName)
     QSqlQuery datasPerHour;
     datasPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
                          "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day', '+1 hour') " \
                          "ORDER BY ts ASC;");
     datasPerHour.bindValue(":deviceAddr", getMacAddress());
 
