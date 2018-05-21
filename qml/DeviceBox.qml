@@ -206,13 +206,12 @@ Rectangle {
             source: "qrc:/assets/ble.svg"
             visible: true
 
-            NumberAnimation on opacity {
+            SequentialAnimation on opacity {
                 id: refreshAnimation
-                from: 0
-                to: 1
-                duration: 1000
                 loops: Animation.Infinite
                 running: true
+                OpacityAnimator { from: 0; to: 1; duration: 600 }
+                OpacityAnimator { from: 1; to: 0;  duration: 600 }
             }
         }
     }
