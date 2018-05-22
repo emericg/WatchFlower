@@ -1,5 +1,5 @@
 TARGET  = WatchFlower
-VERSION = 0.1.0
+VERSION = 0.1.1
 
 CONFIG += c++11
 QT     += core bluetooth sql
@@ -43,7 +43,7 @@ RC_ICONS     = assets/app/watchflower.ico
 linux {
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
-    target_app.extra    = cp $${OUT_PWD}/$${DESTDIR}/$${TARGET} $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    target_app.extra    = cp -p $${OUT_PWD}/$${DESTDIR}/$${TARGET} $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path     = $${PREFIX}/bin/
     target_icon.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).svg
