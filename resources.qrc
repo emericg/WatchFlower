@@ -5,6 +5,8 @@
         <file>qml/Status.qml</file>
         <file>qml/DeviceBox.qml</file>
         <file>qml/DeviceExtended.qml</file>
+        <file>qml/DeviceDatasBox.qml</file>
+        <file>qml/LimitsBox.qml</file>
         <file>qml/ChartBox.qml</file>
         <file>qml/Settings.qml</file>
         <file>assets/app/watchflower.svg</file>

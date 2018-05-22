@@ -101,9 +101,6 @@ int main(int argc, char *argv[])
 
 // TODOs
 
-// 0.1
-// limits editor
-
 // 0.2
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
@@ -112,7 +109,7 @@ int main(int argc, char *argv[])
 // 0.3
 // android port
 // macOS port
-// disable graph when no database
+// disable graph & limits when no database available
 
 // NEXT
 // plant db (???)

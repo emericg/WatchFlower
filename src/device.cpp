@@ -181,6 +181,24 @@ bool Device::getSqlDatas()
         status = true;
     }
 
+    QSqlQuery getLimits;
+    getLimits.prepare("SELECT hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
+                      "FROM limits WHERE deviceAddr = :deviceAddr");
+    getLimits.bindValue(":deviceAddr", getMacAddress());
+    getLimits.exec();
+    while (getLimits.next())
+    {
+        m_limitHygroMin = getLimits.value(0).toInt();
+        m_limitHygroMax = getLimits.value(1).toInt();
+        m_limitTempMin = getLimits.value(2).toInt();
+        m_limitTempMax = getLimits.value(3).toInt();
+        m_limitLumiMin = getLimits.value(4).toInt();
+        m_limitLumiMax = getLimits.value(5).toInt();
+        m_limitConduMin = getLimits.value(6).toInt();
+        m_limitConduMax = getLimits.value(7).toInt();
+        status = true;
+    }
+
     return status;
 }
 
@@ -319,6 +337,33 @@ void Device::setPlantName(QString name)
         updatePlant.bindValue(":deviceAddr", getMacAddress());
         updatePlant.exec();
     }
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+bool Device::setDbLimits()
+{
+    bool status = false;
+
+    QSqlQuery updateLimits;
+    updateLimits.prepare("REPLACE INTO limits (deviceAddr, hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax)"
+                         " VALUES (:deviceAddr, :hyroMin, :hygroMax, :tempMin, :tempMax, :lumiMin, :lumiMax, :conduMin, :conduMax)");
+    updateLimits.bindValue(":deviceAddr", getMacAddress());
+    updateLimits.bindValue(":hyroMin", m_limitHygroMin);
+    updateLimits.bindValue(":hygroMax", m_limitHygroMax);
+    updateLimits.bindValue(":tempMin", m_limitTempMin);
+    updateLimits.bindValue(":tempMax", m_limitTempMax);
+    updateLimits.bindValue(":lumiMin", m_limitLumiMin);
+    updateLimits.bindValue(":lumiMax", m_limitLumiMax);
+    updateLimits.bindValue(":conduMin", m_limitConduMin);
+    updateLimits.bindValue(":conduMax", m_limitConduMax);
+
+    status = updateLimits.exec();
+    if (status == false)
+        qDebug() << "> updateLimits.exec() ERROR" << updateLimits.lastError().type() << ":"  << updateLimits.lastError().text();
+
+    return status;
 }
 
 /* ************************************************************************** */
@@ -677,7 +722,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity) VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
+                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
+                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
                 addDatas.bindValue(":deviceAddr", getMacAddress());
                 addDatas.bindValue(":ts", tsStr);
                 addDatas.bindValue(":ts_full", tsFullStr);

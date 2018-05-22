@@ -35,8 +35,13 @@
 class Device: public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
+
     Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceAddress READ getMacAddress NOTIFY datasUpdated)
+    Q_PROPERTY(QString deviceCustomName READ getCustomName NOTIFY datasUpdated)
+    Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
@@ -44,13 +49,16 @@ class Device: public QObject
     Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
-
     Q_PROPERTY(QString dataString READ getDataString() NOTIFY datasUpdated)
 
-    Q_PROPERTY(QString deviceCustomName READ getCustomName NOTIFY datasUpdated)
-    Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
-
-    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
+    Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitLumiMin READ getLimitLumiMin WRITE setLimitLumiMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitLumiMax READ getLimitLumiMax WRITE setLimitLumiMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
 
     QString m_deviceName;
     QString m_deviceAddress;
@@ -60,7 +68,7 @@ class Device: public QObject
     bool m_updating = false;
     QTimer m_updateTimer;
 
-    // bt device datas
+    // ble device datas
     QString m_firmware = "UNKN";
     int m_battery = -1;
     float m_temp = -1;
@@ -68,11 +76,19 @@ class Device: public QObject
     int m_luminosity = -1;
     int m_conductivity = -1;
 
-    // associated datas
+    // ble associated datas
     QString m_customName;
     QString m_plantName;
 
-    // TODO limits
+    // ble device limits
+    int m_limitHygroMin = 15;
+    int m_limitHygroMax = 30;
+    int m_limitTempMin = 15;
+    int m_limitTempMax = 30;
+    int m_limitLumiMin = 500;
+    int m_limitLumiMax = 10000;
+    int m_limitConduMin = 250;
+    int m_limitConduMax = 750;
 
 public:
     Device(QString &deviceAddr, QString &deviceName);
@@ -87,14 +103,14 @@ public slots:
     bool getBleDatas();
     void refreshDatasFinished();
 
-    // bt device
+    // ble device
     QString getName() const { return m_deviceName; }
     QString getMacAddress() const { return m_deviceAddress; }
 
     bool isAvailable() const { return m_available; }
     bool isUpdating() const { return m_updating; }
 
-    // bt device datas
+    // ble device datas
     QString getFirmware() const { return m_firmware; }
     int getBattery() const { return m_battery; }
     float getTemp() const;
@@ -107,19 +123,31 @@ public slots:
     QString getTempString() const;
     QString getDataString() const;
 
-    // associated datas
+    // ble device associated datas
     QString getCustomName() { return m_customName; }
     void setCustomName(QString name);
 
     QString getPlantName() { return m_plantName; }
     void setPlantName(QString name);
 
-    // limits
-    float getTempLimits() const { return 0; }
-    void setTempLimits() { return; }
-    int getHygroLimits() { return 0; }
-    int getLuminosityLimits() { return 0; }
-    int getConductivityLimits() { return 0; }
+    // ble device limits
+    int getLimitHygroMin() const { return m_limitHygroMin; }
+    int getLimitHygroMax() const { return m_limitHygroMax; }
+    int getLimitTempMin() const { return m_limitTempMin; }
+    int getLimitTempMax() const { return m_limitTempMax; }
+    int getLimitLumiMin() const { return m_limitLumiMin; }
+    int getLimitLumiMax() const { return m_limitLumiMax; }
+    int getLimitConduMin() const { return m_limitConduMin; }
+    int getLimitConduMax() const { return m_limitConduMax; }
+    void setLimitHygroMin(int limitHygroMin) { m_limitHygroMin = limitHygroMin; setDbLimits(); }
+    void setLimitHygroMax(int limitHygroMax) { m_limitHygroMax = limitHygroMax; setDbLimits(); }
+    void setLimitTempMin(int limitTempMin) { m_limitTempMin = limitTempMin; setDbLimits(); }
+    void setLimitTempMax(int limitTempMax) { m_limitTempMax = limitTempMax; setDbLimits(); }
+    void setLimitLumiMin(int limitLumiMin) { m_limitLumiMin = limitLumiMin; setDbLimits(); }
+    void setLimitLumiMax(int limitLumiMax) { m_limitLumiMax = limitLumiMax; setDbLimits(); }
+    void setLimitConduMin(int limitConduMin) { m_limitConduMin = limitConduMin; setDbLimits(); }
+    void setLimitConduMax(int limitConduMax) { m_limitConduMax = limitConduMax; setDbLimits(); }
+    bool setDbLimits();
 
     // Daily graph
     QVariantList getDays();
@@ -132,6 +160,7 @@ public slots:
 Q_SIGNALS:
     void statusUpdated();
     void datasUpdated();
+    void limitsUpdated();
 
 private:
     // QLowEnergyController realted

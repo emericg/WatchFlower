@@ -162,13 +162,13 @@ bool SettingsManager::loadDatabase()
 
                             QSqlQuery createDevices;
                             createDevices.prepare("CREATE TABLE devices (" \
-                                                    "deviceAddr CHAR(17) PRIMARY KEY," \
-                                                    "deviceName VARCHAR(255),"  \
-                                                    "deviceFirmware VARCHAR(255),"  \
-                                                    "deviceBattery INT," \
-                                                    "customName VARCHAR(255)," \
-                                                    "plantName VARCHAR(255)" \
-                                                    ");");
+                                                  "deviceAddr CHAR(17) PRIMARY KEY," \
+                                                  "deviceName VARCHAR(255),"  \
+                                                  "deviceFirmware VARCHAR(255),"  \
+                                                  "deviceBattery INT," \
+                                                  "customName VARCHAR(255)," \
+                                                  "plantName VARCHAR(255)" \
+                                                  ");");
 
                             if (createDevices.exec() == false)
                                 qDebug() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
@@ -195,6 +195,30 @@ bool SettingsManager::loadDatabase()
 
                             if (createDatas.exec() == false)
                                 qDebug() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":"  << createDatas.lastError().text();
+                        }
+
+                        QSqlQuery checkLimits;
+                        checkLimits.exec("PRAGMA table_info(limits);");
+                        if (!checkLimits.next())
+                        {
+                            qDebug() << "+ Adding 'limits' table to local database";
+                            QSqlQuery createLimits;
+                            createLimits.prepare("CREATE TABLE limits (" \
+                                                 "deviceAddr CHAR(17)," \
+                                                   "hyroMin INT," \
+                                                   "hygroMax INT," \
+                                                   "tempMin INT," \
+                                                   "tempMax INT," \
+                                                   "lumiMin INT," \
+                                                   "lumiMax INT," \
+                                                   "conduMin INT," \
+                                                   "conduMax INT," \
+                                                 " PRIMARY KEY(deviceAddr) " \
+                                                 " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                                 ");");
+
+                            if (createLimits.exec() == false)
+                                qDebug() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":"  << createLimits.lastError().text();
                         }
 
                         // Delete everything 7+ days old ///////////////////////
