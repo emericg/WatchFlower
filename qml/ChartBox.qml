@@ -289,8 +289,8 @@ Rectangle {
         anchors.bottom: rectangleSettings.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.topMargin: -16
-        anchors.bottomMargin: -8
+        anchors.topMargin: -12
+        anchors.bottomMargin: -12
         anchors.leftMargin: -16
         anchors.rightMargin: -16
 
@@ -300,7 +300,7 @@ Rectangle {
 
         Component.onCompleted: updateGraph()
 
-        //animationOptions: ChartView.SeriesAnimations
+        animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand
 
         BarSeries {

@@ -78,14 +78,14 @@ Rectangle {
             onPressed: {
                 backImg.anchors.topMargin += 2
                 backImg.anchors.leftMargin += 2
-                backImg.width = backImg.width - 4
-                backImg.height = backImg.height - 4
+                backImg.width -= 4
+                backImg.height -= 4
             }
             onReleased: {
                 backImg.anchors.topMargin -= 2
                 backImg.anchors.leftMargin -= 2
-                backImg.width = backImg.width + 4
-                backImg.height = backImg.height + 4
+                backImg.width += 4
+                backImg.height += 4
             }
             onClicked: {
                 backClicked()

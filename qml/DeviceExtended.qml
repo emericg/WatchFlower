@@ -311,8 +311,8 @@ Rectangle {
 
             Image {
                 id: imagePlant
-                width: 32
-                height: 32
+                width: 30
+                height: 30
                 anchors.left: parent.left
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
