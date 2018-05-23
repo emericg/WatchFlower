@@ -290,7 +290,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: -12
-        anchors.bottomMargin: -12
+        anchors.bottomMargin: -8
         anchors.leftMargin: -16
         anchors.rightMargin: -16
 

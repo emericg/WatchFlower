@@ -607,10 +607,9 @@ void Device::serviceScanDone()
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &Device::serviceDetailsDiscovered);
-
-            connect(serviceData, &QLowEnergyService::characteristicWritten, this, &Device::bleWriteDone);
+            //connect(serviceData, &QLowEnergyService::characteristicWritten, this, &Device::bleWriteDone);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &Device::bleReadDone);
-            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &Device::bleReadDone);
+            //connect(serviceData, &QLowEnergyService::characteristicChanged, this, &Device::bleReadDone);
 
             serviceData->discoverDetails();
         }
@@ -662,7 +661,7 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
         }
         else
         {
-            qWarning() << "DeviceInfo::serviceDetailsDiscovered() state is:" << newState;
+            //qWarning() << "DeviceInfo::serviceDetailsDiscovered() state is:" << newState;
         }
     }
 
@@ -686,8 +685,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
 {
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
-    qDebug() << "bleReadDone on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "bleReadDone WE HAVE DATAS: 0x" \
+    qDebug() << "DeviceInfo::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
                << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
@@ -697,6 +696,11 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
     {
         if (value.size() > 0)
         {
+            // first read might send bad datas (0x aa bb cc dd ee ff 99 88 77 66...)
+            // until the first write is done
+            if (data[0] == 0xAA && data[1] == 0xbb)
+                return;
+
             m_temp = (data[0] + (data[1] << 8)) / 10.0;
             m_hygro = data[7];
             m_luminosity = data[3] + (data[4] << 8);
