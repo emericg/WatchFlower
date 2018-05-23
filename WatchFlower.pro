@@ -36,14 +36,15 @@ OTHER_FILES += qml/*.qml
 RESOURCES   += resources.qrc
 
 # OS icons (macOS and Windows)
-ICON         = assets/app/watchflower.icns
-RC_ICONS     = assets/app/watchflower.ico
+ICON         = assets/app/$$lower($${TARGET}).icns
+RC_ICONS     = assets/app/$$lower($${TARGET}).ico
 
 # Application deployment and installation steps
 linux {
+    TARGET = $$lower($${TARGET})
+
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
-    target_app.extra    = cp -p $${OUT_PWD}/$${DESTDIR}/$${TARGET} $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path     = $${PREFIX}/bin/
     target_icon.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).svg
@@ -55,7 +56,7 @@ linux {
     INSTALLS += target_app target_icon target_appentry target_appdata
 
     # Clean bin/ directory
-    QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
 }
 
 macx {
