@@ -1,8 +1,7 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Application
 Name=WatchFlower
 Comment=Read and plot datas from your Xiaomi "Flower Care" devices!
 Exec=watchflower
-Icon=watchflower.svg
+Icon=watchflower
 Categories=Qt;Utility;
