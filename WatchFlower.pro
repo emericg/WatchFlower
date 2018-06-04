@@ -44,7 +44,7 @@ linux {
     TARGET = $$lower($${TARGET})
 
     # Application packaging
-    #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir=qml/) # needs linuxdeployqt installed
+    #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/) # needs linuxdeployqt installed
 
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
