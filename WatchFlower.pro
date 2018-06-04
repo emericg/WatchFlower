@@ -3,7 +3,7 @@ VERSION = 0.1.1
 
 CONFIG += c++11
 QT     += core bluetooth sql
-QT     += gui widgets quick charts
+QT     += gui widgets svg quick charts
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
