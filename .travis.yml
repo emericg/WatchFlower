@@ -1,10 +1,9 @@
 language: cpp
+compiler: gcc
+os: linux
+sudo: require
+dist: trusty
 
-compiler:
-  - gcc
-
-os:
-  - linux
 
 before_install:
   - sudo apt-add-repository ppa:beineri/opt-qt-5.10.1-trusty -y
@@ -15,8 +14,19 @@ install:
 
 before_script:
   - source /opt/qt510/bin/qt510-env.sh
-  - qmake
+  - qmake CONFIG+=release PREFIX=/usr
 
 script:
-   - make
+  - make -j$(nproc)
+  - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
+  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+  - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+  - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
+  - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
+
+after_success:
+  - find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+  - curl --upload-file WatchFlower*.AppImage https://transfer.sh/WatchFlower-git.$(git rev-parse --short HEAD)-x86_64.AppImage
 
