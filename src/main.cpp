@@ -105,6 +105,11 @@ int main(int argc, char *argv[])
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
 // firmware upgrade advice
+// about
+// fix auto updating ?
+// blinking reset button
+// device offline text
+// fixed settings directory
 
 // 0.3
 // android port

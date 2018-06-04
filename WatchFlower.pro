@@ -1,5 +1,5 @@
 TARGET  = WatchFlower
-VERSION = 0.1.1
+VERSION = 0.2.0
 
 CONFIG += c++11
 QT     += core bluetooth sql
@@ -45,7 +45,6 @@ linux {
 
     # Application packaging
     #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/) # needs linuxdeployqt installed
-    QTPLUGIN += qsvg
 
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
