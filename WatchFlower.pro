@@ -43,6 +43,9 @@ RC_ICONS     = assets/app/$$lower($${TARGET}).ico
 linux {
     TARGET = $$lower($${TARGET})
 
+    # Application packaging
+    #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/) # needs linuxdeployqt installed
+
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
