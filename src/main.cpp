@@ -35,6 +35,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setApplicationDisplayName("WatchFlower");
+    QCoreApplication::setApplicationName("WatchFlower");
 
     QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
@@ -105,11 +107,9 @@ int main(int argc, char *argv[])
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
 // firmware upgrade advice
-// about
-// fix auto updating ?
+// about screen
 // blinking reset button
 // device offline text
-// fixed settings directory
 
 // 0.3
 // android port
