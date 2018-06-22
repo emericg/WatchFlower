@@ -35,6 +35,9 @@ OTHER_FILES += qml/*.qml
 
 RESOURCES   += resources.qrc
 
+include(src/thirdparty/SingleApplication/singleapplication.pri)
+DEFINES += QAPPLICATION_CLASS=QApplication
+
 # Pass app version to the C++
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 

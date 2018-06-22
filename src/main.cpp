@@ -27,6 +27,8 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 
+#include <singleapplication.h>
+
 #include "settingsmanager.h"
 #include "devicemanager.h"
 
@@ -34,7 +36,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    SingleApplication app(argc, argv);
     app.setApplicationDisplayName("WatchFlower");
     QCoreApplication::setApplicationName("WatchFlower");
 
@@ -80,15 +82,20 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("settingsManager", sm);
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->setMinimumWidth(400);
+    view->setMinimumHeight(640);
     view->show();
 
     if (trayEnabled && sysTray && sysTrayMenu)
     {
-        QObject::connect(sysTray, &QSystemTrayIcon::activated, view, &QQuickView::show);
+        //QObject::connect(sysTray, &QSystemTrayIcon::activated, view, &QQuickView::show);
         QObject::connect(actionShow, &QAction::triggered, view, &QQuickView::show);
         //QObject::connect(actSettings, &QAction::triggered, &app, &SystemTray::signalQuit);
         QObject::connect(actionExit, &QAction::triggered, &app, &QApplication::exit);
     }
+
+    QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);
+    QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::raise);
 
     // Run a first scan, but only if we have no saved devices
     if (dm.areDevicesAvailable() == false)
