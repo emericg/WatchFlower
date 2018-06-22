@@ -61,6 +61,9 @@ Q_SIGNALS:
     void intervalChanged();
     void tempunitChanged();
 
+public slots:
+    static QString getAppVersion();
+
 public:
     static SettingsManager *getInstance();
 

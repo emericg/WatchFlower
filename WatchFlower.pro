@@ -35,6 +35,9 @@ OTHER_FILES += qml/*.qml
 
 RESOURCES   += resources.qrc
 
+# Pass app version to the C++
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 # OS icons (macOS and Windows)
 ICON         = assets/app/$$lower($${TARGET}).icns
 RC_ICONS     = assets/app/$$lower($${TARGET}).ico

@@ -123,12 +123,12 @@ Rectangle {
                 width: 375
                 height: 16
                 text: "Change persistent settings here"
+                font.pixelSize: 16
                 anchors.left: parent.left
                 anchors.leftMargin: 13
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 14
                 verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 15
             }
 
             Text {
@@ -152,7 +152,7 @@ Rectangle {
             id: rectangleSettings
             y: 41
             width: 368
-            height: 180
+            height: 244
             color: "#f2f2f2"
             border.width: 0
             anchors.top:rectangleHeader.bottom
@@ -164,8 +164,8 @@ Rectangle {
 
             Image {
                 id: image_systray
-                width: 32
-                height: 32
+                width: 40
+                height: 40
                 anchors.top: parent.top
                 anchors.topMargin: 16
                 anchors.right: parent.right
@@ -178,6 +178,7 @@ Rectangle {
                 width: 332
                 height: 40
                 text: qsTr("Enable system tray icon")
+                font.pixelSize: 16
                 anchors.top: parent.top
                 anchors.topMargin: 16
                 anchors.left: parent.left
@@ -216,10 +217,10 @@ Rectangle {
                 anchors.left: spinBox_update.right
                 anchors.leftMargin: 16
 
-                font.pointSize: 12
                 verticalAlignment: Text.AlignVCenter
 
                 text: qsTr("Update interval in minutes")
+                font.pixelSize: 16
             }
 
             Text {
@@ -228,7 +229,8 @@ Rectangle {
                 y: 128
                 height: 40
                 text: qsTr("Temperature unit:")
-                font.pointSize: 12
+                horizontalAlignment: Text.AlignLeft
+                font.pixelSize: 16
                 anchors.top: spinBox_update.bottom
                 anchors.topMargin: 16
                 anchors.left: parent.left
@@ -283,6 +285,127 @@ Rectangle {
                 onCheckedChanged: {
                     if (checked === true)
                         mySettings.tempunit = 'F';
+                }
+            }
+
+            Text {
+                id: text4
+                height: 40
+                text: qsTr("Default graph:")
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                anchors.top: text3.bottom
+                anchors.topMargin: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+            }
+
+            ComboBox {
+                id: comboBox_view
+                anchors.left: text4.right
+                anchors.leftMargin: 16
+                anchors.top: text4.top
+                anchors.topMargin: 0
+                model: ListModel
+                {
+                    id: cbViewItems
+                    ListElement { text: "Weekly"; }
+                    ListElement { text: "Hourly"; }
+                }
+            }
+
+            ComboBox {
+                id: comboBox_data
+                anchors.left: comboBox_view.right
+                anchors.leftMargin: 16
+                anchors.top: comboBox_view.bottom
+                anchors.topMargin: -40
+                model: ListModel
+                {
+                    id: cbDataItems
+                    ListElement { text: "Hygro."; }
+                    ListElement { text: "Temp."; }
+                    ListElement { text: "Lumi."; }
+                    ListElement { text: "Conduct."; }
+                }
+            }
+        }
+
+        Rectangle {
+            id: rectangleInfos
+            x: 0
+            y: 365
+            height: 160
+            color: "#e9fff1"
+            anchors.top: rectangleSettings.bottom
+            anchors.topMargin: 40
+            opacity: 1
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Text {
+                id: textUrl
+                y: 120
+                color: "#343434"
+                text: "project website on <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html>"
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 16
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 16
+                onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
+            }
+
+            Image {
+                id: image
+                x: 167
+                y: 4
+                width: 80
+                height: 80
+                anchors.verticalCenterOffset: 8
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/assets/app/watchflower.png"
+            }
+
+            Rectangle {
+                id: rectangle
+                x: 60
+                width: 320
+                height: 40
+                color: "#00000000"
+                anchors.top: parent.top
+                anchors.topMargin: 16
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Text {
+                    id: textTitle
+                    x: 0
+                    y: -10
+                    height: 40
+                    color: "#4b4b4b"
+                    text: qsTr("WatchFlower")
+                    font.bold: true
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+                    font.pixelSize: 32
+                }
+
+                Text {
+                    id: textVersion
+                    x: 310
+                    y: 0
+                    height: 20
+                    color: "#343434"
+                    text: { mySettings.getAppVersion() }
+                    anchors.left: textTitle.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: textTitle.verticalCenter
+                    font.pixelSize: 16
                 }
             }
         }
