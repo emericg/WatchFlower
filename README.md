@@ -29,6 +29,7 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 
 ### Building WatchFlower
 
+> $ git clone https://github.com/emericg/WatchFlower.git  
 > $ cd WatchFlower/  
 > $ qmake  
 > $ make  
@@ -44,7 +45,7 @@ Emeric Grange <emeric.grange@gmail.com>
 
 ## Special thanks
 
-* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML advices!
+* Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the inspiration and protocol reverse engineering.
 * App icon is from [Boston Icons](https://diazchris.deviantart.com/art/Boston-Icons-558741523) theme.
 * Other icons are from [Faience](https://tiheum.deviantart.com/art/Faience-icon-theme-255099649) and [Adwaita](https://github.com/GNOME/adwaita-icon-theme) icons themes.

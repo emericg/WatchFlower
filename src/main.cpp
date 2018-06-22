@@ -100,34 +100,42 @@ int main(int argc, char *argv[])
 }
 
 /* ************************************************************************** */
-
 // TODOs
 
-// 0.2
+/// 0.2
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
-// firmware upgrade advice
-// about screen
-// blinking reset button
-// device offline text
 
-// 0.3
+// about screen
+// prefered graph screen
+// blinking reset button
+
+// firmware upgrade advice
+// device offline text
+// bluetooth not re-enabling itself
+
+/// 0.3
+// scan menu button:
+// main: rescan / refresh values
+// device: refresh values
+
+/// NEXT
 // android port
 // macOS port
 // disable graph & limits when no database available
 
-// NEXT
+/// NEXT
 // plant db (???)
 // handle multiple bluetooth adapters (???)
 
 /* ************************************************************************** */
+// PROTOCOL
 
 // https://github.com/barnybug/miflora
 // https://github.com/open-homeautomation/miflora
 // https://github.com/sandeepmistry/node-flower-power
 
 /*
-// PROTOCOL
 1/ Connect to device MAC address (prefix should be C4:7C:8D:xx:xx:xx)
    (use QBluetoothUuid::GenericTelephony service)
 2a/ Read _HANDLE_READ_NAME(0x03) if you care
