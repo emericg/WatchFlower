@@ -29,8 +29,8 @@ Rectangle {
     id: chartBox
     //color: "red" // FIXME too much borders !!!
 
-    property string graphDataSelected: "hygro"
-    property string graphModeSelected: "weekly"
+    property string graphViewSelected: settingsManager.graphview
+    property string graphDataSelected: settingsManager.graphdata
 
     width: parent.width
     anchors.margins: 0
@@ -74,11 +74,6 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "hygro"
-                        textHygro.font.bold = true
-                        textTemp.font.bold = false
-                        textLumi.font.bold = false
-                        textCondu.font.bold = false
-
                         updateGraph()
                     }
                 }
@@ -104,11 +99,6 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "temp"
-                        textHygro.font.bold = false
-                        textTemp.font.bold = true
-                        textLumi.font.bold = false
-                        textCondu.font.bold = false
-
                         updateGraph()
                     }
                 }
@@ -134,11 +124,6 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "luminosity"
-                        textHygro.font.bold = false
-                        textTemp.font.bold = false
-                        textLumi.font.bold = true
-                        textCondu.font.bold = false
-
                         updateGraph()
                     }
                 }
@@ -164,11 +149,6 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         graphDataSelected = "conductivity"
-                        textHygro.font.bold = false
-                        textTemp.font.bold = false
-                        textLumi.font.bold = false
-                        textCondu.font.bold = true
-
                         updateGraph()
                     }
                 }
@@ -204,10 +184,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        graphModeSelected = "daily"
-                        textDays.font.bold = true
-                        textHours.font.bold = false
-
+                        graphViewSelected = "daily"
                         updateGraph()
                     }
                 }
@@ -235,10 +212,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        graphModeSelected = "hourly"
-                        textDays.font.bold = false
-                        textHours.font.bold = true
-
+                        graphViewSelected = "hourly"
                         updateGraph()
                     }
                 }
@@ -259,25 +233,46 @@ Rectangle {
             axisY0.min = 0
             axisY0.max = 66
             myBarSet.color = "#31a3ec"
+            textHygro.font.bold = true
+            textTemp.font.bold = false
+            textLumi.font.bold = false
+            textCondu.font.bold = false
         } else if (graphDataSelected == "temp") {
             axisY0.min = 0
             axisY0.max = 40
             myBarSet.color = "#87d241"
+            textHygro.font.bold = false
+            textTemp.font.bold = true
+            textLumi.font.bold = false
+            textCondu.font.bold = false
         } else if (graphDataSelected == "luminosity") {
             axisY0.min = 0
             axisY0.max = 2000
             myBarSet.color = "#f1ec5c"
+            textHygro.font.bold = false
+            textTemp.font.bold = false
+            textLumi.font.bold = true
+            textCondu.font.bold = false
         } else if (graphDataSelected == "conductivity") {
             axisY0.min = 0
             axisY0.max = 750
             myBarSet.color = "#e19c2f"
+            textHygro.font.bold = false
+            textTemp.font.bold = false
+            textLumi.font.bold = false
+            textCondu.font.bold = true
         }
 
-        if (graphModeSelected == "hourly")
-        {
+        if (graphViewSelected == "hourly") {
+            textDays.font.bold = false
+            textHours.font.bold = true
+
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
         } else {
+            textDays.font.bold = true
+            textHours.font.bold = false
+
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
         }

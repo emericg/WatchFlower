@@ -77,6 +77,11 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/degreUnit"))
             m_tempUnit = settings.value("settings/degreUnit").toString();
 
+        if (settings.contains("settings/graphDefaultView"))
+            m_graphDefaultView = settings.value("settings/graphDefaultView").toString();
+        if (settings.contains("settings/graphDefaultData"))
+            m_graphDefaultData = settings.value("settings/graphDefaultData").toString();
+
         status = true;
     }
     else
@@ -98,6 +103,8 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/trayEnabled", m_trayEnabled);
         settings.setValue("settings/updateInterval", m_updateInterval);
         settings.setValue("settings/degreUnit", m_tempUnit);
+        settings.setValue("settings/graphDefaultView", m_graphDefaultView);
+        settings.setValue("settings/graphDefaultData", m_graphDefaultData);
         settings.sync();
 
         if (settings.status() == QSettings::NoError)
@@ -287,7 +294,7 @@ void SettingsManager::resetDatabase()
 
 /* ************************************************************************** */
 
-void SettingsManager::reset()
+void SettingsManager::resetSettings()
 {
     // Settings
     m_trayEnabled = false;

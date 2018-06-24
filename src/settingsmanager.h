@@ -36,10 +36,14 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
     Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
+    Q_PROPERTY(QString graphview READ getGraphView WRITE setGraphView NOTIFY graphviewChanged)
+    Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
 
     bool m_trayEnabled = false;
     unsigned m_updateInterval = UPDATE_INTERVAL;
     QString m_tempUnit = "C";
+    QString m_graphDefaultView = "weekly";
+    QString m_graphDefaultData = "hygro";
 
     bool readSettings();
     bool writeSettings();
@@ -60,9 +64,8 @@ Q_SIGNALS:
     void systrayChanged();
     void intervalChanged();
     void tempunitChanged();
-
-public slots:
-    static QString getAppVersion();
+    void graphviewChanged();
+    void graphdataChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -78,8 +81,15 @@ public:
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(QString value) { m_tempUnit = value; writeSettings(); }
 
+    QString getGraphView() const { return m_graphDefaultView; }
+    void setGraphView(QString value) { m_graphDefaultView = value; writeSettings(); }
+
+    QString getGraphData() const { return m_graphDefaultData; }
+    void setGraphData(QString value) { m_graphDefaultData = value; writeSettings(); }
+
 public slots:
-    void reset();
+    static QString getAppVersion();
+    void resetSettings();
 };
 
 #endif // SETTINGS_MANAGER_H

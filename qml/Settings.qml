@@ -55,53 +55,6 @@ Rectangle {
         MouseArea {
             id: mouseArea // so the underlying stuff doesn't hijack clicks
             anchors.fill: parent
-
-            Rectangle {
-                id: rectangleReset
-                height: 58
-                color: "#f75a5a"
-
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 16
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-
-                Text {
-                    id: textReset
-                    anchors.fill: parent
-                    color: "#ffffff"
-                    text: qsTr("Reset everything")
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.bold: true
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 20
-                }
-                MouseArea {
-                    anchors.fill: parent
-
-                    onPressed: {
-                        rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin + 4
-                        rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin + 4
-                        rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin + 4
-                        rectangleReset.width = rectangleReset.width - 8
-                        rectangleReset.height = rectangleReset.height - 8
-                    }
-                    onReleased: {
-                        rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin - 4
-                        rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin - 4
-                        rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin - 4
-                        rectangleReset.width = rectangleReset.width + 8
-                        rectangleReset.height = rectangleReset.height + 8
-                    }
-                    onClicked: {
-                        mySettings.reset()
-                    }
-                }
-            }
         }
 
         Rectangle {
@@ -152,7 +105,7 @@ Rectangle {
             id: rectangleSettings
             y: 41
             width: 368
-            height: 244
+            height: 230
             color: "#f2f2f2"
             border.width: 0
             anchors.top:rectangleHeader.bottom
@@ -164,12 +117,13 @@ Rectangle {
 
             Image {
                 id: image_systray
+                x: 12
                 width: 40
                 height: 40
-                anchors.top: parent.top
-                anchors.topMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
+                anchors.top: parent.top
+                anchors.topMargin: 8
                 source: "../assets/app/watchflower_tray.svg"
             }
 
@@ -180,9 +134,9 @@ Rectangle {
                 text: qsTr("Enable system tray icon")
                 font.pixelSize: 16
                 anchors.top: parent.top
-                anchors.topMargin: 16
+                anchors.topMargin: 8
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 12
                 checked: mySettings.systray
 
                 onCheckStateChanged: {
@@ -307,11 +261,17 @@ Rectangle {
                 anchors.leftMargin: 16
                 anchors.top: text4.top
                 anchors.topMargin: 0
-                model: ListModel
-                {
-                    id: cbViewItems
-                    ListElement { text: "Weekly"; }
-                    ListElement { text: "Hourly"; }
+                model: ListModel {
+                    id: cbItemsView
+                    ListElement { text: "weekly"; }
+                    ListElement { text: "hourly"; }
+                }
+                Component.onCompleted: {
+                    currentIndex = find(mySettings.graphview);
+                    if (currentIndex === -1) { currentIndex = 0 }
+                }
+                onCurrentIndexChanged: {
+                    mySettings.graphview = cbItemsView.get(currentIndex).text;
                 }
             }
 
@@ -319,15 +279,21 @@ Rectangle {
                 id: comboBox_data
                 anchors.left: comboBox_view.right
                 anchors.leftMargin: 16
-                anchors.top: comboBox_view.bottom
-                anchors.topMargin: -40
-                model: ListModel
-                {
-                    id: cbDataItems
-                    ListElement { text: "Hygro."; }
-                    ListElement { text: "Temp."; }
-                    ListElement { text: "Lumi."; }
-                    ListElement { text: "Conduct."; }
+                anchors.top: comboBox_view.top
+                anchors.topMargin: 0
+                model: ListModel {
+                    id: cbItemsData
+                    ListElement { text: "hygro"; }
+                    ListElement { text: "temp"; }
+                    ListElement { text: "luminosity"; }
+                    ListElement { text: "conductivity"; }
+                }
+                Component.onCompleted: {
+                    currentIndex = find(mySettings.graphdata);
+                    if (currentIndex === -1) { currentIndex = 0 }
+                }
+                onCurrentIndexChanged: {
+                    mySettings.graphdata = cbItemsData.get(currentIndex).text;
                 }
             }
         }
@@ -336,10 +302,10 @@ Rectangle {
             id: rectangleInfos
             x: 0
             y: 365
-            height: 160
-            color: "#e9fff1"
+            height: 100
+            color: "#00000000"
             anchors.top: rectangleSettings.bottom
-            anchors.topMargin: 40
+            anchors.topMargin: 16
             opacity: 1
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -348,12 +314,13 @@ Rectangle {
 
             Text {
                 id: textUrl
-                y: 120
+                y: 92
                 color: "#343434"
-                text: "project website on <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html>"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 16
-                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Visit the project page on") + " <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html>!"
+                anchors.verticalCenterOffset: 16
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: imageLogo.right
+                anchors.leftMargin: 16
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
@@ -361,51 +328,115 @@ Rectangle {
             }
 
             Image {
-                id: image
+                id: imageLogo
                 x: 167
                 y: 4
                 width: 80
                 height: 80
-                anchors.verticalCenterOffset: 8
+                anchors.horizontalCenterOffset: -159
+                anchors.verticalCenterOffset: 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/app/watchflower.png"
             }
 
-            Rectangle {
-                id: rectangle
-                x: 60
-                width: 320
-                height: 40
-                color: "#00000000"
-                anchors.top: parent.top
-                anchors.topMargin: 16
-                anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                id: textVersion
+                y: 45
+                height: 20
+                color: "#343434"
+                text: { mySettings.getAppVersion() }
+                anchors.verticalCenterOffset: -8
+                anchors.left: imageLogo.right
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 16
+            }
 
-                Text {
-                    id: textTitle
-                    x: 0
-                    y: -10
-                    height: 40
-                    color: "#4b4b4b"
-                    text: qsTr("WatchFlower")
-                    font.bold: true
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    font.pixelSize: 32
+        }
+
+        Rectangle {
+            id: rectangleReset
+            height: 58
+            color: "#f75a5a"
+
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 16
+            anchors.left: parent.left
+            anchors.leftMargin: 16
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+
+            property bool weAreBlinking: false
+
+            function startTheBlink() {
+                if (weAreBlinking === true) {
+                    mySettings.resetSettings();
+                    stopTheBlink();
+                } else {
+                    weAreBlinking = true;
+                    timerReset.start();
+                    blinkReset.start();
+                    textReset.text = qsTr("!!! Click again to confirm !!!");
                 }
+            }
+            function stopTheBlink() {
+                weAreBlinking = false;
+                timerReset.stop();
+                blinkReset.stop();
+                textReset.text = qsTr("Reset everything!");
+                rectangleReset.color = "#f75a5a";
+            }
 
-                Text {
-                    id: textVersion
-                    x: 310
-                    y: 0
-                    height: 20
-                    color: "#343434"
-                    text: { mySettings.getAppVersion() }
-                    anchors.left: textTitle.right
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: textTitle.verticalCenter
-                    font.pixelSize: 16
+            SequentialAnimation on color {
+                id: blinkReset
+                running: false
+                loops: Animation.Infinite
+                ColorAnimation { from: "#f75a5a"; to: "#ff0000"; duration: 750 }
+                ColorAnimation { from: "#ff0000"; to: "#f75a5a"; duration: 750 }
+            }
+
+            Timer {
+                id: timerReset
+                interval: 4000
+                running: false
+                repeat: false
+                onTriggered: {
+                    rectangleReset.stopTheBlink()
+                }
+            }
+
+            Text {
+                id: textReset
+                anchors.fill: parent
+                color: "#ffffff"
+                text: qsTr("Reset everything!")
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.bold: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 20
+            }
+            MouseArea {
+                anchors.fill: parent
+
+                onPressed: {
+                    rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin + 4
+                    rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin + 4
+                    rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin + 4
+                    rectangleReset.width = rectangleReset.width - 8
+                    rectangleReset.height = rectangleReset.height - 8
+                }
+                onReleased: {
+                    rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin - 4
+                    rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin - 4
+                    rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin - 4
+                    rectangleReset.width = rectangleReset.width + 8
+                    rectangleReset.height = rectangleReset.height + 8
+                }
+                onClicked: {
+                    rectangleReset.startTheBlink()
                 }
             }
         }
