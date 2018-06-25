@@ -39,6 +39,12 @@ Rectangle {
     }
 
     function updateBoxDatas() {
+        if (myDevice.devicePlantName !== "")
+        {
+            textName.text = myDevice.devicePlantName;
+            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")";
+        }
+
         if (myDevice.isUpdating())
         {
             imageStatus.source = "qrc:/assets/ble.svg";

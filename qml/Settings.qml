@@ -24,7 +24,6 @@ import QtQuick.Controls 2.0
 
 Rectangle {
     id: settingsRectangle
-    color: "#eefbdb"
     width: 450
     height: 700
 
@@ -44,7 +43,7 @@ Rectangle {
 
     Rectangle {
         id: rectangleBody
-        color: "#ccffffff"
+        color: "#e0fae7"
         border.width: 0
 
         anchors.top: header.bottom

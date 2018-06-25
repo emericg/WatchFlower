@@ -23,7 +23,7 @@ import QtQuick 2.7
 
 Rectangle {
     id: background
-    color: "#e5fed8"
+    color: "#e0fae7"
     width: 450
     height: 700
 
