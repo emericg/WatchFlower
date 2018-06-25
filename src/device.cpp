@@ -422,7 +422,7 @@ QVariantList Device::getDatasDaily(QString dataName)
     if (datasPerDay.exec() == false)
         qDebug() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
 
-    while (datasPerDay.next())
+    while (datasPerDay.next() && (datas.size() < 7))
     {
         int currentDay = datasPerDay.value(1).toInt();
 
@@ -530,7 +530,7 @@ QVariantList Device::getDatasHourly(QString dataName)
     if (datasPerHour.exec() == false)
         qDebug() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
-    while (datasPerHour.next())
+    while (datasPerHour.next() && (datas.size() < 24))
     {
         int currentHour = datasPerHour.value(0).toInt();
 
