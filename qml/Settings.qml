@@ -269,8 +269,12 @@ Rectangle {
                     currentIndex = find(mySettings.graphview);
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
+                property bool cbinit: false
                 onCurrentIndexChanged: {
-                    mySettings.graphview = cbItemsView.get(currentIndex).text;
+                    if (cbinit)
+                        mySettings.graphview = cbItemsView.get(currentIndex).text;
+                    else
+                        cbinit = true;
                 }
             }
 
@@ -291,8 +295,12 @@ Rectangle {
                     currentIndex = find(mySettings.graphdata);
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
+                property bool cbinit: false
                 onCurrentIndexChanged: {
-                    mySettings.graphdata = cbItemsData.get(currentIndex).text;
+                    if (cbinit)
+                        mySettings.graphdata = cbItemsData.get(currentIndex).text;
+                    else
+                        cbinit = true;
                 }
             }
         }

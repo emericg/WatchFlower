@@ -113,10 +113,6 @@ int main(int argc, char *argv[])
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
 
-// about screen
-// prefered graph screen
-// blinking reset button
-
 // firmware upgrade advice
 // device offline text
 // bluetooth not re-enabling itself
