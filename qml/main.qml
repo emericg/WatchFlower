@@ -27,41 +27,48 @@ Rectangle {
     width: 450
     height: 700
 
-    //minimumWidth: 400
-    //minimumHeight: 640
-
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
 
+    Component.onCompleted: {
+        if (deviceManager.bluetooth === false) {
+            rectangleMenu.setError(qsTr("No bluetooth :-("));
+        } else if (deviceManager.areDevicesAvailable() === false) {
+            rectangleMenu.setStatus(qsTr("No devices :-("));
+        } else {
+            rectangleMenu.setMenu();
+        }
+    }
+
     onDeviceScanningChanged: {
         if (deviceManager.scanning) {
+            header.scanAvailable.visible = true;
             header.scanAnimation.start();
-
-            status.statusText = "Scanning...";
-            status.visible = true;
         } else {
             header.scanAnimation.stop();
+            header.scanAvailable.visible = false;
 
             if (deviceManager.areDevicesAvailable()) {
-                status.statusText = "Click on a device for details!"
-                status.visible = true;
+                rectangleMenu.setMenu();
             } else {
-                status.statusText = "Click refresh to scan!"
-                status.visible = true;
+                rectangleMenu.setStatus(qsTr("No devices :-("));
             }
         }
     }
 
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-            header.scanAvailable.visible = true;
             bluetooth_img.visible = false;
-        } else {
-            header.scanAvailable.visible = false;
 
-            status.statusText = "No bluetooth :-(";
-            status.visible = true;
+            if (deviceManager.areDevicesAvailable() === false) {
+                rectangleMenu.setStatus(qsTr("No devices :-("));
+            } else {
+                rectangleMenu.setMenu();
+            }
+        } else {
             bluetooth_img.visible = true;
+
+            rectangleMenu.setError(qsTr("No bluetooth :-("));
         }
     }
 
@@ -69,34 +76,14 @@ Rectangle {
         id: header
         anchors.top: parent.top
 
-        backAvailable.visible: true
         backImg.source: "qrc:/assets/menu_settings.svg"
-        scanAvailable.visible: {
-            if (deviceManager.bluetooth) {
-                header.scanAvailable.visible = true;
-                bluetooth_img.visible = false;
-            } else {
-                header.scanAvailable.visible = false;
-
-                status.statusText = "No bluetooth :-(";
-                status.visible = true;
-                bluetooth_img.visible = true;
-            }
-        }
+        backAvailable.visible: true
+        scanAvailable.visible: false
 
         onBackClicked: {
             pageLoader.setSource("Settings.qml",
                                  { mySettings: settingsManager });
         }
-        onRefreshClicked: {
-            deviceManager.startDeviceDiscovery();
-        }
-    }
-
-    Status {
-        id: status
-        statusText: "Click refresh to scan!"
-        visible: true
     }
 
     Image {
@@ -104,9 +91,9 @@ Rectangle {
         y: 314
         width: 256
         height: 256
-        opacity: 0.9
+        opacity: 1
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 77
+        anchors.bottomMargin: 64
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -152,14 +139,145 @@ Rectangle {
         spacing: 16
         anchors.top: header.bottom
         anchors.topMargin: 16
-        anchors.bottom: status.top // FIXME parent.bottom
+        anchors.bottom: rectangleMenu.top
         anchors.bottomMargin: 16
         anchors.left: parent.left
         anchors.leftMargin: 16
         anchors.right: parent.right
         anchors.rightMargin: 16
 
-        delegate: DeviceBox { myDevice: modelData}
+        delegate: DeviceBox { myDevice: modelData }
+    }
+
+    Rectangle {
+        id: rectangleMenu
+        y: 522
+        height: 50
+        color: "#ffffff"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+
+        function setError(message) {
+            console.log("setError()")
+            rectangleScan.visible = false;
+            rectangleScan.width = 0;
+            rectangleRefresh.visible = false;
+            rectangleRefresh.width = 0;
+            rectangleStatus.visible = true;
+            rectangleStatus.width = parent.width;
+            textStatus.text = message;
+        }
+        function setStatus(message) {
+            console.log("setStatus()")
+            rectangleScan.visible = true;
+            rectangleScan.width = parent.width / 2;
+            rectangleRefresh.visible = false;
+            rectangleRefresh.width = 0;
+            rectangleStatus.width = parent.width / 2;
+            rectangleStatus.visible = true;
+            textStatus.text = message;
+        }
+        function setMenu() {
+            console.log("setMenu()")
+            rectangleStatus.visible = false;
+            rectangleStatus.width = 0;
+            rectangleScan.visible = true;
+            rectangleScan.width = parent.width / 2;
+            rectangleRefresh.visible = true;
+            rectangleRefresh.width = parent.width / 2;
+        }
+
+        Rectangle {
+            id: rectangleRefresh
+            x: 250
+            width: 150
+            color: "#1dcb58"
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Text {
+                id: textRefresh
+                color: "#ffffff"
+                text: qsTr("Refresh!")
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
+                font.pixelSize: 20
+            }
+
+            MouseArea {
+                id: mouseAreaRefresh
+                anchors.fill: parent
+                onPressed: textRefresh.font.pixelSize = 22
+                onClicked: deviceManager.refreshDevices()
+                onReleased: textRefresh.font.pixelSize = 20
+            }
+        }
+
+        Rectangle {
+            id: rectangleScan
+            width: 150
+            height: 64
+            color: "#4287f4"
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            Text {
+                id: textScan
+                color: "#ffffff"
+                text: qsTr("Rescan?")
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
+                font.pixelSize: 20
+            }
+
+            MouseArea {
+                id: mouseAreaScan
+                anchors.fill: parent
+                onPressed: textScan.font.pixelSize = 22
+                onClicked: deviceManager.startDeviceDiscovery()
+                onReleased: textScan.font.pixelSize = 20
+            }
+        }
+
+        Rectangle {
+            id: rectangleStatus
+            color: "#ffb854"
+            anchors.right: rectangleRefresh.left
+            anchors.rightMargin: 0
+            anchors.left: rectangleScan.right
+            anchors.leftMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
+
+            Text {
+                id: textStatus
+                color: "#ffffff"
+                text: qsTr("Status :-(")
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                anchors.fill: parent
+                font.pixelSize: 20
+            }
+        }
     }
 
     Loader {

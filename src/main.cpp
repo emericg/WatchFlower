@@ -113,21 +113,17 @@ int main(int argc, char *argv[])
 // graph auto min/max
 // graph stacked bar + night bars (prettier?)
 
+/// 0.3
 // firmware upgrade advice
 // device offline text
 // bluetooth not re-enabling itself
-
-/// 0.3
-// scan menu button:
-// main: rescan / refresh values
-// device: refresh values
+// disable graph & limits when no database available
 
 /// NEXT
 // android port
 // macOS port
-// disable graph & limits when no database available
 
-/// NEXT
+/// NEXT next
 // plant db (???)
 // handle multiple bluetooth adapters (???)
 

@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/Header.qml</file>
-        <file>qml/Status.qml</file>
         <file>qml/DeviceBox.qml</file>
         <file>qml/DeviceExtended.qml</file>
         <file>qml/DeviceDatasBox.qml</file>

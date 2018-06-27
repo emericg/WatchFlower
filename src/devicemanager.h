@@ -53,6 +53,7 @@ public:
 
 public slots:
     void startDeviceDiscovery();
+    void refreshDevices();
 
     bool hasBluetooth() const;
     bool hasDatabase() const;

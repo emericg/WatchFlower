@@ -25,11 +25,9 @@ Rectangle {
     width: parent.width
     height: 64
     color: "#1dcb58"
-    //color: "#87d241"
-    //color: "#41d289"
 
-    property alias backAvailable: backRect
     property alias backImg: backImg
+    property alias backAvailable: backRect
     property alias scanAvailable: refreshRect
     property alias scanAnimation: refreshRotation
 

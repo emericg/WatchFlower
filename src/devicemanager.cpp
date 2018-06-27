@@ -198,8 +198,28 @@ void DeviceManager::startDeviceDiscovery()
         if (m_discoveryAgent->isActive())
         {
             m_scanning = true;
-            Q_EMIT scanningChanged();
+            emit scanningChanged();
         }
+    }
+}
+
+void DeviceManager::refreshDevices()
+{
+    if (m_bt)
+    {
+        m_scanning = true;
+        emit scanningChanged();
+
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd)
+                dd->refreshDatas();
+        }
+
+        m_scanning = false;
+        emit scanningChanged();
+        emit devicesUpdated();
     }
 }
 
@@ -222,7 +242,7 @@ void DeviceManager::deviceDiscoveryFinished()
             for (auto d: m_devices)
             {
                 Device *dd = qobject_cast<Device*>(d);
-                if (dd->getMacAddress() == deviceAddr)
+                if (dd && dd->getMacAddress() == deviceAddr)
                 {
                     found = true;
                     break;
