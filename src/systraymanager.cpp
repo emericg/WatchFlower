@@ -123,7 +123,7 @@ void SystrayManager::removeSystray()
     }
 }
 
-bool SystrayManager::sendNotification(QString &text)
+void SystrayManager::sendNotification(QString &text)
 {
     if (m_sysTray)
     {

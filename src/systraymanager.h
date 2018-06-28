@@ -57,8 +57,9 @@ public slots:
     void initSystray(QApplication *app, QQuickView *view);
     bool installSystray();
     void removeSystray();
-    bool sendNotification(QString &text);
+
     void showHide(QSystemTrayIcon::ActivationReason r);
+    void sendNotification(QString &text);
 };
 
 #endif // SYSTRAY_MANAGER_H

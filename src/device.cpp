@@ -134,7 +134,7 @@ void Device::refreshDatasFinished()
     Q_EMIT statusUpdated();
     Q_EMIT datasUpdated();
 
-    if (m_hygro <= m_limitHygroMin)
+    if (m_hygro > 0 && m_hygro <= m_limitHygroMin)
     {
         SystrayManager *st = SystrayManager::getInstance();
         if (st)
