@@ -30,6 +30,7 @@
 #include <singleapplication.h>
 
 #include "settingsmanager.h"
+#include "systraymanager.h"
 #include "devicemanager.h"
 
 /* ************************************************************************** */
@@ -44,38 +45,8 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 
     SettingsManager *sm = SettingsManager::getInstance();
-    bool trayEnabled = sm->getSysTray();
 
     DeviceManager dm;
-
-    QSystemTrayIcon *sysTray = nullptr;
-    QMenu *sysTrayMenu = nullptr;
-    QAction *actionShow = nullptr;
-    QAction *actionSettings = nullptr;
-    QAction *actionExit = nullptr;
-    if (trayEnabled)
-    {
-        sysTrayMenu = new QMenu();
-        if (sysTrayMenu)
-        {
-            actionShow = new QAction(QObject::tr("Show"));
-            actionSettings = new QAction(QObject::tr("Settings"));
-            actionExit = new QAction(QObject::tr("Exit"));
-            sysTrayMenu->addAction(actionShow);
-            sysTrayMenu->addAction(actionSettings);
-            sysTrayMenu->addAction(actionExit);
-        }
-
-        sysTray = new QSystemTrayIcon(&app);
-        if (sysTray)
-        {
-            QIcon trayIcon(":/assets/app/watchflower_tray.svg");
-            sysTray->setIcon(trayIcon);
-            sysTray->setContextMenu(sysTrayMenu);
-            sysTray->show();
-            //sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
-        }
-    }
 
     QQuickView *view = new QQuickView;
     view->rootContext()->setContextProperty("deviceManager", &dm);
@@ -86,12 +57,11 @@ int main(int argc, char *argv[])
     view->setMinimumHeight(640);
     view->show();
 
-    if (trayEnabled && sysTray && sysTrayMenu)
+    SystrayManager *st = SystrayManager::getInstance();
+    st->initSystray(&app, view);
+    if (sm->getSysTray())
     {
-        //QObject::connect(sysTray, &QSystemTrayIcon::activated, view, &QQuickView::show);
-        QObject::connect(actionShow, &QAction::triggered, view, &QQuickView::show);
-        //QObject::connect(actSettings, &QAction::triggered, &app, &SystemTray::signalQuit);
-        QObject::connect(actionExit, &QAction::triggered, &app, &QApplication::exit);
+        st->installSystray();
     }
 
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);
@@ -117,11 +87,11 @@ int main(int argc, char *argv[])
 // firmware upgrade advice
 // device offline text
 // bluetooth not re-enabling itself
-// disable graph & limits when no database available
 
 /// NEXT
-// android port
 // macOS port
+// android port
+// properly disable graph & limits when no database available
 
 /// NEXT next
 // plant db (???)

@@ -73,7 +73,7 @@ public:
     bool hasDatabase() const { return m_db; }
 
     bool getSysTray() const { return m_trayEnabled; }
-    void setSysTray(bool value) { m_trayEnabled = value; writeSettings(); }
+    void setSysTray(bool value);
 
     unsigned getUpdateInterval() const { return m_updateInterval; }
     void setUpdateInterval(unsigned value) { m_updateInterval = value; writeSettings(); }

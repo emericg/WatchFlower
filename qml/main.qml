@@ -162,7 +162,6 @@ Rectangle {
         anchors.rightMargin: 0
 
         function setError(message) {
-            console.log("setError()")
             rectangleScan.visible = false;
             rectangleScan.width = 0;
             rectangleRefresh.visible = false;
@@ -172,7 +171,6 @@ Rectangle {
             textStatus.text = message;
         }
         function setStatus(message) {
-            console.log("setStatus()")
             rectangleScan.visible = true;
             rectangleScan.width = parent.width / 2;
             rectangleRefresh.visible = false;
@@ -182,7 +180,6 @@ Rectangle {
             textStatus.text = message;
         }
         function setMenu() {
-            console.log("setMenu()")
             rectangleStatus.visible = false;
             rectangleStatus.width = 0;
             rectangleScan.visible = true;

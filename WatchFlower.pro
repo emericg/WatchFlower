@@ -24,10 +24,12 @@ DESTDIR     = bin/
 # Project files
 SOURCES  += src/main.cpp \
             src/settingsmanager.cpp \
+            src/systraymanager.cpp \
             src/devicemanager.cpp \
             src/device.cpp
 
 HEADERS  += src/settingsmanager.h \
+            src/systraymanager.h \
             src/devicemanager.h \
             src/device.h
 

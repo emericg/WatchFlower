@@ -21,6 +21,7 @@
 
 #include "device.h"
 #include "settingsmanager.h"
+#include "systraymanager.h"
 
 #include <QBluetoothUuid>
 #include <QBluetoothAddress>
@@ -132,6 +133,22 @@ void Device::refreshDatasFinished()
     m_updating = false;
     Q_EMIT statusUpdated();
     Q_EMIT datasUpdated();
+
+    if (m_hygro <= m_limitHygroMin)
+    {
+        SystrayManager *st = SystrayManager::getInstance();
+        if (st)
+        {
+            QString message;
+
+            if (!m_plantName.isEmpty())
+                message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
+            else
+                message = QObject::tr("You need to water the plant on '") + m_customName + "'";
+
+            st->sendNotification(message);
+        }
+    }
 }
 
 /* ************************************************************************** */

@@ -20,6 +20,7 @@
  */
 
 #include "settingsmanager.h"
+#include "systraymanager.h"
 
 #include <QStandardPaths>
 #include <QSettings>
@@ -58,6 +59,7 @@ SettingsManager::~SettingsManager()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool SettingsManager::readSettings()
 {
@@ -92,6 +94,8 @@ bool SettingsManager::readSettings()
     return status;
 }
 
+/* ************************************************************************** */
+
 bool SettingsManager::writeSettings()
 {
     bool status = false;
@@ -120,6 +124,7 @@ bool SettingsManager::writeSettings()
     return status;
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 bool SettingsManager::loadDatabase()
@@ -257,6 +262,8 @@ bool SettingsManager::loadDatabase()
     return m_db;
 }
 
+/* ************************************************************************** */
+
 void SettingsManager::closeDatabase()
 {
     QSqlDatabase db = QSqlDatabase::database();
@@ -271,6 +278,8 @@ void SettingsManager::closeDatabase()
         m_db = false;
     }
 }
+
+/* ************************************************************************** */
 
 void SettingsManager::resetDatabase()
 {
@@ -310,6 +319,7 @@ void SettingsManager::resetSettings()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool SettingsManager::readDevices()
 {
@@ -321,6 +331,27 @@ bool SettingsManager::readDevices()
 QString SettingsManager::getAppVersion()
 {
     return "v"+ QString::fromLatin1(APP_VERSION);
+}
+
+/* ************************************************************************** */
+
+void SettingsManager::setSysTray(bool value)
+{
+    bool trayEnable_saved = m_trayEnabled;
+    m_trayEnabled = value; writeSettings();
+
+    SystrayManager *st = SystrayManager::getInstance();
+    if (st)
+    {
+        if (trayEnable_saved == true && m_trayEnabled == false)
+        {
+            st->removeSystray();
+        }
+        else if (trayEnable_saved == false && m_trayEnabled == true)
+        {
+            st->installSystray();
+        }
+    }
 }
 
 /* ************************************************************************** */
