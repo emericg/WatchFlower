@@ -42,7 +42,7 @@ class SettingsManager: public QObject
     bool m_trayEnabled = false;
     unsigned m_updateInterval = UPDATE_INTERVAL;
     QString m_tempUnit = "C";
-    QString m_graphDefaultView = "weekly";
+    QString m_graphDefaultView = "daily";
     QString m_graphDefaultData = "hygro";
 
     bool readSettings();

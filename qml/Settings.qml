@@ -262,7 +262,7 @@ Rectangle {
                 anchors.topMargin: 0
                 model: ListModel {
                     id: cbItemsView
-                    ListElement { text: "weekly"; }
+                    ListElement { text: "daily"; }
                     ListElement { text: "hourly"; }
                 }
                 Component.onCompleted: {
