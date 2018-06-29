@@ -79,10 +79,6 @@ int main(int argc, char *argv[])
 /* ************************************************************************** */
 // TODOs
 
-/// 0.2
-// graph auto min/max
-// graph stacked bar + night bars (prettier?)
-
 /// 0.3
 // firmware upgrade advice
 // device offline text

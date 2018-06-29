@@ -223,44 +223,54 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     function updateGraph() {
-        //axisY0.tickCount = 1
-        //myBarSet.at(myBarSet.count-1).y
-        //console.log("myAxisY.max=", myAxisY.max);
-        /// min:  Math.floor(((minCategory + sb.position *
-        //                   (maxCategory - minCategory - category)) + 9)/10)*10
+
+        lowLimitSeries.clear()
+        highLimitSeries.clear()
 
         if (graphDataSelected == "hygro") {
-            axisY0.min = 0
             axisY0.max = 66
             myBarSet.color = "#31a3ec"
             textHygro.font.bold = true
             textTemp.font.bold = false
             textLumi.font.bold = false
             textCondu.font.bold = false
+            lowLimitSeries.append(0, myDevice.limitHygroMin);
+            lowLimitSeries.append(1, myDevice.limitHygroMin);
+            highLimitSeries.append(0, myDevice.limitHygroMax);
+            highLimitSeries.append(1, myDevice.limitHygroMax);
         } else if (graphDataSelected == "temp") {
-            axisY0.min = 0
             axisY0.max = 40
             myBarSet.color = "#87d241"
             textHygro.font.bold = false
             textTemp.font.bold = true
             textLumi.font.bold = false
             textCondu.font.bold = false
+            lowLimitSeries.append(0, myDevice.limitTempMin);
+            lowLimitSeries.append(1, myDevice.limitTempMin);
+            highLimitSeries.append(0, myDevice.limitTempMax);
+            highLimitSeries.append(1, myDevice.limitTempMax);
         } else if (graphDataSelected == "luminosity") {
-            axisY0.min = 0
             axisY0.max = 2000
             myBarSet.color = "#f1ec5c"
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = true
             textCondu.font.bold = false
+            lowLimitSeries.append(0, myDevice.limitLumiMin);
+            lowLimitSeries.append(1, myDevice.limitLumiMin);
+            highLimitSeries.append(0, myDevice.limitLumiMax);
+            highLimitSeries.append(1, myDevice.limitLumiMax);
         } else if (graphDataSelected == "conductivity") {
-            axisY0.min = 0
             axisY0.max = 750
             myBarSet.color = "#e19c2f"
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = false
             textCondu.font.bold = true
+            lowLimitSeries.append(0, myDevice.limitConduMin);
+            lowLimitSeries.append(1, myDevice.limitConduMin);
+            highLimitSeries.append(0, myDevice.limitConduMax);
+            highLimitSeries.append(1, myDevice.limitConduMax);
         }
 
         if (graphViewSelected == "hourly") {
@@ -269,13 +279,30 @@ Rectangle {
 
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
+
+            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.values = myDevice.getBackgroundHourly()
+            backgroundNightBars.color = "#f1f1f1"
+            backgroundNightBars.values = myDevice.getBackgroundNightly()
         } else {
             textDays.font.bold = true
             textHours.font.bold = false
 
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
+
+            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.values = [15000, 15000, 15000, 15000, 15000, 15000, 15000]
+            backgroundNightBars.values = [0]
         }
+
+        // Min axis
+        //var min_of_array = Math.min.apply(Math, myBarSet.values);
+        axisY0.min = 0;
+
+        // Max axis
+        var max_of_array = Math.max.apply(Math, myBarSet.values);
+        axisY0.max = max_of_array*1.20;
     }
 
     ChartView {
@@ -295,19 +322,35 @@ Rectangle {
 
         Component.onCompleted: updateGraph()
 
-        animationOptions: ChartView.SeriesAnimations
+        //animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand
 
-        BarSeries {
+        StackedBarSeries {
             id: myBarSeries
-
-            barWidth: 0.95
+            barWidth: 0.90
             labelsVisible: false
 
             axisY: ValueAxis { id: axisY0; visible: true; max: 40; gridVisible: false; }
             axisX: BarCategoryAxis { id: axisX0; visible:true; gridVisible: true; }
 
             BarSet { id: myBarSet; }
+            BarSet { id: backgroundDayBars; }
+            BarSet { id: backgroundNightBars; }
+        }
+
+        LineSeries {
+            id: lowLimitSeries
+            color: "#ffbf66"
+            width: 2
+            axisX: ValueAxis { visible:false; }
+            visible:false
+        }
+        LineSeries {
+            id: highLimitSeries
+            color: "#ffbf66"
+            width: 2
+            axisX: ValueAxis { visible:false; }
+            visible:false
         }
     }
 }

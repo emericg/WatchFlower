@@ -156,6 +156,8 @@ public slots:
     // Hourly graph
     QVariantList getHours();
     QVariantList getDatasHourly(QString dataName);
+    QVariantList getBackgroundHourly();
+    QVariantList getBackgroundNightly();
 
 Q_SIGNALS:
     void statusUpdated();

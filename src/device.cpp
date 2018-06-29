@@ -585,6 +585,108 @@ QVariantList Device::getDatasHourly(QString dataName)
     return datas;
 }
 
+QVariantList Device::getBackgroundHourly()
+{
+    QVariantList lastTwentyfourHours;
+    int firstHour = -1;
+
+    QSqlQuery datasPerHour;
+    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
+                         "FROM datas " \
+                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                         "ORDER BY ts ASC;");
+    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+
+    if (datasPerHour.exec() == false)
+        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+
+    while (datasPerHour.next())
+    {
+        if (firstHour == -1)
+        {
+            firstHour = datasPerHour.value(0).toInt();
+        }
+    }
+
+    if (firstHour == -1) // We don't have datas
+    {
+        QTime now = QTime::currentTime();
+        while (lastTwentyfourHours.size() < 24)
+        {
+            if (now.hour() > 22 || now.hour() < 8)
+                lastTwentyfourHours.append(0);
+            else
+                lastTwentyfourHours.append(15000);
+            now = now.addSecs(3600);
+        }
+    }
+    else // We have datas
+    {
+        QTime now(firstHour, 0);
+        while (lastTwentyfourHours.size() < 24)
+        {
+            if (now.hour() > 22 || now.hour() < 8)
+                lastTwentyfourHours.append(0);
+            else
+                lastTwentyfourHours.append(15000);
+            now = now.addSecs(3600);
+        }
+    }
+
+    return lastTwentyfourHours;
+}
+
+QVariantList Device::getBackgroundNightly()
+{
+    QVariantList lastTwentyfourHours;
+    int firstHour = -1;
+
+    QSqlQuery datasPerHour;
+    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
+                         "FROM datas " \
+                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                         "ORDER BY ts ASC;");
+    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+
+    if (datasPerHour.exec() == false)
+        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+
+    while (datasPerHour.next())
+    {
+        if (firstHour == -1)
+        {
+            firstHour = datasPerHour.value(0).toInt();
+        }
+    }
+
+    if (firstHour == -1) // We don't have datas
+    {
+        QTime now = QTime::currentTime();
+        while (lastTwentyfourHours.size() < 24)
+        {
+            if (now.hour() > 22 || now.hour() < 8)
+                lastTwentyfourHours.append(15000);
+            else
+                lastTwentyfourHours.append(0);
+            now = now.addSecs(3600);
+        }
+    }
+    else // We have datas
+    {
+        QTime now(firstHour, 0);
+        while (lastTwentyfourHours.size() < 24)
+        {
+            if (now.hour() > 22 || now.hour() < 8)
+                lastTwentyfourHours.append(15000);
+            else
+                lastTwentyfourHours.append(0);
+            now = now.addSecs(3600);
+        }
+    }
+
+    return lastTwentyfourHours;
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 
