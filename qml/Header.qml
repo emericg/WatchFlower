@@ -38,7 +38,7 @@ Rectangle {
         text: "WatchFlower"
         color: "#FFFFFF"
         font.bold: true
-        font.pointSize: 24
+        font.pointSize: 26
         antialiasing: true
 
         anchors.fill: parent

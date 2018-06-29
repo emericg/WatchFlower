@@ -153,7 +153,7 @@ Rectangle {
         id: rectangleMenu
         y: 522
         height: 50
-        color: "#ffffff"
+        color: "#00000000"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: parent.left
@@ -175,8 +175,8 @@ Rectangle {
             rectangleScan.width = parent.width / 2;
             rectangleRefresh.visible = false;
             rectangleRefresh.width = 0;
-            rectangleStatus.width = parent.width / 2;
             rectangleStatus.visible = true;
+            rectangleStatus.width = parent.width / 2;
             textStatus.text = message;
         }
         function setMenu() {
