@@ -15,12 +15,20 @@
  </description>
  <screenshots>
   <screenshot type="default">
-   <image>https://i.imgur.com/iSTP9tm.png</image>
+   <image>https://i.imgur.com/8pCBU8E.png</image>
    <caption>Main screen</caption>
   </screenshot>
   <screenshot>
-   <image>https://i.imgur.com/USW4UOn.png</image>
+   <image>https://i.imgur.com/kSpTzBd.png</image>
    <caption>Device screen</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://i.imgur.com/i5Dxeus.png</image>
+   <caption>Limits screen</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://i.imgur.com/48JW2On.png</image>
+   <caption>Settings screen</caption>
   </screenshot>
  </screenshots>
  <url type="homepage">https://github.com/emericg/WatchFlower</url>

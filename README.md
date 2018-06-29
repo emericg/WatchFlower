@@ -15,9 +15,9 @@ It's still a bit early in development but it should work on all Qt platforms, me
 
 ### Screenshots!
 
-![GUI1](https://i.imgur.com/iSTP9tm.png)
+![GUI1](https://i.imgur.com/8pCBU8E.png)
 
-![GUI2](https://i.imgur.com/USW4UOn.png)
+![GUI2](https://i.imgur.com/kSpTzBd.png)
 
 
 ## Documentation
