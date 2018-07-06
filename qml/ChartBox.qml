@@ -282,7 +282,7 @@ Rectangle {
 
             backgroundDayBars.color = "#f9f9f9"
             backgroundDayBars.values = myDevice.getBackgroundHourly()
-            backgroundNightBars.color = "#f1f1f1"
+            backgroundNightBars.color = "#E4E4E4"
             backgroundNightBars.values = myDevice.getBackgroundNightly()
         } else {
             textDays.font.bold = true
@@ -292,7 +292,7 @@ Rectangle {
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
 
             backgroundDayBars.color = "#f9f9f9"
-            backgroundDayBars.values = [15000, 15000, 15000, 15000, 15000, 15000, 15000]
+            backgroundDayBars.values = [30000, 30000, 30000, 30000, 30000, 30000, 30000]
             backgroundNightBars.values = [0]
         }
 

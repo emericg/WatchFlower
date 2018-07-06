@@ -616,7 +616,7 @@ QVariantList Device::getBackgroundHourly()
             if (now.hour() > 22 || now.hour() < 8)
                 lastTwentyfourHours.append(0);
             else
-                lastTwentyfourHours.append(15000);
+                lastTwentyfourHours.append(30000);
             now = now.addSecs(3600);
         }
     }
@@ -628,7 +628,7 @@ QVariantList Device::getBackgroundHourly()
             if (now.hour() > 22 || now.hour() < 8)
                 lastTwentyfourHours.append(0);
             else
-                lastTwentyfourHours.append(15000);
+                lastTwentyfourHours.append(30000);
             now = now.addSecs(3600);
         }
     }
@@ -665,7 +665,7 @@ QVariantList Device::getBackgroundNightly()
         while (lastTwentyfourHours.size() < 24)
         {
             if (now.hour() > 22 || now.hour() < 8)
-                lastTwentyfourHours.append(15000);
+                lastTwentyfourHours.append(30000);
             else
                 lastTwentyfourHours.append(0);
             now = now.addSecs(3600);
@@ -677,7 +677,7 @@ QVariantList Device::getBackgroundNightly()
         while (lastTwentyfourHours.size() < 24)
         {
             if (now.hour() > 22 || now.hour() < 8)
-                lastTwentyfourHours.append(15000);
+                lastTwentyfourHours.append(30000);
             else
                 lastTwentyfourHours.append(0);
             now = now.addSecs(3600);
