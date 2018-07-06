@@ -168,6 +168,8 @@ Rectangle {
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
             rectangleStatus.width = parent.width;
+            rectangleStatus.anchors.left = parent.left
+            rectangleStatus.anchors.right = parent.right
             textStatus.text = message;
         }
         function setStatus(message) {
@@ -177,6 +179,7 @@ Rectangle {
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
             rectangleStatus.width = parent.width / 2;
+            rectangleStatus.anchors.left = rectangleScan.right;
             textStatus.text = message;
         }
         function setMenu() {
@@ -186,6 +189,7 @@ Rectangle {
             rectangleScan.width = parent.width / 2;
             rectangleRefresh.visible = true;
             rectangleRefresh.width = parent.width / 2;
+            rectangleRefresh.anchors.left = rectangleScan.right;
         }
 
         Rectangle {
