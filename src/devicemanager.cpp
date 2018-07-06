@@ -330,9 +330,4 @@ bool DeviceManager::areDevicesAvailable() const
         return false;
 }
 
-QVariant DeviceManager::getDevices() const
-{
-    return QVariant::fromValue(m_devices);
-}
-
 /* ************************************************************************** */

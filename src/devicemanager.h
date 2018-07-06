@@ -49,7 +49,7 @@ public:
     DeviceManager();
     ~DeviceManager();
 
-    QVariant getDevices() const;
+    QVariant getDevices() const { return QVariant::fromValue(m_devices); }
 
 public slots:
     void startDeviceDiscovery();

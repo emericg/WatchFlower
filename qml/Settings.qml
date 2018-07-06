@@ -359,7 +359,6 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
             }
-
         }
 
         Rectangle {

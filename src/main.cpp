@@ -37,6 +37,10 @@
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_WIN)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+
     SingleApplication app(argc, argv);
     app.setApplicationDisplayName("WatchFlower");
     QCoreApplication::setApplicationName("WatchFlower");
@@ -47,6 +51,11 @@ int main(int argc, char *argv[])
     SettingsManager *sm = SettingsManager::getInstance();
 
     DeviceManager dm;
+    if (dm.areDevicesAvailable() == false)
+    {
+        // Run a first scan, but only if we have no saved devices
+        dm.startDeviceDiscovery();
+    }
 
     QQuickView *view = new QQuickView;
     view->rootContext()->setContextProperty("deviceManager", &dm);
@@ -66,12 +75,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::raise);
-
-    // Run a first scan, but only if we have no saved devices
-    if (dm.areDevicesAvailable() == false)
-    {
-        dm.startDeviceDiscovery();
-    }
 
     return app.exec();
 }
