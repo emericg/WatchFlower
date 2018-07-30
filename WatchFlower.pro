@@ -51,8 +51,13 @@ RC_ICONS     = assets/app/$$lower($${TARGET}).ico
 linux {
     TARGET = $$lower($${TARGET})
 
-    # Application packaging
-    #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/) # needs linuxdeployqt installed
+    # Application packaging # Needs linuxdeployqt installed
+    #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/)
+
+    # Application packaging # Needs linuxdeployqt installed
+    #deploy.commands = $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/
+    #install.depends = deploy
+    #QMAKE_EXTRA_TARGETS += install deploy
 
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
@@ -72,7 +77,7 @@ linux {
 
 macx {
     # Bundle packaging
-    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
+    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app)
 
     # Automatic bundle packaging
     deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app
@@ -102,4 +107,15 @@ win32 {
 
     # Clean bin/ directory
     # TODO
+}
+
+android {
+    equals(ANDROID_TARGET_ARCH, "") {
+        #armeabi-v7a
+        #arm64-v8a
+    }
+    equals(ANDROID_TARGET_ARCH, "") {
+        #x86
+        #x86_64
+    }
 }

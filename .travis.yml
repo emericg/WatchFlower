@@ -1,19 +1,18 @@
 language: cpp
 compiler: gcc
 os: linux
+dist: xenial
 sudo: require
-dist: trusty
-
 
 before_install:
-  - sudo apt-add-repository ppa:beineri/opt-qt-5.10.1-trusty -y
+  - sudo add-apt-repository ppa:beineri/opt-qt-5.11.1-xenial -y
   - sudo apt-get update -q
 
 install:
-  - sudo apt-get install qt510base qt510quickcontrols2 qt510connectivity qt510svg qt510scxml qt510imageformats qt510tools qt510charts-no-lgpl sqlite3 -y
+  - sudo apt-get install qt511base qt511quickcontrols2 qt511connectivity qt511svg qt511imageformats qt511tools qt511charts-no-lgpl sqlite3 -y
 
 before_script:
-  - source /opt/qt510/bin/qt510-env.sh
+  - source /opt/qt511/bin/qt511-env.sh
   - qmake CONFIG+=release PREFIX=/usr
 
 script:
@@ -22,10 +21,10 @@ script:
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH
-  - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+  - export VERSION=$(git rev-parse --short HEAD)
   - mkdir -p appdir/usr/plugins/imageformats/ appdir/usr/plugins/iconengines/
-  - cp /opt/qt510/plugins/imageformats/libqsvg.so appdir/usr/plugins/imageformats/
-  - cp /opt/qt510/plugins/iconengines/libqsvgicon.so appdir/usr/plugins/iconengines/
+  - cp /opt/qt511/plugins/imageformats/libqsvg.so appdir/usr/plugins/imageformats/
+  - cp /opt/qt511/plugins/iconengines/libqsvgicon.so appdir/usr/plugins/iconengines/
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -appimage
 
