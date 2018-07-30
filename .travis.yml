@@ -10,6 +10,7 @@ before_install:
 
 install:
   - sudo apt-get install qt511base qt511quickcontrols2 qt511connectivity qt511svg qt511imageformats qt511tools qt511charts-no-lgpl sqlite3 -y
+  - sudo apt-get install libgl1-mesa-dev -y
 
 before_script:
   - source /opt/qt511/bin/qt511-env.sh
