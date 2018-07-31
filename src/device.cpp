@@ -238,7 +238,7 @@ bool Device::getSqlCachedDatas()
         qDebug() << "Using cachedDatas";
         status = true;
 
-        m_temp = cachedDatas.value(0).toInt();
+        m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
         m_luminosity =  cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
