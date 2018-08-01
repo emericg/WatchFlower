@@ -11,9 +11,9 @@ Rectangle {
     anchors.left: parent.left
     anchors.bottom: parent.bottom
 
-    //var badColor = "#ffbf66";
-    //var neutralColor = "#e4e4e4";
-    //var goodColor = "#87d241";
+    property string badColor: "#ffbf66";
+    property string neutralColor: "#e4e4e4";
+    property string goodColor: "#87d241";
 
     function setDatas() {
 
@@ -33,84 +33,111 @@ Rectangle {
         }
 
         // Hygro
-        if (myDevice.deviceHygro < myDevice.limitHygroMin)
+        if (myDevice.deviceHygro < 0)
         {
-            barHygro_low.color = "#ffbf66"
-            barHygro_good.color = "#e4e4e4"
-            barHygro_high.color = "#e4e4e4"
-        }
-        else if (myDevice.deviceHygro > myDevice.limitHygroMax)
-        {
-            barHygro_low.color = "#e4e4e4"
-            barHygro_good.color = "#e4e4e4"
-            barHygro_high.color = "#ffbf66"
+            textHygro.text = qsTr("No datas...")
+            barHygro_low.color = badColor
+            barHygro_good.color = badColor
+            barHygro_high.color = badColor
         }
         else
         {
-            barHygro_low.color = "#e4e4e4"
-            barHygro_good.color = "#87d241"
-            barHygro_high.color = "#e4e4e4"
+            textHygro.text = myDevice.deviceHygro + "%"
+
+            if (myDevice.deviceHygro < myDevice.limitHygroMin) {
+                barHygro_low.color = badColor
+                barHygro_good.color = neutralColor
+                barHygro_high.color = neutralColor
+            } else if (myDevice.deviceHygro > myDevice.limitHygroMax) {
+                barHygro_low.color = neutralColor
+                barHygro_good.color = neutralColor
+                barHygro_high.color = badColor
+            } else {
+                barHygro_low.color = neutralColor
+                barHygro_good.color = goodColor
+                barHygro_high.color = neutralColor
+            }
         }
 
         // Temp
-        textTemp.text = myDevice.getTempString();
-        if (myDevice.deviceTempC < myDevice.limitTempMin)
+        if (myDevice.deviceTempC < 0)
         {
-            barTemp_low.color = "#ffbf66"
-            barTemp_good.color = "#e4e4e4"
-            barTemp_high.color = "#e4e4e4"
-        }
-        else if (myDevice.deviceTempC > myDevice.limitTempMax)
-        {
-            barTemp_low.color = "#e4e4e4"
-            barTemp_good.color = "#e4e4e4"
-            barTemp_high.color = "#ffbf66"
+            textTemp.text = qsTr("No datas...")
+            barTemp_low.color = badColor
+            barTemp_good.color = badColor
+            barTemp_high.color = badColor
         }
         else
         {
-            barTemp_low.color = "#e4e4e4"
-            barTemp_good.color = "#87d241"
-            barTemp_high.color = "#e4e4e4"
+            textTemp.text = myDevice.getTempString();
+
+            if (myDevice.deviceTempC < myDevice.limitTempMin) {
+                barTemp_low.color = badColor
+                barTemp_good.color = neutralColor
+                barTemp_high.color = neutralColor
+            } else if (myDevice.deviceTempC > myDevice.limitTempMax) {
+                barTemp_low.color = neutralColor
+                barTemp_good.color = neutralColor
+                barTemp_high.color = badColor
+            } else {
+                barTemp_low.color = neutralColor
+                barTemp_good.color = goodColor
+                barTemp_high.color = neutralColor
+            }
         }
         
         // Luminosity
-        if (myDevice.deviceLuminosity < myDevice.limitLumiMin)
+        if (myDevice.deviceLuminosity < 0)
         {
-            barLux_low.color = "#ffbf66"
-            barLux_good.color = "#e4e4e4"
-            barLux_high.color = "#e4e4e4"
-        }
-        else if (myDevice.deviceLuminosity > myDevice.limitLumiMax)
-        {
-            barLux_low.color = "#e4e4e4"
-            barLux_good.color = "#e4e4e4"
-            barLux_high.color = "#ffbf66"
+            textLuminosity.text = qsTr("No datas...")
+            barLux_low.color = badColor
+            barLux_good.color = badColor
+            barLux_high.color = badColor
         }
         else
         {
-            barLux_low.color = "#e4e4e4"
-            barLux_good.color = "#87d241"
-            barLux_high.color = "#e4e4e4"
+            textLuminosity.text = myDevice.deviceLuminosity + " lumens"
+
+            if (myDevice.deviceLuminosity < myDevice.limitLumiMin) {
+                barLux_low.color = badColor
+                barLux_good.color = neutralColor
+                barLux_high.color = neutralColor
+            } else if (myDevice.deviceLuminosity > myDevice.limitLumiMax) {
+                barLux_low.color = neutralColor
+                barLux_good.color = neutralColor
+                barLux_high.color = badColor
+            } else {
+                barLux_low.color = neutralColor
+                barLux_good.color = goodColor
+                barLux_high.color = neutralColor
+            }
         }
-        
+
         // Conductivity
-        if (myDevice.deviceConductivity < myDevice.limitConduMin)
+        if (myDevice.deviceConductivity < 0)
         {
-            barCond_low.color = "#ffbf66"
-            barCond_good.color = "#e4e4e4"
-            barCond_high.color = "#e4e4e4"
-        }
-        else if (myDevice.deviceConductivity > myDevice.limitConduMax)
-        {
-            barCond_low.color = "#e4e4e4"
-            barCond_good.color = "#e4e4e4"
-            barCond_high.color = "#ffbf66"
+            textConductivity.text = qsTr("No datas...")
+            barCond_low.color = badColor
+            barCond_good.color = badColor
+            barCond_high.color = badColor
         }
         else
         {
-            barCond_low.color = "#e4e4e4"
-            barCond_good.color = "#87d241"
-            barCond_high.color = "#e4e4e4"
+            textConductivity.text = myDevice.deviceConductivity + " µS/cm"
+
+            if (myDevice.deviceConductivity < myDevice.limitConduMin) {
+                barCond_low.color = badColor
+                barCond_good.color = neutralColor
+                barCond_high.color = neutralColor
+            } else if (myDevice.deviceConductivity > myDevice.limitConduMax) {
+                barCond_low.color = neutralColor
+                barCond_good.color = neutralColor
+                barCond_high.color = badColor
+            } else {
+                barCond_low.color = neutralColor
+                barCond_good.color = goodColor
+                barCond_high.color = neutralColor
+            }
         }
     }
 
@@ -151,7 +178,7 @@ Rectangle {
                 y: 27
                 width: 24
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -162,7 +189,7 @@ Rectangle {
                 y: 27
                 width: 48
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -173,7 +200,7 @@ Rectangle {
                 y: 27
                 width: 23
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -210,7 +237,7 @@ Rectangle {
                 y: 27
                 width: 24
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.color: "#00000000"
                 border.width: 0
             }
@@ -221,7 +248,7 @@ Rectangle {
                 y: 27
                 width: 48
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -232,7 +259,7 @@ Rectangle {
                 y: 27
                 width: 23
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -267,7 +294,7 @@ Rectangle {
                 y: 27
                 width: 24
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -278,7 +305,7 @@ Rectangle {
                 y: 27
                 width: 48
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -289,7 +316,7 @@ Rectangle {
                 y: 27
                 width: 23
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -324,7 +351,7 @@ Rectangle {
                 y: 27
                 width: 24
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -335,7 +362,7 @@ Rectangle {
                 y: 27
                 width: 48
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -346,7 +373,7 @@ Rectangle {
                 y: 27
                 width: 23
                 height: 8
-                color: "#e4e4e4"
+                color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
