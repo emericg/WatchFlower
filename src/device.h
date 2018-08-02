@@ -30,6 +30,8 @@
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
+#define LATEST_KNOWN_FIRMWARE "3.1.8"
+
 /*!
  * \brief The Device class
  */
@@ -47,6 +49,7 @@ class Device: public QObject
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
+    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY datasUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
     Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
@@ -74,6 +77,7 @@ class Device: public QObject
 
     // ble device datas
     QString m_firmware = "UNKN";
+    bool m_firmware_uptodate = false;
     int m_battery = -1;
     float m_temp = -1;
     int m_hygro = -1;
@@ -119,6 +123,7 @@ public slots:
 
     // ble device datas
     QString getFirmware() const { return m_firmware; }
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     int getBattery() const { return m_battery; }
     float getTemp() const;
     int getHygro() const { return m_hygro; }
@@ -189,6 +194,72 @@ private:
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+};
+
+struct Version
+{
+    int major = 0, minor = 0, revision = 0, build = 0;
+
+    Version(QString version_qstr)
+    {
+        std::sscanf(version_qstr.toLatin1().constData(), "%d.%d.%d.%d",
+                    &major, &minor, &revision, &build);
+    }
+
+    bool operator == (const Version &other)
+    {
+        return (major == other.major
+                && minor == other.minor
+                && revision == other.revision
+                && build == other.build);
+    }
+    bool operator < (const Version &other)
+    {
+/*
+        qDebug() << "operator <";
+        qDebug() << major << "." << minor << "." << revision << "." << build;
+        qDebug() << other.major << "." << other.minor << "." << other.revision << "." << other.build;
+*/
+        if (major < other.major)
+            return true;
+        if (major > other.major)
+            return false;
+        if (minor < other.minor)
+            return true;
+        if (minor > other.minor)
+            return false;
+        if (revision < other.revision)
+            return true;
+        if (revision > other.revision)
+            return false;
+        if (build < other.build)
+            return true;
+        if (build > other.build)
+            return false;
+
+        return false;
+    }
+    bool operator <= (const Version &other)
+    {
+        if (*this < other || *this == other)
+            return true;
+
+        return false;
+    }
+    bool operator >= (const Version &other)
+    {
+        if (*this > other || *this == other)
+            return true;
+
+        return false;
+    }
+    bool operator > (const Version &other)
+    {
+        if (!(*this == other) && !(*this < other))
+            return true;
+
+        return false;
+    }
 };
 
 #endif // DEVICE_H

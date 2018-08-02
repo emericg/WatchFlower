@@ -192,6 +192,14 @@ bool Device::getSqlDatas()
     {
         m_firmware = getFirmware.value(0).toString();
         status = true;
+
+        if (m_firmware.size() == 5)
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE))
+            {
+                m_firmware_uptodate = true;
+            }
+        }
     }
 
     QSqlQuery getBattery;
@@ -813,7 +821,20 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
                 m_firmware = chc.value().remove(0, 2);
             }
 
-            // if firmware > 2.6.6 // TODO add proper check
+            bool need_firstsend = true;
+            if (m_firmware.size() == 5)
+            {
+                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE))
+                {
+                    m_firmware_uptodate = true;
+                }
+                if (Version(m_firmware) <= Version("2.6.6"))
+                {
+                    need_firstsend = false;
+                }
+            }
+
+            if (need_firstsend) // if firmware > 2.6.6
             {
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);

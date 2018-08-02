@@ -48,6 +48,10 @@ Rectangle {
             textOffline.visible = false
             textLastUpdate.visible = false
         }
+
+        if (!myDevice.deviceFirmwareUpToDate) {
+            textFw.text = qsTr("v") + myDevice.deviceFirmware + qsTr(" (update available!)")
+        }
     }
 
     Header {
