@@ -29,13 +29,13 @@ Rectangle {
     color: "#ccffffff"
 
     property var myDevice
-    property bool myDeviceUpdating: myDevice.updating // TODO replace by a connection
+
+    Connections {
+        target: myDevice
+        onStatusUpdated: updateBoxDatas()
+    }
 
     Component.onCompleted: updateBoxDatas();
-
-    onMyDeviceUpdatingChanged: {
-        updateBoxDatas();
-    }
 
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "")

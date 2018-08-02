@@ -321,8 +321,7 @@ bool Device::getBleDatas()
     }
     else
     {
-        if (controller)
-            qDebug() << "Current BLE controller state:" << controller->state();
+        //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
     }
 
     controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
