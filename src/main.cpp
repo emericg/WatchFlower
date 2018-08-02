@@ -82,17 +82,15 @@ int main(int argc, char *argv[])
 /* ************************************************************************** */
 // TODOs
 
-/// 0.3
-// firmware upgrade advice
-// bluetooth not re-enabling itself
-
 /// NEXT
 // macOS port
 // android port
-// properly disable graph & limits when no database available
+// bluetooth not re-enabling itself
+// properly disable graph & limits when no database available?
 
 /// NEXT next
-// plant db (???)
+// plants img
+// plants db (???)
 // handle multiple bluetooth adapters (???)
 
 /* ************************************************************************** */

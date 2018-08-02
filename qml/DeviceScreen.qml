@@ -22,7 +22,7 @@
 import QtQuick 2.7
 
 Rectangle {
-    id: deviceExtendedRectangle
+    id: deviceScreenRectangle
     color: "#eefbdb"
     width: 450
     height: 700
@@ -282,7 +282,6 @@ Rectangle {
             Text {
                 id: textFw
                 y: 13
-                width: 72
                 height: 30
 
                 text: "v" + myDevice.deviceFirmware
@@ -457,11 +456,11 @@ Rectangle {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            DeviceDatasBox {
+            DeviceScreenDatas {
                 anchors.fill: parent
                 id: rectangleDeviceDatas
             }
-            LimitsBox {
+            DeviceScreenLimits {
                 anchors.fill: parent
                 id: rectangleLimits
             }

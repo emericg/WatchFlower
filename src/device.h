@@ -121,8 +121,6 @@ public slots:
     QString getFirmware() const { return m_firmware; }
     int getBattery() const { return m_battery; }
     float getTemp() const;
-    float getTempC() const { return m_temp; }
-    float getTempF() const { return (m_temp * 9.0/5.0 + 32.0); }
     int getHygro() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
@@ -176,6 +174,9 @@ private:
     // QLowEnergyController realted
     QLowEnergyController *controller = nullptr;
     bool hasControllerError() const;
+
+    float getTempC() const { return m_temp; }
+    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
 
     void deviceConnected();
     void deviceDisconnected();

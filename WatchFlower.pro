@@ -11,7 +11,7 @@ if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
 }
 if (lessThan(QT_MINOR_VERSION, 10)) {
     warning("You need Qt 5.10 to build WatchFlower with proper data charts." \
-            "You can use Qt 5.7 but you'll need to make a small adjustment into ChartBox.qml...")
+            "You can use Qt 5.7 but you'll need to make a small adjustment into DeviceScreenCharts.qml...")
 }
 
 # Build artifacts

@@ -3,10 +3,10 @@
         <file>qml/main.qml</file>
         <file>qml/Header.qml</file>
         <file>qml/DeviceBox.qml</file>
-        <file>qml/DeviceExtended.qml</file>
-        <file>qml/DeviceDatasBox.qml</file>
-        <file>qml/LimitsBox.qml</file>
-        <file>qml/ChartBox.qml</file>
+        <file>qml/DeviceScreen.qml</file>
+        <file>qml/DeviceScreenDatas.qml</file>
+        <file>qml/DeviceScreenLimits.qml</file>
+        <file>qml/DeviceScreenCharts.qml</file>
         <file>qml/Settings.qml</file>
         <file>assets/app/watchflower.svg</file>
         <file>assets/app/watchflower.png</file>

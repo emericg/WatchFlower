@@ -261,8 +261,10 @@ bool Device::getSqlCachedDatas()
 
     while (cachedDatas.next())
     {
-        qDebug() << "Using cachedDatas";
-
+#ifndef NDEBUG
+        qDebug() << "* Device update:" << getMacAddress();
+        qDebug() << "> using cachedDatas";
+#endif
         m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
         m_luminosity =  cachedDatas.value(2).toInt();
@@ -327,9 +329,9 @@ float Device::getTemp() const
 {
     SettingsManager *s = SettingsManager::getInstance();
     if (s->getTempUnit() == "F")
-        return (m_temp * 9.0/5.0 + 32.0);
+        return getTempF();
     else
-        return m_temp;
+        return getTempC();
 }
 
 QString Device::getTempString() const
@@ -338,9 +340,9 @@ QString Device::getTempString() const
 
     SettingsManager *s = SettingsManager::getInstance();
     if (s->getTempUnit() == "F")
-        tempString = QString::number((m_temp * 9.0/5.0 + 32.0), 'f', 1) + "°F";
+        tempString = QString::number(getTempF(), 'f', 1) + "°F";
     else
-        tempString = QString::number(m_temp, 'f', 1) + "°C";
+        tempString = QString::number(getTempC(), 'f', 1) + "°C";
 
     return tempString;
 }
@@ -801,7 +803,7 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::ServiceDiscovered)
+        if (newState == QLowEnergyService::ServiceDiscovered)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
@@ -811,7 +813,7 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
                 m_firmware = chc.value().remove(0, 2);
             }
 
-            // if firmware > 2.6.6
+            // if firmware > 2.6.6 // TODO add proper check
             {
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
@@ -828,8 +830,6 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
             //qWarning() << "DeviceInfo::serviceDetailsDiscovered() state is:" << newState;
         }
     }
-
-    return;
 }
 
 bool Device::hasControllerError() const
@@ -865,20 +865,20 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
 
-            m_temp = (data[0] + (data[1] << 8)) / 10.0;
+            m_temp = (data[0] + (data[1] << 8)) / 10.f;
             m_hygro = data[7];
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
 
 #ifndef NDEBUG
-            qDebug() << "* Device:" << getMacAddress();
+            qDebug() << "* Device update:" << getMacAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_temp:" << m_temp;
             qDebug() << "- m_hygro:" << m_hygro;
             qDebug() << "- m_luminosity:" << m_luminosity;
             qDebug() << "- m_conductivity:" << m_conductivity;
-#endif // NDEBUG
+#endif
 
             refreshDatasFinished(true);
 

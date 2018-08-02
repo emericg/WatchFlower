@@ -26,7 +26,7 @@ import QtCharts 2.2 // Qt 5.10 needed here...
 // ChartView / "legend.visible" line at the bottom of this file
 
 Rectangle {
-    id: chartBox
+    id: deviceScreenCharts
     //color: "red" // FIXME too much borders !!!
 
     property string graphViewSelected: settingsManager.graphview

@@ -75,8 +75,7 @@ DeviceManager::DeviceManager()
             QString deviceName = queryDevices.value(0).toString();
             QString deviceAddr = queryDevices.value(1).toString();
 
-            qDebug() << "- device: " << deviceName << "/" << deviceAddr;
-
+            //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
             Device *d = new Device(deviceAddr, deviceName);
             m_devices.append(d);
         }
@@ -235,7 +234,7 @@ void DeviceManager::deviceDiscoveryFinished()
             QString deviceName = queryDevices.value(0).toString();
             QString deviceAddr = queryDevices.value(1).toString();
 
-            qDebug() << "- device: " << deviceName << "/" << deviceAddr;
+            qDebug() << "* Device added (from BLE discovery): " << deviceName << "/" << deviceAddr;
 
             // device lookup
             bool found = false;

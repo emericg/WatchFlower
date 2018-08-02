@@ -30,7 +30,7 @@ Rectangle {
     radius: 8
 
     property var myDevice
-    property bool myDeviceUpdating: myDevice.updating
+    property bool myDeviceUpdating: myDevice.updating // TODO replace by a connection
 
     Component.onCompleted: updateBoxDatas();
 
@@ -227,7 +227,7 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            pageLoader.setSource("DeviceExtended.qml",
+            pageLoader.setSource("DeviceScreen.qml",
                                  { myDevice: myDevice });
         }
     }

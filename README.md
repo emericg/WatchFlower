@@ -9,7 +9,7 @@ WatchFlower
 ## Introduction
 
 WatchFlower is a small application to help you read and plot datas from your Xiaomi "Flower Care" devices.
-It works with all versions of the device, and doesn't require GPS or other any other private datas from you.
+It works with all versions of the device, and doesn't require GPS or other any other private datas from you like the official application.
 
 It's still a bit early in development but it should work on all Qt platforms, meaning Linux, macOS, windows, but also android and iOS.
 
@@ -24,7 +24,7 @@ It's still a bit early in development but it should work on all Qt platforms, me
 
 ### Dependencies
 
-You will need a C++11 capable compiler and Qt 5.7+ (versions 5.10+ are recommended).
+You will need a C++11 capable compiler and Qt 5.7+ (versions 5.11+ are recommended however).
 WatchFlower will take advantages of sqlite if it's available on your system.
 
 ### Building WatchFlower
