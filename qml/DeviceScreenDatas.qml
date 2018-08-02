@@ -32,10 +32,6 @@ Rectangle {
     anchors.left: parent.left
     anchors.bottom: parent.bottom
 
-    property string badColor: "#ffbf66";
-    property string neutralColor: "#e4e4e4";
-    property string goodColor: "#87d241";
-
     function setDatas() {
 
         if (myDevice.deviceBattery < 15) {

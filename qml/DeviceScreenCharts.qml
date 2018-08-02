@@ -27,13 +27,12 @@ import QtCharts 2.2 // Qt 5.10 needed here...
 
 Rectangle {
     id: deviceScreenCharts
-    //color: "red" // FIXME too much borders !!!
+    color: "#000000ff"
+    width: parent.width
+    anchors.margins: 0
 
     property string graphViewSelected: settingsManager.graphview
     property string graphDataSelected: settingsManager.graphdata
-
-    width: parent.width
-    anchors.margins: 0
 
     Connections {
         target: myDevice
@@ -311,19 +310,20 @@ Rectangle {
         anchors.bottom: rectangleSettings.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.topMargin: -12
-        anchors.bottomMargin: -8
-        anchors.leftMargin: -16
-        anchors.rightMargin: -16
+        anchors.topMargin: -20
+        anchors.bottomMargin: -16
+        anchors.leftMargin: -20
+        anchors.rightMargin: -20
 
         antialiasing: true
         legend.visible: false // this will only work with Qt 5.10+
         backgroundRoundness: 0
-
-        Component.onCompleted: updateGraph()
+        backgroundColor: "#000000ff"
 
         //animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand
+
+        Component.onCompleted: updateGraph()
 
         StackedBarSeries {
             id: myBarSeries
@@ -340,14 +340,14 @@ Rectangle {
 
         LineSeries {
             id: lowLimitSeries
-            color: "#ffbf66"
+            color: badColor
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false
         }
         LineSeries {
             id: highLimitSeries
-            color: "#ffbf66"
+            color: badColor
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false

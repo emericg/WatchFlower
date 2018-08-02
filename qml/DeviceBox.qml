@@ -23,11 +23,10 @@ import QtQuick 2.7
 
 Rectangle {
     id: deviceBox
-
-    color: "#ccffffff"
     width: parent.width
     height: 128
     radius: 8
+    color: "#ccffffff"
 
     property var myDevice
     property bool myDeviceUpdating: myDevice.updating // TODO replace by a connection

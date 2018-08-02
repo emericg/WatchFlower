@@ -29,6 +29,10 @@ Rectangle {
 
     property var myDevice
 
+    property string badColor: "#ffbf66";
+    property string neutralColor: "#e4e4e4";
+    property string goodColor: "#87d241";
+
     function updateStatus() {
         if (myDevice.updating) {
             header.scanAnimation.start();
