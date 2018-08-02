@@ -28,13 +28,25 @@ Rectangle {
     height: 700
 
     property var myDevice
-    property bool myDeviceUpdating: myDevice.updating
 
-    onMyDeviceUpdatingChanged: {
+    function updateStatus() {
         if (myDevice.updating) {
             header.scanAnimation.start();
         } else {
             header.scanAnimation.stop();
+        }
+
+        if (!myDevice.available && !myDevice.updating) {
+            textOffline.visible = true
+            if (myDevice.lastUpdate) {
+                textLastUpdate.visible = true
+                textLastUpdate.text = qsTr("Last update ") + myDevice.lastUpdate + qsTr("min ago")
+            } else {
+                textLastUpdate.visible = false
+            }
+        } else {
+            textOffline.visible = false
+            textLastUpdate.visible = false
         }
     }
 
@@ -63,11 +75,15 @@ Rectangle {
         anchors.right: parent.right
         anchors.left: parent.left
 
-        Component.onCompleted: rectangleDeviceDatas.setDatas();
+        Component.onCompleted: {
+            updateStatus()
+            rectangleDeviceDatas.setDatas()
+        }
 
         Connections {
             target: myDevice
             onDatasUpdated: rectangleDeviceDatas.setDatas()
+            onStatusUpdated: updateStatus()
         }
 
         MouseArea {
@@ -149,80 +165,97 @@ Rectangle {
                 }
             }
 
-            //            Rectangle {
-            //                id: rectangleDevice
-            //                x: 349
-            //                width: 101
-            //                color: "#00000000"
-            //                anchors.bottom: parent.bottom
-            //                anchors.bottomMargin: 0
-            //                anchors.top: parent.top
-            //                anchors.topMargin: 0
-            //                anchors.right: parent.right
-            //                anchors.rightMargin: 0
-            //                border.width: 0
+            Text {
+                id: textOffline
+                x: 335
+                y: 53
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 12
+                anchors.right: parent.right
+                anchors.rightMargin: 12
 
-            //                Image {
-            //                    id: imageFw
-            //                    x: 399
-            //                    width: 30
-            //                    height: 30
-            //                    anchors.verticalCenterOffset: -16
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    anchors.right: parent.right
-            //                    anchors.rightMargin: 8
-            //                    source: "qrc:/assets/fw.svg"
-            //                }
-            //                Text {
-            //                    id: textFw
-            //                    y: 13
-            //                    width: 64
-            //                    height: 30
-            //                    text: "v" + myDevice.deviceFirmware
-            //                    horizontalAlignment: Text.AlignRight
-            //                    anchors.right: imageFw.left
-            //                    anchors.rightMargin: 8
-            //                    verticalAlignment: Text.AlignVCenter
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    anchors.verticalCenterOffset: -16
-            //                    font.pixelSize: 14
-            //                }
+                color: "#ff671b"
+                text: qsTr("Device is OFFLINE")
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 15
+                font.bold: true
+            }
 
-            //                Image {
-            //                    id: imageBatt
-            //                    x: 205
-            //                    width: 30
-            //                    height: 30
-            //                    anchors.right: parent.right
-            //                    anchors.rightMargin: 8
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    anchors.verticalCenterOffset: 16
-            //                    source: {
-            //                        if (myDevice.deviceBattery < 15) {
-            //                            source = "qrc:/assets/battery_low.svg";
-            //                        } else if (myDevice.deviceBattery > 75) {
-            //                            source = "qrc:/assets/battery_full.svg";
-            //                        } else {
-            //                            source = "qrc:/assets/battery_mid.svg";
-            //                        }
-            //                    }
-            //                }
-            //                Text {
-            //                    id: textBatt
-            //                    x: 260
-            //                    y: 10
-            //                    width: 64
-            //                    height: 30
-            //                    text: myDevice.deviceBattery + "%"
-            //                    horizontalAlignment: Text.AlignRight
-            //                    anchors.right: imageBatt.left
-            //                    anchors.rightMargin: 8
-            //                    verticalAlignment: Text.AlignVCenter
-            //                    anchors.verticalCenterOffset: 16
-            //                    anchors.verticalCenter: parent.verticalCenter
-            //                    font.pixelSize: 14
-            //                }
-            //            }
+//            Rectangle {
+//                id: rectangleDevice
+//                x: 349
+//                width: 101
+//                color: "#00000000"
+//                anchors.bottom: parent.bottom
+//                anchors.bottomMargin: 0
+//                anchors.top: parent.top
+//                anchors.topMargin: 0
+//                anchors.right: parent.right
+//                anchors.rightMargin: 0
+//                border.width: 0
+
+//                Image {
+//                    id: imageFw
+//                    x: 399
+//                    width: 30
+//                    height: 30
+//                    anchors.verticalCenterOffset: -16
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.right: parent.right
+//                    anchors.rightMargin: 8
+//                    source: "qrc:/assets/fw.svg"
+//                }
+//                Text {
+//                    id: textFw
+//                    y: 13
+//                    width: 64
+//                    height: 30
+//                    text: "v" + myDevice.deviceFirmware
+//                    horizontalAlignment: Text.AlignRight
+//                    anchors.right: imageFw.left
+//                    anchors.rightMargin: 8
+//                    verticalAlignment: Text.AlignVCenter
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.verticalCenterOffset: -16
+//                    font.pixelSize: 14
+//                }
+
+//                Image {
+//                    id: imageBatt
+//                    x: 205
+//                    width: 30
+//                    height: 30
+//                    anchors.right: parent.right
+//                    anchors.rightMargin: 8
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.verticalCenterOffset: 16
+//                    source: {
+//                        if (myDevice.deviceBattery < 15) {
+//                            source = "qrc:/assets/battery_low.svg";
+//                        } else if (myDevice.deviceBattery > 75) {
+//                            source = "qrc:/assets/battery_full.svg";
+//                        } else {
+//                            source = "qrc:/assets/battery_mid.svg";
+//                        }
+//                    }
+//                }
+//                Text {
+//                    id: textBatt
+//                    x: 260
+//                    y: 10
+//                    width: 64
+//                    height: 30
+//                    text: myDevice.deviceBattery + "%"
+//                    horizontalAlignment: Text.AlignRight
+//                    anchors.right: imageBatt.left
+//                    anchors.rightMargin: 8
+//                    verticalAlignment: Text.AlignVCenter
+//                    anchors.verticalCenterOffset: 16
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    font.pixelSize: 14
+//                }
+//            }
         }
 
         Rectangle {
@@ -292,6 +325,17 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 font.pixelSize: 14
+            }
+
+            Text {
+                id: textLastUpdate
+                x: 359
+                y: 13
+                text: qsTr("Last update: x min ago")
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                font.pixelSize: 15
             }
         }
 
@@ -397,6 +441,7 @@ Rectangle {
                             rectangleContent.state = "limits";
                         else {
                             rectangleContent.state = "datas";
+                            // Update color bars with new limits
                             rectangleDeviceDatas.setDatas();
                         }
                     }

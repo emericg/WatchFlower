@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QList>
 #include <QTimer>
+#include <QDateTime>
 
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
@@ -36,7 +37,9 @@ class Device: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
+    Q_PROPERTY(QString lastUpdate READ getLastUpdateString NOTIFY statusUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceAddress READ getMacAddress NOTIFY datasUpdated)
@@ -66,6 +69,7 @@ class Device: public QObject
 
     bool m_available = false;
     bool m_updating = false;
+    QDateTime m_lastUpdate;
     QTimer m_updateTimer;
 
     // ble device datas
@@ -98,10 +102,13 @@ public:
 public slots:
     bool refreshDatas();
     void refreshDatasStarted();
+    void refreshDatasFinished(bool status);
+
+    void setTimerInterval(int updateIntervalMin = 0);
+
     bool getSqlDatas();
     bool getSqlCachedDatas();
     bool getBleDatas();
-    void refreshDatasFinished();
 
     // ble device
     QString getName() const { return m_deviceName; }
@@ -122,6 +129,7 @@ public slots:
 
     QString getTempString() const;
     QString getDataString() const;
+    QString getLastUpdateString() const;
 
     // ble device associated datas
     QString getCustomName() { return m_customName; }
@@ -171,7 +179,6 @@ private:
 
     void deviceConnected();
     void deviceDisconnected();
-    void disconnectFromDevice();
     void errorReceived(QLowEnergyController::Error);
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);

@@ -308,7 +308,7 @@ void SettingsManager::resetSettings()
     // Settings
     m_trayEnabled = false;
     emit systrayChanged();
-    m_updateInterval = UPDATE_INTERVAL;
+    m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     emit intervalChanged();
     m_tempUnit = "C";
     emit tempunitChanged();

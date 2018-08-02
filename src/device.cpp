@@ -23,6 +23,8 @@
 #include "settingsmanager.h"
 #include "systraymanager.h"
 
+#include <cmath>
+
 #include <QBluetoothUuid>
 #include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
@@ -56,14 +58,9 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     getSqlDatas();
     refreshDatas();
 
-    // Timer update
-    SettingsManager *sm = SettingsManager::getInstance();
-    int updateInterval = sm->getUpdateInterval();
-    if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
-
-    m_updateTimer.setInterval(updateInterval*60*1000);
+    // Set update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    m_updateTimer.start();
+    setTimerInterval();
 }
 
 Device::Device(const QBluetoothDeviceInfo &d)
@@ -80,14 +77,9 @@ Device::Device(const QBluetoothDeviceInfo &d)
     getSqlDatas();
     refreshDatas();
 
-    // Timer update
-    SettingsManager *sm = SettingsManager::getInstance();
-    int updateInterval = sm->getUpdateInterval();
-    if (updateInterval < 5 || updateInterval > 120) updateInterval = UPDATE_INTERVAL;
-
-    m_updateTimer.setInterval(updateInterval*60*1000);
+    // Set update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    m_updateTimer.start();
+    setTimerInterval();
 }
 
 Device::~Device()
@@ -101,7 +93,6 @@ Device::~Device()
 
 void Device::refreshDatasStarted()
 {
-    m_available = false;
     m_updating = true;
     Q_EMIT statusUpdated();
 }
@@ -114,40 +105,75 @@ bool Device::refreshDatas()
 
     if (getSqlCachedDatas() == false)
     {
-        if (getBleDatas())
+        if (getBleDatas() == false)
         {
-            //
-        }
-        else
-        {
-            m_available = false;
-            refreshDatasFinished();
+            refreshDatasFinished(false);
         }
     }
 
     return status;
 }
 
-void Device::refreshDatasFinished()
+void Device::refreshDatasFinished(bool status)
 {
     m_updating = false;
-    Q_EMIT statusUpdated();
-    Q_EMIT datasUpdated();
+    m_available = status;
 
-    if (m_hygro > 0 && m_hygro <= m_limitHygroMin)
+    if (status == true)
     {
-        SystrayManager *st = SystrayManager::getInstance();
-        if (st)
+        // Only update datas on success
+        m_lastUpdate = QDateTime::currentDateTime();
+        Q_EMIT datasUpdated();
+
+        // Check timer
+        setTimerInterval();
+
+        // 'Water me' notification
+        if (m_hygro > 0 && m_hygro <= m_limitHygroMin)
         {
-            QString message;
+            SystrayManager *st = SystrayManager::getInstance();
+            if (st)
+            {
+                QString message;
 
-            if (!m_plantName.isEmpty())
-                message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
-            else
-                message = QObject::tr("You need to water the plant on '") + m_customName + "'";
+                if (!m_plantName.isEmpty())
+                    message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
+                else
+                    message = QObject::tr("You need to water the plant on '") + m_customName + "'";
 
-            st->sendNotification(message);
+                st->sendNotification(message);
+            }
         }
+    }
+    else
+    {
+        // Set error timer value
+        setTimerInterval(ERROR_UPDATE_INTERVAL);
+    }
+
+    Q_EMIT statusUpdated();
+}
+
+/* ************************************************************************** */
+
+void Device::setTimerInterval(int updateInterval)
+{
+    // If no interval is provided, load the one from settings
+    if (updateInterval <= 0)
+    {
+        SettingsManager *sm = SettingsManager::getInstance();
+        updateInterval = sm->getUpdateInterval();
+    }
+
+    // Validate the interval
+    if (updateInterval < 5 || updateInterval > 120)
+        updateInterval = DEFAULT_UPDATE_INTERVAL;
+
+    // Is our timer already set to this particular interval?
+    if (m_updateTimer.interval() != updateInterval*60*1000)
+    {
+        m_updateTimer.setInterval(updateInterval*60*1000);
+        m_updateTimer.start();
     }
 }
 
@@ -236,21 +262,25 @@ bool Device::getSqlCachedDatas()
     while (cachedDatas.next())
     {
         qDebug() << "Using cachedDatas";
-        status = true;
 
         m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
         m_luminosity =  cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
 
-        m_available = true;
+        m_lastUpdate = QDateTime::currentDateTime(); // good enough
 
-        refreshDatasFinished();
+        refreshDatasFinished(true);
+        status = true;
     }
 
     return status;
 }
 
+/*!
+ * \brief Device::getBleDatas
+ * \return false means immediate error, true means update process started
+ */
 bool Device::getBleDatas()
 {
     //qDebug() << "DeviceInfo::getDatas(" << m_deviceAddress << ")";
@@ -324,6 +354,22 @@ QString Device::getDataString() const
     dataString += QString::number(m_luminosity) + " lm";
 
     return dataString;
+}
+
+QString Device::getLastUpdateString() const
+{
+    QString lastUpdate;
+
+    if (m_lastUpdate.isValid())
+    {
+        // Return hour (HH:MM) since last update
+        //lastUpdate = m_lastUpdate.toString("HH:MM");
+
+        // Return number of minutes since last update
+        lastUpdate = QString::number(std::ceil(m_lastUpdate.secsTo(QDateTime::currentDateTime())/60.0));
+    }
+
+    return lastUpdate;
 }
 
 void Device::setCustomName(QString name)
@@ -701,20 +747,19 @@ void Device::deviceConnected()
 void Device::deviceDisconnected()
 {
     //qDebug() << "DeviceInfo::deviceDisconnected(" << m_deviceAddress << ")";
-    refreshDatasFinished();
-}
 
-void Device::disconnectFromDevice()
-{
-    //qDebug() << "DeviceInfo::disconnectFromDevice(" << m_deviceAddress << ")";
+    if (m_updating)
+    {
+        // This means we got forcibly disconnected by the device before completing the update
+        refreshDatasFinished(false);
+    }
 }
 
 void Device::errorReceived(QLowEnergyController::Error error)
 {
     qDebug() << "DeviceInfo::errorReceived(" << m_deviceAddress << ") error:" << error;
 
-    m_available = false;
-    refreshDatasFinished();
+    refreshDatasFinished(false);
 }
 
 void Device::serviceScanDone()
@@ -835,7 +880,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             qDebug() << "- m_conductivity:" << m_conductivity;
 #endif // NDEBUG
 
-            refreshDatasFinished();
+            refreshDatasFinished(true);
+
             controller->disconnectFromDevice();
 
             //if (m_db)

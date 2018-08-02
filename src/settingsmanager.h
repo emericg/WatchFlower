@@ -22,7 +22,8 @@
 #ifndef SETTINGS_MANAGER_H
 #define SETTINGS_MANAGER_H
 
-#define UPDATE_INTERVAL 60
+#define DEFAULT_UPDATE_INTERVAL     60 // minutes
+#define ERROR_UPDATE_INTERVAL       10 // minutes
 
 #include <QObject>
 
@@ -40,7 +41,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
 
     bool m_trayEnabled = false;
-    unsigned m_updateInterval = UPDATE_INTERVAL;
+    int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphDefaultView = "daily";
     QString m_graphDefaultData = "hygro";
@@ -75,8 +76,8 @@ public:
     bool getSysTray() const { return m_trayEnabled; }
     void setSysTray(bool value);
 
-    unsigned getUpdateInterval() const { return m_updateInterval; }
-    void setUpdateInterval(unsigned value) { m_updateInterval = value; writeSettings(); }
+    int getUpdateInterval() const { return m_updateInterval; }
+    void setUpdateInterval(int value) { m_updateInterval = value; writeSettings(); }
 
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(QString value) { m_tempUnit = value; writeSettings(); }

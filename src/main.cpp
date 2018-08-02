@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
 
 /// 0.3
 // firmware upgrade advice
-// device offline text
 // bluetooth not re-enabling itself
 
 /// NEXT
