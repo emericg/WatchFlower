@@ -640,7 +640,7 @@ QVariantList Device::getDatasHourly(QString dataName)
     return datas;
 }
 
-QVariantList Device::getBackgroundHourly()
+QVariantList Device::getBackgroundHourly(float maxValue)
 {
     QVariantList lastTwentyfourHours;
     int firstHour = -1;
@@ -671,7 +671,8 @@ QVariantList Device::getBackgroundHourly()
             if (now.hour() > 22 || now.hour() < 8)
                 lastTwentyfourHours.append(0);
             else
-                lastTwentyfourHours.append(30000);
+                lastTwentyfourHours.append(maxValue);
+
             now = now.addSecs(3600);
         }
     }
@@ -683,7 +684,8 @@ QVariantList Device::getBackgroundHourly()
             if (now.hour() > 22 || now.hour() < 8)
                 lastTwentyfourHours.append(0);
             else
-                lastTwentyfourHours.append(30000);
+                lastTwentyfourHours.append(maxValue);
+
             now = now.addSecs(3600);
         }
     }
@@ -691,7 +693,7 @@ QVariantList Device::getBackgroundHourly()
     return lastTwentyfourHours;
 }
 
-QVariantList Device::getBackgroundNightly()
+QVariantList Device::getBackgroundNightly(float maxValue)
 {
     QVariantList lastTwentyfourHours;
     int firstHour = -1;
@@ -709,9 +711,7 @@ QVariantList Device::getBackgroundNightly()
     while (datasPerHour.next())
     {
         if (firstHour == -1)
-        {
             firstHour = datasPerHour.value(0).toInt();
-        }
     }
 
     if (firstHour == -1) // We don't have datas
@@ -720,7 +720,7 @@ QVariantList Device::getBackgroundNightly()
         while (lastTwentyfourHours.size() < 24)
         {
             if (now.hour() > 22 || now.hour() < 8)
-                lastTwentyfourHours.append(30000);
+                lastTwentyfourHours.append(maxValue);
             else
                 lastTwentyfourHours.append(0);
             now = now.addSecs(3600);
@@ -732,7 +732,7 @@ QVariantList Device::getBackgroundNightly()
         while (lastTwentyfourHours.size() < 24)
         {
             if (now.hour() > 22 || now.hour() < 8)
-                lastTwentyfourHours.append(30000);
+                lastTwentyfourHours.append(maxValue);
             else
                 lastTwentyfourHours.append(0);
             now = now.addSecs(3600);
@@ -740,6 +740,18 @@ QVariantList Device::getBackgroundNightly()
     }
 
     return lastTwentyfourHours;
+}
+
+QVariantList Device::getBackgroundDaily(float maxValue)
+{
+    QVariantList lastSevenDays;
+
+    while (lastSevenDays.size() < 7)
+    {
+        lastSevenDays.append(maxValue);
+    }
+
+    return lastSevenDays;
 }
 
 /* ************************************************************************** */

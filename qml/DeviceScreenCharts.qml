@@ -272,27 +272,13 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitConduMax);
         }
 
+        // Get datas
         if (graphViewSelected == "hourly") {
-            textDays.font.bold = false
-            textHours.font.bold = true
-
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
-
-            backgroundDayBars.color = "#f9f9f9"
-            backgroundDayBars.values = myDevice.getBackgroundHourly()
-            backgroundNightBars.color = "#E4E4E4"
-            backgroundNightBars.values = myDevice.getBackgroundNightly()
         } else {
-            textDays.font.bold = true
-            textHours.font.bold = false
-
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
-
-            backgroundDayBars.color = "#f9f9f9"
-            backgroundDayBars.values = [30000, 30000, 30000, 30000, 30000, 30000, 30000]
-            backgroundNightBars.values = [0]
         }
 
         // Min axis
@@ -301,11 +287,29 @@ Rectangle {
 
         // Max axis
         var max_of_array = Math.max.apply(Math, myBarSet.values);
-        axisY0.max = max_of_array*1.20;
+        var max_of_legend = max_of_array*1.20;
+        axisY0.max = max_of_legend;
+
+        // Decorations
+        if (graphViewSelected == "hourly") {
+            textDays.font.bold = false
+            textHours.font.bold = true
+            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
+            backgroundNightBars.color = "#E4E4E4"
+            backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
+        } else {
+            textDays.font.bold = true
+            textHours.font.bold = false
+            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
+            backgroundNightBars.values = [0]
+        }
     }
 
     ChartView {
         id: myBarGraph
+        z: -1 // so the graph, overlapping with buttons, doesn't prevent clicks
         anchors.top: parent.top
         anchors.bottom: rectangleSettings.top
         anchors.left: parent.left
