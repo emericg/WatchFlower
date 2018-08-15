@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>app/watchflower.svg</file>
+        <file>app/watchflower.png</file>
+        <file>app/watchflower_tray.svg</file>
+        <file>devices/flowercare.svg</file>
+        <file>devices/hygrotemp.svg</file>
+        <file>devices/ropot.svg</file>
+        <file>background1.png</file>
+        <file>background2.png</file>
+        <file>background3.png</file>
+        <file>menu_back.svg</file>
+        <file>menu_refresh.svg</file>
+        <file>menu_settings.svg</file>
+        <file>delete_button.svg</file>
+        <file>edit_button.svg</file>
+        <file>ble.svg</file>
+        <file>ble_err.svg</file>
+        <file>stats.svg</file>
+        <file>plant.svg</file>
+        <file>fw.svg</file>
+        <file>battery_low.svg</file>
+        <file>battery_mid.svg</file>
+        <file>battery_full.svg</file>
+        <file>temp.svg</file>
+        <file>hygro.svg</file>
+        <file>day.svg</file>
+        <file>night.svg</file>
+        <file>conductivity.svg</file>
+    </qresource>
+</RCC>

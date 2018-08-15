@@ -38,7 +38,7 @@ HEADERS  += src/settingsmanager.h \
 
 OTHER_FILES += qml/*.qml
 
-RESOURCES   += resources.qrc
+RESOURCES   += qml/qml.qrc assets/assets.qrc
 
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
