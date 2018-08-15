@@ -50,15 +50,16 @@ int main(int argc, char *argv[])
 
     SettingsManager *sm = SettingsManager::getInstance();
 
-    DeviceManager dm;
-    if (dm.areDevicesAvailable() == false)
+    DeviceManager *dm = new DeviceManager;
+
+    // Run a first scan, but only if we have no saved devices
+    if (dm->areDevicesAvailable() == false)
     {
-        // Run a first scan, but only if we have no saved devices
-        dm.startDeviceDiscovery();
+        dm->startDeviceDiscovery();
     }
 
     QQuickView *view = new QQuickView;
-    view->rootContext()->setContextProperty("deviceManager", &dm);
+    view->rootContext()->setContextProperty("deviceManager", dm);
     view->rootContext()->setContextProperty("settingsManager", sm);
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
@@ -67,10 +68,13 @@ int main(int argc, char *argv[])
     view->show();
 
     SystrayManager *st = SystrayManager::getInstance();
-    st->initSystray(&app, view);
-    if (sm->getSysTray())
+    if (st)
     {
-        st->installSystray();
+        st->initSystray(&app, view);
+        if (sm->getSysTray())
+        {
+            st->installSystray();
+        }
     }
 
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);

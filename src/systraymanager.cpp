@@ -92,21 +92,26 @@ bool SystrayManager::installSystray()
 {
     bool status = false;
 
-    if (m_sysTray == nullptr && m_sysTrayMenu != nullptr)
+    if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        m_sysTray = new QSystemTrayIcon();
-        if (m_sysTray)
+        if (m_sysTray == nullptr && m_sysTrayMenu != nullptr)
         {
-            QIcon trayIcon(":/assets/app/watchflower_tray.svg");
-            m_sysTray->setIcon(trayIcon);
-            m_sysTray->setContextMenu(m_sysTrayMenu);
-            m_sysTray->show();
+            m_sysTray = new QSystemTrayIcon();
+            if (m_sysTray)
+            {
+                QIcon trayIcon(":/app/watchflower_tray.svg");
+                m_sysTray->setIcon(trayIcon);
+                m_sysTray->setContextMenu(m_sysTrayMenu);
+                m_sysTray->show();
 
-            //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
+                QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::showHide);
+                QObject::connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
 
-            QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::showHide);
+                // Show greetings
+                //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
 
-            status = true;
+                status = true;
+            }
         }
     }
 
@@ -125,9 +130,12 @@ void SystrayManager::removeSystray()
 
 void SystrayManager::sendNotification(QString &text)
 {
-    if (m_sysTray)
+    if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        m_sysTray->showMessage("WatchFlower", text);
+        if (m_sysTray)
+        {
+            m_sysTray->showMessage("WatchFlower", text);
+        }
     }
 }
 
@@ -153,3 +161,9 @@ void SystrayManager::showHide(QSystemTrayIcon::ActivationReason r)
 }
 
 /* ************************************************************************** */
+
+void SystrayManager::aboutToBeDestroyed()
+{
+    qDebug() << "SystrayManager::aboutToBeDestroyed()";
+    m_sysTray = nullptr;
+}
