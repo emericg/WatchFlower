@@ -38,8 +38,7 @@ Rectangle {
     Component.onCompleted: updateBoxDatas();
 
     function updateBoxDatas() {
-        if (myDevice.devicePlantName !== "")
-        {
+        if (myDevice.devicePlantName !== "") {
             textName.text = myDevice.devicePlantName;
             textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")";
         }
@@ -54,13 +53,10 @@ Rectangle {
             textDatas.visible = false;
             imageBattery.visible = false;
             textBattery.visible = false;
-        }
-        else
-        {
+        } else {
             refreshAnimation.running = false;
 
-            if (myDevice.isAvailable())
-            {
+            if (myDevice.isAvailable()) {
                 imageStatus.visible = false;
                 imageDatas.visible = true;
                 textDatas.visible = true;
@@ -77,9 +73,8 @@ Rectangle {
                     imageBattery.source = "qrc:/assets/battery_mid.svg";
                 }
                 textBattery.text = myDevice.deviceBattery + "%"
-            }
+            } else {
             else
-            {
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
 

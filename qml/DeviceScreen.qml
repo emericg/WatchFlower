@@ -33,6 +33,8 @@ Rectangle {
     property string neutralColor: "#e4e4e4";
     property string goodColor: "#87d241";
 
+    Component.onCompleted: updateStatus()
+
     function updateStatus() {
         if (myDevice.updating) {
             header.scanAnimation.start();
@@ -83,15 +85,10 @@ Rectangle {
         anchors.right: parent.right
         anchors.left: parent.left
 
-        Component.onCompleted: {
-            updateStatus()
-            rectangleDeviceDatas.setDatas()
-        }
-
         Connections {
             target: myDevice
-            onDatasUpdated: rectangleDeviceDatas.setDatas()
             onStatusUpdated: updateStatus()
+            onDatasUpdated: rectangleDeviceDatas.updateDatas()
         }
 
         MouseArea {

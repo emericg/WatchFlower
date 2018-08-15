@@ -912,8 +912,6 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
             qDebug() << "- m_conductivity:" << m_conductivity;
 #endif
 
-            refreshDatasFinished(true);
-
             controller->disconnectFromDevice();
 
             //if (m_db)
@@ -943,6 +941,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
                 if (updateDevice.exec() == false)
                     qDebug() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
             }
+
+            refreshDatasFinished(true);
         }
     }
 }

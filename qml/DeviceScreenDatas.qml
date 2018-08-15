@@ -32,7 +32,9 @@ Rectangle {
     anchors.left: parent.left
     anchors.bottom: parent.bottom
 
-    function setDatas() {
+    Component.onCompleted: updateDatas()
+
+    function updateDatas() {
 
         if (myDevice.deviceBattery < 15) {
             imageBatt.source = "qrc:/assets/battery_low.svg";
@@ -50,15 +52,12 @@ Rectangle {
         }
 
         // Hygro
-        if (myDevice.deviceHygro < 0)
-        {
+        if (myDevice.deviceHygro < 0) {
             textHygro.text = qsTr("No datas...")
             barHygro_low.color = badColor
             barHygro_good.color = badColor
             barHygro_high.color = badColor
-        }
-        else
-        {
+        } else {
             textHygro.text = myDevice.deviceHygro + "%"
 
             if (myDevice.deviceHygro < myDevice.limitHygroMin) {
@@ -77,15 +76,12 @@ Rectangle {
         }
 
         // Temp
-        if (myDevice.deviceTempC < 0)
-        {
+        if (myDevice.deviceTempC < 0) {
             textTemp.text = qsTr("No datas...")
             barTemp_low.color = badColor
             barTemp_good.color = badColor
             barTemp_high.color = badColor
-        }
-        else
-        {
+        } else {
             textTemp.text = myDevice.getTempString();
 
             if (myDevice.deviceTempC < myDevice.limitTempMin) {
@@ -104,15 +100,12 @@ Rectangle {
         }
         
         // Luminosity
-        if (myDevice.deviceLuminosity < 0)
-        {
+        if (myDevice.deviceLuminosity < 0) {
             textLuminosity.text = qsTr("No datas...")
             barLux_low.color = badColor
             barLux_good.color = badColor
             barLux_high.color = badColor
-        }
-        else
-        {
+        } else {
             textLuminosity.text = myDevice.deviceLuminosity + " lumens"
 
             if (myDevice.deviceLuminosity < myDevice.limitLumiMin) {
@@ -131,15 +124,12 @@ Rectangle {
         }
 
         // Conductivity
-        if (myDevice.deviceConductivity < 0)
-        {
+        if (myDevice.deviceConductivity < 0) {
             textConductivity.text = qsTr("No datas...")
             barCond_low.color = badColor
             barCond_good.color = badColor
             barCond_high.color = badColor
-        }
-        else
-        {
+        } else {
             textConductivity.text = myDevice.deviceConductivity + " µS/cm"
 
             if (myDevice.deviceConductivity < myDevice.limitConduMin) {
@@ -156,6 +146,8 @@ Rectangle {
                 barCond_high.color = neutralColor
             }
         }
+
+        deviceScreenCharts.updateGraph()
     }
 
     Flow {
