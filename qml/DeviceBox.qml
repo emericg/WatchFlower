@@ -74,7 +74,6 @@ Rectangle {
                 }
                 textBattery.text = myDevice.deviceBattery + "%"
             } else {
-            else
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
 

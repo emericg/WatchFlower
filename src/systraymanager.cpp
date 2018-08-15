@@ -99,7 +99,7 @@ bool SystrayManager::installSystray()
             m_sysTray = new QSystemTrayIcon();
             if (m_sysTray)
             {
-                QIcon trayIcon(":/app/watchflower_tray.svg");
+                QIcon trayIcon(":/assets/app/watchflower_tray.svg");
                 m_sysTray->setIcon(trayIcon);
                 m_sysTray->setContextMenu(m_sysTrayMenu);
                 m_sysTray->show();
