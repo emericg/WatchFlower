@@ -1,9 +1,12 @@
 TARGET  = WatchFlower
-VERSION = 0.3.0
+VERSION = 0.4.0
 
 CONFIG += c++11
 QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
+
+# Pass app version to the C++
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
@@ -39,9 +42,6 @@ RESOURCES   += resources.qrc
 
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
-
-# Pass app version to the C++
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # OS icons (macOS and Windows)
 ICON         = assets/app/$$lower($${TARGET}).icns

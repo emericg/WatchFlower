@@ -86,6 +86,10 @@ int main(int argc, char *argv[])
 /* ************************************************************************** */
 // TODOs
 
+/// 0.4
+// add support for BLE hygro & temp sensor
+// add support for Ropot
+
 /// NEXT
 // macOS port
 // android port
