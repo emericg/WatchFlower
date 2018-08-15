@@ -446,7 +446,7 @@ Rectangle {
                         else {
                             rectangleContent.state = "datas";
                             // Update color bars with new limits
-                            rectangleDeviceDatas.setDatas();
+                            rectangleDeviceDatas.updateDatas();
                         }
                     }
                 }
