@@ -36,12 +36,17 @@ Rectangle {
 
     function updateDatas() {
 
-        if (myDevice.deviceBattery < 15) {
-            imageBatt.source = "qrc:/assets/battery_low.svg";
-        } else if (myDevice.deviceBattery > 75) {
-            imageBatt.source = "qrc:/assets/battery_full.svg";
+        if ((myDevice.deviceCapabilities & 1) == 1) {
+            if (myDevice.deviceBattery < 15) {
+                imageBatt.source = "qrc:/assets/battery_low.svg";
+            } else if (myDevice.deviceBattery > 75) {
+                imageBatt.source = "qrc:/assets/battery_full.svg";
+            } else {
+                imageBatt.source = "qrc:/assets/battery_mid.svg";
+            }
         } else {
-            imageBatt.source = "qrc:/assets/battery_mid.svg";
+            imageBatt.visible = false;
+            textBatt.visible = false;
         }
 
         var hours = Qt.formatDateTime (new Date(), "hh");
@@ -49,6 +54,19 @@ Rectangle {
             imageLuminosity.source = "qrc:/assets/night.svg";
         } else {
             imageLuminosity.source = "qrc:/assets/day.svg";
+        }
+
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            rectangleTemp.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            rectangleHygro.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            rectangleLuminosity.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            rectangleConductivity.visible = false
         }
 
         // Hygro

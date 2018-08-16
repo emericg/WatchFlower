@@ -35,14 +35,14 @@
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
 
 enum DeviceCapabilities {
-    DEVICE_BATTERY      = (1 << 1), //!< Can report its battery level
-    DEVICE_TEMP         = (1 << 2), //!< Has a temperature sensor
-    DEVICE_HYGRO        = (1 << 3), //!< Has a hygrometry sensor
-    DEVICE_LUMINOSITY   = (1 << 4), //!< Has a luminosity sensor
-    DEVICE_CONDUCTIVITY = (1 << 5), //!< Has a conductivity sensor
+    DEVICE_BATTERY      = (1 << 0), //!< Can report its battery level
+    DEVICE_TEMP         = (1 << 1), //!< Has a temperature sensor
+    DEVICE_HYGRO        = (1 << 2), //!< Has a hygrometry sensor
+    DEVICE_LUMINOSITY   = (1 << 3), //!< Has a luminosity sensor
+    DEVICE_CONDUCTIVITY = (1 << 4), //!< Has a conductivity sensor
 
-    DEVICE_LIMITS       = (1 << 6), //!< Can use limits
-    DEVICE_PLANT        = (1 << 7), //!< Is associated to a plant
+    DEVICE_LIMITS       = (1 << 5), //!< Can use limits
+    DEVICE_PLANT        = (1 << 6), //!< Is associated to a plant
 };
 
 /*!
@@ -60,6 +60,8 @@ class Device: public QObject
     Q_PROPERTY(QString deviceAddress READ getMacAddress NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceCustomName READ getCustomName NOTIFY datasUpdated)
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
+
+    Q_PROPERTY(int deviceCapabilities READ getCapabilities NOTIFY datasUpdated)
 
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY datasUpdated)
@@ -89,7 +91,7 @@ protected:
     QString m_deviceAddress;
     QBluetoothDeviceInfo bleDevice;
 
-    int m_capabilities = 0; // TODO
+    int m_capabilities = 0;
 
     bool m_available = false;
     bool m_updating = false;

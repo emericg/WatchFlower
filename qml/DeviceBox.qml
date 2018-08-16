@@ -30,6 +30,25 @@ Rectangle {
 
     property var myDevice
 
+    Text {
+        id: textName
+        y: 8
+        height: 32
+        color: "#454B54"
+        text: myDevice.deviceCustomName
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        anchors.topMargin: 12
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+
+        font.bold: true
+        font.pixelSize: 26
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignLeft
+    }
+
     Connections {
         target: myDevice
         onStatusUpdated: updateBoxDatas()
@@ -42,9 +61,24 @@ Rectangle {
             textName.text = myDevice.devicePlantName;
             textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")";
         }
+        if (myDevice.deviceName === "MJ_HT_V1") {
+            if (myDevice.deviceCustomName !== "MJ_HT_V1") {
+                textName.text = myDevice.devicePlantName;
+            } else {
+                textName.text = qsTr("Temperature sensor");
+            }
+            textAddr.text = myDevice.deviceName + " (" + myDevice.deviceAddress + ")";
+        }
 
-        if (myDevice.isUpdating())
-        {
+        if (myDevice.deviceName === "MJ_HT_V1") {
+            imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
+        } else if (myDevice.deviceName === "ropot") {
+            imageDevice.source = "qrc:/assets/devices/ropot.svg";
+        } else {
+            imageDevice.source = "qrc:/assets/devices/flowercare.svg";
+        }
+
+        if (myDevice.isUpdating()) {
             imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
 
@@ -60,19 +94,25 @@ Rectangle {
                 imageStatus.visible = false;
                 imageDatas.visible = true;
                 textDatas.visible = true;
-                imageBattery.visible = true;
-                textBattery.visible = true;
-
                 textDatas.text = myDevice.dataString;
 
-                if (myDevice.deviceBattery < 15) {
-                   imageBattery.source = "qrc:/assets/battery_low.svg";
-                } else if (myDevice.deviceBattery > 75) {
-                    imageBattery.source = "qrc:/assets/battery_full.svg";
+                if ((myDevice.deviceCapabilities & 0x01) == 1) {
+                    imageBattery.visible = true;
+                    textBattery.visible = true;
+
+                    if (myDevice.deviceBattery < 15) {
+                        imageBattery.source = "qrc:/assets/battery_low.svg";
+                    } else if (myDevice.deviceBattery > 75) {
+                        imageBattery.source = "qrc:/assets/battery_full.svg";
+                    } else {
+                        imageBattery.source = "qrc:/assets/battery_mid.svg";
+                    }
+                    textBattery.text = myDevice.deviceBattery + "%"
                 } else {
-                    imageBattery.source = "qrc:/assets/battery_mid.svg";
+                    imageBattery.visible = false;
+                    textBattery.visible = false;
                 }
-                textBattery.text = myDevice.deviceBattery + "%"
+
             } else {
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
@@ -87,25 +127,6 @@ Rectangle {
     }
 
     Text {
-        id: textName
-        y: 8
-        height: 32
-        color: "#454B54"
-        text: myDevice.deviceCustomName
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.topMargin: 8
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-
-        font.bold: true
-        font.pixelSize: 26
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignLeft
-    }
-
-    Text {
         id: textAddr
         width: 166
         height: 21
@@ -113,10 +134,25 @@ Rectangle {
         font.pixelSize: 14
         text: myDevice.deviceAddress
         anchors.top: textName.bottom
-        anchors.topMargin: 8
+        anchors.topMargin: 4
         anchors.left: parent.left
         anchors.leftMargin: 8
     }
+
+
+    Image {
+        id: imageDevice
+        opacity: 0.5
+        x: 290
+        y: 10
+        width: 64
+        height: 64
+        anchors.top: parent.top
+        anchors.topMargin: 4
+        anchors.right: parent.right
+        anchors.rightMargin: 4
+    }
+
 
     Rectangle {
         id: dataArea

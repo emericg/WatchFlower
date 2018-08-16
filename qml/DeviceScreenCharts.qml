@@ -219,6 +219,19 @@ Rectangle {
 
     function updateGraph() {
 
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            dT.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            dH.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            dL.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            dC.visible = false
+        }
+
         lowLimitSeries.clear()
         highLimitSeries.clear()
 

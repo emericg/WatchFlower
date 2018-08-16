@@ -25,6 +25,23 @@ import QtQuick.Controls 2.0
 Item {
     id: deviceScreenLimits
 
+    Component.onCompleted: updateLimitsVisibility()
+
+    function updateLimitsVisibility() {
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            itemTemp.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            itemHygro.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            itemLumi.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            itemCondu.visible = false
+        }
+    }
+
     Rectangle {
         id: rectangleHeader
         height: 48
