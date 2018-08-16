@@ -238,8 +238,16 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
                 return;
 
             m_temp = value.mid(2, 4).toFloat();
-            m_hygro = value.mid(9, 4).toFloat(); // TODO
+            m_hygro = value.mid(9, 4).toFloat(); // FIXME hygro could be a float too
 
+#ifndef NDEBUG
+            qDebug() << "* DeviceHygrotemp update:" << getMacAddress();
+            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_temp:" << m_temp;
+            qDebug() << "- m_hygro:" << m_hygro;
+#endif
+            // TODO not working...
             //controller->disconnectFromDevice();
 
             //if (m_db)
@@ -277,8 +285,8 @@ void DeviceHygrotemp::confirmedDescriptorWrite(const QLowEnergyDescriptor &d, co
 {
     //qDebug() << "DeviceHygrotemp::confirmedDescriptorWrite!";
 
-    if (d.isValid() && d == m_notificationDesc && value == QByteArray::fromHex("0000")) {
-
+    if (d.isValid() && d == m_notificationDesc && value == QByteArray::fromHex("0000"))
+    {
         qDebug() << "confirmedDescriptorWrite() disconnect?!";
 
         //disabled notifications -> assume disconnect intent
