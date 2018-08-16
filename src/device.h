@@ -30,7 +30,20 @@
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
-#define LATEST_KNOWN_FIRMWARE "3.1.8"
+#define LATEST_KNOWN_FIRMWARE_FLOWERCARE    "3.1.8"
+#define LATEST_KNOWN_FIRMWARE_ROPOT         "0.0.0"
+#define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
+
+enum DeviceCapabilities {
+    DEVICE_BATTERY      = (1 << 1), //!< Can report its battery level
+    DEVICE_TEMP         = (1 << 2), //!< Has a temperature sensor
+    DEVICE_HYGRO        = (1 << 3), //!< Has a hygrometry sensor
+    DEVICE_LUMINOSITY   = (1 << 4), //!< Has a luminosity sensor
+    DEVICE_CONDUCTIVITY = (1 << 5), //!< Has a conductivity sensor
+
+    DEVICE_LIMITS       = (1 << 6), //!< Can use limits
+    DEVICE_PLANT        = (1 << 7), //!< Is associated to a plant
+};
 
 /*!
  * \brief The Device class
@@ -66,29 +79,39 @@ class Device: public QObject
     Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
 
+Q_SIGNALS:
+    void statusUpdated();
+    void datasUpdated();
+    void limitsUpdated();
+
+protected:
     QString m_deviceName;
     QString m_deviceAddress;
     QBluetoothDeviceInfo bleDevice;
+
+    int m_capabilities = 0; // TODO
 
     bool m_available = false;
     bool m_updating = false;
     QDateTime m_lastUpdate;
     QTimer m_updateTimer;
 
-    // ble device datas
+    // BLE device infos
     QString m_firmware = "UNKN";
     bool m_firmware_uptodate = false;
     int m_battery = -1;
+
+    // BLE device datas
     float m_temp = -1;
     int m_hygro = -1;
     int m_luminosity = -1;
     int m_conductivity = -1;
 
-    // ble associated datas
+    // BLE associated datas
     QString m_customName;
     QString m_plantName;
 
-    // ble device limits
+    // BLE device limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 30;
     int m_limitTempMin = 15;
@@ -98,10 +121,28 @@ class Device: public QObject
     int m_limitConduMin = 250;
     int m_limitConduMax = 750;
 
+    // QLowEnergyController related
+    QLowEnergyController *controller = nullptr;
+    bool hasControllerError() const;
+
+    float getTempC() const { return m_temp; }
+    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
+
+    void deviceConnected();
+    void deviceDisconnected();
+    void errorReceived(QLowEnergyController::Error);
+    virtual void serviceScanDone();
+    virtual void addLowEnergyService(const QBluetoothUuid &uuid);
+    virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+
+    virtual void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+    virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+    virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
 public:
     Device(QString &deviceAddr, QString &deviceName);
     Device(const QBluetoothDeviceInfo &d);
-    ~Device();
+    virtual ~Device();
 
 public slots:
     bool refreshDatas();
@@ -114,34 +155,38 @@ public slots:
     bool getSqlCachedDatas();
     bool getBleDatas();
 
-    // ble device
+    // BLE device
     QString getName() const { return m_deviceName; }
     QString getMacAddress() const { return m_deviceAddress; }
+
+    int getCapabilities() const { return m_capabilities; }
 
     bool isAvailable() const { return m_available; }
     bool isUpdating() const { return m_updating; }
 
-    // ble device datas
+    // BLE device infos
     QString getFirmware() const { return m_firmware; }
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     int getBattery() const { return m_battery; }
+
+    // BLE device datas
     float getTemp() const;
     int getHygro() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
 
     QString getTempString() const;
-    QString getDataString() const;
+    virtual QString getDataString() const;
     QString getLastUpdateString() const;
 
-    // ble device associated datas
+    // BLE device associated datas
     QString getCustomName() { return m_customName; }
     void setCustomName(QString name);
 
     QString getPlantName() { return m_plantName; }
     void setPlantName(QString name);
 
-    // ble device limits
+    // BLE device limits
     int getLimitHygroMin() const { return m_limitHygroMin; }
     int getLimitHygroMax() const { return m_limitHygroMax; }
     int getLimitTempMin() const { return m_limitTempMin; }
@@ -170,31 +215,6 @@ public slots:
     QVariantList getBackgroundHourly(float maxValue);
     QVariantList getBackgroundNightly(float maxValue);
     QVariantList getBackgroundDaily(float maxValue);
-
-Q_SIGNALS:
-    void statusUpdated();
-    void datasUpdated();
-    void limitsUpdated();
-
-private:
-    // QLowEnergyController realted
-    QLowEnergyController *controller = nullptr;
-    bool hasControllerError() const;
-
-    float getTempC() const { return m_temp; }
-    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
-
-    void deviceConnected();
-    void deviceDisconnected();
-    void errorReceived(QLowEnergyController::Error);
-    void serviceScanDone();
-    void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
-
-    QLowEnergyService *serviceData = nullptr;
-
-    void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
 struct Version

@@ -21,6 +21,8 @@
 
 #include "devicemanager.h"
 #include "device.h"
+#include "device_flowercare.h"
+#include "device_hygrotemp.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -76,7 +78,18 @@ DeviceManager::DeviceManager()
             QString deviceAddr = queryDevices.value(1).toString();
 
             //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
-            Device *d = new Device(deviceAddr, deviceName);
+            Device *d = nullptr;
+
+            if (deviceName == "Flower care" || deviceName == "Flower mate")
+                d = new DeviceFlowercare(deviceAddr, deviceName);
+            else if (deviceName == "MJ_HT_V1")
+                d = new DeviceHygrotemp(deviceAddr, deviceName);
+            else
+                d = new Device(deviceAddr, deviceName);
+
+            if (!d)
+                return;
+
             m_devices.append(d);
         }
     }
@@ -249,7 +262,18 @@ void DeviceManager::deviceDiscoveryFinished()
             }
             if (found == false)
             {
-                Device *d = new Device(deviceAddr, deviceName);
+                Device *d = nullptr;
+
+                if (deviceName == "Flower care" || deviceName == "Flower mate")
+                    d = new DeviceFlowercare(deviceAddr, deviceName);
+                else if (deviceName == "MJ_HT_V1")
+                    d = new DeviceHygrotemp(deviceAddr, deviceName);
+                else
+                    d = new Device(deviceAddr, deviceName);
+
+                if (!d)
+                    continue;
+
                 m_devices.append(d);
             }
         }
@@ -288,9 +312,21 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
-        if (info.name() == "Flower care" || info.name() == "Flower mate")
+        if (info.name() == "Flower care" || info.name() == "Flower mate" ||
+            info.name() == "MJ_HT_V1")
         {
-            Device *d = new Device(info);
+            Device *d = nullptr;
+
+            if (info.name() == "Flower care" || info.name() == "Flower mate")
+                d = new DeviceFlowercare(info);
+            else if (info.name() == "MJ_HT_V1")
+                    d = new DeviceHygrotemp(info);
+            else
+                d = new Device(info);
+
+            if (!d)
+                return;
+
             m_devices.append(d);
 
             qDebug() << "Last device added: " << d->getName() << "/" << d->getMacAddress();

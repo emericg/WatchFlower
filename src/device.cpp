@@ -42,7 +42,7 @@
 Device::Device(QString &deviceAddr, QString &deviceName)
 {
     if (deviceAddr.size() != 17)
-        qWarning() << "DeviceInfo() '" << deviceAddr << "' is an invalid mac address...";
+        qWarning() << "Device() '" << deviceAddr << "' is an invalid mac address...";
 
     QBluetoothAddress bleAddr(deviceAddr);
 
@@ -52,7 +52,7 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     m_customName = deviceName;
 
     if (bleDevice.isValid() == false)
-        qWarning() << "DeviceInfo() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+        qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
     // Initial update
     getSqlDatas();
@@ -71,7 +71,7 @@ Device::Device(const QBluetoothDeviceInfo &d)
     m_customName = bleDevice.name();
 
     if (bleDevice.isValid() == false)
-        qWarning() << "DeviceInfo() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+        qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
     // Initial update
     getSqlDatas();
@@ -85,7 +85,6 @@ Device::Device(const QBluetoothDeviceInfo &d)
 Device::~Device()
 {
     delete controller;
-    delete serviceData;
 }
 
 /* ************************************************************************** */
@@ -181,7 +180,7 @@ void Device::setTimerInterval(int updateInterval)
 
 bool Device::getSqlDatas()
 {
-    //qDebug() << "DeviceInfo::getSqlDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlDatas(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery getFirmware;
@@ -193,11 +192,20 @@ bool Device::getSqlDatas()
         m_firmware = getFirmware.value(0).toString();
         status = true;
 
-        if (m_firmware.size() == 5)
+        if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && m_firmware.size() == 5)
         {
-            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE))
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
             {
                 m_firmware_uptodate = true;
+                emit datasUpdated();
+            }
+        }
+        else if ((m_deviceName == "MJ_HT_V1") && m_firmware.size() == 8)
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
+            {
+                m_firmware_uptodate = true;
+                emit datasUpdated();
             }
         }
     }
@@ -255,7 +263,7 @@ bool Device::getSqlDatas()
 
 bool Device::getSqlCachedDatas()
 {
-    //qDebug() << "DeviceInfo::getSqlCachedDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlCachedDatas(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery cachedDatas;
@@ -293,7 +301,7 @@ bool Device::getSqlCachedDatas()
  */
 bool Device::getBleDatas()
 {
-    //qDebug() << "DeviceInfo::getDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getDatas(" << m_deviceAddress << ")";
 
     if (!controller)
     {
@@ -356,11 +364,7 @@ QString Device::getTempString() const
 
 QString Device::getDataString() const
 {
-    QString dataString;
-
-    dataString += getTempString() + "  ";
-    dataString += QString::number(m_hygro) + "%  ";
-    dataString += QString::number(m_luminosity) + " lm";
+    QString dataString = "default device: no datas";
 
     return dataString;
 }
@@ -759,7 +763,7 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 
 void Device::deviceConnected()
 {
-    //qDebug() << "DeviceInfo::deviceConnected(" << m_deviceAddress << ")";
+    //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
     m_available = true;
     controller->discoverServices();
@@ -767,7 +771,7 @@ void Device::deviceConnected()
 
 void Device::deviceDisconnected()
 {
-    //qDebug() << "DeviceInfo::deviceDisconnected(" << m_deviceAddress << ")";
+    //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
 
     if (m_updating)
     {
@@ -778,90 +782,23 @@ void Device::deviceDisconnected()
 
 void Device::errorReceived(QLowEnergyController::Error error)
 {
-    qDebug() << "DeviceInfo::errorReceived(" << m_deviceAddress << ") error:" << error;
-
+    qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
     refreshDatasFinished(false);
 }
 
 void Device::serviceScanDone()
 {
-    //qDebug() << "DeviceInfo::serviceScanDone(" << m_deviceAddress << ")";
-
-    if (serviceData)
-    {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
-        {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &Device::serviceDetailsDiscovered);
-            //connect(serviceData, &QLowEnergyService::characteristicWritten, this, &Device::bleWriteDone);
-            connect(serviceData, &QLowEnergyService::characteristicRead, this, &Device::bleReadDone);
-            //connect(serviceData, &QLowEnergyService::characteristicChanged, this, &Device::bleReadDone);
-
-            serviceData->discoverDetails();
-        }
-    }
+    //qDebug() << "Device::serviceScanDone(" << m_deviceAddress << ")";
 }
 
 void Device::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // generic tel
-    {
-        //qDebug() << "DeviceInfo::addLowEnergyService() uuid:" << uuid;
-
-        if (serviceData)
-            delete serviceData;
-
-        serviceData = controller->createServiceObject(uuid);
-        if (!serviceData)
-            qWarning() << "Cannot create service for uuid";
-    }
+    //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
 }
 
 void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 {
-    //qDebug() << "DeviceInfo::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-
-    if (serviceData)
-    {
-        if (newState == QLowEnergyService::ServiceDiscovered)
-        {
-            QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
-            QLowEnergyCharacteristic chc = serviceData->characteristic(c);
-            if (chc.value().size() > 0)
-            {
-                m_battery = chc.value().at(0);
-                m_firmware = chc.value().remove(0, 2);
-            }
-
-            bool need_firstsend = true;
-            if (m_firmware.size() == 5)
-            {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE))
-                {
-                    m_firmware_uptodate = true;
-                }
-                if (Version(m_firmware) <= Version("2.6.6"))
-                {
-                    need_firstsend = false;
-                }
-            }
-
-            if (need_firstsend) // if firmware > 2.6.6
-            {
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                QByteArray aaaaa = QByteArray::fromHex("A01F");
-                serviceData->writeCharacteristic(cha, aaaaa, QLowEnergyService::WriteWithResponse);
-            }
-
-            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handler 0x35
-            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-            serviceData->readCharacteristic(chb);
-        }
-        else
-        {
-            //qWarning() << "DeviceInfo::serviceDetailsDiscovered() state is:" << newState;
-        }
-    }
+    //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
 }
 
 bool Device::hasControllerError() const
@@ -874,75 +811,33 @@ bool Device::hasControllerError() const
 
 void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "DeviceInfo::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
 }
 
 void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
-    qDebug() << "DeviceInfo::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+    qDebug() << "Device::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
                << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
                << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
-    if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}") // handler 0x35
-    {
-        if (value.size() > 0)
-        {
-            // first read might send bad datas (0x aa bb cc dd ee ff 99 88 77 66...)
-            // until the first write is done
-            if (data[0] == 0xAA && data[1] == 0xbb)
-                return;
+}
 
-            m_temp = (data[0] + (data[1] << 8)) / 10.f;
-            m_hygro = data[7];
-            m_luminosity = data[3] + (data[4] << 8);
-            m_conductivity = data[8] + (data[9] << 8);
+void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+/*
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-#ifndef NDEBUG
-            qDebug() << "* Device update:" << getMacAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
-            qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
-            qDebug() << "- m_luminosity:" << m_luminosity;
-            qDebug() << "- m_conductivity:" << m_conductivity;
-#endif
-
-            controller->disconnectFromDevice();
-
-            //if (m_db)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
-                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
-                addDatas.bindValue(":deviceAddr", getMacAddress());
-                addDatas.bindValue(":ts", tsStr);
-                addDatas.bindValue(":ts_full", tsFullStr);
-                addDatas.bindValue(":temp", m_temp);
-                addDatas.bindValue(":hygro", m_hygro);
-                addDatas.bindValue(":luminosity", m_luminosity);
-                addDatas.bindValue(":conductivity", m_conductivity);
-                if (addDatas.exec() == false)
-                    qDebug() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":"  << addDatas.lastError().text();
-
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
-                updateDevice.bindValue(":battery", m_battery);
-                updateDevice.bindValue(":deviceAddr", getMacAddress());
-                if (updateDevice.exec() == false)
-                    qDebug() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
-            }
-
-            refreshDatasFinished(true);
-        }
-    }
+    qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "WE HAVE DATAS: 0x" \
+               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[12]  << hex << data[13];
+*/
 }
