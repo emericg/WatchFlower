@@ -46,13 +46,14 @@ Rectangle {
             id: rectangleSettingsDatas
             width: parent.width * 0.70
             height: parent.height
+            color: "#f2f2f2"
 
             Rectangle {
                 id: dH
-                color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
                 anchors.left: parent.left
+                color: "#f2f2f2"
 
                 Text {
                     id: textHygro
@@ -75,10 +76,10 @@ Rectangle {
             }
             Rectangle {
                 id: dT
-                color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
                 anchors.left: dH.right
+                color: "#f2f2f2"
 
                 Text {
                     id: textTemp
@@ -100,10 +101,10 @@ Rectangle {
             }
             Rectangle {
                 id: dL
-                color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
                 anchors.left: dT.right
+                color: "#f2f2f2"
 
                 Text {
                     id: textLumi
@@ -125,10 +126,10 @@ Rectangle {
             }
             Rectangle {
                 id: dC
-                color: "#f2f2f2"
                 width: parent.width / 4
                 height: parent.height
                 anchors.left: dL.right
+                color: "#f2f2f2"
 
                 Text {
                     id: textCondu
@@ -155,15 +156,15 @@ Rectangle {
             width: parent.width * 0.30
             height: parent.height
             anchors.left: rectangleSettingsDatas.right
+            color: "#e8e9e8"
 
             Rectangle {
                 id: rectangleDays
                 width: parent.width * 0.5
                 height: parent.height
-                color: "#e8e9e8"
-
                 anchors.top: parent.top
                 anchors.left: parent.left
+                color: "#e8e9e8"
 
                 Text {
                     id: textDays
@@ -189,10 +190,9 @@ Rectangle {
                 id: rectangleHours
                 width: parent.width * 0.5
                 height: parent.height
-                color: "#e8e9e8"
-
                 anchors.top: parent.top
                 anchors.right: parent.right
+                color: "#e8e9e8"
 
                 Text {
                     id: textHours
@@ -284,6 +284,9 @@ Rectangle {
         // Max axis
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
+        if (graphDataSelected == "hygro" && max_of_legend > 100.0) {
+            max_of_legend = 100.0; // no need to go higher than 100% hygrometry
+        }
         axisY0.max = max_of_legend;
 
         // Decorations

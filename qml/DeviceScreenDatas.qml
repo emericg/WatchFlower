@@ -157,7 +157,7 @@ Rectangle {
         anchors.top: parent.top
 
         Rectangle {
-            id: rectangle
+            id: rectangleHygro
             width: 200
             height: 48
             color: "#ffffff"
@@ -216,7 +216,7 @@ Rectangle {
         }
 
         Rectangle {
-            id: rectangle1
+            id: rectangleTemp
             width: 200
             height: 48
             color: "#ffffff"
@@ -229,7 +229,6 @@ Rectangle {
                 height: 40
                 source: "qrc:/assets/temp.svg"
             }
-
             Text {
                 id: textTemp
                 x: 54
@@ -250,7 +249,6 @@ Rectangle {
                 border.color: "#00000000"
                 border.width: 0
             }
-
             Rectangle {
                 id: barTemp_good
                 x: 84
@@ -261,7 +259,6 @@ Rectangle {
                 border.width: 0
                 border.color: "#00000000"
             }
-
             Rectangle {
                 id: barTemp_high
                 x: 138
@@ -275,7 +272,7 @@ Rectangle {
         }
 
         Rectangle {
-            id: rectangle2
+            id: rectangleLuminosity
             width: 200
             height: 48
             color: "#ffffff"
@@ -288,7 +285,6 @@ Rectangle {
                 height: 40
                 source: "qrc:/assets/day.svg"
             }
-
             Text {
                 id: textLuminosity
                 x: 62
@@ -307,7 +303,6 @@ Rectangle {
                 border.width: 0
                 border.color: "#00000000"
             }
-
             Rectangle {
                 id: barLux_good
                 x: 92
@@ -318,7 +313,6 @@ Rectangle {
                 border.width: 0
                 border.color: "#00000000"
             }
-
             Rectangle {
                 id: barLux_high
                 x: 146
@@ -332,7 +326,7 @@ Rectangle {
         }
 
         Rectangle {
-            id: rectangle3
+            id: rectangleConductivity
             width: 200
             height: 48
             color: "#ffffff"
@@ -345,7 +339,6 @@ Rectangle {
                 height: 40
                 source: "qrc:/assets/conductivity.svg"
             }
-
             Text {
                 id: textConductivity
                 x: 55
@@ -364,7 +357,6 @@ Rectangle {
                 border.width: 0
                 border.color: "#00000000"
             }
-
             Rectangle {
                 id: barCond_good
                 x: 85
@@ -375,7 +367,6 @@ Rectangle {
                 border.width: 0
                 border.color: "#00000000"
             }
-
             Rectangle {
                 id: barCond_high
                 x: 139

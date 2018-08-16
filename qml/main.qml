@@ -167,18 +167,18 @@ Rectangle {
             rectangleRefresh.visible = false;
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
-            rectangleStatus.width = parent.width;
-            rectangleStatus.anchors.left = parent.left
-            rectangleStatus.anchors.right = parent.right
+            rectangleStatus.width = rectangleMenu.width;
+            rectangleStatus.anchors.left = rectangleMenu.left
+            rectangleStatus.anchors.right = rectangleMenu.right
             textStatus.text = message;
         }
         function setStatus(message) {
             rectangleScan.visible = true;
-            rectangleScan.width = parent.width / 2;
+            rectangleScan.width = rectangleMenu.width / 2;
             rectangleRefresh.visible = false;
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
-            rectangleStatus.width = parent.width / 2;
+            rectangleStatus.width = rectangleMenu.width / 2;
             rectangleStatus.anchors.left = rectangleScan.right;
             textStatus.text = message;
         }
@@ -186,9 +186,9 @@ Rectangle {
             rectangleStatus.visible = false;
             rectangleStatus.width = 0;
             rectangleScan.visible = true;
-            rectangleScan.width = parent.width / 2;
+            rectangleScan.width = rectangleMenu.width / 2;
             rectangleRefresh.visible = true;
-            rectangleRefresh.width = parent.width / 2;
+            rectangleRefresh.width = rectangleMenu.width / 2;
             rectangleRefresh.anchors.left = rectangleScan.right;
         }
 

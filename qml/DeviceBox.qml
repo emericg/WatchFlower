@@ -26,7 +26,7 @@ Rectangle {
     width: parent.width
     height: 128
     radius: 8
-    color: "#ccffffff"
+    color: "#ddffffff"
 
     property var myDevice
 
@@ -170,7 +170,7 @@ Rectangle {
 
             source: {
                 if (myDevice.deviceBattery < 15) {
-                   source = "qrc:/assets/battery_low.svg";
+                    source = "qrc:/assets/battery_low.svg";
                 } else if (myDevice.deviceBattery > 75) {
                     source = "qrc:/assets/battery_full.svg";
                 } else {
