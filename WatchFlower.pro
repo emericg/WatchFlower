@@ -52,7 +52,7 @@ ICON         = assets/app/$$lower($${TARGET}).icns
 RC_ICONS     = assets/app/$$lower($${TARGET}).ico
 
 # Application deployment and installation steps
-linux {
+linux:!android {
     TARGET = $$lower($${TARGET})
 
     # Application packaging # Needs linuxdeployqt installed
@@ -114,12 +114,11 @@ win32 {
 }
 
 android {
-    equals(ANDROID_TARGET_ARCH, "") {
-        #armeabi-v7a
-        #arm64-v8a
-    }
-    equals(ANDROID_TARGET_ARCH, "") {
-        #x86
-        #x86_64
+    #x86
+    #x86_64
+    #armeabi-v7a
+    #arm64-v8a
+    equals(ANDROID_TARGET_ARCH, "arm64-v8a") {
+        #
     }
 }

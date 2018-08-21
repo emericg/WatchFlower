@@ -37,16 +37,17 @@
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_WIN)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
-
+#ifdef Q_OS_ANDROID
+    QApplication app(argc, argv);
+#else
     SingleApplication app(argc, argv);
-    app.setApplicationDisplayName("WatchFlower");
-    QCoreApplication::setApplicationName("WatchFlower");
-
     QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
+#endif
+
+    app.setApplicationDisplayName("WatchFlower");
+    QCoreApplication::setApplicationName("WatchFlower");
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     SettingsManager *sm = SettingsManager::getInstance();
 
@@ -77,8 +78,10 @@ int main(int argc, char *argv[])
         }
     }
 
+#ifndef Q_OS_ANDROID
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::raise);
+#endif
 
     return app.exec();
 }
