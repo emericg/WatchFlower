@@ -23,9 +23,9 @@ import QtQuick 2.7
 
 Rectangle {
     id: background
-    color: "#e0fae7"
     width: 450
     height: 700
+    color: "#E0FAE7"
 
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
@@ -283,8 +283,6 @@ Rectangle {
 
     Loader {
         id: pageLoader
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
         anchors.fill: parent
     }
 }

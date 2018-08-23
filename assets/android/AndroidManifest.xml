@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <manifest package="org.emericdev.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.4.0" android:versionCode="5" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="-- %%INSERT_APP_NAME%% --" android:icon="@drawable/icon">
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="-- %%INSERT_APP_NAME%% --" android:screenOrientation="unspecified" android:launchMode="singleTop">
+        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" 
+                android:name="org.qtproject.qt5.android.bindings.QtActivity" 
+                android:label="-- %%INSERT_APP_NAME%% --" 
+                android:theme="@style/AppTheme" 
+                android:screenOrientation="unspecified" 
+                android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -35,7 +40,7 @@
             <!--  Messages maps -->
 
             <!-- Splash screen -->
-            <!-- meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/logo"/ -->
+            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash"/>
             <!-- meta-data android:name="android.app.splash_screen_sticky" android:value="true"/ -->
             <!-- Splash screen -->
 
