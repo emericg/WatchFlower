@@ -23,7 +23,6 @@
 #include <QApplication>
 #include <QQmlContext>
 #include <QQuickView>
-
 #include <QSystemTrayIcon>
 #include <QMenu>
 
@@ -37,17 +36,18 @@
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setApplicationName("WatchFlower");
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
 #ifdef Q_OS_ANDROID
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
+    app.setApplicationDisplayName("WatchFlower");
+
     QIcon appIcon(":/assets/app/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
-
-    app.setApplicationDisplayName("WatchFlower");
-    QCoreApplication::setApplicationName("WatchFlower");
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     SettingsManager *sm = SettingsManager::getInstance();
 

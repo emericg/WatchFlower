@@ -121,4 +121,10 @@ android {
     equals(ANDROID_TARGET_ARCH, "arm64-v8a") {
         #
     }
+
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+
+    DISTFILES += assets/android/AndroidManifest.xml \
+                 assets/android/res/values/libs.xml \
+                 assets/android/build.gradle
 }

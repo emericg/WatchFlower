@@ -225,8 +225,8 @@ struct Version
 
     Version(QString version_qstr)
     {
-        std::sscanf(version_qstr.toLatin1().constData(), "%d.%d.%d.%d",
-                    &major, &minor, &revision, &build);
+        sscanf(version_qstr.toLatin1().constData(), "%d.%d.%d.%d",
+               &major, &minor, &revision, &build);
     }
 
     bool operator == (const Version &other)
