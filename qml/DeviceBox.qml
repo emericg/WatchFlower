@@ -139,20 +139,17 @@ Rectangle {
         anchors.leftMargin: 8
     }
 
-
     Image {
         id: imageDevice
         opacity: 0.5
         x: 290
-        y: 10
         width: 64
         height: 64
         anchors.top: parent.top
-        anchors.topMargin: 4
+        anchors.topMargin: 8
         anchors.right: parent.right
-        anchors.rightMargin: 4
+        anchors.rightMargin: 8
     }
-
 
     Rectangle {
         id: dataArea

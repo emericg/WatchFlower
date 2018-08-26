@@ -116,7 +116,7 @@ Rectangle {
                 barTemp_high.color = neutralColor
             }
         }
-        
+
         // Luminosity
         if (myDevice.deviceLuminosity < 0) {
             textLuminosity.text = qsTr("No datas...")
@@ -176,14 +176,14 @@ Rectangle {
 
         Rectangle {
             id: rectangleHygro
-            width: 200
+            width: 190
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageHygro
-                x: 16
-                y: 3
+                x: 4
+                y: 4
                 width: 40
                 height: 40
                 source: "qrc:/assets/hygro.svg"
@@ -191,8 +191,8 @@ Rectangle {
 
             Text {
                 id: textHygro
-                x: 63
-                y: 8
+                x: 48
+                y: 10
                 width: 69
                 height: 15
                 text: myDevice.deviceHygro + "%"
@@ -201,21 +201,24 @@ Rectangle {
 
             Rectangle {
                 id: barHygro_low
-                x: 63
+                x: 48
                 y: 27
-                width: 24
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.right: barHygro_good.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: barHygro_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
 
             Rectangle {
                 id: barHygro_good
-                x: 93
-                y: 27
-                width: 48
-                height: 8
+                x: 80
+                y: 30
+                width: 56
+                height: 6
                 color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
@@ -223,11 +226,13 @@ Rectangle {
 
             Rectangle {
                 id: barHygro_high
-                x: 147
                 y: 27
-                width: 23
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.left: barHygro_good.right
+                anchors.leftMargin: 4
+                anchors.verticalCenter: barHygro_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -235,22 +240,22 @@ Rectangle {
 
         Rectangle {
             id: rectangleTemp
-            width: 200
+            width: 190
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageTemp
-                x: 8
-                y: 6
+                x: 4
+                y: 4
                 width: 40
                 height: 40
                 source: "qrc:/assets/temp.svg"
             }
             Text {
                 id: textTemp
-                x: 54
-                y: 8
+                x: 48
+                y: 10
                 width: 108
                 height: 15
                 text: myDevice.getTempString()
@@ -259,31 +264,37 @@ Rectangle {
 
             Rectangle {
                 id: barTemp_low
-                x: 54
+                x: 48
                 y: 27
-                width: 24
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.right: barTemp_good.left
+                anchors.rightMargin: 4
+                anchors.verticalCenterOffset: 0
+                anchors.verticalCenter: barTemp_good.verticalCenter
                 border.color: "#00000000"
                 border.width: 0
             }
             Rectangle {
                 id: barTemp_good
-                x: 84
-                y: 27
-                width: 48
-                height: 8
+                x: 80
+                y: 30
+                width: 56
+                height: 6
                 color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
             Rectangle {
                 id: barTemp_high
-                x: 138
                 y: 27
-                width: 23
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.left: barTemp_good.right
+                anchors.leftMargin: 4
+                anchors.verticalCenter: barTemp_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -291,13 +302,13 @@ Rectangle {
 
         Rectangle {
             id: rectangleLuminosity
-            width: 200
+            width: 190
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageLuminosity
-                x: 16
+                x: 4
                 y: 4
                 width: 40
                 height: 40
@@ -305,39 +316,44 @@ Rectangle {
             }
             Text {
                 id: textLuminosity
-                x: 62
-                y: 8
+                x: 48
+                y: 10
                 text: myDevice.deviceLuminosity + " lumens"
                 font.pixelSize: 13
             }
 
             Rectangle {
                 id: barLux_low
-                x: 62
-                y: 27
-                width: 24
-                height: 8
+                x: 48
+                y: 32
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.right: barLux_good.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: barLux_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
             Rectangle {
                 id: barLux_good
-                x: 92
-                y: 27
-                width: 48
-                height: 8
+                x: 80
+                y: 30
+                width: 56
+                height: 6
                 color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
             Rectangle {
                 id: barLux_high
-                x: 146
-                y: 27
-                width: 23
-                height: 8
+                y: 30
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.left: barLux_good.right
+                anchors.leftMargin: 4
+                anchors.verticalCenter: barLux_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -345,13 +361,13 @@ Rectangle {
 
         Rectangle {
             id: rectangleConductivity
-            width: 200
+            width: 190
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageConductivity
-                x: 8
+                x: 4
                 y: 4
                 width: 40
                 height: 40
@@ -359,39 +375,44 @@ Rectangle {
             }
             Text {
                 id: textConductivity
-                x: 55
-                y: 8
+                x: 48
+                y: 10
                 text: myDevice.deviceConductivity + " µS/cm"
                 font.pixelSize: 13
             }
 
             Rectangle {
                 id: barCond_low
-                x: 55
+                x: 48
                 y: 27
-                width: 24
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.right: barCond_good.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: barCond_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
             Rectangle {
                 id: barCond_good
-                x: 85
-                y: 27
-                width: 48
-                height: 8
+                x: 80
+                y: 30
+                width: 56
+                height: 6
                 color: neutralColor
                 border.width: 0
                 border.color: "#00000000"
             }
             Rectangle {
                 id: barCond_high
-                x: 139
                 y: 27
-                width: 23
-                height: 8
+                width: 28
+                height: 6
                 color: neutralColor
+                anchors.left: barCond_good.right
+                anchors.leftMargin: 4
+                anchors.verticalCenter: barCond_good.verticalCenter
                 border.width: 0
                 border.color: "#00000000"
             }
@@ -406,3 +427,9 @@ Rectangle {
         anchors.bottom: parent.bottom
     }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:7;anchors_x:141}D{i:13;anchors_x:132}
+D{i:19;anchors_x:132}D{i:23;anchors_x:48}D{i:25;anchors_x:132}
+}
+ ##^##*/

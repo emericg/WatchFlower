@@ -283,9 +283,11 @@ Rectangle {
 
         // Get datas
         if (graphViewSelected == "hourly") {
+            myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
         } else {
+            myBarSeries.barWidth = 0.70
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
         }
@@ -306,14 +308,14 @@ Rectangle {
         if (graphViewSelected == "hourly") {
             textDays.font.bold = false
             textHours.font.bold = true
-            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.color = "#F5F5F5"
             backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
             backgroundNightBars.color = "#E4E4E4"
             backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
         } else {
             textDays.font.bold = true
             textHours.font.bold = false
-            backgroundDayBars.color = "#f9f9f9"
+            backgroundDayBars.color = "#F5F5F5"
             backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
             backgroundNightBars.values = [0]
         }
@@ -346,8 +348,8 @@ Rectangle {
             barWidth: 0.90
             labelsVisible: false
 
-            axisY: ValueAxis { id: axisY0; visible: true; max: 40; gridVisible: false; }
-            axisX: BarCategoryAxis { id: axisX0; visible:true; gridVisible: true; labelsFont.pixelSize: 12; }
+            axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
+            axisX: BarCategoryAxis { id: axisX0; visible:true; gridVisible: false; labelsFont.pixelSize: 12; }
 
             BarSet { id: myBarSet; }
             BarSet { id: backgroundDayBars; }
