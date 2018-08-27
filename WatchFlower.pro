@@ -48,8 +48,8 @@ include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
 # OS icons (macOS and Windows)
-ICON         = assets/app/$$lower($${TARGET}).icns
-RC_ICONS     = assets/app/$$lower($${TARGET}).ico
+ICON         = assets/desktop/$$lower($${TARGET}).icns
+RC_ICONS     = assets/desktop/$$lower($${TARGET}).ico
 
 # Application deployment and installation steps
 linux:!android {
@@ -67,11 +67,11 @@ linux:!android {
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path     = $${PREFIX}/bin/
-    target_icon.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).svg
+    target_icon.files  += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).svg
     target_icon.path    = $${PREFIX}/share/pixmaps/
-    target_appentry.files  += $${OUT_PWD}/assets/app/$$lower($${TARGET}).desktop
+    target_appentry.files  += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
-    target_appdata.files   += $${OUT_PWD}/assets/app/$$lower($${TARGET}).appdata.xml
+    target_appdata.files   += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).appdata.xml
     target_appdata.path     = $${PREFIX}/share/appdata
     INSTALLS += target_app target_icon target_appentry target_appdata
 

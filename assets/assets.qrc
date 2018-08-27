@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/assets">
-        <file>app/watchflower.svg</file>
-        <file>app/watchflower.png</file>
-        <file>app/watchflower_tray.svg</file>
+        <file>desktop/watchflower.svg</file>
+        <file>desktop/watchflower.png</file>
+        <file>desktop/watchflower_tray.svg</file>
         <file>devices/flowercare.svg</file>
         <file>devices/hygrotemp.svg</file>
         <file>devices/ropot.svg</file>

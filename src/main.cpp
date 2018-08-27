@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     SingleApplication app(argc, argv);
     app.setApplicationDisplayName("WatchFlower");
 
-    QIcon appIcon(":/assets/app/watchflower.svg");
+    QIcon appIcon(":/assets/desktop/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
 

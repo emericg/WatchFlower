@@ -120,7 +120,7 @@ Rectangle {
                 anchors.verticalCenter: checkBox_systray.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 8
-                source: "../assets/app/watchflower_tray.svg"
+                source: "../assets/desktop/watchflower_tray.svg"
             }
 
             CheckBox {
@@ -313,7 +313,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                source: "qrc:/assets/app/watchflower.png"
+                source: "qrc:/assets/desktop/watchflower.png"
             }
 
             Text {
