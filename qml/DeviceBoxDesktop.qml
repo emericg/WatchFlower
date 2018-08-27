@@ -22,7 +22,7 @@
 import QtQuick 2.7
 
 Rectangle {
-    id: deviceBox
+    id: deviceBoxDesktop
     width: parent.width
     height: 128
     radius: 8
@@ -54,7 +54,7 @@ Rectangle {
         onStatusUpdated: updateBoxDatas()
     }
 
-    Component.onCompleted: updateBoxDatas()
+    Component.onCompleted: updateBoxDatas();
 
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {

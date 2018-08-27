@@ -137,17 +137,23 @@ Rectangle {
         clip: true
         model: deviceManager.devicesList
 
-        spacing: 16
         anchors.top: header.bottom
         anchors.topMargin: 16
         anchors.bottom: rectangleMenu.top
         anchors.bottomMargin: 16
         anchors.left: parent.left
-        anchors.leftMargin: 16
         anchors.right: parent.right
-        anchors.rightMargin: 16
 
-        delegate: DeviceBox { myDevice: modelData }
+        delegate: DeviceBoxDesktop { myDevice: modelData }
+        anchors.leftMargin: 16
+        anchors.rightMargin: 16
+        spacing: 16
+/*
+        delegate: DeviceBoxMobile { myDevice: modelData }
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
+        spacing: 8
+*/
     }
 
     Rectangle {

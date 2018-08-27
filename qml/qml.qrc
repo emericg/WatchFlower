@@ -2,7 +2,8 @@
     <qresource prefix="/qml">
         <file>main.qml</file>
         <file>Header.qml</file>
-        <file>DeviceBox.qml</file>
+        <file>DeviceBoxDesktop.qml</file>
+        <file>DeviceBoxMobile.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
