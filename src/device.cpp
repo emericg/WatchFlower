@@ -129,7 +129,7 @@ void Device::refreshDatasFinished(bool status)
 
         // 'Water me' notification
         if ((m_capabilities & DEVICE_PLANT) == 1 &&
-            m_hygro > 0 && m_hygro <= m_limitHygroMin)
+            m_hygro > 0 && m_hygro < m_limitHygroMin)
         {
             SystrayManager *st = SystrayManager::getInstance();
             if (st)
