@@ -192,17 +192,17 @@ Rectangle {
 
                 checked: {
                     if (mySettings.tempunit === 'C') {
-                        radioDelegateCelsius.checked = true;
-                        radioDelegateFahrenheit.checked = false;
+                        radioDelegateCelsius.checked = true
+                        radioDelegateFahrenheit.checked = false
                     } else {
-                        radioDelegateCelsius.checked = false;
-                        radioDelegateFahrenheit.checked = true;
+                        radioDelegateCelsius.checked = false
+                        radioDelegateFahrenheit.checked = true
                     }
                 }
 
                 onCheckedChanged: {
                     if (checked == true)
-                        mySettings.tempunit = 'C';
+                        mySettings.tempunit = 'C'
                 }
             }
 
@@ -218,17 +218,17 @@ Rectangle {
 
                 checked: {
                     if (mySettings.tempunit === 'F') {
-                        radioDelegateCelsius.checked = false;
-                        radioDelegateFahrenheit.checked = true;
+                        radioDelegateCelsius.checked = false
+                        radioDelegateFahrenheit.checked = true
                     } else {
-                        radioDelegateFahrenheit.checked = false;
-                        radioDelegateCelsius.checked = true;
+                        radioDelegateFahrenheit.checked = false
+                        radioDelegateCelsius.checked = true
                     }
                 }
 
                 onCheckedChanged: {
                     if (checked === true)
-                        mySettings.tempunit = 'F';
+                        mySettings.tempunit = 'F'
                 }
             }
 
@@ -256,16 +256,16 @@ Rectangle {
                     ListElement { text: qsTr("hourly"); }
                 }
                 Component.onCompleted: {
-                    currentIndex = find(mySettings.graphview);
+                    currentIndex = find(mySettings.graphview)
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
                 property bool cbinit: false
                 width: 100
                 onCurrentIndexChanged: {
                     if (cbinit)
-                        mySettings.graphview = cbItemsView.get(currentIndex).text;
+                        mySettings.graphview = cbItemsView.get(currentIndex).text
                     else
-                        cbinit = true;
+                        cbinit = true
                 }
             }
 
@@ -283,15 +283,15 @@ Rectangle {
                     ListElement { text: qsTr("conductivity"); }
                 }
                 Component.onCompleted: {
-                    currentIndex = find(mySettings.graphdata);
+                    currentIndex = find(mySettings.graphdata)
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
                 property bool cbinit: false
                 onCurrentIndexChanged: {
                     if (cbinit)
-                        mySettings.graphdata = cbItemsData.get(currentIndex).text;
+                        mySettings.graphdata = cbItemsData.get(currentIndex).text
                     else
-                        cbinit = true;
+                        cbinit = true
                 }
             }
         }
@@ -365,21 +365,21 @@ Rectangle {
 
             function startTheBlink() {
                 if (weAreBlinking === true) {
-                    mySettings.resetSettings();
-                    stopTheBlink();
+                    mySettings.resetSettings()
+                    stopTheBlink()
                 } else {
-                    weAreBlinking = true;
-                    timerReset.start();
-                    blinkReset.start();
-                    textReset.text = qsTr("!!! Click again to confirm !!!");
+                    weAreBlinking = true
+                    timerReset.start()
+                    blinkReset.start()
+                    textReset.text = qsTr("!!! Click again to confirm !!!")
                 }
             }
             function stopTheBlink() {
-                weAreBlinking = false;
-                timerReset.stop();
-                blinkReset.stop();
-                textReset.text = qsTr("Reset everything!");
-                rectangleReset.color = "#f75a5a";
+                weAreBlinking = false
+                timerReset.stop()
+                blinkReset.stop()
+                textReset.text = qsTr("Reset everything!")
+                rectangleReset.color = "#f75a5a"
             }
 
             SequentialAnimation on color {

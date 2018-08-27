@@ -452,13 +452,3 @@ Rectangle {
         }
     }
 }
-
-/*##^## Designer {
-    D{i:40;anchors_width:316;anchors_x:0}D{i:10;anchors_height:32;anchors_width:32}D{i:4;anchors_height:64;anchors_width:64;anchors_x:8;anchors_y:"-6"}
-D{i:16;anchors_x:6;anchors_y:0}D{i:17;anchors_height:60;anchors_x:19;anchors_y:0}
-D{i:18;anchors_height:60;anchors_x:34;anchors_y:0}D{i:19;anchors_height:60;anchors_x:48;anchors_y:0}
-D{i:20;anchors_height:60;anchors_x:6;anchors_y:0}D{i:21;anchors_height:0;anchors_x:19}
-D{i:22;anchors_x:34}D{i:23;anchors_x:3}D{i:15;anchors_height:64;anchors_width:64;anchors_x:3;anchors_y:0;invisible:true}
-D{i:45;anchors_height:64;anchors_width:64;anchors_x:0;anchors_y:100}
-}
- ##^##*/

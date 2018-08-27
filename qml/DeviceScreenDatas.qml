@@ -38,22 +38,22 @@ Rectangle {
 
         if ((myDevice.deviceCapabilities & 1) == 1) {
             if (myDevice.deviceBattery < 15) {
-                imageBatt.source = "qrc:/assets/battery_low.svg";
+                imageBatt.source = "qrc:/assets/battery_low.svg"
             } else if (myDevice.deviceBattery > 75) {
-                imageBatt.source = "qrc:/assets/battery_full.svg";
+                imageBatt.source = "qrc:/assets/battery_full.svg"
             } else {
-                imageBatt.source = "qrc:/assets/battery_mid.svg";
+                imageBatt.source = "qrc:/assets/battery_mid.svg"
             }
         } else {
-            imageBatt.visible = false;
-            textBatt.visible = false;
+            imageBatt.visible = false
+            textBatt.visible = false
         }
 
-        var hours = Qt.formatDateTime (new Date(), "hh");
+        var hours = Qt.formatDateTime (new Date(), "hh")
         if (hours > 22 || hours < 8) {
-            imageLuminosity.source = "qrc:/assets/night.svg";
+            imageLuminosity.source = "qrc:/assets/night.svg"
         } else {
-            imageLuminosity.source = "qrc:/assets/day.svg";
+            imageLuminosity.source = "qrc:/assets/day.svg"
         }
 
         if ((myDevice.deviceCapabilities & 2) == 0) {
@@ -100,7 +100,7 @@ Rectangle {
             barTemp_good.color = badColor
             barTemp_high.color = badColor
         } else {
-            textTemp.text = myDevice.getTempString();
+            textTemp.text = myDevice.getTempString()
 
             if (myDevice.deviceTempC < myDevice.limitTempMin) {
                 barTemp_low.color = badColor
@@ -170,6 +170,8 @@ Rectangle {
 
     Flow {
         id: flow1
+        anchors.leftMargin: 4
+        anchors.topMargin: 4
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: parent.top
@@ -427,9 +429,3 @@ Rectangle {
         anchors.bottom: parent.bottom
     }
 }
-
-/*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:7;anchors_x:141}D{i:13;anchors_x:132}
-D{i:19;anchors_x:132}D{i:23;anchors_x:48}D{i:25;anchors_x:132}
-}
- ##^##*/

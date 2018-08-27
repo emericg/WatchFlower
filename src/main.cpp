@@ -96,7 +96,6 @@ int main(int argc, char *argv[])
 
 /// NEXT
 // macOS port
-// android port
 // bluetooth not re-enabling itself
 // properly disable graph & limits when no database available?
 
@@ -106,7 +105,7 @@ int main(int argc, char *argv[])
 // handle multiple bluetooth adapters (???)
 
 /* ************************************************************************** */
-// PROTOCOL
+// PROTOCOL // Flower care
 
 // https://github.com/barnybug/miflora
 // https://github.com/open-homeautomation/miflora
@@ -114,7 +113,7 @@ int main(int argc, char *argv[])
 
 /*
 1/ Connect to device MAC address (prefix should be C4:7C:8D:xx:xx:xx)
-   (use QBluetoothUuid::GenericTelephony service)
+2/ Use QBluetoothUuid::GenericTelephony service
 2a/ Read _HANDLE_READ_NAME(0x03) if you care
 2b/ Read _HANDLE_READ_VERSION_BATTERY(0x38)
     - byte 0: battery level percentage
@@ -129,7 +128,7 @@ int main(int argc, char *argv[])
    - byte 7: hygrometry
    - byte 8-9: conductivity in µS/cm
    - bytes 10-15: unknown
-5/ Disconnect
+5/ Disconnect (or let the device disconnect you after a couple of seconds)
 */
 
 /*
@@ -145,4 +144,16 @@ $ gatttool -b C4:7C:8D:xx:xx:xx -I
 > connect
 > char-write-req 0x0033 A01F
 > char-read-hnd 35
+*/
+
+/* ************************************************************************** */
+// PROTOCOL // Bluetooth temperature and humidity sensor
+
+// https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18
+
+/*
+// Connect using btgatt-client
+btgatt-client -d 4C:65:A8:D0:6D:C8
+register-notify 0x000e // temp and humidity
+read-value 0x0018 // battery
 */

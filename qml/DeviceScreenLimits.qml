@@ -52,16 +52,15 @@ Item {
         anchors.leftMargin: 0
 
         Text {
-            id: text4
+            id: textLimits
             height: 40
             text: qsTr("Limits editor:")
             anchors.right: parent.right
-            anchors.rightMargin: 16
-            font.bold: false
+            anchors.rightMargin: 12
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
             anchors.left: parent.left
-            anchors.leftMargin: 16
+            anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 16
         }
@@ -88,7 +87,7 @@ Item {
                 width: 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/hygro.svg"
             }
@@ -152,7 +151,7 @@ Item {
                 width: 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/temp.svg"
             }
@@ -212,7 +211,7 @@ Item {
                 width: 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/day.svg"
             }
@@ -287,7 +286,7 @@ Item {
                 width: 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/conductivity.svg"
             }

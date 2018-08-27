@@ -33,43 +33,42 @@ Rectangle {
 
     Component.onCompleted: {
         if (deviceManager.bluetooth === false) {
-            rectangleMenu.setError(qsTr("No bluetooth :-("));
+            rectangleMenu.setError(qsTr("No bluetooth :-("))
         } else if (deviceManager.areDevicesAvailable() === false) {
-            rectangleMenu.setStatus(qsTr("No devices :-("));
+            rectangleMenu.setStatus(qsTr("No devices :-("))
         } else {
-            rectangleMenu.setMenu();
+            rectangleMenu.setMenu()
         }
     }
 
     onDeviceScanningChanged: {
         if (deviceManager.scanning) {
-            header.menuScanAvailable.visible = true;
-            header.menuScanAnimation.start();
+            header.menuScanAvailable.visible = true
+            header.menuScanAnimation.start()
         } else {
-            header.menuScanAnimation.stop();
-            header.menuScanAvailable.visible = false;
+            header.menuScanAnimation.stop()
+            header.menuScanAvailable.visible = false
 
             if (deviceManager.areDevicesAvailable()) {
-                rectangleMenu.setMenu();
+                rectangleMenu.setMenu()
             } else {
-                rectangleMenu.setStatus(qsTr("No devices :-("));
+                rectangleMenu.setStatus(qsTr("No devices :-("))
             }
         }
     }
 
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-            bluetooth_img.visible = false;
+            bluetooth_img.visible = false
 
             if (deviceManager.areDevicesAvailable() === false) {
-                rectangleMenu.setStatus(qsTr("No devices :-("));
+                rectangleMenu.setStatus(qsTr("No devices :-("))
             } else {
-                rectangleMenu.setMenu();
+                rectangleMenu.setMenu()
             }
         } else {
-            bluetooth_img.visible = true;
-
-            rectangleMenu.setError(qsTr("No bluetooth :-("));
+            bluetooth_img.visible = true
+            rectangleMenu.setError(qsTr("No bluetooth :-("))
         }
     }
 
@@ -83,7 +82,7 @@ Rectangle {
 
         onBackClicked: {
             pageLoader.setSource("Settings.qml",
-                                 { mySettings: settingsManager });
+                                 { mySettings: settingsManager })
         }
     }
 
@@ -99,13 +98,13 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         source: {
-            var a = Math.floor(Math.random() * 2);
+            var a = Math.floor(Math.random() * 2)
             if (a === 2)
-                source = "qrc:/assets/background3.png";
+                source = "qrc:/assets/background3.png"
             else if (a === 1)
-                source = "qrc:/assets/background2.png";
+                source = "qrc:/assets/background2.png"
             else
-                source = "qrc:/assets/background1.png";
+                source = "qrc:/assets/background1.png"
         }
         fillMode: Image.PreserveAspectFit
 
@@ -124,9 +123,9 @@ Rectangle {
 
             visible: {
                 if (deviceManager.bluetooth)
-                    visible = false;
+                    visible = false
                 else
-                    visible = true;
+                    visible = true
             }
         }
     }
