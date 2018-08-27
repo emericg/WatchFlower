@@ -330,7 +330,7 @@ bool SettingsManager::readDevices()
 
 QString SettingsManager::getAppVersion()
 {
-    return "v"+ QString::fromLatin1(APP_VERSION);
+    return QString::fromLatin1(APP_VERSION);
 }
 
 /* ************************************************************************** */

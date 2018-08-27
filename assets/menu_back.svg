@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48"
-   height="48"
-   viewBox="0 0 48 48"
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
    version="1.1"
    id="svg4"
    sodipodi:docname="menu_back.svg"
@@ -41,9 +41,9 @@
      inkscape:window-height="1056"
      id="namedview6"
      showgrid="true"
-     inkscape:zoom="9.8333335"
-     inkscape:cx="-3.6523919"
-     inkscape:cy="23.039889"
+     inkscape:zoom="19.666668"
+     inkscape:cx="9.1121776"
+     inkscape:cy="13.611378"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -54,9 +54,9 @@
        id="grid812" />
   </sodipodi:namedview>
   <path
-     d="M 23.517512,40.025989 V 31.284747 H 41 V 18.172881 H 23.517512 V 9.4316394 L 8.220339,24.728814 Z"
+     d="M 19.828429,31.55635 26.192389,25.192391 17,16 26.192388,6.807614 19.828428,0.4436524 4.2720754,16 Z"
      id="path2"
-     style="fill:#e6e6e6;fill-opacity:0.90196078;stroke:none;stroke-width:1.09265542;stroke-opacity:1"
+     style="fill:#f0f0f0;fill-opacity:1;stroke:none;stroke-width:1.09265542;stroke-opacity:1"
      inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccccccc" />
+     sodipodi:nodetypes="ccccccc" />
 </svg>

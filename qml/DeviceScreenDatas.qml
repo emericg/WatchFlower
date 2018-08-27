@@ -76,7 +76,7 @@ Rectangle {
             barHygro_good.color = badColor
             barHygro_high.color = badColor
         } else {
-            textHygro.text = myDevice.deviceHygro + "%"
+            textHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
 
             if (myDevice.deviceHygro < myDevice.limitHygroMin) {
                 barHygro_low.color = badColor
@@ -176,7 +176,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleHygro
-            width: 190
+            width: 180
             height: 48
             color: "#ffffff"
 
@@ -240,7 +240,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleTemp
-            width: 190
+            width: 180
             height: 48
             color: "#ffffff"
 
@@ -302,7 +302,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleLuminosity
-            width: 190
+            width: 180
             height: 48
             color: "#ffffff"
 
@@ -361,7 +361,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleConductivity
-            width: 190
+            width: 180
             height: 48
             color: "#ffffff"
 

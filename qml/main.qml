@@ -23,9 +23,10 @@ import QtQuick 2.7
 
 Rectangle {
     id: background
+    anchors.fill: parent
+    color: "#E0FAE7"
     width: 450
     height: 700
-    color: "#E0FAE7"
 
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
@@ -42,11 +43,11 @@ Rectangle {
 
     onDeviceScanningChanged: {
         if (deviceManager.scanning) {
-            header.scanAvailable.visible = true;
-            header.scanAnimation.start();
+            header.menuScanAvailable.visible = true;
+            header.menuScanAnimation.start();
         } else {
-            header.scanAnimation.stop();
-            header.scanAvailable.visible = false;
+            header.menuScanAnimation.stop();
+            header.menuScanAvailable.visible = false;
 
             if (deviceManager.areDevicesAvailable()) {
                 rectangleMenu.setMenu();
@@ -76,9 +77,9 @@ Rectangle {
         id: header
         anchors.top: parent.top
 
-        backImg.source: "qrc:/assets/menu_settings.svg"
-        backAvailable.visible: true
-        scanAvailable.visible: false
+        menuBackImg.source: "qrc:/assets/menu_settings.svg"
+        menuBackImg.visible: true
+        menuScanImg.visible: false
 
         onBackClicked: {
             pageLoader.setSource("Settings.qml",
@@ -151,7 +152,6 @@ Rectangle {
 
     Rectangle {
         id: rectangleMenu
-        y: 522
         height: 50
         color: "#00000000"
         anchors.bottom: parent.bottom

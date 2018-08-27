@@ -33,8 +33,8 @@ Rectangle {
         id: header
         anchors.top: parent.top
 
-        backAvailable.visible: true
-        scanAvailable.visible: false
+        menuBackImg.visible: true
+        menuScanImg.visible: false
 
         onBackClicked: {
             pageLoader.source = "main.qml"
@@ -72,15 +72,12 @@ Rectangle {
             Text {
                 id: textAddr
                 y: 46
-                width: 375
-                height: 16
-                text: "Change persistent settings here"
+                text: qsTr("Change persistent settings here")
                 font.pixelSize: 16
                 anchors.left: parent.left
                 anchors.leftMargin: 13
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 14
-                verticalAlignment: Text.AlignVCenter
             }
 
             Text {
@@ -119,28 +116,25 @@ Rectangle {
                 x: 12
                 width: 40
                 height: 40
+                fillMode: Image.PreserveAspectCrop
+                anchors.verticalCenter: checkBox_systray.verticalCenter
                 anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.top: parent.top
-                anchors.topMargin: 8
+                anchors.rightMargin: 8
                 source: "../assets/app/watchflower_tray.svg"
             }
 
             CheckBox {
                 id: checkBox_systray
-                width: 332
                 height: 40
-                text: qsTr("Enable system tray icon")
-                font.pixelSize: 16
                 anchors.top: parent.top
                 anchors.topMargin: 8
                 anchors.left: parent.left
-                anchors.leftMargin: 12
-                checked: mySettings.systray
+                anchors.leftMargin: 6
+                text: qsTr("Enable system tray and notifications")
+                font.pixelSize: 16
 
-                onCheckStateChanged: {
-                    mySettings.systray = checked
-                }
+                checked: mySettings.systray
+                onCheckStateChanged: { mySettings.systray = checked }
             }
 
             SpinBox {
@@ -156,23 +150,18 @@ Rectangle {
                 anchors.leftMargin: 12
                 value: mySettings.interval
 
-                onValueChanged: {
-                    mySettings.interval = value
-                }
+                onValueChanged: { mySettings.interval = value }
             }
 
             Text {
                 id: text2
-                width: 234
                 height: 40
-                anchors.top: spinBox_update.top
-                anchors.topMargin: 0
                 anchors.left: spinBox_update.right
-                anchors.leftMargin: 16
+                anchors.leftMargin: 8
 
                 verticalAlignment: Text.AlignVCenter
-
                 text: qsTr("Update interval in minutes")
+                anchors.verticalCenter: spinBox_update.verticalCenter
                 font.pixelSize: 16
             }
 
@@ -181,13 +170,13 @@ Rectangle {
                 x: 3
                 y: 128
                 height: 40
-                text: qsTr("Temperature unit:")
-                horizontalAlignment: Text.AlignLeft
-                font.pixelSize: 16
                 anchors.top: spinBox_update.bottom
                 anchors.topMargin: 16
                 anchors.left: parent.left
                 anchors.leftMargin: 12
+
+                text: qsTr("Temperature unit:")
+                font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
             }
 
@@ -195,8 +184,9 @@ Rectangle {
                 id: radioDelegateCelsius
                 height: 40
                 text: qsTr("°C")
+                font.pixelSize: 16
                 anchors.left: text3.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 0
                 anchors.top: text3.top
                 anchors.topMargin: 0
 
@@ -220,6 +210,7 @@ Rectangle {
                 id: radioDelegateFahrenheit
                 height: 40
                 text: qsTr("°F")
+                font.pixelSize: 16
                 anchors.left: radioDelegateCelsius.right
                 anchors.leftMargin: 0
                 anchors.top: text3.top
@@ -247,7 +238,6 @@ Rectangle {
                 text: qsTr("Default graph:")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
                 anchors.top: text3.bottom
                 anchors.topMargin: 16
                 anchors.left: parent.left
@@ -257,19 +247,20 @@ Rectangle {
             ComboBox {
                 id: comboBox_view
                 anchors.left: text4.right
-                anchors.leftMargin: 16
+                anchors.leftMargin: 8
                 anchors.top: text4.top
                 anchors.topMargin: 0
                 model: ListModel {
                     id: cbItemsView
-                    ListElement { text: "daily"; }
-                    ListElement { text: "hourly"; }
+                    ListElement { text: qsTr("daily"); }
+                    ListElement { text: qsTr("hourly"); }
                 }
                 Component.onCompleted: {
                     currentIndex = find(mySettings.graphview);
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
                 property bool cbinit: false
+                width: 100
                 onCurrentIndexChanged: {
                     if (cbinit)
                         mySettings.graphview = cbItemsView.get(currentIndex).text;
@@ -281,15 +272,15 @@ Rectangle {
             ComboBox {
                 id: comboBox_data
                 anchors.left: comboBox_view.right
-                anchors.leftMargin: 16
+                anchors.leftMargin: 8
                 anchors.top: comboBox_view.top
                 anchors.topMargin: 0
                 model: ListModel {
                     id: cbItemsData
-                    ListElement { text: "hygro"; }
-                    ListElement { text: "temp"; }
-                    ListElement { text: "luminosity"; }
-                    ListElement { text: "conductivity"; }
+                    ListElement { text: qsTr("hygro"); }
+                    ListElement { text: qsTr("temp"); }
+                    ListElement { text: qsTr("luminosity"); }
+                    ListElement { text: qsTr("conductivity"); }
                 }
                 Component.onCompleted: {
                     currentIndex = find(mySettings.graphdata);
@@ -307,57 +298,54 @@ Rectangle {
 
         Rectangle {
             id: rectangleInfos
-            x: 0
             y: 365
-            height: 100
+            width: 270
+            height: 80
             color: "#00000000"
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: rectangleSettings.bottom
             anchors.topMargin: 16
-            opacity: 1
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-
-            Text {
-                id: textUrl
-                y: 92
-                color: "#343434"
-                text: qsTr("Visit the project page on") + " <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html>!"
-                anchors.verticalCenterOffset: 16
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: imageLogo.right
-                anchors.leftMargin: 16
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 16
-                onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
-            }
 
             Image {
                 id: imageLogo
-                x: 167
-                y: 4
                 width: 80
                 height: 80
-                anchors.horizontalCenterOffset: -159
-                anchors.verticalCenterOffset: 0
-                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 0
                 source: "qrc:/assets/app/watchflower.png"
             }
 
             Text {
                 id: textVersion
-                y: 45
+                width: 180
                 height: 20
-                color: "#343434"
-                text: { mySettings.getAppVersion() }
-                anchors.verticalCenterOffset: -8
+                anchors.verticalCenterOffset: -10
                 anchors.left: imageLogo.right
-                anchors.leftMargin: 16
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
+
+                color: "#343434"
+                text: qsTr("WatchFlower") + " / " + mySettings.getAppVersion()
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
+            }
+            Text {
+                id: textUrl
+                width: 180
+                height: 20
+                anchors.verticalCenterOffset: 16
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: imageLogo.right
+                anchors.leftMargin: 8
+
+                color: "#343434"
+                text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html> page!"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 16
+                onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
             }
         }
 

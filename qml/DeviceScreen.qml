@@ -37,9 +37,9 @@ Rectangle {
 
     function updateStatus() {
         if (myDevice.updating) {
-            header.scanAnimation.start();
+            header.menuScanAnimation.start();
         } else {
-            header.scanAnimation.stop();
+            header.menuScanAnimation.stop();
         }
 
         if (!myDevice.available && !myDevice.updating) {
@@ -64,8 +64,8 @@ Rectangle {
         id: header
         anchors.top: parent.top
 
-        backAvailable.visible: true
-        scanAvailable.visible: true
+        menuBackImg.visible: true
+        menuScanImg.visible: true
 
         onBackClicked: {
             pageLoader.source = "main.qml"

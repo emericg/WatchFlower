@@ -22,14 +22,14 @@
 import QtQuick 2.7
 
 Rectangle {
+    id: rectangleHeader
     width: parent.width
-    height: 64
+    height: 56
     color: "#1dcb58"
 
-    property alias backImg: backImg
-    property alias backAvailable: backRect
-    property alias scanAvailable: refreshRect
-    property alias scanAnimation: refreshRotation
+    property alias menuBackImg: backImg
+    property alias menuScanImg: refreshImg
+    property alias menuScanAnimation: refreshRotation
 
     signal refreshClicked()
     signal backClicked()
@@ -40,35 +40,23 @@ Rectangle {
         font.bold: true
         font.pointSize: 26
         antialiasing: true
-
-        anchors.fill: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideMiddle
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 
-    Rectangle {
-        id: backRect
-
-        width: 64
-        color: "#00000000"
+    Image {
+        id: backImg
+        y: 12
+        width: 32
+        height: 32
         anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.top: parent.top
+        anchors.leftMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
 
-        Image {
-            id: backImg
-
-            width: 48
-            height: 48
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-
-            source: "qrc:/assets/menu_back.svg"
-            fillMode: Image.PreserveAspectFit
-        }
+        source: "qrc:/assets/menu_back.svg"
+        fillMode: Image.PreserveAspectFit
 
         MouseArea {
             anchors.fill: parent
@@ -85,51 +73,33 @@ Rectangle {
                 backImg.width += 4
                 backImg.height += 4
             }
-            onClicked: {
-                backClicked()
-            }
+            onClicked: backClicked()
         }
     }
 
-    Rectangle {
-        id: refreshRect
-
-        width: 64
-        height: 64
-        color: "#00000000"
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+    Image {
+        id: refreshImg
+        width: 32
+        height: 32
         anchors.right: parent.right
+        anchors.rightMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
 
-        Image {
-            id: refreshImg
+        source: "qrc:/assets/menu_refresh.svg"
+        fillMode: Image.PreserveAspectFit
 
-            width: 48
-            height: 48
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-
-            source: "qrc:/assets/menu_refresh.svg"
-            fillMode: Image.PreserveAspectFit
-
-            NumberAnimation on rotation {
-                id: refreshRotation
-                duration: 3000;
-                from:0;
-                to: 360;
-                loops: Animation.Infinite
-                running: false
-            }
+        NumberAnimation on rotation {
+            id: refreshRotation
+            duration: 3000;
+            from: 0;
+            to: 360;
+            loops: Animation.Infinite
+            running: false
         }
 
         MouseArea {
             anchors.fill: parent
-
-            onClicked: {
-                refreshClicked()
-            }
+            onClicked: refreshClicked()
         }
     }
 }

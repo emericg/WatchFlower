@@ -54,7 +54,7 @@ Rectangle {
         onStatusUpdated: updateBoxDatas()
     }
 
-    Component.onCompleted: updateBoxDatas();
+    Component.onCompleted: updateBoxDatas()
 
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {

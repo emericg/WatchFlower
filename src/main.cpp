@@ -64,8 +64,10 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("settingsManager", sm);
     view->setSource(QUrl("qrc:/qml/main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
+#ifndef Q_OS_ANDROID
     view->setMinimumWidth(400);
     view->setMinimumHeight(640);
+#endif
     view->show();
 
     SystrayManager *st = SystrayManager::getInstance();
