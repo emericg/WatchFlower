@@ -28,194 +28,23 @@ import QtCharts 2.2
 
 Rectangle {
     id: deviceScreenCharts
-    color: "#000000ff"
+    color: "#00000000"
     width: parent.width
     anchors.margins: 0
 
     property string graphViewSelected: settingsManager.graphview
     property string graphDataSelected: settingsManager.graphdata
 
-    Rectangle {
-        id: rectangleSettings
-        width: parent.width
-        height: 32
+    property string hygroGraphColor: "#31A3EC"
+    property string tempGraphColor: "#87D241"
+    property string lumiGraphColor: "#F1EC5C"
+    property string condGraphColor: "#E19C2F"
 
-        anchors.bottom: parent.bottom
+    property string bgDayGraphColor: "#F5F5F5"
+    property string bgNightGraphColor: "#E4E4E4"
 
-        Rectangle {
-            id: rectangleSettingsDatas
-            width: parent.width * 0.70
-            height: parent.height
-            color: "#f2f2f2"
-
-            Rectangle {
-                id: dH
-                width: parent.width / 4
-                height: parent.height
-                anchors.left: parent.left
-                color: "#f2f2f2"
-
-                Text {
-                    id: textHygro
-                    x: 21
-                    y: 9
-                    text: qsTr("Hygro")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
-                    font.bold: true
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphDataSelected = "hygro"
-                        updateGraph()
-                    }
-                }
-            }
-            Rectangle {
-                id: dT
-                width: parent.width / 4
-                height: parent.height
-                anchors.left: dH.right
-                color: "#f2f2f2"
-
-                Text {
-                    id: textTemp
-                    x: 21
-                    y: 9
-                    text: qsTr("Temp")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphDataSelected = "temp"
-                        updateGraph()
-                    }
-                }
-            }
-            Rectangle {
-                id: dL
-                width: parent.width / 4
-                height: parent.height
-                anchors.left: dT.right
-                color: "#f2f2f2"
-
-                Text {
-                    id: textLumi
-                    x: 27
-                    y: 9
-                    text: qsTr("Lumi")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: 14
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphDataSelected = "luminosity"
-                        updateGraph()
-                    }
-                }
-            }
-            Rectangle {
-                id: dC
-                width: parent.width / 4
-                height: parent.height
-                anchors.left: dL.right
-                color: "#f2f2f2"
-
-                Text {
-                    id: textCondu
-                    x: 26
-                    y: 9
-                    text: qsTr("Condu")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphDataSelected = "conductivity"
-                        updateGraph()
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            id: rectangleSettingsMode
-            width: parent.width * 0.30
-            height: parent.height
-            anchors.left: rectangleSettingsDatas.right
-            color: "#e8e9e8"
-
-            Rectangle {
-                id: rectangleDays
-                width: parent.width * 0.5
-                height: parent.height
-                anchors.top: parent.top
-                anchors.left: parent.left
-                color: "#e8e9e8"
-
-                Text {
-                    id: textDays
-                    x: 19
-                    y: 9
-                    text: qsTr("Days")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 14
-                    font.bold: true
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphViewSelected = "daily"
-                        updateGraph()
-                    }
-                }
-            }
-
-            Rectangle {
-                id: rectangleHours
-                width: parent.width * 0.5
-                height: parent.height
-                anchors.top: parent.top
-                anchors.right: parent.right
-                color: "#e8e9e8"
-
-                Text {
-                    id: textHours
-                    x: 11
-                    y: 9
-                    text: qsTr("Hours")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 14
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        graphViewSelected = "hourly"
-                        updateGraph()
-                    }
-                }
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
+    property string buttonLightColor: "#F2F2F2"
+    property string buttonDarkColor: "#E8E8E8"
 
     function updateGraph() {
 
@@ -237,7 +66,7 @@ Rectangle {
 
         if (graphDataSelected == "hygro") {
             axisY0.max = 66
-            myBarSet.color = "#31a3ec"
+            myBarSet.color = hygroGraphColor
             textHygro.font.bold = true
             textTemp.font.bold = false
             textLumi.font.bold = false
@@ -248,7 +77,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitHygroMax);
         } else if (graphDataSelected == "temp") {
             axisY0.max = 40
-            myBarSet.color = "#87d241"
+            myBarSet.color = tempGraphColor
             textHygro.font.bold = false
             textTemp.font.bold = true
             textLumi.font.bold = false
@@ -259,7 +88,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitTempMax);
         } else if (graphDataSelected == "luminosity") {
             axisY0.max = 2000
-            myBarSet.color = "#f1ec5c"
+            myBarSet.color = lumiGraphColor
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = true
@@ -270,7 +99,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitLumiMax);
         } else if (graphDataSelected == "conductivity") {
             axisY0.max = 750
-            myBarSet.color = "#e19c2f"
+            myBarSet.color = condGraphColor
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = false
@@ -308,35 +137,218 @@ Rectangle {
         if (graphViewSelected == "hourly") {
             textDays.font.bold = false
             textHours.font.bold = true
-            backgroundDayBars.color = "#F5F5F5"
+            backgroundDayBars.color = bgDayGraphColor
             backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
-            backgroundNightBars.color = "#E4E4E4"
+            backgroundNightBars.color = bgNightGraphColor
             backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
         } else {
             textDays.font.bold = true
             textHours.font.bold = false
-            backgroundDayBars.color = "#F5F5F5"
+            backgroundDayBars.color = bgDayGraphColor
             backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
             backgroundNightBars.values = [0]
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: rectangleSettings
+        width: parent.width
+        height: 32
+        anchors.bottom: parent.bottom
+        z: 1 // so the graph, overlapping with buttons, doesn't prevent clicks
+
+        Rectangle {
+            id: rectangleSettingsDatas
+            width: parent.width * 0.70
+            height: parent.height
+            color: buttonLightColor
+
+            Rectangle {
+                id: dH
+                width: parent.width / 4
+                height: parent.height
+                anchors.left: parent.left
+                color: buttonLightColor
+
+                Text {
+                    id: textHygro
+                    x: 21
+                    y: 9
+                    text: qsTr("Hygro")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 14
+                    font.bold: true
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphDataSelected = "hygro"
+                        updateGraph()
+                    }
+                }
+            }
+            Rectangle {
+                id: dT
+                width: parent.width / 4
+                height: parent.height
+                anchors.left: dH.right
+                color: buttonLightColor
+
+                Text {
+                    id: textTemp
+                    x: 21
+                    y: 9
+                    text: qsTr("Temp")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 14
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphDataSelected = "temp"
+                        updateGraph()
+                    }
+                }
+            }
+            Rectangle {
+                id: dL
+                width: parent.width / 4
+                height: parent.height
+                anchors.left: dT.right
+                color: buttonLightColor
+
+                Text {
+                    id: textLumi
+                    x: 27
+                    y: 9
+                    text: qsTr("Lumi")
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: 14
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphDataSelected = "luminosity"
+                        updateGraph()
+                    }
+                }
+            }
+            Rectangle {
+                id: dC
+                width: parent.width / 4
+                height: parent.height
+                anchors.left: dL.right
+                color: buttonLightColor
+
+                Text {
+                    id: textCondu
+                    x: 26
+                    y: 9
+                    text: qsTr("Condu")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 14
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphDataSelected = "conductivity"
+                        updateGraph()
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: rectangleSettingsMode
+            width: parent.width * 0.30
+            height: parent.height
+            anchors.left: rectangleSettingsDatas.right
+            color: buttonDarkColor
+
+            Rectangle {
+                id: rectangleDays
+                width: parent.width * 0.5
+                height: parent.height
+                anchors.top: parent.top
+                anchors.left: parent.left
+                color: buttonDarkColor
+
+                Text {
+                    id: textDays
+                    x: 19
+                    y: 9
+                    text: qsTr("Days")
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 14
+                    font.bold: true
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphViewSelected = "daily"
+                        updateGraph()
+                    }
+                }
+            }
+
+            Rectangle {
+                id: rectangleHours
+                width: parent.width * 0.5
+                height: parent.height
+                anchors.top: parent.top
+                anchors.right: parent.right
+                color: buttonDarkColor
+
+                Text {
+                    id: textHours
+                    x: 11
+                    y: 9
+                    text: qsTr("Hours")
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 14
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        graphViewSelected = "hourly"
+                        updateGraph()
+                    }
+                }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     ChartView {
         id: myBarGraph
-        z: -1 // so the graph, overlapping with buttons, doesn't prevent clicks
         anchors.top: parent.top
         anchors.bottom: rectangleSettings.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: -20
-        anchors.bottomMargin: -16
+        anchors.bottomMargin: -20
         anchors.leftMargin: -20
         anchors.rightMargin: -20
 
         antialiasing: true
         legend.visible: false // this will only work with Qt 5.10+
         backgroundRoundness: 0
-        backgroundColor: "#000000ff"
+        backgroundColor: "#00000000"
 
         //animationOptions: ChartView.SeriesAnimations
         //theme: ChartView.ChartThemeBrownSand

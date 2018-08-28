@@ -45,25 +45,37 @@ Item {
     Rectangle {
         id: rectangleHeader
         height: 48
-        color: "#FBFBFB"
+        color: "#f5f5f5"
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+
+        Image {
+            id: imageLimits
+            y: 12
+            width: 24
+            height: 24
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/assets/limits.svg"
+        }
 
         Text {
             id: textLimits
             height: 40
             text: qsTr("Limits editor:")
             anchors.right: parent.right
-            anchors.rightMargin: 12
+            anchors.rightMargin: 8
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
-            anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.left: imageLimits.right
+            anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 16
+            font.pixelSize: 18
         }
+
     }
 
     Column {
@@ -93,7 +105,6 @@ Item {
             }
             Text {
                 id: text8
-                y: 0
                 width: 40
                 height: 40
                 text: rangeSlider_hygro.first.value.toFixed(0)
@@ -102,11 +113,9 @@ Item {
                 font.pixelSize: 14
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageHygro.right
-                anchors.leftMargin: 4
             }
             RangeSlider {
                 id: rangeSlider_hygro
-                y: 0
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: text9.left
@@ -124,8 +133,6 @@ Item {
             }
             Text {
                 id: text9
-                x: 0
-                y: 0
                 width: 40
                 height: 40
                 text: rangeSlider_hygro.second.value.toFixed(0)
@@ -164,7 +171,6 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: imageTemp.right
-                anchors.leftMargin: 4
                 font.pixelSize: 14
             }
             RangeSlider {
@@ -217,14 +223,10 @@ Item {
             }
             Text {
                 id: text1
-                x: 72
-                y: -140
                 width: 40
                 height: 40
                 text: qsTr("MIN")
                 anchors.left: imageLumi.right
-                anchors.leftMargin: 8
-                anchors.verticalCenterOffset: 0
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 anchors.verticalCenter: parent.verticalCenter
@@ -232,10 +234,8 @@ Item {
             }
             SpinBox {
                 id: spinBox1
-                x: 128
-                y: -140
                 anchors.left: text1.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 from: 1
@@ -246,8 +246,6 @@ Item {
             }
             SpinBox {
                 id: spinBox2
-                x: 340
-                y: -140
                 anchors.left: spinBox1.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
@@ -260,7 +258,6 @@ Item {
             }
             Text {
                 id: text2
-                y: -140
                 width: 40
                 height: 40
                 text: qsTr("MAX")
@@ -292,8 +289,6 @@ Item {
             }
             Text {
                 id: text7
-                x: 596
-                y: -60
                 width: 40
                 height: 40
                 text: rangeSlider_condu.second.value.toFixed(0)
@@ -306,8 +301,6 @@ Item {
             }
             RangeSlider {
                 id: rangeSlider_condu
-                x: 104
-                y: -60
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: text7.left
@@ -325,8 +318,6 @@ Item {
             }
             Text {
                 id: text6
-                x: 60
-                y: -60
                 width: 40
                 height: 40
                 text: rangeSlider_condu.first.value.toFixed(0)
@@ -335,7 +326,6 @@ Item {
                 font.pixelSize: 14
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageCondu.right
-                anchors.leftMargin: 4
             }
         }
     }

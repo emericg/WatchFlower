@@ -110,14 +110,12 @@ Rectangle {
 
         Image {
             id: bluetooth_img
-            x: 108
-            y: 191
             width: 40
             height: 40
-            anchors.horizontalCenterOffset: 84
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 24
             anchors.horizontalCenter: background_img.horizontalCenter
+            anchors.horizontalCenterOffset: 84
             source: "qrc:/assets/ble_err.svg"
             fillMode: Image.PreserveAspectFit
 
