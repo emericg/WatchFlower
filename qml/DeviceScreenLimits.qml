@@ -181,7 +181,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 from: 0
-                to: 50
+                to: 40
                 stepSize: 1
                 first.value: myDevice.limitTempMin
                 second.value: myDevice.limitTempMax

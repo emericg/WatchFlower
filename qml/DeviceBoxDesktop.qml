@@ -39,18 +39,15 @@ Rectangle {
 
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {
-            textName.text = myDevice.devicePlantName;
-            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")";
+            textName.text = myDevice.devicePlantName
+            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")"
         }
         if (myDevice.deviceName === "MJ_HT_V1") {
-            if (myDevice.deviceCustomName !== "MJ_HT_V1") {
-                textName.text = myDevice.devicePlantName;
-            } else {
-                textName.text = qsTr("Temperature sensor");
-            }
-            textAddr.text = myDevice.deviceName + " (" + myDevice.deviceAddress + ")";
+            textName.text = qsTr("BLE temperature sensor");
+            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")"
         }
 
+        imageDevice.visible = false
         if (myDevice.deviceName === "MJ_HT_V1") {
             imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
         } else if (myDevice.deviceName === "ropot") {

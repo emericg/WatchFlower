@@ -25,10 +25,7 @@ Rectangle {
     id: rectangleDeviceDatas
     anchors.fill: parent
 
-    Component.onCompleted: {
-        rectangleHw.visible = false
-        updateDatas()
-    }
+    Component.onCompleted: updateDatas()
 
     Timer {
         interval: 60000; running: true; repeat: true;
@@ -45,7 +42,7 @@ Rectangle {
             textLastUpdate.font.bold = true
             textLastUpdate.color = "#ff671b"
             textRefresh.text = qsTr("Retry")
-            textRefresh.width = 96
+            textRefresh.width = 90
         } else {
             if (myDevice.lastUpdate <= 1)
                 textLastUpdate.text = qsTr("Last update:") + " " + qsTr("just now!")
@@ -225,7 +222,7 @@ Rectangle {
 
         Rectangle {
             id: buttonRefresh
-            width: 110
+            width: 112
             height: 36
             color: "#e0e0e0"
             anchors.right: parent.right
@@ -234,15 +231,12 @@ Rectangle {
 
             Text {
                 id: textRefresh
-                x: 8
-                width: 66
-                height: 24
                 color: "#202020"
                 text: qsTr("Refresh")
+                anchors.left: parent.left
+                anchors.leftMargin: 8
                 anchors.right: imageRefresh.left
                 anchors.rightMargin: 8
-                horizontalAlignment: Text.AlignRight
-                verticalAlignment: Text.AlignVCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 17
             }
@@ -252,7 +246,7 @@ Rectangle {
                 width: 20
                 height: 20
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/refresh.svg"
 
@@ -284,7 +278,7 @@ Rectangle {
     Flow {
         id: flowData
         anchors.leftMargin: 4
-        anchors.topMargin: 8
+        anchors.topMargin: 6
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: rectangleHeader.bottom

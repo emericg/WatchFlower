@@ -129,8 +129,10 @@ Rectangle {
     ListView {
         id: devicesview
         width: parent.width
+
         clip: true
         model: deviceManager.devicesList
+        spacing: 10
 
         anchors.top: header.bottom
         anchors.bottom: rectangleMenu.top
@@ -143,12 +145,10 @@ Rectangle {
         delegate: DeviceBoxDesktop { myDevice: modelData }
         anchors.leftMargin: 10
         anchors.rightMargin: 10
-        spacing: 10
 /*
         delegate: DeviceBoxMobile { myDevice: modelData }
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-        spacing: 8
 */
     }
 
@@ -169,11 +169,11 @@ Rectangle {
             if (mode === "error") {
                 //
             } else {
-                rectangleScan.width = rectangleMenu.width * 0.4;
+                rectangleScan.width = rectangleMenu.width * 0.5;
                 if (mode === "status") {
-                    rectangleStatus.width = rectangleMenu.width * 0.6;
+                    rectangleStatus.width = rectangleMenu.width * 0.5;
                 } else {
-                    rectangleRefresh.width = rectangleMenu.width * 0.6;
+                    rectangleRefresh.width = rectangleMenu.width * 0.5;
                 }
             }
         }
@@ -193,11 +193,11 @@ Rectangle {
         function setStatus(message) {
             mode = "status"
             rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width * 0.4;
+            rectangleScan.width = rectangleMenu.width * 0.5;
             rectangleRefresh.visible = false;
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
-            rectangleStatus.width = rectangleMenu.width * 0.6;
+            rectangleStatus.width = rectangleMenu.width * 0.5;
             rectangleStatus.anchors.left = rectangleScan.right;
             textStatus.text = message;
         }
@@ -206,9 +206,9 @@ Rectangle {
             rectangleStatus.visible = false;
             rectangleStatus.width = 0;
             rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width * 0.4;
+            rectangleScan.width = rectangleMenu.width * 0.5;
             rectangleRefresh.visible = true;
-            rectangleRefresh.width = rectangleMenu.width * 0.6;
+            rectangleRefresh.width = rectangleMenu.width * 0.5;
             rectangleRefresh.anchors.left = rectangleScan.right;
         }
 

@@ -32,8 +32,19 @@ Rectangle {
     width: parent.width
     anchors.margins: 0
 
-    property string graphViewSelected: settingsManager.graphview
-    property string graphDataSelected: settingsManager.graphdata
+    property string graphViewSelected: {
+        graphViewSelected = settingsManager.graphview
+    }
+    property string graphDataSelected: {
+        graphDataSelected = settingsManager.graphdata
+
+        if (graphDataSelected == "hygro") {
+            if (myDevice.deviceName === "MJ_HT_V1")
+                graphDataSelected = "temp"
+            if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
+                graphDataSelected = "temp"
+        }
+    }
 
     property string hygroGraphColor: "#31A3EC"
     property string tempGraphColor: "#87D241"

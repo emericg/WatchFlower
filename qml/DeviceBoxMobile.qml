@@ -95,22 +95,12 @@ Rectangle {
 
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {
-            textPlant.text = myDevice.devicePlantName;
+            textPlant.text = myDevice.devicePlantName
             textLocation.text = myDevice.deviceCustomName
         }
-
         if (myDevice.deviceName === "MJ_HT_V1") {
-            if (myDevice.deviceCustomName !== "MJ_HT_V1") {
-                textPlant.text = myDevice.devicePlantName;
-            } else {
-                textPlant.text = qsTr("Temp & hygro sensor");
-            }
-            textLocation.text = myDevice.deviceName;
-            imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
-        } else if (myDevice.deviceName === "ropot") {
-            imageDevice.source = "qrc:/assets/devices/ropot.svg";
-        } else {
-            imageDevice.source = "qrc:/assets/devices/flowercare.svg";
+            textPlant.text = qsTr("BLE temperature sensor")
+            textLocation.text = myDevice.deviceCustomName
         }
 
         rectangleSensors.visible = false
@@ -195,96 +185,7 @@ Rectangle {
             anchors.fill: parent
             opacity: 0.5
         }
-        /*
-        Rectangle {
-            id: rectangleDatas
-            color: "#ffffff"
-            anchors.rightMargin: -134
-            anchors.bottomMargin: 94
-            anchors.leftMargin: 134
-            anchors.topMargin: -93
-            anchors.fill: parent
 
-            Rectangle {
-                id: hygro_bg
-                y: 0
-                width: 14
-                height: 64
-                color: "#551389e8"
-                anchors.left: parent.left
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: temp_bg
-                y: 0
-                width: 14
-                height: 64
-                color: "#555dc948"
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 2
-            }
-            Rectangle {
-                id: lumi_bg
-                y: 0
-                width: 14
-                height: 64
-                color: "#55f8ef50"
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 2
-            }
-            Rectangle {
-                id: cond_bg
-                y: 0
-                width: 14
-                height: 64
-                color: "#55fc7203"
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 2
-            }
-
-            Rectangle {
-                id: hygro_data
-                width: 14
-                height: 0
-                color: "#1389e8"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 1
-            }Rectangle {
-                id: temp_data
-                width: 14
-                height: 0
-                color: "#5dc948"
-                visible: true
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 2
-            }
-            Rectangle {
-                id: lumi_data
-                width: 14
-                height: 0
-                color: "#f8ef50"
-                border.color: "#00000000"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 2
-            }
-            Rectangle {
-                id: cond_data
-                width: 14
-                height: 0
-                color: "#fc7203"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 2
-            }
-        }
-*/
         Rectangle {
             id: rectangleSensors
             x: 0
