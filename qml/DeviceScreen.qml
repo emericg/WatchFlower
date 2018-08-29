@@ -35,49 +35,45 @@ Rectangle {
     Component.onCompleted: updateStatus()
 
     function updateStatus() {
-        if (myDevice.updating) {
-            header.menuScanAnimation.start();
-        } else {
-            header.menuScanAnimation.stop();
-        }
 
-        if (!myDevice.available && !myDevice.updating) {
-            textOffline.visible = true
-            if (myDevice.lastUpdate) {
-                textLastUpdate.visible = true
-                textLastUpdate.text = qsTr("Last update ") + myDevice.lastUpdate + qsTr("min ago")
+        // Update header
+        if ((myDevice.deviceCapabilities & 1) == 1) {
+            if (myDevice.deviceBattery < 15) {
+                imageBatt.source = "qrc:/assets/battery_low.svg"
+            } else if (myDevice.deviceBattery > 75) {
+                imageBatt.source = "qrc:/assets/battery_full.svg"
             } else {
-                textLastUpdate.visible = false
+                imageBatt.source = "qrc:/assets/battery_mid.svg"
             }
         } else {
-            textOffline.visible = false
-            textLastUpdate.visible = false
+            imageBatt.visible = false
+            textBatt.visible = false
+        }
+
+        // Plant sensor?
+        if ((myDevice.deviceCapabilities & 64) != 0) {
+            textPlant.visible = true
+            textInputPlant.visible = true
+        } else {
+            textPlant.visible = false
+            textInputPlant.visible = false
         }
 
         if (!myDevice.deviceFirmwareUpToDate) {
-            textFw.text = qsTr("v") + myDevice.deviceFirmware + qsTr(" (update available!)")
+            imageFw.visible = true
+            imageFw.source = "qrc:/assets/update.svg"
+            //textFw.text = qsTr("v") + myDevice.deviceFirmware + qsTr(" (update available!)")
         }
     }
 
     Header {
         id: header
         anchors.top: parent.top
-
-        menuBackImg.visible: true
-        menuScanImg.visible: true
-
-        onBackClicked: {
-            pageLoader.source = "main.qml"
-        }
-        onRefreshClicked: {
-            myDevice.refreshDatas();
-        }
+        onBackClicked: { pageLoader.source = "main.qml" }
     }
 
     Rectangle {
         id: rectangleBody
-        color: "#ccffffff"
-        border.width: 0
 
         anchors.top: header.bottom
         anchors.bottom: parent.bottom
@@ -97,9 +93,11 @@ Rectangle {
 
         Rectangle {
             id: rectangleHeader
-            height: 80
-            color: "#e8e9e8"
-            border.width: 0
+            height: 128
+            //color: "#E0FAE7" // green
+            //color: "#E8E9E8" // dark grey
+            //color: "#F1F1F1" // light
+            color: "#E8E9E8"
 
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -108,344 +106,346 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 0
 
-            Text {
-                id: textAddr
-                y: 46
-                height: 16
-                anchors.left: parent.left
-                anchors.leftMargin: 13
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 12
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 15
-                text: myDevice.deviceName + " (" + myDevice.deviceAddress + ")"
-            }
+            Rectangle {
+                id: rectangleDb
+                color: "#00000000"
+                anchors.fill: parent
 
-            TextInput {
-                id: textInputName
-                height: 32
-                color: "#454b54"
-                text: myDevice.deviceCustomName
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                font.bold: true
-                font.pixelSize: 26
-
-                onEditingFinished: {
-                    myDevice.setCustomName(text);
+                Text {
+                    id: textLocation
+                    x: 12
+                    y: 12
+                    text: qsTr("Location")
+                    anchors.top: parent.top
+                    anchors.topMargin: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    font.pixelSize: 15
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    propagateComposedEvents: true
-
-                    onEntered: { imageEditName.visible = true; }
-                    onExited: { imageEditName.visible = false; }
-
-                    onClicked: mouse.accepted = false;
-                    onPressed: mouse.accepted = false;
-                    onReleased: mouse.accepted = false;
-                    onDoubleClicked: mouse.accepted = false;
-                    onPositionChanged: mouse.accepted = false;
-                    onPressAndHold: mouse.accepted = false;
-                }
-
-                Image {
-                    id: imageEditName
-                    x: 197
-                    y: 0
-                    width: 28
+                TextInput {
+                    id: textInputLocation
                     height: 28
-                    anchors.verticalCenterOffset: 0
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/edit_button.svg"
+                    color: "#454b54"
+                    text: myDevice.deviceCustomName
+                    anchors.top: textLocation.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 11
+                    font.bold: false
+                    font.pixelSize: 22
+                    onEditingFinished: myDevice.setCustomName(text)
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        propagateComposedEvents: true
+
+                        onEntered: { imageEditLocation.visible = true; }
+                        onExited: { imageEditLocation.visible = false; }
+
+                        onClicked: mouse.accepted = false;
+                        onPressed: mouse.accepted = false;
+                        onReleased: mouse.accepted = false;
+                        onDoubleClicked: mouse.accepted = false;
+                        onPositionChanged: mouse.accepted = false;
+                        onPressAndHold: mouse.accepted = false;
+                    }
+
+                    Image {
+                        id: imageEditLocation
+                        y: 0
+                        width: 24
+                        height: 24
+                        anchors.left: parent.right
+                        anchors.leftMargin: 6
+                        anchors.verticalCenterOffset: 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/assets/edit_button.svg"
+                    }
                 }
-            }
 
-            Text {
-                id: textOffline
-                x: 335
-                y: 53
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
+                Text {
+                    id: textPlant
+                    x: 12
+                    y: 62
+                    text: qsTr("Plant")
+                    anchors.top: textInputLocation.bottom
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    font.pixelSize: 15
+                }
 
-                color: "#ff671b"
-                text: qsTr("Device is OFFLINE")
-                horizontalAlignment: Text.AlignRight
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 15
-                font.bold: true
-            }
+                TextInput {
+                    id: textInputPlant
+                    height: 28
+                    color: "#454b54"
+                    text: myDevice.devicePlantName
+                    anchors.top: textPlant.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 11
+                    font.bold: false
+                    horizontalAlignment: Text.AlignLeft
+                    font.pixelSize: 22
+                    onEditingFinished: myDevice.setPlantName(text)
 
-//            Rectangle {
-//                id: rectangleDevice
-//                x: 349
-//                width: 101
-//                color: "#00000000"
-//                anchors.bottom: parent.bottom
-//                anchors.bottomMargin: 0
-//                anchors.top: parent.top
-//                anchors.topMargin: 0
-//                anchors.right: parent.right
-//                anchors.rightMargin: 0
-//                border.width: 0
+                    Image {
+                        id: imageEditPlant
+                        y: 0
+                        width: 24
+                        height: 24
+                        anchors.left: parent.right
+                        anchors.leftMargin: 6
+                        anchors.verticalCenterOffset: 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/assets/edit_button.svg"
+                    }
 
-//                Image {
-//                    id: imageFw
-//                    x: 399
-//                    width: 30
-//                    height: 30
-//                    anchors.verticalCenterOffset: -16
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    anchors.right: parent.right
-//                    anchors.rightMargin: 8
-//                    source: "qrc:/assets/fw.svg"
-//                }
-//                Text {
-//                    id: textFw
-//                    y: 13
-//                    width: 64
-//                    height: 30
-//                    text: "v" + myDevice.deviceFirmware
-//                    horizontalAlignment: Text.AlignRight
-//                    anchors.right: imageFw.left
-//                    anchors.rightMargin: 8
-//                    verticalAlignment: Text.AlignVCenter
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    anchors.verticalCenterOffset: -16
-//                    font.pixelSize: 14
-//                }
+                    MouseArea {
+                        anchors.rightMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.leftMargin: 0
+                        anchors.topMargin: 0
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        propagateComposedEvents: true
 
-//                Image {
-//                    id: imageBatt
-//                    x: 205
-//                    width: 30
-//                    height: 30
-//                    anchors.right: parent.right
-//                    anchors.rightMargin: 8
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    anchors.verticalCenterOffset: 16
-//                    source: {
-//                        if (myDevice.deviceBattery < 15) {
-//                            source = "qrc:/assets/battery_low.svg";
-//                        } else if (myDevice.deviceBattery > 75) {
-//                            source = "qrc:/assets/battery_full.svg";
-//                        } else {
-//                            source = "qrc:/assets/battery_mid.svg";
-//                        }
-//                    }
-//                }
-//                Text {
-//                    id: textBatt
-//                    x: 260
-//                    y: 10
-//                    width: 64
-//                    height: 30
-//                    text: myDevice.deviceBattery + "%"
-//                    horizontalAlignment: Text.AlignRight
-//                    anchors.right: imageBatt.left
-//                    anchors.rightMargin: 8
-//                    verticalAlignment: Text.AlignVCenter
-//                    anchors.verticalCenterOffset: 16
-//                    anchors.verticalCenter: parent.verticalCenter
-//                    font.pixelSize: 14
-//                }
-//            }
-        }
+                        onEntered: { imageEditPlant.visible = true; }
+                        onExited: { imageEditPlant.visible = false; }
 
-        Rectangle {
-            id: rectangleDevice
-            height: 40
-            color: "#f1f1f1"
-            border.width: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.top: rectangleHeader.bottom
-            anchors.topMargin: 0
-
-            Image {
-                id: imageFw
-                width: 30
-                height: 30
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-                source: "qrc:/assets/fw.svg"
-            }
-            Text {
-                id: textFw
-                y: 13
-                height: 30
-
-                text: "v" + myDevice.deviceFirmware
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: imageFw.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 0
-                font.pixelSize: 14
-            }
-            Image {
-                id: imageBatt
-                x: 205
-                width: 28
-                height: 28
-                anchors.left: textFw.right
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 0
-                source: {
-                    if (myDevice.deviceBattery < 15) {
-                        source = "qrc:/assets/battery_low.svg";
-                    } else if (myDevice.deviceBattery > 75) {
-                        source = "qrc:/assets/battery_full.svg";
-                    } else {
-                        source = "qrc:/assets/battery_mid.svg";
+                        onClicked: mouse.accepted = false;
+                        onPressed: mouse.accepted = false;
+                        onReleased: mouse.accepted = false;
+                        onDoubleClicked: mouse.accepted = false;
+                        onPositionChanged: mouse.accepted = false;
+                        onPressAndHold: mouse.accepted = false;
                     }
                 }
             }
-            Text {
-                id: textBatt
-                x: 260
-                y: 10
-                height: 30
-                text: myDevice.deviceBattery + "%"
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: imageBatt.right
-                anchors.leftMargin: 4
-                anchors.verticalCenterOffset: 0
-                anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 14
-            }
+            Rectangle {
+                id: rectangleHw
+                color: "#00000000"
+                visible: true
+                anchors.fill: parent
 
-            Text {
-                id: textLastUpdate
-                x: 359
-                y: 13
-                text: qsTr("Last update: x min ago")
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                font.pixelSize: 15
-            }
-        }
+                Text {
+                    id: labelName
+                    text: qsTr("Device name")
+                    anchors.topMargin: 16
+                    anchors.leftMargin: 12
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: textName
+                    x: 12
+                    y: 12
+                    height: 28
+                    color: "#454b54"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    font.pixelSize: 22
+                    text: myDevice.deviceName
+                    anchors.right: parent.right
+                    anchors.rightMargin: 294
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    anchors.top: labelName.bottom
+                    anchors.topMargin: 0
+                }
 
-        Rectangle {
-            id: rectanglePlant
-            y: 41
-            width: 368
-            height: 40
-            color: "#f9f9f9"
-            border.width: 0
-            anchors.top:rectangleDevice.bottom
-            anchors.topMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
+                Text {
+                    id: labelAddr
+                    text: qsTr("MAC adress")
+                    anchors.topMargin: 8
+                    anchors.leftMargin: 12
+                    anchors.left: parent.left
+                    anchors.top: textName.bottom
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: textAddr
+                    height: 28
+                    color: "#454b54"
+                    text: myDevice.deviceAddress
+                    horizontalAlignment: Text.AlignLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: 235
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.topMargin: 0
+                    anchors.leftMargin: 12
+                    anchors.left: parent.left
+                    anchors.top: labelAddr.bottom
+                    font.pixelSize: 22
+                }
 
-            Image {
-                id: imagePlant
-                width: 30
-                height: 30
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/plant.svg"
-            }
-
-            TextInput {
-                id: textInputPlant
-                y: 12
-                height: 20
-                text: myDevice.devicePlantName
-                anchors.right: imageLimits.left
-                anchors.rightMargin: 4
-                horizontalAlignment: Text.AlignLeft
-                anchors.left: imagePlant.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 16
-
+                Text {
+                    id: labelFw
+                    x: 9
+                    y: 10
+                    text: qsTr("Firmware")
+                    anchors.topMargin: 70
+                    anchors.leftMargin: 238
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: 15
+                }
                 Image {
-                    id: imageEditPlant
-                    x: 197
-                    y: 0
-                    width: 20
-                    height: 20
-                    anchors.verticalCenterOffset: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/edit_button.svg"
-                    anchors.rightMargin: 0
-                    anchors.right: parent.right
+                    id: imageFw
+                    y: 90
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 238
+                    source: "qrc:/assets/update.svg"
                 }
-
-                onEditingFinished: {
-                    myDevice.setPlantName(text);
+                Text {
+                    id: textFw
+                    width: 125
+                    color: "#454b54"
+                    text: myDevice.deviceFirmware
+                    anchors.top: labelFw.bottom
+                    anchors.topMargin: 6
+                    anchors.left: imageFw.right
+                    anchors.leftMargin: 6
+                    font.pixelSize: 18
                 }
+                Image {
+                    id: imageBatt
+                    y: 36
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 170
+                    source: "qrc:/assets/battery_full.svg"
+                }
+                Text {
+                    id: textBatt
+                    y: 38
+                    color: "#454b54"
+                    text: myDevice.deviceBattery + "%"
+                    anchors.left: imageBatt.right
+                    anchors.leftMargin: 6
 
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    propagateComposedEvents: true
-
-                    onEntered: { imageEditPlant.visible = true; }
-                    onExited: { imageEditPlant.visible = false; }
-
-                    onClicked: mouse.accepted = false;
-                    onPressed: mouse.accepted = false;
-                    onReleased: mouse.accepted = false;
-                    onDoubleClicked: mouse.accepted = false;
-                    onPositionChanged: mouse.accepted = false;
-                    onPressAndHold: mouse.accepted = false;
+                    font.pixelSize: 18
                 }
             }
 
-            Image {
-                id: imageLimits
-                x: 416
-                y: 8
-                width: 30
-                height: 30
+            Rectangle {
+                id: rectangleBar
+                width: 48
+                color: "#E1E1E1"
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/stats.svg"
+                anchors.rightMargin: 0
 
-                MouseArea {
-                    anchors.fill: parent
+                Rectangle {
+                    id: rectangleB1
+                    width: 32
+                    height: 32
+                    color: "#00000000"
+                    anchors.verticalCenterOffset: -24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    onPressed: {
-                        imageLimits.anchors.topMargin += 2
-                        imageLimits.anchors.rightMargin += 2
-                        imageLimits.width -= 4
-                        imageLimits.height -= 4
+                    Image {
+                        id: imageB1
+                        width: 28
+                        height: 28
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/assets/hw.svg"
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            hoverEnabled: true
+                            onEntered: imageB1.opacity = 0.5
+                            onExited: imageB1.opacity = 1
+
+                            onPressed: {
+                                imageB1.anchors.topMargin += 2
+                                imageB1.anchors.rightMargin += 2
+                                imageB1.width -= 4
+                                imageB1.height -= 4
+                            }
+                            onReleased: {
+                                imageB1.anchors.topMargin -= 2
+                                imageB1.anchors.rightMargin -= 2
+                                imageB1.width += 4
+                                imageB1.height += 4
+                            }
+                            onClicked: {
+                                if (rectangleHw.visible === true) {
+                                    rectangleHw.visible = false
+                                    rectangleDb.visible = true
+                                    imageB1.source = "qrc:/assets/db.svg"
+                                } else {
+                                    rectangleHw.visible = true
+                                    rectangleDb.visible = false
+                                    imageB1.source = "qrc:/assets/hw.svg"
+                                }
+                            }
+                        }
                     }
-                    onReleased: {
-                        imageLimits.anchors.topMargin -= 2
-                        imageLimits.anchors.rightMargin -= 2
-                        imageLimits.width += 4
-                        imageLimits.height += 4
-                    }
-                    onClicked: {
-                        if (rectangleContent.state === "datas")
-                            rectangleContent.state = "limits";
-                        else {
-                            rectangleContent.state = "datas";
-                            // Update color bars with new limits
-                            rectangleDeviceDatas.updateDatas();
+                }
+
+                Rectangle {
+                    id: rectangleB2
+                    x: 8
+                    y: 106
+                    width: 32
+                    height: 32
+                    color: "#00000000"
+                    anchors.verticalCenterOffset: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Image {
+                        id: imageB2
+                        width: 28
+                        height: 28
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/assets/limits.svg"
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            hoverEnabled: true
+                            onEntered: imageB2.opacity = 0.5
+                            onExited: imageB2.opacity = 1
+
+                            onPressed: {
+                                imageB2.anchors.topMargin += 2
+                                imageB2.anchors.rightMargin += 2
+                                imageB2.width -= 4
+                                imageB2.height -= 4
+                            }
+                            onReleased: {
+                                imageB2.anchors.topMargin -= 2
+                                imageB2.anchors.rightMargin -= 2
+                                imageB2.width += 4
+                                imageB2.height += 4
+                            }
+                            onClicked: {
+                                if (rectangleContent.state === "datas") {
+                                    rectangleContent.state = "limits"
+                                    imageB2.source = "qrc:/assets/graph.svg"
+                                } else {
+                                    rectangleContent.state = "datas"
+                                    // Update color bars with new limits
+                                    rectangleDeviceDatas.updateDatas()
+                                    imageB2.source = "qrc:/assets/limits.svg"
+                                }
+                            }
                         }
                     }
                 }
@@ -454,11 +454,12 @@ Rectangle {
 
         Rectangle {
             id: rectangleContent
+            color: "#ffffff"
+            anchors.bottom: parent.bottom
 
-            anchors.top: rectanglePlant.bottom
+            anchors.top: rectangleHeader.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
 
             DeviceScreenDatas {
                 anchors.fill: parent
@@ -466,7 +467,7 @@ Rectangle {
             }
             DeviceScreenLimits {
                 anchors.fill: parent
-                id: rectangleLimits
+                id: rectangleDeviceLimits
             }
 
             state: "datas"
@@ -478,7 +479,7 @@ Rectangle {
                         visible: true
                     }
                     PropertyChanges {
-                        target: rectangleLimits
+                        target: rectangleDeviceLimits
                         visible: false
                     }
                 },
@@ -489,7 +490,7 @@ Rectangle {
                         visible: false
                     }
                     PropertyChanges {
-                        target: rectangleLimits
+                        target: rectangleDeviceLimits
                         visible: true
                     }
                 }

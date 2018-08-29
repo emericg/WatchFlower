@@ -11,15 +11,12 @@
         <file>background3.png</file>
         <file>menu_back.svg</file>
         <file>menu_front.svg</file>
-        <file>menu_refresh.svg</file>
         <file>menu_settings.svg</file>
         <file>edit_button.svg</file>
         <file>update.svg</file>
         <file>ble.svg</file>
         <file>ble_err.svg</file>
         <file>stats.svg</file>
-        <file>plant.svg</file>
-        <file>fw.svg</file>
         <file>battery_low.svg</file>
         <file>battery_mid.svg</file>
         <file>battery_full.svg</file>

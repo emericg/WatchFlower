@@ -77,8 +77,6 @@ Rectangle {
         anchors.top: parent.top
 
         menuBackImg.source: "qrc:/assets/menu_settings.svg"
-        menuBackImg.visible: true
-        menuScanImg.visible: false
 
         onBackClicked: {
             pageLoader.setSource("Settings.qml",

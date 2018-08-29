@@ -34,7 +34,6 @@ Rectangle {
         anchors.top: parent.top
 
         menuBackImg.visible: true
-        menuScanImg.visible: false
 
         onBackClicked: {
             pageLoader.source = "main.qml"

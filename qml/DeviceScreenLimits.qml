@@ -54,8 +54,8 @@ Item {
         Image {
             id: imageLimits
             y: 12
-            width: 24
-            height: 24
+            width: 28
+            height: 28
             anchors.left: parent.left
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
@@ -64,16 +64,15 @@ Item {
 
         Text {
             id: textLimits
-            height: 40
+            height: 28
             text: qsTr("Limits editor:")
+            verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
             anchors.rightMargin: 8
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
             anchors.left: imageLimits.right
-            anchors.leftMargin: 8
+            anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 17
+            font.pixelSize: 18
         }
     }
 

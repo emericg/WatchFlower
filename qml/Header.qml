@@ -28,10 +28,6 @@ Rectangle {
     color: "#1dcb58"
 
     property alias menuBackImg: backImg
-    property alias menuScanImg: refreshImg
-    property alias menuScanAnimation: refreshRotation
-
-    signal refreshClicked()
     signal backClicked()
 
     Text {
@@ -74,32 +70,6 @@ Rectangle {
                 backImg.height += 4
             }
             onClicked: backClicked()
-        }
-    }
-
-    Image {
-        id: refreshImg
-        width: 32
-        height: 32
-        anchors.right: parent.right
-        anchors.rightMargin: 12
-        anchors.verticalCenter: parent.verticalCenter
-
-        source: "qrc:/assets/menu_refresh.svg"
-        fillMode: Image.PreserveAspectFit
-
-        NumberAnimation on rotation {
-            id: refreshRotation
-            duration: 3000;
-            from: 0;
-            to: 360;
-            loops: Animation.Infinite
-            running: false
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: refreshClicked()
         }
     }
 }

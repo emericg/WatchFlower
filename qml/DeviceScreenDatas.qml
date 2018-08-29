@@ -23,149 +23,262 @@ import QtQuick 2.7
 
 Rectangle {
     id: rectangleDeviceDatas
+    anchors.fill: parent
 
-    anchors.rightMargin: 0
-    anchors.leftMargin: 0
-    anchors.topMargin: 0
-    anchors.top: parent.top
-    anchors.right: parent.right
-    anchors.left: parent.left
-    anchors.bottom: parent.bottom
+    Component.onCompleted: {
+        rectangleHw.visible = false
+        updateDatas()
+    }
 
-    Component.onCompleted: updateDatas()
+    Timer {
+        interval: 60000; running: true; repeat: true;
+        onTriggered: updateLastUpdateText()
+    }
+
+    function updateLastUpdateText() {
+        if (!myDevice.available && myDevice.updating) {
+            textLastUpdate.text = qsTr("Device is updating...")
+            textLastUpdate.color = "#000000"
+            textLastUpdate.font.bold = false
+        } else if (!myDevice.available && !myDevice.updating) {
+            textLastUpdate.text = qsTr("Device is offline!")
+            textLastUpdate.font.bold = true
+            textLastUpdate.color = "#ff671b"
+            textRefresh.text = qsTr("Retry")
+            textRefresh.width = 96
+        } else {
+            if (myDevice.lastUpdate <= 1)
+                textLastUpdate.text = qsTr("Last update:") + " " + qsTr("just now!")
+            else
+                textLastUpdate.text = qsTr("Last update:") + " " +  myDevice.lastUpdate + " " + qsTr("min. ago")
+            textLastUpdate.color = "#000000"
+            textLastUpdate.font.bold = false
+            textRefresh.text = qsTr("Refresh")
+            textRefresh.width = 112
+        }
+    }
 
     function updateDatas() {
 
-        if ((myDevice.deviceCapabilities & 1) == 1) {
-            if (myDevice.deviceBattery < 15) {
-                imageBatt.source = "qrc:/assets/battery_low.svg"
-            } else if (myDevice.deviceBattery > 75) {
-                imageBatt.source = "qrc:/assets/battery_full.svg"
-            } else {
-                imageBatt.source = "qrc:/assets/battery_mid.svg"
-            }
+        // Update header
+        updateLastUpdateText()
+
+        if (myDevice.updating) {
+            refreshRotation.start()
         } else {
-            imageBatt.visible = false
-            textBatt.visible = false
+            refreshRotation.stop()
         }
 
-        var hours = Qt.formatDateTime (new Date(), "hh")
-        if (hours > 22 || hours < 8) {
-            imageLuminosity.source = "qrc:/assets/night.svg"
-        } else {
-            imageLuminosity.source = "qrc:/assets/day.svg"
-        }
-
-        if ((myDevice.deviceCapabilities & 2) == 0) {
-            rectangleTemp.visible = false
-        }
-        if ((myDevice.deviceCapabilities & 4) == 0) {
-            rectangleHygro.visible = false
-        }
-        if ((myDevice.deviceCapabilities & 8) == 0) {
-            rectangleLuminosity.visible = false
-        }
-        if ((myDevice.deviceCapabilities & 16) == 0) {
-            rectangleConductivity.visible = false
-        }
+        // Update graph
+        deviceScreenCharts.updateGraph()
 
         // Hygro
-        if (myDevice.deviceHygro < 0) {
-            textHygro.text = qsTr("No datas...")
-            barHygro_low.color = badColor
-            barHygro_good.color = badColor
-            barHygro_high.color = badColor
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            rectangleHygro.visible = false
         } else {
-            textHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
-
-            if (myDevice.deviceHygro < myDevice.limitHygroMin) {
+            if (myDevice.deviceHygro < 0) {
+                textHygro.text = qsTr("No datas...")
                 barHygro_low.color = badColor
-                barHygro_good.color = neutralColor
-                barHygro_high.color = neutralColor
-            } else if (myDevice.deviceHygro > myDevice.limitHygroMax) {
-                barHygro_low.color = neutralColor
-                barHygro_good.color = neutralColor
+                barHygro_good.color = badColor
                 barHygro_high.color = badColor
             } else {
-                barHygro_low.color = neutralColor
-                barHygro_good.color = goodColor
-                barHygro_high.color = neutralColor
+                textHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
+
+                if (myDevice.deviceHygro < myDevice.limitHygroMin) {
+                    barHygro_low.color = badColor
+                    barHygro_good.color = neutralColor
+                    barHygro_high.color = neutralColor
+                } else if (myDevice.deviceHygro > myDevice.limitHygroMax) {
+                    barHygro_low.color = neutralColor
+                    barHygro_good.color = neutralColor
+                    barHygro_high.color = badColor
+                } else {
+                    barHygro_low.color = neutralColor
+                    barHygro_good.color = goodColor
+                    barHygro_high.color = neutralColor
+                }
             }
         }
 
         // Temp
-        if (myDevice.deviceTempC < 0) {
-            textTemp.text = qsTr("No datas...")
-            barTemp_low.color = badColor
-            barTemp_good.color = badColor
-            barTemp_high.color = badColor
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            rectangleTemp.visible = false
         } else {
-            textTemp.text = myDevice.getTempString()
-
-            if (myDevice.deviceTempC < myDevice.limitTempMin) {
+            if (myDevice.deviceTempC < 0) {
+                textTemp.text = qsTr("No datas...")
                 barTemp_low.color = badColor
-                barTemp_good.color = neutralColor
-                barTemp_high.color = neutralColor
-            } else if (myDevice.deviceTempC > myDevice.limitTempMax) {
-                barTemp_low.color = neutralColor
-                barTemp_good.color = neutralColor
+                barTemp_good.color = badColor
                 barTemp_high.color = badColor
             } else {
-                barTemp_low.color = neutralColor
-                barTemp_good.color = goodColor
-                barTemp_high.color = neutralColor
+                textTemp.text = myDevice.getTempString()
+
+                if (myDevice.deviceTempC < myDevice.limitTempMin) {
+                    barTemp_low.color = badColor
+                    barTemp_good.color = neutralColor
+                    barTemp_high.color = neutralColor
+                } else if (myDevice.deviceTempC > myDevice.limitTempMax) {
+                    barTemp_low.color = neutralColor
+                    barTemp_good.color = neutralColor
+                    barTemp_high.color = badColor
+                } else {
+                    barTemp_low.color = neutralColor
+                    barTemp_good.color = goodColor
+                    barTemp_high.color = neutralColor
+                }
             }
         }
 
         // Luminosity
-        if (myDevice.deviceLuminosity < 0) {
-            textLuminosity.text = qsTr("No datas...")
-            barLux_low.color = badColor
-            barLux_good.color = badColor
-            barLux_high.color = badColor
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            rectangleLuminosity.visible = false
         } else {
-            textLuminosity.text = myDevice.deviceLuminosity + " lumens"
+            var hours = Qt.formatDateTime (new Date(), "hh")
+            if (hours > 22 || hours < 8) {
+                imageLuminosity.source = "qrc:/assets/night.svg"
+            } else {
+                imageLuminosity.source = "qrc:/assets/day.svg"
+            }
 
-            if (myDevice.deviceLuminosity < myDevice.limitLumiMin) {
+            if (myDevice.deviceLuminosity < 0) {
+                textLuminosity.text = qsTr("No datas...")
                 barLux_low.color = badColor
-                barLux_good.color = neutralColor
-                barLux_high.color = neutralColor
-            } else if (myDevice.deviceLuminosity > myDevice.limitLumiMax) {
-                barLux_low.color = neutralColor
-                barLux_good.color = neutralColor
+                barLux_good.color = badColor
                 barLux_high.color = badColor
             } else {
-                barLux_low.color = neutralColor
-                barLux_good.color = goodColor
-                barLux_high.color = neutralColor
+                textLuminosity.text = myDevice.deviceLuminosity + " lumens"
+
+                if (myDevice.deviceLuminosity < myDevice.limitLumiMin) {
+                    barLux_low.color = badColor
+                    barLux_good.color = neutralColor
+                    barLux_high.color = neutralColor
+                } else if (myDevice.deviceLuminosity > myDevice.limitLumiMax) {
+                    barLux_low.color = neutralColor
+                    barLux_good.color = neutralColor
+                    barLux_high.color = badColor
+                } else {
+                    barLux_low.color = neutralColor
+                    barLux_good.color = goodColor
+                    barLux_high.color = neutralColor
+                }
             }
         }
 
         // Conductivity
-        if (myDevice.deviceConductivity < 0) {
-            textConductivity.text = qsTr("No datas...")
-            barCond_low.color = badColor
-            barCond_good.color = badColor
-            barCond_high.color = badColor
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            rectangleConductivity.visible = false
         } else {
-            textConductivity.text = myDevice.deviceConductivity + " µS/cm"
-
-            if (myDevice.deviceConductivity < myDevice.limitConduMin) {
+            if (myDevice.deviceConductivity < 0) {
+                textConductivity.text = qsTr("No datas...")
                 barCond_low.color = badColor
-                barCond_good.color = neutralColor
-                barCond_high.color = neutralColor
-            } else if (myDevice.deviceConductivity > myDevice.limitConduMax) {
-                barCond_low.color = neutralColor
-                barCond_good.color = neutralColor
+                barCond_good.color = badColor
                 barCond_high.color = badColor
             } else {
-                barCond_low.color = neutralColor
-                barCond_good.color = goodColor
-                barCond_high.color = neutralColor
+                textConductivity.text = myDevice.deviceConductivity + " µS/cm"
+
+                if (myDevice.deviceConductivity < myDevice.limitConduMin) {
+                    barCond_low.color = badColor
+                    barCond_good.color = neutralColor
+                    barCond_high.color = neutralColor
+                } else if (myDevice.deviceConductivity > myDevice.limitConduMax) {
+                    barCond_low.color = neutralColor
+                    barCond_good.color = neutralColor
+                    barCond_high.color = badColor
+                } else {
+                    barCond_low.color = neutralColor
+                    barCond_good.color = goodColor
+                    barCond_high.color = neutralColor
+                }
             }
         }
+    }
 
-        deviceScreenCharts.updateGraph()
+    Rectangle {
+        id: rectangleHeader
+        height: 48
+        color: "#f5f5f5"
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+
+        Text {
+            id: textLastUpdate
+            height: 40
+            text: qsTr("Last update:")
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
+            anchors.left: imageLastUpdate.right
+            anchors.leftMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: 17
+        }
+
+        Image {
+            id: imageLastUpdate
+            width: 24
+            height: 24
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/assets/lastupdate.svg"
+        }
+
+        Rectangle {
+            id: buttonRefresh
+            width: 110
+            height: 36
+            color: "#e0e0e0"
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+
+            Text {
+                id: textRefresh
+                x: 8
+                width: 66
+                height: 24
+                color: "#202020"
+                text: qsTr("Refresh")
+                anchors.right: imageRefresh.left
+                anchors.rightMargin: 8
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: 17
+            }
+
+            Image {
+                id: imageRefresh
+                width: 20
+                height: 20
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/assets/refresh.svg"
+
+                NumberAnimation on rotation {
+                    id: refreshRotation
+                    duration: 3000;
+                    from: 0;
+                    to: 360;
+                    loops: Animation.Infinite
+                    running: false
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+
+                hoverEnabled: true
+                onEntered: buttonRefresh.color = "#eaeaea"
+                onExited: buttonRefresh.color = "#e0e0e0"
+
+                onClicked: {
+                    refreshRotation.start()
+                    myDevice.refreshDatas()
+                }
+            }
+        }
     }
 
     Flow {
@@ -205,7 +318,7 @@ Rectangle {
                 x: 48
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.right: barHygro_good.left
                 anchors.rightMargin: 4
@@ -216,14 +329,14 @@ Rectangle {
                 x: 80
                 y: 30
                 width: 56
-                height: 6
+                height: 8
                 color: neutralColor
             }
             Rectangle {
                 id: barHygro_high
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.left: barHygro_good.right
                 anchors.leftMargin: 4
@@ -260,7 +373,7 @@ Rectangle {
                 x: 48
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.right: barTemp_good.left
                 anchors.rightMargin: 4
@@ -272,14 +385,14 @@ Rectangle {
                 x: 80
                 y: 30
                 width: 56
-                height: 6
+                height: 8
                 color: neutralColor
             }
             Rectangle {
                 id: barTemp_high
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.left: barTemp_good.right
                 anchors.leftMargin: 4
@@ -316,7 +429,7 @@ Rectangle {
                 x: 48
                 y: 32
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.right: barLux_good.left
                 anchors.rightMargin: 4
@@ -327,14 +440,14 @@ Rectangle {
                 x: 80
                 y: 30
                 width: 56
-                height: 6
+                height: 8
                 color: neutralColor
             }
             Rectangle {
                 id: barLux_high
                 y: 30
                 width: 28
-                height: 6
+                height: 8
                 anchors.left: barLux_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barLux_good.verticalCenter
@@ -371,7 +484,7 @@ Rectangle {
                 x: 48
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.right: barCond_good.left
                 anchors.rightMargin: 4
@@ -382,14 +495,14 @@ Rectangle {
                 x: 80
                 y: 30
                 width: 56
-                height: 6
+                height: 8
                 color: neutralColor
             }
             Rectangle {
                 id: barCond_high
                 y: 27
                 width: 28
-                height: 6
+                height: 8
                 color: neutralColor
                 anchors.left: barCond_good.right
                 anchors.leftMargin: 4

@@ -1,0 +1,39 @@
+
+# Application icon:
+- assets/desktop/watchflower.svg // Boston icon theme // CC BY-NC-ND 4.0
+
+# Backgrounds:
+- assets/background1.png    // pixabay.com/fr/users/Suxu // CC0 Creative Commons
+- assets/background2.png    // pixabay.com/fr/users/Suxu // CC0 Creative Commons
+- assets/background3.png    // pixabay.com/fr/users/Suxu // CC0 Creative Commons
+
+# Devices:
+- assets/flowercare.svg     // Emeric Grange // CC BY-SA 4.0
+- assets/bletemphygro.svg   // Emeric Grange // CC BY-SA 4.0
+- assets/ropot.svg          // Emeric Grange // CC BY-SA 4.0
+
+# Menu:
+- assets/menu_settings.svg  // Paper icon theme // CC BY-SA 4.0
+- assets/menu_front.svg     // Emeric Grange // CC BY-SA 4.0
+- assets/menu_back.svg      // Emeric Grange // CC BY-SA 4.0
+
+# Icons:
+- assets/battery_full.svg   // Yosa Max icon theme  // GPL v3
+- assets/battery_low.svg    // Yosa Max icon theme  // GPL v3
+- assets/battery_mid.svg    // Yosa Max icon theme  // GPL v3
+- assets/ble.svg            // Gnome symbolic icon theme
+- assets/ble_err.svg        // Gnome symbolic icon theme
+- assets/conductivity.svg   // Gnome symbolic icon theme
+- assets/day.svg            // Gnome symbolic icon theme
+- assets/db.svg             // Yosa Max icon theme  // GPL v3
+- assets/edit_button.svg    // Paper icon theme // CC BY-SA 4.0
+- assets/graph.svg          // Yosa Max icon theme  // GPL v3
+- assets/hw.svg             // Yosa Max icon theme  // GPL v3
+- assets/hygro.svg          // Gnome symbolic icon theme
+- assets/lastupdate.svg     // Yosa Max icon theme  // GPL v3
+- assets/limits.svg         // Yosa Max icon theme  // GPL v3
+- assets/night.svg          // Gnome symbolic icon theme
+- assets/refresh.svg        // Yosa Max icon theme  // GPL v3
+- assets/lastupdate.svg     // Yosa Max icon theme  // GPL v3
+- assets/stats.svg          // Emeric Grange // CC BY-SA 4.0
+- assets/update.svg         // Yosa Max icon theme  // GPL v3
