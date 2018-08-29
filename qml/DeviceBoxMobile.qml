@@ -70,7 +70,7 @@ Rectangle {
         y: 8
         height: 24
         color: "#454B54"
-        text: myDevice.deviceCustomName
+        text: myDevice.deviceLocationName
         font.bold: false
         anchors.topMargin: 18
         anchors.top: parent.top
@@ -96,11 +96,11 @@ Rectangle {
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {
             textPlant.text = myDevice.devicePlantName
-            textLocation.text = myDevice.deviceCustomName
+            textLocation.text = myDevice.deviceLocationName
         }
         if (myDevice.deviceName === "MJ_HT_V1") {
             textPlant.text = qsTr("BLE temperature sensor")
-            textLocation.text = myDevice.deviceCustomName
+            textLocation.text = myDevice.deviceLocationName
         }
 
         rectangleSensors.visible = false

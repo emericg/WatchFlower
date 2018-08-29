@@ -58,7 +58,7 @@ class Device: public QObject
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceAddress READ getMacAddress NOTIFY datasUpdated)
-    Q_PROPERTY(QString deviceCustomName READ getCustomName NOTIFY datasUpdated)
+    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY datasUpdated)
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
     Q_PROPERTY(int deviceCapabilities READ getCapabilities NOTIFY datasUpdated)
@@ -110,7 +110,7 @@ protected:
     int m_conductivity = -1;
 
     // BLE associated datas
-    QString m_customName;
+    QString m_locationName;
     QString m_plantName;
 
     // BLE device limits
@@ -182,8 +182,8 @@ public slots:
     QString getLastUpdateString() const;
 
     // BLE device associated datas
-    QString getCustomName() { return m_customName; }
-    void setCustomName(QString name);
+    QString getLocationName() { return m_locationName; }
+    void setLocationName(QString name);
 
     QString getPlantName() { return m_plantName; }
     void setPlantName(QString name);

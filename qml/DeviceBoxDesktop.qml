@@ -40,11 +40,11 @@ Rectangle {
     function updateBoxDatas() {
         if (myDevice.devicePlantName !== "") {
             textName.text = myDevice.devicePlantName
-            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")"
+            textAddr.text = myDevice.deviceLocationName + " (" + myDevice.deviceAddress + ")"
         }
         if (myDevice.deviceName === "MJ_HT_V1") {
             textName.text = qsTr("BLE temperature sensor");
-            textAddr.text = myDevice.deviceCustomName + " (" + myDevice.deviceAddress + ")"
+            textAddr.text = myDevice.deviceLocationName + " (" + myDevice.deviceAddress + ")"
         }
 
         imageDevice.visible = false
@@ -115,7 +115,7 @@ Rectangle {
         anchors.leftMargin: 8
 
         color: "#454B54"
-        text: myDevice.deviceCustomName
+        text: myDevice.deviceLocationName
         font.bold: true
         font.pixelSize: 24
         verticalAlignment: Text.AlignVCenter

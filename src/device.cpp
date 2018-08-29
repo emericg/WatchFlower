@@ -49,7 +49,7 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
-    m_customName = deviceName;
+    m_locationName = deviceName;
 
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
@@ -68,7 +68,7 @@ Device::Device(const QBluetoothDeviceInfo &d)
     bleDevice = d;
     m_deviceAddress = bleDevice.address().toString();
     m_deviceName = bleDevice.name();
-    m_customName = bleDevice.name();
+    m_locationName = bleDevice.name();
 
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
@@ -142,7 +142,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
                 if (!m_plantName.isEmpty())
                     message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
                 else
-                    message = QObject::tr("You need to water the plant on '") + m_customName + "'";
+                    message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
 
                 st->sendNotification(message);
             }
@@ -224,13 +224,13 @@ bool Device::getSqlDatas()
         status = true;
     }
 
-    QSqlQuery getCustomName;
-    getCustomName.prepare("SELECT customName FROM devices WHERE deviceAddr = :deviceAddr");
-    getCustomName.bindValue(":deviceAddr", getMacAddress());
-    getCustomName.exec();
-    while (getCustomName.next())
+    QSqlQuery getLocationName;
+    getLocationName.prepare("SELECT customName FROM devices WHERE deviceAddr = :deviceAddr");
+    getLocationName.bindValue(":deviceAddr", getMacAddress());
+    getLocationName.exec();
+    while (getLocationName.next())
     {
-        m_customName = getCustomName.value(0).toString();
+        m_locationName = getLocationName.value(0).toString();
         status = true;
     }
 
@@ -389,12 +389,12 @@ QString Device::getLastUpdateString() const
     return lastUpdate;
 }
 
-void Device::setCustomName(QString name)
+void Device::setLocationName(QString name)
 {
     if (!name.isEmpty())
     {
-        m_customName = name;
-        qDebug() << "setCustomName(" << m_customName << ")";
+        m_locationName = name;
+        qDebug() << "setLocationName(" << m_locationName << ")";
 
         QSqlQuery updateName;
         updateName.prepare("UPDATE devices SET customName = :name WHERE deviceAddr = :deviceAddr");
@@ -406,7 +406,7 @@ void Device::setCustomName(QString name)
 
 void Device::setPlantName(QString name)
 {
-    if (!name.isEmpty())
+    //if (!name.isEmpty())
     {
         m_plantName = name;
         qDebug() << "setPlantName(" << m_plantName << ")";

@@ -260,21 +260,22 @@ Rectangle {
             }
             TextInput {
                 id: textInputPlant
-                x: 58
-                y: 106
-                color: "#454b54"
-                text: myDevice.devicePlantName
                 anchors.verticalCenter: labelPlant.verticalCenter
                 anchors.left: labelPlant.right
                 anchors.leftMargin: 8
-                font.bold: false
-                horizontalAlignment: Text.AlignLeft
+
+                text: {
+                    if (myDevice.devicePlantName !== "")
+                        text = myDevice.devicePlantName
+                    else
+                        text = qsTr("Plant")
+                }
+                color: "#454b54"
                 font.pixelSize: 18
                 onEditingFinished: myDevice.setPlantName(text)
 
                 Image {
                     id: imageEditPlant
-                    y: 0
                     width: 24
                     height: 24
                     anchors.left: parent.right
@@ -316,14 +317,19 @@ Rectangle {
             }
             TextInput {
                 id: textInputLocation
-                color: "#454b54"
-                text: myDevice.deviceCustomName
                 anchors.verticalCenter: labelLocation.verticalCenter
                 anchors.left: labelLocation.right
                 anchors.leftMargin: 8
-                font.bold: false
+
+                text: {
+                    if (myDevice.deviceLocationName !== "")
+                        text = myDevice.deviceLocationName
+                    else
+                        text = qsTr("Location")
+                }
+                color: "#454b54"
                 font.pixelSize: 18
-                onEditingFinished: myDevice.setCustomName(text)
+                onEditingFinished: myDevice.setLocationName(text)
 
                 MouseArea {
                     anchors.fill: parent
@@ -343,7 +349,6 @@ Rectangle {
 
                 Image {
                     id: imageEditLocation
-                    y: 0
                     width: 24
                     height: 24
                     anchors.left: parent.right
