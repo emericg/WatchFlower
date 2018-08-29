@@ -73,9 +73,8 @@ Item {
             anchors.left: imageLimits.right
             anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 18
+            font.pixelSize: 17
         }
-
     }
 
     Column {
@@ -88,7 +87,7 @@ Item {
 
         Item {
             id: itemHygro
-            height: 80
+            height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -147,7 +146,7 @@ Item {
 
         Item {
             id: itemTemp
-            height: 80
+            height: 64
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -206,7 +205,7 @@ Item {
 
         Item {
             id: itemLumi
-            height: 80
+            height: 64
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -272,7 +271,7 @@ Item {
 
         Item {
             id: itemCondu
-            height: 80
+            height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right

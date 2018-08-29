@@ -24,30 +24,11 @@ import QtQuick 2.7
 Rectangle {
     id: deviceBoxDesktop
     width: parent.width
-    height: 128
+    height: 120
     radius: 8
     color: "#ddffffff"
 
     property var myDevice
-
-    Text {
-        id: textName
-        y: 8
-        height: 32
-        color: "#454B54"
-        text: myDevice.deviceCustomName
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.topMargin: 12
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-
-        font.bold: true
-        font.pixelSize: 26
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignLeft
-    }
 
     Connections {
         target: myDevice
@@ -127,24 +108,43 @@ Rectangle {
     }
 
     Text {
-        id: textAddr
-        width: 166
-        height: 21
-        verticalAlignment: Text.AlignVCenter
-        font.pixelSize: 14
-        text: myDevice.deviceAddress
-        anchors.top: textName.bottom
-        anchors.topMargin: 4
+        id: textName
+        height: 32
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        anchors.topMargin: 12
+        anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 8
+
+        color: "#454B54"
+        text: myDevice.deviceCustomName
+        font.bold: true
+        font.pixelSize: 24
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Text {
+        id: textAddr
+        height: 22
+        color: "#454b54"
+        anchors.top: textName.bottom
+        anchors.topMargin: 2
+        anchors.left: parent.left
+        anchors.leftMargin: 9
+
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 16
+        text: myDevice.deviceAddress
     }
 
     Image {
         id: imageDevice
+        width: 56
+        height: 56
+        visible: false
         opacity: 0.5
-        x: 290
-        width: 64
-        height: 64
+
         anchors.top: parent.top
         anchors.topMargin: 8
         anchors.right: parent.right
@@ -153,9 +153,7 @@ Rectangle {
 
     Rectangle {
         id: dataArea
-        x: 0
-        y: 80
-        height: 48
+        height: 44
         color: "#aaf3f3f3"
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -166,10 +164,8 @@ Rectangle {
 
         Image {
             id: imageDatas
-            x: 8
-            y: 8
-            width: 30
-            height: 30
+            width: 22
+            height: 22
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 8
@@ -177,26 +173,20 @@ Rectangle {
         }
         Text {
             id: textDatas
-            x: 46
-            y: 8
-            height: 30
-
-            text: myDevice.dataString
-            font.pixelSize: 14
-            verticalAlignment: Text.AlignVCenter
-
+            height: 22
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: imageDatas.right
             anchors.leftMargin: 8
+            text: myDevice.dataString
+            verticalAlignment: Text.AlignBottom
+            font.family: "Arial"
+            font.pixelSize: 16
         }
 
         Image {
             id: imageBattery
-            x: 268
-            y: 10
-            width: 30
-            height: 30
-
+            width: 28
+            height: 28
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: textDatas.right
             anchors.leftMargin: 16
@@ -213,18 +203,15 @@ Rectangle {
         }
         Text {
             id: textBattery
-            x: 304
-            y: 8
             width: 48
-            height: 30
+            height: 28
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 8
+            anchors.left: imageBattery.right
 
             text: myDevice.deviceBattery + "%"
-            font.pixelSize: 14
             verticalAlignment: Text.AlignVCenter
-
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 4
-            anchors.left: imageBattery.right
+            font.pixelSize: 16
         }
 
         Image {

@@ -135,16 +135,17 @@ Rectangle {
         model: deviceManager.devicesList
 
         anchors.top: header.bottom
-        anchors.topMargin: 16
         anchors.bottom: rectangleMenu.top
-        anchors.bottomMargin: 16
         anchors.left: parent.left
         anchors.right: parent.right
 
+        anchors.topMargin: 12
+        anchors.bottomMargin: 10
+
         delegate: DeviceBoxDesktop { myDevice: modelData }
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
-        spacing: 16
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        spacing: 10
 /*
         delegate: DeviceBoxMobile { myDevice: modelData }
         anchors.leftMargin: 0
@@ -155,7 +156,7 @@ Rectangle {
 
     Rectangle {
         id: rectangleMenu
-        height: 50
+        height: 48
         color: "#00000000"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
@@ -164,7 +165,23 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
+        property string mode: "menu"
+
+        onWidthChanged: {
+            if (mode === "error") {
+                //
+            } else {
+                rectangleScan.width = rectangleMenu.width * 0.4;
+                if (mode === "status") {
+                    rectangleStatus.width = rectangleMenu.width * 0.6;
+                } else {
+                    rectangleRefresh.width = rectangleMenu.width * 0.6;
+                }
+            }
+        }
+
         function setError(message) {
+            mode = "error"
             rectangleScan.visible = false;
             rectangleScan.width = 0;
             rectangleRefresh.visible = false;
@@ -176,28 +193,29 @@ Rectangle {
             textStatus.text = message;
         }
         function setStatus(message) {
+            mode = "status"
             rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width / 2;
+            rectangleScan.width = rectangleMenu.width * 0.4;
             rectangleRefresh.visible = false;
             rectangleRefresh.width = 0;
             rectangleStatus.visible = true;
-            rectangleStatus.width = rectangleMenu.width / 2;
+            rectangleStatus.width = rectangleMenu.width * 0.6;
             rectangleStatus.anchors.left = rectangleScan.right;
             textStatus.text = message;
         }
         function setMenu() {
+            mode = "menu"
             rectangleStatus.visible = false;
             rectangleStatus.width = 0;
             rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width / 2;
+            rectangleScan.width = rectangleMenu.width * 0.4;
             rectangleRefresh.visible = true;
-            rectangleRefresh.width = rectangleMenu.width / 2;
+            rectangleRefresh.width = rectangleMenu.width * 0.6;
             rectangleRefresh.anchors.left = rectangleScan.right;
         }
 
         Rectangle {
             id: rectangleRefresh
-            x: 250
             width: 150
             color: "#1dcb58"
             anchors.bottom: parent.bottom
@@ -217,11 +235,10 @@ Rectangle {
                 anchors.fill: parent
                 font.pixelSize: 20
             }
-
             MouseArea {
                 id: mouseAreaRefresh
                 anchors.fill: parent
-                onPressed: textRefresh.font.pixelSize = 22
+                onPressed: textRefresh.font.pixelSize = 18
                 onClicked: deviceManager.refreshDevices()
                 onReleased: textRefresh.font.pixelSize = 20
             }
@@ -230,7 +247,6 @@ Rectangle {
         Rectangle {
             id: rectangleScan
             width: 150
-            height: 64
             color: "#4287f4"
             anchors.top: parent.top
             anchors.topMargin: 0
@@ -249,11 +265,10 @@ Rectangle {
                 anchors.fill: parent
                 font.pixelSize: 20
             }
-
             MouseArea {
                 id: mouseAreaScan
                 anchors.fill: parent
-                onPressed: textScan.font.pixelSize = 22
+                onPressed: textScan.font.pixelSize = 18
                 onClicked: deviceManager.startDeviceDiscovery()
                 onReleased: textScan.font.pixelSize = 20
             }

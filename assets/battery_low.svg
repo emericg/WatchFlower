@@ -9,127 +9,116 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48"
-   height="48"
-   id="svg2"
-   sodipodi:version="0.32"
+   id="svg7384"
+   style="enable-background:new"
+   height="28"
+   width="28"
+   version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   version="1.0"
-   sodipodi:docname="battery_low.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   style="display:inline">
-  <defs
-     id="defs4" />
+   sodipodi:docname="battery_low.svg">
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#fd0000"
+     pagecolor="#a1a1a1"
+     bordercolor="#666666"
      borderopacity="1"
-     inkscape:pageopacity="0.0"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.810167"
-     inkscape:cx="2.481927"
-     inkscape:cy="21.833016"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:showpageshadow="false"
-     showguides="false"
-     inkscape:guide-bbox="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1055"
+     inkscape:window-height="1056"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="16"
+     inkscape:cx="-0.45854297"
+     inkscape:cy="14.176013"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-global="true"
-     inkscape:snap-grids="false"
-     inkscape:snap-center="true">
-    <sodipodi:guide
-       orientation="1,0"
-       position="0,112"
-       id="guide2383"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="26.278146,128"
-       id="guide2385"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="128,54.082119"
-       id="guide2387"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="78.156291,0"
-       id="guide2389"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="60.863576,64.084768"
-       id="guide2391"
-       inkscape:locked="false" />
-    <inkscape:grid
-       type="xygrid"
-       id="grid3672"
-       visible="true"
-       enabled="true"
-       empspacing="8"
-       snapvisiblegridlinesonly="true" />
-  </sodipodi:namedview>
+     inkscape:current-layer="g5102"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-page="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:object-paths="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-intersection-paths="true"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
-     id="metadata7">
+     id="metadata90">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title>Paper Symbolic Icon Theme</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
       </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
+  <title
+     id="title8473">Paper Symbolic Icon Theme</title>
+  <defs
+     id="defs7386">
+    <filter
+       id="filter7554"
+       style="color-interpolation-filters:sRGB">
+      <feBlend
+         id="feBlend7556"
+         in2="BackgroundImage"
+         mode="darken" />
+    </filter>
+  </defs>
   <g
-     inkscape:label="Icon"
-     inkscape:groupmode="layer"
-     id="layer1"
-     style="display:inline"
-     transform="translate(0,26)">
+     id="g5102"
+     transform="matrix(1.6927082,0,0,1.6927082,-1.3854164,4.0276215)"
+     style="stroke-width:0.59076929">
     <path
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.45;fill:#e89494;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.33212495;marker:none;enable-background:accumulate"
-       d="M 15 34.941406 L 15 39.695312 C 15 39.942 15.605565 40.285156 16.357422 40.285156 L 26.625 40.285156 L 26.625 34.941406 L 15 34.941406 z "
-       transform="translate(0,-26)"
-       id="rect2999" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.40436816px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 15,8.941406 H 34 V -12.857143 H 15 Z"
-       id="path834"
+       sodipodi:nodetypes="ccssccc"
+       id="path841-6"
+       d="m 3.8446146,2.3202867 -1.7319231,0.00263 c -0.033964,0 -0.061154,0.2774745 -0.061154,0.6246152 v 6.1115328 c 0,0.34714 0.027189,0.6246247 0.061154,0.6246154 h 1.7319231 z"
+       style="fill:#f05c5c;fill-opacity:0.39215686;stroke-width:0.41906244;enable-background:new"
        inkscape:connector-curvature="0" />
+    <g
+       id="g3-9-36"
+       transform="matrix(0.00985356,0,0,0.00985356,5.181153,18.83862)"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.59076929;enable-background:new">
+      <g
+         id="g5-4-7"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.59076929" />
+    </g>
+    <g
+       id="g3-9-3"
+       transform="matrix(0.00985356,0,0,0.00985356,37.627325,18.401278)"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.59076929;enable-background:new">
+      <g
+         id="g5-4-6"
+         style="fill:#ffffff;fill-opacity:1;stroke-width:0.59076929" />
+    </g>
     <path
-       style="display:inline;fill:#b9b9b9;fill-opacity:1;stroke:none;stroke-width:2.71428561"
-       d="M 19.072266 2.2851562 C 18.320408 2.2851562 17.714844 2.8907211 17.714844 3.6425781 L 17.714844 5 L 17.714844 7.7148438 L 12.964844 7.7148438 C 11.085201 7.7148438 9.5722656 9.2277789 9.5722656 11.107422 L 9.5722656 42.322266 C 9.5722656 44.201908 11.085201 45.714844 12.964844 45.714844 L 26.625 45.714844 L 26.625 40.285156 L 17.035156 40.285156 C 15.907371 40.285156 15 39.377786 15 38.25 L 15 15.177734 C 15 14.049949 15.907371 13.142578 17.035156 13.142578 L 31.964844 13.142578 C 33.092629 13.142578 34 14.049949 34 15.177734 L 34 25.988281 L 39.427734 25.988281 L 39.427734 11.107422 C 39.427734 9.2277789 37.914799 7.7148438 36.035156 7.7148438 L 31.285156 7.7148438 L 31.285156 5 L 31.285156 3.6425781 C 31.285156 2.8907211 30.679592 2.2851562 29.927734 2.2851562 L 28.572266 2.2851562 L 20.427734 2.2851562 L 19.072266 2.2851562 z "
-       transform="translate(0,-26)"
-       id="path3775" />
-    <path
-       class="warning"
-       inkscape:connector-curvature="0"
-       d="m 29.842259,1.2165642 c -1.137606,0 -2.021327,0.883748 -2.021327,2.021326 V 17.675937 c 0,1.137578 0.883721,2.021328 2.021327,2.021328 h 14.43804 c 1.137606,0 2.021327,-0.88375 2.021327,-2.021328 V 3.2378902 c 0,-1.137578 -0.883721,-2.021326 -2.021327,-2.021326 z m 4.908936,2.310088 h 4.620168 v 9.2403498 h -4.620168 z m 0,11.5504368 h 4.620168 v 2.310087 h -4.620168 z"
-       id="rect6718-3"
-       sodipodi:nodetypes="ccccccccccccccccccc"
-       style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:#ff962f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:4.62017441;marker:none" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
-       id="rect827"
-       width="4.6201682"
-       height="9.2403498"
-       x="34.751194"
-       y="3.5266514" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
-       id="rect829"
-       width="4.6201682"
-       height="2.310087"
-       x="34.751194"
-       y="15.077087" />
+       id="path854-3"
+       d="m 1.5319226,1.1652207 c -0.3940649,0 -0.71346116,0.3205584 -0.71346116,0.7134612 v 8.2492321 c 0,0.394659 0.31939626,0.713457 0.71346116,0.713457 H 15.373076 c 0.394626,0 0.713461,-0.319391 0.713461,-0.713457 V 8.6632962 h 0.56 c 0.394639,0 0.713463,-0.3176664 0.713463,-0.7134613 V 4.1186815 C 17.360615,3.7240487 17.041173,3.4025281 16.646537,3.4025281 h -0.56 V 1.8786819 c 0,-0.3929028 -0.318803,-0.7134612 -0.713461,-0.7134612 z m 1.1442304,1.157691 h 11.178461 c 0.347139,0 0.630002,0.2774759 0.630001,0.6246152 v 6.1115397 c 0,0.3471358 -0.282862,0.6246146 -0.630001,0.6246146 H 2.676153 c -0.3471393,0 -0.6246139,-0.2774788 -0.6246153,-0.6246146 V 2.9475269 c 0,-0.3471393 0.277476,-0.6246152 0.6246153,-0.6246152 z"
+       style="fill:#b9b9b9;fill-opacity:1;stroke-width:0.50637364;enable-background:new"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

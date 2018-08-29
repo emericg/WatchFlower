@@ -169,16 +169,16 @@ Rectangle {
     }
 
     Flow {
-        id: flow1
+        id: flowData
         anchors.leftMargin: 4
-        anchors.topMargin: 4
+        anchors.topMargin: 8
         anchors.right: parent.right
         anchors.left: parent.left
-        anchors.top: parent.top
+        anchors.top: rectangleHeader.bottom
 
         Rectangle {
             id: rectangleHygro
-            width: 180
+            width: 172
             height: 48
             color: "#ffffff"
 
@@ -190,15 +190,14 @@ Rectangle {
                 height: 40
                 source: "qrc:/assets/hygro.svg"
             }
-
             Text {
                 id: textHygro
                 x: 48
                 y: 10
-                width: 69
-                height: 15
+                width: 120
+                height: 16
                 text: myDevice.deviceHygro + "%"
-                font.pixelSize: 13
+                font.pixelSize: 14
             }
 
             Rectangle {
@@ -211,10 +210,7 @@ Rectangle {
                 anchors.right: barHygro_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barHygro_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
-
             Rectangle {
                 id: barHygro_good
                 x: 80
@@ -222,10 +218,7 @@ Rectangle {
                 width: 56
                 height: 6
                 color: neutralColor
-                border.width: 0
-                border.color: "#00000000"
             }
-
             Rectangle {
                 id: barHygro_high
                 y: 27
@@ -235,14 +228,12 @@ Rectangle {
                 anchors.left: barHygro_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barHygro_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
         }
 
         Rectangle {
             id: rectangleTemp
-            width: 180
+            width: 172
             height: 48
             color: "#ffffff"
 
@@ -258,10 +249,10 @@ Rectangle {
                 id: textTemp
                 x: 48
                 y: 10
-                width: 108
-                height: 15
+                width: 120
+                height: 16
                 text: myDevice.getTempString()
-                font.pixelSize: 13
+                font.pixelSize: 14
             }
 
             Rectangle {
@@ -275,8 +266,6 @@ Rectangle {
                 anchors.rightMargin: 4
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: barTemp_good.verticalCenter
-                border.color: "#00000000"
-                border.width: 0
             }
             Rectangle {
                 id: barTemp_good
@@ -285,8 +274,6 @@ Rectangle {
                 width: 56
                 height: 6
                 color: neutralColor
-                border.width: 0
-                border.color: "#00000000"
             }
             Rectangle {
                 id: barTemp_high
@@ -297,14 +284,12 @@ Rectangle {
                 anchors.left: barTemp_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barTemp_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
         }
 
         Rectangle {
             id: rectangleLuminosity
-            width: 180
+            width: 172
             height: 48
             color: "#ffffff"
 
@@ -320,8 +305,10 @@ Rectangle {
                 id: textLuminosity
                 x: 48
                 y: 10
+                width: 120
+                height: 17
                 text: myDevice.deviceLuminosity + " lumens"
-                font.pixelSize: 13
+                font.pixelSize: 14
             }
 
             Rectangle {
@@ -334,8 +321,6 @@ Rectangle {
                 anchors.right: barLux_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barLux_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
             Rectangle {
                 id: barLux_good
@@ -344,26 +329,22 @@ Rectangle {
                 width: 56
                 height: 6
                 color: neutralColor
-                border.width: 0
-                border.color: "#00000000"
             }
             Rectangle {
                 id: barLux_high
                 y: 30
                 width: 28
                 height: 6
-                color: neutralColor
                 anchors.left: barLux_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barLux_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
+                color: neutralColor
             }
         }
 
         Rectangle {
             id: rectangleConductivity
-            width: 180
+            width: 172
             height: 48
             color: "#ffffff"
 
@@ -379,8 +360,10 @@ Rectangle {
                 id: textConductivity
                 x: 48
                 y: 10
+                width: 120
+                height: 16
                 text: myDevice.deviceConductivity + " µS/cm"
-                font.pixelSize: 13
+                font.pixelSize: 14
             }
 
             Rectangle {
@@ -393,8 +376,6 @@ Rectangle {
                 anchors.right: barCond_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barCond_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
             Rectangle {
                 id: barCond_good
@@ -403,8 +384,6 @@ Rectangle {
                 width: 56
                 height: 6
                 color: neutralColor
-                border.width: 0
-                border.color: "#00000000"
             }
             Rectangle {
                 id: barCond_high
@@ -415,17 +394,13 @@ Rectangle {
                 anchors.left: barCond_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barCond_good.verticalCenter
-                border.width: 0
-                border.color: "#00000000"
             }
         }
     }
 
     DeviceScreenCharts {
         id: deviceScreenCharts
-        x: 0
-        y: 0
-        anchors.top: flow1.bottom
+        anchors.top: flowData.bottom
         anchors.bottom: parent.bottom
     }
 }

@@ -23,15 +23,14 @@ import QtQuick 2.7
 
 Rectangle {
     id: deviceScreenRectangle
-    color: "#eefbdb"
     width: 450
     height: 700
 
     property var myDevice
 
-    property string badColor: "#ffbf66";
-    property string neutralColor: "#e4e4e4";
-    property string goodColor: "#87d241";
+    property string badColor: "#ffbf66"
+    property string neutralColor: "#e4e4e4"
+    property string goodColor: "#87d241"
 
     Component.onCompleted: updateStatus()
 

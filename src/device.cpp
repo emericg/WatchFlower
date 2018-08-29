@@ -113,7 +113,7 @@ bool Device::refreshDatas()
     return status;
 }
 
-void Device::refreshDatasFinished(bool status)
+void Device::refreshDatasFinished(bool status, bool cached)
 {
     m_updating = false;
     m_available = status;
@@ -121,8 +121,11 @@ void Device::refreshDatasFinished(bool status)
     if (status == true)
     {
         // Only update datas on success
-        m_lastUpdate = QDateTime::currentDateTime();
         Q_EMIT datasUpdated();
+
+        // Only register update if its a real one
+        if (cached == false)
+            m_lastUpdate = QDateTime::currentDateTime();
 
         // Check timer
         setTimerInterval();
@@ -287,10 +290,10 @@ bool Device::getSqlCachedDatas()
         m_luminosity =  cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
 
-        m_lastUpdate = QDateTime::currentDateTime(); // good enough
+        //m_lastUpdate = QDateTime::currentDateTime(); // FIXME
 
-        refreshDatasFinished(true);
         status = true;
+        refreshDatasFinished(true, true);
     }
 
     return status;

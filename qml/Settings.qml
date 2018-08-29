@@ -318,32 +318,28 @@ Rectangle {
 
             Text {
                 id: textVersion
-                width: 180
-                height: 20
+                width: 184
                 anchors.verticalCenterOffset: -10
                 anchors.left: imageLogo.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: "#343434"
                 text: qsTr("WatchFlower") + " / " + mySettings.getAppVersion()
-                verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
             }
             Text {
                 id: textUrl
-                width: 180
-                height: 20
+                width: 184
                 anchors.verticalCenterOffset: 16
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: imageLogo.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
 
                 color: "#343434"
                 text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html> page!"
                 horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
                 onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
             }
@@ -351,7 +347,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleReset
-            height: 58
+            height: 48
             color: "#f75a5a"
 
             anchors.bottom: parent.bottom

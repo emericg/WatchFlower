@@ -14,6 +14,7 @@
         <file>menu_refresh.svg</file>
         <file>menu_settings.svg</file>
         <file>edit_button.svg</file>
+        <file>update.svg</file>
         <file>ble.svg</file>
         <file>ble_err.svg</file>
         <file>stats.svg</file>
@@ -27,5 +28,11 @@
         <file>day.svg</file>
         <file>night.svg</file>
         <file>conductivity.svg</file>
+        <file>lastupdate.svg</file>
+        <file>limits.svg</file>
+        <file>refresh.svg</file>
+        <file>graph.svg</file>
+        <file>db.svg</file>
+        <file>hw.svg</file>
     </qresource>
 </RCC>

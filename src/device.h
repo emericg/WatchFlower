@@ -149,7 +149,7 @@ public:
 public slots:
     bool refreshDatas();
     void refreshDatasStarted();
-    void refreshDatasFinished(bool status);
+    void refreshDatasFinished(bool status, bool cached = false);
 
     void setTimerInterval(int updateIntervalMin = 0);
 
