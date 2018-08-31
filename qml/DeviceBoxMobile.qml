@@ -23,26 +23,29 @@ import QtQuick 2.7
 
 Rectangle {
     id: deviceBoxMobile
+    width: parent.width
     height: 80
-    radius: 2
+    radius: 0
     color: "#ddffffff"
 
-    property var myDevice
-    width: parent.width
+    property var boxDevice
+
+    Connections {
+        target: boxDevice
+        onStatusUpdated: updateBoxDatas()
+        onDatasUpdated: updateBoxDatas()
+    }
 
     MouseArea {
-        id: mouseArea
         anchors.fill: parent
 
         onClicked: {
-            pageLoader.setSource("DeviceScreen.qml",
-                                 { myDevice: myDevice });
+            curentlySelectedDevice = boxDevice
+            content.state = "DeviceDetails"
         }
 
         Image {
             id: imageForward
-            x: 320
-            y: 32
             width: 32
             height: 32
             z: 1
@@ -53,9 +56,58 @@ Rectangle {
         }
     }
 
+    Component.onCompleted: updateBoxDatas()
+
+    function normalize(value, min, max) {
+        if (value <= 0) return 0
+        return Math.min(((value - min) / (max - min)), 1)
+    }
+
+    function updateBoxDatas() {
+        if (boxDevice.devicePlantName !== "") {
+            textPlant.text = boxDevice.devicePlantName
+            textLocation.text = boxDevice.deviceLocationName
+        }
+        if (boxDevice.deviceName === "MJ_HT_V1") {
+            textPlant.text = qsTr("BLE temperature sensor")
+            textLocation.text = boxDevice.deviceLocationName
+        }
+
+        rectangleSensors.visible = false
+        rectangleHygroTemp.visible = false
+
+        if (boxDevice.isUpdating()) {
+            refreshAnimation.running = true;
+            imageStatus.visible = true;
+            imageStatus.source = "qrc:/assets/ble.svg";
+        } else {
+            refreshAnimation.running = false;
+
+            if (boxDevice.isAvailable()) {
+                imageStatus.visible = false;
+
+                if (boxDevice.deviceName === "MJ_HT_V1") {
+                    rectangleHygroTemp.visible = true
+                    textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                    textHygro.text = boxDevice.deviceHygro + "%"
+                } else {
+                    rectangleSensors.visible = true
+                    hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
+                    temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
+                    lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
+                    cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
+                    bat_data.height = (boxDevice.deviceBattery / 100)*64
+                }
+            } else {
+                imageStatus.visible = true;
+                imageStatus.source = "qrc:/assets/ble_err.svg";
+                imageStatus.opacity = 1;
+            }
+        }
+    }
+
     Rectangle {
         id: background
-        y: -78
         height: 64
         color: "#aaf3f3f3"
         anchors.right: parent.right
@@ -67,10 +119,9 @@ Rectangle {
 
     Text {
         id: textPlant
-        y: 8
         height: 24
         color: "#454B54"
-        text: myDevice.deviceLocationName
+        text: boxDevice.deviceLocationName
         font.bold: false
         anchors.topMargin: 18
         anchors.top: parent.top
@@ -81,66 +132,11 @@ Rectangle {
         verticalAlignment: Text.AlignBottom
     }
 
-    Connections {
-        target: myDevice
-        onStatusUpdated: updateBoxDatas()
-    }
-
-    Component.onCompleted: updateBoxDatas()
-
-    function normalize(value, min, max) {
-        if (value <= 0) return 0
-        return Math.min(((value - min) / (max - min)), 1)
-    }
-
-    function updateBoxDatas() {
-        if (myDevice.devicePlantName !== "") {
-            textPlant.text = myDevice.devicePlantName
-            textLocation.text = myDevice.deviceLocationName
-        }
-        if (myDevice.deviceName === "MJ_HT_V1") {
-            textPlant.text = qsTr("BLE temperature sensor")
-            textLocation.text = myDevice.deviceLocationName
-        }
-
-        rectangleSensors.visible = false
-        rectangleHygroTemp.visible = false
-
-        if (myDevice.isUpdating()) {
-            refreshAnimation.running = true;
-            imageStatus.visible = true;
-            imageStatus.source = "qrc:/assets/ble.svg";
-        } else {
-            refreshAnimation.running = false;
-
-            if (myDevice.isAvailable()) {
-                imageStatus.visible = false;
-
-                if (myDevice.deviceName === "MJ_HT_V1") {
-                    rectangleHygroTemp.visible = true
-                    textTemp.text = myDevice.deviceTempC.toFixed(1) + "°"
-                    textHygro.text = myDevice.deviceHygro + "%"
-                } else {
-                    rectangleSensors.visible = true
-                    hygro_data.height = normalize(myDevice.deviceHygro, myDevice.limitHygroMin, myDevice.limitHygroMax) * 64
-                    temp_data.height = normalize(myDevice.deviceTempC, myDevice.limitTempMin, myDevice.limitTempMax) * 64
-                    lumi_data.height = normalize(myDevice.deviceLuminosity, myDevice.limitLumiMin, myDevice.limitLumiMax) * 64
-                    cond_data.height = normalize(myDevice.deviceConductivity, myDevice.limitConduMin, myDevice.limitConduMax) * 64
-                    bat_data.height = (myDevice.deviceBattery / 100)*64
-                }
-            } else {
-                imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/ble_err.svg";
-                imageStatus.opacity = 1;
-            }
-        }
-    }
-
     Text {
         id: textLocation
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
-        text: myDevice.deviceAddress
+        text: boxDevice.deviceAddress
         font.weight: Font.Thin
         font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom
@@ -151,8 +147,6 @@ Rectangle {
 
     Rectangle {
         id: dataArea
-        x: 0
-        y: 80
         width: 64
         height: 64
         color: "#f3f3f3"

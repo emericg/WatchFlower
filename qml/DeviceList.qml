@@ -20,13 +20,12 @@
  */
 
 import QtQuick 2.7
+import QtQuick.Controls 2.4
 
 Rectangle {
     id: background
     anchors.fill: parent
-    color: "#E0FAE7"
-    width: 450
-    height: 700
+    color: "#00000000"
 
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
@@ -43,11 +42,9 @@ Rectangle {
 
     onDeviceScanningChanged: {
         if (deviceManager.scanning) {
-            header.menuScanAvailable.visible = true
-            header.menuScanAnimation.start()
+            header.menuScanImg.start()
         } else {
-            header.menuScanAnimation.stop()
-            header.menuScanAvailable.visible = false
+            header.menuScanImg.stop()
 
             if (deviceManager.areDevicesAvailable()) {
                 rectangleMenu.setMenu()
@@ -69,18 +66,6 @@ Rectangle {
         } else {
             bluetooth_img.visible = true
             rectangleMenu.setError(qsTr("No bluetooth :-("))
-        }
-    }
-
-    Header {
-        id: header
-        anchors.top: parent.top
-
-        menuBackImg.source: "qrc:/assets/menu_settings.svg"
-
-        onBackClicked: {
-            pageLoader.setSource("Settings.qml",
-                                 { mySettings: settingsManager })
         }
     }
 
@@ -129,24 +114,20 @@ Rectangle {
     ListView {
         id: devicesview
         width: parent.width
-
         clip: true
-        model: deviceManager.devicesList
-        spacing: 10
 
-        anchors.top: header.bottom
-        anchors.bottom: rectangleMenu.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
+        anchors.fill: parent
         anchors.topMargin: 12
         anchors.bottomMargin: 10
+        spacing: 10
 
-        delegate: DeviceBoxDesktop { myDevice: modelData }
+        model: deviceManager.devicesList
+
+        delegate: DeviceBoxDesktop { boxDevice: modelData }
         anchors.leftMargin: 10
         anchors.rightMargin: 10
 /*
-        delegate: DeviceBoxMobile { myDevice: modelData }
+        delegate: DeviceBoxMobile { boxDevice: modelData }
         anchors.leftMargin: 0
         anchors.rightMargin: 0
 */
@@ -295,10 +276,5 @@ Rectangle {
                 font.pixelSize: 20
             }
         }
-    }
-
-    Loader {
-        id: pageLoader
-        anchors.fill: parent
     }
 }

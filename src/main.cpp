@@ -19,12 +19,14 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include <QGuiApplication>
 #include <QApplication>
-#include <QQmlContext>
-#include <QQuickView>
+#include <QGuiApplication>
 #include <QSystemTrayIcon>
 #include <QMenu>
+
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickWindow>
 
 #include <singleapplication.h>
 
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("WatchFlower");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-#ifdef Q_OS_ANDROID
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
 
     SettingsManager *sm = SettingsManager::getInstance();
 
+    SystrayManager *st = SystrayManager::getInstance();
+
     DeviceManager *dm = new DeviceManager;
 
     // Run a first scan, but only if we have no saved devices
@@ -59,30 +63,29 @@ int main(int argc, char *argv[])
         dm->startDeviceDiscovery();
     }
 
-    QQuickView *view = new QQuickView;
-    view->rootContext()->setContextProperty("deviceManager", dm);
-    view->rootContext()->setContextProperty("settingsManager", sm);
-    view->setSource(QUrl("qrc:/qml/main.qml"));
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
-#ifndef Q_OS_ANDROID
-    view->setMinimumWidth(400);
-    view->setMinimumHeight(640);
-#endif
-    view->show();
+    QQmlApplicationEngine engine;
+    QQmlContext *engine_context = engine.rootContext();
+    engine_context->setContextProperty("deviceManager", dm);
+    engine_context->setContextProperty("settingsManager", sm);
+    engine_context->setContextProperty("systrayManager", st);
+    engine.load(QUrl(QStringLiteral("qrc:/qml/MainScreen.qml")));
+    if (engine.rootObjects().isEmpty())
+        return EXIT_FAILURE;
 
-    SystrayManager *st = SystrayManager::getInstance();
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+
     if (st)
     {
-        st->initSystray(&app, view);
+        st->initSystray(&app, window);
         if (sm->getSysTray())
         {
             st->installSystray();
         }
     }
 
-#ifndef Q_OS_ANDROID
-    QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::show);
-    QObject::connect(&app, &SingleApplication::instanceStarted, view, &QQuickView::raise);
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
+    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
 
     return app.exec();

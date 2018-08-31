@@ -28,35 +28,45 @@ Rectangle {
     radius: 8
     color: "#ddffffff"
 
-    property var myDevice
+    property var boxDevice
 
     Connections {
-        target: myDevice
+        target: boxDevice
         onStatusUpdated: updateBoxDatas()
+        onDatasUpdated: updateBoxDatas()
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            curentlySelectedDevice = boxDevice
+            content.state = "DeviceDetails"
+        }
     }
 
     Component.onCompleted: updateBoxDatas();
 
     function updateBoxDatas() {
-        if (myDevice.devicePlantName !== "") {
-            textName.text = myDevice.devicePlantName
-            textAddr.text = myDevice.deviceLocationName + " (" + myDevice.deviceAddress + ")"
+        if (boxDevice.devicePlantName !== "") {
+            textName.text = boxDevice.devicePlantName
+            textAddr.text = boxDevice.deviceLocationName + " (" + boxDevice.deviceAddress + ")"
         }
-        if (myDevice.deviceName === "MJ_HT_V1") {
+        if (boxDevice.deviceName === "MJ_HT_V1") {
             textName.text = qsTr("BLE temperature sensor");
-            textAddr.text = myDevice.deviceLocationName + " (" + myDevice.deviceAddress + ")"
+            textAddr.text = boxDevice.deviceLocationName + " (" + boxDevice.deviceAddress + ")"
         }
 
         imageDevice.visible = false
-        if (myDevice.deviceName === "MJ_HT_V1") {
+        if (boxDevice.deviceName === "MJ_HT_V1") {
             imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
-        } else if (myDevice.deviceName === "ropot") {
+        } else if (boxDevice.deviceName === "ropot") {
             imageDevice.source = "qrc:/assets/devices/ropot.svg";
         } else {
             imageDevice.source = "qrc:/assets/devices/flowercare.svg";
         }
 
-        if (myDevice.isUpdating()) {
+        if (boxDevice.isUpdating()) {
             imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
 
@@ -68,24 +78,24 @@ Rectangle {
         } else {
             refreshAnimation.running = false;
 
-            if (myDevice.isAvailable()) {
+            if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
                 imageDatas.visible = true;
                 textDatas.visible = true;
-                textDatas.text = myDevice.dataString;
+                textDatas.text = boxDevice.dataString;
 
-                if ((myDevice.deviceCapabilities & 0x01) == 1) {
+                if ((boxDevice.deviceCapabilities & 0x01) == 1) {
                     imageBattery.visible = true;
                     textBattery.visible = true;
 
-                    if (myDevice.deviceBattery < 15) {
+                    if (boxDevice.deviceBattery < 15) {
                         imageBattery.source = "qrc:/assets/battery_low.svg";
-                    } else if (myDevice.deviceBattery > 75) {
+                    } else if (boxDevice.deviceBattery > 75) {
                         imageBattery.source = "qrc:/assets/battery_full.svg";
                     } else {
                         imageBattery.source = "qrc:/assets/battery_mid.svg";
                     }
-                    textBattery.text = myDevice.deviceBattery + "%"
+                    textBattery.text = boxDevice.deviceBattery + "%"
                 } else {
                     imageBattery.visible = false;
                     textBattery.visible = false;
@@ -115,7 +125,7 @@ Rectangle {
         anchors.leftMargin: 8
 
         color: "#454B54"
-        text: myDevice.deviceLocationName
+        text: boxDevice.deviceLocationName
         font.bold: true
         font.pixelSize: 24
         verticalAlignment: Text.AlignVCenter
@@ -132,7 +142,7 @@ Rectangle {
 
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
-        text: myDevice.deviceAddress
+        text: boxDevice.deviceAddress
     }
 
     Image {
@@ -174,7 +184,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: imageDatas.right
             anchors.leftMargin: 8
-            text: myDevice.dataString
+            text: boxDevice.dataString
             verticalAlignment: Text.AlignBottom
             font.family: "Arial"
             font.pixelSize: 16
@@ -189,9 +199,9 @@ Rectangle {
             anchors.leftMargin: 16
 
             source: {
-                if (myDevice.deviceBattery < 15) {
+                if (boxDevice.deviceBattery < 15) {
                     source = "qrc:/assets/battery_low.svg";
-                } else if (myDevice.deviceBattery > 75) {
+                } else if (boxDevice.deviceBattery > 75) {
                     source = "qrc:/assets/battery_full.svg";
                 } else {
                     source = "qrc:/assets/battery_mid.svg";
@@ -206,7 +216,7 @@ Rectangle {
             anchors.leftMargin: 8
             anchors.left: imageBattery.right
 
-            text: myDevice.deviceBattery + "%"
+            text: boxDevice.deviceBattery + "%"
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 16
         }
@@ -229,16 +239,6 @@ Rectangle {
                 OpacityAnimator { from: 0; to: 1; duration: 600 }
                 OpacityAnimator { from: 1; to: 0;  duration: 600 }
             }
-        }
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-
-        onClicked: {
-            pageLoader.setSource("DeviceScreen.qml",
-                                 { myDevice: myDevice });
         }
     }
 }

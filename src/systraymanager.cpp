@@ -22,9 +22,10 @@
 #include "systraymanager.h"
 
 #include <QApplication>
-#include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QMenu>
+
+#include <QQuickWindow>
 
 /* ************************************************************************** */
 
@@ -64,7 +65,7 @@ SystrayManager::~SystrayManager()
 
 /* ************************************************************************** */
 
-void SystrayManager::initSystray(QApplication *app, QQuickView *view)
+void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
 {
     if (m_sysTrayMenu == nullptr)
     {
@@ -81,8 +82,9 @@ void SystrayManager::initSystray(QApplication *app, QQuickView *view)
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
 
-            QObject::connect(m_actionShow, &QAction::triggered, m_saved_view, &QQuickView::show);
-            QObject::connect(m_actionSettings, &QAction::triggered, m_saved_view, &QQuickView::show);
+            QObject::connect(m_actionShow, &QAction::triggered, m_saved_view, &QQuickWindow::show);
+            QObject::connect(m_actionSettings, &QAction::triggered, m_saved_view, &QQuickWindow::show);
+            QObject::connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingClicked);
             QObject::connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
     }
@@ -141,7 +143,7 @@ void SystrayManager::sendNotification(QString &text)
 
 void SystrayManager::showHide(QSystemTrayIcon::ActivationReason r)
 {
-    //Context, DoubleClick, Trigger, MiddleClick
+    // Context, DoubleClick, Trigger, MiddleClick
 
     if (r == QSystemTrayIcon::Context)
     {

@@ -401,6 +401,8 @@ void Device::setLocationName(QString name)
         updateName.bindValue(":name", name);
         updateName.bindValue(":deviceAddr", getMacAddress());
         updateName.exec();
+
+        Q_EMIT datasUpdated();
     }
 }
 
@@ -416,6 +418,8 @@ void Device::setPlantName(QString name)
         updatePlant.bindValue(":name", name);
         updatePlant.bindValue(":deviceAddr", getMacAddress());
         updatePlant.exec();
+
+        Q_EMIT datasUpdated();
     }
 }
 

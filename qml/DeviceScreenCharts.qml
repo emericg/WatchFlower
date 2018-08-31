@@ -32,19 +32,8 @@ Rectangle {
     width: parent.width
     anchors.margins: 0
 
-    property string graphViewSelected: {
-        graphViewSelected = settingsManager.graphview
-    }
-    property string graphDataSelected: {
-        graphDataSelected = settingsManager.graphdata
-
-        if (graphDataSelected == "hygro") {
-            if (myDevice.deviceName === "MJ_HT_V1")
-                graphDataSelected = "temp"
-            if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
-                graphDataSelected = "temp"
-        }
-    }
+    property string graphViewSelected: settingsManager.graphview
+    property string graphDataSelected: settingsManager.graphdata
 
     property string hygroGraphColor: "#31A3EC"
     property string tempGraphColor: "#87D241"
@@ -57,7 +46,24 @@ Rectangle {
     property string buttonLightColor: "#F2F2F2"
     property string buttonDarkColor: "#E8E8E8"
 
-    function updateGraph() {
+    function loadGraph() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreenCharts // loadGraph() >> " + myDevice)
+
+        graphViewSelected = settingsManager.graphview
+        graphDataSelected = settingsManager.graphdata
+        if (graphDataSelected == "hygro") {
+            if (myDevice.deviceName === "MJ_HT_V1")
+                graphDataSelected = "temp"
+            if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
+                graphDataSelected = "temp"
+        }
+
+        dT.visible = true
+        dH.visible = true
+        dL.visible = true
+        dC.visible = true
 
         if ((myDevice.deviceCapabilities & 2) == 0) {
             dT.visible = false
@@ -71,6 +77,12 @@ Rectangle {
         if ((myDevice.deviceCapabilities & 16) == 0) {
             dC.visible = false
         }
+    }
+
+    function updateGraph() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreenCharts // updateGraph() >> " + myDevice)
 
         lowLimitSeries.clear()
         highLimitSeries.clear()

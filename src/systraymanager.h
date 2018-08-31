@@ -27,7 +27,7 @@
 class QMenu;
 class QAction;
 class QApplication;
-class QQuickView;
+class QQuickWindow;
 
 /*!
  * \brief The SystrayManager class
@@ -36,7 +36,7 @@ class SystrayManager: public QObject
 {
     Q_OBJECT
 
-    QQuickView *m_saved_view = nullptr;
+    QQuickWindow *m_saved_view = nullptr;
     QApplication *m_saved_app = nullptr;
 
     QSystemTrayIcon *m_sysTray = nullptr;
@@ -50,11 +50,17 @@ class SystrayManager: public QObject
     SystrayManager();
     ~SystrayManager();
 
+signals:
+    void showClicked();
+    void hideClicked();
+    void settingClicked();
+    void quitClicked();
+
 public:
     static SystrayManager *getInstance();
 
 public slots:
-    void initSystray(QApplication *app, QQuickView *view);
+    void initSystray(QApplication *app, QQuickWindow *view);
     bool installSystray();
     void removeSystray();
     void sendNotification(QString &text);

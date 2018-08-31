@@ -26,15 +26,27 @@ Rectangle {
     width: 450
     height: 700
 
-    property var myDevice
+    property var myDevice: curentlySelectedDevice
 
     property string badColor: "#ffbf66"
     property string neutralColor: "#e4e4e4"
     property string goodColor: "#87d241"
 
-    Component.onCompleted: updateStatus()
+    Component.onCompleted: loadDevice()
+
+    function loadDevice() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreen // loadDevice() >> " + myDevice)
+
+        updateStatus()
+        rectangleDeviceDatas.loadDatas()
+    }
 
     function updateStatus() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreen // updateStatus() >> " + myDevice)
 
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
@@ -51,10 +63,21 @@ Rectangle {
             imageBattery.visible = false
         }
 
+        if (myDevice.deviceLocationName !== "")
+            textInputLocation.text = myDevice.deviceLocationName
+        else
+            textInputLocation.text = qsTr("Location")
+
         // Plant sensor?
         if ((myDevice.deviceCapabilities & 64) != 0) {
             labelPlant.visible = true
             textInputPlant.visible = true
+
+            if (myDevice.devicePlantName !== "")
+                textInputPlant.text = myDevice.devicePlantName
+            else
+                textInputPlant.text = qsTr("Plant")
+
             rectangleHeader.height = 133
         } else {
             labelPlant.visible = false
@@ -64,34 +87,19 @@ Rectangle {
 
         if (!myDevice.deviceFirmwareUpToDate) {
             imageFw.visible = true
-            imageFw.source = "qrc:/assets/update.svg"
-            //textFw.text = qsTr("v") + myDevice.deviceFirmware + qsTr(" (update available!)")
+        } else {
+            imageFw.visible = false
         }
-    }
-
-    Header {
-        id: header
-        anchors.top: parent.top
-        onBackClicked: { pageLoader.source = "main.qml" }
     }
 
     Rectangle {
         id: rectangleBody
-
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.left: parent.left
+        anchors.fill: parent
 
         Connections {
             target: myDevice
             onStatusUpdated: updateStatus()
             onDatasUpdated: rectangleDeviceDatas.updateDatas()
-        }
-
-        MouseArea {
-            id: mouseArea // so the underlying stuff doesn't hijack clicks
-            anchors.fill: parent
         }
 
         Rectangle {
@@ -131,8 +139,8 @@ Rectangle {
 
                     MouseArea {
                         anchors.fill: parent
-
                         hoverEnabled: true
+
                         onEntered: imageB2.opacity = 0.5
                         onExited: imageB2.opacity = 1
 
@@ -189,13 +197,12 @@ Rectangle {
 
             Text {
                 id: labelFw
-                x: 12
-                y: 51
-                text: qsTr("Firmware")
                 anchors.topMargin: 8
                 anchors.leftMargin: 12
                 anchors.left: parent.left
                 anchors.top: textDeviceName.bottom
+
+                text: qsTr("Firmware")
                 font.pixelSize: 15
             }
             Text {
@@ -221,11 +228,12 @@ Rectangle {
 
             Text {
                 id: labelBattery
-                text: qsTr("Battery")
                 anchors.verticalCenter: textFw.verticalCenter
-                font.pixelSize: 15
-                anchors.leftMargin: 0
+                anchors.leftMargin: 8
                 anchors.left: imageFw.right
+
+                text: qsTr("Battery")
+                font.pixelSize: 15
             }
             Text {
                 id: textBattery
@@ -251,11 +259,12 @@ Rectangle {
 
             Text {
                 id: labelPlant
-                text: qsTr("Plant")
                 anchors.top: labelLocation.bottom
                 anchors.topMargin: 12
                 anchors.left: parent.left
                 anchors.leftMargin: 12
+
+                text: qsTr("Plant")
                 font.pixelSize: 15
             }
             TextInput {
@@ -264,12 +273,7 @@ Rectangle {
                 anchors.left: labelPlant.right
                 anchors.leftMargin: 8
 
-                text: {
-                    if (myDevice.devicePlantName !== "")
-                        text = myDevice.devicePlantName
-                    else
-                        text = qsTr("Plant")
-                }
+                text: ""
                 color: "#454b54"
                 font.pixelSize: 18
                 onEditingFinished: myDevice.setPlantName(text)
@@ -286,10 +290,6 @@ Rectangle {
                 }
 
                 MouseArea {
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
-                    anchors.leftMargin: 0
-                    anchors.topMargin: 0
                     anchors.fill: parent
                     hoverEnabled: true
                     propagateComposedEvents: true
@@ -321,12 +321,7 @@ Rectangle {
                 anchors.left: labelLocation.right
                 anchors.leftMargin: 8
 
-                text: {
-                    if (myDevice.deviceLocationName !== "")
-                        text = myDevice.deviceLocationName
-                    else
-                        text = qsTr("Location")
-                }
+                text: ""
                 color: "#454b54"
                 font.pixelSize: 18
                 onEditingFinished: myDevice.setLocationName(text)

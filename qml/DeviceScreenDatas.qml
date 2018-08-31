@@ -33,6 +33,10 @@ Rectangle {
     }
 
     function updateLastUpdateText() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
+
         if (!myDevice.available && myDevice.updating) {
             textLastUpdate.text = qsTr("Device is updating...")
             textLastUpdate.color = "#000000"
@@ -55,7 +59,19 @@ Rectangle {
         }
     }
 
+    function loadDatas() {
+        if (typeof myDevice === "undefined") return
+
+        //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
+
+        deviceScreenCharts.loadGraph()
+        updateDatas()
+    }
+
     function updateDatas() {
+        if (myDevice === 'undefined') return
+
+        //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
         // Update header
         updateLastUpdateText()
@@ -73,6 +89,8 @@ Rectangle {
         if ((myDevice.deviceCapabilities & 4) == 0) {
             rectangleHygro.visible = false
         } else {
+            rectangleHygro.visible = true
+
             if (myDevice.deviceHygro < 0) {
                 textHygro.text = qsTr("No datas...")
                 barHygro_low.color = badColor
@@ -101,6 +119,8 @@ Rectangle {
         if ((myDevice.deviceCapabilities & 2) == 0) {
             rectangleTemp.visible = false
         } else {
+            rectangleTemp.visible = true
+
             if (myDevice.deviceTempC < 0) {
                 textTemp.text = qsTr("No datas...")
                 barTemp_low.color = badColor
@@ -129,6 +149,8 @@ Rectangle {
         if ((myDevice.deviceCapabilities & 8) == 0) {
             rectangleLuminosity.visible = false
         } else {
+            rectangleLuminosity.visible = true
+
             var hours = Qt.formatDateTime (new Date(), "hh")
             if (hours > 22 || hours < 8) {
                 imageLuminosity.source = "qrc:/assets/night.svg"
@@ -164,6 +186,8 @@ Rectangle {
         if ((myDevice.deviceCapabilities & 16) == 0) {
             rectangleConductivity.visible = false
         } else {
+            rectangleConductivity.visible = true
+
             if (myDevice.deviceConductivity < 0) {
                 textConductivity.text = qsTr("No datas...")
                 barCond_low.color = badColor

@@ -27,8 +27,10 @@ Rectangle {
     height: 56
     color: "#1dcb58"
 
-    property alias menuBackImg: backImg
-    signal backClicked()
+    property alias menuButtonImg: buttonImg
+    property alias menuScanImg: refreshRotation
+
+    signal menuButtonClicked()
 
     Text {
         text: "WatchFlower"
@@ -43,7 +45,7 @@ Rectangle {
     }
 
     Image {
-        id: backImg
+        id: buttonImg
         y: 12
         width: 32
         height: 32
@@ -58,18 +60,49 @@ Rectangle {
             anchors.fill: parent
 
             onPressed: {
-                backImg.anchors.topMargin += 2
-                backImg.anchors.leftMargin += 2
-                backImg.width -= 4
-                backImg.height -= 4
+                buttonImg.anchors.topMargin += 2
+                buttonImg.anchors.leftMargin += 2
+                buttonImg.width -= 4
+                buttonImg.height -= 4
             }
             onReleased: {
-                backImg.anchors.topMargin -= 2
-                backImg.anchors.leftMargin -= 2
-                backImg.width += 4
-                backImg.height += 4
+                buttonImg.anchors.topMargin -= 2
+                buttonImg.anchors.leftMargin -= 2
+                buttonImg.width += 4
+                buttonImg.height += 4
             }
-            onClicked: backClicked()
+            onClicked: menuButtonClicked()
         }
     }
+
+    Image {
+        id: refreshImg
+        width: 32
+        height: 32
+        visible: false
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
+
+        source: "qrc:/assets/refresh.svg"
+        fillMode: Image.PreserveAspectFit
+
+        NumberAnimation on rotation {
+            id: refreshRotation
+            duration: 3000;
+            from: 0;
+            to: 360;
+            loops: Animation.Infinite
+            running: false
+
+            onStarted: refreshImg.visible = true
+            onStopped:  refreshImg.visible = false
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: refreshClicked()
+        }
+    }
+
 }
