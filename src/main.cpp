@@ -76,9 +76,9 @@ int main(int argc, char *argv[])
 
     if (st)
     {
-        st->initSystray(&app, window);
         if (sm->getSysTray())
         {
+            st->initSystray(&app, window);
             st->installSystray();
         }
     }
@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
 
 /// 0.4
 // add support for Ropot
+// BLE device update timeout
 
 /// NEXT
 // macOS port

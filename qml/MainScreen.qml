@@ -53,7 +53,7 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
-        acceptedButtons: Qt.AllButtons
+        acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
             if (mouse.button === Qt.BackButton) {
                 content.state = "DeviceList"

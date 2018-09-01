@@ -46,7 +46,8 @@ SystrayManager *SystrayManager::getInstance()
 
 SystrayManager::SystrayManager()
 {
-    //
+    // Connect retry timer
+    connect(&m_retryTimer, &QTimer::timeout, this, &SystrayManager::installSystray);
 }
 
 SystrayManager::~SystrayManager()
@@ -116,6 +117,15 @@ bool SystrayManager::installSystray()
             }
         }
     }
+    else
+    {
+        if (retryCount > 0)
+        {
+            m_retryTimer.setSingleShot(true);
+            m_retryTimer.start(5000);
+            retryCount--;
+        }
+    }
 
     return status;
 }
@@ -124,7 +134,10 @@ void SystrayManager::removeSystray()
 {
     if (m_sysTray)
     {
+        m_retryTimer.stop();
+
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::showHide);
+        QObject::disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
         delete m_sysTray;
         m_sysTray = nullptr;
     }
@@ -166,6 +179,5 @@ void SystrayManager::showHide(QSystemTrayIcon::ActivationReason r)
 
 void SystrayManager::aboutToBeDestroyed()
 {
-    qDebug() << "SystrayManager::aboutToBeDestroyed()";
     m_sysTray = nullptr;
 }

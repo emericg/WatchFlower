@@ -23,6 +23,7 @@
 #define SYSTRAY_MANAGER_H
 
 #include <QSystemTrayIcon>
+#include <QTimer>
 
 class QMenu;
 class QAction;
@@ -44,6 +45,9 @@ class SystrayManager: public QObject
     QAction *m_actionShow = nullptr;
     QAction *m_actionSettings = nullptr;
     QAction *m_actionExit = nullptr;
+
+    QTimer m_retryTimer;
+    int retryCount = 3;
 
     static SystrayManager *instance;
 
