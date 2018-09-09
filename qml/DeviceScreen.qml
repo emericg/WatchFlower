@@ -50,6 +50,10 @@ Rectangle {
 
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
+            labelBattery.visible = true
+            textBattery.visible = true
+            imageBattery.visible = true
+
             if (myDevice.deviceBattery < 15) {
                 imageBattery.source = "qrc:/assets/battery_low.svg"
             } else if (myDevice.deviceBattery > 75) {

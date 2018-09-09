@@ -96,7 +96,7 @@ Rectangle {
             running: false
 
             onStarted: refreshImg.visible = true
-            onStopped:  refreshImg.visible = false
+            onStopped: refreshImg.visible = false
         }
 
         MouseArea {
@@ -104,5 +104,4 @@ Rectangle {
             onClicked: refreshClicked()
         }
     }
-
 }
