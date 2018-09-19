@@ -31,14 +31,16 @@ SOURCES  += src/main.cpp \
             src/devicemanager.cpp \
             src/device.cpp \
             src/device_flowercare.cpp \
-            src/device_hygrotemp.cpp
+            src/device_hygrotemp.cpp \
+            src/device_ropot.cpp
 
 HEADERS  += src/settingsmanager.h \
             src/systraymanager.h \
             src/devicemanager.h \
             src/device.h \
             src/device_flowercare.h \
-            src/device_hygrotemp.h
+            src/device_hygrotemp.h \
+            src/device_ropot.h
 
 OTHER_FILES += qml/*.qml
 

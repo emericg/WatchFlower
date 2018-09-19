@@ -196,7 +196,7 @@ bool Device::getSqlDatas()
         m_firmware = getFirmware.value(0).toString();
         status = true;
 
-        if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && m_firmware.size() == 5)
+        if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_firmware.size() == 5))
         {
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
             {
@@ -204,7 +204,15 @@ bool Device::getSqlDatas()
                 emit datasUpdated();
             }
         }
-        else if ((m_deviceName == "MJ_HT_V1") && m_firmware.size() == 8)
+        else if ((m_deviceName == "ropot") && (m_firmware.size() == 5))
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
+            {
+                m_firmware_uptodate = true;
+                emit datasUpdated();
+            }
+        }
+        else if ((m_deviceName == "MJ_HT_V1") && (m_firmware.size() == 8))
         {
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
             {

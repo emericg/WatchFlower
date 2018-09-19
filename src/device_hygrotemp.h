@@ -48,7 +48,7 @@ public slots:
     QString getDataString() const;
 
 private:
-    // QLowEnergyController realted
+    // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
     void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);

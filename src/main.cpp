@@ -95,7 +95,6 @@ int main(int argc, char *argv[])
 // TODOs
 
 /// 0.4
-// add support for Ropot
 // BLE device update timeout
 
 /// NEXT

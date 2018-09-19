@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_FLOWERCARE_H
-#define DEVICE_FLOWERCARE_H
+#ifndef DEVICE_ROPOT_H
+#define DEVICE_ROPOT_H
 
 #include "device.h"
 
@@ -33,16 +33,16 @@
 #include <QLowEnergyController>
 
 /*!
- * \brief The DeviceFlowercare class
+ * \brief The DeviceRopot class
  */
-class DeviceFlowercare: public Device
+class DeviceRopot: public Device
 {
     Q_OBJECT
 
 public:
-    DeviceFlowercare(QString &deviceAddr, QString &deviceName);
-    DeviceFlowercare(const QBluetoothDeviceInfo &d);
-    ~DeviceFlowercare();
+    DeviceRopot(QString &deviceAddr, QString &deviceName);
+    DeviceRopot(const QBluetoothDeviceInfo &d);
+    ~DeviceRopot();
 
 public slots:
     QString getDataString() const;
@@ -58,4 +58,4 @@ private:
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
-#endif // DEVICE_FLOWERCARE_H
+#endif // DEVICE_ROPOT_H

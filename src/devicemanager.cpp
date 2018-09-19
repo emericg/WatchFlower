@@ -23,6 +23,7 @@
 #include "device.h"
 #include "device_flowercare.h"
 #include "device_hygrotemp.h"
+#include "device_ropot.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -82,6 +83,8 @@ DeviceManager::DeviceManager()
 
             if (deviceName == "Flower care" || deviceName == "Flower mate")
                 d = new DeviceFlowercare(deviceAddr, deviceName);
+            else if (deviceName == "ropot")
+                d = new DeviceRopot(deviceAddr, deviceName);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotemp(deviceAddr, deviceName);
             else
@@ -266,6 +269,8 @@ void DeviceManager::deviceDiscoveryFinished()
 
                 if (deviceName == "Flower care" || deviceName == "Flower mate")
                     d = new DeviceFlowercare(deviceAddr, deviceName);
+                else if (deviceName == "ropot")
+                    d = new DeviceRopot(deviceAddr, deviceName);
                 else if (deviceName == "MJ_HT_V1")
                     d = new DeviceHygrotemp(deviceAddr, deviceName);
                 else
@@ -313,12 +318,15 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
+            info.name() == "ropot" ||
             info.name() == "MJ_HT_V1")
         {
             Device *d = nullptr;
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
                 d = new DeviceFlowercare(info);
+            else if (info.name() == "ropot")
+                    d = new DeviceRopot(info);
             else if (info.name() == "MJ_HT_V1")
                     d = new DeviceHygrotemp(info);
             else
@@ -353,6 +361,10 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                     addDevice.exec();
                 }
             }
+        }
+        else
+        {
+            //qDebug() << "Unsupported device: " << info.name() << "/" << info.address();
         }
     }
 }
