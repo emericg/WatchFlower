@@ -25,10 +25,13 @@ import QtQuick.Controls 2.0
 Item {
     id: deviceScreenLimits
 
-    Component.onCompleted: updateLimitsVisibility()
-
     function updateLimitsVisibility() {
         if (myDevice) {
+            itemTemp.visible = true
+            itemHygro.visible = true
+            itemLumi.visible = true
+            itemCondu.visible = true
+
             if ((myDevice.deviceCapabilities & 2) == 0) {
                 itemTemp.visible = false
             }

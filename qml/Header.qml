@@ -36,7 +36,7 @@ Rectangle {
         text: "WatchFlower"
         color: "#FFFFFF"
         font.bold: true
-        font.pointSize: 26
+        font.pointSize: 30
         antialiasing: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -84,7 +84,7 @@ Rectangle {
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/refresh.svg"
+        source: "qrc:/assets/menu_refresh.svg"
         fillMode: Image.PreserveAspectFit
 
         NumberAnimation on rotation {

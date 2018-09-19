@@ -41,6 +41,7 @@ Rectangle {
 
         updateStatus()
         rectangleDeviceDatas.loadDatas()
+        rectangleDeviceLimits.updateLimitsVisibility()
     }
 
     function updateStatus() {
