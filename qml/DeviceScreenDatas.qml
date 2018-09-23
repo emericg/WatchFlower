@@ -28,7 +28,7 @@ Rectangle {
     Component.onCompleted: updateDatas()
 
     Timer {
-        interval: 60000; running: true; repeat: true;
+        interval: 30000; running: true; repeat: true;
         onTriggered: updateLastUpdateText()
     }
 

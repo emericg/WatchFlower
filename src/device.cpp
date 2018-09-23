@@ -120,12 +120,12 @@ void Device::refreshDatasFinished(bool status, bool cached)
 
     if (status == true)
     {
-        // Only update datas on success
-        Q_EMIT datasUpdated();
-
         // Only register update if its a real one
         if (cached == false)
             m_lastUpdate = QDateTime::currentDateTime();
+
+        // Only update datas on success
+        Q_EMIT datasUpdated();
 
         // Check timer
         setTimerInterval();

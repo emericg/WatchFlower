@@ -39,6 +39,8 @@ Rectangle {
 
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
+        rectangleContent.state = "datas"
+
         updateStatus()
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceLimits.updateLimitsVisibility()
