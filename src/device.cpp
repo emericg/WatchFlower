@@ -131,7 +131,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
         setTimerInterval();
 
         // 'Water me' notification
-        if ((m_capabilities & DEVICE_PLANT) == 1 &&
+        if ((m_capabilities & DEVICE_PLANT) != 0 &&
             m_hygro > 0 && m_hygro < m_limitHygroMin)
         {
             SystrayManager *st = SystrayManager::getInstance();
