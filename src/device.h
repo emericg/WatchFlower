@@ -57,7 +57,7 @@ class Device: public QObject
     Q_PROPERTY(QString lastUpdate READ getLastUpdateString NOTIFY statusUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
-    Q_PROPERTY(QString deviceAddress READ getMacAddress NOTIFY datasUpdated)
+    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY datasUpdated)
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
@@ -159,7 +159,7 @@ public slots:
 
     // BLE device
     QString getName() const { return m_deviceName; }
-    QString getMacAddress() const { return m_deviceAddress; }
+    QString getAddress() const { return m_deviceAddress; }
 
     int getCapabilities() const { return m_capabilities; }
 

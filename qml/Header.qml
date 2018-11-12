@@ -36,7 +36,7 @@ Rectangle {
         text: "WatchFlower"
         color: "#FFFFFF"
         font.bold: true
-        font.pointSize: 30
+        font.pixelSize: 36
         antialiasing: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -46,7 +46,6 @@ Rectangle {
 
     Image {
         id: buttonImg
-        y: 12
         width: 32
         height: 32
         anchors.left: parent.left

@@ -41,10 +41,17 @@
 
 Device::Device(QString &deviceAddr, QString &deviceName)
 {
+#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+    if (deviceAddr.size() != 38)
+        qWarning() << "Device() '" << deviceAddr << "' is an invalid UUID...";
+
+    QBluetoothUuid bleAddr(deviceAddr);
+#else
     if (deviceAddr.size() != 17)
-        qWarning() << "Device() '" << deviceAddr << "' is an invalid mac address...";
+        qWarning() << "Device() '" << deviceAddr << "' is an invalid MAC address...";
 
     QBluetoothAddress bleAddr(deviceAddr);
+#endif
 
     bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
     m_deviceAddress = deviceAddr;
@@ -66,9 +73,14 @@ Device::Device(QString &deviceAddr, QString &deviceName)
 Device::Device(const QBluetoothDeviceInfo &d)
 {
     bleDevice = d;
-    m_deviceAddress = bleDevice.address().toString();
     m_deviceName = bleDevice.name();
     m_locationName = bleDevice.name();
+
+#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+    m_deviceAddress = bleDevice.deviceUuid().toString();
+#else
+    m_deviceAddress = bleDevice.address().toString();
+#endif
 
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
@@ -189,7 +201,7 @@ bool Device::getSqlDatas()
 
     QSqlQuery getFirmware;
     getFirmware.prepare("SELECT deviceFirmware FROM devices WHERE deviceAddr = :deviceAddr");
-    getFirmware.bindValue(":deviceAddr", getMacAddress());
+    getFirmware.bindValue(":deviceAddr", getAddress());
     getFirmware.exec();
     while (getFirmware.next())
     {
@@ -224,7 +236,7 @@ bool Device::getSqlDatas()
 
     QSqlQuery getBattery;
     getBattery.prepare("SELECT deviceBattery FROM devices WHERE deviceAddr = :deviceAddr");
-    getBattery.bindValue(":deviceAddr", getMacAddress());
+    getBattery.bindValue(":deviceAddr", getAddress());
     getBattery.exec();
     while (getBattery.next())
     {
@@ -234,7 +246,7 @@ bool Device::getSqlDatas()
 
     QSqlQuery getLocationName;
     getLocationName.prepare("SELECT customName FROM devices WHERE deviceAddr = :deviceAddr");
-    getLocationName.bindValue(":deviceAddr", getMacAddress());
+    getLocationName.bindValue(":deviceAddr", getAddress());
     getLocationName.exec();
     while (getLocationName.next())
     {
@@ -244,7 +256,7 @@ bool Device::getSqlDatas()
 
     QSqlQuery getPlantName;
     getPlantName.prepare("SELECT plantName FROM devices WHERE deviceAddr = :deviceAddr");
-    getPlantName.bindValue(":deviceAddr", getMacAddress());
+    getPlantName.bindValue(":deviceAddr", getAddress());
     getPlantName.exec();
     while (getPlantName.next())
     {
@@ -255,7 +267,7 @@ bool Device::getSqlDatas()
     QSqlQuery getLimits;
     getLimits.prepare("SELECT hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
                       "FROM limits WHERE deviceAddr = :deviceAddr");
-    getLimits.bindValue(":deviceAddr", getMacAddress());
+    getLimits.bindValue(":deviceAddr", getAddress());
     getLimits.exec();
     while (getLimits.next())
     {
@@ -282,7 +294,7 @@ bool Device::getSqlCachedDatas()
     cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity " \
                         "FROM datas " \
                         "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-5 minutes');");
-    cachedDatas.bindValue(":deviceAddr", getMacAddress());
+    cachedDatas.bindValue(":deviceAddr", getAddress());
 
     if (cachedDatas.exec() == false)
         qDebug() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
@@ -290,7 +302,7 @@ bool Device::getSqlCachedDatas()
     while (cachedDatas.next())
     {
 #ifndef NDEBUG
-        qDebug() << "* Device update:" << getMacAddress();
+        qDebug() << "* Device update:" << getAddress();
         qDebug() << "> using cachedDatas";
 #endif
         m_temp = cachedDatas.value(0).toFloat();
@@ -407,7 +419,7 @@ void Device::setLocationName(QString name)
         QSqlQuery updateName;
         updateName.prepare("UPDATE devices SET customName = :name WHERE deviceAddr = :deviceAddr");
         updateName.bindValue(":name", name);
-        updateName.bindValue(":deviceAddr", getMacAddress());
+        updateName.bindValue(":deviceAddr", getAddress());
         updateName.exec();
 
         Q_EMIT datasUpdated();
@@ -424,7 +436,7 @@ void Device::setPlantName(QString name)
         QSqlQuery updatePlant;
         updatePlant.prepare("UPDATE devices SET plantName = :name WHERE deviceAddr = :deviceAddr");
         updatePlant.bindValue(":name", name);
-        updatePlant.bindValue(":deviceAddr", getMacAddress());
+        updatePlant.bindValue(":deviceAddr", getAddress());
         updatePlant.exec();
 
         Q_EMIT datasUpdated();
@@ -441,7 +453,7 @@ bool Device::setDbLimits()
     QSqlQuery updateLimits;
     updateLimits.prepare("REPLACE INTO limits (deviceAddr, hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax)"
                          " VALUES (:deviceAddr, :hyroMin, :hygroMax, :tempMin, :tempMax, :lumiMin, :lumiMax, :conduMin, :conduMax)");
-    updateLimits.bindValue(":deviceAddr", getMacAddress());
+    updateLimits.bindValue(":deviceAddr", getAddress());
     updateLimits.bindValue(":hyroMin", m_limitHygroMin);
     updateLimits.bindValue(":hygroMax", m_limitHygroMax);
     updateLimits.bindValue(":tempMin", m_limitTempMin);
@@ -509,7 +521,7 @@ QVariantList Device::getDatasDaily(QString dataName)
                         "FROM datas WHERE deviceAddr = :deviceAddr " \
                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
                         "ORDER BY ts DESC;");
-    datasPerDay.bindValue(":deviceAddr", getMacAddress());
+    datasPerDay.bindValue(":deviceAddr", getAddress());
 
     if (datasPerDay.exec() == false)
         qDebug() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
@@ -566,7 +578,7 @@ QVariantList Device::getHours()
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
                          "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+    datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
         qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
@@ -617,7 +629,7 @@ QVariantList Device::getDatasHourly(QString dataName)
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day', '+2 hour') " \
                          "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+    datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
         qDebug() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
@@ -670,7 +682,7 @@ QVariantList Device::getBackgroundHourly(float maxValue)
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
                          "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+    datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
         qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
@@ -723,7 +735,7 @@ QVariantList Device::getBackgroundNightly(float maxValue)
                          "FROM datas " \
                          "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
                          "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getMacAddress());
+    datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
         qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
@@ -810,11 +822,13 @@ void Device::serviceScanDone()
 void Device::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
+    Q_UNUSED(uuid);
 }
 
 void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 {
     //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
+    Q_UNUSED(newState);
 }
 
 bool Device::hasControllerError() const
@@ -832,6 +846,8 @@ void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 
 void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    Q_UNUSED(c);
+    Q_UNUSED(value);
 /*
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
@@ -846,6 +862,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
 
 void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    Q_UNUSED(c);
+    Q_UNUSED(value);
 /*
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 

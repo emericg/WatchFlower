@@ -257,7 +257,7 @@ void DeviceManager::deviceDiscoveryFinished()
             for (auto d: m_devices)
             {
                 Device *dd = qobject_cast<Device*>(d);
-                if (dd && dd->getMacAddress() == deviceAddr)
+                if (dd && dd->getAddress() == deviceAddr)
                 {
                     found = true;
                     break;
@@ -337,7 +337,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             m_devices.append(d);
 
-            qDebug() << "Last device added: " << d->getName() << "/" << d->getMacAddress();
+            qDebug() << "Last device added: " << d->getName() << "/" << d->getAddress();
 
             // Also add it to the database?
             if (m_db)
@@ -345,17 +345,17 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 // if
                 QSqlQuery queryDevice;
                 queryDevice.prepare("SELECT deviceName FROM devices WHERE deviceAddr = :deviceAddr");
-                queryDevice.bindValue(":deviceAddr", d->getMacAddress());
+                queryDevice.bindValue(":deviceAddr", d->getAddress());
                 queryDevice.exec();
 
                 // then
                 if (queryDevice.last() == false)
                 {
-                    qDebug() << "+ Adding device: " << d->getName() << "/" << d->getMacAddress() << "to local database";
+                    qDebug() << "+ Adding device: " << d->getName() << "/" << d->getAddress() << "to local database";
 
                     QSqlQuery addDevice;
                     addDevice.prepare("INSERT INTO devices (deviceAddr, deviceName, customName) VALUES (:deviceAddr, :deviceName, :customName)");
-                    addDevice.bindValue(":deviceAddr", d->getMacAddress());
+                    addDevice.bindValue(":deviceAddr", d->getAddress());
                     addDevice.bindValue(":deviceName", d->getName());
                     addDevice.bindValue(":customName", d->getName());
                     addDevice.exec();

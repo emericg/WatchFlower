@@ -24,7 +24,7 @@ import QtQuick 2.7
 Rectangle {
     id: deviceBoxDesktop
     width: parent.width
-    height: 120
+    height: 111
     radius: 8
     color: "#ddffffff"
 
@@ -119,7 +119,7 @@ Rectangle {
         height: 32
         anchors.right: parent.right
         anchors.rightMargin: 8
-        anchors.topMargin: 12
+        anchors.topMargin: 8
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 8
@@ -136,7 +136,7 @@ Rectangle {
         height: 22
         color: "#454b54"
         anchors.top: textName.bottom
-        anchors.topMargin: 2
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 9
 

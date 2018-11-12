@@ -97,7 +97,7 @@ Rectangle {
             anchors.verticalCenter: checkBox_systray.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 8
-            source: "../assets/desktop/watchflower_tray.svg"
+            source: "../assets/desktop/watchflower_tray_dark.svg"
         }
 
         CheckBox {

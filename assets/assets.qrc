@@ -2,7 +2,8 @@
     <qresource prefix="/assets">
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower.png</file>
-        <file>desktop/watchflower_tray.svg</file>
+        <file>desktop/watchflower_tray_light.svg</file>
+        <file>desktop/watchflower_tray_dark.svg</file>
         <file>devices/flowercare.svg</file>
         <file>devices/hygrotemp.svg</file>
         <file>devices/ropot.svg</file>

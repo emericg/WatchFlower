@@ -192,7 +192,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             m_conductivity = data[8] + (data[9] << 8);
 
 #ifndef NDEBUG
-            qDebug() << "* DeviceFlowercare update:" << getMacAddress();
+            qDebug() << "* DeviceFlowercare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_temp:" << m_temp;
@@ -212,7 +212,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 QSqlQuery addDatas;
                 addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
                                  " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
-                addDatas.bindValue(":deviceAddr", getMacAddress());
+                addDatas.bindValue(":deviceAddr", getAddress());
                 addDatas.bindValue(":ts", tsStr);
                 addDatas.bindValue(":ts_full", tsFullStr);
                 addDatas.bindValue(":temp", m_temp);
@@ -226,7 +226,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_firmware);
                 updateDevice.bindValue(":battery", m_battery);
-                updateDevice.bindValue(":deviceAddr", getMacAddress());
+                updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qDebug() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
             }

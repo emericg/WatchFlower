@@ -102,7 +102,11 @@ bool SystrayManager::installSystray()
             m_sysTray = new QSystemTrayIcon();
             if (m_sysTray)
             {
-                QIcon trayIcon(":/assets/desktop/watchflower_tray.svg");
+#ifdef TARGET_OS_OSX
+                QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg")
+#else
+                QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
+#endif
                 m_sysTray->setIcon(trayIcon);
                 m_sysTray->setContextMenu(m_sysTrayMenu);
                 m_sysTray->show();

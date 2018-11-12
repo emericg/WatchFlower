@@ -184,7 +184,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             m_conductivity = data[8] + (data[9] << 8);
 
 #ifndef NDEBUG
-            qDebug() << "* DeviceRopot update:" << getMacAddress();
+            qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_temp:" << m_temp;
@@ -203,7 +203,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 QSqlQuery addDatas;
                 addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, conductivity)"
                                  " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :conductivity)");
-                addDatas.bindValue(":deviceAddr", getMacAddress());
+                addDatas.bindValue(":deviceAddr", getAddress());
                 addDatas.bindValue(":ts", tsStr);
                 addDatas.bindValue(":ts_full", tsFullStr);
                 addDatas.bindValue(":temp", m_temp);
@@ -216,7 +216,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_firmware);
                 updateDevice.bindValue(":battery", m_battery);
-                updateDevice.bindValue(":deviceAddr", getMacAddress());
+                updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qDebug() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
             }
