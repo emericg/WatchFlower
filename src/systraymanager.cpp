@@ -103,7 +103,7 @@ bool SystrayManager::installSystray()
             if (m_sysTray)
             {
 #ifdef TARGET_OS_OSX
-                QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg")
+                QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg");
 #else
                 QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
 #endif

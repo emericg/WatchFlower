@@ -47,47 +47,9 @@ Item {
         }
     }
 
-    Rectangle {
-        id: rectangleHeader
-        height: 48
-        color: "#f5f5f5"
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-
-        Image {
-            id: imageLimits
-            y: 12
-            width: 28
-            height: 28
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
-            source: "qrc:/assets/limits.svg"
-        }
-
-        Text {
-            id: textLimits
-            height: 28
-            text: qsTr("Limits editor:")
-            verticalAlignment: Text.AlignVCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            anchors.left: imageLimits.right
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 18
-        }
-    }
-
     Column {
         id: column
-        anchors.top: rectangleHeader.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.topMargin: 0
+        anchors.fill: parent
 
         Item {
             id: itemHygro

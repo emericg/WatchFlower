@@ -94,13 +94,16 @@ int main(int argc, char *argv[])
 /* ************************************************************************** */
 // TODOs
 
-/// 0.4
+/// 0.5
+// monthly graphs
+// always load <12h old datas at loading
 // BLE device update timeout
+// bluetooth not re-enabling itself
 
 /// NEXT
-// macOS port
-// bluetooth not re-enabling itself
-// properly disable graph & limits when no database available?
+// better mobile UI: sidemenu, notifs, ...
+// background daemon for mobile?
+// iOS port
 
 /// NEXT next
 // plants img

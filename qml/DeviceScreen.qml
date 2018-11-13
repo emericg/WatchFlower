@@ -34,6 +34,52 @@ Rectangle {
 
     Component.onCompleted: loadDevice()
 
+    Timer {
+        interval: 30000; running: true; repeat: true;
+        onTriggered: updateLastUpdateText()
+    }
+
+    function updateLastUpdateText() {
+        if (typeof myDevice === "undefined") return
+        var shortVersion = false
+        if (rectangleSubHeader.width < 480)
+            shortVersion = true
+
+        //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
+
+        if (!myDevice.available && myDevice.updating) {
+            if (!shortVersion)
+                textLastUpdate.text = qsTr("Device is updating...")
+            else
+                textLastUpdate.text = qsTr("updating...")
+            textLastUpdate.color = "#000000"
+            textLastUpdate.font.bold = false
+        } else if (!myDevice.available && !myDevice.updating) {
+            if (!shortVersion)
+                textLastUpdate.text = qsTr("Device is offline!")
+            else
+                textLastUpdate.text = qsTr("offline!")
+            textLastUpdate.font.bold = true
+            textLastUpdate.color = "#ff671b"
+            textRefresh.text = qsTr("Retry")
+            textRefresh.width = 90
+        } else {
+            if (!shortVersion)
+                textLastUpdate.text = qsTr("Last update:") + " "
+            else
+                textLastUpdate.text = ""
+
+            if (myDevice.lastUpdate <= 1)
+                textLastUpdate.text += qsTr("just now!")
+            else
+                textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
+            textLastUpdate.color = "#000000"
+            textLastUpdate.font.bold = false
+            textRefresh.text = qsTr("Refresh")
+            textRefresh.width = 112
+        }
+    }
+
     function loadDevice() {
         if (typeof myDevice === "undefined") return
 
@@ -42,6 +88,7 @@ Rectangle {
         rectangleContent.state = "datas"
 
         updateStatus()
+
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceLimits.updateLimitsVisibility()
     }
@@ -97,6 +144,15 @@ Rectangle {
         } else {
             imageFw.visible = false
         }
+
+        // Update sub header
+        updateLastUpdateText()
+
+        if (myDevice.updating) {
+            refreshRotation.start()
+        } else {
+            refreshRotation.stop()
+        }
     }
 
     Rectangle {
@@ -123,60 +179,6 @@ Rectangle {
             anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
-
-            Rectangle {
-                id: rectangleB2
-                x: 410
-                y: 78
-                width: 32
-                height: 32
-                color: "#00000000"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 8
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-
-                Image {
-                    id: imageB2
-                    width: 28
-                    height: 28
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/limits.svg"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-
-                        onEntered: imageB2.opacity = 0.5
-                        onExited: imageB2.opacity = 1
-
-                        onPressed: {
-                            imageB2.anchors.topMargin += 2
-                            imageB2.anchors.rightMargin += 2
-                            imageB2.width -= 4
-                            imageB2.height -= 4
-                        }
-                        onReleased: {
-                            imageB2.anchors.topMargin -= 2
-                            imageB2.anchors.rightMargin -= 2
-                            imageB2.width += 4
-                            imageB2.height += 4
-                        }
-                        onClicked: {
-                            if (rectangleContent.state === "datas") {
-                                rectangleContent.state = "limits"
-                                imageB2.source = "qrc:/assets/graph.svg"
-                            } else {
-                                rectangleContent.state = "datas"
-                                // Update color bars with new limits
-                                rectangleDeviceDatas.updateDatas()
-                                imageB2.source = "qrc:/assets/limits.svg"
-                            }
-                        }
-                    }
-                }
-            }
 
             Text {
                 id: textDeviceName
@@ -363,11 +365,152 @@ Rectangle {
         }
 
         Rectangle {
+            id: rectangleSubHeader
+            height: 48
+            color: "#f5f5f5"
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.top: rectangleHeader.bottom
+            anchors.topMargin: 0
+
+            Text {
+                id: textLastUpdate
+                height: 40
+                text: qsTr("Last update:")
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 17
+                horizontalAlignment: Text.AlignLeft
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: imageLastUpdate.right
+                anchors.leftMargin: 8
+            }
+
+            Image {
+                id: imageLastUpdate
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: buttonLimits.right
+                source: "qrc:/assets/lastupdate.svg"
+                anchors.leftMargin: 10
+            }
+
+            Rectangle {
+                id: buttonRefresh
+                width: 112
+                height: 36
+                color: "#e0e0e0"
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    id: textRefresh
+                    color: "#202020"
+                    text: qsTr("Refresh")
+                    anchors.right: parent.right
+                    font.pixelSize: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: imageRefresh.right
+                    anchors.rightMargin: 8
+                    anchors.leftMargin: 8
+                }
+
+                Image {
+                    id: imageRefresh
+                    width: 22
+                    height: 22
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/assets/refresh.svg"
+
+                    NumberAnimation on rotation {
+                        id: refreshRotation
+                        duration: 3000;
+                        from: 0;
+                        to: 360;
+                        loops: Animation.Infinite
+                        running: false
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    hoverEnabled: true
+                    onEntered: buttonRefresh.color = "#eaeaea"
+                    onExited: buttonRefresh.color = "#e0e0e0"
+
+                    onClicked: {
+                        refreshRotation.start()
+                        myDevice.refreshDatas()
+                    }
+                }
+            }
+
+            Rectangle {
+                id: buttonLimits
+                width: 112
+                height: 36
+                color: "#e0e0e0"
+                anchors.left: buttonRefresh.right
+                anchors.leftMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    id: textLimits
+                    color: "#202020"
+                    text: qsTr("Limits")
+                    anchors.right: parent.right
+                    font.pixelSize: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: imageLimits.right
+                    anchors.rightMargin: 8
+                    anchors.leftMargin: 8
+                }
+
+                Image {
+                    id: imageLimits
+                    width: 22
+                    height: 22
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    source: "qrc:/assets/limits.svg"
+                    anchors.leftMargin: 10
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    hoverEnabled: true
+                    onEntered: buttonLimits.color = "#eaeaea"
+                    onExited: buttonLimits.color = "#e0e0e0"
+
+                    onClicked: {
+                        if (rectangleContent.state === "datas") {
+                            rectangleContent.state = "limits"
+                            imageB2.source = "qrc:/assets/graph.svg"
+                        } else {
+                            rectangleContent.state = "datas"
+                            // Update color bars with new limits
+                            rectangleDeviceDatas.updateDatas()
+                            imageB2.source = "qrc:/assets/limits.svg"
+                        }
+                    }
+                }
+            }
+        }
+
+        Rectangle {
             id: rectangleContent
             color: "#ffffff"
+            anchors.topMargin: 0
             anchors.bottom: parent.bottom
 
-            anchors.top: rectangleHeader.bottom
+            anchors.top: rectangleSubHeader.bottom
             anchors.left: parent.left
             anchors.right: parent.right
 

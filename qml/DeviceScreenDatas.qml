@@ -27,38 +27,6 @@ Rectangle {
 
     Component.onCompleted: updateDatas()
 
-    Timer {
-        interval: 30000; running: true; repeat: true;
-        onTriggered: updateLastUpdateText()
-    }
-
-    function updateLastUpdateText() {
-        if (typeof myDevice === "undefined") return
-
-        //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
-
-        if (!myDevice.available && myDevice.updating) {
-            textLastUpdate.text = qsTr("Device is updating...")
-            textLastUpdate.color = "#000000"
-            textLastUpdate.font.bold = false
-        } else if (!myDevice.available && !myDevice.updating) {
-            textLastUpdate.text = qsTr("Device is offline!")
-            textLastUpdate.font.bold = true
-            textLastUpdate.color = "#ff671b"
-            textRefresh.text = qsTr("Retry")
-            textRefresh.width = 90
-        } else {
-            if (myDevice.lastUpdate <= 1)
-                textLastUpdate.text = qsTr("Last update:") + " " + qsTr("just now!")
-            else
-                textLastUpdate.text = qsTr("Last update:") + " " +  myDevice.lastUpdate + " " + qsTr("min. ago")
-            textLastUpdate.color = "#000000"
-            textLastUpdate.font.bold = false
-            textRefresh.text = qsTr("Refresh")
-            textRefresh.width = 112
-        }
-    }
-
     function loadDatas() {
         if (typeof myDevice === "undefined") return
 
@@ -72,15 +40,6 @@ Rectangle {
         if (myDevice === 'undefined') return
 
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
-
-        // Update header
-        updateLastUpdateText()
-
-        if (myDevice.updating) {
-            refreshRotation.start()
-        } else {
-            refreshRotation.stop()
-        }
 
         // Update graph
         deviceScreenCharts.updateGraph()
@@ -213,99 +172,13 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        id: rectangleHeader
-        height: 48
-        color: "#f5f5f5"
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-
-        Text {
-            id: textLastUpdate
-            height: 40
-            text: qsTr("Last update:")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            anchors.left: imageLastUpdate.right
-            anchors.leftMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 17
-        }
-
-        Image {
-            id: imageLastUpdate
-            width: 24
-            height: 24
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-            source: "qrc:/assets/lastupdate.svg"
-        }
-
-        Rectangle {
-            id: buttonRefresh
-            width: 112
-            height: 36
-            color: "#e0e0e0"
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-
-            Text {
-                id: textRefresh
-                color: "#202020"
-                text: qsTr("Refresh")
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-                anchors.right: imageRefresh.left
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 17
-            }
-
-            Image {
-                id: imageRefresh
-                width: 20
-                height: 20
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/refresh.svg"
-
-                NumberAnimation on rotation {
-                    id: refreshRotation
-                    duration: 3000;
-                    from: 0;
-                    to: 360;
-                    loops: Animation.Infinite
-                    running: false
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                hoverEnabled: true
-                onEntered: buttonRefresh.color = "#eaeaea"
-                onExited: buttonRefresh.color = "#e0e0e0"
-
-                onClicked: {
-                    refreshRotation.start()
-                    myDevice.refreshDatas()
-                }
-            }
-        }
-    }
-
     Flow {
         id: flowData
         anchors.leftMargin: 4
-        anchors.topMargin: 6
+        anchors.topMargin: 0
         anchors.right: parent.right
         anchors.left: parent.left
-        anchors.top: rectangleHeader.bottom
+        anchors.top: parent.top
 
         Rectangle {
             id: rectangleHygro
