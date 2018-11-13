@@ -10,7 +10,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
-    error("You really need Qt 5.7 to build WatchFlower, sorry...")
+    error("You really need AT LEAST Qt 5.7 to build WatchFlower, sorry...")
 }
 if (lessThan(QT_MINOR_VERSION, 10)) {
     warning("You need Qt 5.10 to build WatchFlower with proper data charts." \
@@ -83,10 +83,10 @@ linux:!android {
 
 macx {
     # Bundle packaging
-    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app)
+    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
 
     # Automatic bundle packaging
-    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app
+    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
