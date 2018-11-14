@@ -175,50 +175,53 @@ Rectangle {
     Flow {
         id: flowData
         anchors.leftMargin: 4
-        anchors.topMargin: 0
+        anchors.topMargin: 2
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: parent.top
 
         Rectangle {
             id: rectangleHygro
-            width: 172
+            width: 173
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageHygro
-                x: 4
-                y: 4
-                width: 40
-                height: 40
+                x: 0
+                y: 0
+                width: 48
+                height: 48
                 source: "qrc:/assets/hygro.svg"
             }
             Text {
                 id: textHygro
-                x: 48
-                y: 10
+                x: 50
+                y: 8
                 width: 120
-                height: 16
+                height: 18
                 text: myDevice.deviceHygro + "%"
-                font.pixelSize: 14
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 16
             }
 
             Rectangle {
                 id: barHygro_low
-                x: 48
+                x: 57
                 y: 27
                 width: 28
                 height: 8
                 color: neutralColor
+                anchors.verticalCenterOffset: 0
                 anchors.right: barHygro_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barHygro_good.verticalCenter
             }
             Rectangle {
                 id: barHygro_good
-                x: 80
-                y: 30
+                x: 82
+                y: 31
                 width: 56
                 height: 8
                 color: neutralColor
@@ -229,6 +232,7 @@ Rectangle {
                 width: 28
                 height: 8
                 color: neutralColor
+                anchors.verticalCenterOffset: 0
                 anchors.left: barHygro_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barHygro_good.verticalCenter
@@ -237,26 +241,28 @@ Rectangle {
 
         Rectangle {
             id: rectangleTemp
-            width: 172
+            width: 173
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageTemp
-                x: 4
-                y: 4
-                width: 40
-                height: 40
+                x: 0
+                y: 0
+                width: 48
+                height: 48
                 source: "qrc:/assets/temp.svg"
             }
             Text {
                 id: textTemp
-                x: 48
-                y: 10
+                x: 50
+                y: 8
                 width: 120
-                height: 16
+                height: 18
                 text: myDevice.getTempString()
-                font.pixelSize: 14
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 16
             }
 
             Rectangle {
@@ -273,8 +279,8 @@ Rectangle {
             }
             Rectangle {
                 id: barTemp_good
-                x: 80
-                y: 30
+                x: 82
+                y: 31
                 width: 56
                 height: 8
                 color: neutralColor
@@ -293,26 +299,28 @@ Rectangle {
 
         Rectangle {
             id: rectangleLuminosity
-            width: 172
+            width: 173
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageLuminosity
-                x: 4
-                y: 4
-                width: 40
-                height: 40
+                x: 0
+                y: 0
+                width: 48
+                height: 48
                 source: "qrc:/assets/day.svg"
             }
             Text {
                 id: textLuminosity
-                x: 48
-                y: 10
+                x: 50
+                y: 8
                 width: 120
-                height: 17
+                height: 18
                 text: myDevice.deviceLuminosity + " lumens"
-                font.pixelSize: 14
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 16
             }
 
             Rectangle {
@@ -328,8 +336,8 @@ Rectangle {
             }
             Rectangle {
                 id: barLux_good
-                x: 80
-                y: 30
+                x: 82
+                y: 31
                 width: 56
                 height: 8
                 color: neutralColor
@@ -348,26 +356,28 @@ Rectangle {
 
         Rectangle {
             id: rectangleConductivity
-            width: 172
+            width: 173
             height: 48
             color: "#ffffff"
 
             Image {
                 id: imageConductivity
-                x: 4
-                y: 4
-                width: 40
-                height: 40
+                x: 0
+                y: 0
+                width: 48
+                height: 48
                 source: "qrc:/assets/conductivity.svg"
             }
             Text {
                 id: textConductivity
-                x: 48
-                y: 10
+                x: 50
+                y: 8
                 width: 120
-                height: 16
+                height: 18
                 text: myDevice.deviceConductivity + " µS/cm"
-                font.pixelSize: 14
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 16
             }
 
             Rectangle {
@@ -383,8 +393,8 @@ Rectangle {
             }
             Rectangle {
                 id: barCond_good
-                x: 80
-                y: 30
+                x: 82
+                y: 31
                 width: 56
                 height: 8
                 color: neutralColor

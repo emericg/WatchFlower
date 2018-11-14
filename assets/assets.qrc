@@ -31,7 +31,5 @@
         <file>limits.svg</file>
         <file>refresh.svg</file>
         <file>graph.svg</file>
-        <file>db.svg</file>
-        <file>hw.svg</file>
     </qresource>
 </RCC>

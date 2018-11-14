@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.3
 
 Rectangle {
     id: rectangleSettings
@@ -275,9 +275,8 @@ Rectangle {
 
     Rectangle {
         id: rectangleInfos
-        y: 365
-        width: 270
-        height: 80
+        width: 290
+        height: 88
         color: "#00000000"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: rectangleSettingsContent.bottom
@@ -285,8 +284,8 @@ Rectangle {
 
         Image {
             id: imageLogo
-            width: 80
-            height: 80
+            width: 88
+            height: 88
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -296,28 +295,28 @@ Rectangle {
         Text {
             id: textVersion
             width: 184
-            anchors.verticalCenterOffset: -10
+            anchors.verticalCenterOffset: -12
             anchors.left: imageLogo.right
-            anchors.leftMargin: 4
+            anchors.leftMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
             color: "#343434"
             text: qsTr("WatchFlower") + " / " + settingsManager.getAppVersion()
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 16
+            font.pixelSize: 17
         }
         Text {
             id: textUrl
             width: 184
-            anchors.verticalCenterOffset: 16
+            anchors.verticalCenterOffset: 12
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: imageLogo.right
-            anchors.leftMargin: 4
+            anchors.leftMargin: 8
 
             color: "#343434"
             text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html> page!"
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 16
+            font.pixelSize: 17
             onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
         }
     }

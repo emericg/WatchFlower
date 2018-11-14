@@ -70,6 +70,8 @@ Rectangle {
             imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
 
+            dataArea.color = "#aaf3f3f3"
+
             imageStatus.visible = true;
             imageDatas.visible = false;
             textDatas.visible = false;
@@ -83,6 +85,13 @@ Rectangle {
                 imageDatas.visible = true;
                 textDatas.visible = true;
                 textDatas.text = boxDevice.dataString;
+
+                if (boxDevice.deviceHygro > 0 &&
+                    (boxDevice.deviceHygro < boxDevice.limitHygroMin ||
+                    boxDevice.deviceHygro > boxDevice.limitHygroMax))
+                    dataArea.color = "#abfed985"
+                else
+                    dataArea.color = "#aaf3f3f3"
 
                 if ((boxDevice.deviceCapabilities & 0x01) == 1) {
                     imageBattery.visible = true;
@@ -127,7 +136,7 @@ Rectangle {
         color: "#454B54"
         text: boxDevice.deviceLocationName
         font.bold: true
-        font.pixelSize: 24
+        font.pixelSize: 23
         verticalAlignment: Text.AlignVCenter
     }
 
@@ -160,7 +169,7 @@ Rectangle {
 
     Rectangle {
         id: dataArea
-        height: 44
+        height: 42
         color: "#aaf3f3f3"
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -211,13 +220,14 @@ Rectangle {
         Text {
             id: textBattery
             width: 48
-            height: 28
+            height: 22
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 8
             anchors.left: imageBattery.right
 
             text: boxDevice.deviceBattery + "%"
-            verticalAlignment: Text.AlignVCenter
+            font.family: "Arial"
+            verticalAlignment: Text.AlignBottom
             font.pixelSize: 16
         }
 

@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.7
+import QtQuick.Controls 2.3
 
 Rectangle {
     id: deviceScreenRectangle
@@ -187,7 +188,7 @@ Rectangle {
                 color: "#454b54"
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                font.pixelSize: 22
+                font.pixelSize: 23
                 text: myDevice.deviceName
                 font.capitalization: Font.AllUppercase
                 anchors.top: parent.top
@@ -377,11 +378,10 @@ Rectangle {
 
             Text {
                 id: textLastUpdate
-                height: 40
+                height: 32
                 text: qsTr("Last update:")
                 verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 17
-                horizontalAlignment: Text.AlignLeft
+                font.pixelSize: 16
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: imageLastUpdate.right
                 anchors.leftMargin: 8
@@ -389,8 +389,8 @@ Rectangle {
 
             Image {
                 id: imageLastUpdate
-                width: 24
-                height: 24
+                width: 22
+                height: 22
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: buttonLimits.right
                 source: "qrc:/assets/lastupdate.svg"
@@ -399,8 +399,8 @@ Rectangle {
 
             Rectangle {
                 id: buttonRefresh
-                width: 112
-                height: 36
+                width: 108
+                height: 32
                 color: "#e0e0e0"
                 anchors.left: parent.left
                 anchors.leftMargin: 10
@@ -408,13 +408,15 @@ Rectangle {
 
                 Text {
                     id: textRefresh
+                    height: 32
                     color: "#202020"
                     text: qsTr("Refresh")
+                    verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
                     font.pixelSize: 16
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageRefresh.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 0
                     anchors.leftMargin: 8
                 }
 
@@ -423,7 +425,7 @@ Rectangle {
                     width: 22
                     height: 22
                     anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 6
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/refresh.svg"
 
@@ -453,8 +455,8 @@ Rectangle {
 
             Rectangle {
                 id: buttonLimits
-                width: 112
-                height: 36
+                width: 100
+                height: 32
                 color: "#e0e0e0"
                 anchors.left: buttonRefresh.right
                 anchors.leftMargin: 10
@@ -462,13 +464,15 @@ Rectangle {
 
                 Text {
                     id: textLimits
+                    height: 32
                     color: "#202020"
                     text: qsTr("Limits")
+                    verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
                     font.pixelSize: 16
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageLimits.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 0
                     anchors.leftMargin: 8
                 }
 
@@ -479,7 +483,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     source: "qrc:/assets/limits.svg"
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 6
                 }
 
                 MouseArea {
@@ -492,12 +496,15 @@ Rectangle {
                     onClicked: {
                         if (rectangleContent.state === "datas") {
                             rectangleContent.state = "limits"
-                            imageB2.source = "qrc:/assets/graph.svg"
+                            textLimits.text = qsTr("Datas")
+                            imageLimits.source = "qrc:/assets/graph.svg"
                         } else {
                             rectangleContent.state = "datas"
+                            textLimits.text = qsTr("Limits")
+                            imageLimits.source = "qrc:/assets/limits.svg"
+
                             // Update color bars with new limits
                             rectangleDeviceDatas.updateDatas()
-                            imageB2.source = "qrc:/assets/limits.svg"
                         }
                     }
                 }
