@@ -25,8 +25,8 @@ Rectangle {
     id: deviceBoxDesktop
     width: parent.width
     height: 111
-    radius: 8
     color: "#ddffffff"
+    radius: 8
 
     property var boxDevice
 
@@ -70,6 +70,7 @@ Rectangle {
             imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
 
+            deviceBoxDesktop.color = "#ddffffff"
             dataArea.color = "#aaf3f3f3"
 
             imageStatus.visible = true;
@@ -88,10 +89,13 @@ Rectangle {
 
                 if (boxDevice.deviceHygro > 0 &&
                     (boxDevice.deviceHygro < boxDevice.limitHygroMin ||
-                    boxDevice.deviceHygro > boxDevice.limitHygroMax))
-                    dataArea.color = "#abfed985"
-                else
+                    boxDevice.deviceHygro > boxDevice.limitHygroMax)) {
+                    deviceBoxDesktop.color = "#ddfff5e4"
+                    dataArea.color = "#88ffd86e"
+                } else {
+                    deviceBoxDesktop.color = "#ddffffff"
                     dataArea.color = "#aaf3f3f3"
+                }
 
                 if ((boxDevice.deviceCapabilities & 0x01) == 1) {
                     imageBattery.visible = true;
