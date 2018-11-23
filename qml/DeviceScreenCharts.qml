@@ -384,7 +384,7 @@ Rectangle {
             labelsVisible: false
 
             axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
-            axisX: BarCategoryAxis { id: axisX0; visible:true; gridVisible: false; labelsFont.pixelSize: 12; }
+            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false; labelsFont.pixelSize: 12; }
 
             BarSet { id: myBarSet; }
             BarSet { id: backgroundDayBars; }

@@ -90,8 +90,8 @@ Rectangle {
                 if (boxDevice.deviceHygro > 0 &&
                     (boxDevice.deviceHygro < boxDevice.limitHygroMin ||
                     boxDevice.deviceHygro > boxDevice.limitHygroMax)) {
-                    deviceBoxDesktop.color = "#ddfff5e4"
-                    dataArea.color = "#88ffd86e"
+                    deviceBoxDesktop.color = "#ddfff9e4"
+                    dataArea.color = "#aafff2c8"
                 } else {
                     deviceBoxDesktop.color = "#ddffffff"
                     dataArea.color = "#aaf3f3f3"
