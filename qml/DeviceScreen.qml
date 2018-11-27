@@ -101,7 +101,6 @@ Rectangle {
 
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
-            labelBattery.visible = true
             textBattery.visible = true
             imageBattery.visible = true
 
@@ -113,10 +112,12 @@ Rectangle {
                 imageBattery.source = "qrc:/assets/battery_mid.svg"
             }
         } else {
-            labelBattery.visible = false
             textBattery.visible = false
             imageBattery.visible = false
         }
+
+        if (myDevice.deviceAddress.charAt(0) !== '{')
+            textAddr.text = " [" + boxDevice.deviceAddress + "]"
 
         if (myDevice.deviceLocationName !== "")
             textInputLocation.text = myDevice.deviceLocationName
@@ -142,8 +143,10 @@ Rectangle {
 
         if (!myDevice.deviceFirmwareUpToDate) {
             imageFw.visible = true
+            textFw.visible = true
         } else {
             imageFw.visible = false
+            textFw.visible = false
         }
 
         // Update sub header
@@ -196,12 +199,12 @@ Rectangle {
             }
             Text {
                 id: textAddr
+                y: 48
                 color: "#454b54"
                 text: myDevice.deviceAddress
-                anchors.bottom: textDeviceName.bottom
-                anchors.bottomMargin: 2
-                anchors.left: textDeviceName.right
+                anchors.left: labelFw.right
                 anchors.leftMargin: 8
+                anchors.verticalCenter: labelFw.verticalCenter
                 font.pixelSize: 16
             }
 
@@ -212,58 +215,64 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.top: textDeviceName.bottom
 
-                text: qsTr("Firmware")
+                text: qsTr("Address")
                 font.pixelSize: 15
             }
             Text {
                 id: textFw
+                height: 26
                 color: "#454b54"
                 text: myDevice.deviceFirmware
-                anchors.left: labelFw.right
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: imageFw.right
                 anchors.leftMargin: 8
-                anchors.verticalCenter: labelFw.verticalCenter
-                font.pixelSize: 18
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                font.pixelSize: 15
+
+                property string saveText: myDevice.deviceFirmware
             }
             Image {
                 id: imageFw
                 width: 26
                 height: 26
-                anchors.verticalCenter: textFw.verticalCenter
-                anchors.left: textFw.right
+                anchors.verticalCenterOffset: 0
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                anchors.left: textBattery.right
                 anchors.leftMargin: 8
 
-                visible: false
                 source: "qrc:/assets/update.svg"
-            }
 
-            Text {
-                id: labelBattery
-                anchors.verticalCenter: textFw.verticalCenter
-                anchors.leftMargin: 8
-                anchors.left: imageFw.right
-
-                text: qsTr("Battery")
-                font.pixelSize: 15
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: {
+                        textFw.saveText = textFw.text
+                        textFw.text = qsTr("Update available!")
+                    }
+                    onExited: {
+                        textFw.text = textFw.saveText
+                    }
+                }
             }
             Text {
                 id: textBattery
-                anchors.verticalCenter: labelBattery.verticalCenter
-                anchors.left: labelBattery.right
-                anchors.leftMargin: 8
+                height: 26
                 color: "#454b54"
                 text: myDevice.deviceBattery + "%"
-                anchors.verticalCenterOffset: 0
-                font.pixelSize: 18
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: imageBattery.right
+                anchors.leftMargin: 8
+                anchors.verticalCenter: imageBattery.verticalCenter
+                font.pixelSize: 15
             }
             Image {
                 id: imageBattery
                 width: 26
                 height: 26
-                anchors.verticalCenter: textBattery.verticalCenter
-                anchors.left: textBattery.right
-                anchors.leftMargin: 8
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                anchors.left: textDeviceName.right
+                anchors.leftMargin: 24
 
-                visible: false
                 source: "qrc:/assets/battery_full.svg"
             }
 
@@ -383,8 +392,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: imageLastUpdate.right
-                anchors.leftMargin: 8
+                anchors.left: buttonRefresh.right
+                anchors.leftMargin: 10
             }
 
             Image {
@@ -402,7 +411,7 @@ Rectangle {
                 width: 108
                 height: 32
                 color: "#e0e0e0"
-                anchors.left: parent.left
+                anchors.left: buttonLimits.right
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -458,7 +467,7 @@ Rectangle {
                 width: 100
                 height: 32
                 color: "#e0e0e0"
-                anchors.left: buttonRefresh.right
+                anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
 

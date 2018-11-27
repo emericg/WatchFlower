@@ -50,11 +50,17 @@ Rectangle {
     function updateBoxDatas() {
         if (boxDevice.devicePlantName !== "") {
             textName.text = boxDevice.devicePlantName
-            textAddr.text = boxDevice.deviceLocationName + " (" + boxDevice.deviceAddress + ")"
         }
         if (boxDevice.deviceName === "MJ_HT_V1") {
             textName.text = qsTr("BLE temperature sensor");
-            textAddr.text = boxDevice.deviceLocationName + " (" + boxDevice.deviceAddress + ")"
+        }
+
+        textAddr.text = boxDevice.deviceLocationName
+        if (boxDevice.deviceLocationName === boxDevice.deviceName) {
+            if (boxDevice.deviceAddress.charAt(0) === '{')
+                textAddr.text += " " + boxDevice.deviceAddress
+            else
+                textAddr.text += " [" + boxDevice.deviceAddress + "]"
         }
 
         imageDevice.visible = false
@@ -198,7 +204,7 @@ Rectangle {
             anchors.left: imageDatas.right
             anchors.leftMargin: 8
             text: boxDevice.dataString
-            verticalAlignment: Text.AlignBottom
+            verticalAlignment: Text.AlignVCenter
             font.family: "Arial"
             font.pixelSize: 16
         }
@@ -231,7 +237,7 @@ Rectangle {
 
             text: boxDevice.deviceBattery + "%"
             font.family: "Arial"
-            verticalAlignment: Text.AlignBottom
+            verticalAlignment: Text.AlignVCenter
             font.pixelSize: 16
         }
 
