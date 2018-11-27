@@ -29,6 +29,13 @@
 #include "singleapplication.h"
 #include "singleapplication_p.h"
 
+#ifdef Q_OS_MAC
+#include <objc/objc.h>
+#include <objc/message.h>
+void setupDockClickHandler();
+bool dockClickHandler(id self, SEL _cmd, ...);
+#endif // Q_OS_MAC
+
 /**
  * @brief Constructor. Checks and fires up LocalServer or closes the program
  * if another instance already exists
@@ -99,6 +106,10 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
     if( inst->primary == false) {
         d->startPrimary();
         d->memory->unlock();
+
+#ifdef Q_OS_MAC
+    setupDockClickHandler();
+#endif
         return;
     }
 
@@ -112,6 +123,10 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
             d->connectToPrimary( timeout, SingleApplicationPrivate::SecondaryInstance );
         }
         d->memory->unlock();
+
+#ifdef Q_OS_MAC
+    setupDockClickHandler();
+#endif
         return;
     }
 
@@ -172,3 +187,40 @@ bool SingleApplication::sendMessage( QByteArray message, int timeout )
     d->socket->waitForBytesWritten( timeout );
     return dataWritten;
 }
+
+#ifdef Q_OS_MAC
+void setupDockClickHandler()
+{
+    Class cls = objc_getClass("NSApplication");
+    objc_object *appInst = objc_msgSend((objc_object*)cls, sel_registerName("sharedApplication"));
+
+    if (appInst != nullptr)
+    {
+        objc_object *delegate = objc_msgSend(appInst, sel_registerName("delegate"));
+        Class delClass = (Class)objc_msgSend(delegate, sel_registerName("class"));
+        SEL shouldHandle = sel_registerName("applicationShouldHandleReopen:hasVisibleWindows:");
+
+        if (class_getInstanceMethod(delClass, shouldHandle))
+        {
+            if (!class_replaceMethod(delClass, shouldHandle, (IMP)dockClickHandler, "B@:"))
+                qWarning() << "Failed to replace method for dock click handler!";
+        }
+        else
+        {
+            if (!class_addMethod(delClass, shouldHandle, (IMP)dockClickHandler,"B@:"))
+                qWarning() << "Failed to register dock click handler!";
+        }
+    }
+}
+
+bool dockClickHandler(id self, SEL _cmd, ...)
+{
+    Q_UNUSED(self)
+    Q_UNUSED(_cmd)
+
+    //qDebug() << "Dock icon clicked!";
+    emit static_cast<SingleApplication *>(qApp)->dockClicked();
+
+    return false; // Return NO (false) to suppress the default OS X actions
+}
+#endif // Q_OS_MAC
