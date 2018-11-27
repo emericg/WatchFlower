@@ -57,7 +57,7 @@ class SystrayManager: public QObject
 signals:
     void showClicked();
     void hideClicked();
-    void settingClicked();
+    void settingsClicked();
     void quitClicked();
 
 public:
@@ -70,7 +70,11 @@ public slots:
     void sendNotification(QString &text);
 
 private slots:
-    void showHide(QSystemTrayIcon::ActivationReason r);
+    void trayClicked(QSystemTrayIcon::ActivationReason r);
+    void showHideButton();
+    void settingsButton();
+
+    void visibilityChanged();
     void aboutToBeDestroyed();
 };
 

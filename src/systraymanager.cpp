@@ -77,15 +77,16 @@ void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
         if (m_sysTrayMenu)
         {
             m_actionShow = new QAction(QObject::tr("Show"));
+            if (m_saved_view->isVisible())
+                m_actionShow->setText(QObject::tr("Hide"));
             m_actionSettings = new QAction(QObject::tr("Settings"));
             m_actionExit = new QAction(QObject::tr("Exit"));
             m_sysTrayMenu->addAction(m_actionShow);
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
 
-            QObject::connect(m_actionShow, &QAction::triggered, m_saved_view, &QQuickWindow::show);
-            QObject::connect(m_actionSettings, &QAction::triggered, m_saved_view, &QQuickWindow::show);
-            QObject::connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingClicked);
+            QObject::connect(m_actionShow, &QAction::triggered, this, &SystrayManager::showHideButton);
+            QObject::connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingsButton);
             QObject::connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
     }
@@ -106,13 +107,14 @@ bool SystrayManager::installSystray()
                 QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg");
 #else
                 QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
+                QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
 #endif
                 m_sysTray->setIcon(trayIcon);
                 m_sysTray->setContextMenu(m_sysTrayMenu);
                 m_sysTray->show();
 
-                QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::showHide);
                 QObject::connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+                QObject::connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
                 // Show greetings
                 //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
@@ -139,13 +141,15 @@ void SystrayManager::removeSystray()
     if (m_sysTray)
     {
         m_retryTimer.stop();
-
-        QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::showHide);
+        QObject::disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+        QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
         delete m_sysTray;
         m_sysTray = nullptr;
     }
 }
+
+/* ************************************************************************** */
 
 void SystrayManager::sendNotification(QString &text)
 {
@@ -158,7 +162,9 @@ void SystrayManager::sendNotification(QString &text)
     }
 }
 
-void SystrayManager::showHide(QSystemTrayIcon::ActivationReason r)
+/* ************************************************************************** */
+
+void SystrayManager::trayClicked(QSystemTrayIcon::ActivationReason r)
 {
     // Context, DoubleClick, Trigger, MiddleClick
 
@@ -168,20 +174,47 @@ void SystrayManager::showHide(QSystemTrayIcon::ActivationReason r)
     }
     else
     {
-        if (m_saved_view->isVisible())
-        {
-            m_saved_view->hide();
-        }
-        else
-        {
-            m_saved_view->show();
-        }
+        showHideButton();
     }
 }
 
+void SystrayManager::showHideButton()
+{
+    if (m_saved_view->isVisible())
+    {
+        m_saved_view->hide();
+    }
+    else
+    {
+        m_saved_view->show();
+        m_saved_view->raise();
+    }
+}
+
+void SystrayManager::settingsButton()
+{
+    m_saved_view->show();
+    m_saved_view->raise();
+    emit settingsClicked();
+}
+
 /* ************************************************************************** */
+
+void SystrayManager::visibilityChanged()
+{
+    if (m_saved_view->isVisible())
+    {
+        m_actionShow->setText(QObject::tr("Hide"));
+    }
+    else
+    {
+        m_actionShow->setText(QObject::tr("Show"));
+    }
+}
 
 void SystrayManager::aboutToBeDestroyed()
 {
     m_sysTray = nullptr;
 }
+
+/* ************************************************************************** */

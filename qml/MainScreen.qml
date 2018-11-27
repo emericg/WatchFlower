@@ -46,7 +46,7 @@ ApplicationWindow {
     }
     Connections {
         target: systrayManager
-        onSettingClicked: {
+        onSettingsClicked: {
             content.state = "Settings"
         }
     }
@@ -93,6 +93,10 @@ ApplicationWindow {
     onClosing: {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             close.accepted = false;
+        }
+        if (Qt.platform.os === "osx") {
+            close.accepted = false;
+            applicationWindow.hide()
         }
     }
 
