@@ -38,13 +38,14 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setApplicationName("WatchFlower");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
+    app.setApplicationName("WatchFlower");
     app.setApplicationDisplayName("WatchFlower");
 
     QIcon appIcon(":/assets/desktop/watchflower.svg");
