@@ -117,7 +117,7 @@ Rectangle {
         }
 
         if (myDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = " [" + boxDevice.deviceAddress + "]"
+            textAddr.text = " [" + myDevice.deviceAddress + "]"
 
         if (myDevice.deviceLocationName !== "")
             textInputLocation.text = myDevice.deviceLocationName
