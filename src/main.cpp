@@ -101,8 +101,11 @@ int main(int argc, char *argv[])
 // TODOs
 
 /// 0.5
+// save states
+// save geometry
 // monthly graphs
 // always load <12h old datas at loading
+
 // BLE device update timeout
 // bluetooth not re-enabling itself
 

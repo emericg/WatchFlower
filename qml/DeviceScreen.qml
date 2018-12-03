@@ -90,6 +90,7 @@ Rectangle {
 
         updateStatus()
 
+        buttonLimits.initButton()
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceLimits.updateLimitsVisibility()
     }
@@ -470,6 +471,16 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
+
+                function initButton() {
+                    if (rectangleContent.state === "limits") {
+                        textLimits.text = qsTr("Datas")
+                        imageLimits.source = "qrc:/assets/graph.svg"
+                    } else {
+                        textLimits.text = qsTr("Limits")
+                        imageLimits.source = "qrc:/assets/limits.svg"
+                    }
+                }
 
                 Text {
                     id: textLimits
