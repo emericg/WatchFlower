@@ -1,6 +1,5 @@
 language: cpp
 dist: xenial
-sudo: require
 
 os:
   - linux
@@ -8,7 +7,7 @@ os:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-add-repository ppa:beineri/opt-qt-5.11.1-xenial -y;
+      sudo apt-add-repository ppa:beineri/opt-qt-5.11.2-xenial -y;
       sudo apt-get update -q;
     fi
 
@@ -49,9 +48,11 @@ after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq;
       curl --upload-file WatchFlower*.AppImage https://transfer.sh/WatchFlower-git.$(git rev-parse --short HEAD)-linux64.AppImage;
+      echo '>> Uploading to transfer.sh completed';
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       cd bin/;
       zip -r -X WatchFlower.zip WatchFlower.app;
       curl --upload-file WatchFlower*.zip https://transfer.sh/WatchFlower-git.$(git rev-parse --short HEAD)-macOS.zip;
+      echo '>> Uploading to transfer.sh completed';
     fi

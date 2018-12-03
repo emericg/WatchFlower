@@ -8,10 +8,10 @@ WatchFlower
 
 ## Introduction
 
-WatchFlower is a small application that reads and plots datas from your Xiaomi "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
-It works with all versions of the devices, and doesn't require GPS or other any other private datas from you, like the official application...
+WatchFlower is an application that reads and plots datas from your Xiaomi "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
+It works with all versions of the devices, and doesn't require GPS or other any other private datas from you, unlike the official application...
 
-Should work on all Qt platforms, meaning Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
+It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
 
 ### Screenshots!
 
