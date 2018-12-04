@@ -36,15 +36,6 @@ Rectangle {
         onDatasUpdated: updateBoxDatas()
     }
 
-    MouseArea {
-        anchors.fill: parent
-
-        onClicked: {
-            curentlySelectedDevice = boxDevice
-            content.state = "DeviceDetails"
-        }
-    }
-
     Component.onCompleted: updateBoxDatas();
 
     function updateBoxDatas() {
@@ -130,6 +121,15 @@ Rectangle {
                 imageBattery.visible = false;
                 textBattery.visible = false;
             }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            curentlySelectedDevice = boxDevice
+            content.state = "DeviceDetails"
         }
     }
 

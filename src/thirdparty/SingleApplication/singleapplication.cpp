@@ -219,7 +219,7 @@ bool dockClickHandler(id self, SEL _cmd, ...)
     Q_UNUSED(_cmd)
 
     //qDebug() << "Dock icon clicked!";
-    emit static_cast<SingleApplication *>(qApp)->dockClicked();
+    Q_EMIT static_cast<SingleApplication *>(qApp)->dockClicked();
 
     return false; // Return NO (false) to suppress the default OS X actions
 }

@@ -36,26 +36,6 @@ Rectangle {
         onDatasUpdated: updateBoxDatas()
     }
 
-    MouseArea {
-        anchors.fill: parent
-
-        onClicked: {
-            curentlySelectedDevice = boxDevice
-            content.state = "DeviceDetails"
-        }
-
-        Image {
-            id: imageForward
-            width: 32
-            height: 32
-            z: 1
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            source: "qrc:/assets/menu_front.svg"
-        }
-    }
-
     Component.onCompleted: updateBoxDatas()
 
     function normalize(value, min, max) {
@@ -103,6 +83,26 @@ Rectangle {
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
             }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            curentlySelectedDevice = boxDevice
+            content.state = "DeviceDetails"
+        }
+
+        Image {
+            id: imageForward
+            width: 32
+            height: 32
+            z: 1
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            source: "qrc:/assets/menu_front.svg"
         }
     }
 

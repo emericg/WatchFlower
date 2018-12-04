@@ -137,7 +137,7 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
                 if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
-                    emit datasUpdated();
+                    Q_EMIT datasUpdated();
                 }
                 if (Version(m_firmware) <= Version("2.6.6"))
                 {
@@ -191,7 +191,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowercare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;

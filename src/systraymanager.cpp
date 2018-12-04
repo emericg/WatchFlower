@@ -195,7 +195,7 @@ void SystrayManager::settingsButton()
 {
     m_saved_view->show();
     m_saved_view->raise();
-    emit settingsClicked();
+    Q_EMIT settingsClicked();
 }
 
 /* ************************************************************************** */

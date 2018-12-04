@@ -134,7 +134,7 @@ void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newSt
                 if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
-                    emit datasUpdated();
+                    Q_EMIT datasUpdated();
                 }
             }
 
@@ -183,7 +183,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             m_hygro = data[7];
             m_conductivity = data[8] + (data[9] << 8);
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;

@@ -157,7 +157,7 @@ void DeviceManager::loadBluetooth()
             qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter.hostMode();
     }
 
-    emit bluetoothChanged();
+    Q_EMIT bluetoothChanged();
 }
 
 void DeviceManager::loadDatabase()
@@ -189,7 +189,7 @@ void DeviceManager::changeBluetoothMode(QBluetoothLocalDevice::HostMode state)
     else
         m_bt = false;
 
-    emit bluetoothChanged();
+    Q_EMIT bluetoothChanged();
 }
 
 /* ************************************************************************** */
@@ -205,7 +205,7 @@ void DeviceManager::startDeviceDiscovery()
     {
         qDeleteAll(m_devices);
         m_devices.clear();
-        emit devicesUpdated();
+        Q_EMIT devicesUpdated();
 
         qDebug() << "Scanning (bluetooth) for devices...";
 
@@ -213,7 +213,7 @@ void DeviceManager::startDeviceDiscovery()
         if (m_discoveryAgent->isActive())
         {
             m_scanning = true;
-            emit scanningChanged();
+            Q_EMIT scanningChanged();
         }
     }
 }
@@ -223,7 +223,7 @@ void DeviceManager::refreshDevices()
     if (m_bt)
     {
         m_scanning = true;
-        emit scanningChanged();
+        Q_EMIT scanningChanged();
 
         for (auto d: m_devices)
         {
@@ -233,8 +233,8 @@ void DeviceManager::refreshDevices()
         }
 
         m_scanning = false;
-        emit scanningChanged();
-        emit devicesUpdated();
+        Q_EMIT scanningChanged();
+        Q_EMIT devicesUpdated();
     }
 }
 
@@ -292,8 +292,8 @@ void DeviceManager::deviceDiscoveryFinished()
 */
     m_scanning = false;
 
-    emit devicesUpdated();
-    emit scanningChanged();
+    Q_EMIT devicesUpdated();
+    Q_EMIT scanningChanged();
 }
 
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
@@ -307,8 +307,8 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
     m_scanning = false;
 
-    emit devicesUpdated();
-    emit scanningChanged();
+    Q_EMIT devicesUpdated();
+    Q_EMIT scanningChanged();
 }
 
 /* ************************************************************************** */

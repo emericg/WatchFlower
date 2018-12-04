@@ -70,7 +70,7 @@ class Device: public QObject
     Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
-    Q_PROPERTY(QString dataString READ getDataString() NOTIFY datasUpdated)
+    Q_PROPERTY(QString dataString READ getDataString NOTIFY datasUpdated)
 
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)

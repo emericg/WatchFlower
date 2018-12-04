@@ -75,23 +75,19 @@ int main(int argc, char *argv[])
 
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
 
-    if (st)
+    if (st && sm && sm->getSysTray())
     {
-        if (sm->getSysTray())
-        {
-            st->initSystray(&app, window);
-            st->installSystray();
-        }
+        st->initSystray(&app, window);
+        st->installSystray();
     }
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
-
-#ifdef Q_OS_MACOS
+#endif
+#if defined(Q_OS_MACOS)
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
-#endif
 #endif
 
     return app.exec();

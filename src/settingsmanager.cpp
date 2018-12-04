@@ -307,11 +307,11 @@ void SettingsManager::resetSettings()
 {
     // Settings
     m_trayEnabled = false;
-    emit systrayChanged();
+    Q_EMIT systrayChanged();
     m_updateInterval = DEFAULT_UPDATE_INTERVAL;
-    emit intervalChanged();
+    Q_EMIT intervalChanged();
     m_tempUnit = "C";
-    emit tempunitChanged();
+    Q_EMIT tempunitChanged();
 
     // Database
     resetDatabase();

@@ -213,7 +213,7 @@ bool Device::getSqlDatas()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
             {
                 m_firmware_uptodate = true;
-                emit datasUpdated();
+                Q_EMIT datasUpdated();
             }
         }
         else if ((m_deviceName == "ropot") && (m_firmware.size() == 5))
@@ -221,7 +221,7 @@ bool Device::getSqlDatas()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
             {
                 m_firmware_uptodate = true;
-                emit datasUpdated();
+                Q_EMIT datasUpdated();
             }
         }
         else if ((m_deviceName == "MJ_HT_V1") && (m_firmware.size() == 8))
@@ -229,7 +229,7 @@ bool Device::getSqlDatas()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
             {
                 m_firmware_uptodate = true;
-                emit datasUpdated();
+                Q_EMIT datasUpdated();
             }
         }
     }
@@ -301,7 +301,7 @@ bool Device::getSqlCachedDatas()
 
     while (cachedDatas.next())
     {
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
         qDebug() << "* Device update:" << getAddress();
         qDebug() << "> using cachedDatas";
 #endif

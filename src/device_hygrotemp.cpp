@@ -125,7 +125,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // (unknown service) // battery
     {
         m_capabilities += DEVICE_BATTERY;
-        emit statusUpdated();
+        Q_EMIT statusUpdated();
 
         if (serviceBattery)
             delete serviceBattery;
@@ -190,7 +190,7 @@ void DeviceHygrotemp::serviceDetailsDiscovered(QLowEnergyService::ServiceState n
                 if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
                 {
                     m_firmware_uptodate = true;
-                    emit datasUpdated();
+                    Q_EMIT datasUpdated();
                 }
             }
         }
@@ -242,7 +242,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
             m_temp = value.mid(2, 4).toFloat();
             m_hygro = value.mid(9, 4).toFloat(); // FIXME hygro could be a float too
 
-#ifndef NDEBUG
+#ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotemp update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
