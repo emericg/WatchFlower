@@ -1,5 +1,5 @@
 TARGET  = WatchFlower
-VERSION = 0.4.0
+VERSION = 0.5.0
 
 CONFIG += c++11
 QT     += core bluetooth sql
