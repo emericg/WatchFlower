@@ -33,6 +33,7 @@ Rectangle {
     Connections {
         target: boxDevice
         onStatusUpdated: updateBoxDatas()
+        onLimitsUpdated: updateBoxDatas()
         onDatasUpdated: updateBoxDatas()
     }
 

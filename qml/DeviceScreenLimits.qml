@@ -25,6 +25,15 @@ import QtQuick.Controls 2.3
 Item {
     id: deviceScreenLimits
 
+    function updateLimits() {
+        rangeSlider_hygro.first.value = myDevice.limitHygroMin
+        rangeSlider_hygro.second.value = myDevice.limitHygroMax
+        rangeSlider_temp.first.value = myDevice.limitTempMin
+        rangeSlider_temp.second.value = myDevice.limitTempMax
+        rangeSlider_condu.first.value = myDevice.limitConduMin
+        rangeSlider_condu.second.value = myDevice.limitConduMax
+    }
+
     function updateLimitsVisibility() {
         if (myDevice) {
             itemTemp.visible = true

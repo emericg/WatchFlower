@@ -281,6 +281,7 @@ bool Device::getSqlDatas()
         m_limitConduMax = getLimits.value(7).toInt();
         status = true;
     }
+    Q_EMIT limitsUpdated();
 
     return status;
 }
@@ -466,6 +467,8 @@ bool Device::setDbLimits()
     status = updateLimits.exec();
     if (status == false)
         qDebug() << "> updateLimits.exec() ERROR" << updateLimits.lastError().type() << ":"  << updateLimits.lastError().text();
+
+    Q_EMIT limitsUpdated();
 
     return status;
 }

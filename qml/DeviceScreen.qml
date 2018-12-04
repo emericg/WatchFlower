@@ -92,6 +92,7 @@ Rectangle {
 
         buttonLimits.initButton()
         rectangleDeviceDatas.loadDatas()
+        rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
     }
 

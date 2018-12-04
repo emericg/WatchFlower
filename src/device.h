@@ -197,14 +197,14 @@ public slots:
     int getLimitLumiMax() const { return m_limitLumiMax; }
     int getLimitConduMin() const { return m_limitConduMin; }
     int getLimitConduMax() const { return m_limitConduMax; }
-    void setLimitHygroMin(int limitHygroMin) { m_limitHygroMin = limitHygroMin; setDbLimits(); }
-    void setLimitHygroMax(int limitHygroMax) { m_limitHygroMax = limitHygroMax; setDbLimits(); }
-    void setLimitTempMin(int limitTempMin) { m_limitTempMin = limitTempMin; setDbLimits(); }
-    void setLimitTempMax(int limitTempMax) { m_limitTempMax = limitTempMax; setDbLimits(); }
-    void setLimitLumiMin(int limitLumiMin) { m_limitLumiMin = limitLumiMin; setDbLimits(); }
-    void setLimitLumiMax(int limitLumiMax) { m_limitLumiMax = limitLumiMax; setDbLimits(); }
-    void setLimitConduMin(int limitConduMin) { m_limitConduMin = limitConduMin; setDbLimits(); }
-    void setLimitConduMax(int limitConduMax) { m_limitConduMax = limitConduMax; setDbLimits(); }
+    void setLimitHygroMin(int limitHygroMin) { if (m_limitHygroMin == limitHygroMin) return; m_limitHygroMin = limitHygroMin; setDbLimits(); }
+    void setLimitHygroMax(int limitHygroMax) { if (m_limitHygroMax == limitHygroMax) return; m_limitHygroMax = limitHygroMax; setDbLimits(); }
+    void setLimitTempMin(int limitTempMin) { if (m_limitTempMin == limitTempMin) return; m_limitTempMin = limitTempMin; setDbLimits(); }
+    void setLimitTempMax(int limitTempMax) { if (m_limitTempMax == limitTempMax) return; m_limitTempMax = limitTempMax; setDbLimits(); }
+    void setLimitLumiMin(int limitLumiMin) { if (m_limitLumiMin == limitLumiMin) return; m_limitLumiMin = limitLumiMin; setDbLimits(); }
+    void setLimitLumiMax(int limitLumiMax) { if (m_limitLumiMax == limitLumiMax) return; m_limitLumiMax = limitLumiMax; setDbLimits(); }
+    void setLimitConduMin(int limitConduMin) { if (m_limitConduMin == limitConduMin) return; m_limitConduMin = limitConduMin; setDbLimits(); }
+    void setLimitConduMax(int limitConduMax) { if (m_limitConduMax == limitConduMax) return; m_limitConduMax = limitConduMax; setDbLimits(); }
     bool setDbLimits();
 
     // Daily graph
