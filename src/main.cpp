@@ -45,8 +45,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
+
     app.setApplicationName("WatchFlower");
     app.setApplicationDisplayName("WatchFlower");
+    app.setOrganizationName("WatchFlower");
+    app.setOrganizationDomain("WatchFlower");
 
     QIcon appIcon(":/assets/desktop/watchflower.svg");
     app.setWindowIcon(appIcon);

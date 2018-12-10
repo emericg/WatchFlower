@@ -10,5 +10,6 @@
         <file>DeviceScreenLimits.qml</file>
         <file>DeviceScreenCharts.qml</file>
         <file>Settings.qml</file>
+        <file>WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>

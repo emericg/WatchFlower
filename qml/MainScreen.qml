@@ -27,10 +27,15 @@ ApplicationWindow {
     color: "#E0FAE7"
     visible: true
 
-    width: 480
-    height: 740
+    //width: 480
+    //height: 740
     minimumWidth: 400
     minimumHeight: 640
+
+    WindowGeometrySaver {
+        window: applicationWindow
+        windowName: "applicationWindow"
+    }
 
     // Events handling /////////////////////////////////////////////////////////
 
