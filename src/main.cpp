@@ -29,6 +29,7 @@
 #include <QQuickWindow>
 
 #include <singleapplication.h>
+#include <statusbar.h>
 
 #include "settingsmanager.h"
 #include "systraymanager.h"
@@ -66,6 +67,8 @@ int main(int argc, char *argv[])
     {
         dm->startDeviceDiscovery();
     }
+
+    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();

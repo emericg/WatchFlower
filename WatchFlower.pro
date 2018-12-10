@@ -46,6 +46,7 @@ OTHER_FILES += qml/*.qml
 
 RESOURCES   += qml/qml.qrc assets/assets.qrc
 
+include(src/thirdparty/StatusBar/statusbar.pri)
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 

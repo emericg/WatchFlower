@@ -21,6 +21,9 @@
 
 import QtQuick 2.7
 import QtQuick.Controls 2.3
+import QtQuick.Controls.Material 2.0
+
+import StatusBar 0.1
 
 ApplicationWindow {
     id: applicationWindow
@@ -31,6 +34,16 @@ ApplicationWindow {
     //height: 740
     minimumWidth: 400
     minimumHeight: 640
+
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+
+    Material.theme: Material.System
+    Material.accent: Material.Green
+
+    StatusBar {
+        theme: Material.System
+        color: Material.color(Material.Green, Material.Shade500)
+    }
 
     WindowGeometrySaver {
         window: applicationWindow
