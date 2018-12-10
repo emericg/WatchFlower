@@ -111,8 +111,7 @@ ApplicationWindow {
     onClosing: {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             close.accepted = false;
-        }
-        if (Qt.platform.os === "osx") {
+        } else {
             close.accepted = false;
             applicationWindow.hide()
         }
