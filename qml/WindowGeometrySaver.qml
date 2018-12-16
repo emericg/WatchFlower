@@ -47,7 +47,7 @@ Item {
     }
 
     function saveSettings() {
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
             switch(window.visibility) {
             case ApplicationWindow.Windowed:
                 s.x = window.x;
