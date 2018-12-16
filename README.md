@@ -6,8 +6,6 @@ WatchFlower
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-## Introduction
-
 WatchFlower is an application that reads and plots datas from your Xiaomi "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
 It works with all versions of the devices, and doesn't require GPS or other any other private datas from you, unlike the official application...
 
@@ -15,9 +13,11 @@ It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries a
 
 ### Screenshots!
 
-![GUI1](https://i.imgur.com/8pCBU8E.png)
+![GUI1](https://i.imgur.com/Ur98oIg.png)
 
-![GUI2](https://i.imgur.com/kSpTzBd.png)
+![GUI1](https://i.imgur.com/nKZ2dxr.png)
+
+![GUI2](https://i.imgur.com/2GLtPgH.png)
 
 
 ## Documentation

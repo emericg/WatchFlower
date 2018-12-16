@@ -103,8 +103,9 @@ int main(int argc, char *argv[])
 // TODOs
 
 /// 0.5
+// start minimized argument
+// mobile UI: sidemenu
 // save states
-// save geometry
 // monthly graphs
 // always load <12h old datas at loading
 
@@ -112,9 +113,9 @@ int main(int argc, char *argv[])
 // bluetooth not re-enabling itself
 
 /// NEXT
-// better mobile UI: sidemenu, notifs, ...
-// background daemon for mobile?
-// iOS port
+// desktop UI
+// mobile UI: notifications
+// mobile UI: background daemon
 
 /// NEXT next
 // plants img
