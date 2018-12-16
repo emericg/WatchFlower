@@ -233,11 +233,11 @@ bool SettingsManager::loadDatabase()
                                 qDebug() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":"  << createLimits.lastError().text();
                         }
 
-                        // Delete everything 7+ days old ///////////////////////
+                        // Delete everything 30+ days old ///////////////////////
                         // DATETIME: YYY-MM-JJ HH:MM:SS
 
                         QSqlQuery sanitizeDatas;
-                        sanitizeDatas.exec("DELETE FROM datas WHERE ts <  DATE('now', '-7 days')");
+                        sanitizeDatas.exec("DELETE FROM datas WHERE ts <  DATE('now', '-30 days')");
 
                         if (sanitizeDatas.exec() == false)
                             qDebug() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
