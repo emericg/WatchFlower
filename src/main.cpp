@@ -28,8 +28,8 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 
-#include <singleapplication.h>
 #include <statusbar.h>
+#include <singleapplication.h>
 
 #include "settingsmanager.h"
 #include "systraymanager.h"

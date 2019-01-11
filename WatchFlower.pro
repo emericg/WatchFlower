@@ -131,3 +131,7 @@ android {
                  assets/android/res/values/libs.xml \
                  assets/android/build.gradle
 }
+
+ios {
+    QT += gui-private
+}

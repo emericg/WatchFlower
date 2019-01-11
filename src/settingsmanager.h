@@ -27,6 +27,11 @@
 
 #include <QObject>
 
+#if defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+#include <QQuickWindow>
+#include <QtGui/qpa/qplatformwindow.h>
+#endif
+
 /*!
  * \brief The SettingsManager class
  */
@@ -87,6 +92,10 @@ public:
 
     QString getGraphData() const { return m_graphDefaultData; }
     void setGraphData(QString value) { m_graphDefaultData = value; writeSettings(); }
+
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+    Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
+#endif
 
 public slots:
     static QString getAppVersion();

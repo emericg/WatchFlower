@@ -355,3 +355,36 @@ void SettingsManager::setSysTray(bool value)
 }
 
 /* ************************************************************************** */
+#if defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+
+QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
+{
+    QVariantMap map;
+
+    if (window)
+    {
+        QPlatformWindow *platformWindow = static_cast<QPlatformWindow *>(window->handle());
+        if (platformWindow)
+        {
+            QMargins margins = platformWindow->safeAreaMargins();
+            map["top"] = margins.top();
+            map["right"] = margins.right();
+            map["bottom"] = margins.bottom();
+            map["left"] = margins.left();
+            map["total"] = margins.top() + margins.right() + margins.bottom() + margins.left();
+        }
+        else
+        {
+            qDebug() << "No platformWindow";
+        }
+    }
+    else
+    {
+        qDebug() << "No window";
+    }
+
+    return map;
+}
+
+#endif // defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+/* ************************************************************************** */
