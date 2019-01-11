@@ -56,6 +56,19 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 #endif
 
+    // Arguments
+    bool start_minimized = false;
+    for (int i = 1; i < argc; i++)
+    {
+        if (argv[i])
+        {
+            //qDebug() << "> arg >" << argv[i];
+
+            if (QString::fromLocal8Bit(argv[i]) == "--starts-minimized")
+                start_minimized = true;
+        }
+    }
+
     SettingsManager *sm = SettingsManager::getInstance();
 
     SystrayManager *st = SystrayManager::getInstance();
@@ -75,11 +88,16 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
+
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+    engine_context->setContextProperty("quickWindow", window);
+
     engine.load(QUrl(QStringLiteral("qrc:/qml/MainScreen.qml")));
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
 
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+    if (start_minimized)
+        window->setVisibility(QWindow::Minimized);
 
     if (st && sm && sm->getSysTray())
     {

@@ -74,7 +74,7 @@ bool SettingsManager::readSettings()
             m_trayEnabled = settings.value("settings/trayEnabled").toBool();
 
         if (settings.contains("settings/updateInterval"))
-            m_updateInterval = settings.value("settings/updateInterval").toUInt();
+            m_updateInterval = settings.value("settings/updateInterval").toInt();
 
         if (settings.contains("settings/degreUnit"))
             m_tempUnit = settings.value("settings/degreUnit").toString();

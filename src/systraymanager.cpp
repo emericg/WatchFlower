@@ -76,9 +76,15 @@ void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
         m_sysTrayMenu = new QMenu();
         if (m_sysTrayMenu)
         {
-            m_actionShow = new QAction(QObject::tr("Show"));
-            if (m_saved_view->isVisible())
-                m_actionShow->setText(QObject::tr("Hide"));
+            m_actionShow = new QAction(QObject::tr("Hide"));
+            if (!m_saved_view ||
+                m_saved_view->isVisible() == false ||
+                m_saved_view->visibility() == QWindow::Hidden ||
+                m_saved_view->visibility() == QWindow::Minimized)
+            {
+                m_actionShow->setText(QObject::tr("Show"));
+            }
+
             m_actionSettings = new QAction(QObject::tr("Settings"));
             m_actionExit = new QAction(QObject::tr("Exit"));
             m_sysTrayMenu->addAction(m_actionShow);
