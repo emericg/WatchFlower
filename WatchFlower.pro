@@ -2,6 +2,8 @@ TARGET  = WatchFlower
 VERSION = 0.5.0
 
 CONFIG += c++11
+versionAtLeast(QT_VERSION, 5.11) { CONFIG += qtquickcompiler }
+
 QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
 
@@ -42,9 +44,10 @@ HEADERS  += src/settingsmanager.h \
             src/device_hygrotemp.h \
             src/device_ropot.h
 
-OTHER_FILES += qml/*.qml
+RESOURCES   += qml/qml.qrc \
+               assets/assets.qrc
 
-RESOURCES   += qml/qml.qrc assets/assets.qrc
+OTHER_FILES += .travis.yml
 
 include(src/thirdparty/StatusBar/statusbar.pri)
 include(src/thirdparty/SingleApplication/singleapplication.pri)

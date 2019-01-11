@@ -17,3 +17,4 @@ Makefile
 
 # Others
 stash/*
+.DS_Store

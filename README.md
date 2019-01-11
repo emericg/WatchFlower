@@ -38,7 +38,7 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 ## Licensing
 
 WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
-Read [LICENSE](LICENSE) or [consult the licence on the FSF website](http://www.gnu.org/licenses/gpl-3.0.txt) directly.
+Read [LICENSE](LICENSE) or [consult the licence on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
 Emeric Grange <emeric.grange@gmail.com>
 
@@ -48,7 +48,8 @@ Emeric Grange <emeric.grange@gmail.com>
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
-* Graphical resources: read [assets/COPYING](assets/COPYING)
+* Graphical resources: please read [assets/COPYING](assets/COPYING)
+
 
 ## Get involved!
 

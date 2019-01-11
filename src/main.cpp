@@ -118,29 +118,6 @@ int main(int argc, char *argv[])
 }
 
 /* ************************************************************************** */
-// TODOs
-
-/// 0.5
-// start minimized argument
-// mobile UI: sidemenu
-// save states
-// monthly graphs
-// always load <12h old datas at loading
-
-// BLE device update timeout
-// bluetooth not re-enabling itself
-
-/// NEXT
-// desktop UI
-// mobile UI: notifications
-// mobile UI: background daemon
-
-/// NEXT next
-// plants img
-// plants db (???)
-// handle multiple bluetooth adapters (???)
-
-/* ************************************************************************** */
 // PROTOCOL // Flower care
 
 // https://github.com/barnybug/miflora
