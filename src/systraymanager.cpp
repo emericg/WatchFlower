@@ -104,29 +104,28 @@ bool SystrayManager::installSystray()
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        if (m_sysTray == nullptr && m_sysTrayMenu != nullptr)
-        {
+        if (m_sysTray == nullptr)
             m_sysTray = new QSystemTrayIcon();
-            if (m_sysTray)
-            {
+
+        if (m_sysTray != nullptr && m_sysTrayMenu != nullptr)
+        {
 #ifdef TARGET_OS_OSX
-                QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg");
+            QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg");
 #else
-                QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
-                QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
+            QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
+            QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
 #endif
-                m_sysTray->setIcon(trayIcon);
-                m_sysTray->setContextMenu(m_sysTrayMenu);
-                m_sysTray->show();
+            m_sysTray->setIcon(trayIcon);
+            m_sysTray->setContextMenu(m_sysTrayMenu);
+            m_sysTray->show();
 
-                QObject::connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
-                QObject::connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+            QObject::connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+            QObject::connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
-                // Show greetings
-                //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
+            // Show greetings
+            //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
 
-                status = true;
-            }
+            status = true;
         }
     }
     else
@@ -134,7 +133,7 @@ bool SystrayManager::installSystray()
         if (retryCount > 0)
         {
             m_retryTimer.setSingleShot(true);
-            m_retryTimer.start(5000);
+            m_retryTimer.start(3333);
             retryCount--;
         }
     }
@@ -150,6 +149,7 @@ void SystrayManager::removeSystray()
         QObject::disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+
         delete m_sysTray;
         m_sysTray = nullptr;
     }
@@ -159,12 +159,13 @@ void SystrayManager::removeSystray()
 
 void SystrayManager::sendNotification(QString &text)
 {
-    if (QSystemTrayIcon::isSystemTrayAvailable())
+    if (!m_sysTray)
     {
-        if (m_sysTray)
-        {
-            m_sysTray->showMessage("WatchFlower", text);
-        }
+        installSystray();
+    }
+    if (m_sysTray && QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        m_sysTray->showMessage("WatchFlower", text);
     }
 }
 
@@ -220,7 +221,7 @@ void SystrayManager::visibilityChanged()
 
 void SystrayManager::aboutToBeDestroyed()
 {
-    m_sysTray = nullptr;
+    qWarning() << "aboutToBeDestroyed()";
 }
 
 /* ************************************************************************** */
