@@ -90,14 +90,16 @@ Rectangle {
 
         Image {
             id: image_systray
-            x: 12
             width: 40
             height: 40
-            fillMode: Image.PreserveAspectCrop
             anchors.verticalCenter: checkBox_systray.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 8
-            source: "../assets/desktop/watchflower_tray_dark.svg"
+
+            source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+            sourceSize.width: width
+            sourceSize.height: height
+            fillMode: Image.PreserveAspectCrop
         }
 
         CheckBox {
@@ -289,7 +291,10 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 0
+
             source: "qrc:/assets/desktop/watchflower.png"
+            sourceSize.width: width
+            sourceSize.height: height
         }
 
         Text {

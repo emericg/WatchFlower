@@ -103,7 +103,10 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 8
+
             source: "qrc:/assets/menu_front.svg"
+            sourceSize.width: width
+            sourceSize.height: height
         }
     }
 
@@ -163,6 +166,8 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/ble.svg"
+            sourceSize.width: width
+            sourceSize.height: height
             visible: false
 
             SequentialAnimation on opacity {

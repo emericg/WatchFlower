@@ -212,7 +212,7 @@ Rectangle {
 
             Text {
                 id: labelFw
-                anchors.topMargin: 8
+                anchors.topMargin: 10
                 anchors.leftMargin: 12
                 anchors.left: parent.left
                 anchors.top: textDeviceName.bottom
@@ -243,6 +243,8 @@ Rectangle {
                 anchors.leftMargin: 8
 
                 source: "qrc:/assets/update.svg"
+                sourceSize.width: width
+                sourceSize.height: height
 
                 MouseArea {
                     anchors.fill: parent
@@ -276,12 +278,14 @@ Rectangle {
                 anchors.leftMargin: 24
 
                 source: "qrc:/assets/battery_full.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
 
             Text {
                 id: labelPlant
                 anchors.top: labelLocation.bottom
-                anchors.topMargin: 12
+                anchors.topMargin: 10
                 anchors.left: parent.left
                 anchors.leftMargin: 12
 
@@ -308,6 +312,8 @@ Rectangle {
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/edit_button.svg"
+                    sourceSize.width: width
+                    sourceSize.height: height
                 }
 
                 MouseArea {
@@ -372,6 +378,8 @@ Rectangle {
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/edit_button.svg"
+                    sourceSize.width: width
+                    sourceSize.height: height
                 }
             }
         }
@@ -404,8 +412,10 @@ Rectangle {
                 height: 22
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: buttonLimits.right
-                source: "qrc:/assets/lastupdate.svg"
                 anchors.leftMargin: 10
+                source: "qrc:/assets/lastupdate.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
 
             Rectangle {
@@ -439,6 +449,8 @@ Rectangle {
                     anchors.leftMargin: 6
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/refresh.svg"
+                    sourceSize.width: width
+                    sourceSize.height: height
 
                     NumberAnimation on rotation {
                         id: refreshRotation
@@ -503,8 +515,10 @@ Rectangle {
                     height: 22
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    source: "qrc:/assets/limits.svg"
                     anchors.leftMargin: 6
+                    source: "qrc:/assets/limits.svg"
+                    sourceSize.width: width
+                    sourceSize.height: height
                 }
 
                 MouseArea {

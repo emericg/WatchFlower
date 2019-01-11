@@ -76,6 +76,8 @@ Item {
                 anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/hygro.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: text8
@@ -135,6 +137,8 @@ Item {
                 anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/temp.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: text3
@@ -194,6 +198,8 @@ Item {
                 anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/day.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: text1
@@ -260,6 +266,8 @@ Item {
                 anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/conductivity.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: text7

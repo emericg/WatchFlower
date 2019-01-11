@@ -193,6 +193,8 @@ Rectangle {
                 width: 48
                 height: 48
                 source: "qrc:/assets/hygro.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: textHygro
@@ -252,6 +254,8 @@ Rectangle {
                 width: 48
                 height: 48
                 source: "qrc:/assets/temp.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: textTemp
@@ -310,6 +314,8 @@ Rectangle {
                 width: 48
                 height: 48
                 source: "qrc:/assets/day.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: textLuminosity
@@ -367,6 +373,8 @@ Rectangle {
                 width: 48
                 height: 48
                 source: "qrc:/assets/conductivity.svg"
+                sourceSize.width: width
+                sourceSize.height: height
             }
             Text {
                 id: textConductivity

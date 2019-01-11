@@ -71,7 +71,6 @@ Rectangle {
 
     Image {
         id: background_img
-        y: 314
         width: 256
         height: 256
         opacity: 1
@@ -89,6 +88,8 @@ Rectangle {
             else
                 source = "qrc:/assets/background1.png"
         }
+        sourceSize.width: width
+        sourceSize.height: height
         fillMode: Image.PreserveAspectFit
 
         Image {
@@ -99,7 +100,10 @@ Rectangle {
             anchors.bottomMargin: 24
             anchors.horizontalCenter: background_img.horizontalCenter
             anchors.horizontalCenterOffset: 84
+
             source: "qrc:/assets/ble_err.svg"
+            sourceSize.width: width
+            sourceSize.height: height
             fillMode: Image.PreserveAspectFit
 
             visible: {

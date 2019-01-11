@@ -197,6 +197,8 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 8
             source: "qrc:/assets/stats.svg"
+            sourceSize.width: width
+            sourceSize.height: height
         }
         Text {
             id: textDatas
@@ -227,6 +229,8 @@ Rectangle {
                     source = "qrc:/assets/battery_mid.svg";
                 }
             }
+            sourceSize.width: width
+            sourceSize.height: height
         }
         Text {
             id: textBattery
@@ -246,11 +250,13 @@ Rectangle {
             id: imageStatus
             width: 32
             height: 32
-
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
+
             source: "qrc:/assets/ble.svg"
+            sourceSize.width: width
+            sourceSize.height: height
             visible: true
 
             SequentialAnimation on opacity {
