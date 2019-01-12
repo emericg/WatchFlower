@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 2.3
+import QtQuick.Controls 2.0
 
 Rectangle {
     id: deviceScreenRectangle
@@ -48,36 +48,38 @@ Rectangle {
 
         //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
 
-        if (!myDevice.available && myDevice.updating) {
-            if (!shortVersion)
-                textLastUpdate.text = qsTr("Device is updating...")
-            else
-                textLastUpdate.text = qsTr("updating...")
-            textLastUpdate.color = "#000000"
-            textLastUpdate.font.bold = false
-        } else if (!myDevice.available && !myDevice.updating) {
-            if (!shortVersion)
-                textLastUpdate.text = qsTr("Device is offline!")
-            else
-                textLastUpdate.text = qsTr("offline!")
-            textLastUpdate.font.bold = true
-            textLastUpdate.color = "#ff671b"
-            textRefresh.text = qsTr("Retry")
-            textRefresh.width = 90
-        } else {
-            if (!shortVersion)
-                textLastUpdate.text = qsTr("Last update:") + " "
-            else
-                textLastUpdate.text = ""
+        if (myDevice) {
+            if (!myDevice.available && myDevice.updating) {
+                if (!shortVersion)
+                    textLastUpdate.text = qsTr("Device is updating...")
+                else
+                    textLastUpdate.text = qsTr("Updating...")
+                textLastUpdate.color = "#000000"
+                textLastUpdate.font.bold = false
+            } else if (!myDevice.available && !myDevice.updating) {
+                if (!shortVersion)
+                    textLastUpdate.text = qsTr("Device is offline!")
+                else
+                    textLastUpdate.text = qsTr("Offline!")
+                textLastUpdate.font.bold = true
+                textLastUpdate.color = "#ff671b"
+                textRefresh.text = qsTr("Retry")
+                textRefresh.width = 90
+            } else {
+                if (!shortVersion)
+                    textLastUpdate.text = qsTr("Last update:") + " "
+                else
+                    textLastUpdate.text = ""
 
-            if (myDevice.lastUpdate <= 1)
-                textLastUpdate.text += qsTr("just now!")
-            else
-                textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
-            textLastUpdate.color = "#000000"
-            textLastUpdate.font.bold = false
-            textRefresh.text = qsTr("Refresh")
-            textRefresh.width = 112
+                if (myDevice.lastUpdate <= 1)
+                    textLastUpdate.text += qsTr("Just now!")
+                else
+                    textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
+                textLastUpdate.color = "#000000"
+                textLastUpdate.font.bold = false
+                textRefresh.text = qsTr("Refresh")
+                textRefresh.width = 112
+            }
         }
     }
 
@@ -97,7 +99,7 @@ Rectangle {
     }
 
     function updateStatus() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         //console.log("DeviceScreen // updateStatus() >> " + myDevice)
 

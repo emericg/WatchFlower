@@ -47,7 +47,7 @@ Rectangle {
     property string buttonDarkColor: "#E8E8E8"
 
     function loadGraph() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         //console.log("DeviceScreenCharts // loadGraph() >> " + myDevice)
 
@@ -80,7 +80,7 @@ Rectangle {
     }
 
     function updateGraph() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         //console.log("DeviceScreenCharts // updateGraph() >> " + myDevice)
 

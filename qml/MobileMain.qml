@@ -1,6 +1,6 @@
 
 import QtQuick 2.7
-import QtQuick.Controls 2.3
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 import StatusBar 0.1
@@ -15,11 +15,11 @@ ApplicationWindow {
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
-    Material.theme: Material.System
+    Material.theme: Material.Dark
     Material.accent: Material.Green
 
     StatusBar {
-        theme: Material.System
+        theme: Material.Dark
         color: Material.color(Material.Green, Material.Shade500)
     }
 
@@ -97,7 +97,7 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var curentlySelectedDevice
+    property var curentlySelectedDevice: null
 
     MobileHeader {
         id: header

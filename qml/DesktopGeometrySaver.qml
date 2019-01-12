@@ -1,6 +1,6 @@
-import QtQuick 2.10
-import QtQuick.Window 2.10
-import QtQuick.Controls 2.3
+import QtQuick 2.7
+import QtQuick.Window 2.7
+import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 
 Item {

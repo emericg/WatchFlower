@@ -6,6 +6,7 @@ versionAtLeast(QT_VERSION, 5.11) { CONFIG += qtquickcompiler }
 
 QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
+ios | android { QT += gui-private }
 
 # Pass app version to the C++
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
@@ -131,10 +132,5 @@ android {
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
 
     DISTFILES += assets/android/AndroidManifest.xml \
-                 assets/android/res/values/libs.xml \
-                 assets/android/build.gradle
-}
-
-ios {
-    QT += gui-private
+                 assets/android/res/values/libs.xml
 }

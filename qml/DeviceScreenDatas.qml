@@ -37,7 +37,7 @@ Rectangle {
     }
 
     function updateDatas() {
-        if (typeof myDevice === 'undefined') return
+        if (typeof myDevice === 'undefined' || !myDevice) return
 
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 

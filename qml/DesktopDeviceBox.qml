@@ -28,7 +28,7 @@ Rectangle {
     color: "#ddffffff"
     radius: 8
 
-    property var boxDevice
+    property var boxDevice: null
 
     Connections {
         target: boxDevice

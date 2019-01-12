@@ -44,6 +44,7 @@ Rectangle {
     }
 
     onScreenOrientationChanged: {
+/*
         console.log("screen orientation changed")
 
         var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
@@ -56,7 +57,7 @@ Rectangle {
         console.log("right:" + safeMargins["right"])
         console.log("bottom:" + safeMargins["bottom"])
         console.log("left:" + safeMargins["left"])
-
+*/
         handleNotches()
     }
 
