@@ -29,7 +29,21 @@
         <file>conductivity.svg</file>
         <file>lastupdate.svg</file>
         <file>limits.svg</file>
-        <file>refresh.svg</file>
         <file>graph.svg</file>
+        <file>refresh.svg</file>
+        <file>search.svg</file>
+        <file>settings.svg</file>
+        <file>icons_material/baseline-access_time-24px.svg</file>
+        <file>icons_material/baseline-autorenew-24px.svg</file>
+        <file>icons_material/baseline-date_range-24px.svg</file>
+        <file>icons_material/baseline-delete-24px.svg</file>
+        <file>icons_material/baseline-edit-24px.svg</file>
+        <file>icons_material/baseline-exit_to_app-24px.svg</file>
+        <file>icons_material/baseline-keyboard_arrow_left-24px.svg</file>
+        <file>icons_material/baseline-menu-24px.svg</file>
+        <file>icons_material/baseline-more_vert-24px.svg</file>
+        <file>icons_material/baseline-refresh-24px.svg</file>
+        <file>icons_material/baseline-search-24px.svg</file>
+        <file>icons_material/baseline-tune-24px.svg</file>
     </qresource>
 </RCC>

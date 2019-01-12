@@ -7,7 +7,7 @@ os:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-add-repository ppa:beineri/opt-qt-5.12-xenial -y;
+      sudo apt-add-repository ppa:beineri/opt-qt-5.12.0-xenial -y;
       sudo apt-get update -q;
     fi
 

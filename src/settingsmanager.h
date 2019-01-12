@@ -26,8 +26,9 @@
 #define ERROR_UPDATE_INTERVAL       10 // minutes
 
 #include <QObject>
+#include <QApplication>
 
-#if defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 #include <QQuickWindow>
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
@@ -93,13 +94,14 @@ public:
     QString getGraphData() const { return m_graphDefaultData; }
     void setGraphData(QString value) { m_graphDefaultData = value; writeSettings(); }
 
-#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 #endif
 
 public slots:
     static QString getAppVersion();
     void resetSettings();
+    void exit() { QApplication::exit(); }
 };
 
 #endif // SETTINGS_MANAGER_H

@@ -32,24 +32,20 @@ Rectangle {
 
     Component.onCompleted: {
         if (deviceManager.bluetooth === false) {
-            rectangleMenu.setError(qsTr("No bluetooth :-("))
+            rectangleStatus.setError(qsTr("No bluetooth :-("))
         } else if (deviceManager.areDevicesAvailable() === false) {
-            rectangleMenu.setStatus(qsTr("No devices :-("))
+            rectangleStatus.setStatus(qsTr("No devices :-("))
         } else {
-            rectangleMenu.setMenu()
+            rectangleStatus.hide()
         }
     }
 
     onDeviceScanningChanged: {
-        if (deviceManager.scanning) {
-            header.menuScanImg.start()
-        } else {
-            header.menuScanImg.stop()
-
+        if (!deviceManager.scanning) {
             if (deviceManager.areDevicesAvailable()) {
-                rectangleMenu.setMenu()
+                rectangleStatus.hide()
             } else {
-                rectangleMenu.setStatus(qsTr("No devices :-("))
+                rectangleStatus.setStatus(qsTr("No devices :-("))
             }
         }
     }
@@ -59,13 +55,51 @@ Rectangle {
             bluetooth_img.visible = false
 
             if (deviceManager.areDevicesAvailable() === false) {
-                rectangleMenu.setStatus(qsTr("No devices :-("))
+                rectangleStatus.setStatus(qsTr("No devices :-("))
             } else {
-                rectangleMenu.setMenu()
+                rectangleStatus.hide()
             }
         } else {
             bluetooth_img.visible = true
-            rectangleMenu.setError(qsTr("No bluetooth :-("))
+            rectangleStatus.setError(qsTr("No bluetooth :-("))
+        }
+    }
+
+    Rectangle {
+        id: rectangleStatus
+        height: 48
+        color: "#ffb854"
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+
+        Text {
+            id: textStatus
+            color: "#ffffff"
+            text: qsTr("Status :-(")
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.fill: parent
+            font.pixelSize: 20
+        }
+
+        function hide() {
+            rectangleStatus.visible = false;
+            rectangleStatus.height = 0;
+        }
+        function setError(message) {
+            rectangleStatus.visible = true;
+            rectangleStatus.height = 48;
+            textStatus.text = message;
+        }
+        function setStatus(message) {
+            rectangleStatus.visible = true;
+            rectangleStatus.height = 48;
+            textStatus.text = message;
         }
     }
 
@@ -119,6 +153,7 @@ Rectangle {
         id: devicesview
         width: parent.width
         clip: true
+        //topPad: rectangleStatus.width
 
         anchors.fill: parent
         anchors.topMargin: 12
@@ -127,158 +162,13 @@ Rectangle {
 
         model: deviceManager.devicesList
 
-        delegate: DeviceBoxDesktop { boxDevice: modelData }
+        delegate: DesktopDeviceBox { boxDevice: modelData }
         anchors.leftMargin: 10
         anchors.rightMargin: 10
 /*
-        delegate: DeviceBoxMobile { boxDevice: modelData }
+        delegate: MobileDeviceBox { boxDevice: modelData }
         anchors.leftMargin: 0
         anchors.rightMargin: 0
 */
-    }
-
-    Rectangle {
-        id: rectangleMenu
-        height: 48
-        color: "#00000000"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        property string mode: "menu"
-
-        onWidthChanged: {
-            if (mode === "error") {
-                //
-            } else {
-                rectangleScan.width = rectangleMenu.width * 0.5;
-                if (mode === "status") {
-                    rectangleStatus.width = rectangleMenu.width * 0.5;
-                } else {
-                    rectangleRefresh.width = rectangleMenu.width * 0.5;
-                }
-            }
-        }
-
-        function setError(message) {
-            mode = "error"
-            rectangleScan.visible = false;
-            rectangleScan.width = 0;
-            rectangleRefresh.visible = false;
-            rectangleRefresh.width = 0;
-            rectangleStatus.visible = true;
-            rectangleStatus.width = rectangleMenu.width;
-            rectangleStatus.anchors.left = rectangleMenu.left
-            rectangleStatus.anchors.right = rectangleMenu.right
-            textStatus.text = message;
-        }
-        function setStatus(message) {
-            mode = "status"
-            rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width * 0.5;
-            rectangleRefresh.visible = false;
-            rectangleRefresh.width = 0;
-            rectangleStatus.visible = true;
-            rectangleStatus.width = rectangleMenu.width * 0.5;
-            rectangleStatus.anchors.left = rectangleScan.right;
-            textStatus.text = message;
-        }
-        function setMenu() {
-            mode = "menu"
-            rectangleStatus.visible = false;
-            rectangleStatus.width = 0;
-            rectangleScan.visible = true;
-            rectangleScan.width = rectangleMenu.width * 0.5;
-            rectangleRefresh.visible = true;
-            rectangleRefresh.width = rectangleMenu.width * 0.5;
-            rectangleRefresh.anchors.left = rectangleScan.right;
-        }
-
-        Rectangle {
-            id: rectangleRefresh
-            width: 150
-            color: "#1dcb58"
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-
-            Text {
-                id: textRefresh
-                color: "#ffffff"
-                text: qsTr("Refresh!")
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.fill: parent
-                font.pixelSize: 20
-            }
-            MouseArea {
-                id: mouseAreaRefresh
-                anchors.fill: parent
-                onPressed: textRefresh.font.pixelSize = 18
-                onClicked: deviceManager.refreshDevices()
-                onReleased: textRefresh.font.pixelSize = 20
-            }
-        }
-
-        Rectangle {
-            id: rectangleScan
-            width: 150
-            color: "#4287f4"
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-
-            Text {
-                id: textScan
-                color: "#ffffff"
-                text: qsTr("Rescan?")
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.fill: parent
-                font.pixelSize: 20
-            }
-            MouseArea {
-                id: mouseAreaScan
-                anchors.fill: parent
-                onPressed: textScan.font.pixelSize = 18
-                onClicked: deviceManager.startDeviceDiscovery()
-                onReleased: textScan.font.pixelSize = 20
-            }
-        }
-
-        Rectangle {
-            id: rectangleStatus
-            color: "#ffb854"
-            anchors.right: rectangleRefresh.left
-            anchors.rightMargin: 0
-            anchors.left: rectangleScan.right
-            anchors.leftMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 0
-
-            Text {
-                id: textStatus
-                color: "#ffffff"
-                text: qsTr("Status :-(")
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-                anchors.fill: parent
-                font.pixelSize: 20
-            }
-        }
     }
 }

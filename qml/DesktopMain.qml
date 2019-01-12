@@ -30,22 +30,14 @@ ApplicationWindow {
     color: "#E0FAE7"
     visible: true
 
-    //width: 480
-    //height: 740
-    minimumWidth: 400
-    minimumHeight: 640
+    width: 720
+    height: 480
+    minimumWidth: 720
+    minimumHeight: 480
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
-    Material.theme: Material.System
-    Material.accent: Material.Green
-
-    StatusBar {
-        theme: Material.System
-        color: Material.color(Material.Green, Material.Shade500)
-    }
-
-    WindowGeometrySaver {
+    DesktopGeometrySaver {
         window: applicationWindow
         windowName: "applicationWindow"
     }
@@ -54,13 +46,19 @@ ApplicationWindow {
 
     Connections {
         target: header
-        onMenuButtonClicked: {
-            if (content.state === "DeviceList") {
-                content.state = "Settings"
-            } else {
+        onBackButtonClicked: {
+            if (content.state !== "DeviceList") {
                 content.state = "DeviceList"
             }
         }
+        onRefreshButtonClicked: {
+            deviceManager.refreshDevices()
+        }
+        onRescanButtonClicked: {
+            deviceManager.scanDevices()
+        }
+        onSettingsButtonClicked: content.state = "Settings"
+        onExitButtonClicked: settingsManager.exit()
     }
     Connections {
         target: systrayManager
@@ -121,10 +119,9 @@ ApplicationWindow {
 
     property var curentlySelectedDevice
 
-    Header {
+    DesktopHeader {
         id: header
-        anchors.top: parent.top
-        menuButtonImg.source: "qrc:/assets/menu_settings.svg"
+        width: parent.width
     }
 
     Rectangle {
@@ -154,10 +151,6 @@ ApplicationWindow {
                 name: "DeviceList"
 
                 PropertyChanges {
-                    target: header.menuButtonImg
-                    source: "qrc:/assets/menu_settings.svg"
-                }
-                PropertyChanges {
                     target: screenDeviceList
                     visible: true
                 }
@@ -173,10 +166,6 @@ ApplicationWindow {
             State {
                 name: "DeviceDetails"
 
-                PropertyChanges {
-                    target: header.menuButtonImg
-                    source: "qrc:/assets/menu_back.svg"
-                }
                 PropertyChanges {
                     target: screenDeviceList
                     visible: false
@@ -197,10 +186,6 @@ ApplicationWindow {
             State {
                 name: "Settings"
 
-                PropertyChanges {
-                    target: header.menuButtonImg
-                    source: "qrc:/assets/menu_back.svg"
-                }
                 PropertyChanges {
                     target: screenDeviceList
                     visible: false

@@ -355,7 +355,7 @@ void SettingsManager::setSysTray(bool value)
 }
 
 /* ************************************************************************** */
-#if defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
 QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
 {
@@ -386,5 +386,5 @@ QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
     return map;
 }
 
-#endif // defined(Q_OS_IOS) || defined (Q_OS_ANDROID)
+#endif // defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 /* ************************************************************************** */

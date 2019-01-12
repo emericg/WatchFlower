@@ -43,6 +43,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
+    Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
 
 public:
@@ -52,13 +53,15 @@ public:
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
 
 public slots:
-    void startDeviceDiscovery();
+    void scanDevices();
+    bool isScanning() const;
+
     void refreshDevices();
+    bool isRefreshing() const;
 
     bool hasBluetooth() const;
     bool hasDatabase() const;
 
-    bool isScanning() const;
     bool areDevicesAvailable() const;
 
 private slots:
@@ -75,12 +78,14 @@ Q_SIGNALS:
     void disconnected();
 
     void scanningChanged();
+    void refreshingChanged();
     void bluetoothChanged();
 
 private:
     bool m_bt = false;
     bool m_db = false;
     bool m_scanning = false;
+    bool m_refreshing = false;
 
     void loadBluetooth();
     void loadDatabase();

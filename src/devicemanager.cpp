@@ -199,7 +199,12 @@ bool DeviceManager::isScanning() const
     return m_scanning;
 }
 
-void DeviceManager::startDeviceDiscovery()
+bool DeviceManager::isRefreshing() const
+{
+    return m_refreshing;
+}
+
+void DeviceManager::scanDevices()
 {
     if (m_bt)
     {
@@ -222,8 +227,8 @@ void DeviceManager::refreshDevices()
 {
     if (m_bt)
     {
-        m_scanning = true;
-        Q_EMIT scanningChanged();
+        m_refreshing = true;
+        Q_EMIT refreshingChanged();
 
         for (auto d: m_devices)
         {
@@ -232,8 +237,8 @@ void DeviceManager::refreshDevices()
                 dd->refreshDatas();
         }
 
-        m_scanning = false;
-        Q_EMIT scanningChanged();
+        m_refreshing = false;
+        Q_EMIT refreshingChanged();
         Q_EMIT devicesUpdated();
     }
 }

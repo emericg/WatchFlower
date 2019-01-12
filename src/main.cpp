@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || !defined(QT_NO_DEBUG)
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     // Run a first scan, but only if we have no saved devices
     if (dm->areDevicesAvailable() == false)
     {
-        dm->startDeviceDiscovery();
+        dm->scanDevices();
     }
 
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
@@ -92,7 +92,12 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
-    engine.load(QUrl(QStringLiteral("qrc:/qml/MainScreen.qml")));
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
+#else
+    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
+#endif
+
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
 
@@ -104,8 +109,8 @@ int main(int argc, char *argv[])
         st->initSystray(&app, window);
         st->installSystray();
     }
-
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+/*
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) || defined(QT_NO_DEBUG)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
@@ -113,7 +118,7 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
 #endif
-
+*/
     return app.exec();
 }
 

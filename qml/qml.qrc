@@ -1,15 +1,18 @@
 <RCC>
     <qresource prefix="/qml">
-        <file>MainScreen.qml</file>
-        <file>Header.qml</file>
+        <file>MobileMain.qml</file>
+        <file>MobileDrawer.qml</file>
+        <file>MobileHeader.qml</file>
+        <file>MobileDeviceBox.qml</file>
+        <file>DesktopMain.qml</file>
+        <file>DesktopHeader.qml</file>
+        <file>DesktopDeviceBox.qml</file>
+        <file>DesktopGeometrySaver.qml</file>
         <file>DeviceList.qml</file>
-        <file>DeviceBoxDesktop.qml</file>
-        <file>DeviceBoxMobile.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
         <file>DeviceScreenCharts.qml</file>
         <file>Settings.qml</file>
-        <file>WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>
