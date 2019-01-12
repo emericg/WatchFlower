@@ -12,8 +12,6 @@
         <file>background3.png</file>
         <file>menu_back.svg</file>
         <file>menu_front.svg</file>
-        <file>menu_refresh.svg</file>
-        <file>menu_settings.svg</file>
         <file>edit_button.svg</file>
         <file>update.svg</file>
         <file>ble.svg</file>
@@ -31,8 +29,6 @@
         <file>limits.svg</file>
         <file>graph.svg</file>
         <file>refresh.svg</file>
-        <file>search.svg</file>
-        <file>settings.svg</file>
         <file>icons_material/baseline-access_time-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
         <file>icons_material/baseline-date_range-24px.svg</file>
