@@ -28,6 +28,7 @@ Rectangle {
     height: 64
     color: "#1dcb58"
 
+    property var leftIcon: buttonBack
     signal backButtonClicked()
     signal refreshButtonClicked()
     signal rescanButtonClicked()
@@ -37,14 +38,12 @@ Rectangle {
     Connections {
         target: deviceManager
         onScanningChanged: {
-            console.log("scanning xhanged")
             if (deviceManager.scanning)
                 rescanRotation.start()
             else
                 rescanRotation.stop()
         }
         onRefreshingChanged: {
-            console.log("refreshing xhanged")
             if (deviceManager.refreshing)
                 refreshRotation.start()
             else
@@ -67,13 +66,13 @@ Rectangle {
 
     Image {
         id: buttonBack
-        width: 40
-        height: 40
+        width: 24
+        height: 24
         anchors.left: parent.left
-        anchors.leftMargin: 4
+        anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/icons_material/baseline-keyboard_arrow_left-24px.svg"
+        source: "qrc:/assets/watchflower.svg"
         sourceSize.width: width
         sourceSize.height: height
         fillMode: Image.PreserveAspectFit

@@ -59,6 +59,16 @@ ApplicationWindow {
         onExitButtonClicked: settingsManager.exit()
     }
     Connections {
+        target: content
+        onStateChanged: {
+            if (content.state === "DeviceList") {
+                header.leftIcon.source = "qrc:/assets/watchflower.svg"
+            } else {
+                header.leftIcon.source = "qrc:/assets/menu_back.svg"
+            }
+        }
+    }
+    Connections {
         target: systrayManager
         onSettingsClicked: {
             content.state = "Settings"

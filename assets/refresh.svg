@@ -30,8 +30,8 @@
      inkscape:bbox-nodes="true"
      inkscape:snap-page="true"
      inkscape:zoom="30.34131"
-     inkscape:cx="5.1024045"
-     inkscape:cy="12.812198"
+     inkscape:cx="5.151842"
+     inkscape:cy="12.185989"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -55,9 +55,8 @@
      id="layer1">
     <path
        id="rect4148"
-       d="m -5,41 c 0,-6.648 5.352,-12 12,-12 6.648,0 12,5.352 12,12 h -3 c 0,-4.986 -4.014,-9 -9,-9 -4.986,0 -9,4.014 -9,9 0,2.6728 1.1616615,5.057554 3,6.703125 V 44 h 3 v 9 H 1 -5 v -3 h 4.098633 C -3.405158,47.806316 -5,44.606357 -5,41 Z"
-       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.0244391;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;"
-       inkscape:connector-curvature="0"
-       transform="matrix(0.97614395,0,0,0.97614395,0.16871978,0.97982542)" />
+       d="m -3.2618319,41.001727 c 0,-5.686011 4.5775475,-10.263559 10.2635594,-10.263559 5.6860115,0 10.2635595,4.577548 10.2635595,10.263559 h -2.56589 c 0,-4.264508 -3.433161,-7.697669 -7.6976695,-7.697669 -4.2645089,0 -7.69766952,3.433161 -7.69766952,7.697669 0,2.286037 0.99356514,4.325709 2.56588982,5.73316 v -3.16727 h 2.5658898 v 7.69767 H 1.8699478 -3.2618319 v -2.56589 H 0.24371506 C -1.8977689,46.823146 -3.2618319,44.086232 -3.2618319,41.001727 Z"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

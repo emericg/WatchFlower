@@ -46,15 +46,17 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
+#endif
+
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    QIcon appIcon(":/assets/desktop/watchflower.svg");
+    app.setWindowIcon(appIcon);
+#endif
 
     app.setApplicationName("WatchFlower");
     app.setApplicationDisplayName("WatchFlower");
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
-
-    QIcon appIcon(":/assets/desktop/watchflower.svg");
-    app.setWindowIcon(appIcon);
-#endif
 
     // Arguments
     bool start_minimized = false;
