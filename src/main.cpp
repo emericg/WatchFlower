@@ -88,20 +88,18 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
-
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
-    engine_context->setContextProperty("quickWindow", window);
-
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
 #endif
-
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
 
-    if (start_minimized)
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+    engine_context->setContextProperty("quickWindow", window);
+
+    if (window && start_minimized)
         window->setVisibility(QWindow::Minimized);
 
     if (st && sm && sm->getSysTray())
@@ -109,8 +107,8 @@ int main(int argc, char *argv[])
         st->initSystray(&app, window);
         st->installSystray();
     }
-/*
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) || defined(QT_NO_DEBUG)
+
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && defined(QT_NO_DEBUG)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
@@ -118,7 +116,7 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
 #endif
-*/
+
     return app.exec();
 }
 

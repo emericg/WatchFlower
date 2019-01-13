@@ -68,6 +68,12 @@ SystrayManager::~SystrayManager()
 
 void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
 {
+    if (!app || !view)
+    {
+        qDebug() << "initSystray(ERROR) no app or view passed";
+        return;
+    }
+
     if (m_sysTrayMenu == nullptr)
     {
         m_saved_app = app;
