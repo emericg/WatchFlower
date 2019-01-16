@@ -31,14 +31,14 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make INSTALL_ROOT=appdir -j$(nproc) install; find appdir/;
       wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/linuxdeployqt-5-x86_64.AppImage";
-      chmod a+x linuxdeployqt-continuous-x86_64.AppImage;
+      chmod a+x linuxdeployqt-5-x86_64.AppImage;
       unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH;
       export VERSION=$(git rev-parse --short HEAD);
       mkdir -p appdir/usr/plugins/imageformats/ appdir/usr/plugins/iconengines/;
       cp /opt/qt512/plugins/imageformats/libqsvg.so appdir/usr/plugins/imageformats/;
       cp /opt/qt512/plugins/iconengines/libqsvgicon.so appdir/usr/plugins/iconengines/;
-      ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so;
-      ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -appimage;
+      ./linuxdeployqt-5-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so;
+      ./linuxdeployqt-5-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -appimage;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       make install;
