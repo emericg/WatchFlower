@@ -179,7 +179,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
 
-            m_temp = (data[0] + (data[1] << 8)) / 10.f;
+            m_temp = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
             m_hygro = data[7];
             m_conductivity = data[8] + (data[9] << 8);
 
@@ -190,7 +190,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "- m_temp:" << m_temp;
             qDebug() << "- m_hygro:" << m_hygro;
             qDebug() << "- m_conductivity:" << m_conductivity;
-#endif
+#endif // QT_NO_DEBUG
 
             controller->disconnectFromDevice();
 

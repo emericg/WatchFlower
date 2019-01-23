@@ -186,7 +186,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
 
-            m_temp = (data[0] + (data[1] << 8)) / 10.f;
+            m_temp = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
             m_hygro = data[7];
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
@@ -199,7 +199,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             qDebug() << "- m_hygro:" << m_hygro;
             qDebug() << "- m_luminosity:" << m_luminosity;
             qDebug() << "- m_conductivity:" << m_conductivity;
-#endif
+#endif // QT_NO_DEBUG
 
             controller->disconnectFromDevice();
 
