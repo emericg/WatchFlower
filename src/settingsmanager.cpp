@@ -346,10 +346,12 @@ void SettingsManager::setSysTray(bool value)
         if (trayEnable_saved == true && m_trayEnabled == false)
         {
             st->removeSystray();
+            Q_EMIT systrayChanged();
         }
         else if (trayEnable_saved == false && m_trayEnabled == true)
         {
             st->installSystray();
+            Q_EMIT systrayChanged();
         }
     }
 }

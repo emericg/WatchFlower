@@ -50,6 +50,15 @@ Rectangle {
                 refreshRotation.stop()
         }
     }
+    Connections {
+        target: settingsManager
+        onSystrayChanged: {
+            if (settingsManager.systray)
+                buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+            else
+                buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+        }
+    }
 
     Text {
         text: "WatchFlower"
@@ -216,7 +225,12 @@ Rectangle {
         anchors.rightMargin: 16
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+        source: {
+            if (settingsManager.systray)
+                buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+            else
+                buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+        }
         sourceSize.width: width
         sourceSize.height: height
         fillMode: Image.PreserveAspectFit
@@ -228,7 +242,12 @@ Rectangle {
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: exitButtonClicked()
+            onClicked: {
+                if (settingsManager.systray)
+                    applicationWindow.hide()
+                else
+                    exitButtonClicked()
+            }
         }
     }
 }

@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         {
             //qDebug() << "> arg >" << argv[i];
 
-            if (QString::fromLocal8Bit(argv[i]) == "--starts-minimized")
+            if (QString::fromLocal8Bit(argv[i]) == "--start-minimized")
                 start_minimized = true;
         }
     }
