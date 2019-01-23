@@ -47,7 +47,7 @@ class SystrayManager: public QObject
     QAction *m_actionExit = nullptr;
 
     QTimer m_retryTimer;
-    int retryCount = 3;
+    int retryCount = 5;
 
     static SystrayManager *instance;
 

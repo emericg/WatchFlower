@@ -44,7 +44,6 @@ Rectangle {
 
         Text {
             id: textTitle
-            height: 32
             color: "#454b54"
             text: qsTr("Settings")
             anchors.right: parent.right
@@ -54,13 +53,11 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 12
             font.bold: true
-            verticalAlignment: Text.AlignVCenter
             font.pixelSize: 26
         }
 
         Text {
             id: textSubtitle
-            y: 46
             text: qsTr("Change persistent settings here")
             font.pixelSize: 16
             anchors.left: parent.left
@@ -290,9 +287,8 @@ Rectangle {
             height: 88
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 0
 
-            source: "qrc:/assets/desktop/watchflower.png"
+            source: "qrc:/assets/desktop/watchflower.svg"
             sourceSize.width: width
             sourceSize.height: height
         }

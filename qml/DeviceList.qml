@@ -156,9 +156,11 @@ Rectangle {
         //topPad: rectangleStatus.width
 
         anchors.fill: parent
-        anchors.topMargin: 12
+        anchors.topMargin: rectangleStatus.height + 12
         anchors.bottomMargin: 10
         spacing: 10
+
+        topMargin: rectangleStatus.height
 
         model: deviceManager.devicesList
 

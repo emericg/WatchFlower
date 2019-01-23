@@ -299,11 +299,15 @@ Rectangle {
                 anchors.verticalCenter: labelPlant.verticalCenter
                 anchors.left: labelPlant.right
                 anchors.leftMargin: 8
+                padding: 4
 
                 text: ""
                 color: "#454b54"
                 font.pixelSize: 18
-                onEditingFinished: myDevice.setPlantName(text)
+                onEditingFinished: {
+                    myDevice.setPlantName(text)
+                    focus = false
+                }
 
                 Image {
                     id: imageEditPlant
@@ -349,11 +353,15 @@ Rectangle {
                 anchors.verticalCenter: labelLocation.verticalCenter
                 anchors.left: labelLocation.right
                 anchors.leftMargin: 8
+                padding: 4
 
                 text: ""
                 color: "#454b54"
                 font.pixelSize: 18
-                onEditingFinished: myDevice.setLocationName(text)
+                onEditingFinished: {
+                    myDevice.setLocationName(text)
+                    focus = false
+                }
 
                 MouseArea {
                     anchors.fill: parent

@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QList>
+#include <QTimer>
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -40,11 +41,29 @@ QT_FORWARD_DECLARE_CLASS (QLowEnergyController)
 class DeviceManager: public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
+
+    bool m_bt = false;
+    bool m_db = false;
+    bool m_scanning = false;
+    bool m_refreshing = false;
+    QTimer m_refreshingTimer;
+
+    void loadBluetooth();
+    void loadDatabase();
+
+    QBluetoothLocalDevice m_bluetoothAdapter;
+    QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
+    QLowEnergyController *m_controller = nullptr;
+
+    QList<QObject*> m_devices;
+
+    QTimer m_updateTimer;
 
 public:
     DeviceManager();
@@ -57,6 +76,7 @@ public slots:
     bool isScanning() const;
 
     void refreshDevices();
+    void refreshCheck();
     bool isRefreshing() const;
 
     bool hasBluetooth() const;
@@ -80,21 +100,6 @@ Q_SIGNALS:
     void scanningChanged();
     void refreshingChanged();
     void bluetoothChanged();
-
-private:
-    bool m_bt = false;
-    bool m_db = false;
-    bool m_scanning = false;
-    bool m_refreshing = false;
-
-    void loadBluetooth();
-    void loadDatabase();
-
-    QBluetoothLocalDevice m_bluetoothAdapter;
-    QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
-    QLowEnergyController *m_controller = nullptr;
-
-    QList<QObject*> m_devices;
 };
 
 #endif // DEVICE_MANAGER_H

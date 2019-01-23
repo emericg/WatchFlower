@@ -96,6 +96,11 @@ DeviceManager::DeviceManager()
             m_devices.append(d);
         }
     }
+
+    // Set refresh timer
+    connect(&m_refreshingTimer, &QTimer::timeout, this, &DeviceManager::refreshCheck);
+    m_refreshingTimer.setInterval(1000);
+    m_refreshingTimer.start();
 }
 
 DeviceManager::~DeviceManager()
@@ -210,7 +215,6 @@ void DeviceManager::scanDevices()
     {
         qDeleteAll(m_devices);
         m_devices.clear();
-        Q_EMIT devicesUpdated();
 
         qDebug() << "Scanning (bluetooth) for devices...";
 
@@ -225,21 +229,39 @@ void DeviceManager::scanDevices()
 
 void DeviceManager::refreshDevices()
 {
-    if (m_bt)
+    if (m_bt && !m_devices.empty())
     {
         m_refreshing = true;
+
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd) dd->refreshDatas();
+        }
+
         Q_EMIT refreshingChanged();
+        Q_EMIT devicesUpdated();
+    }
+}
+
+void DeviceManager::refreshCheck()
+{
+    if (m_bt)
+    {
+        bool refreshing = false;
 
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd)
-                dd->refreshDatas();
+                refreshing |= dd->isUpdating();
         }
 
-        m_refreshing = false;
-        Q_EMIT refreshingChanged();
-        Q_EMIT devicesUpdated();
+        if (m_refreshing != refreshing)
+        {
+            m_refreshing = refreshing;
+            Q_EMIT refreshingChanged();
+        }
     }
 }
 
@@ -342,7 +364,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             m_devices.append(d);
 
-            qDebug() << "Last device added: " << d->getName() << "/" << d->getAddress();
+            qDebug() << "Device added: " << d->getName() << "/" << d->getAddress();
+            Q_EMIT devicesUpdated();
 
             // Also add it to the database?
             if (m_db)

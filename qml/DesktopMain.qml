@@ -103,15 +103,7 @@ ApplicationWindow {
     Item {
         focus: true
         Keys.onBackPressed: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (content.state === "DeviceList") {
-                    // hide windows?
-                } else {
-                    content.state = "DeviceList"
-                }
-            } else {
-                content.state = "DeviceList"
-            }
+            content.state = "DeviceList"
         }
     }
     onClosing: {

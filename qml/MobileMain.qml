@@ -20,7 +20,8 @@ ApplicationWindow {
 
     StatusBar {
         theme: Material.Dark
-        color: Material.color(Material.Green, Material.Shade500)
+        color: "#1ab850"
+        //color: Material.color(Material.Green, Material.Shade500)
     }
 
     Drawer {

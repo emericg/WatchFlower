@@ -54,7 +54,7 @@ Rectangle {
             else
                 textAddr.text += " [" + boxDevice.deviceAddress + "]"
         }
-
+/*
         imageDevice.visible = false
         if (boxDevice.deviceName === "MJ_HT_V1") {
             imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
@@ -63,7 +63,7 @@ Rectangle {
         } else {
             imageDevice.source = "qrc:/assets/devices/flowercare.svg";
         }
-
+*/
         if (boxDevice.isUpdating()) {
             imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
@@ -111,7 +111,6 @@ Rectangle {
                     imageBattery.visible = false;
                     textBattery.visible = false;
                 }
-
             } else {
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
@@ -127,7 +126,6 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-
         onClicked: {
             curentlySelectedDevice = boxDevice
             content.state = "DeviceDetails"
@@ -169,6 +167,8 @@ Rectangle {
         id: imageDevice
         width: 56
         height: 56
+        sourceSize.width: width
+        sourceSize. height: height
         visible: false
         opacity: 0.5
 
@@ -196,17 +196,20 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 8
+
             source: "qrc:/assets/stats.svg"
             sourceSize.width: width
             sourceSize.height: height
         }
         Text {
             id: textDatas
-            height: 22
+            height: 42
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: imageDatas.right
             anchors.leftMargin: 8
             text: boxDevice.dataString
+            topPadding: 4
+            font.wordSpacing: 0
             verticalAlignment: Text.AlignVCenter
             font.family: "Arial"
             font.pixelSize: 16
@@ -235,12 +238,13 @@ Rectangle {
         Text {
             id: textBattery
             width: 48
-            height: 22
+            height: 42
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 8
             anchors.left: imageBattery.right
 
             text: boxDevice.deviceBattery + "%"
+            topPadding: 4
             font.family: "Arial"
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 16

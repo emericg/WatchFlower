@@ -111,7 +111,7 @@ Rectangle {
             rectangleLuminosity.visible = true
 
             var hours = Qt.formatDateTime (new Date(), "hh")
-            if (hours > 22 || hours < 8) {
+            if (hours >= 21 || hours <= 8) {
                 imageLuminosity.source = "qrc:/assets/night.svg"
             } else {
                 imageLuminosity.source = "qrc:/assets/day.svg"

@@ -4,4 +4,4 @@ Name=WatchFlower
 Comment=Read and plot datas from your Xiaomi "Flower Care" devices!
 Exec=watchflower
 Icon=watchflower
-Categories=Qt;Utility;
+Categories=Utility;Qt;DataVisualization;

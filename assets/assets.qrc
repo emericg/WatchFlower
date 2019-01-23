@@ -2,7 +2,6 @@
     <qresource prefix="/assets">
         <file>watchflower.svg</file>
         <file>desktop/watchflower.svg</file>
-        <file>desktop/watchflower.png</file>
         <file>desktop/watchflower_tray_light.svg</file>
         <file>desktop/watchflower_tray_dark.svg</file>
         <file>devices/flowercare.svg</file>
@@ -36,7 +35,6 @@
         <file>icons_material/baseline-delete-24px.svg</file>
         <file>icons_material/baseline-edit-24px.svg</file>
         <file>icons_material/baseline-exit_to_app-24px.svg</file>
-        <file>icons_material/baseline-keyboard_arrow_left-24px.svg</file>
         <file>icons_material/baseline-menu-24px.svg</file>
         <file>icons_material/baseline-minimize-24px.svg</file>
         <file>icons_material/baseline-more_vert-24px.svg</file>

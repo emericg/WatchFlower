@@ -39,15 +39,15 @@ Rectangle {
         target: deviceManager
         onScanningChanged: {
             if (deviceManager.scanning)
-                rescanRotation.start()
+                rescanAnimation.start()
             else
-                rescanRotation.stop()
+                rescanAnimation.stop()
         }
         onRefreshingChanged: {
             if (deviceManager.refreshing)
-                refreshRotation.start()
+                refreshAnimation.start()
             else
-                refreshRotation.stop()
+                refreshAnimation.stop()
         }
     }
     Connections {
@@ -125,27 +125,22 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
 
         NumberAnimation on rotation {
-            id: refreshRotation
-            duration: 3000;
-            from: 0;
-            to: 360;
+            id: refreshAnimation
+            duration: 2000
+            from: 0
+            to: 360
             loops: Animation.Infinite
-            running: deviceManager.scanning
-            onStopped: refreshRotationStop.start()
+            running: deviceManager.refreshing
+            onStopped: refreshAnimationStop.start()
         }
         NumberAnimation on rotation {
-            id: refreshRotationStop
+            id: refreshAnimationStop
             duration: 1000;
             to: 360;
-            easing.type: Easing.OutQuart
+            easing.type: Easing.OutExpo
             running: false
         }
 
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: "white"
-        }
         MouseArea {
             anchors.fill: parent
             onClicked: refreshButtonClicked()
@@ -165,28 +160,25 @@ Rectangle {
         sourceSize.height: height
         fillMode: Image.PreserveAspectFit
 
-        NumberAnimation on rotation {
-            id: rescanRotation
-            duration: 3000;
-            from: 0;
-            to: 360;
+        OpacityAnimator {
+            id: rescanAnimation
+            target: buttonRescan
+            duration: 1000
+            from: 0.5
+            to: 1
             loops: Animation.Infinite
-            running: false
-            onStopped: rescanRotationStop.start()
+            running: deviceManager.scanning
+            onStopped: rescanAnimationStop.start()
         }
-        NumberAnimation on rotation {
-            id: rescanRotationStop
-            duration: 1000;
-            to: 360;
-            easing.type: Easing.OutQuart
+        OpacityAnimator {
+            id: rescanAnimationStop
+            target: buttonRescan
+            duration: 500
+            to: 1
+            easing.type: Easing.OutExpo
             running: false
         }
 
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: "white"
-        }
         MouseArea {
             anchors.fill: parent
             onClicked: rescanButtonClicked()
@@ -206,11 +198,6 @@ Rectangle {
         sourceSize.height: height
         fillMode: Image.PreserveAspectFit
 
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: "white"
-        }
         MouseArea {
             anchors.fill: parent
             onClicked: settingsButtonClicked()
@@ -235,11 +222,6 @@ Rectangle {
         sourceSize.height: height
         fillMode: Image.PreserveAspectFit
 
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: "white"
-        }
         MouseArea {
             anchors.fill: parent
             onClicked: {

@@ -17,6 +17,22 @@ Rectangle {
             rectangleSettings.color = "#dddddd"
     }
 
+    Connections {
+        target: deviceManager
+        onScanningChanged: {
+            if (deviceManager.scanning)
+                rescanAnimation.start()
+            else
+                rescanAnimation.stop()
+        }
+        onRefreshingChanged: {
+            if (deviceManager.refreshing)
+                refreshAnimation.start()
+            else
+                refreshAnimation.stop()
+        }
+    }
+
     Rectangle {
         id: rectangleHeader
         height: 128
@@ -57,6 +73,147 @@ Rectangle {
             anchors.leftMargin: 0
             anchors.right: parent.right
             anchors.rightMargin: 0
+        }
+
+        Rectangle {
+            id: rectangleRefresh
+            height: 48
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    deviceManager.refreshDevices()
+                    drawer.close()
+                }
+            }
+
+            Image {
+                id: buttonRefresh
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "grey"
+                }
+
+                NumberAnimation on rotation {
+                    id: refreshAnimation
+                    duration: 2000
+                    from: 0
+                    to: 360
+                    loops: Animation.Infinite
+                    running: deviceManager.refreshing
+                    onStopped: refreshAnimationStop.start()
+                }
+                NumberAnimation on rotation {
+                    id: refreshAnimationStop
+                    duration: 1000;
+                    to: 360;
+                    easing.type: Easing.OutExpo
+                    running: false
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Update sensors")
+                font.pixelSize: 14
+            }
+        }
+
+        Rectangle {
+            id: rectangleScan
+            height: 48
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    deviceManager.scanDevices()
+                    drawer.close()
+                }
+            }
+
+            Image {
+                id: buttonRescan
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "grey"
+                }
+
+                OpacityAnimator {
+                    id: rescanAnimation
+                    target: buttonRescan
+                    duration: 1000
+                    from: 0.5
+                    to: 1
+                    loops: Animation.Infinite
+                    running: deviceManager.scanning
+                    onStopped: rescanAnimationStop.start()
+                }
+                OpacityAnimator {
+                    id: rescanAnimationStop
+                    target: buttonRescan
+                    duration: 500
+                    to: 1
+                    easing.type: Easing.OutExpo
+                    running: false
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Search for new devices")
+                font.pixelSize: 14
+            }
+        }
+
+        Rectangle {
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+        }
+        Rectangle {
+            height: 1
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "darkgrey"
+        }
+        Rectangle {
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
         }
 
         Rectangle {
@@ -139,109 +296,6 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Settings")
-                font.pixelSize: 14
-            }
-        }
-
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-        Rectangle {
-            height: 1
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "darkgrey"
-        }
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-
-        Rectangle {
-            id: rectangleRefresh
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deviceManager.refreshDevices()
-                    drawer.close()
-                }
-            }
-
-            Image {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "grey"
-                }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Update sensors")
-                font.pixelSize: 14
-            }
-        }
-
-        Rectangle {
-            id: rectangleScan
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deviceManager.scanDevices()
-                    drawer.close()
-                }
-            }
-
-            Image {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "grey"
-                }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Search for new devices")
                 font.pixelSize: 14
             }
         }

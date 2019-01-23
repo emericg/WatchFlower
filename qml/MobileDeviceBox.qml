@@ -179,13 +179,6 @@ Rectangle {
             }
         }
 
-        Image {
-            id: imageDevice
-            visible: false
-            anchors.fill: parent
-            opacity: 0.5
-        }
-
         Rectangle {
             id: rectangleSensors
             x: 0
