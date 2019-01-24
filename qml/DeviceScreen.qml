@@ -64,7 +64,7 @@ Rectangle {
                 textLastUpdate.font.bold = true
                 textLastUpdate.color = "#ff671b"
                 textRefresh.text = qsTr("Retry")
-                textRefresh.width = 90
+                textRefresh.width = 80
             } else {
                 if (!shortVersion)
                     textLastUpdate.text = qsTr("Last update:") + " "
@@ -317,6 +317,7 @@ Rectangle {
                     anchors.leftMargin: 6
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: false
                     source: "qrc:/assets/edit_button.svg"
                     sourceSize.width: width
                     sourceSize.height: height
@@ -387,6 +388,7 @@ Rectangle {
                     anchors.leftMargin: 6
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: false
                     source: "qrc:/assets/edit_button.svg"
                     sourceSize.width: width
                     sourceSize.height: height
