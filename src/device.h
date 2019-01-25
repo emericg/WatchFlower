@@ -104,7 +104,7 @@ protected:
     int m_battery = -1;
 
     // BLE device datas
-    float m_temp = -1;
+    float m_temp = -111.f;
     int m_hygro = -1;
     int m_luminosity = -1;
     int m_conductivity = -1;

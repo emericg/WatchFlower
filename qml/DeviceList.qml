@@ -107,11 +107,19 @@ Rectangle {
         id: background_img
         width: 256
         height: 256
-        opacity: 1
+        z: -1
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 64
+        anchors.bottomMargin: 24
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
+
+        visible: {
+            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+                visible = false
+            } else {
+                visible = true
+            }
+        }
 
         source: {
             var a = Math.floor(Math.random() * 2)

@@ -80,7 +80,7 @@ Rectangle {
         } else {
             rectangleTemp.visible = true
 
-            if (myDevice.deviceTempC < 0) {
+            if (myDevice.deviceTempC < -100) {
                 textTemp.text = qsTr("No datas...")
                 barTemp_low.color = badColor
                 barTemp_good.color = badColor

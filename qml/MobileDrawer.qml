@@ -1,3 +1,24 @@
+/*!
+ * This file is part of WatchFlower.
+ * COPYRIGHT (C) 2018 Emeric Grange - All Rights Reserved
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * \date      2018
+ * \author    Emeric Grange <emeric.grange@gmail.com>
+ */
+
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
@@ -61,18 +82,113 @@ Rectangle {
     Column {
         id: row
         anchors.top: rectangleHeader.bottom
+        anchors.topMargin: 8
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
         anchors.left: parent.left
-        anchors.topMargin: 0
 
         Rectangle {
-            height: 8
-            color: "#00000000"
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+            id: rectangleHome
+            height: 48
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.left: parent.left
+            color: "#00000000"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    content.state = "DeviceList"
+                    drawer.close()
+                }
+            }
+
+            Image {
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "grey"
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Device List")
+                font.pixelSize: 14
+            }
+        }
+
+        Rectangle {
+            id: rectangleSettings
+            height: 48
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    content.state = "Settings"
+                    drawer.close()
+                }
+            }
+
+            Image {
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "grey"
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Settings")
+                font.pixelSize: 14
+            }
+        }
+
+        Rectangle { // spacer
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+        }
+        Rectangle {
+            height: 1
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "darkgrey"
+        }
+        Rectangle {
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
         }
 
         Rectangle {
@@ -195,173 +311,6 @@ Rectangle {
                 text: qsTr("Search for new devices")
                 font.pixelSize: 14
             }
-        }
-
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-        Rectangle {
-            height: 1
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "darkgrey"
-        }
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-
-        Rectangle {
-            id: rectangleHome
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    content.state = "DeviceList"
-                    drawer.close()
-                }
-            }
-
-            Image {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "grey"
-                }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Device List")
-                font.pixelSize: 14
-            }
-        }
-
-        Rectangle {
-            id: rectangleSettings
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    content.state = "Settings"
-                    drawer.close()
-                }
-            }
-
-            Image {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "grey"
-                }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Settings")
-                font.pixelSize: 14
-            }
-        }
-
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-        Rectangle {
-            height: 1
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "darkgrey"
-        }
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
-        }
-
-        Rectangle {
-            id: rectangleExit
-            height: 48
-            color: "#00000000"
-            anchors.right: parent.right
-            anchors.left: parent.left
-            MouseArea {
-                anchors.fill: parent
-                onClicked: settingsManager.exit()
-            }
-
-            Image {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "grey"
-                }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Exit")
-                font.pixelSize: 14
-            }
-        }
-
-        Rectangle {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "#00000000"
         }
     }
 }

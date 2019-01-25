@@ -79,22 +79,21 @@ Rectangle {
 
         Text {
             text: "WatchFlower"
+            anchors.left: leftMenuImg.right
+            anchors.leftMargin: 24
             color: "#FFFFFF"
             font.bold: true
-            font.pixelSize: 36
+            font.pixelSize: 24
             antialiasing: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Image {
             id: leftMenuImg
-            width: 32
-            height: 32
+            width: 24
+            height: 24
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
@@ -116,11 +115,11 @@ Rectangle {
 
         Image {
             id: rightMenuImg
-            width: 32
-            height: 32
+            width: 24
+            height: 24
             visible: false
             anchors.right: parent.right
-            anchors.rightMargin: 12
+            anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
