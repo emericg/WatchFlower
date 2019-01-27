@@ -110,7 +110,7 @@ Rectangle {
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+                source: "qrc:/assets/watchflower.svg"
                 sourceSize.width: width
                 sourceSize.height: height
                 fillMode: Image.PreserveAspectFit
@@ -125,7 +125,7 @@ Rectangle {
                 anchors.leftMargin: 56
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Device List")
+                text: qsTr("Plants")
                 font.pixelSize: 14
             }
         }

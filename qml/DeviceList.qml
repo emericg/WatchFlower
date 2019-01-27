@@ -193,14 +193,14 @@ Rectangle {
         spacing: 10
 
         model: deviceManager.devicesList
-
+/*
         delegate: DesktopDeviceBox { boxDevice: modelData }
         anchors.leftMargin: 10
         anchors.rightMargin: 10
-/*
+*/
         delegate: MobileDeviceBox { boxDevice: modelData }
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-*/
+
     }
 }
