@@ -312,5 +312,68 @@ Rectangle {
                 font.pixelSize: 14
             }
         }
+
+        Rectangle {
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+        }
+        Rectangle {
+            height: 1
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "darkgrey"
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+        }
+        Rectangle {
+            height: 8
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+        }
+
+        Rectangle {
+            id: rectangleExit
+            height: 48
+            color: "#00000000"
+            anchors.right: parent.right
+            anchors.left: parent.left
+
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: settingsManager.exit()
+            }
+
+            Image {
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "grey"
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Exit")
+                font.pixelSize: 14
+            }
+        }
     }
 }

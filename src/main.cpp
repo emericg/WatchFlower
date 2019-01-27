@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
-#if defined(Q_OS_MACOS)
+#if defined(Q_OS_MACOS) && defined(QT_NO_DEBUG)
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
 #endif

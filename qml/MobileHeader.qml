@@ -32,6 +32,8 @@ Rectangle {
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
 
+    property bool rightMenuEnabled: false
+
     signal leftMenuClicked()
     signal rightMenuClicked()
 
@@ -117,7 +119,7 @@ Rectangle {
             id: rightMenuImg
             width: 24
             height: 24
-            visible: false
+            visible: rightMenuEnabled
             anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
@@ -135,6 +137,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
+                enabled:rightMenuEnabled
                 onClicked: rightMenuClicked()
             }
         }

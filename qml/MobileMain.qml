@@ -60,11 +60,8 @@ ApplicationWindow {
         onLeftMenuClicked: {
             drawer.open()
         }
-    }
-    Connections {
-        target: systrayManager
-        onSettingsClicked: {
-            content.state = "Settings"
+        onRightMenuClicked: {
+            //
         }
     }
 
@@ -148,6 +145,10 @@ ApplicationWindow {
 
         onStateChanged: {
             drawerscreen.updateDrawerFocus()
+            if (state === "DeviceDetails")
+                header.rightMenuEnabled = true
+            else
+                header.rightMenuEnabled = false
         }
 
         state: "DeviceList"

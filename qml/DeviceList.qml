@@ -87,6 +87,19 @@ Rectangle {
             font.pixelSize: 20
         }
 
+        Button {
+            id: buttonRetry
+            width: 96
+            height: 30
+            text: qsTr("Retry")
+            opacity: 0.8
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
+
+            onClicked: deviceManager.checkBluetooth()
+        }
+
         function hide() {
             rectangleStatus.visible = false;
             rectangleStatus.height = 0;
@@ -95,11 +108,23 @@ Rectangle {
             rectangleStatus.visible = true;
             rectangleStatus.height = 48;
             textStatus.text = message;
+
+            if (!deviceManager.hasBluetooth()) {
+                buttonRetry.visible = true
+            } else {
+                buttonRetry.visible = false
+            }
         }
         function setStatus(message) {
             rectangleStatus.visible = true;
             rectangleStatus.height = 48;
             textStatus.text = message;
+
+            if (!deviceManager.hasBluetooth()) {
+                buttonRetry.visible = true
+            } else {
+                buttonRetry.visible = false
+            }
         }
     }
 

@@ -126,6 +126,9 @@ Rectangle {
         height: 24
         color: "#454B54"
         text: boxDevice.deviceLocationName
+        anchors.right: dataArea.left
+        anchors.rightMargin: 12
+        clip: true
         font.bold: false
         anchors.topMargin: 18
         anchors.top: parent.top
@@ -141,6 +144,9 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
         text: boxDevice.deviceAddress
+        anchors.right: dataArea.left
+        anchors.rightMargin: 12
+        clip: true
         font.weight: Font.Thin
         font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom

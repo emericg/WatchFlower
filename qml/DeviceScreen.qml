@@ -40,6 +40,13 @@ Rectangle {
         onTriggered: updateLastUpdateText()
     }
 
+    Connections {
+        target: header
+        onRightMenuClicked: {
+            //
+        }
+    }
+
     function updateLastUpdateText() {
         if (typeof myDevice === "undefined") return
         var shortVersion = false
