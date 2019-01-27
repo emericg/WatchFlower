@@ -154,7 +154,7 @@ public slots:
     void setTimerInterval(int updateIntervalMin = 0);
 
     bool getSqlDatas();
-    bool getSqlCachedDatas();
+    bool getSqlCachedDatas(int minutes = 5);
     bool getBleDatas();
 
     // BLE device

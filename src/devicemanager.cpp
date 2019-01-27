@@ -46,8 +46,8 @@
 
 DeviceManager::DeviceManager()
 {
-    loadBluetooth();
-    loadDatabase();
+    checkBluetooth();
+    checkDatabase();
 
     // BLE discovery agent
     m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
@@ -90,22 +90,27 @@ DeviceManager::DeviceManager()
             else
                 d = new Device(deviceAddr, deviceName);
 
-            if (!d)
-                return;
-
-            m_devices.append(d);
+            if (d)
+            {
+                if (hasBluetooth()) d->refreshDatas();
+                m_devices.append(d);
+            }
         }
     }
 
     // Set refresh timer
     connect(&m_refreshingTimer, &QTimer::timeout, this, &DeviceManager::refreshCheck);
     m_refreshingTimer.setInterval(1000);
+
+    // Start refresh timer
     m_refreshingTimer.start();
 }
 
 DeviceManager::~DeviceManager()
 {
+    delete  m_bluetoothAdapter;
     delete m_discoveryAgent;
+    delete m_controller;
 
     qDeleteAll(m_devices);
     m_devices.clear();
@@ -116,7 +121,17 @@ DeviceManager::~DeviceManager()
 
 bool DeviceManager::hasBluetooth() const
 {
-    return m_bt;
+    return (m_btA && m_btE);
+}
+
+bool DeviceManager::hasBluetoothAdapter() const
+{
+    return m_btA;
+}
+
+bool DeviceManager::hasBluetoothEnabled() const
+{
+    return m_btE;
 }
 
 bool DeviceManager::hasDatabase() const
@@ -126,7 +141,7 @@ bool DeviceManager::hasDatabase() const
 
 /* ************************************************************************** */
 
-void DeviceManager::loadBluetooth()
+void DeviceManager::checkBluetooth()
 {
     // List bluetooth adapters
     QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
@@ -134,48 +149,66 @@ void DeviceManager::loadBluetooth()
     {
         for (QBluetoothHostInfo a: adaptersList)
         {
-            //qDebug() << "- Bluetooth adapter:" << a.name();
+            qDebug() << "- Bluetooth adapter:" << a.name();
         }
     }
     else
     {
         qDebug() << "> No bluetooth adapter found...";
+        if (m_bluetoothAdapter)
+        {
+            disconnect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
+            delete m_bluetoothAdapter;
+            m_bluetoothAdapter = nullptr;
+        }
+        Q_EMIT bluetoothChanged();
         return;
     }
 
     // TODO // We only try the "first" available bluetooth adapter
-    if (m_bluetoothAdapter.isValid())
+    if (!m_bluetoothAdapter)
     {
-        // Make sure its powered on
-        m_bluetoothAdapter.powerOn();
+        m_bluetoothAdapter = new QBluetoothLocalDevice();
+    }
 
-        // Keep us informed of availability changes
-        connect(&m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
+    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
+    {
+        m_btA = true;
+
+        // Make sure its powered on
+        // Doesn't work on all platforms
+        //m_bluetoothAdapter->powerOn();
 
         // Check availability
-        if (m_bluetoothAdapter.hostMode() > 0)
+        if (m_bluetoothAdapter->hostMode() > 0)
         {
-            m_bt = true;
+            m_btE = true;
             qDebug() << "> Bluetooth adapter available";
+
+            // Keep us informed of availability changes
+            // Can only inform us about disconnection, never reconnection
+            connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
         }
         else
-            qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter.hostMode();
+            qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter->hostMode();
     }
 
     Q_EMIT bluetoothChanged();
 }
 
-void DeviceManager::loadDatabase()
+void DeviceManager::checkDatabase()
 {
     if (QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
         qDebug() << "> SQLite available";
 
         QSqlDatabase db = QSqlDatabase::database();
-        if (db.isValid())
-        {
-            m_db = true;
-        }
+
+        m_db = db.isValid();
+    }
+    else
+    {
+        m_db = false;
     }
 }
 
@@ -188,11 +221,14 @@ void DeviceManager::changeBluetoothMode(QBluetoothLocalDevice::HostMode state)
 
     if (state > 0)
     {
-        m_bt = true;
-        qDebug() << "> Bluetooth available";
+        m_btE = true;
     }
     else
-        m_bt = false;
+    {
+        m_btE = false;
+
+        // Check bluetooth again?
+    }
 
     Q_EMIT bluetoothChanged();
 }
@@ -211,7 +247,7 @@ bool DeviceManager::isRefreshing() const
 
 void DeviceManager::scanDevices()
 {
-    if (m_bt)
+    if (m_btA)
     {
         qDeleteAll(m_devices);
         m_devices.clear();
@@ -229,7 +265,7 @@ void DeviceManager::scanDevices()
 
 void DeviceManager::refreshDevices()
 {
-    if (m_bt && !m_devices.empty())
+    if (m_btA && !m_devices.empty())
     {
         m_refreshing = true;
 
@@ -246,7 +282,7 @@ void DeviceManager::refreshDevices()
 
 void DeviceManager::refreshCheck()
 {
-    if (m_bt)
+    if (m_btA)
     {
         bool refreshing = false;
 

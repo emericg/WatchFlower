@@ -61,9 +61,8 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
-    // Initial update
+    // Initial datas query
     getSqlDatas();
-    refreshDatas();
 
     // Set update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
@@ -132,10 +131,6 @@ void Device::refreshDatasFinished(bool status, bool cached)
 
     if (status == true)
     {
-        // Only register update if its a real one
-        if (cached == false)
-            m_lastUpdate = QDateTime::currentDateTime();
-
         // Only update datas on success
         Q_EMIT datasUpdated();
 
@@ -283,18 +278,23 @@ bool Device::getSqlDatas()
     }
     Q_EMIT limitsUpdated();
 
+    if (getSqlCachedDatas(12*60))
+    {
+        Q_EMIT datasUpdated();
+    }
+
     return status;
 }
 
-bool Device::getSqlCachedDatas()
+bool Device::getSqlCachedDatas(int minutes)
 {
     //qDebug() << "Device::getSqlCachedDatas(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery cachedDatas;
-    cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity " \
+    cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
                         "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-5 minutes');");
+                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
     cachedDatas.bindValue(":deviceAddr", getAddress());
 
     if (cachedDatas.exec() == false)
@@ -311,7 +311,8 @@ bool Device::getSqlCachedDatas()
         m_luminosity =  cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
 
-        //m_lastUpdate = QDateTime::currentDateTime(); // FIXME
+        QString datetime = cachedDatas.value(4).toString();
+        m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 
         status = true;
         refreshDatasFinished(true, true);

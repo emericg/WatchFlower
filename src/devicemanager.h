@@ -46,30 +46,34 @@ class DeviceManager: public QObject
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
-    Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
 
-    bool m_bt = false;
+    Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
+    Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
+    Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
+
+    bool m_btA = false;
+    bool m_btE = false;
     bool m_db = false;
+
     bool m_scanning = false;
     bool m_refreshing = false;
     QTimer m_refreshingTimer;
+    QTimer m_updateTimer;
 
-    void loadBluetooth();
-    void loadDatabase();
-
-    QBluetoothLocalDevice m_bluetoothAdapter;
+    QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyController *m_controller = nullptr;
 
     QList<QObject*> m_devices;
-
-    QTimer m_updateTimer;
 
 public:
     DeviceManager();
     ~DeviceManager();
 
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
+
+    Q_INVOKABLE void checkBluetooth();
+    Q_INVOKABLE void checkDatabase();
 
 public slots:
     void scanDevices();
@@ -78,6 +82,9 @@ public slots:
     void refreshDevices();
     void refreshCheck();
     bool isRefreshing() const;
+
+    bool hasBluetoothAdapter() const;
+    bool hasBluetoothEnabled() const;
 
     bool hasBluetooth() const;
     bool hasDatabase() const;
