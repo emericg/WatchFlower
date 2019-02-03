@@ -8,9 +8,6 @@ QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
 ios | android { QT += gui-private }
 
-# Pass app version to the C++
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
-
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
     error("You really need AT LEAST Qt 5.7 to build WatchFlower, sorry...")
@@ -20,12 +17,16 @@ if (lessThan(QT_MINOR_VERSION, 10)) {
             "You can use Qt 5.7 but you'll need to make a small adjustment into DeviceScreenCharts.qml...")
 }
 
+################################################################################
+
 # Build artifacts
 OBJECTS_DIR = build/
 MOC_DIR     = build/
 RCC_DIR     = build/
 UI_DIR      = build/
 DESTDIR     = bin/
+
+################################################################################
 
 # Project files
 SOURCES  += src/main.cpp \
@@ -50,15 +51,24 @@ RESOURCES   += qml/qml.qrc \
 
 OTHER_FILES += .travis.yml
 
+################################################################################
+
+# Pass app version to the C++
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
+# Force mobile UI
+DEFINES += FORCE_MOBILE_UI
+
+# StatusBar for mobile OS
 include(src/thirdparty/StatusBar/statusbar.pri)
+
+# SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
-# OS icons (macOS and Windows)
-ICON         = assets/desktop/$$lower($${TARGET}).icns
-RC_ICONS     = assets/desktop/$$lower($${TARGET}).ico
-
+################################################################################
 # Application deployment and installation steps
+
 linux:!android {
     TARGET = $$lower($${TARGET})
 
@@ -87,6 +97,9 @@ linux:!android {
 }
 
 macx {
+    # OS icon
+    ICON = assets/desktop/$$lower($${TARGET}).icns
+
     # Bundle packaging
     #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
 
@@ -105,6 +118,9 @@ macx {
 }
 
 win32 {
+    # OS icon
+    RC_ICONS = assets/desktop/$$lower($${TARGET}).ico
+
     # Application packaging
     #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
 

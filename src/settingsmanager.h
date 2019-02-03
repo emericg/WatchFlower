@@ -41,12 +41,18 @@ class SettingsManager: public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
+    Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
+    Q_PROPERTY(bool bluetooth READ getBluetooth WRITE setBluetooth NOTIFY bluetoothChanged)
+
     Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
     Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
     Q_PROPERTY(QString graphview READ getGraphView WRITE setGraphView NOTIFY graphviewChanged)
     Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
 
-    bool m_trayEnabled = false;
+    bool m_systrayEnabled = false;
+    bool m_notificationsEnabled = false;
+    bool m_autoBluetoothEnabled = false;
+
     int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphDefaultView = "daily";
@@ -69,6 +75,8 @@ class SettingsManager: public QObject
 
 Q_SIGNALS:
     void systrayChanged();
+    void notifsChanged();
+    void bluetoothChanged();
     void intervalChanged();
     void tempunitChanged();
     void graphviewChanged();
@@ -79,8 +87,14 @@ public:
 
     bool hasDatabase() const { return m_db; }
 
-    bool getSysTray() const { return m_trayEnabled; }
+    bool getSysTray() const { return m_systrayEnabled; }
     void setSysTray(bool value);
+
+    bool getNotifs() const { return m_notificationsEnabled; }
+    void setNotifs(bool value);
+
+    bool getBluetooth() const { return m_autoBluetoothEnabled; }
+    void setBluetooth(bool value);
 
     int getUpdateInterval() const { return m_updateInterval; }
     void setUpdateInterval(int value) { m_updateInterval = value; writeSettings(); }

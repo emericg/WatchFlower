@@ -42,10 +42,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || !defined(QT_NO_DEBUG)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     QApplication app(argc, argv);
 #else
+#if defined(QT_NO_DEBUG)
     SingleApplication app(argc, argv);
+#endif
 #endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
@@ -83,14 +85,18 @@ int main(int argc, char *argv[])
         dm->scanDevices();
     }
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+#endif
+
+    qmlRegisterSingletonType(QUrl("qrc:/qml/Theme.qml"), "app.watchflower.theme", 1, 0, "Theme");
 
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
@@ -110,9 +116,11 @@ int main(int argc, char *argv[])
         st->installSystray();
     }
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && defined(QT_NO_DEBUG)
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+#if defined(QT_NO_DEBUG)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
+#endif
 #endif
 #if defined(Q_OS_MACOS) && defined(QT_NO_DEBUG)
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);

@@ -35,14 +35,6 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 > $ make  
 
 
-## Licensing
-
-WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
-Read [LICENSE](LICENSE) or [consult the licence on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
-
-Emeric Grange <emeric.grange@gmail.com>
-
-
 ## Special thanks
 
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
@@ -55,8 +47,16 @@ Emeric Grange <emeric.grange@gmail.com>
 
 ### Developers
 
-You can browse the code here on GitHub, submit patches and pull requests! Your help would be greatly appreciated ;-)
+You can browse the code on the GitHub page, submit patches and pull requests! Your help would be greatly appreciated ;-)
 
 ### Users
 
-You can help us finding bugs, proposing new features and more! Visit the "Issues" section in the GitHub menu to start.
+You can help us find and report bugs, propose new features, help with the documentation and more! Visit the Issues section of the GitHub page to start!
+
+
+## License
+
+WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
+Read the [LICENSE](LICENSE) file or [consult the licence on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
+
+Emeric Grange <emeric.grange@gmail.com>

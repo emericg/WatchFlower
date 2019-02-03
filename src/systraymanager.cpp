@@ -55,10 +55,13 @@ SystrayManager::~SystrayManager()
     delete m_actionShow;
     delete m_actionSettings;
     delete m_actionExit;
-    delete m_sysTrayMenu;
     m_actionShow = nullptr;
     m_actionSettings = nullptr;
     m_actionExit = nullptr;
+
+    delete m_sysTrayIcon;
+    delete m_sysTrayMenu;
+    m_sysTrayIcon = nullptr;
     m_sysTrayMenu = nullptr;
 
     removeSystray();
@@ -101,6 +104,12 @@ void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
             QObject::connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingsButton);
             QObject::connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
+
+#ifdef TARGET_OS_OSX
+            m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_light.svg");
+#else
+            m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_dark.svg");
+#endif
     }
 }
 
@@ -113,15 +122,12 @@ bool SystrayManager::installSystray()
         if (m_sysTray == nullptr)
             m_sysTray = new QSystemTrayIcon();
 
-        if (m_sysTray != nullptr && m_sysTrayMenu != nullptr)
+        if (m_sysTray != nullptr && m_sysTrayMenu != nullptr && m_sysTrayIcon != nullptr)
         {
-#ifdef TARGET_OS_OSX
-            QIcon trayIcon(":/assets/desktop/watchflower_tray_light.svg");
-#else
-            QIcon trayIcon(":/assets/desktop/watchflower_tray_dark.svg");
+#if !defined(TARGET_OS_OSX)
             QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
 #endif
-            m_sysTray->setIcon(trayIcon);
+            m_sysTray->setIcon(*m_sysTrayIcon);
             m_sysTray->setContextMenu(m_sysTrayMenu);
             m_sysTray->show();
 
@@ -155,6 +161,8 @@ void SystrayManager::removeSystray()
         QObject::disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
         QObject::disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+
+        retryCount = 6;
 
         delete m_sysTray;
         m_sysTray = nullptr;

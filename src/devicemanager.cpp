@@ -143,6 +143,7 @@ bool DeviceManager::hasDatabase() const
 
 void DeviceManager::checkBluetooth()
 {
+/*
     // List bluetooth adapters
     QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
     if (adaptersList.size() > 0)
@@ -164,30 +165,38 @@ void DeviceManager::checkBluetooth()
         Q_EMIT bluetoothChanged();
         return;
     }
-
+*/
     // TODO // We only try the "first" available bluetooth adapter
     if (!m_bluetoothAdapter)
     {
         m_bluetoothAdapter = new QBluetoothLocalDevice();
     }
 
-    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
+    if (m_bluetoothAdapter)
     {
         m_btA = true;
 
-        // Make sure its powered on
-        // Doesn't work on all platforms
-        //m_bluetoothAdapter->powerOn();
+        // Keep us informed of availability changes
+        // On some platform it can only inform us about disconnection, not reconnection
+        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
+    }
+
+    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
+    {
+        SettingsManager *sm = SettingsManager::getInstance();
+
+        if (sm && sm->getBluetooth())
+        {
+            // Make sure its powered on
+            // Doesn't work on all platforms...
+            m_bluetoothAdapter->powerOn();
+        }
 
         // Check availability
         if (m_bluetoothAdapter->hostMode() > 0)
         {
             m_btE = true;
             qDebug() << "> Bluetooth adapter available";
-
-            // Keep us informed of availability changes
-            // Can only inform us about disconnection, never reconnection
-            connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
         }
         else
             qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter->hostMode();

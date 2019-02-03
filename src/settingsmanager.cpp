@@ -71,7 +71,13 @@ bool SettingsManager::readSettings()
     if (settings.status() == QSettings::NoError)
     {
         if (settings.contains("settings/trayEnabled"))
-            m_trayEnabled = settings.value("settings/trayEnabled").toBool();
+            m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
+
+        if (settings.contains("settings/notifsEnabled"))
+            m_notificationsEnabled = settings.value("settings/notifsEnabled").toBool();
+
+        if (settings.contains("settings/bluetoothEnabled"))
+            m_autoBluetoothEnabled = settings.value("settings/bluetoothEnabled").toBool();
 
         if (settings.contains("settings/updateInterval"))
             m_updateInterval = settings.value("settings/updateInterval").toInt();
@@ -104,11 +110,15 @@ bool SettingsManager::writeSettings()
 
     if (settings.isWritable())
     {
-        settings.setValue("settings/trayEnabled", m_trayEnabled);
+        settings.setValue("settings/trayEnabled", m_systrayEnabled);
+        settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
+        settings.setValue("settings/bluetoothEnabled", m_autoBluetoothEnabled);
+
         settings.setValue("settings/updateInterval", m_updateInterval);
         settings.setValue("settings/degreUnit", m_tempUnit);
         settings.setValue("settings/graphDefaultView", m_graphDefaultView);
         settings.setValue("settings/graphDefaultData", m_graphDefaultData);
+
         settings.sync();
 
         if (settings.status() == QSettings::NoError)
@@ -306,12 +316,21 @@ void SettingsManager::resetDatabase()
 void SettingsManager::resetSettings()
 {
     // Settings
-    m_trayEnabled = false;
+    m_systrayEnabled = false;
     Q_EMIT systrayChanged();
+    m_notificationsEnabled = false;
+    Q_EMIT notifsChanged();
+    m_autoBluetoothEnabled = false;
+    Q_EMIT bluetoothChanged();
+
     m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     Q_EMIT intervalChanged();
     m_tempUnit = "C";
     Q_EMIT tempunitChanged();
+    m_graphDefaultView = "daily";
+    Q_EMIT graphviewChanged();
+    m_graphDefaultData = "hygro";
+    Q_EMIT graphdataChanged();
 
     // Database
     resetDatabase();
@@ -337,23 +356,33 @@ QString SettingsManager::getAppVersion()
 
 void SettingsManager::setSysTray(bool value)
 {
-    bool trayEnable_saved = m_trayEnabled;
-    m_trayEnabled = value; writeSettings();
+    bool trayEnable_saved = m_systrayEnabled;
+    m_systrayEnabled = value; writeSettings();
 
     SystrayManager *st = SystrayManager::getInstance();
     if (st)
     {
-        if (trayEnable_saved == true && m_trayEnabled == false)
+        if (trayEnable_saved == true && m_systrayEnabled == false)
         {
             st->removeSystray();
             Q_EMIT systrayChanged();
         }
-        else if (trayEnable_saved == false && m_trayEnabled == true)
+        else if (trayEnable_saved == false && m_systrayEnabled == true)
         {
             st->installSystray();
             Q_EMIT systrayChanged();
         }
     }
+}
+
+void SettingsManager::setNotifs(bool value)
+{
+    m_notificationsEnabled = value; writeSettings();
+}
+
+void SettingsManager::setBluetooth(bool value)
+{
+    m_autoBluetoothEnabled = value; writeSettings();
 }
 
 /* ************************************************************************** */

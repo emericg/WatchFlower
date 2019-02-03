@@ -14,5 +14,6 @@
         <file>DeviceScreenLimits.qml</file>
         <file>DeviceScreenCharts.qml</file>
         <file>Settings.qml</file>
+        <file>Theme.qml</file>
     </qresource>
 </RCC>

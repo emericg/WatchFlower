@@ -41,13 +41,14 @@ class SystrayManager: public QObject
     QApplication *m_saved_app = nullptr;
 
     QSystemTrayIcon *m_sysTray = nullptr;
+    QIcon *m_sysTrayIcon = nullptr;
     QMenu *m_sysTrayMenu = nullptr;
     QAction *m_actionShow = nullptr;
     QAction *m_actionSettings = nullptr;
     QAction *m_actionExit = nullptr;
 
     QTimer m_retryTimer;
-    int retryCount = 5;
+    int retryCount = 6;
 
     static SystrayManager *instance;
 
