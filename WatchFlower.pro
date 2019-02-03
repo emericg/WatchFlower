@@ -57,7 +57,7 @@ OTHER_FILES += .travis.yml
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Force mobile UI
-DEFINES += FORCE_MOBILE_UI
+#DEFINES += FORCE_MOBILE_UI
 
 # StatusBar for mobile OS
 include(src/thirdparty/StatusBar/statusbar.pri)
