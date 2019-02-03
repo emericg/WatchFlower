@@ -315,7 +315,7 @@ Rectangle {
             anchors.leftMargin: 8
 
             color: "#343434"
-            text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\">github</a></html> page!"
+            text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\" style=\"text-decoration: none\">GitHub</a></html> page!"
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 17
             onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")

@@ -54,15 +54,12 @@ Rectangle {
 
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-            bluetooth_img.visible = false
-
             if (deviceManager.areDevicesAvailable() === false) {
                 rectangleStatus.setStatus(qsTr("No devices :-("))
             } else {
                 rectangleStatus.hide()
             }
         } else {
-            bluetooth_img.visible = true
             rectangleStatus.setError(qsTr("No bluetooth :-("))
         }
     }
@@ -140,12 +137,12 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: rectangleStatus.height + 12
         anchors.bottomMargin: 10
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
         spacing: 10
 
         model: deviceManager.devicesList
+        delegate: MobileDeviceBox { boxDevice: modelData }
 
-        delegate: DesktopDeviceBox { boxDevice: modelData }
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
     }
 }

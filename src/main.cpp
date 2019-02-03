@@ -42,12 +42,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI) || defined(QT_NO_DEBUG)
     QApplication app(argc, argv);
 #else
-#if defined(QT_NO_DEBUG)
     SingleApplication app(argc, argv);
-#endif
 #endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)

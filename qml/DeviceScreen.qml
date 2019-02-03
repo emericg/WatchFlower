@@ -22,6 +22,9 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import QtGraphicalEffects 1.0
+import app.watchflower.theme 1.0
+
 Rectangle {
     id: deviceScreenRectangle
     width: 450
@@ -112,15 +115,21 @@ Rectangle {
 
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
-            textBattery.visible = true
+            textBattery.visible = false // temporary disable
             imageBattery.visible = true
 
-            if (myDevice.deviceBattery < 15) {
-                imageBattery.source = "qrc:/assets/battery_low.svg"
-            } else if (myDevice.deviceBattery > 75) {
-                imageBattery.source = "qrc:/assets/battery_full.svg"
+            if (myDevice.deviceBattery < 10) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
+            } else if (myDevice.deviceBattery < 40) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
+            } else if (myDevice.deviceBattery < 60) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery < 60) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery < 95) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
             } else {
-                imageBattery.source = "qrc:/assets/battery_mid.svg"
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
             }
         } else {
             textBattery.visible = false
@@ -182,11 +191,8 @@ Rectangle {
 
         Rectangle {
             id: rectangleHeader
-            height: 133
-            //color: "#E0FAE7" // green
-            //color: "#E8E9E8" // dark grey
-            //color: "#F1F1F1" // light
-            color: "#E8E9E8"
+            height: 124
+            color: Theme.colorMaterialLightGrey
 
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -199,7 +205,7 @@ Rectangle {
                 id: textDeviceName
                 x: 12
                 y: 12
-                color: "#454b54"
+                color: "#454B54"
                 anchors.left: parent.left
                 anchors.leftMargin: 12
                 font.pixelSize: 23
@@ -211,7 +217,7 @@ Rectangle {
             Text {
                 id: textAddr
                 y: 48
-                color: "#454b54"
+                color: "#454B54"
                 text: myDevice.deviceAddress
                 anchors.left: labelFw.right
                 anchors.leftMargin: 8
@@ -232,7 +238,7 @@ Rectangle {
             Text {
                 id: textFw
                 height: 26
-                color: "#454b54"
+                color: "#454B54"
                 text: myDevice.deviceFirmware
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageFw.right
@@ -244,16 +250,22 @@ Rectangle {
             }
             Image {
                 id: imageFw
-                width: 26
-                height: 26
+                width: 24
+                height: 24
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: textDeviceName.verticalCenter
                 anchors.left: textBattery.right
                 anchors.leftMargin: 8
 
-                source: "qrc:/assets/update.svg"
+                source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
 
                 MouseArea {
                     anchors.fill: parent
@@ -270,7 +282,7 @@ Rectangle {
             Text {
                 id: textBattery
                 height: 26
-                color: "#454b54"
+                color: "#454B54"
                 text: myDevice.deviceBattery + "%"
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageBattery.right
@@ -280,15 +292,22 @@ Rectangle {
             }
             Image {
                 id: imageBattery
-                width: 26
-                height: 26
+                width: 32
+                height: 32
+                rotation: 90
                 anchors.verticalCenter: textDeviceName.verticalCenter
                 anchors.left: textDeviceName.right
-                anchors.leftMargin: 24
+                anchors.leftMargin: 16
 
-                source: "qrc:/assets/battery_full.svg"
+                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
 
             Text {
@@ -309,7 +328,7 @@ Rectangle {
                 padding: 4
 
                 text: ""
-                color: "#454b54"
+                color: "#454B54"
                 font.pixelSize: 18
                 onEditingFinished: {
                     myDevice.setPlantName(text)
@@ -325,9 +344,15 @@ Rectangle {
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     visible: false
-                    source: "qrc:/assets/edit_button.svg"
+                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                     sourceSize.width: width
                     sourceSize.height: height
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorDarkGrey
+                    }
                 }
 
                 MouseArea {
@@ -364,7 +389,7 @@ Rectangle {
                 padding: 4
 
                 text: ""
-                color: "#454b54"
+                color: "#454B54"
                 font.pixelSize: 18
                 onEditingFinished: {
                     myDevice.setLocationName(text)
@@ -396,9 +421,15 @@ Rectangle {
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     visible: false
-                    source: "qrc:/assets/edit_button.svg"
+                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                     sourceSize.width: width
                     sourceSize.height: height
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorDarkGrey
+                    }
                 }
             }
         }
@@ -406,7 +437,7 @@ Rectangle {
         Rectangle {
             id: rectangleSubHeader
             height: 48
-            color: "#f5f5f5"
+            color: Theme.colorMaterialLightGrey
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -432,9 +463,15 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: buttonLimits.right
                 anchors.leftMargin: 10
-                source: "qrc:/assets/lastupdate.svg"
+                source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
 
             Rectangle {
@@ -467,9 +504,15 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 6
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/refresh.svg"
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                     sourceSize.width: width
                     sourceSize.height: height
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorDarkGrey
+                    }
 
                     NumberAnimation on rotation {
                         id: refreshRotation
@@ -500,17 +543,17 @@ Rectangle {
                 width: 100
                 height: 32
                 color: "#e0e0e0"
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
 
                 function initButton() {
                     if (rectangleContent.state === "limits") {
                         textLimits.text = qsTr("Datas")
-                        imageLimits.source = "qrc:/assets/graph.svg"
+                        imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                     } else {
                         textLimits.text = qsTr("Limits")
-                        imageLimits.source = "qrc:/assets/limits.svg"
+                        imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
                     }
                 }
 
@@ -535,9 +578,15 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 6
-                    source: "qrc:/assets/limits.svg"
+                    source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                     sourceSize.width: width
                     sourceSize.height: height
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorDarkGrey
+                    }
                 }
 
                 MouseArea {
@@ -551,11 +600,11 @@ Rectangle {
                         if (rectangleContent.state === "datas") {
                             rectangleContent.state = "limits"
                             textLimits.text = qsTr("Datas")
-                            imageLimits.source = "qrc:/assets/graph.svg"
+                            imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                         } else {
                             rectangleContent.state = "datas"
                             textLimits.text = qsTr("Limits")
-                            imageLimits.source = "qrc:/assets/limits.svg"
+                            imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
 
                             // Update color bars with new limits
                             rectangleDeviceDatas.updateDatas()

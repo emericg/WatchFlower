@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/qml">
         <file>MobileMain.qml</file>
-        <file>MobileDrawer.qml</file>
         <file>MobileHeader.qml</file>
+        <file>MobileDrawer.qml</file>
+        <file>MobileDeviceList.qml</file>
         <file>MobileDeviceBox.qml</file>
+        <file>MobileSettings.qml</file>
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
         <file>DesktopDeviceBox.qml</file>
@@ -15,5 +17,6 @@
         <file>DeviceScreenCharts.qml</file>
         <file>Settings.qml</file>
         <file>Theme.qml</file>
+        <file>ThemedSwitch.qml</file>
     </qresource>
 </RCC>

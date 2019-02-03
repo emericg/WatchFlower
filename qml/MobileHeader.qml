@@ -21,13 +21,18 @@
 
 import QtQuick 2.7
 import QtQuick.Window 2.2
+
 import QtGraphicalEffects 1.0
+import app.watchflower.theme 1.0
 
 Rectangle {
     id: rectangleHeader
     width: parent.width
     height: screenTopPadding + 56
-    color: "#1dcb58"
+
+    border.width: 1
+    color: Theme.colorHeaderMobile
+    border.color: Theme.colorHeaderMobileBorder
 
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
@@ -84,7 +89,7 @@ Rectangle {
             anchors.left: leftMenuImg.right
             anchors.leftMargin: 24
             color: "#FFFFFF"
-            font.bold: true
+            font.bold: false
             font.pixelSize: 24
             antialiasing: true
             anchors.verticalCenter: parent.verticalCenter
@@ -92,8 +97,8 @@ Rectangle {
 
         Image {
             id: leftMenuImg
-            width: 24
-            height: 24
+            width: 28
+            height: 28
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
@@ -103,12 +108,6 @@ Rectangle {
             sourceSize.height: height
             fillMode: Image.PreserveAspectFit
 
-            ColorOverlay {
-                anchors.fill: parent
-                source: parent
-                color: "white"
-            }
-
             MouseArea {
                 anchors.fill: parent
                 onClicked: leftMenuClicked()
@@ -117,8 +116,8 @@ Rectangle {
 
         Image {
             id: rightMenuImg
-            width: 24
-            height: 24
+            width: 28
+            height: 28
             visible: rightMenuEnabled
             anchors.right: parent.right
             anchors.rightMargin: 16
@@ -128,12 +127,6 @@ Rectangle {
             sourceSize.width: width
             sourceSize.height: height
             fillMode: Image.PreserveAspectFit
-
-            ColorOverlay {
-                anchors.fill: parent
-                source: parent
-                color: "white"
-            }
 
             MouseArea {
                 anchors.fill: parent

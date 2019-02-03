@@ -22,16 +22,21 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import QtGraphicalEffects 1.0
+import app.watchflower.theme 1.0
+
 Item {
     id: deviceScreenLimits
 
     function updateLimits() {
-        rangeSlider_hygro.first.value = myDevice.limitHygroMin
-        rangeSlider_hygro.second.value = myDevice.limitHygroMax
-        rangeSlider_temp.first.value = myDevice.limitTempMin
-        rangeSlider_temp.second.value = myDevice.limitTempMax
-        rangeSlider_condu.first.value = myDevice.limitConduMin
-        rangeSlider_condu.second.value = myDevice.limitConduMax
+        if (myDevice) {
+            rangeSlider_hygro.first.value = myDevice.limitHygroMin
+            rangeSlider_hygro.second.value = myDevice.limitHygroMax
+            rangeSlider_temp.first.value = myDevice.limitTempMin
+            rangeSlider_temp.second.value = myDevice.limitTempMax
+            rangeSlider_condu.first.value = myDevice.limitConduMin
+            rangeSlider_condu.second.value = myDevice.limitConduMax
+        }
     }
 
     function updateLimitsVisibility() {
@@ -70,14 +75,20 @@ Item {
 
             Image {
                 id: imageHygro
-                width: 48
-                height: 48
+                width: 32
+                height: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/hygro.svg"
+                source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: text8
@@ -131,14 +142,20 @@ Item {
 
             Image {
                 id: imageTemp
-                width: 48
-                height: 48
+                width: 32
+                height: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/temp.svg"
+                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: text3
@@ -192,14 +209,20 @@ Item {
 
             Image {
                 id: imageLumi
-                width: 48
-                height: 48
+                width: 32
+                height: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/day.svg"
+                source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: text1
@@ -260,14 +283,20 @@ Item {
 
             Image {
                 id: imageCondu
-                width: 48
-                height: 48
+                width: 32
+                height: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/conductivity.svg"
+                source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: text7
@@ -312,3 +341,8 @@ Item {
         }
     }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

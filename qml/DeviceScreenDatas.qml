@@ -20,6 +20,10 @@
  */
 
 import QtQuick 2.7
+import QtQuick.Controls 2.0
+
+import QtGraphicalEffects 1.0
+import app.watchflower.theme 1.0
 
 Rectangle {
     id: rectangleDeviceDatas
@@ -112,9 +116,9 @@ Rectangle {
 
             var hours = Qt.formatDateTime (new Date(), "hh")
             if (hours >= 21 || hours <= 8) {
-                imageLuminosity.source = "qrc:/assets/night.svg"
+                imageLuminosity.source = "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
             } else {
-                imageLuminosity.source = "qrc:/assets/day.svg"
+                imageLuminosity.source = "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
             }
 
             if (myDevice.deviceLuminosity < 0) {
@@ -188,13 +192,19 @@ Rectangle {
 
             Image {
                 id: imageHygro
-                x: 0
-                y: 0
-                width: 48
-                height: 48
-                source: "qrc:/assets/hygro.svg"
+                x: 8
+                y: 8
+                width: 32
+                height: 32
+                source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: textHygro
@@ -249,13 +259,19 @@ Rectangle {
 
             Image {
                 id: imageTemp
-                x: 0
-                y: 0
-                width: 48
-                height: 48
-                source: "qrc:/assets/temp.svg"
+                x: 8
+                y: 8
+                width: 32
+                height: 32
+                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: textTemp
@@ -309,13 +325,19 @@ Rectangle {
 
             Image {
                 id: imageLuminosity
-                x: 0
-                y: 0
-                width: 48
-                height: 48
-                source: "qrc:/assets/day.svg"
+                x: 8
+                y: 8
+                width: 32
+                height: 32
+                source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: textLuminosity
@@ -368,13 +390,19 @@ Rectangle {
 
             Image {
                 id: imageConductivity
-                x: 0
-                y: 0
-                width: 48
-                height: 48
-                source: "qrc:/assets/conductivity.svg"
+                x: 8
+                y: 8
+                width: 32
+                height: 32
+                source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
                 sourceSize.width: width
                 sourceSize.height: height
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorDarkGrey
+                }
             }
             Text {
                 id: textConductivity

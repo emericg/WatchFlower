@@ -21,7 +21,9 @@
 
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+
 import QtGraphicalEffects 1.0
+import app.watchflower.theme 1.0
 
 Rectangle {
     width: parent.width
@@ -33,9 +35,9 @@ Rectangle {
         rectangleSettings.color = "#00000000"
 
         if (content.state === "DeviceList")
-            rectangleHome.color = "#dddddd"
+            rectangleHome.color = Theme.colorMaterialDarkGrey
         else if (content.state === "Settings")
-            rectangleSettings.color = "#dddddd"
+            rectangleSettings.color = Theme.colorMaterialDarkGrey
     }
 
     Connections {

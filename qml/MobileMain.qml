@@ -24,6 +24,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 import StatusBar 0.1
+import app.watchflower.theme 1.0
 
 ApplicationWindow {
     id: applicationWindow
@@ -36,12 +37,12 @@ ApplicationWindow {
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     Material.theme: Material.Dark
-    Material.accent: Material.Green
+    Material.accent: Material.LightGreen
 
     StatusBar {
         theme: Material.Dark
-        color: "#1ab850"
-        //color: Material.color(Material.Green, Material.Shade500)
+        color: Theme.colorHeaderMobileStatusbar
+        //color: Material.color(Material.LightGreen, Material.Shade900)
     }
 
     Drawer {
@@ -130,7 +131,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        DeviceList {
+        MobileDeviceList {
             anchors.fill: parent
             id: screenDeviceList
         }
@@ -138,7 +139,7 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceDetails
         }
-        Settings {
+        MobileSettings {
             anchors.fill: parent
             id: screenSettings
         }
