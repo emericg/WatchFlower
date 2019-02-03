@@ -4,6 +4,9 @@
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
         <file>desktop/watchflower_tray_dark.svg</file>
+        <file>devices/flowercare.svg</file>
+        <file>devices/ropot.svg</file>
+        <file>devices/hygrotemp.svg</file>
         <file>menu_back.svg</file>
         <file>menu_front.svg</file>
         <file>ble.svg</file>
@@ -21,6 +24,7 @@
         <file>icons_material/baseline-edit-24px.svg</file>
         <file>icons_material/baseline-exit_to_app-24px.svg</file>
         <file>icons_material/baseline-flash_on-24px.svg</file>
+        <file>icons_material/baseline-info-24px.svg</file>
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>
         <file>icons_material/baseline-menu-24px.svg</file>

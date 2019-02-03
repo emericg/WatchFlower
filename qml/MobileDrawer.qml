@@ -33,11 +33,14 @@ Rectangle {
     function updateDrawerFocus() {
         rectangleHome.color = "#00000000"
         rectangleSettings.color = "#00000000"
+        rectangleAbout.color = "#00000000"
 
         if (content.state === "DeviceList")
             rectangleHome.color = Theme.colorMaterialDarkGrey
         else if (content.state === "Settings")
             rectangleSettings.color = Theme.colorMaterialDarkGrey
+        else if (content.state === "About")
+            rectangleAbout.color = Theme.colorMaterialDarkGrey
     }
 
     Connections {
@@ -119,7 +122,7 @@ Rectangle {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "grey"
+                    color: "#454B54"
                 }
             }
             Label {
@@ -129,6 +132,8 @@ Rectangle {
 
                 text: qsTr("Plants")
                 font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
             }
         }
 
@@ -161,7 +166,7 @@ Rectangle {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "grey"
+                    color: "#454B54"
                 }
             }
             Label {
@@ -171,6 +176,52 @@ Rectangle {
 
                 text: qsTr("Settings")
                 font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
+            }
+        }
+
+        Rectangle {
+            id: rectangleAbout
+            height: 48
+            anchors.right: parent.right
+            anchors.left: parent.left
+            color: "#00000000"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    content.state = "About"
+                    drawer.close()
+                }
+            }
+
+            Image {
+                width: 24
+                height: 24
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                sourceSize.width: width
+                sourceSize.height: height
+                fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "#454B54"
+                }
+            }
+            Label {
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("About")
+                font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
             }
         }
 
@@ -184,7 +235,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "darkgrey"
+            color: "#454B54"
         }
         Rectangle {
             height: 8
@@ -223,7 +274,7 @@ Rectangle {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "grey"
+                    color: "#454B54"
                 }
 
                 NumberAnimation on rotation {
@@ -250,6 +301,8 @@ Rectangle {
 
                 text: qsTr("Update sensors")
                 font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
             }
         }
 
@@ -283,7 +336,7 @@ Rectangle {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "grey"
+                    color: "#454B54"
                 }
 
                 OpacityAnimator {
@@ -312,6 +365,8 @@ Rectangle {
 
                 text: qsTr("Search for new devices")
                 font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
             }
         }
 
@@ -326,7 +381,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "darkgrey"
+            color: "#454B54"
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
         Rectangle {
@@ -365,7 +420,7 @@ Rectangle {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "grey"
+                    color: "#454B54"
                 }
             }
             Label {
@@ -375,6 +430,8 @@ Rectangle {
 
                 text: qsTr("Exit")
                 font.pixelSize: 14
+                font.bold: true
+                color: "#454B54"
             }
         }
     }

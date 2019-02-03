@@ -6,6 +6,7 @@
         <file>MobileDeviceList.qml</file>
         <file>MobileDeviceBox.qml</file>
         <file>MobileSettings.qml</file>
+        <file>MobileAbout.qml</file>
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
         <file>DesktopDeviceBox.qml</file>
@@ -18,5 +19,6 @@
         <file>Settings.qml</file>
         <file>Theme.qml</file>
         <file>ThemedSwitch.qml</file>
+        <file>ThemedRadioButton.qml</file>
     </qresource>
 </RCC>

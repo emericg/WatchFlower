@@ -91,7 +91,7 @@ ApplicationWindow {
                 content.state = "DeviceDetails"
         }
     }
-    Item {
+    FocusScope {
         focus: true
         Keys.onBackPressed: {
             if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
@@ -143,6 +143,10 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenSettings
         }
+        MobileAbout {
+            anchors.fill: parent
+            id: screenAbout
+        }
 
         onStateChanged: {
             drawerscreen.updateDrawerFocus()
@@ -159,15 +163,23 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: screenDeviceList
+                    enabled: true
                     visible: true
                 }
                 PropertyChanges {
                     target: screenDeviceDetails
+                    enabled: false
                     visible: false
                 }
                 PropertyChanges {
                     target: screenSettings
+                    enabled: false
                     visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
                 }
             },
             State {
@@ -175,15 +187,23 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: screenDeviceList
+                    enabled: false
                     visible: false
                 }
                 PropertyChanges {
                     target: screenDeviceDetails
+                    enabled: true
                     visible: true
                 }
                 PropertyChanges {
                     target: screenSettings
+                    enabled: false
                     visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
                 }
                 StateChangeScript {
                     name: "secondScript"
@@ -196,15 +216,22 @@ ApplicationWindow {
                 PropertyChanges {
                     target: screenDeviceList
                     visible: false
+                    enabled: false
                 }
                 PropertyChanges {
                     target: screenDeviceDetails
-                    myDevice: curentlySelectedDevice
                     visible: false
+                    enabled: false
                 }
                 PropertyChanges {
                     target: screenSettings
                     visible: true
+                    enabled: true
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
                 }
             }
         ]

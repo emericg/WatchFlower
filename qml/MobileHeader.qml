@@ -89,7 +89,7 @@ Rectangle {
             anchors.left: leftMenuImg.right
             anchors.leftMargin: 24
             color: "#FFFFFF"
-            font.bold: false
+            font.bold: true
             font.pixelSize: 24
             antialiasing: true
             anchors.verticalCenter: parent.verticalCenter
@@ -120,7 +120,7 @@ Rectangle {
             height: 28
             visible: rightMenuEnabled
             anchors.right: parent.right
-            anchors.rightMargin: 16
+            anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"

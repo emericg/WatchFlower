@@ -333,6 +333,7 @@ Rectangle {
                 onEditingFinished: {
                     myDevice.setPlantName(text)
                     focus = false
+                    imageEditPlant.visible = false
                 }
 
                 Image {
@@ -363,8 +364,14 @@ Rectangle {
                     onEntered: { imageEditPlant.visible = true; }
                     onExited: { imageEditPlant.visible = false; }
 
-                    onClicked: mouse.accepted = false;
-                    onPressed: mouse.accepted = false;
+                    onClicked:  {
+                        imageEditPlant.visible = true;
+                        mouse.accepted = false;
+                    }
+                    onPressed:  {
+                        imageEditPlant.visible = true;
+                        mouse.accepted = false;
+                    }
                     onReleased: mouse.accepted = false;
                     onDoubleClicked: mouse.accepted = false;
                     onPositionChanged: mouse.accepted = false;
@@ -394,6 +401,7 @@ Rectangle {
                 onEditingFinished: {
                     myDevice.setLocationName(text)
                     focus = false
+                    imageEditLocation.visible = false
                 }
 
                 MouseArea {
@@ -404,8 +412,14 @@ Rectangle {
                     onEntered: { imageEditLocation.visible = true; }
                     onExited: { imageEditLocation.visible = false; }
 
-                    onClicked: mouse.accepted = false;
-                    onPressed: mouse.accepted = false;
+                    onClicked: {
+                        imageEditLocation.visible = true;
+                        mouse.accepted = false;
+                    }
+                    onPressed: {
+                        imageEditLocation.visible = true;
+                        mouse.accepted = false;
+                    }
                     onReleased: mouse.accepted = false;
                     onDoubleClicked: mouse.accepted = false;
                     onPositionChanged: mouse.accepted = false;

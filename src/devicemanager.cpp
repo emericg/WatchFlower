@@ -141,6 +141,32 @@ bool DeviceManager::hasDatabase() const
 
 /* ************************************************************************** */
 
+void DeviceManager::enableBluetooth()
+{
+    // TODO // We only try the "first" available bluetooth adapter
+    if (!m_bluetoothAdapter)
+    {
+        m_bluetoothAdapter = new QBluetoothLocalDevice();
+    }
+
+    if (m_bluetoothAdapter)
+    {
+        m_btA = true;
+
+        SettingsManager *sm = SettingsManager::getInstance();
+        if (sm && sm->getBluetooth())
+        {
+            // Make sure its powered on
+            // Doesn't work on all platforms...
+            m_bluetoothAdapter->powerOn();
+        }
+
+        // Keep us informed of availability changes
+        // On some platform it can only inform us about disconnection, not reconnection
+        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::bluetoothModeChanged);
+    }
+}
+
 void DeviceManager::checkBluetooth()
 {
 /*
@@ -156,43 +182,14 @@ void DeviceManager::checkBluetooth()
     else
     {
         qDebug() << "> No bluetooth adapter found...";
-        if (m_bluetoothAdapter)
-        {
-            disconnect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
-            delete m_bluetoothAdapter;
-            m_bluetoothAdapter = nullptr;
-        }
-        Q_EMIT bluetoothChanged();
-        return;
     }
 */
-    // TODO // We only try the "first" available bluetooth adapter
-    if (!m_bluetoothAdapter)
-    {
-        m_bluetoothAdapter = new QBluetoothLocalDevice();
-    }
+    // Enables adapter
+    enableBluetooth();
 
-    if (m_bluetoothAdapter)
-    {
-        m_btA = true;
-
-        // Keep us informed of availability changes
-        // On some platform it can only inform us about disconnection, not reconnection
-        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::changeBluetoothMode);
-    }
-
+    // Check availability
     if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
     {
-        SettingsManager *sm = SettingsManager::getInstance();
-
-        if (sm && sm->getBluetooth())
-        {
-            // Make sure its powered on
-            // Doesn't work on all platforms...
-            m_bluetoothAdapter->powerOn();
-        }
-
-        // Check availability
         if (m_bluetoothAdapter->hostMode() > 0)
         {
             m_btE = true;
@@ -224,7 +221,7 @@ void DeviceManager::checkDatabase()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceManager::changeBluetoothMode(QBluetoothLocalDevice::HostMode state)
+void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 {
     qDebug() << "Bluetooth host mode changed, now:" << state;
 

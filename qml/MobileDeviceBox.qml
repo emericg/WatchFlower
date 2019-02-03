@@ -102,7 +102,7 @@ Rectangle {
             z: 1
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.rightMargin: 6
 
             source: "qrc:/assets/menu_front.svg"
             sourceSize.width: width
@@ -123,36 +123,34 @@ Rectangle {
 
     Text {
         id: textPlant
-        height: 24
-        color: "#454B54"
+        color: "#544545"
         text: boxDevice.deviceLocationName
+        font.capitalization: Font.AllUppercase
         anchors.right: dataArea.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 8
         clip: true
         font.bold: false
-        anchors.topMargin: 18
+        anchors.topMargin: 16
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: 12
+        anchors.leftMargin: 8
 
         font.pixelSize: 22
-        verticalAlignment: Text.AlignBottom
     }
 
     Text {
         id: textLocation
-        verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
         text: boxDevice.deviceAddress
         anchors.right: dataArea.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 8
         clip: true
         font.weight: Font.Thin
         font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
         anchors.left: parent.left
-        anchors.leftMargin: 12
+        anchors.leftMargin: 8
     }
 
     Rectangle {

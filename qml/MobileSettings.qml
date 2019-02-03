@@ -81,12 +81,6 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        Component.onCompleted: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                checkBox_systray.enabled = false
-            }
-        }
-
         SpinBox {
             id: spinBox_update
             width: 128
@@ -128,7 +122,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
         }
 
-        RadioDelegate {
+        ThemedRadioButton {
             id: radioDelegateCelsius
             height: 40
             text: qsTr("°C")
@@ -153,7 +147,7 @@ Rectangle {
             }
         }
 
-        RadioDelegate {
+        ThemedRadioButton {
             id: radioDelegateFahrenheit
             height: 40
             text: qsTr("°F")
@@ -285,70 +279,20 @@ Rectangle {
 
             checked: settingsManager.bluetooth
             onCheckedChanged: { settingsManager.bluetooth = checked }
-
-        }
-    }
-
-    Rectangle {
-        id: rectangleInfos
-        width: 290
-        height: 88
-        color: "#00000000"
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: rectangleSettingsContent.bottom
-        anchors.topMargin: 16
-
-        Image {
-            id: imageLogo
-            width: 88
-            height: 88
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-
-            source: "qrc:/assets/desktop/watchflower.svg"
-            sourceSize.width: width
-            sourceSize.height: height
-        }
-
-        Text {
-            id: textVersion
-            width: 184
-            anchors.verticalCenterOffset: -12
-            anchors.left: imageLogo.right
-            anchors.leftMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-
-            color: "#343434"
-            text: qsTr("WatchFlower") + " / " + settingsManager.getAppVersion()
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 17
-        }
-        Text {
-            id: textUrl
-            width: 184
-            anchors.verticalCenterOffset: 12
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: imageLogo.right
-            anchors.leftMargin: 8
-
-            color: "#343434"
-            text: "Visit our <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\" style=\"text-decoration: none\">GitHub</a></html> page!"
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 17
-            onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
         }
     }
 
     Rectangle {
         id: rectangleReset
-        height: 40
+        height: 44
+        width: 300
         color: Theme.colorRed
-
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
+        radius: 20
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: rectangleSettingsContent.bottom
+        anchors.topMargin: 16
 
         property bool weAreBlinking: false
-        width: 300
 
         function startTheBlink() {
             if (weAreBlinking === true) {
@@ -376,8 +320,6 @@ Rectangle {
             ColorAnimation { from: Theme.colorRed; to: Theme.colorOrange; duration: 1000 }
             ColorAnimation { from: Theme.colorOrange; to: Theme.colorRed; duration: 1000 }
         }
-        radius: 20
-        anchors.horizontalCenter: parent.horizontalCenter
 
         Timer {
             id: timerReset
@@ -404,20 +346,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
 
-            onPressed: {
-                rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin + 4
-                rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin + 4
-                rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin + 4
-                rectangleReset.width = rectangleReset.width - 8
-                rectangleReset.height = rectangleReset.height - 8
-            }
-            onReleased: {
-                rectangleReset.anchors.bottomMargin = rectangleReset.anchors.bottomMargin - 4
-                rectangleReset.anchors.leftMargin = rectangleReset.anchors.leftMargin - 4
-                rectangleReset.anchors.rightMargin = rectangleReset.anchors.rightMargin - 4
-                rectangleReset.width = rectangleReset.width + 8
-                rectangleReset.height = rectangleReset.height + 8
-            }
             onClicked: {
                 rectangleReset.startTheBlink()
             }

@@ -72,6 +72,8 @@ public:
 
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
 
+    Q_INVOKABLE void enableBluetooth();
+
     Q_INVOKABLE void checkBluetooth();
     Q_INVOKABLE void checkDatabase();
 
@@ -93,7 +95,7 @@ public slots:
 
 private slots:
     // QBluetoothLocalDevice related
-    void changeBluetoothMode(QBluetoothLocalDevice::HostMode);
+    void bluetoothModeChanged(QBluetoothLocalDevice::HostMode);
 
     // QBluetoothDeviceDiscoveryAgent related
     void addBleDevice(const QBluetoothDeviceInfo &);

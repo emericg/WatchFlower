@@ -92,13 +92,16 @@ Rectangle {
             id: buttonEnables
             width: 128
             height: 30
-            text: qsTr("Enables")
-            opacity: 0.8
+            text: qsTr("Enable it!")
+            opacity: 0.9
             anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            onClicked: deviceManager.checkBluetooth()
+            onClicked: {
+                deviceManager.enableBluetooth()
+                deviceManager.checkBluetooth()
+            }
         }
 
         function hide() {
