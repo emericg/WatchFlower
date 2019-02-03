@@ -11,7 +11,7 @@
         <file>DesktopHeader.qml</file>
         <file>DesktopDeviceBox.qml</file>
         <file>DesktopGeometrySaver.qml</file>
-        <file>DeviceList.qml</file>
+        <file>DesktopDeviceList.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>

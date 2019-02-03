@@ -22,13 +22,13 @@
 import QtQuick 2.7
 
 Rectangle {
-    id: deviceBoxDesktop
+    id: deviceBoxMobile
     width: parent.width
-    height: 111
-    color: "#ddffffff"
-    radius: 8
+    height: 96
+    color: "#ffffff"
+    radius: 0
 
-    property var boxDevice: null
+    property var boxDevice
 
     Connections {
         target: boxDevice
@@ -37,231 +37,130 @@ Rectangle {
         onDatasUpdated: updateBoxDatas()
     }
 
-    Component.onCompleted: updateBoxDatas();
+    Component.onCompleted: updateBoxDatas()
+
+    function normalize(value, min, max) {
+        if (value <= 0) return 0
+        return Math.min(((value - min) / (max - min)), 1)
+    }
 
     function updateBoxDatas() {
         if (boxDevice.devicePlantName !== "") {
-            textName.text = boxDevice.devicePlantName
+            textPlant.text = boxDevice.devicePlantName
+            textLocation.text = boxDevice.deviceLocationName
         }
         if (boxDevice.deviceName === "MJ_HT_V1") {
-            textName.text = qsTr("BLE temperature sensor");
+            textPlant.text = qsTr("BLE temperature sensor")
+            textLocation.text = boxDevice.deviceLocationName
         }
 
-        textAddr.text = boxDevice.deviceLocationName
-        if (boxDevice.deviceLocationName === boxDevice.deviceName) {
-            if (boxDevice.deviceAddress.charAt(0) === '{')
-                textAddr.text += " " + boxDevice.deviceAddress
-            else
-                textAddr.text += " [" + boxDevice.deviceAddress + "]"
-        }
-/*
-        imageDevice.visible = false
-        if (boxDevice.deviceName === "MJ_HT_V1") {
-            imageDevice.source = "qrc:/assets/devices/hygrotemp.svg";
-        } else if (boxDevice.deviceName === "ropot") {
-            imageDevice.source = "qrc:/assets/devices/ropot.svg";
-        } else {
-            imageDevice.source = "qrc:/assets/devices/flowercare.svg";
-        }
-*/
+        rectangleSensors.visible = false
+        rectangleHygroTemp.visible = false
+
         if (boxDevice.isUpdating()) {
-            imageStatus.source = "qrc:/assets/ble.svg";
             refreshAnimation.running = true;
-
-            deviceBoxDesktop.color = "#ddffffff"
-            dataArea.color = "#aaf3f3f3"
-
             imageStatus.visible = true;
-            imageDatas.visible = false;
-            textDatas.visible = false;
-            imageBattery.visible = false;
-            textBattery.visible = false;
+            imageStatus.source = "qrc:/assets/ble.svg";
         } else {
             refreshAnimation.running = false;
 
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
-                imageDatas.visible = true;
-                textDatas.visible = true;
-                textDatas.text = boxDevice.dataString;
 
-                if (boxDevice.deviceHygro > 0 &&
-                    (boxDevice.deviceHygro < boxDevice.limitHygroMin ||
-                    boxDevice.deviceHygro > boxDevice.limitHygroMax)) {
-                    deviceBoxDesktop.color = "#ddfff9e4"
-                    dataArea.color = "#aafff2c8"
+                if (boxDevice.deviceName === "MJ_HT_V1") {
+                    rectangleHygroTemp.visible = true
+                    textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                    textHygro.text = boxDevice.deviceHygro + "%"
                 } else {
-                    deviceBoxDesktop.color = "#ddffffff"
-                    dataArea.color = "#aaf3f3f3"
-                }
-
-                if ((boxDevice.deviceCapabilities & 0x01) == 1) {
-                    imageBattery.visible = true;
-                    textBattery.visible = true;
-
-                    if (boxDevice.deviceBattery < 15) {
-                        imageBattery.source = "qrc:/assets/battery_low.svg";
-                    } else if (boxDevice.deviceBattery > 75) {
-                        imageBattery.source = "qrc:/assets/battery_full.svg";
-                    } else {
-                        imageBattery.source = "qrc:/assets/battery_mid.svg";
-                    }
-                    textBattery.text = boxDevice.deviceBattery + "%"
-                } else {
-                    imageBattery.visible = false;
-                    textBattery.visible = false;
+                    rectangleSensors.visible = true
+                    hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
+                    temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
+                    lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
+                    cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
+                    bat_data.height = (boxDevice.deviceBattery / 100)*64
                 }
             } else {
+                imageStatus.visible = true;
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
-
-                imageStatus.visible = true;
-                imageDatas.visible = false;
-                textDatas.visible = false;
-                imageBattery.visible = false;
-                textBattery.visible = false;
             }
         }
     }
 
     MouseArea {
         anchors.fill: parent
+
         onClicked: {
             curentlySelectedDevice = boxDevice
-            content.state = "DeviceDetails"
+            deviceScreen.loadDevice()
         }
     }
 
-    Text {
-        id: textName
-        height: 32
+    Rectangle {
+        id: background
+        height: 88
+        color: "#f9f9f9"
         anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.topMargin: 8
-        anchors.top: parent.top
+        anchors.rightMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 8
-
-        color: "#454B54"
-        text: boxDevice.deviceLocationName
-        font.bold: true
-        font.pixelSize: 23
-        verticalAlignment: Text.AlignVCenter
+        anchors.leftMargin: 0
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
-        id: textAddr
-        height: 22
-        color: "#454b54"
-        anchors.top: textName.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 9
+        id: textPlant
+        color: "#454B54"
+        text: boxDevice.deviceLocationName
+        font.capitalization: Font.AllUppercase
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+        clip: true
+        font.bold: false
+        anchors.topMargin: 14
+        anchors.top: parent.top
+        anchors.left: dataArea.right
+        anchors.leftMargin: 12
 
+        font.pixelSize: 24
+        verticalAlignment: Text.AlignBottom
+    }
+
+    Text {
+        id: textLocation
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
         text: boxDevice.deviceAddress
-    }
-
-    Image {
-        id: imageDevice
-        width: 56
-        height: 56
-        sourceSize.width: width
-        sourceSize. height: height
-        visible: false
-        opacity: 0.5
-
-        anchors.top: parent.top
-        anchors.topMargin: 8
         anchors.right: parent.right
-        anchors.rightMargin: 8
+        anchors.rightMargin: 12
+        clip: true
+        font.weight: Font.Thin
+        font.capitalization: Font.AllUppercase
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 14
+        anchors.left: dataArea.right
+        anchors.leftMargin: 12
     }
 
     Rectangle {
         id: dataArea
-        height: 42
-        color: "#aaf3f3f3"
+        width: 83
+        height: 88
+        color: "#00000000"
         anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-
-        Image {
-            id: imageDatas
-            width: 22
-            height: 22
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-
-            source: "qrc:/assets/stats.svg"
-            sourceSize.width: width
-            sourceSize.height: height
-        }
-        Text {
-            id: textDatas
-            height: 42
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: imageDatas.right
-            anchors.leftMargin: 8
-            text: boxDevice.dataString
-            topPadding: 4
-            font.wordSpacing: 0
-            verticalAlignment: Text.AlignVCenter
-            font.family: "Arial"
-            font.pixelSize: 16
-        }
-
-        Image {
-            id: imageBattery
-            width: 28
-            height: 28
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: textDatas.right
-            anchors.leftMargin: 16
-
-            source: {
-                if (boxDevice.deviceBattery < 15) {
-                    source = "qrc:/assets/battery_low.svg";
-                } else if (boxDevice.deviceBattery > 75) {
-                    source = "qrc:/assets/battery_full.svg";
-                } else {
-                    source = "qrc:/assets/battery_mid.svg";
-                }
-            }
-            sourceSize.width: width
-            sourceSize.height: height
-        }
-        Text {
-            id: textBattery
-            width: 48
-            height: 42
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 8
-            anchors.left: imageBattery.right
-
-            text: boxDevice.deviceBattery + "%"
-            topPadding: 4
-            font.family: "Arial"
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 16
-        }
+        anchors.leftMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
 
         Image {
             id: imageStatus
             width: 32
             height: 32
-            anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/ble.svg"
             sourceSize.width: width
             sourceSize.height: height
-            visible: true
+            visible: false
 
             SequentialAnimation on opacity {
                 id: refreshAnimation
@@ -269,6 +168,181 @@ Rectangle {
                 running: true
                 OpacityAnimator { from: 0; to: 1; duration: 600 }
                 OpacityAnimator { from: 1; to: 0;  duration: 600 }
+            }
+        }
+
+        Rectangle {
+            id: rectangleSensors
+            color: "#00000000"
+            anchors.fill: parent
+            visible: true
+
+            Rectangle {
+                id: hygro_bg
+                width: 12
+                color: "#e2e6e5"
+                radius: 6
+                clip: true
+
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                Rectangle {
+                    id: hygro_data
+                    height: 50
+                    color: "#289de1"
+                    radius: 5
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    border.width: 0
+                }
+            }
+
+            Rectangle {
+                id: temp_bg
+                width: 12
+                color: "#e2e6e5"
+                radius: 6
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.left: hygro_bg.right
+                anchors.leftMargin: 6
+
+                Rectangle {
+                    id: temp_data
+                    height: 20
+                    color: "#1abc9c"
+                    radius: 5
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    border.width: 0
+                    visible: true
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
+            }
+
+            Rectangle {
+                id: lumi_bg
+                width: 12
+                color: "#e2e6e5"
+                radius: 6
+                border.width: 0
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.left: temp_bg.right
+                anchors.leftMargin: 6
+
+                Rectangle {
+                    id: lumi_data
+                    height: 10
+                    color: "#ffba5a"
+                    radius: 6
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    border.width: 0
+                }
+            }
+            Rectangle {
+                id: cond_bg
+                width: 12
+                color: "#e2e6e5"
+                radius: 6
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.left: lumi_bg.right
+                anchors.leftMargin: 6
+
+                Rectangle {
+                    id: cond_data
+                    height: 16
+                    color: "#ff7657"
+                    radius: 6
+                    border.width: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
+            }
+            Rectangle {
+                id: bat_bg
+                width: 12
+                color: "#e2e6e5"
+                radius: 6
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.left: cond_bg.right
+                anchors.leftMargin: 6
+
+                Rectangle {
+                    id: bat_data
+                    y: 80
+                    height: 0
+                    color: "#555151"
+                    radius: 6
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    border.width: 0
+                }
+            }
+        }
+
+        Rectangle {
+            id: rectangleHygroTemp
+            color: "#f3f3f3"
+            anchors.fill: parent
+
+            Text {
+                id: textTemp
+                y: 18
+                color: "#393939"
+                text: qsTr("25.0°")
+                font.wordSpacing: -1.2
+                font.letterSpacing: -1.4
+                renderType: Text.NativeRendering
+                font.weight: Font.Normal
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 24
+            }
+
+            Text {
+                id: textHygro
+                color: "#393939"
+                text: qsTr("55%")
+                anchors.top: textTemp.bottom
+                anchors.topMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 20
             }
         }
     }

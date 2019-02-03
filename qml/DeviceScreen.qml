@@ -64,7 +64,7 @@ Rectangle {
                     textLastUpdate.text = qsTr("Device is updating...")
                 else
                     textLastUpdate.text = qsTr("Updating...")
-                textLastUpdate.color = "#000000"
+                textLastUpdate.color = "#454B54"
                 textLastUpdate.font.bold = false
             } else if (!myDevice.available && !myDevice.updating) {
                 if (!shortVersion)
@@ -72,9 +72,9 @@ Rectangle {
                 else
                     textLastUpdate.text = qsTr("Offline!")
                 textLastUpdate.font.bold = true
-                textLastUpdate.color = "#ff671b"
+                textLastUpdate.color = Theme.colorOrange
                 textRefresh.text = qsTr("Retry")
-                textRefresh.width = 80
+                //textRefresh.width = 80
             } else {
                 if (!shortVersion)
                     textLastUpdate.text = qsTr("Last update:") + " "
@@ -85,10 +85,10 @@ Rectangle {
                     textLastUpdate.text += qsTr("Just now!")
                 else
                     textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
-                textLastUpdate.color = "#000000"
+                textLastUpdate.color = "#454B54"
                 textLastUpdate.font.bold = false
                 textRefresh.text = qsTr("Refresh")
-                textRefresh.width = 112
+                //textRefresh.width = 112
             }
         }
     }
@@ -115,8 +115,12 @@ Rectangle {
 
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
-            textBattery.visible = false // temporary disable
             imageBattery.visible = true
+            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+                textBattery.visible = false
+            } else {
+                textBattery.visible = true
+            }
 
             if (myDevice.deviceBattery < 10) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
@@ -132,8 +136,8 @@ Rectangle {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
             }
         } else {
-            textBattery.visible = false
             imageBattery.visible = false
+            textBattery.visible = false
         }
 
         if (myDevice.deviceAddress.charAt(0) !== '{')
@@ -154,11 +158,13 @@ Rectangle {
             else
                 textInputPlant.text = qsTr("Plant")
 
-            rectangleHeader.height = 133
+            rectangleHeader.height = 160
+            labelStatus.anchors.top = labelPlant.bottom
         } else {
             labelPlant.visible = false
+            labelStatus.anchors.top = labelLocation.bottom
             textInputPlant.visible = false
-            rectangleHeader.height = 104
+            rectangleHeader.height = 140
         }
 
         if (!myDevice.deviceFirmwareUpToDate) {
@@ -191,7 +197,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleHeader
-            height: 124
+            height: 160
             color: Theme.colorMaterialLightGrey
 
             anchors.right: parent.right
@@ -446,182 +452,172 @@ Rectangle {
                     }
                 }
             }
-        }
 
-        Rectangle {
-            id: rectangleSubHeader
-            height: 48
-            color: Theme.colorMaterialLightGrey
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.top: rectangleHeader.bottom
-            anchors.topMargin: 0
+            Text {
+                id: labelStatus
+                text: qsTr("Status")
+                anchors.top: labelPlant.bottom
+                anchors.left: parent.left
+                anchors.topMargin: 10
+                anchors.leftMargin: 12
+                font.pixelSize: 15
+            }
 
             Text {
                 id: textLastUpdate
-                height: 32
-                text: qsTr("Last update:")
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 16
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: buttonRefresh.right
-                anchors.leftMargin: 10
-            }
-
-            Image {
-                id: imageLastUpdate
-                width: 22
-                height: 22
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: buttonLimits.right
-                anchors.leftMargin: 10
-                source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorDarkGrey
-                }
+                color: "#454b54"
+                text: qsTr("Loading...")
+                font.pixelSize: 18
+                anchors.verticalCenter: labelStatus.verticalCenter
+                anchors.left: labelStatus.right
+                anchors.leftMargin: 12
             }
 
             Rectangle {
-                id: buttonRefresh
-                width: 108
-                height: 32
-                color: "#e0e0e0"
-                anchors.left: buttonLimits.right
-                anchors.leftMargin: 10
+                id: rectangleSubHeader
+                width: 120
+                height: 94
+                color: Theme.colorMaterialLightGrey
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
 
-                Text {
-                    id: textRefresh
+                Rectangle {
+                    id: buttonRefresh
+                    width: 100
                     height: 32
-                    color: "#202020"
-                    text: qsTr("Refresh")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.right: parent.right
-                    font.pixelSize: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: imageRefresh.right
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 8
-                }
-
-                Image {
-                    id: imageRefresh
-                    width: 22
-                    height: 22
+                    color: "#e0e0e0"
+                    anchors.top: buttonLimits.bottom
+                    anchors.topMargin: 10
                     anchors.left: parent.left
-                    anchors.leftMargin: 6
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    sourceSize.width: width
-                    sourceSize.height: height
+                    anchors.leftMargin: 10
 
-                    ColorOverlay {
+                    Text {
+                        id: textRefresh
+                        height: 32
+                        color: "#202020"
+                        text: qsTr("Refresh")
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.right: parent.right
+                        font.pixelSize: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imageRefresh.right
+                        anchors.rightMargin: 0
+                        anchors.leftMargin: 8
+                    }
+
+                    Image {
+                        id: imageRefresh
+                        width: 22
+                        height: 22
+                        anchors.left: parent.left
+                        anchors.leftMargin: 6
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                        sourceSize.width: width
+                        sourceSize.height: height
+
+                        ColorOverlay {
+                            anchors.fill: parent
+                            source: parent
+                            color: Theme.colorDarkGrey
+                        }
+
+                        NumberAnimation on rotation {
+                            id: refreshRotation
+                            duration: 3000;
+                            from: 0;
+                            to: 360;
+                            loops: Animation.Infinite
+                            running: false
+                        }
+                    }
+
+                    MouseArea {
                         anchors.fill: parent
-                        source: parent
-                        color: Theme.colorDarkGrey
-                    }
 
-                    NumberAnimation on rotation {
-                        id: refreshRotation
-                        duration: 3000;
-                        from: 0;
-                        to: 360;
-                        loops: Animation.Infinite
-                        running: false
+                        hoverEnabled: true
+                        onEntered: buttonRefresh.color = "#eaeaea"
+                        onExited: buttonRefresh.color = "#e0e0e0"
+
+                        onClicked: {
+                            refreshRotation.start()
+                            myDevice.refreshDatas()
+                        }
                     }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-
-                    hoverEnabled: true
-                    onEntered: buttonRefresh.color = "#eaeaea"
-                    onExited: buttonRefresh.color = "#e0e0e0"
-
-                    onClicked: {
-                        refreshRotation.start()
-                        myDevice.refreshDatas()
-                    }
-                }
-            }
-
-            Rectangle {
-                id: buttonLimits
-                width: 100
-                height: 32
-                color: "#e0e0e0"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-
-                function initButton() {
-                    if (rectangleContent.state === "limits") {
-                        textLimits.text = qsTr("Datas")
-                        imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                    } else {
-                        textLimits.text = qsTr("Limits")
-                        imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                    }
-                }
-
-                Text {
-                    id: textLimits
+                Rectangle {
+                    id: buttonLimits
+                    width: 100
                     height: 32
-                    color: "#202020"
-                    text: qsTr("Limits")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.right: parent.right
-                    font.pixelSize: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: imageLimits.right
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 8
-                }
-
-                Image {
-                    id: imageLimits
-                    width: 22
-                    height: 22
-                    anchors.verticalCenter: parent.verticalCenter
+                    color: "#e0e0e0"
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
                     anchors.left: parent.left
-                    anchors.leftMargin: 6
-                    source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                    sourceSize.width: width
-                    sourceSize.height: height
+                    anchors.leftMargin: 10
 
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: Theme.colorDarkGrey
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    hoverEnabled: true
-                    onEntered: buttonLimits.color = "#eaeaea"
-                    onExited: buttonLimits.color = "#e0e0e0"
-
-                    onClicked: {
-                        if (rectangleContent.state === "datas") {
-                            rectangleContent.state = "limits"
+                    function initButton() {
+                        if (rectangleContent.state === "limits") {
                             textLimits.text = qsTr("Datas")
                             imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                         } else {
-                            rectangleContent.state = "datas"
                             textLimits.text = qsTr("Limits")
                             imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                        }
+                    }
 
-                            // Update color bars with new limits
-                            rectangleDeviceDatas.updateDatas()
+                    Text {
+                        id: textLimits
+                        height: 32
+                        color: "#202020"
+                        text: qsTr("Limits")
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.right: parent.right
+                        font.pixelSize: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imageLimits.right
+                        anchors.rightMargin: 0
+                        anchors.leftMargin: 8
+                    }
+
+                    Image {
+                        id: imageLimits
+                        width: 22
+                        height: 22
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 6
+                        source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                        sourceSize.width: width
+                        sourceSize.height: height
+
+                        ColorOverlay {
+                            anchors.fill: parent
+                            source: parent
+                            color: Theme.colorDarkGrey
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        hoverEnabled: true
+                        onEntered: buttonLimits.color = "#eaeaea"
+                        onExited: buttonLimits.color = "#e0e0e0"
+
+                        onClicked: {
+                            if (rectangleContent.state === "datas") {
+                                rectangleContent.state = "limits"
+                                textLimits.text = qsTr("Datas")
+                                imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                            } else {
+                                rectangleContent.state = "datas"
+                                textLimits.text = qsTr("Limits")
+                                imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
+
+                                // Update color bars with new limits
+                                rectangleDeviceDatas.updateDatas()
+                            }
                         }
                     }
                 }
@@ -634,7 +630,7 @@ Rectangle {
             anchors.topMargin: 0
             anchors.bottom: parent.bottom
 
-            anchors.top: rectangleSubHeader.bottom
+            anchors.top: rectangleHeader.bottom
             anchors.left: parent.left
             anchors.right: parent.right
 

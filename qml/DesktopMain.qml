@@ -132,13 +132,9 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        DeviceList {
+        DesktopDeviceList {
             anchors.fill: parent
             id: screenDeviceList
-        }
-        DeviceScreen {
-            anchors.fill: parent
-            id: screenDeviceDetails
         }
         Settings {
             anchors.fill: parent
@@ -155,10 +151,6 @@ ApplicationWindow {
                     visible: true
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
-                    visible: false
-                }
-                PropertyChanges {
                     target: screenSettings
                     visible: false
                 }
@@ -171,16 +163,8 @@ ApplicationWindow {
                     visible: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
-                    visible: true
-                }
-                PropertyChanges {
                     target: screenSettings
                     visible: false
-                }
-                StateChangeScript {
-                    name: "secondScript"
-                    script: screenDeviceDetails.loadDevice()
                 }
             },
             State {
@@ -188,11 +172,6 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: screenDeviceList
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceDetails
-                    myDevice: curentlySelectedDevice
                     visible: false
                 }
                 PropertyChanges {
