@@ -41,6 +41,7 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
 * Graphical resources: please read [assets/COPYING](assets/COPYING)
+* Christian Díaz <christiandiaz.design@gmail.com> for the application icon.
 
 
 ## Get involved!
