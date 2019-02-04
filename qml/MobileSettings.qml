@@ -46,7 +46,7 @@ Rectangle {
 
         Text {
             id: textTitle
-            color: "#454B54"
+            color: Theme.colorTitles
             text: qsTr("Settings")
             anchors.right: parent.right
             anchors.rightMargin: 12
@@ -71,7 +71,7 @@ Rectangle {
 
     Rectangle {
         id: rectangleSettingsContent
-        height: 256
+        height: 238
         color: "#00000000"
 
         anchors.top:rectangleSettingsTitle.bottom
@@ -287,10 +287,10 @@ Rectangle {
         height: 44
         width: 300
         color: Theme.colorRed
-        radius: 20
+        radius: 22
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: rectangleSettingsContent.bottom
-        anchors.topMargin: 16
+        anchors.topMargin: 24
 
         property bool weAreBlinking: false
 
@@ -309,7 +309,7 @@ Rectangle {
             weAreBlinking = false
             timerReset.stop()
             blinkReset.stop()
-            textReset.text = qsTr("Reset everything!")
+            textReset.text = qsTr("Reset sensors & datas!")
             rectangleReset.color = Theme.colorRed
         }
 
@@ -335,13 +335,13 @@ Rectangle {
             id: textReset
             anchors.fill: parent
             color: "#ffffff"
-            text: qsTr("Reset everything!")
+            text: qsTr("Reset sensors & datas!")
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font.bold: false
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 20
+            font.pixelSize: 18
         }
         MouseArea {
             anchors.fill: parent

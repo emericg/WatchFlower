@@ -29,10 +29,11 @@ Rectangle {
     id: rectangleHeader
     width: parent.width
     height: screenTopPadding + 56
-
-    border.width: 1
     color: Theme.colorHeaderMobile
-    border.color: Theme.colorHeaderMobileBorder
+
+    // Border can be good for material design
+    //border.width: 1
+    //border.color: Theme.colorHeaderMobile
 
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
@@ -104,8 +105,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
-            sourceSize.width: width
-            sourceSize.height: height
+            sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectFit
 
             MouseArea {
@@ -124,8 +124,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-            sourceSize.width: width
-            sourceSize.height: height
+            sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectFit
 
             MouseArea {

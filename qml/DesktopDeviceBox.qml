@@ -109,7 +109,7 @@ Rectangle {
 
     Text {
         id: textPlant
-        color: "#454B54"
+        color: Theme.colorTitles
         text: boxDevice.deviceLocationName
         font.capitalization: Font.AllUppercase
         anchors.right: parent.right
@@ -158,8 +158,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/ble.svg"
-            sourceSize.width: width
-            sourceSize.height: height
+            sourceSize: Qt.size(width, height)
             visible: false
 
             SequentialAnimation on opacity {

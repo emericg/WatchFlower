@@ -25,7 +25,7 @@ import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import app.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: rectangleDeviceDatas
     anchors.fill: parent
 
@@ -56,24 +56,24 @@ Rectangle {
 
             if (myDevice.deviceHygro < 0) {
                 textHygro.text = qsTr("No datas...")
-                barHygro_low.color = badColor
-                barHygro_good.color = badColor
-                barHygro_high.color = badColor
+                barHygro_low.color = Theme.colorBad
+                barHygro_good.color = Theme.colorBad
+                barHygro_high.color = Theme.colorBad
             } else {
                 textHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
 
                 if (myDevice.deviceHygro < myDevice.limitHygroMin) {
-                    barHygro_low.color = badColor
-                    barHygro_good.color = neutralColor
-                    barHygro_high.color = neutralColor
+                    barHygro_low.color = Theme.colorBad
+                    barHygro_good.color = Theme.colorNeutralDay
+                    barHygro_high.color = Theme.colorNeutralDay
                 } else if (myDevice.deviceHygro > myDevice.limitHygroMax) {
-                    barHygro_low.color = neutralColor
-                    barHygro_good.color = neutralColor
-                    barHygro_high.color = badColor
+                    barHygro_low.color = Theme.colorNeutralDay
+                    barHygro_good.color = Theme.colorNeutralDay
+                    barHygro_high.color = Theme.colorBad
                 } else {
-                    barHygro_low.color = neutralColor
-                    barHygro_good.color = goodColor
-                    barHygro_high.color = neutralColor
+                    barHygro_low.color = Theme.colorNeutralDay
+                    barHygro_good.color = Theme.colorGood
+                    barHygro_high.color = Theme.colorNeutralDay
                 }
             }
         }
@@ -86,24 +86,24 @@ Rectangle {
 
             if (myDevice.deviceTempC < -100) {
                 textTemp.text = qsTr("No datas...")
-                barTemp_low.color = badColor
-                barTemp_good.color = badColor
-                barTemp_high.color = badColor
+                barTemp_low.color = Theme.colorBad
+                barTemp_good.color = Theme.colorBad
+                barTemp_high.color = Theme.colorBad
             } else {
                 textTemp.text = myDevice.getTempString()
 
                 if (myDevice.deviceTempC < myDevice.limitTempMin) {
-                    barTemp_low.color = badColor
-                    barTemp_good.color = neutralColor
-                    barTemp_high.color = neutralColor
+                    barTemp_low.color = Theme.colorBad
+                    barTemp_good.color = Theme.colorNeutralDay
+                    barTemp_high.color = Theme.colorNeutralDay
                 } else if (myDevice.deviceTempC > myDevice.limitTempMax) {
-                    barTemp_low.color = neutralColor
-                    barTemp_good.color = neutralColor
-                    barTemp_high.color = badColor
+                    barTemp_low.color = Theme.colorNeutralDay
+                    barTemp_good.color = Theme.colorNeutralDay
+                    barTemp_high.color = Theme.colorBad
                 } else {
-                    barTemp_low.color = neutralColor
-                    barTemp_good.color = goodColor
-                    barTemp_high.color = neutralColor
+                    barTemp_low.color = Theme.colorNeutralDay
+                    barTemp_good.color = Theme.colorGood
+                    barTemp_high.color = Theme.colorNeutralDay
                 }
             }
         }
@@ -123,24 +123,24 @@ Rectangle {
 
             if (myDevice.deviceLuminosity < 0) {
                 textLuminosity.text = qsTr("No datas...")
-                barLux_low.color = badColor
-                barLux_good.color = badColor
-                barLux_high.color = badColor
+                barLux_low.color = Theme.colorBad
+                barLux_good.color = Theme.colorBad
+                barLux_high.color = Theme.colorBad
             } else {
                 textLuminosity.text = myDevice.deviceLuminosity + " lumens"
 
                 if (myDevice.deviceLuminosity < myDevice.limitLumiMin) {
-                    barLux_low.color = badColor
-                    barLux_good.color = neutralColor
-                    barLux_high.color = neutralColor
+                    barLux_low.color = Theme.colorBad
+                    barLux_good.color = Theme.colorNeutralDay
+                    barLux_high.color = Theme.colorNeutralDay
                 } else if (myDevice.deviceLuminosity > myDevice.limitLumiMax) {
-                    barLux_low.color = neutralColor
-                    barLux_good.color = neutralColor
-                    barLux_high.color = badColor
+                    barLux_low.color = Theme.colorNeutralDay
+                    barLux_good.color = Theme.colorNeutralDay
+                    barLux_high.color = Theme.colorBad
                 } else {
-                    barLux_low.color = neutralColor
-                    barLux_good.color = goodColor
-                    barLux_high.color = neutralColor
+                    barLux_low.color = Theme.colorNeutralDay
+                    barLux_good.color = Theme.colorGood
+                    barLux_high.color = Theme.colorNeutralDay
                 }
             }
         }
@@ -153,24 +153,24 @@ Rectangle {
 
             if (myDevice.deviceConductivity < 0) {
                 textConductivity.text = qsTr("No datas...")
-                barCond_low.color = badColor
-                barCond_good.color = badColor
-                barCond_high.color = badColor
+                barCond_low.color = Theme.colorBad
+                barCond_good.color = Theme.colorBad
+                barCond_high.color = Theme.colorBad
             } else {
                 textConductivity.text = myDevice.deviceConductivity + " µS/cm"
 
                 if (myDevice.deviceConductivity < myDevice.limitConduMin) {
-                    barCond_low.color = badColor
-                    barCond_good.color = neutralColor
-                    barCond_high.color = neutralColor
+                    barCond_low.color = Theme.colorBad
+                    barCond_good.color = Theme.colorNeutralDay
+                    barCond_high.color = Theme.colorNeutralDay
                 } else if (myDevice.deviceConductivity > myDevice.limitConduMax) {
-                    barCond_low.color = neutralColor
-                    barCond_good.color = neutralColor
-                    barCond_high.color = badColor
+                    barCond_low.color = Theme.colorNeutralDay
+                    barCond_good.color = Theme.colorNeutralDay
+                    barCond_high.color = Theme.colorBad
                 } else {
-                    barCond_low.color = neutralColor
-                    barCond_good.color = goodColor
-                    barCond_high.color = neutralColor
+                    barCond_low.color = Theme.colorNeutralDay
+                    barCond_good.color = Theme.colorGood
+                    barCond_high.color = Theme.colorNeutralDay
                 }
             }
         }
@@ -188,7 +188,7 @@ Rectangle {
             id: rectangleHygro
             width: 173
             height: 48
-            color: "#ffffff"
+            color: "#00000000"
 
             Image {
                 id: imageHygro
@@ -197,13 +197,12 @@ Rectangle {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -224,7 +223,7 @@ Rectangle {
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.verticalCenterOffset: 0
                 anchors.right: barHygro_good.left
                 anchors.rightMargin: 4
@@ -236,14 +235,14 @@ Rectangle {
                 y: 31
                 width: 56
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
             }
             Rectangle {
                 id: barHygro_high
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.verticalCenterOffset: 0
                 anchors.left: barHygro_good.right
                 anchors.leftMargin: 4
@@ -255,7 +254,7 @@ Rectangle {
             id: rectangleTemp
             width: 173
             height: 48
-            color: "#ffffff"
+            color: "#00000000"
 
             Image {
                 id: imageTemp
@@ -264,13 +263,12 @@ Rectangle {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -291,7 +289,7 @@ Rectangle {
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.right: barTemp_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenterOffset: 0
@@ -303,14 +301,14 @@ Rectangle {
                 y: 31
                 width: 56
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
             }
             Rectangle {
                 id: barTemp_high
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.left: barTemp_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barTemp_good.verticalCenter
@@ -321,7 +319,7 @@ Rectangle {
             id: rectangleLuminosity
             width: 173
             height: 48
-            color: "#ffffff"
+            color: "#00000000"
 
             Image {
                 id: imageLuminosity
@@ -330,13 +328,12 @@ Rectangle {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -357,7 +354,7 @@ Rectangle {
                 y: 32
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.right: barLux_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barLux_good.verticalCenter
@@ -368,7 +365,7 @@ Rectangle {
                 y: 31
                 width: 56
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
             }
             Rectangle {
                 id: barLux_high
@@ -378,7 +375,7 @@ Rectangle {
                 anchors.left: barLux_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barLux_good.verticalCenter
-                color: neutralColor
+                color: Theme.colorNeutralDay
             }
         }
 
@@ -386,7 +383,7 @@ Rectangle {
             id: rectangleConductivity
             width: 173
             height: 48
-            color: "#ffffff"
+            color: "#00000000"
 
             Image {
                 id: imageConductivity
@@ -395,13 +392,12 @@ Rectangle {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -422,7 +418,7 @@ Rectangle {
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.right: barCond_good.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: barCond_good.verticalCenter
@@ -433,14 +429,14 @@ Rectangle {
                 y: 31
                 width: 56
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
             }
             Rectangle {
                 id: barCond_high
                 y: 27
                 width: 28
                 height: 8
-                color: neutralColor
+                color: Theme.colorNeutralDay
                 anchors.left: barCond_good.right
                 anchors.leftMargin: 4
                 anchors.verticalCenter: barCond_good.verticalCenter

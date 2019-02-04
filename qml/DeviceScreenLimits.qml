@@ -81,13 +81,12 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -101,7 +100,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageHygro.right
             }
-            RangeSlider {
+            ThemedRangeSlider {
                 id: rangeSlider_hygro
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
@@ -148,13 +147,12 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -168,7 +166,7 @@ Item {
                 anchors.left: imageTemp.right
                 font.pixelSize: 14
             }
-            RangeSlider {
+            ThemedRangeSlider {
                 id: rangeSlider_temp
                 height: 40
                 anchors.right: text5.left
@@ -215,13 +213,12 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -289,13 +286,12 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
             Text {
@@ -310,7 +306,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
             }
-            RangeSlider {
+            ThemedRangeSlider {
                 id: rangeSlider_condu
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
@@ -341,8 +337,3 @@ Item {
         }
     }
 }
-
-/*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
- ##^##*/

@@ -78,8 +78,7 @@ Rectangle {
             anchors.top: parent.top
 
             source: "qrc:/assets/desktop/watchflower.svg"
-            sourceSize.width: width
-            sourceSize.height: width
+            sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectCrop
         }
     }
@@ -116,13 +115,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/watchflower.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
             }
             Label {
@@ -133,7 +131,7 @@ Rectangle {
                 text: qsTr("Plants")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
 
@@ -160,13 +158,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
             }
             Label {
@@ -177,7 +174,7 @@ Rectangle {
                 text: qsTr("Settings")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
 
@@ -204,13 +201,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-info-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
             }
             Label {
@@ -221,7 +217,7 @@ Rectangle {
                 text: qsTr("About")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
 
@@ -235,7 +231,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#454B54"
+            color: Theme.colorText
         }
         Rectangle {
             height: 8
@@ -268,13 +264,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
 
                 NumberAnimation on rotation {
@@ -302,7 +297,7 @@ Rectangle {
                 text: qsTr("Update sensors")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
 
@@ -330,13 +325,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
 
                 OpacityAnimator {
@@ -366,7 +360,7 @@ Rectangle {
                 text: qsTr("Search for new devices")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
 
@@ -381,7 +375,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#454B54"
+            color: Theme.colorIcons
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
         Rectangle {
@@ -395,10 +389,9 @@ Rectangle {
         Rectangle {
             id: rectangleExit
             height: 48
-            color: "#00000000"
             anchors.right: parent.right
             anchors.left: parent.left
-
+            color: "#00000000"
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             MouseArea {
@@ -414,13 +407,12 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: "#454B54"
+                    color: Theme.colorIcons
                 }
             }
             Label {
@@ -431,7 +423,7 @@ Rectangle {
                 text: qsTr("Exit")
                 font.pixelSize: 14
                 font.bold: true
-                color: "#454B54"
+                color: Theme.colorText
             }
         }
     }

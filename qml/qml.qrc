@@ -20,5 +20,6 @@
         <file>Theme.qml</file>
         <file>ThemedSwitch.qml</file>
         <file>ThemedRadioButton.qml</file>
+        <file>ThemedRangeSlider.qml</file>
     </qresource>
 </RCC>

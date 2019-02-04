@@ -22,6 +22,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import QtGraphicalEffects 1.0
 import app.watchflower.theme 1.0
 
 Rectangle {
@@ -46,7 +47,7 @@ Rectangle {
 
         Text {
             id: textTitle
-            color: "#454B54"
+            color: Theme.colorTitles
             text: qsTr("About")
             anchors.right: parent.right
             anchors.rightMargin: 12
@@ -71,7 +72,7 @@ Rectangle {
 
     Rectangle {
         id: rectangleContent
-        color: "#ffffff"
+        color: "#00000000"
         anchors.top: rectangleAboutTitle.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -80,21 +81,23 @@ Rectangle {
 
         TextArea {
             id: element
-            text: qsTr("WatchFlower is an application that reads and plots datas from these Xiaomi devices:")
             anchors.top: parent.top
             anchors.topMargin: 8
-            wrapMode: Text.WordWrap
             anchors.left: parent.left
             anchors.leftMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 8
+
+            text: qsTr("WatchFlower is an application that reads and plots datas from these Xiaomi devices:")
+            wrapMode: Text.WordWrap
+            readOnly: true
             font.pixelSize: 17
         }
 
         Rectangle {
-            id: rectangle
+            id: rectangleIcons
             height: 96
-            color: "#ffffff"
+            color: "#00000000"
             anchors.top: element.bottom
             anchors.topMargin: 8
             anchors.left: parent.left
@@ -109,9 +112,15 @@ Rectangle {
                 anchors.left: image2.right
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
+
                 source: "qrc:/assets/devices/hygrotemp.svg"
                 fillMode: Image.PreserveAspectFit
                 sourceSize: Qt.size(width, height)
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
             }
 
             Image {
@@ -123,6 +132,11 @@ Rectangle {
                 source: "qrc:/assets/devices/ropot.svg"
                 fillMode: Image.PreserveAspectFit
                 sourceSize: Qt.size(width, height)
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
             }
 
             Image {
@@ -135,6 +149,11 @@ Rectangle {
                 source: "qrc:/assets/devices/flowercare.svg"
                 fillMode: Image.PreserveAspectFit
                 sourceSize: Qt.size(width, height)
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
             }
         }
 
@@ -155,8 +174,7 @@ Rectangle {
                 anchors.left: parent.left
 
                 source: "qrc:/assets/desktop/watchflower.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
             }
 
             Text {

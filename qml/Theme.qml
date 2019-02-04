@@ -26,33 +26,43 @@ Item {
     // Headers
     readonly property string colorHeaderDesktop: "#4E598C"
     readonly property string colorHeaderMobile: "#00c853"
-    readonly property string colorHeaderMobileBorder: "#00c853"
     readonly property string colorHeaderMobileStatusbar: "#009624"
 
     // Material
+    readonly property string colorMaterialLightGrey: "#f8f8f8"
+    readonly property string colorMaterialDarkGrey: "#ececec"
     readonly property string colorMaterialLightGreen: "#00c853"
     readonly property string colorMaterialDarkGreen: "#84E351"
-    readonly property string colorMaterialLightGrey: "#f5f5f6"
-    readonly property string colorMaterialDarkGrey: "#e1e2e1"
     readonly property string colorMaterialOrange: "#ffb300"
 
-    // Palette
+    // Actually used colors...
+    readonly property string colorGood: "#87d241"
+    readonly property string colorBad: "#ffbf66"
+    readonly property string colorNeutralDay: "#e4e4e4"
+    readonly property string colorNeutralNight: "#ffb300"
+
+    readonly property string colorTitles: "#454B54"
+    readonly property string colorText: "#505050"
+    readonly property string colorIcons: "#606060"
+
+    readonly property string colorBarHygro: "#31A3EC"
+    readonly property string colorBarTemp: "#87D241"
+    readonly property string colorBarLumi: "#F1EC5C"
+    readonly property string colorBarCond: "#E19C2F"
+
+    // Palette (WIP)
     readonly property string colorRed: "#ff7657"
     readonly property string colorOrange: "#ffb74c"
     readonly property string colorBlue: "#408ab4"
-
     readonly property string colorGreen1: "#c9ffc7"
     readonly property string colorGreen2: "#2ecc71"
     readonly property string colorGreen3: "#27ae60"
     readonly property string colorGreen4: "#1abc9c"
-
     readonly property string colorDarkGrey: "#555151"
     readonly property string colorBlueGrey: "#a9bcb8"
 
-    // Fonts (sizes in pixel)
-    readonly property int fontSizeHeaderTitle: 30
-    readonly property int fontSizeHeaderText: 17
-    readonly property int fontSizeBannerText: 20
-    readonly property int fontSizeContentTitle: 24
-    readonly property int fontSizeContentText: 15
+    // Fonts (sizes in pixel) (WIP)
+    readonly property int fontSizeHeader: 30
+    readonly property int fontSizeTitle: 17
+    readonly property int fontSizeContent: 15
 }

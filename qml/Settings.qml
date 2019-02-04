@@ -44,7 +44,7 @@ Rectangle {
 
         Text {
             id: textTitle
-            color: "#454b54"
+            color: Theme.colorTitles
             text: qsTr("Settings")
             anchors.right: parent.right
             anchors.rightMargin: 12
@@ -94,8 +94,7 @@ Rectangle {
             anchors.rightMargin: 8
 
             source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
-            sourceSize.width: width
-            sourceSize.height: height
+            sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectCrop
         }
 
@@ -289,8 +288,7 @@ Rectangle {
             anchors.left: parent.left
 
             source: "qrc:/assets/desktop/watchflower.svg"
-            sourceSize.width: width
-            sourceSize.height: height
+            sourceSize: Qt.size(width, height)
         }
 
         Text {

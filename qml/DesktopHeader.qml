@@ -82,8 +82,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/watchflower.svg"
-        sourceSize.width: width
-        sourceSize.height: height
+        sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
         ColorOverlay {
@@ -120,8 +119,7 @@ Rectangle {
         anchors.rightMargin: 16
 
         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-        sourceSize.width: width
-        sourceSize.height: height
+        sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
         NumberAnimation on rotation {
@@ -156,8 +154,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-        sourceSize.width: width
-        sourceSize.height: height
+        sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
         OpacityAnimator {
@@ -194,8 +191,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-        sourceSize.width: width
-        sourceSize.height: height
+        sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
         MouseArea {
@@ -218,8 +214,7 @@ Rectangle {
             else
                 buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
         }
-        sourceSize.width: width
-        sourceSize.height: height
+        sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
         MouseArea {

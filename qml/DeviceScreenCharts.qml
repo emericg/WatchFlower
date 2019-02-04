@@ -26,6 +26,8 @@ import QtQuick 2.7
 // ChartView / "legend.visible" line at the bottom of this file
 import QtCharts 2.2
 
+import app.watchflower.theme 1.0
+
 Rectangle {
     id: deviceScreenCharts
     color: "#00000000"
@@ -35,16 +37,11 @@ Rectangle {
     property string graphViewSelected: settingsManager.graphview
     property string graphDataSelected: settingsManager.graphdata
 
-    property string hygroGraphColor: "#31A3EC"
-    property string tempGraphColor: "#87D241"
-    property string lumiGraphColor: "#F1EC5C"
-    property string condGraphColor: "#E19C2F"
+    property string bgDayGraphColor: "#F1F1F1"
+    property string bgNightGraphColor: "#E1E1E1"
 
-    property string bgDayGraphColor: "#F5F5F5"
-    property string bgNightGraphColor: "#E4E4E4"
-
-    property string buttonLightColor: "#F2F2F2"
-    property string buttonDarkColor: "#E8E8E8"
+    property string buttonLightColor: "#F0F0F0"
+    property string buttonDarkColor: "#E5E5E5"
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
@@ -89,7 +86,7 @@ Rectangle {
 
         if (graphDataSelected == "hygro") {
             axisY0.max = 66
-            myBarSet.color = hygroGraphColor
+            myBarSet.color = Theme.colorBarHygro
             textHygro.font.bold = true
             textTemp.font.bold = false
             textLumi.font.bold = false
@@ -100,7 +97,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitHygroMax);
         } else if (graphDataSelected == "temp") {
             axisY0.max = 40
-            myBarSet.color = tempGraphColor
+            myBarSet.color = Theme.colorBarTemp
             textHygro.font.bold = false
             textTemp.font.bold = true
             textLumi.font.bold = false
@@ -111,7 +108,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitTempMax);
         } else if (graphDataSelected == "luminosity") {
             axisY0.max = 2000
-            myBarSet.color = lumiGraphColor
+            myBarSet.color = Theme.colorBarLumi
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = true
@@ -122,7 +119,7 @@ Rectangle {
             highLimitSeries.append(1, myDevice.limitLumiMax);
         } else if (graphDataSelected == "conductivity") {
             axisY0.max = 750
-            myBarSet.color = condGraphColor
+            myBarSet.color = Theme.colorBarCond
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = false
@@ -393,14 +390,14 @@ Rectangle {
 
         LineSeries {
             id: lowLimitSeries
-            color: badColor
+            color: Theme.colorBad
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false
         }
         LineSeries {
             id: highLimitSeries
-            color: badColor
+            color: Theme.colorBad
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false

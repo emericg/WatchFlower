@@ -32,10 +32,6 @@ Rectangle {
 
     property var myDevice: curentlySelectedDevice
 
-    property string badColor: "#ffbf66"
-    property string neutralColor: "#e4e4e4"
-    property string goodColor: "#87d241"
-
     Component.onCompleted: loadDevice()
 
     Timer {
@@ -64,7 +60,7 @@ Rectangle {
                     textLastUpdate.text = qsTr("Device is updating...")
                 else
                     textLastUpdate.text = qsTr("Updating...")
-                textLastUpdate.color = "#454B54"
+                textLastUpdate.color = Theme.colorText
                 textLastUpdate.font.bold = false
             } else if (!myDevice.available && !myDevice.updating) {
                 if (!shortVersion)
@@ -85,7 +81,7 @@ Rectangle {
                     textLastUpdate.text += qsTr("Just now!")
                 else
                     textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
-                textLastUpdate.color = "#454B54"
+                textLastUpdate.color = Theme.colorText
                 textLastUpdate.font.bold = false
                 textRefresh.text = qsTr("Refresh")
                 //textRefresh.width = 112
@@ -198,7 +194,7 @@ Rectangle {
         Rectangle {
             id: rectangleHeader
             height: 160
-            color: Theme.colorMaterialLightGrey
+            color: Theme.colorMaterialDarkGrey
 
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -211,7 +207,7 @@ Rectangle {
                 id: textDeviceName
                 x: 12
                 y: 12
-                color: "#454B54"
+                color: Theme.colorText
                 anchors.left: parent.left
                 anchors.leftMargin: 12
                 font.pixelSize: 23
@@ -223,7 +219,7 @@ Rectangle {
             Text {
                 id: textAddr
                 y: 48
-                color: "#454B54"
+                color: Theme.colorText
                 text: myDevice.deviceAddress
                 anchors.left: labelFw.right
                 anchors.leftMargin: 8
@@ -244,7 +240,7 @@ Rectangle {
             Text {
                 id: textFw
                 height: 26
-                color: "#454B54"
+                color: Theme.colorText
                 text: myDevice.deviceFirmware
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageFw.right
@@ -264,13 +260,12 @@ Rectangle {
                 anchors.leftMargin: 8
 
                 source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
 
                 MouseArea {
@@ -288,7 +283,7 @@ Rectangle {
             Text {
                 id: textBattery
                 height: 26
-                color: "#454B54"
+                color: Theme.colorText
                 text: myDevice.deviceBattery + "%"
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageBattery.right
@@ -306,13 +301,12 @@ Rectangle {
                 anchors.leftMargin: 16
 
                 source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                sourceSize.width: width
-                sourceSize.height: height
+                sourceSize: Qt.size(width, height)
 
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorDarkGrey
+                    color: Theme.colorIcons
                 }
             }
 
@@ -334,7 +328,7 @@ Rectangle {
                 padding: 4
 
                 text: ""
-                color: "#454B54"
+                color: Theme.colorText
                 font.pixelSize: 18
                 onEditingFinished: {
                     myDevice.setPlantName(text)
@@ -352,13 +346,12 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     visible: false
                     source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                    sourceSize.width: width
-                    sourceSize.height: height
+                    sourceSize: Qt.size(width, height)
 
                     ColorOverlay {
                         anchors.fill: parent
                         source: parent
-                        color: Theme.colorDarkGrey
+                        color: Theme.colorIcons
                     }
                 }
 
@@ -402,7 +395,7 @@ Rectangle {
                 padding: 4
 
                 text: ""
-                color: "#454B54"
+                color: Theme.colorText
                 font.pixelSize: 18
                 onEditingFinished: {
                     myDevice.setLocationName(text)
@@ -442,13 +435,12 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     visible: false
                     source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                    sourceSize.width: width
-                    sourceSize.height: height
+                    sourceSize: Qt.size(width, height)
 
                     ColorOverlay {
                         anchors.fill: parent
                         source: parent
-                        color: Theme.colorDarkGrey
+                        color: Theme.colorIcons
                     }
                 }
             }
@@ -465,7 +457,7 @@ Rectangle {
 
             Text {
                 id: textLastUpdate
-                color: "#454b54"
+                color: Theme.colorText
                 text: qsTr("Loading...")
                 font.pixelSize: 18
                 anchors.verticalCenter: labelStatus.verticalCenter
@@ -477,7 +469,7 @@ Rectangle {
                 id: rectangleSubHeader
                 width: 120
                 height: 94
-                color: Theme.colorMaterialLightGrey
+                color: "#00000000"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
 
@@ -513,13 +505,12 @@ Rectangle {
                         anchors.leftMargin: 6
                         anchors.verticalCenter: parent.verticalCenter
                         source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                        sourceSize.width: width
-                        sourceSize.height: height
+                        sourceSize: Qt.size(width, height)
 
                         ColorOverlay {
                             anchors.fill: parent
                             source: parent
-                            color: Theme.colorDarkGrey
+                            color: Theme.colorIcons
                         }
 
                         NumberAnimation on rotation {
@@ -588,13 +579,12 @@ Rectangle {
                         anchors.left: parent.left
                         anchors.leftMargin: 6
                         source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                        sourceSize.width: width
-                        sourceSize.height: height
+                        sourceSize: Qt.size(width, height)
 
                         ColorOverlay {
                             anchors.fill: parent
                             source: parent
-                            color: Theme.colorDarkGrey
+                            color: Theme.colorIcons
                         }
                     }
 
@@ -626,7 +616,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleContent
-            color: "#ffffff"
+            color: Theme.colorMaterialLightGrey
             anchors.topMargin: 0
             anchors.bottom: parent.bottom
 
