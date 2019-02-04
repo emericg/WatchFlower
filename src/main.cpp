@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
@@ -114,11 +114,11 @@ int main(int argc, char *argv[])
         st->installSystray();
     }
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(FORCE_MOBILE_UI)
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
-#if defined(Q_OS_MACOS) && defined(QT_NO_DEBUG)
+#if defined(Q_OS_MACOS)
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
 #endif
