@@ -36,7 +36,7 @@ Rectangle {
 
     Timer {
         interval: 30000; running: true; repeat: true;
-        onTriggered: updateLastUpdateText()
+        onTriggered: updateStatusText()
     }
 
     Connections {
@@ -46,43 +46,46 @@ Rectangle {
         }
     }
 
-    function updateLastUpdateText() {
+    function updateStatusText() {
         if (typeof myDevice === "undefined") return
+        //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
+
         var shortVersion = false
         if (rectangleSubHeader.width < 480)
             shortVersion = true
 
-        //console.log("DeviceScreenDatas // updateLastUpdateText() >> " + myDevice)
-
         if (myDevice) {
             if (!myDevice.available && myDevice.updating) {
                 if (!shortVersion)
-                    textLastUpdate.text = qsTr("Device is updating...")
+                    textStatus.text = qsTr("Device is updating...")
                 else
-                    textLastUpdate.text = qsTr("Updating...")
-                textLastUpdate.color = Theme.colorText
-                textLastUpdate.font.bold = false
+                    textStatus.text = qsTr("Updating...")
+
+                textStatus.color = "#000"
+                textStatus.font.bold = false
             } else if (!myDevice.available && !myDevice.updating) {
                 if (!shortVersion)
-                    textLastUpdate.text = qsTr("Device is offline!")
+                    textStatus.text = qsTr("Device is offline!")
                 else
-                    textLastUpdate.text = qsTr("Offline!")
-                textLastUpdate.font.bold = true
-                textLastUpdate.color = Theme.colorOrange
+                    textStatus.text = qsTr("Offline!")
+
+                textStatus.font.bold = true
+                textStatus.color = Theme.colorOrange
                 textRefresh.text = qsTr("Retry")
                 //textRefresh.width = 80
             } else {
                 if (!shortVersion)
-                    textLastUpdate.text = qsTr("Last update:") + " "
+                    textStatus.text = qsTr("Last update:") + " "
                 else
-                    textLastUpdate.text = ""
+                    textStatus.text = ""
 
                 if (myDevice.lastUpdate <= 1)
-                    textLastUpdate.text += qsTr("Just now!")
+                    textStatus.text += qsTr("Just updated!")
                 else
-                    textLastUpdate.text += myDevice.lastUpdate + " " + qsTr("min. ago")
-                textLastUpdate.color = Theme.colorText
-                textLastUpdate.font.bold = false
+                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+
+                textStatus.color = "#000"
+                textStatus.font.bold = false
                 textRefresh.text = qsTr("Refresh")
                 //textRefresh.width = 112
             }
@@ -114,16 +117,16 @@ Rectangle {
             imageBattery.visible = true
             if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
                 textBattery.visible = false
+                rectangleSubHeader.visible = false
             } else {
                 textBattery.visible = true
+                rectangleSubHeader.visible = true
             }
 
             if (myDevice.deviceBattery < 10) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
             } else if (myDevice.deviceBattery < 40) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery < 60) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
             } else if (myDevice.deviceBattery < 60) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
             } else if (myDevice.deviceBattery < 95) {
@@ -154,13 +157,13 @@ Rectangle {
             else
                 textInputPlant.text = qsTr("Plant")
 
-            rectangleHeader.height = 160
+            rectangleHeader.height = 162
             labelStatus.anchors.top = labelPlant.bottom
         } else {
             labelPlant.visible = false
             labelStatus.anchors.top = labelLocation.bottom
             textInputPlant.visible = false
-            rectangleHeader.height = 140
+            rectangleHeader.height = 132
         }
 
         if (!myDevice.deviceFirmwareUpToDate) {
@@ -171,13 +174,15 @@ Rectangle {
             textFw.visible = false
         }
 
-        // Update sub header
-        updateLastUpdateText()
+        updateStatusText()
 
-        if (myDevice.updating) {
-            refreshRotation.start()
-        } else {
-            refreshRotation.stop()
+        // Update sub header
+        if (rectangleSubHeader.visible) {
+            if (myDevice.updating) {
+                refreshRotation.start()
+            } else {
+                refreshRotation.stop()
+            }
         }
     }
 
@@ -193,7 +198,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleHeader
-            height: 160
+            height: 162
             color: Theme.colorMaterialDarkGrey
 
             anchors.right: parent.right
@@ -205,12 +210,10 @@ Rectangle {
 
             Text {
                 id: textDeviceName
-                x: 12
-                y: 12
                 color: Theme.colorText
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                font.pixelSize: 23
+                font.pixelSize: 24
                 text: myDevice.deviceName
                 font.capitalization: Font.AllUppercase
                 anchors.top: parent.top
@@ -218,8 +221,6 @@ Rectangle {
             }
             Text {
                 id: textAddr
-                y: 48
-                color: Theme.colorText
                 text: myDevice.deviceAddress
                 anchors.left: labelFw.right
                 anchors.leftMargin: 8
@@ -229,18 +230,19 @@ Rectangle {
 
             Text {
                 id: labelFw
+                width: 72
                 anchors.topMargin: 10
                 anchors.leftMargin: 12
                 anchors.left: parent.left
                 anchors.top: textDeviceName.bottom
 
                 text: qsTr("Address")
+                color: Theme.colorText
                 font.pixelSize: 15
             }
             Text {
                 id: textFw
                 height: 26
-                color: Theme.colorText
                 text: myDevice.deviceFirmware
                 verticalAlignment: Text.AlignVCenter
                 anchors.left: imageFw.right
@@ -250,143 +252,19 @@ Rectangle {
 
                 property string saveText: myDevice.deviceFirmware
             }
-            Image {
-                id: imageFw
-                width: 24
-                height: 24
-                anchors.verticalCenterOffset: 0
-                anchors.verticalCenter: textDeviceName.verticalCenter
-                anchors.left: textBattery.right
-                anchors.leftMargin: 8
-
-                source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorIcons
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onEntered: {
-                        textFw.saveText = textFw.text
-                        textFw.text = qsTr("Update available!")
-                    }
-                    onExited: {
-                        textFw.text = textFw.saveText
-                    }
-                }
-            }
-            Text {
-                id: textBattery
-                height: 26
-                color: Theme.colorText
-                text: myDevice.deviceBattery + "%"
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: imageBattery.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: imageBattery.verticalCenter
-                font.pixelSize: 15
-            }
-            Image {
-                id: imageBattery
-                width: 32
-                height: 32
-                rotation: 90
-                anchors.verticalCenter: textDeviceName.verticalCenter
-                anchors.left: textDeviceName.right
-                anchors.leftMargin: 16
-
-                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorIcons
-                }
-            }
-
-            Text {
-                id: labelPlant
-                anchors.top: labelLocation.bottom
-                anchors.topMargin: 10
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-
-                text: qsTr("Plant")
-                font.pixelSize: 15
-            }
-            TextInput {
-                id: textInputPlant
-                anchors.verticalCenter: labelPlant.verticalCenter
-                anchors.left: labelPlant.right
-                anchors.leftMargin: 8
-                padding: 4
-
-                text: ""
-                color: Theme.colorText
-                font.pixelSize: 18
-                onEditingFinished: {
-                    myDevice.setPlantName(text)
-                    focus = false
-                    imageEditPlant.visible = false
-                }
-
-                Image {
-                    id: imageEditPlant
-                    width: 24
-                    height: 24
-                    anchors.left: parent.right
-                    anchors.leftMargin: 6
-                    anchors.verticalCenterOffset: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                    sourceSize: Qt.size(width, height)
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: Theme.colorIcons
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    propagateComposedEvents: true
-
-                    onEntered: { imageEditPlant.visible = true; }
-                    onExited: { imageEditPlant.visible = false; }
-
-                    onClicked:  {
-                        imageEditPlant.visible = true;
-                        mouse.accepted = false;
-                    }
-                    onPressed:  {
-                        imageEditPlant.visible = true;
-                        mouse.accepted = false;
-                    }
-                    onReleased: mouse.accepted = false;
-                    onDoubleClicked: mouse.accepted = false;
-                    onPositionChanged: mouse.accepted = false;
-                    onPressAndHold: mouse.accepted = false;
-                }
-            }
-
             Text {
                 id: labelLocation
-                text: qsTr("Location")
+                width: 72
                 anchors.top: labelFw.bottom
                 anchors.topMargin: 10
                 anchors.left: parent.left
                 anchors.leftMargin: 12
+
+                text: qsTr("Location")
+                color: Theme.colorText
                 font.pixelSize: 15
             }
+
             TextInput {
                 id: textInputLocation
                 anchors.verticalCenter: labelLocation.verticalCenter
@@ -394,8 +272,6 @@ Rectangle {
                 anchors.leftMargin: 8
                 padding: 4
 
-                text: ""
-                color: Theme.colorText
                 font.pixelSize: 18
                 onEditingFinished: {
                     myDevice.setLocationName(text)
@@ -446,23 +322,157 @@ Rectangle {
             }
 
             Text {
+                id: labelPlant
+                width: 72
+                anchors.top: labelLocation.bottom
+                anchors.topMargin: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+
+                text: qsTr("Plant")
+                color: Theme.colorText
+                font.pixelSize: 15
+            }
+
+            TextInput {
+                id: textInputPlant
+                anchors.verticalCenter: labelPlant.verticalCenter
+                anchors.left: labelPlant.right
+                anchors.leftMargin: 8
+                padding: 4
+
+                font.pixelSize: 18
+                onEditingFinished: {
+                    myDevice.setPlantName(text)
+                    focus = false
+                    imageEditPlant.visible = false
+                }
+
+                Image {
+                    id: imageEditPlant
+                    width: 24
+                    height: 24
+                    anchors.left: parent.right
+                    anchors.leftMargin: 6
+                    anchors.verticalCenterOffset: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                    sourceSize: Qt.size(width, height)
+
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorIcons
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    propagateComposedEvents: true
+
+                    onEntered: { imageEditPlant.visible = true; }
+                    onExited: { imageEditPlant.visible = false; }
+
+                    onClicked:  {
+                        imageEditPlant.visible = true;
+                        mouse.accepted = false;
+                    }
+                    onPressed:  {
+                        imageEditPlant.visible = true;
+                        mouse.accepted = false;
+                    }
+                    onReleased: mouse.accepted = false;
+                    onDoubleClicked: mouse.accepted = false;
+                    onPositionChanged: mouse.accepted = false;
+                    onPressAndHold: mouse.accepted = false;
+                }
+            }
+
+            Text {
                 id: labelStatus
-                text: qsTr("Status")
+                width: 72
                 anchors.top: labelPlant.bottom
                 anchors.left: parent.left
                 anchors.topMargin: 10
                 anchors.leftMargin: 12
+
+                text: qsTr("Status")
+                color: Theme.colorText
                 font.pixelSize: 15
             }
 
             Text {
-                id: textLastUpdate
-                color: Theme.colorText
-                text: qsTr("Loading...")
-                font.pixelSize: 18
+                id: textStatus
                 anchors.verticalCenter: labelStatus.verticalCenter
                 anchors.left: labelStatus.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 8
+
+                text: qsTr("Loading...")
+                padding: 4
+                font.pixelSize: 18
+            }
+
+            Image {
+                id: imageFw
+                width: 24
+                height: 24
+                anchors.verticalCenterOffset: 0
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                anchors.left: textBattery.right
+                anchors.leftMargin: 8
+
+                source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
+                sourceSize: Qt.size(width, height)
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: {
+                        textFw.saveText = textFw.text
+                        textFw.text = qsTr("Update available!")
+                    }
+                    onExited: {
+                        textFw.text = textFw.saveText
+                    }
+                }
+            }
+            Image {
+                id: imageBattery
+                width: 32
+                height: 32
+                rotation: 90
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                anchors.left: textDeviceName.right
+                anchors.leftMargin: 16
+
+                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                sourceSize: Qt.size(width, height)
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+            }
+
+            Text {
+                id: textBattery
+                height: 26
+                color: Theme.colorText
+                text: myDevice.deviceBattery + "%"
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: imageBattery.right
+                anchors.leftMargin: 8
+                anchors.verticalCenter: imageBattery.verticalCenter
+                font.pixelSize: 15
             }
 
             Rectangle {
