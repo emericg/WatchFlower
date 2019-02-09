@@ -335,5 +335,27 @@ Item {
                 anchors.left: imageCondu.right
             }
         }
+
+        Item {
+            id: itemDone
+            height: 64
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Button {
+                id: buttonDone
+                width: 140
+                text: qsTr("OK I'm done!")
+                font.pointSize: 14
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                onClicked: {
+                    rectangleContent.state = "datas"
+                }
+            }
+        }
     }
 }

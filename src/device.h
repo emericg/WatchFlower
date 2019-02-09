@@ -31,7 +31,7 @@
 #include <QLowEnergyController>
 
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE    "3.1.8"
-#define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.2"
+#define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.5"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
 
 enum DeviceCapabilities {

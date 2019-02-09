@@ -50,7 +50,7 @@ Rectangle {
             textLocation.text = boxDevice.deviceLocationName
         }
         if (boxDevice.deviceName === "MJ_HT_V1") {
-            textPlant.text = qsTr("BLE temperature sensor")
+            textPlant.text = qsTr("Thermometer")
             textLocation.text = boxDevice.deviceLocationName
         }
 
