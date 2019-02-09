@@ -71,6 +71,11 @@ ApplicationWindow {
 
         onStateChanged: {
             drawerscreen.updateDrawerFocus()
+            if (state === "DeviceList")
+                header.leftMenuMode = "drawer"
+            else
+                header.leftMenuMode = "back"
+
             if (state === "DeviceDetails")
                 header.rightMenuEnabled = true
             else
@@ -202,7 +207,10 @@ ApplicationWindow {
     Connections {
         target: header
         onLeftMenuClicked: {
-            drawer.open()
+            if (content.state === "DeviceList")
+                drawer.open()
+            else
+                content.state = "DeviceList"
         }
         onRightMenuClicked: {
             //

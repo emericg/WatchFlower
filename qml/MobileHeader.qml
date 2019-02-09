@@ -38,6 +38,7 @@ Rectangle {
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
 
+    property string leftMenuMode: "drawer"
     property bool rightMenuEnabled: false
 
     signal leftMenuClicked()
@@ -67,6 +68,13 @@ Rectangle {
         console.log("left:" + safeMargins["left"])
 */
         handleNotches()
+    }
+
+    onLeftMenuModeChanged: {
+        if (leftMenuMode === "drawer")
+            leftMenuImg.source = "qrc:/assets/icons_material/baseline-menu-24px.svg"
+        else
+            leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
     }
 
     Component.onCompleted: {
