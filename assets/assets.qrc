@@ -12,11 +12,17 @@
         <file>ble.svg</file>
         <file>ble_err.svg</file>
         <file>icons_material/baseline-access_time-24px.svg</file>
+        <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
-        <file>icons_material/baseline-battery_20-24px.svg</file>
-        <file>icons_material/baseline-battery_50-24px.svg</file>
-        <file>icons_material/baseline-battery_90-24px.svg</file>
         <file>icons_material/baseline-battery_alert-24px.svg</file>
+        <file>icons_material/baseline-battery_20-24px.svg</file>
+        <file>icons_material/baseline-battery_30-24px.svg</file>
+        <file>icons_material/baseline-battery_40-24px.svg</file>
+        <file>icons_material/baseline-battery_50-24px.svg</file>
+        <file>icons_material/baseline-battery_60-24px.svg</file>
+        <file>icons_material/baseline-battery_70-24px.svg</file>
+        <file>icons_material/baseline-battery_80-24px.svg</file>
+        <file>icons_material/baseline-battery_90-24px.svg</file>
         <file>icons_material/baseline-battery_full-24px.svg</file>
         <file>icons_material/baseline-battery_unknown-24px.svg</file>
         <file>icons_material/baseline-bluetooth-24px.svg</file>
