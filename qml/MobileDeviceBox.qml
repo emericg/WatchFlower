@@ -21,6 +21,9 @@
 
 import QtQuick 2.7
 
+import QtGraphicalEffects 1.0
+import com.watchflower.theme 1.0
+
 Rectangle {
     id: deviceBoxMobile
     width: parent.width
@@ -57,12 +60,25 @@ Rectangle {
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
 
+        water.visible = false
+        if (boxDevice.deviceHygro > 0) {
+            if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+                water.visible = true
+            }
+        }
+
+        ble.visible = false
         if (boxDevice.isUpdating()) {
             refreshAnimation.running = true;
+            refreshAnimation2.running = true;
             imageStatus.visible = true;
             imageStatus.source = "qrc:/assets/ble.svg";
+
+            ble.visible = true
+            ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
         } else {
             refreshAnimation.running = false;
+            refreshAnimation2.running = false;
 
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
@@ -83,6 +99,9 @@ Rectangle {
                 imageStatus.visible = true;
                 imageStatus.source = "qrc:/assets/ble_err.svg";
                 imageStatus.opacity = 1;
+
+                ble.visible = true
+                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             }
         }
     }
@@ -121,6 +140,21 @@ Rectangle {
     }
 
     Text {
+        id: textLocation
+        font.pixelSize: 16
+        text: boxDevice.deviceAddress
+        anchors.right: dataArea.left
+        anchors.rightMargin: 8
+        clip: true
+        font.weight: Font.Thin
+        font.capitalization: Font.AllUppercase
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 16
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+    }
+
+    Text {
         id: textPlant
         color: "#544545"
         text: boxDevice.deviceLocationName
@@ -137,19 +171,57 @@ Rectangle {
         font.pixelSize: 22
     }
 
-    Text {
-        id: textLocation
-        font.pixelSize: 16
-        text: boxDevice.deviceAddress
+    Row {
+        id: lilIcons
+        width: 60
+        height: 20
+        layoutDirection: Qt.RightToLeft
+        spacing: 8
+
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
         anchors.right: dataArea.left
         anchors.rightMargin: 8
-        clip: true
-        font.weight: Font.Thin
-        font.capitalization: Font.AllUppercase
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
-        anchors.left: parent.left
-        anchors.leftMargin: 8
+
+        Image {
+            id: ble
+            width: 20
+            height: 20
+            anchors.verticalCenter: parent.verticalCenter
+
+            source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            sourceSize: Qt.size(width, height)
+            fillMode: Image.PreserveAspectFit
+            ColorOverlay {
+                anchors.fill: parent
+                source: parent
+                color: Theme.colorIcons
+            }
+            SequentialAnimation on opacity {
+                id: refreshAnimation2
+                loops: Animation.Infinite
+                running: true
+                OpacityAnimator { from: 0; to: 1; duration: 600 }
+                OpacityAnimator { from: 1; to: 0;  duration: 600 }
+            }
+        }
+
+        Image {
+            id: water
+            width: 20
+            height: 20
+            anchors.verticalCenter: parent.verticalCenter
+
+            source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+            sourceSize: Qt.size(width, height)
+            fillMode: Image.PreserveAspectFit
+            ColorOverlay {
+                anchors.fill: parent
+                source: parent
+                color: Theme.colorOrange
+            }
+        }
+
     }
 
     Rectangle {
