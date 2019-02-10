@@ -28,7 +28,7 @@ Rectangle {
     id: deviceBoxMobile
     width: parent.width
     height: 80
-    color: "#44f3f3f3"
+    color: "#e6f0f0f0"
 
     property var boxDevice
 
@@ -58,49 +58,64 @@ Rectangle {
 
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
-
         water.visible = false
+        ble.visible = false
+
+        // water me notif
         if (boxDevice.deviceHygro > 0) {
             if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
                 water.visible = true
             }
         }
 
-        ble.visible = false
+        // Update notif
         if (boxDevice.isUpdating()) {
-            refreshAnimation.running = true;
-            refreshAnimation2.running = true;
-            imageStatus.visible = true;
-            imageStatus.source = "qrc:/assets/ble.svg";
-
-            ble.visible = true
-            ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            if (boxDevice.deviceTempC > 0) {
+                // if we have data cached, used the little indicator
+                ble.visible = true
+                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                refreshAnimation2.running = true;
+            } else {
+                // otherwise, fullsize
+                imageStatus.visible = true;
+                imageStatus.source = "qrc:/assets/ble.svg";
+                refreshAnimation.running = true;
+            }
         } else {
             refreshAnimation.running = false;
             refreshAnimation2.running = false;
 
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
-
-                if (boxDevice.deviceName === "MJ_HT_V1") {
-                    rectangleHygroTemp.visible = true
-                    textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
-                    textHygro.text = boxDevice.deviceHygro + "%"
-                } else {
-                    rectangleSensors.visible = true
-                    hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
-                    temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
-                    lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
-                    cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
-                    bat_data.height = (boxDevice.deviceBattery / 100)*64
-                }
             } else {
-                imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/ble_err.svg";
-                imageStatus.opacity = 1;
+                if (boxDevice.deviceTempC > 0) {
+                    // if we have data cached, used the little indicator
+                    imageStatus.visible = false;
+                    ble.visible = true
+                    ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                } else {
+                    // otherwise big one
+                    ble.visible = false
+                    imageStatus.visible = true;
+                    imageStatus.source = "qrc:/assets/ble_err.svg";
+                    imageStatus.opacity = 1;
+                }
+            }
+        }
 
-                ble.visible = true
-                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+        // Has datas? always display them
+        if (boxDevice.deviceTempC > 0) {
+            if (boxDevice.deviceName === "MJ_HT_V1") {
+                rectangleHygroTemp.visible = true
+                textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                textHygro.text = boxDevice.deviceHygro + "%"
+            } else {
+                rectangleSensors.visible = true
+                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
+                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
+                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
+                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
+                bat_data.height = (boxDevice.deviceBattery / 100)*64
             }
         }
     }
@@ -130,7 +145,8 @@ Rectangle {
     Rectangle {
         id: background
         height: 64
-        color: "#aaf3f3f3"
+        color: "#99e6e6e6"
+        visible: false
         anchors.right: parent.right
         anchors.rightMargin: 44
         anchors.left: parent.left
@@ -199,7 +215,7 @@ Rectangle {
             SequentialAnimation on opacity {
                 id: refreshAnimation2
                 loops: Animation.Infinite
-                running: true
+                running: false
                 OpacityAnimator { from: 0; to: 1; duration: 600 }
                 OpacityAnimator { from: 1; to: 0;  duration: 600 }
             }
@@ -252,14 +268,12 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleSensors
-            x: 0
-            y: 4
             width: 64
             height: 64
-            color: "#f3f3f3"
             anchors.verticalCenter: parent.verticalCenter
+
             visible: true
             Rectangle {
                 id: hygro_bg
@@ -374,9 +388,8 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleHygroTemp
-            color: "#f3f3f3"
             anchors.fill: parent
 
             Text {

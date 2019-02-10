@@ -902,6 +902,7 @@ Item {
         // Update header
         if ((myDevice.deviceCapabilities & 1) == 1) {
             imageBattery.visible = true
+            battery.visible = true
 
             if (myDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -925,6 +926,7 @@ Item {
         } else {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             imageBattery.visible = false
+            battery.visible = false
         }
 
         textFirmware.text = myDevice.deviceFirmware
