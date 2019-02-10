@@ -76,10 +76,9 @@ int main(int argc, char *argv[])
     SystrayManager *st = SystrayManager::getInstance();
 
     DeviceManager *dm = new DeviceManager;
-
-    // Run a first scan, but only if we have no saved devices
-    if (dm->areDevicesAvailable() == false)
+    if (dm && dm->areDevicesAvailable() == false)
     {
+        // Run a first scan, but only if we have no saved devices
         dm->scanDevices();
     }
 
@@ -108,10 +107,15 @@ int main(int argc, char *argv[])
     if (window && start_minimized)
         window->setVisibility(QWindow::Minimized);
 
-    if (st && sm && sm->getSysTray())
+    if (st)
     {
-        st->initSystray(&app, window);
-        st->installSystray();
+        st->initSettings(&app, window);
+
+        if (sm && sm->getSysTray())
+        {
+            st->initSystray();
+            st->installSystray();
+        }
     }
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)

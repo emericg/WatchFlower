@@ -69,19 +69,30 @@ SystrayManager::~SystrayManager()
 
 /* ************************************************************************** */
 
-void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
+void SystrayManager::initSettings(QApplication *app, QQuickWindow *view)
 {
     if (!app || !view)
     {
-        qDebug() << "initSystray(ERROR) no app or view passed";
+        qDebug() << "initSettings(ERROR) no QApplication or QQuickWindow passed";
+        return;
+    }
+
+    m_saved_app = app;
+    m_saved_view = view;
+}
+
+/* ************************************************************************** */
+
+void SystrayManager::initSystray()
+{
+    if (!m_saved_app || !m_saved_view)
+    {
+        qDebug() << "initSystray(ERROR) no QApplication or QQuickWindow saved";
         return;
     }
 
     if (m_sysTrayMenu == nullptr)
     {
-        m_saved_app = app;
-        m_saved_view = view;
-
         m_sysTrayMenu = new QMenu();
         if (m_sysTrayMenu)
         {
@@ -106,9 +117,9 @@ void SystrayManager::initSystray(QApplication *app, QQuickWindow *view)
         }
 
 #ifdef TARGET_OS_OSX
-            m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_light.svg");
+        m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_light.svg");
 #else
-            m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_dark.svg");
+        m_sysTrayIcon = new QIcon(":/assets/desktop/watchflower_tray_dark.svg");
 #endif
     }
 }
@@ -120,7 +131,10 @@ bool SystrayManager::installSystray()
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         if (m_sysTray == nullptr)
+        {
+            initSystray();
             m_sysTray = new QSystemTrayIcon();
+        }
 
         if (m_sysTray != nullptr && m_sysTrayMenu != nullptr && m_sysTrayIcon != nullptr)
         {
@@ -138,6 +152,10 @@ bool SystrayManager::installSystray()
             //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
 
             status = true;
+        }
+        else
+        {
+            qDebug() << "Cannot install systray...";
         }
     }
     else
@@ -173,10 +191,6 @@ void SystrayManager::removeSystray()
 
 void SystrayManager::sendNotification(QString &text)
 {
-    if (!m_sysTray)
-    {
-        installSystray();
-    }
     if (m_sysTray && QSystemTrayIcon::isSystemTrayAvailable())
     {
         m_sysTray->showMessage("WatchFlower", text);

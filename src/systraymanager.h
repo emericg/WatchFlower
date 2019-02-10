@@ -65,7 +65,8 @@ public:
     static SystrayManager *getInstance();
 
 public slots:
-    void initSystray(QApplication *app, QQuickWindow *view);
+    void initSettings(QApplication *app, QQuickWindow *view);
+    void initSystray();
     bool installSystray();
     void removeSystray();
     void sendNotification(QString &text);

@@ -240,18 +240,21 @@ FocusScope {
                             radioDelegateFahrenheit.checked = true
                         }
                     }
-                    anchors.rightMargin: 0
+                    onCheckedChanged: {
+                        if (checked == true)
+                            settingsManager.tempunit = 'C'
+                    }
                 }
 
                 ThemedRadioButton {
                     id: radioDelegateFahrenheit
-                    x: 9
-                    y: 9
                     height: 40
-                    text: qsTr("°F")
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 16
                     anchors.right: parent.right
+                    anchors.rightMargin: 12
+
+                    text: qsTr("°F")
+                    font.pixelSize: 16
                     checked: {
                         if (settingsManager.tempunit === 'F') {
                             radioDelegateCelsius.checked = false
@@ -261,8 +264,10 @@ FocusScope {
                             radioDelegateCelsius.checked = true
                         }
                     }
-                    anchors.verticalCenterOffset: 0
-                    anchors.rightMargin: 12
+                    onCheckedChanged: {
+                        if (checked == true)
+                            settingsManager.tempunit = 'F'
+                    }
                 }
             }
 
@@ -333,14 +338,13 @@ FocusScope {
                 Text {
                     id: text_graph
                     height: 40
-                    text: qsTr("Preferred graph")
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 16
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.top: text_unit.bottom
-                    anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 12
+
+                    text: qsTr("Preferred graph")
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }
