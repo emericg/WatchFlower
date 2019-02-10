@@ -141,6 +141,9 @@ protected:
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
+    void refreshDatasStarted();
+    void refreshDatasFinished(bool status, bool cached = false);
+
 public:
     Device(QString &deviceAddr, QString &deviceName);
     Device(const QBluetoothDeviceInfo &d);
@@ -148,13 +151,11 @@ public:
 
 public slots:
     bool refreshDatas();
-    void refreshDatasStarted();
-    void refreshDatasFinished(bool status, bool cached = false);
-
+    bool refreshDatasCached(int minutes = 1);
     void setTimerInterval(int updateIntervalMin = 0);
 
     bool getSqlDatas();
-    bool getSqlCachedDatas(int minutes = 5);
+    bool getSqlCachedDatas(int minutes);
     bool getBleDatas();
 
     // BLE device

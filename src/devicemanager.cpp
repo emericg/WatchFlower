@@ -64,6 +64,11 @@ DeviceManager::DeviceManager()
         qWarning() << "Unable to create BLE discovery agent...";
     }
 
+    //
+    int updateInterval = 5;
+    SettingsManager *sm = SettingsManager::getInstance();
+    if (sm) { updateInterval = sm->getUpdateInterval(); }
+
     // Add static devices first?
     qDebug() << "Scanning (database) for devices...";
     if (m_db)
@@ -92,7 +97,7 @@ DeviceManager::DeviceManager()
 
             if (d)
             {
-                if (hasBluetooth()) d->refreshDatas();
+                if (hasBluetooth()) d->refreshDatasCached(updateInterval);
                 m_devices.append(d);
             }
         }
@@ -278,7 +283,7 @@ void DeviceManager::refreshDevices()
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd) dd->refreshDatas();
+            if (dd) dd->refreshDatasCached();
         }
 
         Q_EMIT refreshingChanged();

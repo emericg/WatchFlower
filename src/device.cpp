@@ -61,7 +61,7 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
-    // Initial datas query
+    // Load limits and initial datas
     getSqlDatas();
 
     // Set update timer
@@ -84,9 +84,8 @@ Device::Device(const QBluetoothDeviceInfo &d)
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
-    // Initial update
+    // Load limits and initial datas
     getSqlDatas();
-    refreshDatas();
 
     // Set update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
@@ -109,11 +108,16 @@ void Device::refreshDatasStarted()
 
 bool Device::refreshDatas()
 {
+    return refreshDatasCached();
+}
+
+bool Device::refreshDatasCached(int minutes)
+{
     bool status = false;
 
     refreshDatasStarted();
 
-    if (getSqlCachedDatas() == false)
+    if (getSqlCachedDatas(minutes) == false)
     {
         if (getBleDatas() == false)
         {
@@ -278,6 +282,7 @@ bool Device::getSqlDatas()
     }
     Q_EMIT limitsUpdated();
 
+    // We always load datas into the GUI (if they are no more than 12h old)
     if (getSqlCachedDatas(12*60))
     {
         Q_EMIT datasUpdated();
@@ -288,7 +293,7 @@ bool Device::getSqlDatas()
 
 bool Device::getSqlCachedDatas(int minutes)
 {
-    //qDebug() << "Device::getSqlCachedDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlCachedDatas(" << m_deviceAddress << ") for the last" << minutes << "minutes";
     bool status = false;
 
     QSqlQuery cachedDatas;
