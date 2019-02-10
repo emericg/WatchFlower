@@ -66,7 +66,7 @@ Rectangle {
         anchors.leftMargin: 48
         color: "#FFFFFF"
         font.bold: true
-        font.pixelSize: 36
+        font.pixelSize: 30
         antialiasing: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -112,11 +112,11 @@ Rectangle {
 
     Image {
         id: buttonRefresh
-        width: 36
-        height: 36
+        width: 24
+        height: 24
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: buttonRescan.left
-        anchors.rightMargin: 16
+        anchors.rightMargin: 12
 
         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
         sourceSize: Qt.size(width, height)
@@ -147,10 +147,10 @@ Rectangle {
 
     Image {
         id: buttonRescan
-        width: 36
-        height: 36
+        width: 24
+        height: 24
         anchors.right: imageSettings.left
-        anchors.rightMargin: 16
+        anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -184,10 +184,10 @@ Rectangle {
 
     Image {
         id: imageSettings
-        width: 36
-        height: 36
+        width: 32
+        height: 32
         anchors.right: buttonExit.left
-        anchors.rightMargin: 16
+        anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
@@ -202,10 +202,10 @@ Rectangle {
 
     Image {
         id: buttonExit
-        width: 36
-        height: 36
+        width: 32
+        height: 32
         anchors.right: parent.right
-        anchors.rightMargin: 16
+        anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
         source: {

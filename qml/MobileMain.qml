@@ -36,17 +36,121 @@ ApplicationWindow {
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
+    // Mobile stuff
+
     Material.theme: Material.Dark
     Material.accent: Material.LightGreen
 
+    StatusBar {
+        theme: Material.Dark
+        color: Theme.colorHeaderMobileStatusbar
+        //color: Material.color(Material.LightGreen, Material.Shade900)
+    }
+
+    Drawer {
+        id: drawer
+        width: 0.80 * applicationWindow.width
+        height: applicationWindow.height
+
+        onOpenedChanged: drawerscreen.updateDrawerFocus()
+        MobileDrawer { id: drawerscreen }
+    }
+
+    // Events handling /////////////////////////////////////////////////////////
+
+    Connections {
+        target: header
+        onLeftMenuClicked: {
+            if (content.state === "DeviceList")
+                drawer.open()
+            else
+                content.state = "DeviceList"
+        }
+        onRightMenuClicked: {
+            //
+        }
+    }
+
+    Connections {
+        target: Qt.application
+        onStateChanged: {
+            switch (Qt.application.state) {
+            case Qt.ApplicationSuspended:
+                console.log("Qt.ApplicationSuspended")
+                break
+            case Qt.ApplicationHidden:
+                console.log("Qt.ApplicationHidden")
+                break
+            case Qt.ApplicationActive:
+                console.log("Qt.ApplicationActive")
+                break
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.BackButton | Qt.ForwardButton
+        onClicked: {
+            if (mouse.button === Qt.BackButton) {
+                content.state = "DeviceList"
+            } else if (mouse.button === Qt.ForwardButton) {
+                if (curentlySelectedDevice)
+                    content.state = "DeviceDetails"
+            }
+        }
+    }
+    FocusScope {
+        focus: true
+        Keys.onBackPressed: {
+            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+                if (content.state === "DeviceList") {
+                    // hide windows?
+                    //console.log("WE SHOULD HIDE")
+                    //event.accepted = true;
+                } else {
+                    content.state = "DeviceList"
+                }
+            } else {
+                content.state = "DeviceList"
+            }
+        }
+    }
+
+    Shortcut {
+        sequence: StandardKey.Back
+        onActivated: {
+            content.state = "DeviceList"
+        }
+    }
+    Shortcut {
+        sequence: StandardKey.Forward
+        onActivated: {
+            if (curentlySelectedDevice)
+                content.state = "DeviceDetails"
+        }
+    }
+    onClosing: {
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+            close.accepted = false;
+        } else {
+            close.accepted = false;
+            applicationWindow.hide()
+        }
+    }
+
+    // QML /////////////////////////////////////////////////////////////////////
+
+    property var curentlySelectedDevice: null
+
     MobileHeader {
         id: header
+        width: parent.width
         anchors.top: parent.top
     }
 
-    Rectangle {
+    Item {
         id: content
-        color: "#00000000"
         anchors.top: header.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -186,108 +290,4 @@ ApplicationWindow {
             }
         ]
     }
-
-    StatusBar {
-        theme: Material.Dark
-        color: Theme.colorHeaderMobileStatusbar
-        //color: Material.color(Material.LightGreen, Material.Shade900)
-    }
-
-    Drawer {
-        id: drawer
-        width: 0.80 * applicationWindow.width
-        height: applicationWindow.height
-
-        onOpenedChanged: drawerscreen.updateDrawerFocus()
-        MobileDrawer { id: drawerscreen }
-    }
-
-    // Events handling /////////////////////////////////////////////////////////
-
-    Connections {
-        target: header
-        onLeftMenuClicked: {
-            if (content.state === "DeviceList")
-                drawer.open()
-            else
-                content.state = "DeviceList"
-        }
-        onRightMenuClicked: {
-            //
-        }
-    }
-
-    Connections {
-        target: Qt.application
-        onStateChanged: {
-            switch (Qt.application.state) {
-            case Qt.ApplicationSuspended:
-                console.log("Qt.ApplicationSuspended")
-                break
-            case Qt.ApplicationHidden:
-                console.log("Qt.ApplicationHidden")
-                break
-            case Qt.ApplicationActive:
-                console.log("Qt.ApplicationActive")
-                break
-            }
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
-            if (mouse.button === Qt.BackButton) {
-                content.state = "DeviceList"
-            } else if (mouse.button === Qt.ForwardButton) {
-                if (curentlySelectedDevice)
-                    content.state = "DeviceDetails"
-            }
-        }
-    }
-    FocusScope {
-        focus: true
-        Keys.onBackPressed: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (content.state === "DeviceList") {
-                    // hide windows?
-                    //console.log("WE SHOULD HIDE")
-                    //event.accepted = true;
-                } else {
-                    content.state = "DeviceList"
-                }
-            } else {
-                content.state = "DeviceList"
-            }
-        }
-    }
-
-    Shortcut {
-        sequence: StandardKey.Back
-        onActivated: {
-            content.state = "DeviceList"
-        }
-    }
-    Shortcut {
-        sequence: StandardKey.Forward
-        onActivated: {
-            if (curentlySelectedDevice)
-                content.state = "DeviceDetails"
-        }
-    }
-    onClosing: {
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            close.accepted = false;
-        } else {
-            close.accepted = false;
-            applicationWindow.hide()
-        }
-    }
-
-    // QML /////////////////////////////////////////////////////////////////////
-
-    property var curentlySelectedDevice: null
-
-
 }

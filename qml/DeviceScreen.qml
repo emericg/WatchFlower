@@ -25,7 +25,7 @@ import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: deviceScreenRectangle
     width: 450
     height: 700
@@ -102,26 +102,22 @@ Rectangle {
                 }
             }
 
-            Rectangle {
+            Item {
                 id: desktopButtons
-                x: 330
-                width: 120
-                height: 94
-                color: "#00000000"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.rightMargin: 0
+                width: 112
+                height: 72
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.rightMargin: 12
                 anchors.right: parent.right
 
                 Rectangle {
                     id: buttonRefresh
-                    width: 100
+                    width: 112
                     height: 32
                     color: "#e0e0e0"
-                    anchors.top: buttonLimits.bottom
-                    anchors.topMargin: 10
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     Text {
                         id: buttonRefreshText
@@ -179,13 +175,12 @@ Rectangle {
 
                 Rectangle {
                     id: buttonLimits
-                    width: 100
+                    width: 112
                     height: 32
                     color: "#e0e0e0"
                     anchors.top: parent.top
-                    anchors.topMargin: 10
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.topMargin: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     function initButton() {
                         if (rectangleContent.state === "limits") {
@@ -649,8 +644,8 @@ Rectangle {
 
     Rectangle {
         id: miniMenu
-        width: 140
-        height: 108
+        width: 160
+        height: 120
         color: "#ffffff"
         anchors.top: parent.top
         anchors.topMargin: -8
@@ -712,7 +707,7 @@ Rectangle {
 
             Rectangle {
                 id: menuRefresh
-                height: 36
+                height: 40
                 color: "#ffffff"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -729,7 +724,7 @@ Rectangle {
                     anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 12
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 MouseArea {
@@ -746,7 +741,7 @@ Rectangle {
 
             Rectangle {
                 id: menuLimits
-                height: 36
+                height: 40
                 color: "#ffffff"
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -763,7 +758,7 @@ Rectangle {
                     anchors.leftMargin: 12
 
                     text: qsTr("Edit limits")
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -789,7 +784,7 @@ Rectangle {
 
             Rectangle {
                 id: menuInfos
-                height: 36
+                height: 40
                 color: "#ffffff"
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -807,7 +802,7 @@ Rectangle {
 
                     text: qsTr("Device infos")
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 MouseArea {
@@ -862,12 +857,14 @@ Rectangle {
                 //buttonRefreshText.text = qsTr("Retry")
             }
 
-            if (myDevice.lastUpdate <= 1)
-                textStatus.text += qsTr("Just updated!")
-            else if (myDevice.available)
-                textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
-            else
-                textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+            if (myDevice.lastUpdate) {
+                if (myDevice.lastUpdate <= 1)
+                    textStatus.text += qsTr("Just updated!")
+                else if (myDevice.available)
+                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+                else
+                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+            }
         }
     }
 
@@ -895,7 +892,7 @@ Rectangle {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             desktopButtons.visible = false
         } else {
-            desktopButtons.visible = false
+            desktopButtons.visible = true
         }
 
         // Update header

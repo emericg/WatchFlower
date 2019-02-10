@@ -25,13 +25,13 @@ import QtQuick.Controls 2.0
 import com.watchflower.theme 1.0
 
 FocusScope {
+    id: focusScope
     anchors.fill: parent
 
-    Rectangle {
+    Item {
         id: rectangleSettings
         width: 480
         height: 640
-        color: Theme.colorMaterialLightGrey
         anchors.fill: parent
 
         Rectangle {
@@ -72,216 +72,279 @@ FocusScope {
             }
         }
 
-        Rectangle {
-            id: rectangleSettingsContent
-            height: 238
-            color: "#00000000"
-
-            anchors.top:rectangleSettingsTitle.bottom
-            anchors.topMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+        Column {
+            id: column
+            anchors.top: rectangleSettingsTitle.bottom
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.topMargin: 0
 
-            SpinBox {
-                id: spinBox_update
-                width: 128
-                height: 40
+            Item {
+                id: element
+                height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.verticalCenter: text_update.verticalCenter
-                from: 30
-                stepSize: 30
-                to: 120
-                value: settingsManager.interval
-
-                onValueChanged: { settingsManager.interval = value }
-            }
-
-            Text {
-                id: text_update
-                height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-
-                verticalAlignment: Text.AlignVCenter
-                text: qsTr("Update interval in minutes")
-                anchors.top: text_bluetooth.bottom
-                anchors.topMargin: 8
-                font.pixelSize: 16
-            }
-
-            Text {
-                id: text_unit
-                height: 40
-                anchors.top: text_update.bottom
-                anchors.topMargin: 8
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-
-                text: qsTr("Temperature unit")
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            ThemedRadioButton {
-                id: radioDelegateCelsius
-                height: 40
-                text: qsTr("°C")
-                anchors.right: radioDelegateFahrenheit.left
                 anchors.rightMargin: 0
-                anchors.verticalCenter: text_unit.verticalCenter
-                font.pixelSize: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 0
 
-                checked: {
-                    if (settingsManager.tempunit === 'C') {
-                        radioDelegateCelsius.checked = true
-                        radioDelegateFahrenheit.checked = false
-                    } else {
-                        radioDelegateCelsius.checked = false
-                        radioDelegateFahrenheit.checked = true
+                Text {
+                    id: text_bluetooth
+                    height: 40
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Launch bluetooth with the app")
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ThemedSwitch {
+                    id: switch_bluetooth
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    checked: settingsManager.bluetooth
+                    onCheckedChanged: settingsManager.bluetooth = checked
+                    anchors.rightMargin: 12
+                }
+            }
+
+            Item {
+                id: element1
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+
+                ThemedSwitch {
+                    id: switch_worker
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    checked: settingsManager.systray
+                    onCheckedChanged: settingsManager.systray = checked
+                    anchors.rightMargin: 12
+                }
+
+                Text {
+                    id: text_worker
+                    height: 40
+                    text: qsTr("Background worker")
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 12
+                }
+            }
+
+            Item {
+                id: element2
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+
+                ThemedSwitch {
+                    id: switch_notifiations
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    checked: settingsManager.notifications
+                    onCheckedChanged: settingsManager.notifications = checked
+                    anchors.rightMargin: 12
+                }
+
+                Text {
+                    id: text_notifications
+                    height: 40
+                    text: qsTr("Enable notifications")
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 12
+                }
+            }
+
+            Item {
+                id: element3
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+
+                SpinBox {
+                    id: spinBox_update
+                    width: 128
+                    height: 40
+                    value: settingsManager.interval
+                    onValueChanged: settingsManager.interval = value
+                    to: 120
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    stepSize: 30
+                    anchors.rightMargin: 12
+                    from: 30
+                }
+
+                Text {
+                    id: text_update
+                    height: 40
+                    text: qsTr("Update interval in minutes")
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: text_bluetooth.bottom
+                    anchors.leftMargin: 12
+                    anchors.topMargin: 8
+                }
+            }
+
+            Item {
+                id: element4
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+
+                Text {
+                    id: text_unit
+                    height: 40
+                    text: qsTr("Temperature unit")
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: text_update.bottom
+                    anchors.leftMargin: 12
+                    anchors.topMargin: 8
+                }
+
+                ThemedRadioButton {
+                    id: radioDelegateCelsius
+                    x: 9
+                    y: 9
+                    height: 40
+                    text: qsTr("°C")
+                    anchors.verticalCenter: text_unit.verticalCenter
+                    font.pixelSize: 16
+                    anchors.right: radioDelegateFahrenheit.left
+                    checked: {
+                        if (settingsManager.tempunit === 'C') {
+                            radioDelegateCelsius.checked = true
+                            radioDelegateFahrenheit.checked = false
+                        } else {
+                            radioDelegateCelsius.checked = false
+                            radioDelegateFahrenheit.checked = true
+                        }
+                    }
+                    anchors.rightMargin: 0
+                }
+
+                ThemedRadioButton {
+                    id: radioDelegateFahrenheit
+                    x: 9
+                    y: 9
+                    height: 40
+                    text: qsTr("°F")
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    anchors.right: parent.right
+                    checked: {
+                        if (settingsManager.tempunit === 'F') {
+                            radioDelegateCelsius.checked = false
+                            radioDelegateFahrenheit.checked = true
+                        } else {
+                            radioDelegateFahrenheit.checked = false
+                            radioDelegateCelsius.checked = true
+                        }
+                    }
+                    anchors.verticalCenterOffset: 0
+                    anchors.rightMargin: 12
+                }
+            }
+
+            Item {
+                id: element5
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+
+                ComboBox {
+                    id: comboBox_data
+                    anchors.top: comboBox_view.top
+                    anchors.topMargin: 0
+                    model: ListModel {
+                        id: cbItemsData
+                        ListElement { text: qsTr("hygro"); }
+                        ListElement { text: qsTr("temp"); }
+                        ListElement { text: qsTr("luminosity"); }
+                        ListElement { text: qsTr("conductivity"); }
+                    }
+                    Component.onCompleted: {
+                        currentIndex = find(settingsManager.graphdata)
+                        if (currentIndex === -1) { currentIndex = 0 }
+                    }
+                    property bool cbinit: false
+                    x: -221
+                    y: -240
+                    width: 100
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    onCurrentIndexChanged: {
+                        if (cbinit)
+                            settingsManager.graphdata = cbItemsData.get(currentIndex).text
+                        else
+                            cbinit = true
                     }
                 }
 
-                onCheckedChanged: {
-                    if (checked == true)
-                        settingsManager.tempunit = 'C'
-                }
-            }
-
-            ThemedRadioButton {
-                id: radioDelegateFahrenheit
-                height: 40
-                text: qsTr("°F")
-                anchors.verticalCenterOffset: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.verticalCenter: text_unit.verticalCenter
-                font.pixelSize: 16
-
-                checked: {
-                    if (settingsManager.tempunit === 'F') {
-                        radioDelegateCelsius.checked = false
-                        radioDelegateFahrenheit.checked = true
-                    } else {
-                        radioDelegateFahrenheit.checked = false
-                        radioDelegateCelsius.checked = true
+                ComboBox {
+                    id: comboBox_view
+                    model: ListModel {
+                        id: cbItemsView
+                        ListElement { text: qsTr("daily"); }
+                        ListElement { text: qsTr("hourly"); }
+                    }
+                    Component.onCompleted: {
+                        currentIndex = find(settingsManager.graphview)
+                        if (currentIndex === -1) { currentIndex = 0 }
+                    }
+                    property bool cbinit: false
+                    x: 230
+                    y: -240
+                    width: 100
+                    anchors.right: comboBox_data.left
+                    anchors.rightMargin: 26
+                    anchors.verticalCenter: parent.verticalCenter
+                    onCurrentIndexChanged: {
+                        if (cbinit)
+                            settingsManager.graphview = cbItemsView.get(currentIndex).text
+                        else
+                            cbinit = true
                     }
                 }
 
-                onCheckedChanged: {
-                    if (checked === true)
-                        settingsManager.tempunit = 'F'
+                Text {
+                    id: text_graph
+                    height: 40
+                    text: qsTr("Preferred graph")
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: text_unit.bottom
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
                 }
-            }
-
-            Text {
-                id: text_graph
-                height: 40
-                text: qsTr("Preferred graph")
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-                anchors.top: text_unit.bottom
-                anchors.topMargin: 8
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-            }
-
-            ComboBox {
-                id: comboBox_view
-                model: ListModel {
-                    id: cbItemsView
-                    ListElement { text: qsTr("daily"); }
-                    ListElement { text: qsTr("hourly"); }
-                }
-                Component.onCompleted: {
-                    currentIndex = find(settingsManager.graphview)
-                    if (currentIndex === -1) { currentIndex = 0 }
-                }
-                property bool cbinit: false
-                width: 100
-                anchors.right: comboBox_data.left
-                anchors.rightMargin: 12
-                anchors.verticalCenter: text_graph.verticalCenter
-                onCurrentIndexChanged: {
-                    if (cbinit)
-                        settingsManager.graphview = cbItemsView.get(currentIndex).text
-                    else
-                        cbinit = true
-                }
-            }
-
-            ComboBox {
-                id: comboBox_data
-                anchors.top: comboBox_view.top
-                anchors.topMargin: 0
-                model: ListModel {
-                    id: cbItemsData
-                    ListElement { text: qsTr("hygro"); }
-                    ListElement { text: qsTr("temp"); }
-                    ListElement { text: qsTr("luminosity"); }
-                    ListElement { text: qsTr("conductivity"); }
-                }
-                Component.onCompleted: {
-                    currentIndex = find(settingsManager.graphdata)
-                    if (currentIndex === -1) { currentIndex = 0 }
-                }
-                property bool cbinit: false
-                width: 100
-                anchors.verticalCenter: text_graph.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                onCurrentIndexChanged: {
-                    if (cbinit)
-                        settingsManager.graphdata = cbItemsData.get(currentIndex).text
-                    else
-                        cbinit = true
-                }
-            }
-
-            ThemedSwitch {
-                id: switch_notifiations
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: text_notifications.verticalCenter
-
-                checked: settingsManager.notifications
-                onCheckedChanged: { settingsManager.notifications = checked }
-            }
-
-            Text {
-                id: text_bluetooth
-                height: 40
-                text: qsTr("Launch bluetooth with the app")
-                verticalAlignment: Text.AlignVCenter
-                anchors.top: text_notifications.bottom
-                anchors.topMargin: 6
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                font.pixelSize: 16
-            }
-
-            Text {
-                id: text_notifications
-                height: 40
-                text: qsTr("Enable notifications")
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                verticalAlignment: Text.AlignVCenter
-                anchors.top: parent.top
-                anchors.topMargin: 8
-                font.pixelSize: 16
-            }
-
-            ThemedSwitch {
-                id: switch_bluetooth
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: text_bluetooth.verticalCenter
-
-                checked: settingsManager.bluetooth
-                onCheckedChanged: { settingsManager.bluetooth = checked }
             }
         }
 
@@ -291,9 +354,9 @@ FocusScope {
             width: 300
             color: Theme.colorRed
             radius: 22
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 32
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: rectangleSettingsContent.bottom
-            anchors.topMargin: 24
 
             property bool weAreBlinking: false
 
@@ -348,7 +411,6 @@ FocusScope {
             }
             MouseArea {
                 anchors.fill: parent
-
                 onClicked: {
                     rectangleReset.startTheBlink()
                 }

@@ -24,10 +24,9 @@ import QtQuick.Controls 2.0
 
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: background
     anchors.fill: parent
-    color: Theme.colorMaterialLightGrey
 
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
@@ -146,6 +145,5 @@ Rectangle {
 
         model: deviceManager.devicesList
         delegate: MobileDeviceBox { boxDevice: modelData }
-
     }
 }

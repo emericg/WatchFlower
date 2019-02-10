@@ -25,15 +25,17 @@ import QtQuick.Controls.Material 2.0
 
 ApplicationWindow {
     id: applicationWindow
-    color: "#E0FAE7"
+    color: Theme.colorMaterialLightGrey
     visible: true
 
-    width: 720
-    height: 480
-    minimumWidth: 720
-    minimumHeight: 480
+    width: 480
+    height: 720
+    minimumWidth: 480
+    minimumHeight: 720
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+
+    // Desktop stuff
 
     DesktopGeometrySaver {
         window: applicationWindow
@@ -117,28 +119,36 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var curentlySelectedDevice
+    property var curentlySelectedDevice: null
 
     DesktopHeader {
         id: header
         width: parent.width
+        anchors.top: parent.top
     }
 
-    Rectangle {
+    Item {
         id: content
-        color: "#e0fae7"
         anchors.top: header.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        DesktopDeviceList {
+        MobileDeviceList {
             anchors.fill: parent
             id: screenDeviceList
         }
-        Settings {
+        DeviceScreen {
+            anchors.fill: parent
+            id: screenDeviceDetails
+        }
+        MobileSettings {
             anchors.fill: parent
             id: screenSettings
+        }
+        MobileAbout {
+            anchors.fill: parent
+            id: screenAbout
         }
 
         state: "DeviceList"
@@ -148,11 +158,23 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: screenDeviceList
+                    enabled: true
                     visible: true
                 }
                 PropertyChanges {
-                    target: screenSettings
+                    target: screenDeviceDetails
+                    enabled: false
                     visible: false
+                }
+                PropertyChanges {
+                    target: screenSettings
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
                 }
             },
             State {
@@ -160,11 +182,27 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: screenDeviceList
+                    enabled: false
                     visible: false
                 }
                 PropertyChanges {
+                    target: screenDeviceDetails
+                    enabled: true
+                    visible: true
+                }
+                PropertyChanges {
                     target: screenSettings
+                    enabled: false
                     visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
+                }
+                StateChangeScript {
+                    name: "secondScript"
+                    script: screenDeviceDetails.loadDevice()
                 }
             },
             State {
@@ -173,10 +211,46 @@ ApplicationWindow {
                 PropertyChanges {
                     target: screenDeviceList
                     visible: false
+                    enabled: false
+                }
+                PropertyChanges {
+                    target: screenDeviceDetails
+                    visible: false
+                    enabled: false
                 }
                 PropertyChanges {
                     target: screenSettings
                     visible: true
+                    enabled: true
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
+                }
+            },
+            State {
+                name: "About"
+
+                PropertyChanges {
+                    target: screenDeviceList
+                    visible: false
+                    enabled: false
+                }
+                PropertyChanges {
+                    target: screenDeviceDetails
+                    visible: false
+                    enabled: false
+                }
+                PropertyChanges {
+                    target: screenSettings
+                    visible: false
+                    enabled: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: true
+                    enabled: true
                 }
             }
         ]

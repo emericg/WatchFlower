@@ -28,8 +28,7 @@ Rectangle {
     id: deviceBoxMobile
     width: parent.width
     height: 80
-    radius: 0
-    color: "#ddffffff"
+    color: "#44f3f3f3"
 
     property var boxDevice
 
