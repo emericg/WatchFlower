@@ -25,11 +25,10 @@ import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: rectangleAbout
     width: 480
     height: 640
-    color: Theme.colorMaterialLightGrey
     anchors.fill: parent
 
     Rectangle {
@@ -88,10 +87,10 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 8
 
-            text: qsTr("WatchFlower is an application that reads and plots datas from these Xiaomi devices:")
+            text: qsTr("WatchFlower is a plant monitoring application that reads and plots datas from these Xiaomi bluetooth devices:")
             wrapMode: Text.WordWrap
             readOnly: true
-            font.pixelSize: 17
+            font.pixelSize: 18
         }
 
         Rectangle {
@@ -110,7 +109,7 @@ Rectangle {
                 width: 96
                 height: 96
                 anchors.left: image2.right
-                anchors.leftMargin: 16
+                anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/devices/hygrotemp.svg"
@@ -144,7 +143,7 @@ Rectangle {
                 width: 96
                 height: 96
                 anchors.right: image2.left
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/devices/flowercare.svg"
                 fillMode: Image.PreserveAspectFit

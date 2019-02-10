@@ -88,48 +88,6 @@ ApplicationWindow {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
-            if (mouse.button === Qt.BackButton) {
-                content.state = "DeviceList"
-            } else if (mouse.button === Qt.ForwardButton) {
-                if (curentlySelectedDevice)
-                    content.state = "DeviceDetails"
-            }
-        }
-    }
-    FocusScope {
-        focus: true
-        Keys.onBackPressed: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (content.state === "DeviceList") {
-                    // hide windows?
-                    //console.log("WE SHOULD HIDE")
-                    //event.accepted = true;
-                } else {
-                    content.state = "DeviceList"
-                }
-            } else {
-                content.state = "DeviceList"
-            }
-        }
-    }
-
-    Shortcut {
-        sequence: StandardKey.Back
-        onActivated: {
-            content.state = "DeviceList"
-        }
-    }
-    Shortcut {
-        sequence: StandardKey.Forward
-        onActivated: {
-            if (curentlySelectedDevice)
-                content.state = "DeviceDetails"
-        }
-    }
     onClosing: {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             close.accepted = false;
@@ -149,8 +107,27 @@ ApplicationWindow {
         anchors.top: parent.top
     }
 
-    Item {
+    FocusScope {
         id: content
+
+        focus: true
+        Keys.onBackPressed: {
+            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+                if (content.state === "DeviceList") {
+                    // hide window?
+                    //event.accepted = true;
+                } else {
+                    if (content.state === "DeviceDetails" && screenDeviceDetails.content.state === "limits") {
+                        screenDeviceDetails.content.state = "datas"
+                    } else {
+                        content.state = "DeviceList"
+                    }
+                }
+            } else {
+                content.state = "DeviceList"
+            }
+        }
+
         anchors.top: header.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
