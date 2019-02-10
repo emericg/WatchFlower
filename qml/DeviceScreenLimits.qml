@@ -343,18 +343,17 @@ Item {
             anchors.leftMargin: 0
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             Button {
                 id: buttonDone
                 width: 140
-                text: qsTr("OK I'm done!")
-                font.pointSize: 14
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                onClicked: {
-                    rectangleContent.state = "datas"
-                }
+                text: qsTr("OK I'm done!")
+                font.pointSize: 14
+                onClicked: rectangleContent.state = "datas"
             }
         }
     }

@@ -105,7 +105,8 @@ Item {
             Item {
                 id: desktopButtons
                 width: 112
-                height: 72
+                height: 80
+                z: 1
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 12
                 anchors.right: parent.right
@@ -845,16 +846,19 @@ Item {
         if (typeof myDevice === "undefined") return
         //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
 
+        textStatus.color = "#000"
+        textStatus.font.bold = false
+
         if (myDevice) {
             textStatus.text = ""
             if (myDevice.updating) {
                 textStatus.text = qsTr("Updating... ")
-                textStatus.color = "#000"
-                //buttonRefreshText.text = qsTr("Refresh")
+                buttonRefreshText.text = qsTr("Refresh")
             } else if (!myDevice.available && !myDevice.updating) {
                 textStatus.text = qsTr("Offline! ")
                 textStatus.color = Theme.colorOrange
-                //buttonRefreshText.text = qsTr("Retry")
+                textStatus.font.bold = true
+                buttonRefreshText.text = qsTr("Retry")
             }
 
             if (myDevice.lastUpdate) {

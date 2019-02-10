@@ -91,7 +91,13 @@ Item {
             id: buttonEnables
             width: 128
             height: 30
-            text: qsTr("Enable it!")
+            text: {
+                if (Qt.platform.os === "osx") {
+                    qsTr("Try again")
+                } else {
+                    qsTr("Enable it!")
+                }
+            }
             opacity: 0.9
             anchors.right: parent.right
             anchors.rightMargin: 16

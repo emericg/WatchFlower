@@ -212,6 +212,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceHygro + "%"
+                color: Theme.colorIcons
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
@@ -278,6 +279,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.getTempString()
+                color: Theme.colorIcons
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
@@ -343,6 +345,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceLuminosity + " lumens"
+                color: Theme.colorIcons
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
@@ -407,6 +410,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceConductivity + " µS/cm"
+                color: Theme.colorIcons
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16

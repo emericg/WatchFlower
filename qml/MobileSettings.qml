@@ -193,14 +193,13 @@ FocusScope {
                 Text {
                     id: text_update
                     height: 40
-                    text: qsTr("Update interval in minutes")
+                    anchors.leftMargin: 12
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Update interval in minutes")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
-                    anchors.top: text_bluetooth.bottom
-                    anchors.leftMargin: 12
-                    anchors.topMargin: 8
                 }
             }
 
@@ -215,25 +214,23 @@ FocusScope {
                 Text {
                     id: text_unit
                     height: 40
-                    text: qsTr("Temperature unit")
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
+                    anchors.leftMargin: 12
+
+                    text: qsTr("Temperature unit")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
-                    anchors.top: text_update.bottom
-                    anchors.leftMargin: 12
-                    anchors.topMargin: 8
                 }
 
                 ThemedRadioButton {
                     id: radioDelegateCelsius
-                    x: 9
-                    y: 9
                     height: 40
                     text: qsTr("°C")
                     anchors.verticalCenter: text_unit.verticalCenter
-                    font.pixelSize: 16
                     anchors.right: radioDelegateFahrenheit.left
+
+                    font.pixelSize: 16
                     checked: {
                         if (settingsManager.tempunit === 'C') {
                             radioDelegateCelsius.checked = true
