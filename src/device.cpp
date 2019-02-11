@@ -64,7 +64,12 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     // Load limits and initial datas
     getSqlDatas();
 
-    // Set update timer
+    // Configure timeout timer
+    m_timeoutTimer.setSingleShot(true);
+    m_timeoutTimer.setInterval(m_timeout*1000);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
+
+    // Configure update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
     setTimerInterval();
 }
@@ -128,10 +133,24 @@ bool Device::refreshDatasCached(int minutes)
     return status;
 }
 
+void Device::refreshDatasCanceled()
+{
+    m_updating = false;
+    m_available = false;
+    Q_EMIT statusUpdated();
+
+    controller->disconnectFromDevice();
+
+    // Set error timer value
+    setTimerInterval(ERROR_UPDATE_INTERVAL);
+}
+
 void Device::refreshDatasFinished(bool status, bool cached)
 {
     m_updating = false;
     m_available = status;
+
+    m_timeoutTimer.stop();
 
     if (status == true)
     {
@@ -168,6 +187,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
     Q_EMIT statusUpdated();
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void Device::setTimerInterval(int updateInterval)
@@ -362,6 +382,8 @@ bool Device::getBleDatas()
     {
         //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
     }
+
+    m_timeoutTimer.start();
 
     controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
     controller->connectToDevice();

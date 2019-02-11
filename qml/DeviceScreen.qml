@@ -889,13 +889,29 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // updateHeader() >> " + myDevice)
 
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            desktopButtons.visible = false
+        // Sensor address
+        if (myDevice.deviceAddress.charAt(0) !== '{')
+            textAddr.text = "[" + myDevice.deviceAddress + "]"
+
+        // Sensor location
+        if (myDevice.deviceLocationName !== "")
+            textInputLocation.text = myDevice.deviceLocationName
+        else
+            textInputLocation.text = qsTr("Location")
+
+        // Plant sensor?
+        if ((myDevice.deviceCapabilities & 64) != 0) {
+            itemPlant.visible = true
+
+            if (myDevice.devicePlantName !== "")
+                textInputPlant.text = myDevice.devicePlantName
+            else
+                textInputPlant.text = qsTr("Plant")
         } else {
-            desktopButtons.visible = true
+            itemPlant.visible = false
         }
 
-        // Update header
+        // Sensor battery level
         if ((myDevice.deviceCapabilities & 1) == 1) {
             imageBattery.visible = true
             battery.visible = true
@@ -925,28 +941,8 @@ Item {
             battery.visible = false
         }
 
+        // Firmware
         textFirmware.text = myDevice.deviceFirmware
-
-        if (myDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = "[" + myDevice.deviceAddress + "]"
-
-        if (myDevice.deviceLocationName !== "")
-            textInputLocation.text = myDevice.deviceLocationName
-        else
-            textInputLocation.text = qsTr("Location")
-
-        // Plant sensor?
-        if ((myDevice.deviceCapabilities & 64) != 0) {
-            itemPlant.visible = true
-
-            if (myDevice.devicePlantName !== "")
-                textInputPlant.text = myDevice.devicePlantName
-            else
-                textInputPlant.text = qsTr("Plant")
-        } else {
-            itemPlant.visible = false
-        }
-
         if (!myDevice.deviceFirmwareUpToDate) {
             imageFwUpdate.visible = true
             textFwUpdate.visible = true
@@ -955,10 +951,15 @@ Item {
             textFwUpdate.visible = false
         }
 
+        // Status
         updateStatusText()
 
-        // Update desktopButtons
-        if (desktopButtons.visible) {
+        // Update desktop buttons
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+            desktopButtons.visible = false
+        } else {
+            desktopButtons.visible = true
+
             if (myDevice.updating) {
                 refreshRotation.start()
             } else {

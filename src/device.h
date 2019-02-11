@@ -97,6 +97,7 @@ protected:
     bool m_updating = false;
     QDateTime m_lastUpdate;
     QTimer m_updateTimer;
+    QTimer m_timeoutTimer;
 
     // BLE device infos
     QString m_firmware = "UNKN";
@@ -115,13 +116,18 @@ protected:
 
     // BLE device limits
     int m_limitHygroMin = 15;
-    int m_limitHygroMax = 30;
-    int m_limitTempMin = 15;
-    int m_limitTempMax = 30;
-    int m_limitLumiMin = 500;
+    int m_limitHygroMax = 50;
+    int m_limitTempMin = 8;
+    int m_limitTempMax = 23;
+    int m_limitLumiMin = 3000;
     int m_limitLumiMax = 10000;
     int m_limitConduMin = 250;
-    int m_limitConduMax = 750;
+    int m_limitConduMax = 1000;
+
+    // BLE
+    int m_timeout = 10;
+    int m_retries = 2;
+    int m_update_interval = 0;
 
     // QLowEnergyController related
     QLowEnergyController *controller = nullptr;
@@ -142,6 +148,7 @@ protected:
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
     void refreshDatasStarted();
+    void refreshDatasCanceled();
     void refreshDatasFinished(bool status, bool cached = false);
 
 public:

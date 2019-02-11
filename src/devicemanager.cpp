@@ -53,7 +53,7 @@ DeviceManager::DeviceManager()
     m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
     if (m_discoveryAgent)
     {
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(5000);
+        m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
 
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &DeviceManager::addBleDevice);
         connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error), this, &DeviceManager::deviceDiscoveryError);
@@ -103,11 +103,9 @@ DeviceManager::DeviceManager()
         }
     }
 
-    // Set refresh timer
+    // Set "refresh check" timer
     connect(&m_refreshingTimer, &QTimer::timeout, this, &DeviceManager::refreshCheck);
     m_refreshingTimer.setInterval(1000);
-
-    // Start refresh timer
     m_refreshingTimer.start();
 }
 

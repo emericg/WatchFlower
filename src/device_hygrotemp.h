@@ -34,6 +34,8 @@
 
 /*!
  * \brief The DeviceHygrotemp class
+ *
+ * Xiaomi Mijia "BLE Temperature and Humidity sensor with LCD"
  */
 class DeviceHygrotemp: public Device
 {

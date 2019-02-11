@@ -34,6 +34,8 @@
 
 /*!
  * \brief The DeviceFlowercare class
+ *
+ * Xiaomi "Flower Care" / "Mi Flora" / ...
  */
 class DeviceFlowercare: public Device
 {
