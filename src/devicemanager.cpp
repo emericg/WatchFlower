@@ -163,7 +163,13 @@ void DeviceManager::enableBluetooth()
             // Doesn't work on all platforms...
             m_bluetoothAdapter->powerOn();
         }
-
+#if defined(Q_OS_ANDROID)
+        if (m_bluetoothAdapter->isValid() && m_bluetoothAdapter->hostMode() > 0)
+        {
+            // Already powered on? Power on again anyway. It helps on android...
+            m_bluetoothAdapter->powerOn();
+        }
+#endif
         // Keep us informed of availability changes
         // On some platform it can only inform us about disconnection, not reconnection
         connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::bluetoothModeChanged);

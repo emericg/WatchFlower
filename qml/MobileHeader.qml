@@ -88,57 +88,71 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        color: "transparent"
+    Item {
         anchors.fill: parent
         anchors.topMargin: screenTopPadding
 
         Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 68
+            anchors.verticalCenter: parent.verticalCenter
+
             text: "WatchFlower"
-            anchors.left: leftMenuImg.right
-            anchors.leftMargin: 24
             color: "#FFFFFF"
             font.bold: true
             font.pixelSize: 24
             antialiasing: true
-            anchors.verticalCenter: parent.verticalCenter
         }
 
-        Image {
-            id: leftMenuImg
-            width: 28
-            height: 28
+        MouseArea {
+            id: leftArea
+            width: 56
+            height: 56
+            anchors.bottom: parent.bottom
             anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
+            onClicked: leftMenuClicked()
 
-            source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
+            Image {
+                id: leftMenuImg
+                x: 16
+                y: 14
+                width: 28
+                height: 28
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: leftMenuClicked()
+                source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
             }
         }
 
-        Image {
-            id: rightMenuImg
-            width: 28
-            height: 28
-            visible: rightMenuEnabled
+        MouseArea {
+            id: rightArea
+            width: 44
+            height: 56
             anchors.right: parent.right
-            anchors.rightMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.top: parent.top
+            enabled:rightMenuEnabled
+            onClicked: rightMenuClicked()
 
-            source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
+            Image {
+                id: rightMenuImg
+                x: 20
+                y: 14
+                width: 28
+                height: 28
+                visible: rightMenuEnabled
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
 
-            MouseArea {
-                anchors.fill: parent
-                enabled:rightMenuEnabled
-                onClicked: rightMenuClicked()
+                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
             }
         }
     }

@@ -850,15 +850,17 @@ Item {
             if (myDevice.updating) {
                 textStatus.text = qsTr("Updating... ")
                 buttonRefreshText.text = qsTr("Refresh")
-            } else if (!myDevice.available && !myDevice.updating) {
-                textStatus.text = qsTr("Offline! ")
-                textStatus.color = Theme.colorOrange
-                textStatus.font.bold = true
-                buttonRefreshText.text = qsTr("Retry")
+            } else {
+                if (!myDevice.available) {
+                    textStatus.text = qsTr("Offline! ")
+                    textStatus.color = Theme.colorOrange
+                    textStatus.font.bold = true
+                    buttonRefreshText.text = qsTr("Retry")
+                }
             }
 
             if (myDevice.lastUpdateMin >= 0) {
-                if (myDevice.lastUpdateMin < 1)
+                if (myDevice.lastUpdateMin <= 1)
                     textStatus.text += qsTr("Just updated!")
                 else if (myDevice.available)
                     textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")

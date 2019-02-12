@@ -176,9 +176,6 @@ Item {
             anchors.rightMargin: 0
             anchors.leftMargin: 0
 
-            // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
             SpinBox {
                 id: spinBox_update
                 width: 128

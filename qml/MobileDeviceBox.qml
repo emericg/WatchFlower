@@ -214,7 +214,7 @@ Rectangle {
                 running: false
                 OpacityAnimator { from: 0; to: 1; duration: 600 }
                 OpacityAnimator { from: 1; to: 0;  duration: 600 }
-                onStopped: { opacity = 1 }
+                onStopped: { ble.opacity = 1 }
             }
         }
 
