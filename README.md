@@ -6,18 +6,18 @@ WatchFlower
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is an application that reads and plots datas from your Xiaomi "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
-It works with all versions of the devices, and doesn't require GPS or other any other private datas from you, unlike the official application...
+WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
+It works with all versions of the devices, and doesn't require an account creation, nor your GPS location or any other private datas from you, unlike the official application.
 
 It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
 
-### Screenshots!
+### Desktop screenshots
 
-![GUI1](https://i.imgur.com/Ur98oIg.png)
+![GUI1](https://i.imgur.com/rasL730.png)
 
-![GUI1](https://i.imgur.com/nKZ2dxr.png)
+### Mobile screenshots
 
-![GUI2](https://i.imgur.com/2GLtPgH.png)
+![GUI1](https://i.imgur.com/xSFZ5nB.png)
 
 
 ## Documentation
@@ -37,11 +37,11 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 
 ## Special thanks
 
+* Christian Díaz <christiandiaz.design@gmail.com> for the application logo.
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
 * Graphical resources: please read [assets/COPYING](assets/COPYING)
-* Christian Díaz <christiandiaz.design@gmail.com> for the application icon.
 
 
 ## Get involved!
