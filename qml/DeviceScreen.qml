@@ -514,7 +514,7 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: myDevice.deviceFirmware
+                    text: qsTr("Update available!")
                     font.pixelSize: 16
                 }
                 Image {
@@ -538,7 +538,7 @@ Item {
                         anchors.fill: parent
                         hoverEnabled: true
                         onEntered: {
-                            textFwUpdate.text = qsTr("Update available!")
+                            textFwUpdate.text = qsTr("Use official app to upgrade")
                         }
                         onExited: {
                             textFwUpdate.text = qsTr("Update available!")
@@ -857,13 +857,13 @@ Item {
                 buttonRefreshText.text = qsTr("Retry")
             }
 
-            if (myDevice.lastUpdate) {
-                if (myDevice.lastUpdate <= 1)
+            if (myDevice.lastUpdateMin >= 0) {
+                if (myDevice.lastUpdateMin < 1)
                     textStatus.text += qsTr("Just updated!")
                 else if (myDevice.available)
-                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
                 else
-                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdate + " " + qsTr("min. ago")
+                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
             }
         }
     }
@@ -898,6 +898,16 @@ Item {
             textInputLocation.text = myDevice.deviceLocationName
         else
             textInputLocation.text = qsTr("Location")
+
+        // Firmware
+        textFirmware.text = myDevice.deviceFirmware
+        if (!myDevice.deviceFirmwareUpToDate) {
+            imageFwUpdate.visible = true
+            textFwUpdate.visible = true
+        } else {
+            imageFwUpdate.visible = false
+            textFwUpdate.visible = false
+        }
 
         // Plant sensor?
         if ((myDevice.deviceCapabilities & 64) != 0) {
@@ -939,16 +949,6 @@ Item {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             imageBattery.visible = false
             battery.visible = false
-        }
-
-        // Firmware
-        textFirmware.text = myDevice.deviceFirmware
-        if (!myDevice.deviceFirmwareUpToDate) {
-            imageFwUpdate.visible = true
-            textFwUpdate.visible = true
-        } else {
-            imageFwUpdate.visible = false
-            textFwUpdate.visible = false
         }
 
         // Status

@@ -71,7 +71,7 @@ Device::Device(QString &deviceAddr, QString &deviceName)
 
     // Configure update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    setTimerInterval();
+    setUpdateTimerInterval();
 }
 
 Device::Device(const QBluetoothDeviceInfo &d)
@@ -94,7 +94,7 @@ Device::Device(const QBluetoothDeviceInfo &d)
 
     // Set update timer
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    setTimerInterval();
+    setUpdateTimerInterval();
 }
 
 Device::~Device()
@@ -135,14 +135,14 @@ bool Device::refreshDatasCached(int minutes)
 
 void Device::refreshDatasCanceled()
 {
+    controller->disconnectFromDevice();
+
     m_updating = false;
     m_available = false;
     Q_EMIT statusUpdated();
 
-    controller->disconnectFromDevice();
-
     // Set error timer value
-    setTimerInterval(ERROR_UPDATE_INTERVAL);
+    setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
 }
 
 void Device::refreshDatasFinished(bool status, bool cached)
@@ -158,7 +158,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
         Q_EMIT datasUpdated();
 
         // Check timer
-        setTimerInterval();
+        setUpdateTimerInterval();
 
         // 'Water me' notification
         if ((m_capabilities & DEVICE_PLANT) != 0 &&
@@ -181,7 +181,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
     else
     {
         // Set error timer value
-        setTimerInterval(ERROR_UPDATE_INTERVAL);
+        setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
     }
 
     Q_EMIT statusUpdated();
@@ -190,7 +190,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::setTimerInterval(int updateInterval)
+void Device::setUpdateTimerInterval(int updateInterval)
 {
     // If no interval is provided, load the one from settings
     if (updateInterval <= 0)
@@ -422,17 +422,39 @@ QString Device::getDataString() const
     return dataString;
 }
 
+int Device::getLastUpdateInt() const
+{
+    int mins = -1;
+
+    if (m_lastUpdate.isValid())
+    {
+        mins = std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0);
+    }
+
+    return mins;
+}
+
 QString Device::getLastUpdateString() const
 {
     QString lastUpdate;
 
     if (m_lastUpdate.isValid())
     {
-        // Return hour (HH:MM) since last update
+        // Return timestamp (HH:MM) of last update
         //lastUpdate = m_lastUpdate.toString("HH:MM");
 
-        // Return number of minutes since last update
-        lastUpdate = QString::number(std::ceil(m_lastUpdate.secsTo(QDateTime::currentDateTime())/60.0));
+        // Return number of hours or minutes since last update
+        int mins = getLastUpdateInt();
+        if (mins > 0)
+        {
+            if (mins < 60) {
+                lastUpdate = QString::number(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0));
+                lastUpdate += tr(" min.");
+            } else {
+                lastUpdate = QString::number(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 3600.0));
+                lastUpdate += tr(" hours");
+            }
+        }
     }
 
     return lastUpdate;
@@ -824,7 +846,6 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
-    m_available = true;
     controller->discoverServices();
 }
 

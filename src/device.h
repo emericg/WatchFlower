@@ -54,7 +54,8 @@ class Device: public QObject
 
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
-    Q_PROPERTY(QString lastUpdate READ getLastUpdateString NOTIFY statusUpdated)
+    Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
+    Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY datasUpdated)
@@ -118,14 +119,14 @@ protected:
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
     int m_limitTempMin = 8;
-    int m_limitTempMax = 23;
+    int m_limitTempMax = 32;
     int m_limitLumiMin = 3000;
     int m_limitLumiMax = 10000;
     int m_limitConduMin = 250;
     int m_limitConduMax = 1000;
 
     // BLE
-    int m_timeout = 10;
+    int m_timeout = 20;
     int m_retries = 2;
     int m_update_interval = 0;
 
@@ -159,7 +160,7 @@ public:
 public slots:
     bool refreshDatas();
     bool refreshDatasCached(int minutes = 1);
-    void setTimerInterval(int updateIntervalMin = 0);
+    void setUpdateTimerInterval(int updateIntervalMin = 0);
 
     bool getSqlDatas();
     bool getSqlCachedDatas(int minutes);
@@ -188,6 +189,7 @@ public slots:
     QString getTempString() const;
     virtual QString getDataString() const;
     QString getLastUpdateString() const;
+    int getLastUpdateInt() const;
 
     // BLE device associated datas
     QString getLocationName() { return m_locationName; }

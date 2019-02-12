@@ -87,6 +87,7 @@ Rectangle {
 
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
+                ble.visible = false
             } else {
                 if (boxDevice.deviceTempC > 0) {
                     // if we have data cached, used the little indicator
@@ -115,7 +116,7 @@ Rectangle {
                 temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
                 lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
                 cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
-                bat_data.height = (boxDevice.deviceBattery / 100)*64
+                bat_data.height = (boxDevice.deviceBattery / 100) * 64
             }
         }
     }
@@ -207,17 +208,13 @@ Rectangle {
             source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
             sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectFit
-            ColorOverlay {
-                anchors.fill: parent
-                source: parent
-                color: Theme.colorIcons
-            }
             SequentialAnimation on opacity {
                 id: refreshAnimation2
                 loops: Animation.Infinite
                 running: false
                 OpacityAnimator { from: 0; to: 1; duration: 600 }
                 OpacityAnimator { from: 1; to: 0;  duration: 600 }
+                onStopped: { opacity = 1 }
             }
         }
 
@@ -236,7 +233,6 @@ Rectangle {
                 color: Theme.colorOrange
             }
         }
-
     }
 
     Rectangle {
