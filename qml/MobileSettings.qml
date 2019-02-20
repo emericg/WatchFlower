@@ -105,6 +105,38 @@ Item {
         }
 
         Item {
+            id: element6
+            height: 48
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            Text {
+                id: text_minimized
+                height: 40
+                text: qsTr("Start application minimized")
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 16
+            }
+
+            ThemedSwitch {
+                id: switch_minimized
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                checked: settingsManager.minimized
+                onCheckedChanged: settingsManager.minimized = checked
+            }
+        }
+
+        Item {
             id: element1
             height: 48
             anchors.left: parent.left
@@ -345,74 +377,83 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
         }
-    }
 
-    Rectangle {
-        id: rectangleReset
-        height: 44
-        width: 300
-        color: Theme.colorRed
-        radius: 50
-        anchors.top: column.bottom
-        anchors.topMargin: 24
-        anchors.horizontalCenter: parent.horizontalCenter
+        Item {
+            id: element7
+            height: 48
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
 
-        property bool weAreBlinking: false
+            Rectangle {
+                id: rectangleReset
+                height: 40
+                width: 300
+                color: Theme.colorRed
+                radius: 20
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
 
-        function startTheBlink() {
-            if (weAreBlinking === true) {
-                settingsManager.resetSettings()
-                stopTheBlink()
-            } else {
-                weAreBlinking = true
-                timerReset.start()
-                blinkReset.start()
-                textReset.text = qsTr("!!! Click again to confirm !!!")
+                property bool weAreBlinking: false
+
+                function startTheBlink() {
+                    if (weAreBlinking === true) {
+                        settingsManager.resetSettings()
+                        stopTheBlink()
+                    } else {
+                        weAreBlinking = true
+                        timerReset.start()
+                        blinkReset.start()
+                        textReset.text = qsTr("!!! Click again to confirm !!!")
+                    }
+                }
+                function stopTheBlink() {
+                    weAreBlinking = false
+                    timerReset.stop()
+                    blinkReset.stop()
+                    textReset.text = qsTr("Reset sensors & datas!")
+                    rectangleReset.color = Theme.colorRed
+                }
+
+                SequentialAnimation on color {
+                    id: blinkReset
+                    running: false
+                    loops: Animation.Infinite
+                    ColorAnimation { from: Theme.colorRed; to: Theme.colorOrange; duration: 1000 }
+                    ColorAnimation { from: Theme.colorOrange; to: Theme.colorRed; duration: 1000 }
+                }
+
+                Timer {
+                    id: timerReset
+                    interval: 4000
+                    running: false
+                    repeat: false
+                    onTriggered: {
+                        rectangleReset.stopTheBlink()
+                    }
+                }
+
+                Text {
+                    id: textReset
+                    anchors.fill: parent
+                    color: "#ffffff"
+                    text: qsTr("Reset sensors & datas!")
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 18
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        rectangleReset.startTheBlink()
+                    }
+                }
             }
         }
-        function stopTheBlink() {
-            weAreBlinking = false
-            timerReset.stop()
-            blinkReset.stop()
-            textReset.text = qsTr("Reset sensors & datas!")
-            rectangleReset.color = Theme.colorRed
-        }
 
-        SequentialAnimation on color {
-            id: blinkReset
-            running: false
-            loops: Animation.Infinite
-            ColorAnimation { from: Theme.colorRed; to: Theme.colorOrange; duration: 1000 }
-            ColorAnimation { from: Theme.colorOrange; to: Theme.colorRed; duration: 1000 }
-        }
-
-        Timer {
-            id: timerReset
-            interval: 4000
-            running: false
-            repeat: false
-            onTriggered: {
-                rectangleReset.stopTheBlink()
-            }
-        }
-
-        Text {
-            id: textReset
-            anchors.fill: parent
-            color: "#ffffff"
-            text: qsTr("Reset sensors & datas!")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.bold: false
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 18
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                rectangleReset.startTheBlink()
-            }
-        }
     }
 }

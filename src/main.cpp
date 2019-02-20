@@ -72,20 +72,22 @@ int main(int argc, char *argv[])
     }
 
     SettingsManager *sm = SettingsManager::getInstance();
-
     SystrayManager *st = SystrayManager::getInstance();
-
     DeviceManager *dm = new DeviceManager;
-    if (dm && dm->areDevicesAvailable() == false)
+
+    if (!sm || !st || !dm )
+        return EXIT_FAILURE;
+
+    // Run a first scan, but only if we have no saved devices
+    if (dm->areDevicesAvailable() == false)
     {
-        // Run a first scan, but only if we have no saved devices
         dm->scanDevices();
     }
 
+    // Then we start the UI
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 #endif
-
     qmlRegisterSingletonType(QUrl("qrc:/qml/Theme.qml"), "com.watchflower.theme", 1, 0, "Theme");
 
     QQmlApplicationEngine engine;
@@ -98,24 +100,26 @@ int main(int argc, char *argv[])
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
 #endif
+
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
 
+    // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
-    if (window && start_minimized)
-        window->setVisibility(QWindow::Minimized);
-
-    if (st)
+    // Set systray?
+    st->initSettings(&app, window);
+    if (sm->getSysTray())
     {
-        st->initSettings(&app, window);
+        st->initSystray();
+        st->installSystray();
+    }
 
-        if (sm && sm->getSysTray())
-        {
-            st->initSystray();
-            st->installSystray();
-        }
+    // Start minimized?
+    if (start_minimized || sm->getMinimized())
+    {
+        window->setVisibility(QWindow::Minimized);
     }
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)

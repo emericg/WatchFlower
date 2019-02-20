@@ -70,6 +70,9 @@ bool SettingsManager::readSettings()
 
     if (settings.status() == QSettings::NoError)
     {
+        if (settings.contains("settings/startMinimized"))
+            m_startMinimized = settings.value("settings/startMinimized").toBool();
+
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
 
@@ -110,6 +113,7 @@ bool SettingsManager::writeSettings()
 
     if (settings.isWritable())
     {
+        settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
         settings.setValue("settings/bluetoothEnabled", m_autoBluetoothEnabled);
@@ -316,6 +320,8 @@ void SettingsManager::resetDatabase()
 void SettingsManager::resetSettings()
 {
     // Settings
+    m_startMinimized = false;
+    Q_EMIT minimizedChanged();
     m_systrayEnabled = false;
     Q_EMIT systrayChanged();
     m_notificationsEnabled = false;
@@ -373,6 +379,11 @@ void SettingsManager::setSysTray(bool value)
             Q_EMIT systrayChanged();
         }
     }
+}
+
+void SettingsManager::setMinimized(bool value)
+{
+    m_startMinimized = value; writeSettings();
 }
 
 void SettingsManager::setNotifs(bool value)

@@ -43,12 +43,14 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool bluetooth READ getBluetooth WRITE setBluetooth NOTIFY bluetoothChanged)
+    Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
 
     Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
     Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
     Q_PROPERTY(QString graphview READ getGraphView WRITE setGraphView NOTIFY graphviewChanged)
     Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
 
+    bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
     bool m_autoBluetoothEnabled = false;
@@ -74,6 +76,7 @@ class SettingsManager: public QObject
     ~SettingsManager();
 
 Q_SIGNALS:
+    void minimizedChanged();
     void systrayChanged();
     void notifsChanged();
     void bluetoothChanged();
@@ -86,6 +89,9 @@ public:
     static SettingsManager *getInstance();
 
     bool hasDatabase() const { return m_db; }
+
+    bool getMinimized() const { return m_startMinimized; }
+    void setMinimized(bool value);
 
     bool getSysTray() const { return m_systrayEnabled; }
     void setSysTray(bool value);
