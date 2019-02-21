@@ -1,14 +1,17 @@
 
 # Application icon:
-- assets/desktop/watchflower.svg // Christian Díaz <christiandiaz.design@gmail.com>
+- assets/desktop/watchflower.svg    // Christian Díaz <christiandiaz.design@gmail.com>
 
 # Devices:
-- assets/flowercare.svg     // Emeric Grange // CC BY-SA 4.0
-- assets/bletemphygro.svg   // Emeric Grange // CC BY-SA 4.0
-- assets/ropot.svg          // Emeric Grange // CC BY-SA 4.0
+- assets/flowercare.svg         // Emeric Grange // CC BY-SA 4.0
+- assets/bletemphygro.svg       // Emeric Grange // CC BY-SA 4.0
+- assets/ropot.svg              // Emeric Grange // CC BY-SA 4.0
 # Menu:
-- assets/menu_front.svg     // Emeric Grange // CC BY-SA 4.0
-- assets/menu_back.svg      // Emeric Grange // CC BY-SA 4.0
+- assets/menu_front.svg         // Emeric Grange // CC BY-SA 4.0
+- assets/menu_back.svg          // Emeric Grange // CC BY-SA 4.0
 
 # assets/icons_material
-- *                         // Google Material Design icons // CC BY-SA 4.0
+- *                             // Google Material Design icons // CC BY-SA 4.0
+
+# other:
+- assets/GitHub-Mark-64px.png   // https://github.com/logos // proprietary

@@ -11,6 +11,7 @@
         <file>menu_front.svg</file>
         <file>ble.svg</file>
         <file>ble_err.svg</file>
+        <file>GitHub-Mark-64px.png</file>
         <file>icons_material/baseline-access_time-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
@@ -28,9 +29,12 @@
         <file>icons_material/baseline-bluetooth_disabled-24px.svg</file>
         <file>icons_material/baseline-bluetooth_searching-24px.svg</file>
         <file>icons_material/baseline-brightness_2-24px.svg</file>
+        <file>icons_material/baseline-close-24px.svg</file>
         <file>icons_material/baseline-edit-24px.svg</file>
         <file>icons_material/baseline-exit_to_app-24px.svg</file>
         <file>icons_material/baseline-flash_on-24px.svg</file>
+        <file>icons_material/baseline-import_contacts-24px.svg</file>
+        <file>icons_material/baseline-import_contacts-24px.svg.png</file>
         <file>icons_material/baseline-info-24px.svg</file>
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>
@@ -45,5 +49,7 @@
         <file>icons_material/baseline-settings-20px.svg</file>
         <file>icons_material/baseline-tune-24px.svg</file>
         <file>icons_material/baseline-wb_sunny-24px.svg</file>
+        <file>icons_material/outline-info-24px.svg</file>
+        <file>icons_material/outline-info-24px_white.svg</file>
     </qresource>
 </RCC>

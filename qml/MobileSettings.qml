@@ -25,7 +25,7 @@ import QtQuick.Controls 2.0
 import com.watchflower.theme 1.0
 
 Item {
-    id: rectangleSettings
+    id: settingsScreen
     width: 480
     height: 640
     anchors.fill: parent

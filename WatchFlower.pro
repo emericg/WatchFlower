@@ -1,5 +1,5 @@
 TARGET  = WatchFlower
-VERSION = 0.5.0
+VERSION = 0.5
 
 CONFIG += c++11
 versionAtLeast(QT_VERSION, 5.11) { CONFIG += qtquickcompiler }

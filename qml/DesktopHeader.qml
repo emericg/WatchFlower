@@ -33,6 +33,7 @@ Rectangle {
     signal refreshButtonClicked()
     signal rescanButtonClicked()
     signal settingsButtonClicked()
+    signal aboutButtonClicked()
     signal exitButtonClicked()
 
     Connections {
@@ -186,7 +187,7 @@ Rectangle {
         id: imageSettings
         width: 32
         height: 32
-        anchors.right: buttonExit.left
+        anchors.right: imageAbout.left
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
@@ -197,6 +198,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: settingsButtonClicked()
+        }
+    }
+
+    Image {
+        id: imageAbout
+        width: 32
+        height: 32
+        anchors.right: buttonExit.left
+        anchors.rightMargin: 12
+        anchors.verticalCenter: parent.verticalCenter
+
+        source: "qrc:/assets/icons_material/outline-info-24px_white.svg"
+        sourceSize: Qt.size(width, height)
+        fillMode: Image.PreserveAspectFit
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: aboutButtonClicked()
         }
     }
 

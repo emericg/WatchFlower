@@ -59,10 +59,9 @@ Rectangle {
         }
     }
 
-    Rectangle {
+    Item {
         id: rectangleHeader
         height: 128
-        color: "#00000000"
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.left: parent.left
@@ -128,7 +127,7 @@ Rectangle {
                 anchors.leftMargin: 56
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Plants")
+                text: qsTr("My plants")
                 font.pixelSize: 14
                 font.bold: true
                 color: Theme.colorText
@@ -221,11 +220,10 @@ Rectangle {
             }
         }
 
-        Rectangle { // spacer
+        Item { // spacer
             height: 8
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
         }
         Rectangle {
             height: 1
@@ -233,11 +231,10 @@ Rectangle {
             anchors.left: parent.left
             color: Theme.colorText
         }
-        Rectangle {
+        Item {
             height: 8
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
         }
 
         Rectangle {
@@ -294,7 +291,7 @@ Rectangle {
                 anchors.leftMargin: 56
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Update sensors")
+                text: qsTr("Refresh sensors")
                 font.pixelSize: 14
                 font.bold: true
                 color: Theme.colorText
@@ -364,11 +361,10 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Item {
             height: 8
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
         Rectangle {
@@ -378,11 +374,10 @@ Rectangle {
             color: Theme.colorIcons
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
-        Rectangle {
+        Item {
             height: 8
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
 

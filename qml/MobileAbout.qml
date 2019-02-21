@@ -26,7 +26,7 @@ import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
-    id: rectangleAbout
+    id: aboutScreen
     width: 480
     height: 640
     anchors.fill: parent
@@ -77,93 +77,26 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.topMargin: 0
+    }
 
-        TextArea {
-            id: element
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
+    Column {
+        id: column
+        anchors.top: rectangleAboutTitle.bottom
+        anchors.topMargin: 16
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 16
+        anchors.right: parent.right
+        anchors.rightMargin: 16
+        anchors.left: parent.left
+        anchors.leftMargin: 16
 
-            text: qsTr("WatchFlower is a plant monitoring application that reads and plots datas from these Xiaomi bluetooth devices:")
-            wrapMode: Text.WordWrap
-            readOnly: true
-            font.pixelSize: 18
-        }
-
-        Rectangle {
-            id: rectangleIcons
-            height: 96
-            color: "#00000000"
-            anchors.top: element.bottom
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+        Item {
+            id: logo
+            height: 100
             anchors.right: parent.right
             anchors.rightMargin: 0
-
-            Image {
-                id: image3
-                width: 96
-                height: 96
-                anchors.left: image2.right
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/devices/hygrotemp.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size(width, height)
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorIcons
-                }
-            }
-
-            Image {
-                id: image2
-                width: 96
-                height: 96
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/devices/ropot.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size(width, height)
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorIcons
-                }
-            }
-
-            Image {
-                id: image1
-                width: 96
-                height: 96
-                anchors.right: image2.left
-                anchors.rightMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/devices/flowercare.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size(width, height)
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorIcons
-                }
-            }
-        }
-
-        Rectangle {
-            id: rectangleInfos
-            width: 290
-            height: 88
-            color: "#00000000"
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 32
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 0
 
             Image {
                 id: imageLogo
@@ -178,30 +111,218 @@ Item {
 
             Text {
                 id: textVersion
-                width: 184
-                anchors.verticalCenterOffset: -12
                 anchors.left: imageLogo.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 18
 
                 color: "#343434"
-                text: qsTr("WatchFlower") + " / " + settingsManager.getAppVersion()
-                horizontalAlignment: Text.AlignHCenter
+                text: qsTr("version") + " " + settingsManager.getAppVersion()
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 16
                 font.pixelSize: 17
             }
-            Text {
-                id: textUrl
-                width: 184
-                anchors.verticalCenterOffset: 12
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: imageLogo.right
-                anchors.leftMargin: 8
 
+            Text {
+                id: element1
+                text: qsTr("WatchFlower")
+                anchors.top: parent.top
+                anchors.topMargin: 16
+                anchors.left: imageLogo.right
+                anchors.leftMargin: 16
+                font.pixelSize: 36
+            }
+        }
+
+        Item {
+            id: github
+            height: 48
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Image {
+                id: image4
+                width: 32
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                source: "qrc:/assets/GitHub-Mark-64px.png"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+            }
+
+            Text {
+                id: link
                 color: "#343434"
-                text: "Visit the <html><style type=\"text/css\"></style><a href=\"https://github.com/emericg/WatchFlower\" style=\"text-decoration: none\">GitHub</a></html> page!"
+                text: "GitHub"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: image4.right
+                anchors.leftMargin: 16
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 17
-                onLinkActivated: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
+
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
+                }
+            }
+        }
+
+        Item {
+            id: tuto
+            height: 48
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Image {
+                id: image5
+                width: 32
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 8
+
+                source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg.png"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+            }
+
+            Text {
+                id: element
+                anchors.left: image5.right
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                text: qsTr("Tutorial")
+                color: "#343434"
+                font.pixelSize: 17
+
+                MouseArea {
+                    id: mouseArea1
+                    anchors.fill: parent
+                }
+            }
+        }
+
+        Item {
+            id: desc
+            height: 180
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            Image {
+                id: image
+                width: 32
+                height: 32
+                anchors.top: parent.top
+                anchors.topMargin: 8
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+            }
+            TextArea {
+                id: description
+
+                text: qsTr("WatchFlower is a plant monitoring application that reads and plots datas from these Xiaomi / Mijia bluetooth devices:")
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.left: image.right
+                anchors.leftMargin: 8
+                wrapMode: Text.WordWrap
+                readOnly: true
+                font.pixelSize: 18
+            }
+
+            Item {
+                id: rectangleIcons
+                height: 96
+                anchors.top: description.bottom
+                anchors.topMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                Image {
+                    id: image3
+                    width: 80
+                    height: 80
+                    anchors.left: image2.right
+                    anchors.leftMargin: 32
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/devices/hygrotemp.svg"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size(width, height)
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorIcons
+                    }
+                }
+
+                Image {
+                    id: image2
+                    width: 80
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/assets/devices/ropot.svg"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size(width, height)
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorIcons
+                    }
+                }
+
+                Image {
+                    id: image1
+                    width: 80
+                    height: 80
+                    anchors.right: image2.left
+                    anchors.rightMargin: 32
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/assets/devices/flowercare.svg"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size(width, height)
+                    ColorOverlay {
+                        anchors.fill: parent
+                        source: parent
+                        color: Theme.colorIcons
+                    }
+                }
             }
         }
     }

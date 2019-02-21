@@ -10,6 +10,10 @@ WatchFlower.creator*
 WatchFlower.files
 WatchFlower.includes
 
+# Qt Quick compiler
+qmlcache_loader.cpp
+qml_*qml.cpp
+
 # QMake temporary project files
 WatchFlower.pro*
 Makefile

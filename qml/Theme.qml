@@ -50,6 +50,10 @@ Item {
     readonly property string colorBarLumi: "#F1EC5C"
     readonly property string colorBarCond: "#E19C2F"
 
+    // statusbar: "#1abc9c"
+    // header: "#009688"
+    // select: bbebe1
+
     // Palette (WIP)
     readonly property string colorRed: "#ff7657"
     readonly property string colorOrange: "#ffb74c"

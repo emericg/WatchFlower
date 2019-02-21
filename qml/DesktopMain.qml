@@ -59,6 +59,7 @@ ApplicationWindow {
             deviceManager.scanDevices()
         }
         onSettingsButtonClicked: content.state = "Settings"
+        onAboutButtonClicked: content.state = "About"
         onExitButtonClicked: settingsManager.exit()
     }
     Connections {
