@@ -160,21 +160,25 @@ void Device::refreshDatasFinished(bool status, bool cached)
         // Check timer
         setUpdateTimerInterval();
 
-        // 'Water me' notification
-        if ((m_capabilities & DEVICE_PLANT) != 0 &&
-            m_hygro > 0 && m_hygro < m_limitHygroMin)
+        // 'Water me' notification, if enabled
+        SettingsManager *sm = SettingsManager::getInstance();
+        if (sm && sm->getNotifs())
         {
-            SystrayManager *st = SystrayManager::getInstance();
-            if (st)
+            if ((m_capabilities & DEVICE_PLANT) != 0 &&
+                m_hygro > 0 && m_hygro < m_limitHygroMin)
             {
-                QString message;
+                SystrayManager *st = SystrayManager::getInstance();
+                if (st)
+                {
+                    QString message;
 
-                if (!m_plantName.isEmpty())
-                    message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
-                else
-                    message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
+                    if (!m_plantName.isEmpty())
+                        message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
+                    else
+                        message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
 
-                st->sendNotification(message);
+                    st->sendNotification(message);
+                }
             }
         }
     }
@@ -313,7 +317,6 @@ bool Device::getSqlDatas()
 
 bool Device::getSqlCachedDatas(int minutes)
 {
-    //qDebug() << "Device::getSqlCachedDatas(" << m_deviceAddress << ") for the last" << minutes << "minutes";
     bool status = false;
 
     QSqlQuery cachedDatas;
@@ -324,13 +327,16 @@ bool Device::getSqlCachedDatas(int minutes)
 
     if (cachedDatas.exec() == false)
         qDebug() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
-
-    while (cachedDatas.next())
+    else
     {
 #ifndef QT_NO_DEBUG
         qDebug() << "* Device update:" << getAddress();
         qDebug() << "> using cachedDatas";
 #endif
+    }
+
+    while (cachedDatas.next())
+    {
         m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
         m_luminosity =  cachedDatas.value(2).toInt();
