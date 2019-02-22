@@ -75,36 +75,6 @@ Item {
         anchors.left: parent.left
 
         Item {
-            id: element
-            height: 48
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-
-            Text {
-                id: text_bluetooth
-                height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Launch bluetooth with the app")
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            ThemedSwitch {
-                id: switch_bluetooth
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                checked: settingsManager.bluetooth
-                onCheckedChanged: settingsManager.bluetooth = checked
-                anchors.rightMargin: 12
-            }
-        }
-
-        Item {
             id: element6
             height: 48
             anchors.right: parent.right
@@ -137,6 +107,36 @@ Item {
         }
 
         Item {
+            id: element
+            height: 48
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            Text {
+                id: text_bluetooth
+                height: 40
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Start bluetooth with the app")
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            ThemedSwitch {
+                id: switch_bluetooth
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                checked: settingsManager.bluetooth
+                onCheckedChanged: settingsManager.bluetooth = checked
+                anchors.rightMargin: 12
+            }
+        }
+
+        Item {
             id: element1
             height: 48
             anchors.left: parent.left
@@ -159,7 +159,7 @@ Item {
             Text {
                 id: text_worker
                 height: 40
-                text: qsTr("Background worker")
+                text: qsTr("Enable system tray")
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
@@ -212,9 +212,9 @@ Item {
                 id: spinBox_update
                 width: 128
                 height: 40
-                value: settingsManager.interval
+                value: 60
                 onValueChanged: settingsManager.interval = value
-                to: 120
+                to: 180
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 stepSize: 30
@@ -229,7 +229,7 @@ Item {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Update interval in minutes")
+                text: qsTr("Update interval (minutes)")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
             }
@@ -327,8 +327,6 @@ Item {
                     if (currentIndex === -1) { currentIndex = 0 }
                 }
                 property bool cbinit: false
-                x: -221
-                y: -240
                 width: 100
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
@@ -380,7 +378,7 @@ Item {
 
         Item {
             id: element7
-            height: 48
+            height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.right: parent.right
@@ -454,6 +452,5 @@ Item {
                 }
             }
         }
-
     }
 }

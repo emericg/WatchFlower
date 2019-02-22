@@ -133,6 +133,49 @@ Item {
         }
 
         Item {
+            id: website
+            height: 48
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            Image {
+                width: 32
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: Theme.colorIcons
+                }
+            }
+
+            Text {
+                color: "#343434"
+                text: "Website"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 48
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 17
+
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower.html")
+                }
+            }
+        }
+
+        Item {
             id: github
             height: 48
             anchors.left: parent.left
@@ -142,11 +185,11 @@ Item {
 
             Image {
                 id: image4
-                width: 32
-                height: 32
+                width: 28
+                height: 28
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 2
 
                 source: "qrc:/assets/GitHub-Mark-64px.png"
                 sourceSize: Qt.size(width, height)
@@ -162,15 +205,14 @@ Item {
             Text {
                 id: link
                 color: "#343434"
-                text: "GitHub"
+                text: "GitHub page"
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: image4.right
-                anchors.leftMargin: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 48
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 17
 
                 MouseArea {
-                    id: mouseArea
                     anchors.fill: parent
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                 }
@@ -185,8 +227,9 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
+            visible: false
+
             Image {
-                id: image5
                 width: 32
                 height: 32
                 anchors.left: parent.left
@@ -206,9 +249,8 @@ Item {
             }
 
             Text {
-                id: element
-                anchors.left: image5.right
-                anchors.leftMargin: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 48
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Tutorial")
                 color: "#343434"
@@ -230,7 +272,6 @@ Item {
             anchors.leftMargin: 0
 
             Image {
-                id: image
                 width: 32
                 height: 32
                 anchors.top: parent.top
@@ -256,8 +297,8 @@ Item {
                 anchors.rightMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
-                anchors.left: image.right
-                anchors.leftMargin: 8
+                anchors.left: parent.left
+                anchors.leftMargin: 40
                 wrapMode: Text.WordWrap
                 readOnly: true
                 font.pixelSize: 18
