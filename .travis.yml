@@ -13,7 +13,7 @@ before_install:
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get install qt512base qt512quickcontrols2 qt512connectivity qt512svg qt512imageformats qt512tools qt512charts-no-lgpl sqlite3 -y;
+      sudo apt-get install qt512base qt512tools qt512quickcontrols2 qt512graphicaleffects qt512connectivity qt512svg qt512imageformats qt512charts-no-lgpl sqlite3 -y;
       sudo apt-get install libgl1-mesa-dev -y;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
