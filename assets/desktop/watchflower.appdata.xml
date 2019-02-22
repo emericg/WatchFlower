@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2018 Emeric Grange <emeric.grange@gmail.com> -->
+<!-- Copyright 2019 Emeric Grange <emeric.grange@gmail.com> -->
 <component type="desktop">
  <id>watchflower.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
  <name>WatchFlower</name>
- <summary>WatchFlower helps you read and plot datas from your Xiaomi "Flower Care" devices!</summary>
+ <summary>WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / Mijia 'Flower Care' and 'Ropot' devices!</summary>
  <description>
    <p>
-   WatchFlower is a small application to help you read and plot datas from your
-   Xiaomi "Flower Care" devices. It works with all versions of the device, and
-   doesn't require GPS or other any other private datas from you.
+    WatchFlower is a plant monitoring application that reads and plots datas from
+    your Xiaomi / Mijia "Flower Care", "Ropot" and "Bluetooth temperature and
+    humidity sensor" devices. It works with all versions of the devices, and 
+    doesn't require an account creation, nor your GPS location or any other 
+    private datas from you, unlike the official application.
    </p>
  </description>
  <screenshots>
   <screenshot type="default">
-   <image>https://i.imgur.com/Ur98oIg.png</image>
-   <caption>Main screen</caption>
-  </screenshot>
-  <screenshot>
-   <image>https://i.imgur.com/nKZ2dxr.png</image>
+   <image>https://i.imgur.com/rasL730.png</image>
    <caption>Device screen</caption>
   </screenshot>
   <screenshot>
-   <image>https://i.imgur.com/H3ezqVE.png</image>
-   <caption>Limits screen</caption>
-  </screenshot>
-  <screenshot>
-   <image>https://i.imgur.com/2GLtPgH.png</image>
-   <caption>Settings screen</caption>
+   <image>https://i.imgur.com/xSFZ5nB.png</image>
+   <caption>Mobile screens</caption>
   </screenshot>
  </screenshots>
- <url type="homepage">https://github.com/emericg/WatchFlower</url>
+ <url type="homepage">https://emeric.io/WatchFlower.html</url>
  <updatecontact>emeric.grange@gmail.com</updatecontact>
  <keywords>
    <keyword>xiaomi</keyword>
+   <keyword>mijia</keyword>
+   <keyword>ble</keyword>
+   <keyword>plants</keyword>
    <keyword>flower care</keyword>
+   <keyword>ropot</keyword>
  </keywords>
 </component>
