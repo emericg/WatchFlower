@@ -191,7 +191,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 2
 
-                source: "qrc:/assets/GitHub-Mark-64px.png"
+                source: "qrc:/assets/github.png"
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
 
