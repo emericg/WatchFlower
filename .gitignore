@@ -1,21 +1,22 @@
 # Binaries and build artifacts
 build/*
 bin/*
-*.o
-qrc_resources.cpp
+contribs/*
+appdir/*
 
 # QtCreator temporary project files
 WatchFlower.config
 WatchFlower.creator*
 WatchFlower.files
 WatchFlower.includes
+WatchFlower.pro*
 
-# Qt Quick compiler
+# Qt Quick Compiler
+qrc_resources.cpp
 qmlcache_loader.cpp
 qml_*qml.cpp
 
 # QMake temporary project files
-WatchFlower.pro*
 Makefile
 .qmake.stash
 

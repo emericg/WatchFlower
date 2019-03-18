@@ -1,11 +1,12 @@
 TARGET  = WatchFlower
+
 VERSION = 0.6
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
-versionAtLeast(QT_VERSION, 5.11) { CONFIG += qtquickcompiler }
-
 QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
+android { QT += androidextras }
 ios | android { QT += gui-private }
 
 # Validate Qt version
@@ -52,9 +53,10 @@ RESOURCES   += qml/qml.qrc \
 OTHER_FILES += .travis.yml
 
 ################################################################################
+# App features
 
-# Pass app version to the C++
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+# Use Qt Quick compiler
+ios | android { CONFIG += qtquickcompiler }
 
 # Force mobile UI
 #DEFINES += FORCE_MOBILE_UI
@@ -149,4 +151,8 @@ android {
 
     DISTFILES += assets/android/AndroidManifest.xml \
                  assets/android/res/values/libs.xml
+}
+
+ios {
+    #
 }

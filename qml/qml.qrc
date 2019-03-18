@@ -10,16 +10,17 @@
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
         <file>DesktopDeviceBox.qml</file>
-        <file>DesktopGeometrySaver.qml</file>
         <file>DesktopDeviceList.qml</file>
+        <file>DesktopSettings.qml</file>
+        <file>DesktopAbout.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
         <file>DeviceScreenCharts.qml</file>
-        <file>Settings.qml</file>
         <file>Theme.qml</file>
         <file>ThemedSwitch.qml</file>
         <file>ThemedRadioButton.qml</file>
         <file>ThemedRangeSlider.qml</file>
+        <file alias="WindowGeometrySaver.qml">thirdparty/WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>

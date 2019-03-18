@@ -20,7 +20,6 @@
  */
 
 #include <QApplication>
-#include <QGuiApplication>
 #include <QSystemTrayIcon>
 #include <QMenu>
 

@@ -21,12 +21,14 @@
 
 import QtQuick 2.7
 
+import QtGraphicalEffects 1.0
+import com.watchflower.theme 1.0
+
 Rectangle {
     id: deviceBoxMobile
     width: parent.width
-    height: 96
-    color: "#ffffff"
-    radius: 0
+    height: 80
+    color: "#e6f0f0f0"
 
     property var boxDevice
 
@@ -50,39 +52,71 @@ Rectangle {
             textLocation.text = boxDevice.deviceLocationName
         }
         if (boxDevice.deviceName === "MJ_HT_V1") {
-            textPlant.text = qsTr("BLE temperature sensor")
+            textPlant.text = qsTr("Thermometer")
             textLocation.text = boxDevice.deviceLocationName
         }
 
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
+        water.visible = false
+        ble.visible = false
 
+        // water me notif
+        if (boxDevice.deviceHygro > 0) {
+            if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+                water.visible = true
+            }
+        }
+
+        // Update notif
         if (boxDevice.isUpdating()) {
-            refreshAnimation.running = true;
-            imageStatus.visible = true;
-            imageStatus.source = "qrc:/assets/ble.svg";
+            if (boxDevice.deviceTempC > 0) {
+                // if we have data cached, used the little indicator
+                ble.visible = true
+                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                refreshAnimation2.running = true;
+            } else {
+                // otherwise, fullsize
+                imageStatus.visible = true;
+                imageStatus.source = "qrc:/assets/ble.svg";
+                refreshAnimation.running = true;
+            }
         } else {
             refreshAnimation.running = false;
+            refreshAnimation2.running = false;
 
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
-
-                if (boxDevice.deviceName === "MJ_HT_V1") {
-                    rectangleHygroTemp.visible = true
-                    textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
-                    textHygro.text = boxDevice.deviceHygro + "%"
-                } else {
-                    rectangleSensors.visible = true
-                    hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
-                    temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
-                    lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
-                    cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
-                    bat_data.height = (boxDevice.deviceBattery / 100)*64
-                }
+                ble.visible = false
             } else {
-                imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/ble_err.svg";
-                imageStatus.opacity = 1;
+                if (boxDevice.deviceTempC > 0) {
+                    // if we have data cached, used the little indicator
+                    imageStatus.visible = false;
+                    ble.visible = true
+                    ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                } else {
+                    // otherwise big one
+                    ble.visible = false
+                    imageStatus.visible = true;
+                    imageStatus.source = "qrc:/assets/ble_err.svg";
+                    imageStatus.opacity = 1;
+                }
+            }
+        }
+
+        // Has datas? always display them
+        if (boxDevice.deviceTempC > 0) {
+            if (boxDevice.deviceName === "MJ_HT_V1") {
+                rectangleHygroTemp.visible = true
+                textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                textHygro.text = boxDevice.deviceHygro + "%"
+            } else {
+                rectangleSensors.visible = true
+                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
+                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
+                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
+                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
+                bat_data.height = (boxDevice.deviceBattery / 100) * 64
             }
         }
     }
@@ -92,63 +126,123 @@ Rectangle {
 
         onClicked: {
             curentlySelectedDevice = boxDevice
-            deviceScreen.loadDevice()
+            content.state = "DeviceDetails"
+        }
+
+        Image {
+            id: imageForward
+            width: 32
+            height: 32
+            z: 1
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 6
+
+            source: "qrc:/assets/menu_front.svg"
+            sourceSize: Qt.size(width, height)
         }
     }
 
     Rectangle {
         id: background
-        height: 88
-        color: "#f9f9f9"
+        height: 64
+        color: "#99e6e6e6"
+        visible: false
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.rightMargin: 44
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
-        id: textPlant
-        color: Theme.colorTitles
-        text: boxDevice.deviceLocationName
-        font.capitalization: Font.AllUppercase
-        anchors.right: parent.right
-        anchors.rightMargin: 12
-        clip: true
-        font.bold: false
-        anchors.topMargin: 14
-        anchors.top: parent.top
-        anchors.left: dataArea.right
-        anchors.leftMargin: 12
-
-        font.pixelSize: 24
-        verticalAlignment: Text.AlignBottom
-    }
-
-    Text {
         id: textLocation
-        verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
         text: boxDevice.deviceAddress
-        anchors.right: parent.right
-        anchors.rightMargin: 12
+        anchors.right: dataArea.left
+        anchors.rightMargin: 8
         clip: true
         font.weight: Font.Thin
         font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 14
-        anchors.left: dataArea.right
-        anchors.leftMargin: 12
+        anchors.bottomMargin: 16
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+    }
+
+    Text {
+        id: textPlant
+        color: "#544545"
+        text: boxDevice.deviceLocationName
+        font.capitalization: Font.AllUppercase
+        anchors.right: dataArea.left
+        anchors.rightMargin: 8
+        clip: true
+        font.bold: false
+        anchors.topMargin: 16
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+
+        font.pixelSize: 22
+    }
+
+    Row {
+        id: lilIcons
+        width: 60
+        height: 20
+        layoutDirection: Qt.RightToLeft
+        spacing: 8
+
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
+        anchors.right: dataArea.left
+        anchors.rightMargin: 8
+
+        Image {
+            id: ble
+            width: 20
+            height: 20
+            anchors.verticalCenter: parent.verticalCenter
+
+            source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            sourceSize: Qt.size(width, height)
+            fillMode: Image.PreserveAspectFit
+            SequentialAnimation on opacity {
+                id: refreshAnimation2
+                loops: Animation.Infinite
+                running: false
+                OpacityAnimator { from: 0; to: 1; duration: 600 }
+                OpacityAnimator { from: 1; to: 0;  duration: 600 }
+                onStopped: { ble.opacity = 1 }
+            }
+        }
+
+        Image {
+            id: water
+            width: 20
+            height: 20
+            anchors.verticalCenter: parent.verticalCenter
+
+            source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+            sourceSize: Qt.size(width, height)
+            fillMode: Image.PreserveAspectFit
+            ColorOverlay {
+                anchors.fill: parent
+                source: parent
+                color: Theme.colorOrange
+            }
+        }
     }
 
     Rectangle {
         id: dataArea
-        width: 83
-        height: 88
-        color: "#00000000"
-        anchors.left: parent.left
-        anchors.leftMargin: 12
+        width: 64
+        height: 64
+        color: "#f3f3f3"
         anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 44
 
         Image {
             id: imageStatus
@@ -170,178 +264,166 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleSensors
-            color: "#00000000"
-            anchors.fill: parent
-            visible: true
+            width: 64
+            height: 64
+            anchors.verticalCenter: parent.verticalCenter
 
+            visible: true
             Rectangle {
                 id: hygro_bg
                 width: 12
-                color: "#e2e6e5"
-                radius: 6
-                clip: true
-
+                color: "#331389e8"
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-
-                Rectangle {
-                    id: hygro_data
-                    height: 50
-                    color: "#289de1"
-                    radius: 5
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    border.width: 0
-                }
             }
 
             Rectangle {
                 id: temp_bg
                 width: 12
-                color: "#e2e6e5"
-                radius: 6
+                color: "#335dc948"
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.left: hygro_bg.right
-                anchors.leftMargin: 6
-
-                Rectangle {
-                    id: temp_data
-                    height: 20
-                    color: "#1abc9c"
-                    radius: 5
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    border.width: 0
-                    visible: true
-                    anchors.bottomMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                }
+                anchors.leftMargin: 1
             }
 
             Rectangle {
                 id: lumi_bg
                 width: 12
-                color: "#e2e6e5"
-                radius: 6
-                border.width: 0
+                color: "#33f8ef50"
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.left: temp_bg.right
-                anchors.leftMargin: 6
-
-                Rectangle {
-                    id: lumi_data
-                    height: 10
-                    color: "#ffba5a"
-                    radius: 6
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    border.width: 0
-                }
+                anchors.leftMargin: 1
             }
             Rectangle {
                 id: cond_bg
                 width: 12
-                color: "#e2e6e5"
-                radius: 6
+                color: "#33fc7203"
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.left: lumi_bg.right
-                anchors.leftMargin: 6
-
-                Rectangle {
-                    id: cond_data
-                    height: 16
-                    color: "#ff7657"
-                    radius: 6
-                    border.width: 0
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                }
+                anchors.leftMargin: 1
             }
             Rectangle {
                 id: bat_bg
+                x: 65
                 width: 12
-                color: "#e2e6e5"
-                radius: 6
+                color: "#33797979"
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.left: cond_bg.right
-                anchors.leftMargin: 6
+                anchors.leftMargin: 1
+            }
 
-                Rectangle {
-                    id: bat_data
-                    y: 80
-                    height: 0
-                    color: "#555151"
-                    radius: 6
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    border.width: 0
-                }
+            Rectangle {
+                id: hygro_data
+                width: 12
+                height: 0
+                color: "#1389e8"
+                anchors.bottomMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+            }
+            Rectangle {
+                id: temp_data
+                width: 12
+                height: 0
+                color: "#5dc948"
+                visible: true
+                anchors.bottomMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.left: hygro_bg.right
+                anchors.leftMargin: 1
+            }
+            Rectangle {
+                id: lumi_data
+                width: 12
+                height: 0
+                color: "#f8ef50"
+                anchors.bottomMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.left: temp_bg.right
+                anchors.leftMargin: 1
+                border.color: "#00000000"
+            }
+            Rectangle {
+                id: cond_data
+                width: 12
+                height: 0
+                color: "#fc7203"
+                anchors.bottomMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.left: lumi_bg.right
+                anchors.leftMargin: 1
+            }
+            Rectangle {
+                id: bat_data
+                width: 12
+                height: 0
+                color: "#797979"
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.left: cond_bg.right
+                anchors.leftMargin: 1
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleHygroTemp
-            color: "#f3f3f3"
             anchors.fill: parent
 
             Text {
                 id: textTemp
-                y: 18
+                x: 0
+                y: 8
+                height: 28
                 color: "#393939"
                 text: qsTr("25.0°")
                 font.wordSpacing: -1.2
                 font.letterSpacing: -1.4
                 renderType: Text.NativeRendering
-                font.weight: Font.Normal
+                font.weight: Font.Bold
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 24
+                font.pixelSize: 22
             }
 
             Text {
                 id: textHygro
+                x: 0
+                y: 36
+                height: 20
                 color: "#393939"
                 text: qsTr("55%")
-                anchors.top: textTemp.bottom
-                anchors.topMargin: 0
+                font.family: "Tahoma"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 20
+                font.pixelSize: 18
             }
         }
     }

@@ -1,12 +1,18 @@
 import QtQuick 2.7
-import QtQuick.Window 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Window 2.2
 import Qt.labs.settings 1.0
 
 Item {
+    // MUST be set by the calling application.
     property Window window
-    property string windowName: ""
 
+    // Can be changed by the calling application.
+    property string windowName: "ApplicationWindow"
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // QSettings file. Will use organisation and project name.
     Settings {
         id: s
         category: windowName
@@ -18,16 +24,11 @@ Item {
         property int visibility
     }
 
-    Component.onCompleted: {
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
-            if (s.width && s.height) {
-                window.x = s.x;
-                window.y = s.y;
-                window.width = s.width;
-                window.height = s.height;
-                window.visibility = s.visibility;
-            }
-        }
+    Timer {
+        id: saveSettingsTimer
+        interval: 3333 // 3s is probably good enough...
+        repeat: false // started by application geometry changes
+        onTriggered: saveSettings()
     }
 
     Connections {
@@ -39,13 +40,25 @@ Item {
         onVisibilityChanged: saveSettingsTimer.restart()
     }
 
-    Timer {
-        id: saveSettingsTimer
-        interval: 1000
-        repeat: false
-        onTriggered: saveSettings()
+    Component.onCompleted: restoreSettings()
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Restore settings
+    function restoreSettings() {
+        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
+            // Restore settings from saved settings
+            if (s.width && s.height) {
+                window.x = s.x;
+                window.y = s.y;
+                window.width = s.width;
+                window.height = s.height;
+                window.visibility = s.visibility;
+            }
+        }
     }
 
+    // Save settings
     function saveSettings() {
         if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
             switch(window.visibility) {

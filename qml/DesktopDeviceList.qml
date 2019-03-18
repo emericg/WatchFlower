@@ -24,10 +24,9 @@ import QtQuick.Controls 2.0
 
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: background
     anchors.fill: parent
-    color: Theme.colorMaterialLightGrey
 
     property bool deviceScanning: deviceManager.scanning
     property bool bluetoothAvailable: deviceManager.bluetooth
@@ -40,10 +39,6 @@ Rectangle {
         } else {
             rectangleStatus.hide()
         }
-
-        // load first device of the list
-        curentlySelectedDevice = deviceManager.getFirstDevice()
-        deviceScreen.loadDevice()
     }
 
     onDeviceScanningChanged: {
@@ -58,7 +53,6 @@ Rectangle {
 
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-
             if (deviceManager.areDevicesAvailable() === false) {
                 rectangleStatus.setStatus(qsTr("No devices :-("))
             } else {
@@ -70,111 +64,92 @@ Rectangle {
     }
 
     Rectangle {
-        id: list
-        width: 400
-        color: "#f5ffed"
-        anchors.left: parent.left
-        anchors.leftMargin: 0
+        id: rectangleStatus
+        height: 48
+        color: Theme.colorMaterialOrange
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
 
-        ListView {
-            id: devicesview
-            x: 10
-            y: 60
-            width: parent.width
-            clip: true
-
+        Text {
+            id: textStatus
+            color: "#ffffff"
+            text: qsTr("Status :-(")
+            anchors.rightMargin: 16
+            anchors.leftMargin: 16
+            font.bold: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignLeft
             anchors.fill: parent
-            anchors.topMargin: rectangleStatus.height + 12
-            anchors.bottomMargin: 10
-            spacing: 10
-
-            model: deviceManager.devicesList
-
-            delegate: DesktopDeviceBox { boxDevice: modelData }
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
+            font.pixelSize: 20
         }
 
-        Rectangle {
-            id: rectangleStatus
-            height: 48
-            color: Theme.colorOrange
-            anchors.top: parent.top
-            anchors.topMargin: 0
+        Button {
+            id: buttonEnables
+            width: 128
+            height: 30
+            text: {
+                if (Qt.platform.os === "osx") {
+                    qsTr("Try again")
+                } else {
+                    qsTr("Enable it!")
+                }
+            }
+            opacity: 0.9
             anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
 
-            Text {
-                id: textStatus
-                color: "#ffffff"
-                text: qsTr("Status :-(")
-                anchors.rightMargin: 16
-                anchors.leftMargin: 16
-                font.bold: true
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                anchors.fill: parent
-                font.pixelSize: 20
+            onClicked: {
+                deviceManager.enableBluetooth()
+                deviceManager.checkBluetooth()
             }
+        }
 
-            Button {
-                id: buttonEnables
-                width: 128
-                height: 30
-                text: qsTr("Enables")
-                opacity: 0.8
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+        function hide() {
+            rectangleStatus.visible = false;
+            rectangleStatus.height = 0;
+        }
+        function setError(message) {
+            rectangleStatus.visible = true;
+            rectangleStatus.height = 48;
+            textStatus.text = message;
 
-                onClicked: deviceManager.checkBluetooth()
+            if (!deviceManager.hasBluetooth()) {
+                buttonEnables.visible = true
+            } else {
+                buttonEnables.visible = false
             }
+        }
+        function setStatus(message) {
+            rectangleStatus.visible = true;
+            rectangleStatus.height = 48;
+            textStatus.text = message;
 
-            function hide() {
-                rectangleStatus.visible = false;
-                rectangleStatus.height = 0;
-            }
-            function setError(message) {
-                rectangleStatus.visible = true;
-                rectangleStatus.height = 48;
-                textStatus.text = message;
-
-                if (!deviceManager.hasBluetooth()) {
-                    buttonEnables.visible = true
-                } else {
-                    buttonEnables.visible = false
-                }
-            }
-            function setStatus(message) {
-                rectangleStatus.visible = true;
-                rectangleStatus.height = 48;
-                textStatus.text = message;
-
-                if (!deviceManager.hasBluetooth()) {
-                    buttonEnables.visible = true
-                } else {
-                    buttonEnables.visible = false
-                }
+            if (!deviceManager.hasBluetooth()) {
+                buttonEnables.visible = true
+            } else {
+                buttonEnables.visible = false
             }
         }
     }
 
-    DeviceScreen {
-        id: deviceScreen
-        color: "#ffffff"
-        anchors.left: list.right
+    ListView {
+        id: devicesview
+        width: parent.width
+        clip: true
+
+        anchors.fill: parent
+        anchors.topMargin: rectangleStatus.height + 12
+        anchors.bottomMargin: 10
         anchors.leftMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.right: parent.right
         anchors.rightMargin: 0
+        spacing: 10
+
+        model: deviceManager.devicesList
+        delegate: MobileDeviceBox { boxDevice: modelData }
     }
 }

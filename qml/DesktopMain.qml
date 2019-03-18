@@ -26,19 +26,20 @@ import com.watchflower.theme 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    color: Theme.colorMaterialLightGrey
-    visible: true
 
     width: 480
     height: 720
     minimumWidth: 480
     minimumHeight: 720
 
+    color: Theme.colorMaterialLightGrey
+
+    visible: true
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     // Desktop stuff
 
-    DesktopGeometrySaver {
+    WindowGeometrySaver {
         window: applicationWindow
         windowName: "applicationWindow"
     }
@@ -136,7 +137,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        MobileDeviceList {
+        DesktopDeviceList {
             anchors.fill: parent
             id: screenDeviceList
         }
@@ -144,11 +145,11 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceDetails
         }
-        MobileSettings {
+        DesktopSettings {
             anchors.fill: parent
             id: screenSettings
         }
-        MobileAbout {
+        DesktopAbout {
             anchors.fill: parent
             id: screenAbout
         }
