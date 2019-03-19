@@ -593,13 +593,10 @@ Item {
         }
     }
 
-    Rectangle {
+    Item {
         id: rectangleContent
-        color: Theme.colorMaterialLightGrey
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-
         anchors.top: rectangleHeader.bottom
+        anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
 

@@ -115,8 +115,6 @@ Rectangle {
 
             Image {
                 id: leftMenuImg
-                x: 16
-                y: 14
                 width: 28
                 height: 28
                 anchors.left: parent.left
@@ -126,6 +124,11 @@ Rectangle {
                 source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "white"
+                }
             }
         }
 
@@ -138,11 +141,21 @@ Rectangle {
             anchors.top: parent.top
             enabled:rightMenuEnabled
             onClicked: rightMenuClicked()
+            /*
+            ColorOverlay {
+                id: rightMenuImg
+                width: rightMenuImgSource.sourceSize.width
+                height: rightMenuImgSource.sourceSize.height
+                visible: rightMenuEnabled
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
 
+                source: rightMenuImgSource
+                cached: true
+            }*/
             Image {
                 id: rightMenuImg
-                x: 20
-                y: 14
                 width: 28
                 height: 28
                 visible: rightMenuEnabled
@@ -153,6 +166,11 @@ Rectangle {
                 source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
                 sourceSize: Qt.size(width, height)
                 fillMode: Image.PreserveAspectFit
+                ColorOverlay {
+                    anchors.fill: parent
+                    source: parent
+                    color: "white"
+                }
             }
         }
     }

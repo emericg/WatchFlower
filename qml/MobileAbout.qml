@@ -32,56 +32,15 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        id: rectangleAboutTitle
-        height: 80
-        color: Theme.colorMaterialDarkGrey
-        border.width: 0
-
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-
-        Text {
-            id: textTitle
-            color: Theme.colorTitles
-            text: qsTr("About")
-            anchors.right: parent.right
-            anchors.rightMargin: 12
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.top: parent.top
-            anchors.topMargin: 12
-            font.bold: true
-            font.pixelSize: 26
-        }
-
-        Text {
-            id: textSubtitle
-            text: qsTr("What do you want to know?")
-            font.pixelSize: 16
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
-        }
-    }
-
-    Rectangle {
         id: rectangleContent
         color: "#00000000"
+        anchors.fill: parent
         anchors.top: rectangleAboutTitle.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.topMargin: 0
     }
 
     Column {
         id: column
-        anchors.top: rectangleAboutTitle.bottom
+        anchors.top: parent.top
         anchors.topMargin: 16
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16

@@ -24,11 +24,10 @@ import QtQuick 2.7
 import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: deviceBoxMobile
     width: parent.width
     height: 80
-    color: "#e6f0f0f0"
 
     property var boxDevice
 
@@ -122,6 +121,10 @@ Rectangle {
     }
 
     MouseArea {
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         anchors.fill: parent
 
         onClicked: {
@@ -136,9 +139,9 @@ Rectangle {
             z: 1
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: 4
 
-            source: "qrc:/assets/menu_front.svg"
+            source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             sourceSize: Qt.size(width, height)
         }
     }
@@ -227,22 +230,35 @@ Rectangle {
             source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
             sourceSize: Qt.size(width, height)
             fillMode: Image.PreserveAspectFit
+
             ColorOverlay {
                 anchors.fill: parent
                 source: parent
-                color: Theme.colorOrange
+                color: Theme.colorBlue
             }
         }
     }
 
     Rectangle {
+        id: rectangle
+        height: 1
+        color: "#bfbfbf"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+    }
+
+    Rectangle {
         id: dataArea
-        width: 64
-        height: 64
-        color: "#f3f3f3"
+        width: 72
+        height: 70
+        color: "#00000000"
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        anchors.rightMargin: 44
+        anchors.rightMargin: 40
 
         Image {
             id: imageStatus
@@ -266,121 +282,164 @@ Rectangle {
 
         Item {
             id: rectangleSensors
-            width: 64
-            height: 64
-            anchors.verticalCenter: parent.verticalCenter
-
+            anchors.fill: parent
             visible: true
-            Rectangle {
+
+            Item {
                 id: hygro_bg
-                width: 12
-                color: "#331389e8"
+                width: 8
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+
+                Rectangle {
+                    id: bg1
+                    anchors.fill: parent
+                    color: Theme.colorBlue
+                    opacity: 0.33
+                    radius: 3
+                }
+                Rectangle {
+                    id: hygro_data
+                    height: 12
+                    color: Theme.colorBlue
+                    radius: 3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
 
-            Rectangle {
+            Item {
                 id: temp_bg
-                width: 12
-                color: "#335dc948"
+                width: 8
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.left: hygro_bg.right
-                anchors.leftMargin: 1
+                anchors.leftMargin: 8
+
+                Rectangle {
+                    id: bg2
+                    anchors.fill: parent
+                    color: Theme.colorGreen
+                    opacity: 0.33
+                    radius: 3
+                }
+                Rectangle {
+                    id: temp_data
+                    height: 6
+                    color: Theme.colorGreen
+                    radius: 3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    visible: true
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
 
-            Rectangle {
+            Item {
                 id: lumi_bg
-                width: 12
-                color: "#33f8ef50"
+                width: 8
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.left: temp_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: cond_bg
-                width: 12
-                color: "#33fc7203"
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: bat_bg
-                x: 65
-                width: 12
-                color: "#33797979"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.left: cond_bg.right
-                anchors.leftMargin: 1
+                anchors.leftMargin: 8
+
+                Rectangle {
+                    id: bg3
+                    anchors.fill: parent
+                    color: Theme.colorYellow
+                    opacity: 0.33
+                    radius: 3
+                }
+                Rectangle {
+                    id: lumi_data
+                    height: 8
+                    color: Theme.colorYellow
+                    radius: 3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    border.color: "#00000000"
+                }
             }
 
-            Rectangle {
-                id: hygro_data
-                width: 12
-                height: 0
-                color: "#1389e8"
-                anchors.bottomMargin: 0
+            Item {
+                id: cond_bg
+                width: 8
+                anchors.top: parent.top
+                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-            }
-            Rectangle {
-                id: temp_data
-                width: 12
-                height: 0
-                color: "#5dc948"
-                visible: true
                 anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: lumi_data
-                width: 12
-                height: 0
-                color: "#f8ef50"
-                anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 1
-                border.color: "#00000000"
-            }
-            Rectangle {
-                id: cond_data
-                width: 12
-                height: 0
-                color: "#fc7203"
-                anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
                 anchors.left: lumi_bg.right
-                anchors.leftMargin: 1
+                anchors.leftMargin: 8
+
+                Rectangle {
+                    id: bg4
+                    anchors.fill: parent
+                    color: Theme.colorRed
+                    opacity: 0.33
+                    radius: 3
+                }
+                Rectangle {
+                    id: cond_data
+                    height: 10
+                    color: Theme.colorRed
+                    radius: 3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
-            Rectangle {
-                id: bat_data
-                width: 12
-                height: 0
-                color: "#797979"
+
+            Item {
+                id: bat_bg
+                width: 8
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 0
                 anchors.left: cond_bg.right
-                anchors.leftMargin: 1
+                anchors.leftMargin: 8
+
+                Rectangle {
+                    id: bg5
+                    anchors.fill: parent
+                    color: Theme.colorGrey
+                    opacity: 0.33
+                    radius: 3
+                }
+                Rectangle {
+                    id: bat_data
+                    height: 6
+                    color: Theme.colorGrey
+                    radius: 3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
         }
 

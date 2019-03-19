@@ -28,7 +28,7 @@ import com.watchflower.theme 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    color: Theme.colorMaterialLightGrey
+    color: "white"
     visible: true
 
     minimumWidth: 400

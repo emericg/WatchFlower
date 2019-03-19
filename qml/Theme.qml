@@ -41,9 +41,9 @@ Item {
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"
 
-    readonly property string colorTitles: "#333333"
-    readonly property string colorSubTitles: "#333333"
+    readonly property string colorTitles: "#FFFFFF"
     readonly property string colorText: "#333333"
+    readonly property string colorSubText: "#666666"
     readonly property string colorIcons: "#333333"
 
     readonly property string colorBarHygro: "#31A3EC"
@@ -63,7 +63,7 @@ Item {
     readonly property string colorYellow: "#ffba5a"
     readonly property string colorRed: "#ff7657"
     readonly property string colorBrown: "#555151"
-    readonly property string colorGrey: "#a9bcb8"
+    readonly property string colorGrey: "#555151"
 
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: 30
