@@ -51,6 +51,5 @@
         <file>icons_material/baseline-tune-24px.svg</file>
         <file>icons_material/baseline-wb_sunny-24px.svg</file>
         <file>icons_material/outline-info-24px.svg</file>
-        <file>icons_material/outline-info-24px_white.svg</file>
     </qresource>
 </RCC>

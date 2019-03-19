@@ -1,5 +1,5 @@
 /*!
- * This file is part of OffloadBuddy.
+ * This file is part of WatchFlower.
  * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@ import QtQuick 2.7
 Item {
     // Headers
     readonly property string colorHeaderDesktop: "#4E598C"
-    readonly property string colorHeaderMobile: "#00c853"
-    readonly property string colorHeaderMobileStatusbar: "#009624"
+    readonly property string colorHeaderMobile: "#1abc9c"
+    readonly property string colorHeaderMobileStatusbar: "#009688"
 
     // Material
     readonly property string colorMaterialLightGrey: "#f8f8f8"
@@ -41,9 +41,10 @@ Item {
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"
 
-    readonly property string colorTitles: "#454B54"
-    readonly property string colorText: "#505050"
-    readonly property string colorIcons: "#606060"
+    readonly property string colorTitles: "#333333"
+    readonly property string colorSubTitles: "#333333"
+    readonly property string colorText: "#333333"
+    readonly property string colorIcons: "#333333"
 
     readonly property string colorBarHygro: "#31A3EC"
     readonly property string colorBarTemp: "#87D241"
@@ -55,15 +56,14 @@ Item {
     // select: bbebe1
 
     // Palette (WIP)
-    readonly property string colorRed: "#ff7657"
-    readonly property string colorOrange: "#ffb74c"
+    readonly property string colorLightGreen: "#09debc"
+    readonly property string colorGreen: "#07bf97"
+    readonly property string colorDarkGreen: "#1ea892"
     readonly property string colorBlue: "#408ab4"
-    readonly property string colorGreen1: "#c9ffc7"
-    readonly property string colorGreen2: "#2ecc71"
-    readonly property string colorGreen3: "#27ae60"
-    readonly property string colorGreen4: "#1abc9c"
-    readonly property string colorDarkGrey: "#555151"
-    readonly property string colorBlueGrey: "#a9bcb8"
+    readonly property string colorYellow: "#ffba5a"
+    readonly property string colorRed: "#ff7657"
+    readonly property string colorBrown: "#555151"
+    readonly property string colorGrey: "#a9bcb8"
 
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: 30

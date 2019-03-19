@@ -209,7 +209,7 @@ Rectangle {
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/icons_material/outline-info-24px_white.svg"
+        source: "qrc:/assets/icons_material/outline-info-24px.svg"
         sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
 
