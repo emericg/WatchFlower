@@ -35,7 +35,6 @@ Item {
         id: rectangleContent
         color: "#00000000"
         anchors.fill: parent
-        anchors.top: rectangleAboutTitle.bottom
     }
 
     Column {
@@ -51,7 +50,7 @@ Item {
 
         Item {
             id: logo
-            height: 100
+            height: 80
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -59,12 +58,12 @@ Item {
 
             Image {
                 id: imageLogo
-                width: 88
-                height: 88
+                width: 80
+                height: 80
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
 
-                source: "qrc:/assets/desktop/watchflower.svg"
+                source: "qrc:/assets/logo.svg"
                 sourceSize: Qt.size(width, height)
             }
 
@@ -72,22 +71,24 @@ Item {
                 id: textVersion
                 anchors.left: imageLogo.right
                 anchors.leftMargin: 18
-
-                color: "#343434"
-                text: qsTr("version") + " " + settingsManager.getAppVersion()
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 16
+                anchors.bottomMargin: 10
+
+                color: Theme.colorSubText
+                text: qsTr("version") + " " + settingsManager.getAppVersion()
                 font.pixelSize: 17
             }
 
             Text {
                 id: element1
-                text: qsTr("WatchFlower")
                 anchors.top: parent.top
-                anchors.topMargin: 16
+                anchors.topMargin: 14
                 anchors.left: imageLogo.right
                 anchors.leftMargin: 16
-                font.pixelSize: 36
+
+                text: qsTr("WatchFlower")
+                color: Theme.colorText
+                font.pixelSize: 30
             }
         }
 
@@ -99,31 +100,36 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Image {
+            Item {
                 width: 32
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-
-                ColorOverlay {
+                Image {
+                    id: websiteImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: websiteImg
+                    anchors.fill: parent
                     color: Theme.colorIcons
+                    cached: true
                 }
             }
 
             Text {
-                color: "#343434"
-                text: "Website"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 48
-                horizontalAlignment: Text.AlignHCenter
+
+                color: Theme.colorText
+                text: "Website"
                 font.pixelSize: 17
 
                 MouseArea {
@@ -142,33 +148,38 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Image {
-                id: image4
+            Item {
                 width: 28
                 height: 28
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 2
 
-                source: "qrc:/assets/github.png"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-
-                ColorOverlay {
+                Image {
+                    id: githubImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/github.png"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: githubImg
+                    anchors.fill: parent
                     color: Theme.colorIcons
+                    cached: true
                 }
             }
 
             Text {
                 id: link
-                color: "#343434"
-                text: "GitHub page"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 48
                 horizontalAlignment: Text.AlignHCenter
+
+                color: Theme.colorText
+                text: "GitHub page"
                 font.pixelSize: 17
 
                 MouseArea {
@@ -186,24 +197,27 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            visible: false
-
-            Image {
-                width: 32
-                height: 32
+            Item {
+                width: 30
+                height: 30
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 1
                 anchors.top: parent.top
                 anchors.topMargin: 8
 
-                source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg.png"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-
-                ColorOverlay {
+                Image {
+                    id: tutoImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg.png"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: tutoImg
+                    anchors.fill: parent
                     color: Theme.colorIcons
+                    cached: true
                 }
             }
 
@@ -211,8 +225,9 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 48
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("Tutorial")
-                color: "#343434"
+
+                text: qsTr("Open the tutorial")
+                color: Theme.colorText
                 font.pixelSize: 17
 
                 MouseArea {
@@ -230,7 +245,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            Image {
+            Item {
                 width: 32
                 height: 32
                 anchors.top: parent.top
@@ -238,20 +253,26 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-
-                ColorOverlay {
+                Image {
+                    id: descImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: descImg
+                    anchors.fill: parent
                     color: Theme.colorIcons
+                    cached: true
                 }
             }
             TextArea {
                 id: description
 
-                text: qsTr("WatchFlower is a plant monitoring application that reads and plots datas from these Xiaomi / Mijia bluetooth devices:")
+                color: Theme.colorText
+                text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' bluetooth devices.")
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.top: parent.top
@@ -273,54 +294,72 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                Image {
-                    id: image3
+                Item {
                     width: 80
                     height: 80
-                    anchors.left: image2.right
+                    anchors.left: itemMiddle.right
                     anchors.leftMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/devices/hygrotemp.svg"
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize: Qt.size(width, height)
-                    ColorOverlay {
+                    Image {
+                        id: image3
                         anchors.fill: parent
-                        source: parent
+                        visible: false
+                        source: "qrc:/assets/devices/hygrotemp.svg"
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
+                    }
+                    ColorOverlay {
+                        source: image3
+                        anchors.fill: parent
                         color: Theme.colorIcons
+                        cached: true
                     }
                 }
 
-                Image {
-                    id: image2
+                Item {
+                    id: itemMiddle
                     width: 80
                     height: 80
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/ropot.svg"
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize: Qt.size(width, height)
-                    ColorOverlay {
+
+                    Image {
+                        id: image2
                         anchors.fill: parent
-                        source: parent
+                        visible: false
+                        source: "qrc:/assets/devices/ropot.svg"
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
+                    }
+                    ColorOverlay {
+                        source: image2
+                        anchors.fill: parent
                         color: Theme.colorIcons
+                        cached: true
                     }
                 }
 
-                Image {
-                    id: image1
+                Item {
                     width: 80
                     height: 80
-                    anchors.right: image2.left
+                    anchors.right: itemMiddle.left
                     anchors.rightMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/flowercare.svg"
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize: Qt.size(width, height)
-                    ColorOverlay {
+
+                    Image {
+                        id: image1
                         anchors.fill: parent
-                        source: parent
+                        visible: false
+                        source: "qrc:/assets/devices/flowercare.svg"
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
+                    }
+                    ColorOverlay {
+                        source: image1
+                        anchors.fill: parent
                         color: Theme.colorIcons
+                        cached: true
                     }
                 }
             }

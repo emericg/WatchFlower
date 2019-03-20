@@ -169,6 +169,10 @@ ApplicationWindow {
                 name: "DeviceList"
 
                 PropertyChanges {
+                    target: header
+                    title: "WatchFlower"
+                }
+                PropertyChanges {
                     target: screenDeviceList
                     enabled: true
                     visible: true
@@ -192,6 +196,10 @@ ApplicationWindow {
             State {
                 name: "DeviceDetails"
 
+                PropertyChanges {
+                    target: header
+                    title: "WatchFlower"
+                }
                 PropertyChanges {
                     target: screenDeviceList
                     enabled: false
@@ -221,6 +229,10 @@ ApplicationWindow {
                 name: "Settings"
 
                 PropertyChanges {
+                    target: header
+                    title: qsTr("Settings")
+                }
+                PropertyChanges {
                     target: screenDeviceList
                     visible: false
                     enabled: false
@@ -244,6 +256,10 @@ ApplicationWindow {
             State {
                 name: "About"
 
+                PropertyChanges {
+                    target: header
+                    title: qsTr("About")
+                }
                 PropertyChanges {
                     target: screenDeviceList
                     visible: false

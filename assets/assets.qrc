@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/assets">
+        <file>logo.svg</file>
         <file>watchflower.svg</file>
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
@@ -37,7 +38,6 @@
         <file>icons_material/baseline-flash_on-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg.png</file>
-        <file>icons_material/baseline-info-24px.svg</file>
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-insert_link-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>

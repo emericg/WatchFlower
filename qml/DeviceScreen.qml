@@ -850,7 +850,7 @@ Item {
             } else {
                 if (!myDevice.available) {
                     textStatus.text = qsTr("Offline! ")
-                    textStatus.color = Theme.colorOrange
+                    textStatus.color = Theme.colorRed
                     textStatus.font.bold = true
                     buttonRefreshText.text = qsTr("Retry")
                 }

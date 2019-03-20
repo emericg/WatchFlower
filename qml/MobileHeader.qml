@@ -38,6 +38,8 @@ Rectangle {
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
 
+    property string title: "WatchFlower"
+
     property string leftMenuMode: "drawer"
     property bool rightMenuEnabled: false
 
@@ -97,10 +99,10 @@ Rectangle {
             anchors.leftMargin: 68
             anchors.verticalCenter: parent.verticalCenter
 
-            text: "WatchFlower"
+            text: title
             color: "#FFFFFF"
-            font.bold: true
-            font.pixelSize: 24
+            font.bold: false
+            font.pixelSize: 26
             antialiasing: true
         }
 
@@ -113,21 +115,26 @@ Rectangle {
             anchors.top: parent.top
             onClicked: leftMenuClicked()
 
-            Image {
-                id: leftMenuImg
+            Item {
                 width: 28
                 height: 28
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
+                Image {
+                    id: leftMenuImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: leftMenuImg
+                    anchors.fill: parent
                     color: "white"
+                    cached: true
                 }
             }
         }
@@ -141,21 +148,8 @@ Rectangle {
             anchors.top: parent.top
             enabled:rightMenuEnabled
             onClicked: rightMenuClicked()
-            /*
-            ColorOverlay {
-                id: rightMenuImg
-                width: rightMenuImgSource.sourceSize.width
-                height: rightMenuImgSource.sourceSize.height
-                visible: rightMenuEnabled
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
 
-                source: rightMenuImgSource
-                cached: true
-            }*/
-            Image {
-                id: rightMenuImg
+            Item {
                 width: 28
                 height: 28
                 visible: rightMenuEnabled
@@ -163,13 +157,19 @@ Rectangle {
                 anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-                ColorOverlay {
+                Image {
+                    id: rightMenuImg
                     anchors.fill: parent
-                    source: parent
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                    sourceSize: Qt.size(width, height)
+                    fillMode: Image.PreserveAspectFit
+                }
+                ColorOverlay {
+                    source: rightMenuImg
+                    anchors.fill: parent
                     color: "white"
+                    cached: true
                 }
             }
         }

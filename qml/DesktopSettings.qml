@@ -418,8 +418,8 @@ Item {
                     id: blinkReset
                     running: false
                     loops: Animation.Infinite
-                    ColorAnimation { from: Theme.colorRed; to: Theme.colorOrange; duration: 1000 }
-                    ColorAnimation { from: Theme.colorOrange; to: Theme.colorRed; duration: 1000 }
+                    ColorAnimation { from: Theme.colorRed; to: Theme.colorYellow; duration: 1000 }
+                    ColorAnimation { from: Theme.colorYellow; to: Theme.colorRed; duration: 1000 }
                 }
 
                 Timer {

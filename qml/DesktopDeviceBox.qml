@@ -230,7 +230,7 @@ Rectangle {
             ColorOverlay {
                 anchors.fill: parent
                 source: parent
-                color: Theme.colorOrange
+                color: Theme.colorYellow
             }
         }
     }

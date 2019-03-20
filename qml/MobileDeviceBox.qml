@@ -27,7 +27,7 @@ import com.watchflower.theme 1.0
 Item {
     id: deviceBoxMobile
     width: parent.width
-    height: 80
+    height: 90
 
     property var boxDevice
 
@@ -72,7 +72,7 @@ Item {
             if (boxDevice.deviceTempC > 0) {
                 // if we have data cached, used the little indicator
                 ble.visible = true
-                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
                 refreshAnimation2.running = true;
             } else {
                 // otherwise, fullsize
@@ -92,7 +92,7 @@ Item {
                     // if we have data cached, used the little indicator
                     imageStatus.visible = false;
                     ble.visible = true
-                    ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 } else {
                     // otherwise big one
                     ble.visible = false
@@ -160,34 +160,32 @@ Item {
 
     Text {
         id: textLocation
-        font.pixelSize: 16
-        text: boxDevice.deviceAddress
         anchors.right: dataArea.left
         anchors.rightMargin: 8
-        clip: true
-        font.weight: Font.Thin
-        font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
+        anchors.bottomMargin: 20
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 12
+
+        clip: true
+        color: Theme.colorSubText
+        text: "#boxDevice.deviceAddress#"
+        font.pixelSize: 18
     }
 
     Text {
         id: textPlant
-        color: "#544545"
-        text: boxDevice.deviceLocationName
-        font.capitalization: Font.AllUppercase
         anchors.right: dataArea.left
         anchors.rightMargin: 8
-        clip: true
-        font.bold: false
-        anchors.topMargin: 16
+        anchors.topMargin: 20
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 12
 
+        color: Theme.colorText
+        text: boxDevice.deviceLocationName
         font.pixelSize: 22
+        clip: true
     }
 
     Row {
@@ -202,15 +200,27 @@ Item {
         anchors.right: dataArea.left
         anchors.rightMargin: 8
 
-        Image {
+        Item {
             id: ble
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
+            Image {
+                id: bleImg
+                anchors.fill: parent
+                visible: false
+                source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                source: bleImg
+                anchors.fill: parent
+                color: Theme.colorIcons
+                cached: true
+            }
+
             SequentialAnimation on opacity {
                 id: refreshAnimation2
                 loops: Animation.Infinite
@@ -221,20 +231,25 @@ Item {
             }
         }
 
-        Image {
+        Item {
             id: water
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
-
-            ColorOverlay {
+            Image {
+                id: waterImg
                 anchors.fill: parent
-                source: parent
+                visible: false
+                source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                source: waterImg
+                anchors.fill: parent
                 color: Theme.colorBlue
+                cached: true
             }
         }
     }
@@ -242,7 +257,7 @@ Item {
     Rectangle {
         id: rectangle
         height: 1
-        color: "#bfbfbf"
+        color: "#b3b3b3"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: parent.left
@@ -300,13 +315,13 @@ Item {
                     anchors.fill: parent
                     color: Theme.colorBlue
                     opacity: 0.33
-                    radius: 3
+                    radius: 2
                 }
                 Rectangle {
                     id: hygro_data
                     height: 12
                     color: Theme.colorBlue
-                    radius: 3
+                    radius: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -331,13 +346,13 @@ Item {
                     anchors.fill: parent
                     color: Theme.colorGreen
                     opacity: 0.33
-                    radius: 3
+                    radius: 2
                 }
                 Rectangle {
                     id: temp_data
                     height: 6
                     color: Theme.colorGreen
-                    radius: 3
+                    radius: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     visible: true
@@ -363,13 +378,13 @@ Item {
                     anchors.fill: parent
                     color: Theme.colorYellow
                     opacity: 0.33
-                    radius: 3
+                    radius: 2
                 }
                 Rectangle {
                     id: lumi_data
                     height: 8
                     color: Theme.colorYellow
-                    radius: 3
+                    radius: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -395,13 +410,13 @@ Item {
                     anchors.fill: parent
                     color: Theme.colorRed
                     opacity: 0.33
-                    radius: 3
+                    radius: 2
                 }
                 Rectangle {
                     id: cond_data
                     height: 10
                     color: Theme.colorRed
-                    radius: 3
+                    radius: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -426,13 +441,13 @@ Item {
                     anchors.fill: parent
                     color: Theme.colorGrey
                     opacity: 0.33
-                    radius: 3
+                    radius: 2
                 }
                 Rectangle {
                     id: bat_data
                     height: 6
                     color: Theme.colorGrey
-                    radius: 3
+                    radius: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottom: parent.bottom
@@ -449,41 +464,46 @@ Item {
 
             Text {
                 id: textTemp
-                x: 0
-                y: 8
-                height: 28
-                color: "#393939"
-                text: qsTr("25.0°")
-                font.wordSpacing: -1.2
-                font.letterSpacing: -1.4
-                renderType: Text.NativeRendering
-                font.weight: Font.Bold
+                y: 6
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+
+                text: qsTr("25.0°")
+                color: "#333333"
+                font.wordSpacing: -1.2
+                font.letterSpacing: -1.4
+                renderType: Text.NativeRendering
+                font.pixelSize: 28
                 font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 22
             }
 
             Text {
                 id: textHygro
-                x: 0
-                y: 36
-                height: 20
-                color: "#393939"
-                text: qsTr("55%")
-                font.family: "Tahoma"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
+
+                text: qsTr("55%")
+                anchors.top: textTemp.bottom
+                anchors.topMargin: 0
+                color: "#666666"
+                font.pixelSize: 24
+                font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 18
             }
         }
     }
 }
+
+
+
+/*##^## Designer {
+    D{i:14;invisible:true}
+}
+ ##^##*/

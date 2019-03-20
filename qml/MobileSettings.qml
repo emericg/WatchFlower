@@ -33,7 +33,6 @@ Item {
     Column {
         id: column
         anchors.fill: parent
-        anchors.top: rectangleSettingsTitle.bottom
 
         Item {
             id: element
@@ -50,7 +49,7 @@ Item {
                 anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Start bluetooth with the app")
+                text: qsTr("Allow bluetooth control")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
             }
@@ -88,7 +87,7 @@ Item {
             Text {
                 id: text_worker
                 height: 40
-                text: qsTr("Enable system tray")
+                text: qsTr("Enable background updates")
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16

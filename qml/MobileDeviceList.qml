@@ -67,8 +67,8 @@ Item {
         id: rectangleStatus
         height: 48
         color: Theme.colorMaterialOrange
-        anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
@@ -143,11 +143,11 @@ Item {
         clip: true
 
         anchors.fill: parent
-        anchors.topMargin: rectangleStatus.height + 12
-        anchors.bottomMargin: 10
+        anchors.topMargin: 0
+        anchors.bottomMargin: rectangleStatus.height + 0
         anchors.leftMargin: 0
         anchors.rightMargin: 0
-        spacing: 10
+        spacing: 0
 
         model: deviceManager.devicesList
         delegate: MobileDeviceBox { boxDevice: modelData }
