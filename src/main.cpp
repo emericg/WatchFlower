@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     QApplication app(argc, argv);
 #else
     SingleApplication app(argc, argv);
@@ -121,11 +121,11 @@ int main(int argc, char *argv[])
         window->setVisibility(QWindow::Minimized);
     }
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(FORCE_MOBILE_UI)
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
-#if defined(Q_OS_MACOS)
+#if defined(Q_OS_MACOS) && !defined(FORCE_MOBILE_UI)
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
 #endif

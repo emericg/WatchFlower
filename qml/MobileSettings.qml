@@ -32,6 +32,7 @@ Item {
 
     Column {
         id: column
+        anchors.topMargin: 16
         anchors.fill: parent
 
         Item {
@@ -45,8 +46,8 @@ Item {
             Text {
                 id: text_bluetooth
                 height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_bluetooth.right
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Allow bluetooth control")
@@ -62,6 +63,18 @@ Item {
                 onCheckedChanged: settingsManager.bluetooth = checked
                 anchors.rightMargin: 12
             }
+
+            ImageSvg {
+                id: image_bluetooth
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            }
         }
 
         Item {
@@ -73,7 +86,7 @@ Item {
             anchors.leftMargin: 0
 
             // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             ThemedSwitch {
                 id: switch_worker
@@ -88,11 +101,23 @@ Item {
                 id: text_worker
                 height: 40
                 text: qsTr("Enable background updates")
-                anchors.left: parent.left
+                anchors.left: image_worker.right
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
+            }
+
+            ImageSvg {
+                id: image_worker
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+                anchors.left: parent.left
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
             }
         }
 
@@ -105,7 +130,7 @@ Item {
             anchors.leftMargin: 0
 
             // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             ThemedSwitch {
                 id: switch_notifiations
@@ -120,11 +145,23 @@ Item {
                 id: text_notifications
                 height: 40
                 text: qsTr("Enable notifications")
-                anchors.left: parent.left
+                anchors.left: image_notifications.right
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
+            }
+
+            ImageSvg {
+                id: image_notifications
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
             }
         }
 
@@ -153,13 +190,25 @@ Item {
             Text {
                 id: text_update
                 height: 40
-                anchors.leftMargin: 12
-                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.left: image_update.right
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Update interval (minutes)")
+                text: qsTr("Update interval")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
+            }
+
+            ImageSvg {
+                id: image_update
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+                anchors.left: parent.left
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
             }
         }
 
@@ -175,8 +224,8 @@ Item {
                 id: text_unit
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_unit.right
+                anchors.leftMargin: 16
 
                 text: qsTr("Temperature unit")
                 font.pixelSize: 16
@@ -227,80 +276,20 @@ Item {
                 onCheckedChanged: {
                     if (checked == true)
                         settingsManager.tempunit = 'F'
-                }
-            }
-        }
-
-        Item {
-            id: element5
-            height: 48
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.leftMargin: 0
-
-            ComboBox {
-                id: comboBox_data
-                anchors.top: comboBox_view.top
-                anchors.topMargin: 0
-                model: ListModel {
-                    id: cbItemsData
-                    ListElement { text: qsTr("hygro"); }
-                    ListElement { text: qsTr("temp"); }
-                    ListElement { text: qsTr("luminosity"); }
-                    ListElement { text: qsTr("conductivity"); }
-                }
-                Component.onCompleted: {
-                    currentIndex = find(settingsManager.graphdata)
-                    if (currentIndex === -1) { currentIndex = 0 }
-                }
-                property bool cbinit: false
-                width: 100
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                onCurrentIndexChanged: {
-                    if (cbinit)
-                        settingsManager.graphdata = cbItemsData.get(currentIndex).text
-                    else
-                        cbinit = true
+                    settingsManager.tempunitChanged()
                 }
             }
 
-            ComboBox {
-                id: comboBox_view
-                model: ListModel {
-                    id: cbItemsView
-                    ListElement { text: qsTr("daily"); }
-                    ListElement { text: qsTr("hourly"); }
-                }
-                Component.onCompleted: {
-                    currentIndex = find(settingsManager.graphview)
-                    if (currentIndex === -1) { currentIndex = 0 }
-                }
-                property bool cbinit: false
-                width: 100
-                anchors.right: comboBox_data.left
-                anchors.rightMargin: 12
+            ImageSvg {
+                id: image_unit
+                width: 24
+                height: 24
                 anchors.verticalCenter: parent.verticalCenter
-                onCurrentIndexChanged: {
-                    if (cbinit)
-                        settingsManager.graphview = cbItemsView.get(currentIndex).text
-                    else
-                        cbinit = true
-                }
-            }
-
-            Text {
-                id: text_graph
-                height: 40
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
                 anchors.left: parent.left
-                anchors.leftMargin: 12
 
-                text: qsTr("Preferred graph")
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
             }
         }
     }

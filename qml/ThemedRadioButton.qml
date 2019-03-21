@@ -43,7 +43,7 @@ RadioButton {
             x: 5
             y: 5
             radius: 8
-            color: control.down ? Theme.colorMaterialLightGreen : Theme.colorMaterialLightGreen
+            color: control.down ? Theme.colorGreen : Theme.colorGreen
             visible: control.checked
         }
     }
@@ -52,7 +52,7 @@ RadioButton {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorDarkGrey
+        color: Theme.colorMaterialDarkGrey
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
     }

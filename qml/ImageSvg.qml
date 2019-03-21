@@ -22,37 +22,31 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import com.watchflower.theme 1.0
+import QtGraphicalEffects 1.0
 
-Switch {
-    id: control
-    font.bold: true
+Item {
+    width: 32
+    height: 32
 
-    indicator: Rectangle {
-        implicitWidth: 48
-        implicitHeight: 26
-        x: control.leftPadding
-        y: parent.height / 2 - height / 2
-        radius: 13
-        color: "#fff"
-        border.color: "#e0e0e0"
+    property string source
+    property string color
+    property int fillMode: Image.PreserveAspectFit
 
-        Rectangle {
-            x: control.checked ? parent.width - width : 0
-            width: 26
-            height: 26
-            radius: 13
-            color: control.checked ? Theme.colorGreen : "#e0e0e0"
-            border.color: control.checked ? Theme.colorGreen : "#e0e0e0"
-        }
+    Image {
+        id: sourceImg
+        anchors.fill: parent
+        visible: color ? false : true
+
+        source: parent.source
+        sourceSize: Qt.size(width, height)
+        fillMode: parent.fillMode
     }
+    ColorOverlay {
+        source: sourceImg
+        anchors.fill: parent
+        visible: color ? true : false
 
-    contentItem: Text {
-        text: control.text
-        font: control.font
-        opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorGrey
-        verticalAlignment: Text.AlignVCenter
-        leftPadding: control.indicator.width + control.spacing
+        color: parent.color
+        cached: true
     }
 }

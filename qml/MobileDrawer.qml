@@ -134,7 +134,7 @@ Rectangle {
                 ColorOverlay {
                     source: buttonPlantsImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -144,7 +144,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("My plants")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }
@@ -183,7 +183,7 @@ Rectangle {
                 ColorOverlay {
                     source: buttonSettingsImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -193,7 +193,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Settings")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }
@@ -232,7 +232,7 @@ Rectangle {
                 ColorOverlay {
                     source: buttonAboutImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -242,7 +242,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("About")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }
@@ -298,7 +298,7 @@ Rectangle {
                 ColorOverlay {
                     source: buttonRefreshImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
 
@@ -325,7 +325,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Refresh sensors")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }
@@ -393,7 +393,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Search for new devices")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }
@@ -459,7 +459,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Exit")
-                font.pixelSize: 12
+                font.pixelSize: 13
                 font.bold: true
                 color: Theme.colorText
             }

@@ -16,14 +16,14 @@ RangeSlider {
         width: control.availableWidth
         height: implicitHeight
         radius: 2
-        color: Theme.colorMaterialOrange
+        color: Theme.colorYellow
         opacity: 0.5
 
         Rectangle {
             x: control.first.visualPosition * parent.width
             width: control.second.visualPosition * parent.width - x
             height: parent.height
-            color: Theme.colorMaterialLightGreen
+            color: Theme.colorGreen
             radius: 2
         }
     }

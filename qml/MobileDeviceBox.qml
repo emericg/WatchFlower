@@ -60,10 +60,14 @@ Item {
         water.visible = false
         ble.visible = false
 
-        // water me notif
+        bottomSeparator.visible = false
+
+        // Water me notif
         if (boxDevice.deviceHygro > 0) {
-            if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
-                water.visible = true
+            if (boxDevice.deviceName !== "MJ_HT_V1") {
+                if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+                    water.visible = true
+                }
             }
         }
 
@@ -107,7 +111,7 @@ Item {
         if (boxDevice.deviceTempC > 0) {
             if (boxDevice.deviceName === "MJ_HT_V1") {
                 rectangleHygroTemp.visible = true
-                textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
                 textHygro.text = boxDevice.deviceHygro + "%"
             } else {
                 rectangleSensors.visible = true
@@ -169,7 +173,7 @@ Item {
 
         clip: true
         color: Theme.colorSubText
-        text: "#boxDevice.deviceAddress#"
+        text: boxDevice.deviceAddress
         font.pixelSize: 18
     }
 
@@ -217,7 +221,7 @@ Item {
             ColorOverlay {
                 source: bleImg
                 anchors.fill: parent
-                color: Theme.colorIcons
+                color: Theme.colorText
                 cached: true
             }
 
@@ -255,7 +259,7 @@ Item {
     }
 
     Rectangle {
-        id: rectangle
+        id: bottomSeparator
         height: 1
         color: "#b3b3b3"
         anchors.bottom: parent.bottom
@@ -462,6 +466,14 @@ Item {
             id: rectangleHygroTemp
             anchors.fill: parent
 
+            Connections {
+                target: settingsManager
+                onTempunitChanged: {
+                    console.log("onTempnnitChanged"+ boxDevice.getTemp())
+                    textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+                }
+            }
+
             Text {
                 id: textTemp
                 y: 6
@@ -500,10 +512,3 @@ Item {
         }
     }
 }
-
-
-
-/*##^## Designer {
-    D{i:14;invisible:true}
-}
- ##^##*/

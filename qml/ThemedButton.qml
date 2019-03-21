@@ -24,35 +24,30 @@ import QtQuick.Controls 2.0
 
 import com.watchflower.theme 1.0
 
-Switch {
+Button {
     id: control
-    font.bold: true
 
-    indicator: Rectangle {
-        implicitWidth: 48
-        implicitHeight: 26
-        x: control.leftPadding
-        y: parent.height / 2 - height / 2
-        radius: 13
-        color: "#fff"
-        border.color: "#e0e0e0"
-
-        Rectangle {
-            x: control.checked ? parent.width - width : 0
-            width: 26
-            height: 26
-            radius: 13
-            color: control.checked ? Theme.colorGreen : "#e0e0e0"
-            border.color: control.checked ? Theme.colorGreen : "#e0e0e0"
-        }
-    }
+    property string color: Theme.colorText
 
     contentItem: Text {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorGrey
+        color: control.down ? control.color : control.color
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        leftPadding: control.indicator.width + control.spacing
+        elide: Text.ElideRight
+    }
+
+    background: Rectangle {
+        implicitWidth: 128
+        implicitHeight: 40
+        radius: 4
+        opacity: enabled ? 1 : 0.3
+        //color: control.down ? Theme.buttonDownColor : theme.buttonColor
+        color: control.down ? "#66666666" : "transparent"
+
+        border.width: 2
+        border.color: control.color
     }
 }

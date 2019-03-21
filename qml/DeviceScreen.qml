@@ -95,7 +95,7 @@ Item {
             ColorOverlay {
                 anchors.fill: parent
                 source: parent
-                color: Theme.colorIcons
+                color: Theme.colorText
             }
         }
 
@@ -144,7 +144,7 @@ Item {
                     ColorOverlay {
                         anchors.fill: parent
                         source: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorText
                     }
 
                     NumberAnimation on rotation {
@@ -217,7 +217,7 @@ Item {
                     ColorOverlay {
                         anchors.fill: parent
                         source: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorText
                     }
                 }
 
@@ -331,7 +331,7 @@ Item {
                         ColorOverlay {
                             anchors.fill: parent
                             source: parent
-                            color: Theme.colorIcons
+                            color: Theme.colorText
                         }
                     }
                 }
@@ -408,7 +408,7 @@ Item {
                         ColorOverlay {
                             anchors.fill: parent
                             source: parent
-                            color: Theme.colorIcons
+                            color: Theme.colorText
                         }
                     }
                 }
@@ -531,7 +531,7 @@ Item {
                     ColorOverlay {
                         anchors.fill: parent
                         source: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorText
                     }
 
                     MouseArea {

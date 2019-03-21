@@ -202,7 +202,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -212,7 +212,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceHygro + "%"
-                color: Theme.colorIcons
+                color: Theme.colorText
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
@@ -269,7 +269,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -279,7 +279,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.getTempString()
-                color: Theme.colorIcons
+                color: Theme.colorText
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
@@ -335,7 +335,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -345,7 +345,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceLuminosity + " lumens"
-                color: Theme.colorIcons
+                color: Theme.colorText
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16
@@ -400,7 +400,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -410,7 +410,7 @@ Item {
                 width: 120
                 height: 18
                 text: myDevice.deviceConductivity + " µS/cm"
-                color: Theme.colorIcons
+                color: Theme.colorText
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 16

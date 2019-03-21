@@ -66,7 +66,7 @@ Item {
     Rectangle {
         id: rectangleStatus
         height: 48
-        color: Theme.colorMaterialOrange
+        color: Theme.colorYellow
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right

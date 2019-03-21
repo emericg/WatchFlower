@@ -66,7 +66,7 @@ Item {
     Rectangle {
         id: rectangleStatus
         height: 48
-        color: Theme.colorMaterialOrange
+        color: Theme.colorYellow
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
@@ -74,38 +74,43 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
 
-        Text {
-            id: textStatus
-            color: "#ffffff"
-            text: qsTr("Status :-(")
-            anchors.rightMargin: 16
-            anchors.leftMargin: 16
-            font.bold: true
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            anchors.fill: parent
-            font.pixelSize: 20
-        }
+        Row {
+            id: row
+            spacing: 32
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.horizontalCenter: parent.horizontalCenter
 
-        Button {
-            id: buttonEnables
-            width: 128
-            height: 30
-            text: {
-                if (Qt.platform.os === "osx") {
-                    qsTr("Try again")
-                } else {
-                    qsTr("Enable it!")
-                }
+            Text {
+                id: textStatus
+                color: "#ffffff"
+                text: qsTr("Status :-(")
+                anchors.verticalCenter: parent.verticalCenter
+                font.bold: true
+                font.pixelSize: 20
             }
-            opacity: 0.9
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
 
-            onClicked: {
-                deviceManager.enableBluetooth()
-                deviceManager.checkBluetooth()
+            ThemedButton {
+                id: buttonEnables
+                width: 128
+                height: 30
+                color: "white"
+                text: {
+                    if (Qt.platform.os === "osx") {
+                        qsTr("Try again")
+                    } else {
+                        qsTr("Enable it!")
+                    }
+                }
+                opacity: 0.9
+                anchors.verticalCenter: parent.verticalCenter
+
+                onClicked: {
+                    deviceManager.enableBluetooth()
+                    deviceManager.checkBluetooth()
+                }
             }
         }
 

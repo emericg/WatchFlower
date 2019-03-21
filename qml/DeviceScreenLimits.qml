@@ -86,7 +86,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -152,7 +152,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -218,7 +218,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -291,7 +291,7 @@ Item {
                 ColorOverlay {
                     anchors.fill: parent
                     source: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                 }
             }
             Text {
@@ -345,7 +345,7 @@ Item {
             anchors.rightMargin: 0
             visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-            Button {
+            ThemedButton {
                 id: buttonDone
                 width: 140
                 anchors.horizontalCenter: parent.horizontalCenter

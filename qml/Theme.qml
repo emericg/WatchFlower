@@ -29,11 +29,9 @@ Item {
     readonly property string colorHeaderMobileStatusbar: "#449287"
 
     // Material
-    readonly property string colorMaterialLightGrey: "#f8f8f8"
+    readonly property string colorMaterialLightGrey: "#f8f8f8" // desktop BG
     readonly property string colorMaterialDarkGrey: "#ececec"
     readonly property string colorMaterialLightGreen: "#00c853"
-    readonly property string colorMaterialDarkGreen: "#84E351"
-    readonly property string colorMaterialOrange: "#ffb300"
 
     // Actually used colors...
     readonly property string colorGood: "#87d241"
@@ -44,7 +42,6 @@ Item {
     readonly property string colorTitles: "#FFFFFF"
     readonly property string colorText: "#333333"
     readonly property string colorSubText: "#666666"
-    readonly property string colorIcons: "#333333"
 
     readonly property string colorBarHygro: "#31A3EC"
     readonly property string colorBarTemp: "#87D241"

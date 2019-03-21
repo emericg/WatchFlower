@@ -76,7 +76,7 @@ Item {
 
                 color: Theme.colorSubText
                 text: qsTr("version") + " " + settingsManager.getAppVersion()
-                font.pixelSize: 17
+                font.pixelSize: 16
             }
 
             Text {
@@ -88,7 +88,7 @@ Item {
 
                 text: qsTr("WatchFlower")
                 color: Theme.colorText
-                font.pixelSize: 30
+                font.pixelSize: 32
             }
         }
 
@@ -118,7 +118,7 @@ Item {
                 ColorOverlay {
                     source: websiteImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -166,7 +166,7 @@ Item {
                 ColorOverlay {
                     source: githubImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -216,7 +216,7 @@ Item {
                 ColorOverlay {
                     source: tutoImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -264,7 +264,7 @@ Item {
                 ColorOverlay {
                     source: descImg
                     anchors.fill: parent
-                    color: Theme.colorIcons
+                    color: Theme.colorText
                     cached: true
                 }
             }
@@ -286,7 +286,7 @@ Item {
 
             Item {
                 id: rectangleIcons
-                height: 96
+                height: 102
                 anchors.top: description.bottom
                 anchors.topMargin: 0
                 anchors.left: parent.left
@@ -312,7 +312,7 @@ Item {
                     ColorOverlay {
                         source: image3
                         anchors.fill: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorGreen
                         cached: true
                     }
                 }
@@ -335,7 +335,7 @@ Item {
                     ColorOverlay {
                         source: image2
                         anchors.fill: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorGreen
                         cached: true
                     }
                 }
@@ -358,7 +358,7 @@ Item {
                     ColorOverlay {
                         source: image1
                         anchors.fill: parent
-                        color: Theme.colorIcons
+                        color: Theme.colorGreen
                         cached: true
                     }
                 }
