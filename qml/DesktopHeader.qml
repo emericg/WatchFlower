@@ -20,7 +20,7 @@
  */
 
 import QtQuick 2.7
-import QtGraphicalEffects 1.0
+import com.watchflower.theme 1.0
 
 Rectangle {
     id: rectangleHeader
@@ -74,7 +74,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    Image {
+    ImageSvg {
         id: buttonBack
         width: 24
         height: 24
@@ -83,14 +83,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/watchflower.svg"
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
-
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: "white"
-        }
+        color: Theme.colorTitles
 
         MouseArea {
             anchors.fill: parent
@@ -111,7 +104,7 @@ Rectangle {
         }
     }
 
-    Image {
+    ImageSvg {
         id: buttonRefresh
         width: 24
         height: 24
@@ -120,8 +113,7 @@ Rectangle {
         anchors.rightMargin: 12
 
         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
+        color: Theme.colorTitles
 
         NumberAnimation on rotation {
             id: refreshAnimation
@@ -146,7 +138,7 @@ Rectangle {
         }
     }
 
-    Image {
+    ImageSvg {
         id: buttonRescan
         width: 24
         height: 24
@@ -155,8 +147,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
+        color: Theme.colorTitles
 
         OpacityAnimator {
             id: rescanAnimation
@@ -183,7 +174,7 @@ Rectangle {
         }
     }
 
-    Image {
+    ImageSvg {
         id: imageSettings
         width: 32
         height: 32
@@ -192,8 +183,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
+        color: Theme.colorTitles
 
         MouseArea {
             anchors.fill: parent
@@ -201,17 +191,16 @@ Rectangle {
         }
     }
 
-    Image {
+    ImageSvg {
         id: imageAbout
         width: 32
         height: 32
-        anchors.right: buttonExit.left
+        anchors.right: buttonExit.visible ? buttonExit.left : parent.right
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/outline-info-24px.svg"
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
+        color: Theme.colorTitles
 
         MouseArea {
             anchors.fill: parent
@@ -219,7 +208,7 @@ Rectangle {
         }
     }
 
-    Image {
+    ImageSvg {
         id: buttonExit
         width: 32
         height: 32
@@ -227,14 +216,15 @@ Rectangle {
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
+        visible: false
+
         source: {
             if (settingsManager.systray)
                 buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
             else
                 buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
         }
-        sourceSize: Qt.size(width, height)
-        fillMode: Image.PreserveAspectFit
+        color: Theme.colorTitles
 
         MouseArea {
             anchors.fill: parent

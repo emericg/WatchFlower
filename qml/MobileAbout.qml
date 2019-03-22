@@ -32,14 +32,49 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        id: rectangleContent
-        color: "#00000000"
-        anchors.fill: parent
+        id: rectangleAboutTitle
+        height: 80
+        color: Theme.colorMaterialDarkGrey
+
+        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+
+        Text {
+            id: textTitle
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.top: parent.top
+            anchors.topMargin: 12
+
+            font.bold: true
+            font.pixelSize: 26
+            color: Theme.colorText
+            text: qsTr("About")
+        }
+
+        Text {
+            id: textSubtitle
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 14
+
+            text: qsTr("What do you want to know?")
+            font.pixelSize: 16
+        }
     }
 
     Column {
         id: column
-        anchors.top: parent.top
+        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleAboutTitle.bottom : parent.top
         anchors.topMargin: 16
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16

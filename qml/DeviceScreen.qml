@@ -80,7 +80,7 @@ Item {
                 }
             }
         }
-        Image {
+        ImageSvg {
             id: imageBattery
             width: 32
             height: 32
@@ -90,13 +90,7 @@ Item {
             anchors.leftMargin: 16
 
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-            sourceSize: Qt.size(width, height)
-
-            ColorOverlay {
-                anchors.fill: parent
-                source: parent
-                color: Theme.colorText
-            }
+            color: Theme.colorText
         }
 
         Item {
@@ -679,7 +673,7 @@ Item {
             target: miniMenu
             from: 0
             to: 1
-            duration: 250
+            duration: 133
             running: true
         }
         OpacityAnimator {
@@ -687,7 +681,7 @@ Item {
             target: miniMenu
             from: 1
             to: 0
-            duration: 250
+            duration: 133
             running: true
 
             onStopped: {

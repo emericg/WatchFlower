@@ -34,7 +34,6 @@ Item {
         id: rectangleSettingsTitle
         height: 80
         color: Theme.colorMaterialDarkGrey
-        border.width: 0
 
         anchors.right: parent.right
         anchors.rightMargin: 0
@@ -45,14 +44,15 @@ Item {
 
         Text {
             id: textTitle
-            color: Theme.colorTitles
-            text: qsTr("Settings")
             anchors.right: parent.right
             anchors.rightMargin: 12
             anchors.left: parent.left
             anchors.leftMargin: 12
             anchors.top: parent.top
             anchors.topMargin: 12
+
+            color: Theme.colorText
+            text: qsTr("Settings")
             font.bold: true
             font.pixelSize: 26
         }
@@ -130,9 +130,9 @@ Item {
                 id: switch_bluetooth
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                checked: settingsManager.bluetooth
-                onCheckedChanged: settingsManager.bluetooth = checked
                 anchors.rightMargin: 12
+                Component.onCompleted: checked = settingsManager.bluetooth
+                onCheckedChanged: settingsManager.bluetooth = checked
             }
         }
 
@@ -183,9 +183,9 @@ Item {
                 id: switch_notifiations
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                checked: settingsManager.notifications
-                onCheckedChanged: settingsManager.notifications = checked
                 anchors.rightMargin: 12
+                onCheckedChanged: settingsManager.notifications = checked
+                Component.onCompleted: checked = settingsManager.notifications
             }
 
             Text {

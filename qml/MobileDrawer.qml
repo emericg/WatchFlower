@@ -79,7 +79,6 @@ Rectangle {
 
             source: "qrc:/assets/logo.svg"
             sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectCrop
         }
 
         Text {
