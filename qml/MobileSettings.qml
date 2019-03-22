@@ -59,9 +59,10 @@ Item {
                 id: switch_bluetooth
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                checked: settingsManager.bluetooth
-                onCheckedChanged: settingsManager.bluetooth = checked
                 anchors.rightMargin: 12
+                onCheckedChanged: settingsManager.bluetooth = checked
+                //checked: settingsManager.bluetooth
+                Component.onCompleted: checked = settingsManager.bluetooth
             }
 
             ImageSvg {
@@ -136,9 +137,10 @@ Item {
                 id: switch_notifiations
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                checked: settingsManager.notifications
-                onCheckedChanged: settingsManager.notifications = checked
                 anchors.rightMargin: 12
+                onCheckedChanged: settingsManager.notifications = checked
+                //checked: settingsManager.notifications
+                Component.onCompleted: checked = settingsManager.notifications
             }
 
             Text {
@@ -276,7 +278,6 @@ Item {
                 onCheckedChanged: {
                     if (checked == true)
                         settingsManager.tempunit = 'F'
-                    settingsManager.tempunitChanged()
                 }
             }
 

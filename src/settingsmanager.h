@@ -103,16 +103,16 @@ public:
     void setBluetooth(bool value);
 
     int getUpdateInterval() const { return m_updateInterval; }
-    void setUpdateInterval(int value) { m_updateInterval = value; writeSettings(); }
+    void setUpdateInterval(int value);
 
     QString getTempUnit() const { return m_tempUnit; }
-    void setTempUnit(QString value) { m_tempUnit = value; writeSettings(); }
+    void setTempUnit(QString value);
 
     QString getGraphView() const { return m_graphDefaultView; }
-    void setGraphView(QString value) { m_graphDefaultView = value; writeSettings(); }
+    void setGraphView(QString value);
 
     QString getGraphData() const { return m_graphDefaultData; }
-    void setGraphData(QString value) { m_graphDefaultData = value; writeSettings(); }
+    void setGraphData(QString value);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);

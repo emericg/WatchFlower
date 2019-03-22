@@ -383,17 +383,51 @@ void SettingsManager::setSysTray(bool value)
 
 void SettingsManager::setMinimized(bool value)
 {
-    m_startMinimized = value; writeSettings();
+    m_startMinimized = value;
+    writeSettings();
+    Q_EMIT minimizedChanged();
 }
 
 void SettingsManager::setNotifs(bool value)
 {
-    m_notificationsEnabled = value; writeSettings();
+    m_notificationsEnabled = value;
+    writeSettings();
+    Q_EMIT notifsChanged();
 }
 
 void SettingsManager::setBluetooth(bool value)
 {
-    m_autoBluetoothEnabled = value; writeSettings();
+    m_autoBluetoothEnabled = value;
+    writeSettings();
+    Q_EMIT bluetoothChanged();
+}
+
+void SettingsManager::setUpdateInterval(int value)
+{
+    m_updateInterval = value;
+    writeSettings();
+    Q_EMIT intervalChanged();
+}
+
+void SettingsManager::setTempUnit(QString value)
+{
+    m_tempUnit = value;
+    writeSettings();
+    Q_EMIT tempunitChanged();
+}
+
+void SettingsManager::setGraphView(QString value)
+{
+    m_graphDefaultView = value;
+    writeSettings();
+    Q_EMIT graphviewChanged();
+}
+
+void SettingsManager::setGraphData(QString value)
+{
+    m_graphDefaultData = value;
+    writeSettings();
+    Q_EMIT graphdataChanged();
 }
 
 /* ************************************************************************** */

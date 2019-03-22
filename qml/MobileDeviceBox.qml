@@ -468,10 +468,7 @@ Item {
 
             Connections {
                 target: settingsManager
-                onTempunitChanged: {
-                    console.log("onTempnnitChanged"+ boxDevice.getTemp())
-                    textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
-                }
+                onTempunitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
             }
 
             Text {

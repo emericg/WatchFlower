@@ -70,7 +70,7 @@ ApplicationWindow {
             //
         }
     }
-
+/*
     Connections {
         target: Qt.application
         onStateChanged: {
@@ -87,7 +87,7 @@ ApplicationWindow {
             }
         }
     }
-
+*/
     onClosing: {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             close.accepted = false;
