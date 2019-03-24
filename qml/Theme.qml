@@ -24,16 +24,14 @@ import QtQuick 2.7
 
 Item {
     // Headers
-    readonly property string colorHeaderDesktop: "#4E598C"
+    readonly property string colorHeaderDesktop: "#1dcb58"
     readonly property string colorHeaderMobile: "#58b79b"
     readonly property string colorHeaderMobileStatusbar: "#449287"
 
-    // Material
+    // Actually used colors
     readonly property string colorMaterialLightGrey: "#f8f8f8" // desktop BG
     readonly property string colorMaterialDarkGrey: "#ececec"
-    readonly property string colorMaterialLightGreen: "#00c853"
 
-    // Actually used colors...
     readonly property string colorGood: "#87d241"
     readonly property string colorBad: "#ffbf66"
     readonly property string colorNeutralDay: "#e4e4e4"
@@ -48,11 +46,7 @@ Item {
     readonly property string colorBarLumi: "#F1EC5C"
     readonly property string colorBarCond: "#E19C2F"
 
-    // statusbar: "#1abc9c"
-    // header: "#009688"
-    // select: bbebe1
-
-    // Palette (WIP)
+    // Palette
     readonly property string colorLightGreen: "#09debc"
     readonly property string colorGreen: "#07bf97"
     readonly property string colorDarkGreen: "#1ea892"

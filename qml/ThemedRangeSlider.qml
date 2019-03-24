@@ -17,7 +17,7 @@ RangeSlider {
         height: implicitHeight
         radius: 2
         color: Theme.colorYellow
-        opacity: 0.5
+        opacity: 0.6
 
         Rectangle {
             x: control.first.visualPosition * parent.width
@@ -31,20 +31,22 @@ RangeSlider {
     first.handle: Rectangle {
         x: control.leftPadding + first.visualPosition * (control.availableWidth - width)
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: 26
-        implicitHeight: 26
-        radius: 13
-        color: first.pressed ? "#f0f0f0" : "#f6f6f6"
-        border.color: "#bdbebf"
+        implicitWidth: 24
+        implicitHeight: 24
+        radius: 12
+        opacity: first.pressed ? 0.8 : 1
+        color: Theme.colorGreen
+        border.color: Theme.colorGreen
     }
 
     second.handle: Rectangle {
         x: control.leftPadding + second.visualPosition * (control.availableWidth - width)
         y: control.topPadding + control.availableHeight / 2 - height / 2
-        implicitWidth: 26
-        implicitHeight: 26
-        radius: 13
-        color: second.pressed ? "#f0f0f0" : "#f6f6f6"
-        border.color: "#bdbebf"
+        implicitWidth: 24
+        implicitHeight: 24
+        radius: 12
+        opacity: second.pressed ? 0.8 : 1
+        color: Theme.colorGreen
+        border.color: Theme.colorGreen
     }
 }

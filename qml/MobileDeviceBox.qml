@@ -115,11 +115,15 @@ Item {
                 textHygro.text = boxDevice.deviceHygro + "%"
             } else {
                 rectangleSensors.visible = true
-                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
-                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
-                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
-                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
-                bat_data.height = (boxDevice.deviceBattery / 100) * 64
+                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * dataArea.height
+                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * dataArea.height
+                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * dataArea.height
+                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * dataArea.height
+                bat_data.height = (boxDevice.deviceBattery / 100) * dataArea.height
+
+                hygro_bg.visible = (boxDevice.deviceHygro > 0) ? true : false
+                lumi_bg.visible = (boxDevice.deviceLuminosity > 0) ? true : false
+                cond_bg.visible = (boxDevice.deviceConductivity > 0) ? true : false
             }
         }
     }
@@ -148,18 +152,6 @@ Item {
             source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             sourceSize: Qt.size(width, height)
         }
-    }
-
-    Rectangle {
-        id: background
-        height: 64
-        color: "#99e6e6e6"
-        visible: false
-        anchors.right: parent.right
-        anchors.rightMargin: 44
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
@@ -270,11 +262,10 @@ Item {
         anchors.rightMargin: 0
     }
 
-    Rectangle {
+    Item {
         id: dataArea
         width: 72
         height: 70
-        color: "#00000000"
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 40
@@ -299,33 +290,38 @@ Item {
             }
         }
 
-        Item {
+        Row {
             id: rectangleSensors
-            anchors.fill: parent
             visible: true
+
+            property int sensorWidth: 8
+            property int sensorRadius: 2
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.top: parent.top
+            spacing: 8
 
             Item {
                 id: hygro_bg
-                width: 8
+                width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 Rectangle {
                     id: bg1
                     anchors.fill: parent
                     color: Theme.colorBlue
                     opacity: 0.33
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                 }
                 Rectangle {
                     id: hygro_data
                     height: 12
                     color: Theme.colorBlue
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -337,26 +333,24 @@ Item {
 
             Item {
                 id: temp_bg
-                width: 8
+                width: rectangleSensors.sensorWidth
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 8
 
                 Rectangle {
                     id: bg2
                     anchors.fill: parent
                     color: Theme.colorGreen
                     opacity: 0.33
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                 }
                 Rectangle {
                     id: temp_data
                     height: 6
                     color: Theme.colorGreen
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     visible: true
@@ -369,26 +363,24 @@ Item {
 
             Item {
                 id: lumi_bg
-                width: 8
+                width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 8
 
                 Rectangle {
                     id: bg3
                     anchors.fill: parent
                     color: Theme.colorYellow
                     opacity: 0.33
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                 }
                 Rectangle {
                     id: lumi_data
                     height: 8
                     color: Theme.colorYellow
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -401,26 +393,24 @@ Item {
 
             Item {
                 id: cond_bg
-                width: 8
+                width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 8
 
                 Rectangle {
                     id: bg4
                     anchors.fill: parent
                     color: Theme.colorRed
                     opacity: 0.33
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                 }
                 Rectangle {
                     id: cond_data
                     height: 10
                     color: Theme.colorRed
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottomMargin: 0
@@ -432,26 +422,24 @@ Item {
 
             Item {
                 id: bat_bg
-                width: 8
+                width: rectangleSensors.sensorWidth
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
-                anchors.left: cond_bg.right
-                anchors.leftMargin: 8
 
                 Rectangle {
                     id: bg5
                     anchors.fill: parent
                     color: Theme.colorGrey
                     opacity: 0.33
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                 }
                 Rectangle {
                     id: bat_data
                     height: 6
                     color: Theme.colorGrey
-                    radius: 2
+                    radius: rectangleSensors.sensorRadius
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.bottom: parent.bottom

@@ -26,7 +26,7 @@ Rectangle {
     id: rectangleHeader
     width: 720
     height: 64
-    color: "#1dcb58"
+    color: Theme.colorHeaderDesktop
 
     property var leftIcon: buttonBack
     signal backButtonClicked()

@@ -177,24 +177,24 @@ bool SystrayManager::installSystray()
 
 void SystrayManager::REinstallSystray()
 {
-#ifdef Q_OS_LINUX    
-    qDebug() << "REinstallSystray()";
+#ifdef Q_OS_LINUX
     if (m_sysTray)
     {
         if (m_sysTrayIcon && m_sysTrayMenu)
         {
+            m_sysTray->hide();
             m_sysTray->setIcon(*m_sysTrayIcon);
             m_sysTray->setContextMenu(m_sysTrayMenu);
             m_sysTray->show();
         }
         else
         {
-            qDebug() << "REinstallSystray() ERROR?";
+            qDebug() << "REinstallSystray() ERROR";
         }
     }
     else
     {
-        qDebug() << "REinstallSystray() ERROR not enabled?";
+        //qDebug() << "REinstallSystray() ERROR or just not enabled?!";
     }
 #endif // Q_OS_LINUX
 }

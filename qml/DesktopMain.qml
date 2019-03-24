@@ -27,10 +27,10 @@ import com.watchflower.theme 1.0
 ApplicationWindow {
     id: applicationWindow
 
-    width: 480
-    height: 720
+    width: 720
+    height: 480
     minimumWidth: 480
-    minimumHeight: 720
+    minimumHeight: 480
 
     color: Theme.colorMaterialLightGrey
 
@@ -112,9 +112,7 @@ ApplicationWindow {
         }
     }
     onClosing: {
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            close.accepted = false;
-        } else {
+        if (settingsManager.systray || Qt.platform.os === "macx") {
             close.accepted = false;
             applicationWindow.hide()
         }

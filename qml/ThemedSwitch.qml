@@ -29,19 +29,21 @@ Switch {
     font.bold: true
 
     indicator: Rectangle {
-        implicitWidth: 48
-        implicitHeight: 26
+        implicitWidth: 40
+        implicitHeight: 16
         x: control.leftPadding
-        y: parent.height / 2 - height / 2
+        y: parent.width / 2 - width / 2
+
         radius: 13
-        color: "#fff"
-        border.color: "#e0e0e0"
+        //border.color: "#e0e0e0"
+        color: control.checked ? Theme.colorLightGreen : "#b3b3b3"
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
-            width: 26
-            height: 26
-            radius: 13
+            anchors.verticalCenter: parent.verticalCenter
+            width: 24
+            height: 24
+            radius: 12
             color: control.checked ? Theme.colorGreen : "#e0e0e0"
             border.color: control.checked ? Theme.colorGreen : "#e0e0e0"
         }
@@ -51,7 +53,7 @@ Switch {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorGrey
+        color: Theme.colorText
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
     }

@@ -27,8 +27,11 @@ import com.watchflower.theme 1.0
 Rectangle {
     id: deviceBoxMobile
     width: parent.width
-    height: 80
-    color: "#e6f0f0f0"
+    height: 96
+    radius: 4
+    border.width: 1
+    border.color: "#D3D3D3"
+    color: "#00000000"
 
     property var boxDevice
 
@@ -61,10 +64,12 @@ Rectangle {
         water.visible = false
         ble.visible = false
 
-        // water me notif
+        // Water me notif
         if (boxDevice.deviceHygro > 0) {
-            if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
-                water.visible = true
+            if (boxDevice.deviceName !== "MJ_HT_V1") {
+                if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+                    water.visible = true
+                }
             }
         }
 
@@ -73,7 +78,7 @@ Rectangle {
             if (boxDevice.deviceTempC > 0) {
                 // if we have data cached, used the little indicator
                 ble.visible = true
-                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
                 refreshAnimation2.running = true;
             } else {
                 // otherwise, fullsize
@@ -93,7 +98,7 @@ Rectangle {
                     // if we have data cached, used the little indicator
                     imageStatus.visible = false;
                     ble.visible = true
-                    ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 } else {
                     // otherwise big one
                     ble.visible = false
@@ -108,83 +113,66 @@ Rectangle {
         if (boxDevice.deviceTempC > 0) {
             if (boxDevice.deviceName === "MJ_HT_V1") {
                 rectangleHygroTemp.visible = true
-                textTemp.text = boxDevice.deviceTempC.toFixed(1) + "°"
+                textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
                 textHygro.text = boxDevice.deviceHygro + "%"
             } else {
                 rectangleSensors.visible = true
-                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * 64
-                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * 64
-                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * 64
-                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * 64
-                bat_data.height = (boxDevice.deviceBattery / 100) * 64
+                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * dataArea.height
+                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * dataArea.height
+                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * dataArea.height
+                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * dataArea.height
+                bat_data.height = (boxDevice.deviceBattery / 100) * dataArea.height
+
+                hygro_bg.visible = (boxDevice.deviceHygro > 0) ? true : false
+                lumi_bg.visible = (boxDevice.deviceLuminosity > 0) ? true : false
+                cond_bg.visible = (boxDevice.deviceConductivity > 0) ? true : false
             }
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     MouseArea {
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         anchors.fill: parent
 
         onClicked: {
             curentlySelectedDevice = boxDevice
             content.state = "DeviceDetails"
         }
-
-        Image {
-            id: imageForward
-            width: 32
-            height: 32
-            z: 1
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 6
-
-            source: "qrc:/assets/menu_front.svg"
-            sourceSize: Qt.size(width, height)
-        }
-    }
-
-    Rectangle {
-        id: background
-        height: 64
-        color: "#99e6e6e6"
-        visible: false
-        anchors.right: parent.right
-        anchors.rightMargin: 44
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.verticalCenter: parent.verticalCenter
     }
 
     Text {
         id: textLocation
-        font.pixelSize: 16
-        text: boxDevice.deviceAddress
         anchors.right: dataArea.left
         anchors.rightMargin: 8
-        clip: true
-        font.weight: Font.Thin
-        font.capitalization: Font.AllUppercase
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
+        anchors.bottomMargin: 20
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 12
+
+        clip: true
+        color: Theme.colorSubText
+        text: boxDevice.deviceAddress
+        font.pixelSize: 18
     }
 
     Text {
         id: textPlant
-        color: "#544545"
-        text: boxDevice.deviceLocationName
-        font.capitalization: Font.AllUppercase
         anchors.right: dataArea.left
         anchors.rightMargin: 8
-        clip: true
-        font.bold: false
-        anchors.topMargin: 16
+        anchors.topMargin: 20
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 12
 
+        color: Theme.colorText
+        text: boxDevice.deviceLocationName
         font.pixelSize: 22
+        clip: true
     }
 
     Row {
@@ -199,15 +187,27 @@ Rectangle {
         anchors.right: dataArea.left
         anchors.rightMargin: 8
 
-        Image {
+        Item {
             id: ble
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
+            Image {
+                id: bleImg
+                anchors.fill: parent
+                visible: false
+                source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                source: bleImg
+                anchors.fill: parent
+                color: Theme.colorText
+                cached: true
+            }
+
             SequentialAnimation on opacity {
                 id: refreshAnimation2
                 loops: Animation.Infinite
@@ -218,31 +218,40 @@ Rectangle {
             }
         }
 
-        Image {
+        Item {
             id: water
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-            sourceSize: Qt.size(width, height)
-            fillMode: Image.PreserveAspectFit
-            ColorOverlay {
+            Image {
+                id: waterImg
                 anchors.fill: parent
-                source: parent
-                color: Theme.colorYellow
+                visible: false
+                source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+                sourceSize: Qt.size(width, height)
+                fillMode: Image.PreserveAspectFit
+            }
+            ColorOverlay {
+                source: waterImg
+                anchors.fill: parent
+                color: Theme.colorBlue
+                cached: true
             }
         }
     }
 
-    Rectangle {
+    ////////////////////////////////////////////////////////////////////////////
+
+    Item {
         id: dataArea
-        width: 64
-        height: 64
-        color: "#f3f3f3"
-        anchors.verticalCenter: parent.verticalCenter
+        width: 82
+        anchors.top: parent.top
+        anchors.topMargin: 8
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
         anchors.right: parent.right
-        anchors.rightMargin: 44
+        anchors.rightMargin: 8
 
         Image {
             id: imageStatus
@@ -264,123 +273,162 @@ Rectangle {
             }
         }
 
-        Item {
+        Row {
             id: rectangleSensors
-            width: 64
-            height: 64
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.top: parent.top
 
             visible: true
-            Rectangle {
+            spacing: 8
+            property int sensorWidth: 10
+            property int sensorRadius: 2
+
+            Item {
                 id: hygro_bg
-                width: 12
-                color: "#331389e8"
+                width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
+
+                Rectangle {
+                    id: bg1
+                    anchors.fill: parent
+                    color: Theme.colorBlue
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: hygro_data
+                    height: 12
+                    color: Theme.colorBlue
+                    radius: rectangleSensors.sensorRadius
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
 
-            Rectangle {
+            Item {
                 id: temp_bg
-                width: 12
-                color: "#335dc948"
+                width: rectangleSensors.sensorWidth
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 anchors.top: parent.top
                 anchors.topMargin: 0
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 1
+
+                Rectangle {
+                    id: bg2
+                    anchors.fill: parent
+                    color: Theme.colorGreen
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: temp_data
+                    height: 6
+                    color: Theme.colorGreen
+                    radius: rectangleSensors.sensorRadius
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    visible: true
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
 
-            Rectangle {
+            Item {
                 id: lumi_bg
-                width: 12
-                color: "#33f8ef50"
+                width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: cond_bg
-                width: 12
-                color: "#33fc7203"
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: bat_bg
-                x: 65
-                width: 12
-                color: "#33797979"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.left: cond_bg.right
-                anchors.leftMargin: 1
+
+                Rectangle {
+                    id: bg3
+                    anchors.fill: parent
+                    color: Theme.colorYellow
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: lumi_data
+                    height: 8
+                    color: Theme.colorYellow
+                    radius: rectangleSensors.sensorRadius
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    border.color: "#00000000"
+                }
             }
 
-            Rectangle {
-                id: hygro_data
-                width: 12
-                height: 0
-                color: "#1389e8"
-                anchors.bottomMargin: 0
+            Item {
+                id: cond_bg
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.bottomMargin: 0
+
+                Rectangle {
+                    id: bg4
+                    anchors.fill: parent
+                    color: Theme.colorRed
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: cond_data
+                    height: 10
+                    color: Theme.colorRed
+                    radius: rectangleSensors.sensorRadius
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
-            Rectangle {
-                id: temp_data
-                width: 12
-                height: 0
-                color: "#5dc948"
-                visible: true
-                anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.left: hygro_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: lumi_data
-                width: 12
-                height: 0
-                color: "#f8ef50"
-                anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.left: temp_bg.right
-                anchors.leftMargin: 1
-                border.color: "#00000000"
-            }
-            Rectangle {
-                id: cond_data
-                width: 12
-                height: 0
-                color: "#fc7203"
-                anchors.bottomMargin: 0
-                anchors.bottom: parent.bottom
-                anchors.left: lumi_bg.right
-                anchors.leftMargin: 1
-            }
-            Rectangle {
-                id: bat_data
-                width: 12
-                height: 0
-                color: "#797979"
+
+            Item {
+                id: bat_bg
+                width: rectangleSensors.sensorWidth
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-                anchors.left: cond_bg.right
-                anchors.leftMargin: 1
+                anchors.top: parent.top
+                anchors.topMargin: 0
+
+                Rectangle {
+                    id: bg5
+                    anchors.fill: parent
+                    color: Theme.colorGrey
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: bat_data
+                    height: 6
+                    color: Theme.colorGrey
+                    radius: rectangleSensors.sensorRadius
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                }
             }
         }
 
@@ -388,42 +436,45 @@ Rectangle {
             id: rectangleHygroTemp
             anchors.fill: parent
 
+            Connections {
+                target: settingsManager
+                onTempunitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+            }
+
             Text {
                 id: textTemp
-                x: 0
                 y: 8
-                height: 28
-                color: "#393939"
-                text: qsTr("25.0°")
-                font.wordSpacing: -1.2
-                font.letterSpacing: -1.4
-                renderType: Text.NativeRendering
-                font.weight: Font.Bold
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+
+                text: qsTr("25.0°")
+                color: "#333333"
+                font.wordSpacing: -1.2
+                font.letterSpacing: -1.4
+                renderType: Text.NativeRendering
+                font.pixelSize: 30
                 font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 22
             }
 
             Text {
                 id: textHygro
-                x: 0
-                y: 36
-                height: 20
-                color: "#393939"
-                text: qsTr("55%")
-                font.family: "Tahoma"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
+
+                text: qsTr("55%")
+                anchors.top: textTemp.bottom
+                anchors.topMargin: 0
+                color: "#666666"
+                font.pixelSize: 24
+                font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 18
             }
         }
     }

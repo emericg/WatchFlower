@@ -137,19 +137,37 @@ Item {
         }
     }
 
-    ListView {
+    GridView {
         id: devicesview
-        width: parent.width
         clip: true
 
         anchors.fill: parent
-        anchors.topMargin: rectangleStatus.height + 12
-        anchors.bottomMargin: 10
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
-        spacing: 10
+        anchors.topMargin: rectangleStatus.height + 16
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 16
+        anchors.rightMargin: -16
 
+        property int boxHeight: 96
+
+        property int cellSizeTarget: 350
+        property int cellSize: 350
+        property int cellMarginTarget: 16
+        property int cellMargin: 16
+        cellWidth: cellSizeTarget + cellMarginTarget
+        cellHeight: boxHeight + cellMarginTarget
+
+        function computeCellSize() {
+            var availableWidth = devicesview.width - cellMarginTarget
+            var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
+            // 1 // Adjust only cellSize
+            cellSize = (availableWidth - cellMarginTarget * cellColumnsTarget) / cellColumnsTarget
+            // Recompute
+            cellWidth = cellSize + cellMargin
+            cellHeight = boxHeight + cellMarginTarget
+        }
+
+        onWidthChanged: computeCellSize()
         model: deviceManager.devicesList
-        delegate: MobileDeviceBox { boxDevice: modelData }
+        delegate: DesktopDeviceBox { boxDevice: modelData; width: devicesview.cellSize;}
     }
 }

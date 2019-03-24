@@ -75,7 +75,7 @@ Item {
     Column {
         id: column
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleAboutTitle.bottom : parent.top
-        anchors.topMargin: 16
+        anchors.topMargin: 8
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
         anchors.right: parent.right

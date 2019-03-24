@@ -35,7 +35,7 @@ RadioButton {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 13
-        border.color: Theme.colorMaterialDarkGrey
+        border.color: control.down ? Theme.colorGreen : Theme.colorMaterialDarkGrey
 
         Rectangle {
             width: 16
@@ -52,7 +52,7 @@ RadioButton {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorMaterialDarkGrey
+        color: Theme.colorText
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
     }
