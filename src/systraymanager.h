@@ -68,6 +68,7 @@ public slots:
     void initSettings(QApplication *app, QQuickWindow *view);
     void initSystray();
     bool installSystray();
+    void REinstallSystray();
     void removeSystray();
     void sendNotification(QString &text);
 

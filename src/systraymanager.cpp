@@ -166,9 +166,37 @@ bool SystrayManager::installSystray()
             m_retryTimer.start(3333);
             retryCount--;
         }
+        else
+        {
+           qWarning() << "Empty systray counter";
+        }
     }
 
     return status;
+}
+
+void SystrayManager::REinstallSystray()
+{
+#ifdef Q_OS_LINUX    
+    qDebug() << "REinstallSystray()";
+    if (m_sysTray)
+    {
+        if (m_sysTrayIcon && m_sysTrayMenu)
+        {
+            m_sysTray->setIcon(*m_sysTrayIcon);
+            m_sysTray->setContextMenu(m_sysTrayMenu);
+            m_sysTray->show();
+        }
+        else
+        {
+            qDebug() << "REinstallSystray() ERROR?";
+        }
+    }
+    else
+    {
+        qDebug() << "REinstallSystray() ERROR not enabled?";
+    }
+#endif // Q_OS_LINUX
 }
 
 void SystrayManager::removeSystray()
