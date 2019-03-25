@@ -35,6 +35,8 @@ Item {
         height: 80
         color: Theme.colorMaterialDarkGrey
 
+        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
@@ -89,8 +91,8 @@ Item {
                 id: text_minimized
                 height: 40
                 text: qsTr("Start application minimized")
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_minimized.right
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 16
@@ -101,8 +103,20 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                checked: settingsManager.minimized
+                Component.onCompleted: checked = settingsManager.minimized
                 onCheckedChanged: settingsManager.minimized = checked
+            }
+
+            ImageSvg {
+                id: image_minimized
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
             }
         }
 
@@ -114,14 +128,17 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
             Text {
                 id: text_bluetooth
                 height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_bluetooth.right
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Start bluetooth with the app")
+                text: qsTr("Allow bluetooth control")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
             }
@@ -134,6 +151,18 @@ Item {
                 Component.onCompleted: checked = settingsManager.bluetooth
                 onCheckedChanged: settingsManager.bluetooth = checked
             }
+
+            ImageSvg {
+                id: image_bluetooth
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            }
         }
 
         Item {
@@ -145,7 +174,7 @@ Item {
             anchors.leftMargin: 0
 
             // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             ThemedSwitch {
                 id: switch_worker
@@ -159,12 +188,25 @@ Item {
             Text {
                 id: text_worker
                 height: 40
-                text: qsTr("Enable system tray")
-                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.left: image_worker.right
                 anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Enable background updates")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 12
+            }
+
+            ImageSvg {
+                id: image_worker
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+                anchors.left: parent.left
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
             }
         }
 
@@ -177,26 +219,39 @@ Item {
             anchors.leftMargin: 0
 
             // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             ThemedSwitch {
                 id: switch_notifiations
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                onCheckedChanged: settingsManager.notifications = checked
                 Component.onCompleted: checked = settingsManager.notifications
+                onCheckedChanged: settingsManager.notifications = checked
             }
 
             Text {
                 id: text_notifications
                 height: 40
-                text: qsTr("Enable notifications")
-                anchors.left: parent.left
+                anchors.left: image_notifications.right
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+
+                text: qsTr("Enable notifications")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 12
+            }
+
+            ImageSvg {
+                id: image_notifications
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
             }
         }
 
@@ -225,13 +280,25 @@ Item {
             Text {
                 id: text_update
                 height: 40
-                anchors.leftMargin: 12
-                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.left: image_update.right
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Update interval (minutes)")
+                text: qsTr("Update interval")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
+            }
+
+            ImageSvg {
+                id: image_update
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+                anchors.left: parent.left
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
             }
         }
 
@@ -247,8 +314,8 @@ Item {
                 id: text_unit
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_unit.right
+                anchors.leftMargin: 16
 
                 text: qsTr("Temperature unit")
                 font.pixelSize: 16
@@ -301,6 +368,18 @@ Item {
                         settingsManager.tempunit = 'F'
                 }
             }
+
+            ImageSvg {
+                id: image_unit
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+                anchors.left: parent.left
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+            }
         }
 
         Item {
@@ -310,6 +389,21 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.leftMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            ImageSvg {
+                id: image_data
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+            }
 
             ComboBox {
                 id: comboBox_data
@@ -367,8 +461,8 @@ Item {
                 id: text_graph
                 height: 40
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.left: image_data.right
+                anchors.leftMargin: 16
 
                 text: qsTr("Preferred graph")
                 font.pixelSize: 16
@@ -383,6 +477,9 @@ Item {
             anchors.leftMargin: 0
             anchors.right: parent.right
             anchors.rightMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
             Rectangle {
                 id: rectangleReset

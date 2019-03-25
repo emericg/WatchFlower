@@ -180,21 +180,18 @@ void SystrayManager::REinstallSystray()
 #ifdef Q_OS_LINUX
     if (m_sysTray)
     {
+        // This hack helps in cases where the tray icon just disappears after some
+        // time, seen a lot on Gnome desktop. Trying to launch a new instance will
+        // manually hide then show a tray icon...
         if (m_sysTrayIcon && m_sysTrayMenu)
         {
             m_sysTray->hide();
-            m_sysTray->setIcon(*m_sysTrayIcon);
-            m_sysTray->setContextMenu(m_sysTrayMenu);
             m_sysTray->show();
         }
         else
         {
             qDebug() << "REinstallSystray() ERROR";
         }
-    }
-    else
-    {
-        //qDebug() << "REinstallSystray() ERROR or just not enabled?!";
     }
 #endif // Q_OS_LINUX
 }

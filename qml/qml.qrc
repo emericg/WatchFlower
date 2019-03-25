@@ -17,12 +17,13 @@
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
         <file>DeviceScreenCharts.qml</file>
-        <file>ImageSvg.qml</file>
-        <file>Theme.qml</file>
+        <file>ThemeEngine.qml</file>
         <file>ThemedButton.qml</file>
         <file>ThemedSwitch.qml</file>
         <file>ThemedRadioButton.qml</file>
         <file>ThemedRangeSlider.qml</file>
-        <file alias="WindowGeometrySaver.qml">thirdparty/WindowGeometrySaver.qml</file>
+        <file>ItemImageButton.qml</file>
+        <file>ImageSvg.qml</file>
+        <file>WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>

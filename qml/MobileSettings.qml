@@ -30,10 +30,95 @@ Item {
     height: 640
     anchors.fill: parent
 
+    Rectangle {
+        id: rectangleSettingsTitle
+        height: 80
+        color: Theme.colorMaterialDarkGrey
+
+        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+
+        Text {
+            id: textTitle
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.top: parent.top
+            anchors.topMargin: 12
+
+            color: Theme.colorText
+            text: qsTr("Settings")
+            font.bold: true
+            font.pixelSize: 26
+        }
+
+        Text {
+            id: textSubtitle
+            text: qsTr("Change persistent settings here!")
+            font.pixelSize: 16
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 14
+        }
+    }
+
     Column {
         id: column
-        anchors.topMargin: 16
-        anchors.fill: parent
+        anchors.top: rectangleSettingsTitle.bottom
+        anchors.right: parent.right
+        anchors.left: parent.left
+
+        Item {
+            id: element6
+            height: 48
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            Text {
+                id: text_minimized
+                height: 40
+                text: qsTr("Start application minimized")
+                anchors.left: image_minimized.right
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 16
+            }
+
+            ThemedSwitch {
+                id: switch_minimized
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                Component.onCompleted: checked = settingsManager.minimized
+                onCheckedChanged: settingsManager.minimized = checked
+            }
+
+            ImageSvg {
+                id: image_minimized
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+            }
+        }
 
         Item {
             id: element
@@ -42,6 +127,9 @@ Item {
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
             Text {
                 id: text_bluetooth
@@ -60,9 +148,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                onCheckedChanged: settingsManager.bluetooth = checked
-                //checked: settingsManager.bluetooth
                 Component.onCompleted: checked = settingsManager.bluetooth
+                onCheckedChanged: settingsManager.bluetooth = checked
             }
 
             ImageSvg {
@@ -101,12 +188,13 @@ Item {
             Text {
                 id: text_worker
                 height: 40
-                text: qsTr("Enable background updates")
+                anchors.leftMargin: 16
                 anchors.left: image_worker.right
                 anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Enable background updates")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 16
             }
 
             ImageSvg {
@@ -138,20 +226,20 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                onCheckedChanged: settingsManager.notifications = checked
-                //checked: settingsManager.notifications
                 Component.onCompleted: checked = settingsManager.notifications
+                onCheckedChanged: settingsManager.notifications = checked
             }
 
             Text {
                 id: text_notifications
                 height: 40
-                text: qsTr("Enable notifications")
                 anchors.left: image_notifications.right
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 16
+
+                text: qsTr("Enable notifications")
                 font.pixelSize: 16
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 16
             }
 
             ImageSvg {
@@ -291,6 +379,174 @@ Item {
 
                 color: Theme.colorText
                 source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+            }
+        }
+
+        Item {
+            id: element5
+            height: 48
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.leftMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            ImageSvg {
+                id: image_data
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+            }
+
+            ComboBox {
+                id: comboBox_data
+                anchors.top: comboBox_view.top
+                anchors.topMargin: 0
+                model: ListModel {
+                    id: cbItemsData
+                    ListElement { text: qsTr("hygro"); }
+                    ListElement { text: qsTr("temp"); }
+                    ListElement { text: qsTr("luminosity"); }
+                    ListElement { text: qsTr("conductivity"); }
+                }
+                Component.onCompleted: {
+                    currentIndex = find(settingsManager.graphdata)
+                    if (currentIndex === -1) { currentIndex = 0 }
+                }
+                property bool cbinit: false
+                width: 100
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                onCurrentIndexChanged: {
+                    if (cbinit)
+                        settingsManager.graphdata = cbItemsData.get(currentIndex).text
+                    else
+                        cbinit = true
+                }
+            }
+
+            ComboBox {
+                id: comboBox_view
+                model: ListModel {
+                    id: cbItemsView
+                    ListElement { text: qsTr("daily"); }
+                    ListElement { text: qsTr("hourly"); }
+                }
+                Component.onCompleted: {
+                    currentIndex = find(settingsManager.graphview)
+                    if (currentIndex === -1) { currentIndex = 0 }
+                }
+                property bool cbinit: false
+                width: 100
+                anchors.right: comboBox_data.left
+                anchors.rightMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                onCurrentIndexChanged: {
+                    if (cbinit)
+                        settingsManager.graphview = cbItemsView.get(currentIndex).text
+                    else
+                        cbinit = true
+                }
+            }
+
+            Text {
+                id: text_graph
+                height: 40
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: image_data.right
+                anchors.leftMargin: 16
+
+                text: qsTr("Preferred graph")
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+
+        Item {
+            id: element7
+            height: 64
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            Rectangle {
+                id: rectangleReset
+                height: 40
+                width: 300
+                color: Theme.colorRed
+                radius: 20
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                property bool weAreBlinking: false
+
+                function startTheBlink() {
+                    if (weAreBlinking === true) {
+                        settingsManager.resetSettings()
+                        stopTheBlink()
+                    } else {
+                        weAreBlinking = true
+                        timerReset.start()
+                        blinkReset.start()
+                        textReset.text = qsTr("!!! Click again to confirm !!!")
+                    }
+                }
+                function stopTheBlink() {
+                    weAreBlinking = false
+                    timerReset.stop()
+                    blinkReset.stop()
+                    textReset.text = qsTr("Reset sensors & datas!")
+                    rectangleReset.color = Theme.colorRed
+                }
+
+                SequentialAnimation on color {
+                    id: blinkReset
+                    running: false
+                    loops: Animation.Infinite
+                    ColorAnimation { from: Theme.colorRed; to: Theme.colorYellow; duration: 1000 }
+                    ColorAnimation { from: Theme.colorYellow; to: Theme.colorRed; duration: 1000 }
+                }
+
+                Timer {
+                    id: timerReset
+                    interval: 4000
+                    running: false
+                    repeat: false
+                    onTriggered: {
+                        rectangleReset.stopTheBlink()
+                    }
+                }
+
+                Text {
+                    id: textReset
+                    anchors.fill: parent
+                    color: "#ffffff"
+                    text: qsTr("Reset sensors & datas!")
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 18
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        rectangleReset.startTheBlink()
+                    }
+                }
             }
         }
     }

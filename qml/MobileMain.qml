@@ -28,12 +28,11 @@ import com.watchflower.theme 1.0
 
 ApplicationWindow {
     id: applicationWindow
-    color: "white"
-    visible: true
-
     minimumWidth: 400
     minimumHeight: 640
 
+    color: "white"
+    visible: true
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     // Mobile stuff

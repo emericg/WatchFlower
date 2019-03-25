@@ -20,6 +20,7 @@
  */
 
 import QtQuick 2.7
+
 import com.watchflower.theme 1.0
 
 Rectangle {
@@ -104,16 +105,18 @@ Rectangle {
         }
     }
 
-    ImageSvg {
+
+    ItemImageButton {
         id: buttonRefresh
-        width: 24
-        height: 24
-        anchors.verticalCenter: parent.verticalCenter
+        width: 36
+        height: 36
         anchors.right: buttonRescan.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 0
+        anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-        color: Theme.colorTitles
+        iconColor: Theme.colorTitles
+        onClicked: refreshButtonClicked()
 
         NumberAnimation on rotation {
             id: refreshAnimation
@@ -131,23 +134,19 @@ Rectangle {
             easing.type: Easing.OutExpo
             running: false
         }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: refreshButtonClicked()
-        }
     }
 
-    ImageSvg {
+    ItemImageButton {
         id: buttonRescan
-        width: 24
-        height: 24
+        width: 36
+        height: 36
         anchors.right: imageSettings.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 0
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-        color: Theme.colorTitles
+        iconColor: Theme.colorTitles
+        onClicked: rescanButtonClicked()
 
         OpacityAnimator {
             id: rescanAnimation
@@ -167,45 +166,32 @@ Rectangle {
             easing.type: Easing.OutExpo
             running: false
         }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: rescanButtonClicked()
-        }
     }
 
-    ImageSvg {
+    ItemImageButton {
         id: imageSettings
-        width: 32
-        height: 32
+        width: 48
+        height: 48
         anchors.right: imageAbout.left
-        anchors.rightMargin: 12
+        anchors.rightMargin: 0
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-        color: Theme.colorTitles
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: settingsButtonClicked()
-        }
+        iconColor: Theme.colorTitles
+        onClicked: settingsButtonClicked()
     }
 
-    ImageSvg {
+    ItemImageButton {
         id: imageAbout
-        width: 32
-        height: 32
+        width: 48
+        height: 48
         anchors.right: buttonExit.visible ? buttonExit.left : parent.right
-        anchors.rightMargin: 12
+        anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/icons_material/outline-info-24px.svg"
-        color: Theme.colorTitles
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: aboutButtonClicked()
-        }
+        iconColor: Theme.colorTitles
+        onClicked: aboutButtonClicked()
     }
 
     ImageSvg {

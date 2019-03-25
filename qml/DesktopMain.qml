@@ -33,8 +33,7 @@ ApplicationWindow {
     minimumHeight: 480
 
     color: Theme.colorMaterialLightGrey
-
-    visible: true
+    visible: true // !settingsManager.minimized
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     // Desktop stuff
