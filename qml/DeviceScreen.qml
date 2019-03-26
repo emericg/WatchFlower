@@ -822,6 +822,7 @@ Item {
     Connections {
         target: header
         onRightMenuClicked: {
+            // mobile only
             if (!miniMenu.visible)
                 miniMenu.showMiniMenu()
             else

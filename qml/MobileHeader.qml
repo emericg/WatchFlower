@@ -75,7 +75,9 @@ Rectangle {
     onLeftMenuModeChanged: {
         if (leftMenuMode === "drawer")
             leftMenuImg.source = "qrc:/assets/icons_material/baseline-menu-24px.svg"
-        else
+        else if (leftMenuMode === "close")
+            leftMenuImg.source = "qrc:/assets/icons_material/baseline-close-24px.svg"
+        else // back
             leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
     }
 

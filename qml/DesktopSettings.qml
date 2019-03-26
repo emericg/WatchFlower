@@ -72,7 +72,8 @@ Item {
 
     Column {
         id: column
-        anchors.top: rectangleSettingsTitle.bottom
+        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleSettingsTitle.bottom : parent.top
+        anchors.topMargin: 8
         anchors.right: parent.right
         anchors.left: parent.left
 

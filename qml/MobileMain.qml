@@ -132,6 +132,10 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
+        Tutorial {
+            anchors.fill: parent
+            id: screenTutorial
+        }
         MobileDeviceList {
             anchors.fill: parent
             id: screenDeviceList
@@ -149,10 +153,16 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        // Initial state
+        state: "DeviceList"
+
         onStateChanged: {
             drawerscreen.updateDrawerFocus()
+
             if (state === "DeviceList")
                 header.leftMenuMode = "drawer"
+            else if (state === "Tutorial")
+                header.leftMenuMode = "close"
             else
                 header.leftMenuMode = "back"
 
@@ -162,14 +172,51 @@ ApplicationWindow {
                 header.rightMenuEnabled = false
         }
 
-        state: "DeviceList"
         states: [
+            State {
+                name: "Tutorial"
+
+                PropertyChanges {
+                    target: header
+                    title: "Welcome"
+                }
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: true
+                    visible: true
+                }
+                PropertyChanges {
+                    target: screenDeviceList
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenDeviceDetails
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenSettings
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
+                }
+            },
             State {
                 name: "DeviceList"
 
                 PropertyChanges {
                     target: header
                     title: "WatchFlower"
+                }
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
                 }
                 PropertyChanges {
                     target: screenDeviceList
@@ -198,6 +245,11 @@ ApplicationWindow {
                 PropertyChanges {
                     target: header
                     title: "WatchFlower"
+                }
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
                 }
                 PropertyChanges {
                     target: screenDeviceList
@@ -232,6 +284,11 @@ ApplicationWindow {
                     title: qsTr("Settings")
                 }
                 PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
                     target: screenDeviceList
                     visible: false
                     enabled: false
@@ -258,6 +315,11 @@ ApplicationWindow {
                 PropertyChanges {
                     target: header
                     title: qsTr("About")
+                }
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
                 }
                 PropertyChanges {
                     target: screenDeviceList

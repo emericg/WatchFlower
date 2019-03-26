@@ -134,6 +134,10 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
+        Tutorial {
+            anchors.fill: parent
+            id: screenTutorial
+        }
         DesktopDeviceList {
             anchors.fill: parent
             id: screenDeviceList
@@ -151,10 +155,60 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        // Initial state
         state: "DeviceList"
+
         states: [
             State {
+                name: "Tutorial"
+
+                PropertyChanges {
+                    target: header
+                    //title: qsTr("Welcome")
+                    menuVisible: false
+                }
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: true
+                    visible: true
+                }
+
+                PropertyChanges {
+                    target: screenDeviceList
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenDeviceDetails
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenSettings
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
+                }
+            },
+            State {
                 name: "DeviceList"
+
+                PropertyChanges {
+                    target: header
+                    //title: qsTr("WatchFlower")
+                    menuVisible: true
+                }
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
 
                 PropertyChanges {
                     target: screenDeviceList
@@ -179,6 +233,18 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceDetails"
+
+                PropertyChanges {
+                    target: header
+                    //title: qsTr("WatchFlower")
+                    menuVisible: true
+                }
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
 
                 PropertyChanges {
                     target: screenDeviceList
@@ -209,6 +275,18 @@ ApplicationWindow {
                 name: "Settings"
 
                 PropertyChanges {
+                    target: header
+                    //title: qsTr("Settings")
+                    menuVisible: true
+                }
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
+
+                PropertyChanges {
                     target: screenDeviceList
                     visible: false
                     enabled: false
@@ -231,6 +309,18 @@ ApplicationWindow {
             },
             State {
                 name: "About"
+
+                PropertyChanges {
+                    target: header
+                    //title: qsTr("About")
+                    menuVisible: true
+                }
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
 
                 PropertyChanges {
                     target: screenDeviceList
