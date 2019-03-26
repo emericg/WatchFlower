@@ -44,8 +44,7 @@ Button {
         implicitHeight: 40
         radius: 4
         opacity: enabled ? 1 : 0.3
-        //color: control.down ? Theme.buttonDownColor : theme.buttonColor
-        color: control.down ? "#66666666" : "transparent"
+        color: control.down ? (control.color === "white" ? "#66FFFFFF" : "#66666666") : "transparent"
 
         border.width: 2
         border.color: control.color

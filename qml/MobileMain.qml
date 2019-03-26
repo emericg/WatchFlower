@@ -166,6 +166,11 @@ ApplicationWindow {
             else
                 header.leftMenuMode = "back"
 
+            if (state === "Tutorial")
+                drawer.interactive = false;
+            else
+                drawer.interactive = true;
+
             if (state === "DeviceDetails")
                 header.rightMenuEnabled = true
             else

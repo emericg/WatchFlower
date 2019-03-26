@@ -87,21 +87,17 @@ Item {
             font.pixelSize: 20
         }
 
-        Button {
+        ThemedButton {
             id: buttonEnables
             width: 128
             height: 30
-            text: {
-                if (Qt.platform.os === "osx") {
-                    qsTr("Try again")
-                } else {
-                    qsTr("Enable it!")
-                }
-            }
-            opacity: 0.9
             anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
+
+            text: qsTr("Try again")
+            color: "white"
+            opacity: 0.9
 
             onClicked: {
                 deviceManager.enableBluetooth()
@@ -144,15 +140,15 @@ Item {
         anchors.fill: parent
         anchors.topMargin: rectangleStatus.height + 16
         anchors.bottomMargin: 0
-        anchors.leftMargin: 16
-        anchors.rightMargin: -16
+        anchors.leftMargin: 12
+        anchors.rightMargin: -12
 
         property int boxHeight: 96
 
         property int cellSizeTarget: 350
         property int cellSize: 350
-        property int cellMarginTarget: 16
-        property int cellMargin: 16
+        property int cellMarginTarget: 12
+        property int cellMargin: 12
         cellWidth: cellSizeTarget + cellMarginTarget
         cellHeight: boxHeight + cellMarginTarget
 

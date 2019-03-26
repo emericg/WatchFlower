@@ -96,16 +96,17 @@ Item {
                 id: buttonEnables
                 width: 128
                 height: 30
-                color: "white"
+                anchors.verticalCenter: parent.verticalCenter
+
                 text: {
-                    if (Qt.platform.os === "osx") {
+                    if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
                         qsTr("Try again")
                     } else {
                         qsTr("Enable it!")
                     }
                 }
+                color: "white"
                 opacity: 0.9
-                anchors.verticalCenter: parent.verticalCenter
 
                 onClicked: {
                     deviceManager.enableBluetooth()
