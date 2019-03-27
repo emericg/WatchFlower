@@ -128,6 +128,23 @@ Rectangle {
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorTitles
             onClicked: refreshButtonClicked()
+
+            NumberAnimation on rotation {
+                id: refreshAnimation
+                duration: 2000
+                from: 0
+                to: 360
+                loops: Animation.Infinite
+                running: deviceManager.refreshing
+                onStopped: refreshAnimationStop.start()
+            }
+            NumberAnimation on rotation {
+                id: refreshAnimationStop
+                duration: 1000;
+                to: 360;
+                easing.type: Easing.OutExpo
+                running: false
+            }
         }
 
         ItemImageButton {
