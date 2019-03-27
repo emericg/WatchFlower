@@ -8,6 +8,7 @@ QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
 android { QT += androidextras }
 ios | android { QT += gui-private }
+android { QT += androidextras }
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
@@ -33,6 +34,7 @@ DESTDIR     = bin/
 SOURCES  += src/main.cpp \
             src/settingsmanager.cpp \
             src/systraymanager.cpp \
+            src/notificationmanager.cpp \
             src/devicemanager.cpp \
             src/device.cpp \
             src/device_flowercare.cpp \
@@ -41,6 +43,7 @@ SOURCES  += src/main.cpp \
 
 HEADERS  += src/settingsmanager.h \
             src/systraymanager.h \
+            src/notificationmanager.h \
             src/devicemanager.h \
             src/device.h \
             src/device_flowercare.h \
@@ -50,7 +53,8 @@ HEADERS  += src/settingsmanager.h \
 RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
-OTHER_FILES += .travis.yml
+OTHER_FILES += .travis.yml \
+               src/thirdparty/NotificationAndroid.java
 
 ################################################################################
 # App features
