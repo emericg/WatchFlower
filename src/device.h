@@ -30,6 +30,10 @@
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
+QT_CHARTS_USE_NAMESPACE
+
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE    "3.1.8"
 #define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.5"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
@@ -216,6 +220,9 @@ public slots:
     void setLimitConduMin(int limitConduMin) { if (m_limitConduMin == limitConduMin) return; m_limitConduMin = limitConduMin; setDbLimits(); }
     void setLimitConduMax(int limitConduMax) { if (m_limitConduMax == limitConduMax) return; m_limitConduMax = limitConduMax; setDbLimits(); }
     bool setDbLimits();
+
+    // AIO graph
+    Q_INVOKABLE void getTempDatas(QDateTimeAxis *axis, QLineSeries *hygro, QLineSeries *temp, QLineSeries *lumi, QLineSeries *cond);
 
     // Daily graph
     QVariantList getDays();

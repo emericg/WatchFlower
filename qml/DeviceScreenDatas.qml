@@ -448,7 +448,7 @@ Item {
         }
     }
 
-    DeviceScreenCharts {
+    DeviceScreenBarCharts {
         id: deviceScreenCharts
         anchors.top: flowData.bottom
         anchors.bottom: parent.bottom

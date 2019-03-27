@@ -16,7 +16,8 @@
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
-        <file>DeviceScreenCharts.qml</file>
+        <file>DeviceScreenAioCharts.qml</file>
+        <file>DeviceScreenBarCharts.qml</file>
         <file>Tutorial.qml</file>
         <file>ThemeEngine.qml</file>
         <file>ThemedButton.qml</file>
