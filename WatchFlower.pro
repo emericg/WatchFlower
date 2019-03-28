@@ -8,7 +8,6 @@ QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
 android { QT += androidextras }
 ios | android { QT += gui-private }
-android { QT += androidextras }
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
@@ -54,7 +53,7 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .travis.yml \
-               src/thirdparty/NotificationAndroid.java
+               assets/android/com/emeric/watchflower/NotificationAndroid.java \
 
 ################################################################################
 # App features

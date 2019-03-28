@@ -21,6 +21,7 @@
 
 #ifndef DEVICE_ROPOT_H
 #define DEVICE_ROPOT_H
+/* ************************************************************************** */
 
 #include "device.h"
 
@@ -31,6 +32,8 @@
 
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
+
+/* ************************************************************************** */
 
 /*!
  * \brief The DeviceRopot class
@@ -60,4 +63,5 @@ private:
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
+/* ************************************************************************** */
 #endif // DEVICE_ROPOT_H

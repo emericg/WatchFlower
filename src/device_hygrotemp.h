@@ -21,6 +21,7 @@
 
 #ifndef DEVICE_HYGROTEMP_H
 #define DEVICE_HYGROTEMP_H
+/* ************************************************************************** */
 
 #include "device.h"
 
@@ -31,6 +32,8 @@
 
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
+
+/* ************************************************************************** */
 
 /*!
  * \brief The DeviceHygrotemp class
@@ -66,4 +69,5 @@ private:
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
+/* ************************************************************************** */
 #endif // DEVICE_HYGROTEMP_H

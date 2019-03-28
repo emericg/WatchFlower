@@ -21,6 +21,7 @@
 
 #ifndef SYSTRAY_MANAGER_H
 #define SYSTRAY_MANAGER_H
+/* ************************************************************************** */
 
 #include <QSystemTrayIcon>
 #include <QTimer>
@@ -29,6 +30,8 @@ class QMenu;
 class QAction;
 class QApplication;
 class QQuickWindow;
+
+/* ************************************************************************** */
 
 /*!
  * \brief The SystrayManager class
@@ -81,4 +84,5 @@ private slots:
     void aboutToBeDestroyed();
 };
 
+/* ************************************************************************** */
 #endif // SYSTRAY_MANAGER_H

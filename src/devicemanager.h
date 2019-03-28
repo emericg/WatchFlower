@@ -21,6 +21,7 @@
 
 #ifndef DEVICE_MANAGER_H
 #define DEVICE_MANAGER_H
+/* ************************************************************************** */
 
 #include "settingsmanager.h"
 
@@ -34,6 +35,8 @@
 
 QT_FORWARD_DECLARE_CLASS (QBluetoothDeviceInfo)
 QT_FORWARD_DECLARE_CLASS (QLowEnergyController)
+
+/* ************************************************************************** */
 
 /*!
  * \brief The DeviceManager class
@@ -112,4 +115,5 @@ Q_SIGNALS:
     void bluetoothChanged();
 };
 
+/* ************************************************************************** */
 #endif // DEVICE_MANAGER_H

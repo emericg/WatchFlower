@@ -21,6 +21,7 @@
 
 #ifndef DEVICE_H
 #define DEVICE_H
+/* ************************************************************************** */
 
 #include <QObject>
 #include <QList>
@@ -38,6 +39,8 @@ QT_CHARTS_USE_NAMESPACE
 #define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.5"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
 
+/* ************************************************************************** */
+
 enum DeviceCapabilities {
     DEVICE_BATTERY      = (1 << 0), //!< Can report its battery level
     DEVICE_TEMP         = (1 << 1), //!< Has a temperature sensor
@@ -48,6 +51,8 @@ enum DeviceCapabilities {
     DEVICE_LIMITS       = (1 << 5), //!< Can use limits
     DEVICE_PLANT        = (1 << 6), //!< Is associated to a plant
 };
+
+/* ************************************************************************** */
 
 /*!
  * \brief The Device class
@@ -236,6 +241,8 @@ public slots:
     QVariantList getBackgroundDaily(float maxValue);
 };
 
+/* ************************************************************************** */
+
 struct Version
 {
     int major = 0, minor = 0, revision = 0, build = 0;
@@ -336,4 +343,5 @@ static void testVersionStringComparison()
     assert( (Version("3.7.9")   >   Version("3.8.8"))   == false);
 }
 */
+/* ************************************************************************** */
 #endif // DEVICE_H

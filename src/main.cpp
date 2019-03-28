@@ -32,6 +32,7 @@
 
 #include "settingsmanager.h"
 #include "systraymanager.h"
+#include "notificationmanager.h"
 #include "devicemanager.h"
 
 /* ************************************************************************** */
@@ -59,6 +60,7 @@ int main(int argc, char *argv[])
 
     // Arguments
     bool start_minimized = false;
+    bool refresh_only = false;
     for (int i = 1; i < argc; i++)
     {
         if (argv[i])
@@ -67,15 +69,28 @@ int main(int argc, char *argv[])
 
             if (QString::fromLocal8Bit(argv[i]) == "--start-minimized")
                 start_minimized = true;
+            if (QString::fromLocal8Bit(argv[i]) == "--refresh")
+                refresh_only = true;
         }
     }
 
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
+    NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
 
     if (!sm || !st || !dm )
         return EXIT_FAILURE;
+
+    // Refresh datas in the background, without starting the UI, then exit
+    if (refresh_only)
+    {
+        if (dm->areDevicesAvailable() == true)
+        {
+            dm->refreshDevices();
+            return EXIT_SUCCESS;
+        }
+    }
 
     // Run a first scan, but only if we have no saved devices
     if (dm->areDevicesAvailable() == false)
@@ -107,6 +122,7 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     // Set systray?
     st->initSettings(&app, window);
     if (sm->getSysTray())
@@ -120,6 +136,7 @@ int main(int argc, char *argv[])
     {
         window->setVisibility(QWindow::Minimized);
     }
+#endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(FORCE_MOBILE_UI)
 #if defined(Q_OS_LINUX)

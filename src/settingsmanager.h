@@ -21,6 +21,7 @@
 
 #ifndef SETTINGS_MANAGER_H
 #define SETTINGS_MANAGER_H
+/* ************************************************************************** */
 
 #define DEFAULT_UPDATE_INTERVAL     60 // minutes
 #define ERROR_UPDATE_INTERVAL       10 // minutes
@@ -32,6 +33,8 @@
 #include <QQuickWindow>
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
+
+/* ************************************************************************** */
 
 /*!
  * \brief The SettingsManager class
@@ -124,4 +127,5 @@ public slots:
     void exit() { QApplication::exit(); }
 };
 
+/* ************************************************************************** */
 #endif // SETTINGS_MANAGER_H

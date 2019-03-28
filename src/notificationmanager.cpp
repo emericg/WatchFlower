@@ -20,6 +20,10 @@
  */
 
 #include "notificationmanager.h"
+#include "systraymanager.h"
+
+#include <QDebug>
+#include <QString>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -27,18 +31,44 @@
 
 /* ************************************************************************** */
 
-NotificationManager::NotificationManager(QObject *parent)
-    : QObject(parent)
+NotificationManager *NotificationManager::instance = nullptr;
+
+NotificationManager *NotificationManager::getInstance()
 {
-    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateAndroidNotification()));
+    if (instance == nullptr)
+    {
+        instance = new NotificationManager();
+        return instance;
+    }
+    else
+    {
+        return instance;
+    }
 }
 
+NotificationManager::NotificationManager()
+{
+#if defined(Q_OS_ANDROID)
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateAndroidNotification()));
+#elif defined(Q_OS_IOS)
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateIosNotification()));
+#else
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateDesktopNotification()));
+#endif
+}
+
+NotificationManager::~NotificationManager()
+{
+    //
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void NotificationManager::setNotification(const QString &notification)
 {
-    if (m_notification == notification)
-        return;
+    //if (m_notification == notification)
+    //    return;
 
     m_notification = notification;
     emit notificationChanged();
@@ -49,13 +79,32 @@ QString NotificationManager::notification() const
     return m_notification;
 }
 
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void NotificationManager::updateDesktopNotification()
+{
+    SystrayManager *st = SystrayManager::getInstance();
+    if (st)
+    {
+        st->sendNotification(m_notification);
+    }
+}
+
+void NotificationManager::updateIosNotification()
+{
+#ifdef Q_OS_IOS
+    //
+#endif // Q_OS_IOS
+}
+
 void NotificationManager::updateAndroidNotification()
 {
 #ifdef Q_OS_ANDROID
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString(m_notification);
-    QAndroidJniObject::callStaticMethod<void>("org/qtproject/example/notification/NotificationClient",
-                                       "notify",
-                                       "(Ljava/lang/String;)V",
-                                       javaNotification.object<jstring>());
+    QAndroidJniObject::callStaticMethod<void>("com/emeric/watchflower/NotificationAndroid",
+                                              "notify",
+                                              "(Ljava/lang/String;)V",
+                                              javaNotification.object<jstring>());
 #endif // Q_OS_ANDROID
 }

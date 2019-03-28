@@ -21,7 +21,7 @@
 
 #include "device.h"
 #include "settingsmanager.h"
-#include "systraymanager.h"
+#include "notificationmanager.h"
 
 #include <cmath>
 
@@ -167,17 +167,16 @@ void Device::refreshDatasFinished(bool status, bool cached)
             if ((m_capabilities & DEVICE_PLANT) != 0 &&
                 m_hygro > 0 && m_hygro < m_limitHygroMin)
             {
-                SystrayManager *st = SystrayManager::getInstance();
-                if (st)
+                NotificationManager *nm = NotificationManager::getInstance();
+                if (nm)
                 {
                     QString message;
-
                     if (!m_plantName.isEmpty())
                         message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
                     else
                         message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
 
-                    st->sendNotification(message);
+                    nm->setNotification(message);
                 }
             }
         }

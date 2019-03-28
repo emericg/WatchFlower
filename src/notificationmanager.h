@@ -25,14 +25,24 @@
 
 #include <QObject>
 
+/* ************************************************************************** */
+
+/*!
+ * \brief The NotificationManager class
+ */
 class NotificationManager : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QString notification READ notification WRITE setNotification NOTIFY notificationChanged)
 
+    static NotificationManager *instance;
+
+    NotificationManager();
+    ~NotificationManager();
+
 public:
-    explicit NotificationManager(QObject *parent = 0);
+    static NotificationManager *getInstance();
 
     void setNotification(const QString &notification);
     QString notification() const;
@@ -42,6 +52,8 @@ signals:
 
 private slots:
     void updateAndroidNotification();
+    void updateIosNotification();
+    void updateDesktopNotification();
 
 private:
     QString m_notification;
