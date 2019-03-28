@@ -935,35 +935,43 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 void Device::getTempDatas(QDateTimeAxis *axis,
                           QLineSeries *hygro, QLineSeries *temp,
                           QLineSeries *lumi, QLineSeries *cond)
 {
-    QSqlQuery cachedDatas;
-    cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
-    cachedDatas.bindValue(":deviceAddr", getAddress());
+    if (!axis || !hygro || !temp || !lumi || !cond)
+        return;
 
-    if (cachedDatas.exec() == false)
-        qDebug() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
+    QSqlQuery graphDatas;
+    graphDatas.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
+                       "FROM datas " \
+                       "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
+    graphDatas.bindValue(":deviceAddr", getAddress());
 
+    if (graphDatas.exec() == false)
+    {
+        qDebug() << "> cachedDatas.exec() ERROR" << graphDatas.lastError().type() << ":"  << graphDatas.lastError().text();
+        return;
+    }
+
+    axis->setFormat("dd MMM");
     bool minSet = false;
     axis->setMax(QDateTime::currentDateTime());
 
-    while (cachedDatas.next())
+    while (graphDatas.next())
     {
-        QDateTime date = QDateTime::fromString(cachedDatas.value(4).toString(), "yyyy-MM-dd hh:mm:ss");
+        QDateTime date = QDateTime::fromString(graphDatas.value(4).toString(), "yyyy-MM-dd hh:mm:ss");
         if (!minSet) {
             axis->setMin(date);
             minSet = true;
         }
         int64_t timecode = date.toMSecsSinceEpoch();
 
-        temp->append(timecode, cachedDatas.value(0).toFloat());
-        hygro->append(timecode, cachedDatas.value(1).toFloat());
-        lumi->append(timecode, cachedDatas.value(2).toFloat());
-        cond->append(timecode, cachedDatas.value(3).toFloat());
+        temp->append(timecode, graphDatas.value(0).toFloat());
+        hygro->append(timecode, graphDatas.value(1).toFloat());
+        lumi->append(timecode, graphDatas.value(2).toFloat());
+        cond->append(timecode, graphDatas.value(3).toFloat());
     }
 }

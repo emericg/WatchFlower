@@ -28,9 +28,8 @@ import QtCharts 2.2
 
 import com.watchflower.theme 1.0
 
-Rectangle {
+Item {
     id: deviceScreenBarCharts
-    color: "#00000000"
     width: parent.width
     anchors.margins: 0
 

@@ -82,12 +82,18 @@ Item {
         ValueAxis { id: axisY0; visible: false; gridVisible: true; }
         ValueAxis { id: axisY1; visible: false; gridVisible: true; }
         ValueAxis { id: axisY2; visible: false; gridVisible: true; }
-        DateTimeAxis { id: axisTime; visible: false; }
+        DateTimeAxis { id: axisTime; visible: true; }
 
         LineSeries {
-            id: hygroDatas
-            color: Theme.colorBlue; width: 2;
-            axisY: axisY0; axisX: axisTime;
+            id: lumiDatas
+            color: Theme.colorYellow; width: 2;
+            visible: false
+            axisY: axisY1; axisX: axisTime;
+        }
+        LineSeries {
+            id: condDatas
+            color: Theme.colorRed; width: 2;
+            axisY: axisY2; axisX: axisTime;
         }
         LineSeries {
             id: tempDatas
@@ -95,14 +101,11 @@ Item {
             axisY: axisY0; axisX: axisTime;
         }
         LineSeries {
-            id: lumiDatas
-            color: Theme.colorYellow; width: 2;
-            axisY: axisY1; axisX: axisTime;
-        }
-        LineSeries {
-            id: condDatas
-            color: Theme.colorRed; width: 2;
-            axisY: axisY2; axisX: axisTime;
+            id: hygroDatas
+            color: Theme.colorBlue; width: 3;
+            axisY: axisY0; axisX: axisTime;
+
+            onClicked: console.log("onClicked: " + point.x + ", " + point.y);
         }
     }
 }
