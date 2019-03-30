@@ -71,8 +71,8 @@ Rectangle {
 
         Image {
             id: imageHeader
-            width: 32
-            height: 32
+            width: 40
+            height: 40
             anchors.left: parent.left
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
@@ -83,11 +83,14 @@ Rectangle {
 
         Text {
             id: element
+            color: "#4b4747"
             text: qsTr("WatchFlower")
+            font.bold: true
+            anchors.verticalCenterOffset: 2
             anchors.left: imageHeader.right
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 26
+            font.pixelSize: 22
         }
     }
 
@@ -126,7 +129,7 @@ Rectangle {
                     id: buttonPlantsImg
                     anchors.fill: parent
                     visible: false
-                    source: "qrc:/assets/watchflower.svg"
+                    source: "qrc:/assets/watchflower_small.svg"
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                 }

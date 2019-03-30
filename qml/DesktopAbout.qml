@@ -194,7 +194,7 @@ Item {
                     id: githubImg
                     anchors.fill: parent
                     visible: false
-                    source: "qrc:/assets/github.png"
+                    source: "qrc:/assets/github.svg"
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                 }

@@ -33,7 +33,7 @@ Rectangle {
     color: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? Theme.colorHeaderDesktop : Theme.colorHeaderMobile
 
     property string goBackTo: "DeviceList"
-    onGoBackToChanged: currentIndex = 0 // reset
+    onGoBackToChanged: swipeView.currentIndex = 0 // reset
 
     SwipeView {
         id: swipeView
@@ -58,14 +58,14 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -70
+                anchors.verticalCenterOffset: -88
 
                 text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' bluetooth devices.")
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 color: "white"
-                wrapMode: Text.WordWrap
                 //horizontalAlignment: Text.AlignHCenter
-                font.bold: true
-                font.pixelSize: 18
+                //effectiveHorizontalAlignment: Text.AlignJustify
+                font.pixelSize: 20
             }
             Row {
                 height: 80
@@ -108,14 +108,13 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -70
+                anchors.verticalCenterOffset: -88
 
                 text: qsTr("To start using WatchFlower, you first need to search for compatible bluetooth devices near you.")
                 color: "white"
-                wrapMode: Text.WordWrap
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 //horizontalAlignment: Text.AlignHCenter
-                font.bold: true
-                font.pixelSize: 18
+                font.pixelSize: 20
             }
             Row {
                 height: 80
@@ -158,14 +157,13 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -70
+                anchors.verticalCenterOffset: -72
 
                 text: qsTr("Once devices are paired, the application will periodically sync these devices datas.\nYou can set name to your plants and customize settings like optimal water level...")
                 color: "white"
-                wrapMode: Text.WordWrap
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 //horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 18
-                font.bold: true
+                font.pixelSize: 20
             }
             Row {
                 height: 80
