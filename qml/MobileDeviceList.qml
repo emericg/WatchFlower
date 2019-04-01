@@ -149,7 +149,7 @@ Item {
         clip: true
 
         anchors.fill: parent
-        anchors.topMargin: 0
+        anchors.topMargin: 8
         anchors.bottomMargin: rectangleStatus.height + 0
         anchors.leftMargin: 0
         anchors.rightMargin: 0

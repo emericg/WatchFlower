@@ -78,7 +78,7 @@ Item {
         anchors.left: parent.left
 
         Item {
-            id: element6
+            id: element1
             height: 48
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -122,7 +122,7 @@ Item {
         }
 
         Item {
-            id: element
+            id: element2
             height: 48
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -166,8 +166,24 @@ Item {
             }
         }
 
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("WatchFlower can enable your device's bluetooth in order to operate")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
+        }
+
         Item {
-            id: element1
+            id: element3
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -207,12 +223,28 @@ Item {
                 anchors.left: parent.left
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             }
         }
 
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if bluetooth or bluetooth control is enabled.")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
+        }
+
         Item {
-            id: element2
+            id: element4
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -256,8 +288,24 @@ Item {
             }
         }
 
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("If a plant needs water, we'll be sure to bring it to your attention")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
+        }
+
         Item {
-            id: element3
+            id: element5
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -304,7 +352,7 @@ Item {
         }
 
         Item {
-            id: element4
+            id: element6
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -384,7 +432,7 @@ Item {
         }
 
         Item {
-            id: element5
+            id: element7
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -472,7 +520,7 @@ Item {
         }
 
         Item {
-            id: element7
+            id: element8
             height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0

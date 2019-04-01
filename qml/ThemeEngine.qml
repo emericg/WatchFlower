@@ -24,16 +24,16 @@ import QtQuick 2.7
 
 Item {
     // Headers
-    readonly property string colorHeaderDesktop: "#1dcb58"
-    readonly property string colorHeaderMobile: "#58b79b"
-    readonly property string colorHeaderMobileStatusbar: "#449287"
+    readonly property string colorHeaderDesktop: "#83d83a"
+    readonly property string colorHeaderMobile: "#1abc9c" // #83d83a
+    readonly property string colorHeaderMobileStatusbar: "#009688" // #52a527
 
     // Actually used colors
     readonly property string colorMaterialLightGrey: "#f8f8f8" // desktop BG
     readonly property string colorMaterialDarkGrey: "#ececec"
 
-    readonly property string colorGood: "#87d241"
-    readonly property string colorBad: "#ffbf66"
+    readonly property string colorGood: "#83d83a"
+    readonly property string colorBad: "#ffba5a"
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"
 
@@ -53,8 +53,8 @@ Item {
     readonly property string colorBlue: "#408ab4"
     readonly property string colorYellow: "#ffba5a"
     readonly property string colorRed: "#ff7657"
-    readonly property string colorBrown: "#555151"
     readonly property string colorGrey: "#555151"
+    readonly property string colorLightGrey: "#a9bcb8"
 
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: 30

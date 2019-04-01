@@ -78,7 +78,7 @@ Item {
         anchors.left: parent.left
 
         Item {
-            id: element6
+            id: element1
             height: 48
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -122,7 +122,7 @@ Item {
         }
 
         Item {
-            id: element
+            id: element2
             height: 48
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -167,7 +167,7 @@ Item {
         }
 
         Item {
-            id: element1
+            id: element3
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -212,7 +212,7 @@ Item {
         }
 
         Item {
-            id: element2
+            id: element4
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -257,7 +257,7 @@ Item {
         }
 
         Item {
-            id: element3
+            id: element5
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -304,7 +304,7 @@ Item {
         }
 
         Item {
-            id: element4
+            id: element6
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -384,7 +384,7 @@ Item {
         }
 
         Item {
-            id: element5
+            id: element7
             height: 48
             anchors.left: parent.left
             anchors.right: parent.right
@@ -472,7 +472,7 @@ Item {
         }
 
         Item {
-            id: element7
+            id: element8
             height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0
