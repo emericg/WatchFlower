@@ -24,6 +24,7 @@
         <file>ThemedSwitch.qml</file>
         <file>ThemedRadioButton.qml</file>
         <file>ThemedRangeSlider.qml</file>
+        <file>ItemMenuButton.qml</file>
         <file>ItemImageButton.qml</file>
         <file>ImageSvg.qml</file>
         <file>WindowGeometrySaver.qml</file>

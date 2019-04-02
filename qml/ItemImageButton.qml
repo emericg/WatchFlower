@@ -15,7 +15,7 @@ Item {
 
     // settings
     property string highlightMode: "circle" // circle / color / off
-    property string highlightColor: Theme.colorYellow
+    property string highlightColor: "#25B298"
     property string iconColor: Theme.iconColor
     property bool background: false
     property string tooltipText: ""

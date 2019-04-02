@@ -29,15 +29,73 @@ Rectangle {
     height: 64
     color: Theme.colorHeaderDesktop
 
-    property var leftIcon: buttonBack
-    property bool menuVisible: true
-
     signal backButtonClicked()
+
+    signal deviceRefreshButtonClicked()
+    signal deviceDatasButtonClicked()
+    signal deviceSettingsButtonClicked()
+
     signal refreshButtonClicked()
     signal rescanButtonClicked()
+    signal plantsButtonClicked()
     signal settingsButtonClicked()
     signal aboutButtonClicked()
     signal exitButtonClicked()
+
+    function setActiveDeviceDatas() {
+        menuDeviceDatas.selected = true
+        menuDeviceSettings.selected = false
+    }
+    function setActiveDeviceSettings() {
+        menuDeviceDatas.selected = false
+        menuDeviceSettings.selected = true
+    }
+
+    function setActiveMenu() {
+
+        if (content.state === "Tutorial") {
+            title.text = qsTr("Welcome")
+            menu.visible = false
+            buttonBack.source = "qrc:/assets/icons_material/baseline-close-24px.svg"
+        } else {
+            title.text = "WatchFlower"
+            menu.visible = true
+            if (content.state === "DeviceList") {
+                buttonBack.source = "qrc:/assets/watchflower.svg"
+            } else {
+                buttonBack.source = "qrc:/assets/menu_back.svg"
+            }
+
+            if (content.state === "DeviceDetails") {
+                buttonRefreshAll.visible = false
+                buttonRescan.visible = false
+                menuPlants.visible = false
+                menuAbout.visible = false
+                menuSettings.visible = false
+                setActiveDeviceDatas()
+            } else {
+                buttonRefreshAll.visible = true
+                buttonRescan.visible = true
+                menuPlants.visible = true
+                menuAbout.visible = true
+                menuSettings.visible = true
+
+                if (content.state === "DeviceList") {
+                    menuPlants.selected = true
+                    menuAbout.selected = false
+                    menuSettings.selected = false
+                } else if (content.state == "Settings") {
+                    menuPlants.selected = false
+                    menuAbout.selected = false
+                    menuSettings.selected = true
+                } else if (content.state == "About") {
+                    menuPlants.selected = false
+                    menuAbout.selected = true
+                    menuSettings.selected = false
+                }
+            }
+        }
+    }
 
     ImageSvg {
         id: buttonBack
@@ -78,23 +136,18 @@ Rectangle {
                 rescanAnimation.stop()
         }
         onRefreshingChanged: {
-            if (deviceManager.refreshing)
+            if (deviceManager.refreshing) {
                 refreshAnimation.start()
-            else
+                refreshAllAnimation.start()
+            } else {
                 refreshAnimation.stop()
-        }
-    }
-    Connections {
-        target: settingsManager
-        onSystrayChanged: {
-            if (settingsManager.systray)
-                buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
-            else
-                buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                refreshAllAnimation.stop()
+            }
         }
     }
 
     Text {
+        id: title
         anchors.left: parent.left
         anchors.leftMargin: 48
         anchors.verticalCenter: parent.verticalCenter
@@ -102,9 +155,7 @@ Rectangle {
         text: "WatchFlower"
         color: "#FFFFFF"
         font.bold: true
-        font.pixelSize: 30
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 32
     }
 
     Row {
@@ -117,17 +168,20 @@ Rectangle {
         anchors.rightMargin: 8
 
         spacing: 0
-        visible: menuVisible
+        visible: true
+
+        ///////
 
         ItemImageButton {
             id: buttonRefresh
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter
+            visible: content.state == "DeviceDetails"
 
-            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+            source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorTitles
-            onClicked: refreshButtonClicked()
+            onClicked: deviceRefreshButtonClicked()
 
             NumberAnimation on rotation {
                 id: refreshAnimation
@@ -146,7 +200,52 @@ Rectangle {
                 running: false
             }
         }
+        ItemMenuButton {
+            id: menuDeviceDatas
+            width: 64
+            height: 64
+            visible: content.state == "DeviceDetails"
+            source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+            onClicked: deviceDatasButtonClicked()
+        }
+        ItemMenuButton {
+            id: menuDeviceSettings
+            width: 64
+            height: 64
+            visible: content.state == "DeviceDetails"
+            source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+            onClicked: deviceSettingsButtonClicked()
+        }
 
+        ///////
+
+        ItemImageButton {
+            id: buttonRefreshAll
+            width: 36
+            height: 36
+            anchors.verticalCenter: parent.verticalCenter
+
+            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+            iconColor: Theme.colorTitles
+            onClicked: refreshButtonClicked()
+
+            NumberAnimation on rotation {
+                id: refreshAllAnimation
+                duration: 2000
+                from: 0
+                to: 360
+                loops: Animation.Infinite
+                running: deviceManager.refreshing
+                onStopped: refreshAllAnimationStop.start()
+            }
+            NumberAnimation on rotation {
+                id: refreshAllAnimationStop
+                duration: 1000;
+                to: 360;
+                easing.type: Easing.OutExpo
+                running: false
+            }
+        }
         ItemImageButton {
             id: buttonRescan
             width: 36
@@ -176,35 +275,45 @@ Rectangle {
             }
         }
 
-        ItemImageButton {
-            id: imageSettings
-            width: 48
-            height: 48
-            anchors.verticalCenter: parent.verticalCenter
-
-            source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-            iconColor: Theme.colorTitles
-            onClicked: settingsButtonClicked()()
+        ItemMenuButton {
+            id: menuPlants
+            width: 64
+            height: 64
+            source: "qrc:/assets/watchflower_small.svg"
+            onClicked: plantsButtonClicked()
         }
-
-        ItemImageButton {
-            id: imageAbout
-            width: 48
-            height: 48
-            anchors.verticalCenter: parent.verticalCenter
-
+        ItemMenuButton {
+            id: menuSettings
+            width: 64
+            height: 64
+            source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+            onClicked: settingsButtonClicked()
+        }
+        ItemMenuButton {
+            id: menuAbout
+            width: 64
+            height: 64
             source: "qrc:/assets/icons_material/outline-info-24px.svg"
-            iconColor: Theme.colorTitles
             onClicked: aboutButtonClicked()
         }
 
+        ///////
+/*
         ImageSvg {
             id: buttonExit
             width: 32
             height: 32
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: false
+            Connections {
+                target: settingsManager
+                onSystrayChanged: {
+                    if (settingsManager.systray)
+                        buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+                    else
+                        buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                }
+            }
 
             source: {
                 if (settingsManager.systray)
@@ -220,9 +329,10 @@ Rectangle {
                     if (settingsManager.systray)
                         applicationWindow.hide()
                     else
-                        exitButtonClicked()
+                        settingsManager.exit()
                 }
             }
         }
+*/
     }
 }

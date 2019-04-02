@@ -166,6 +166,22 @@ Item {
             }
         }
 
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("WatchFlower can enable your device's bluetooth in order to operate")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
+        }
+
         Item {
             id: element3
             height: 48
@@ -207,8 +223,24 @@ Item {
                 anchors.left: parent.left
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             }
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if bluetooth or bluetooth control is enabled.")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
         }
 
         Item {
@@ -254,6 +286,22 @@ Item {
                 color: Theme.colorText
                 source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
             }
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            topPadding: -8
+
+            // mobile only
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+            text: qsTr("If a plant needs water, we'll be sure to bring it to your attention")
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: 14
         }
 
         Item {

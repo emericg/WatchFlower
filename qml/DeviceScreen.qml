@@ -40,6 +40,21 @@ Item {
         onStatusUpdated: updateHeader()
         onDatasUpdated: rectangleDeviceDatas.updateDatas()
     }
+    Connections {
+        target: header
+        onDeviceDatasButtonClicked: {
+            header.setActiveDeviceDatas()
+            rectangleContent.state = "datas"
+            plantPanel.visible = true
+            devicePanel. visible = false
+        }
+        onDeviceSettingsButtonClicked: {
+            header.setActiveDeviceSettings()
+            rectangleContent.state = "limits"
+            plantPanel.visible = false
+            devicePanel. visible = true
+        }
+    }
 
     Rectangle {
         id: rectangleHeader

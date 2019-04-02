@@ -52,25 +52,17 @@ ApplicationWindow {
                 content.state = "DeviceList"
             }
         }
-        onRefreshButtonClicked: {
-            deviceManager.refreshDevices()
+
+        onDeviceRefreshButtonClicked: {
+            if (curentlySelectedDevice)
+                curentlySelectedDevice.refreshDatas()
         }
-        onRescanButtonClicked: {
-            deviceManager.scanDevices()
-        }
+        onRefreshButtonClicked: deviceManager.refreshDevices()
+        onRescanButtonClicked: deviceManager.scanDevices()
+
+        onPlantsButtonClicked: content.state = "DeviceList"
         onSettingsButtonClicked: content.state = "Settings"
         onAboutButtonClicked: content.state = "About"
-        onExitButtonClicked: settingsManager.exit()
-    }
-    Connections {
-        target: content
-        onStateChanged: {
-            if (content.state === "DeviceList") {
-                header.leftIcon.source = "qrc:/assets/watchflower.svg"
-            } else {
-                header.leftIcon.source = "qrc:/assets/menu_back.svg"
-            }
-        }
     }
     Connections {
         target: systrayManager
@@ -134,6 +126,8 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
+        onStateChanged: header.setActiveMenu()
+
         Tutorial {
             anchors.fill: parent
             id: screenTutorial
@@ -161,12 +155,6 @@ ApplicationWindow {
         states: [
             State {
                 name: "Tutorial"
-
-                PropertyChanges {
-                    target: header
-                    //title: qsTr("Welcome")
-                    menuVisible: false
-                }
 
                 PropertyChanges {
                     target: screenTutorial
@@ -199,12 +187,6 @@ ApplicationWindow {
                 name: "DeviceList"
 
                 PropertyChanges {
-                    target: header
-                    //title: qsTr("WatchFlower")
-                    menuVisible: true
-                }
-
-                PropertyChanges {
                     target: screenTutorial
                     enabled: false
                     visible: false
@@ -233,12 +215,6 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceDetails"
-
-                PropertyChanges {
-                    target: header
-                    //title: qsTr("WatchFlower")
-                    menuVisible: true
-                }
 
                 PropertyChanges {
                     target: screenTutorial
@@ -275,12 +251,6 @@ ApplicationWindow {
                 name: "Settings"
 
                 PropertyChanges {
-                    target: header
-                    //title: qsTr("Settings")
-                    menuVisible: true
-                }
-
-                PropertyChanges {
                     target: screenTutorial
                     enabled: false
                     visible: false
@@ -309,12 +279,6 @@ ApplicationWindow {
             },
             State {
                 name: "About"
-
-                PropertyChanges {
-                    target: header
-                    //title: qsTr("About")
-                    menuVisible: true
-                }
 
                 PropertyChanges {
                     target: screenTutorial
