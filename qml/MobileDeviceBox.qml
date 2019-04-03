@@ -46,13 +46,18 @@ Item {
     }
 
     function updateBoxDatas() {
-        if (boxDevice.devicePlantName !== "") {
-            textPlant.text = boxDevice.devicePlantName
-            textLocation.text = boxDevice.deviceLocationName
-        }
         if (boxDevice.deviceName === "MJ_HT_V1") {
             textPlant.text = qsTr("Thermometer")
+        } else if (boxDevice.devicePlantName !== "") {
+            textPlant.text = boxDevice.devicePlantName
+        } else {
+            textPlant.text = boxDevice.deviceName
+        }
+
+        if (boxDevice.deviceLocationName !== "") {
             textLocation.text = boxDevice.deviceLocationName
+        } else {
+            textLocation.text = boxDevice.deviceAddress
         }
 
         rectangleSensors.visible = false

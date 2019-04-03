@@ -79,7 +79,7 @@ Item {
             text: myDevice.deviceName
             font.capitalization: Font.AllUppercase
             color: Theme.colorText
-
+/*
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
@@ -94,6 +94,7 @@ Item {
                     }
                 }
             }
+*/
         }
         ImageSvg {
             id: imageBattery
@@ -106,153 +107,6 @@ Item {
 
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
             color: Theme.colorText
-        }
-
-        Item {
-            id: desktopButtons
-            width: 112
-            height: 80
-            z: 1
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.rightMargin: 12
-            anchors.right: parent.right
-
-            Rectangle {
-                id: buttonRefresh
-                width: 112
-                height: 32
-                color: "#e0e0e0"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Text {
-                    id: buttonRefreshText
-                    height: 32
-                    color: "#202020"
-                    text: qsTr("Refresh")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.right: parent.right
-                    font.pixelSize: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: imageRefresh.right
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 8
-                }
-
-                Image {
-                    id: imageRefresh
-                    width: 22
-                    height: 22
-                    anchors.left: parent.left
-                    anchors.leftMargin: 6
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    sourceSize: Qt.size(width, height)
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: Theme.colorText
-                    }
-
-                    NumberAnimation on rotation {
-                        id: refreshRotation
-                        duration: 3000;
-                        from: 0;
-                        to: 360;
-                        loops: Animation.Infinite
-                        running: false
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    hoverEnabled: true
-                    onEntered: buttonRefresh.color = "#eaeaea"
-                    onExited: buttonRefresh.color = "#e0e0e0"
-
-                    onClicked: {
-                        refreshRotation.start()
-                        myDevice.refreshDatas()
-                    }
-                }
-            }
-
-            Rectangle {
-                id: buttonLimits
-                width: 112
-                height: 32
-                color: "#e0e0e0"
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                function initButton() {
-                    if (rectangleContent.state === "limits") {
-                        textLimits.text = qsTr("Datas")
-                        imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                    } else {
-                        textLimits.text = qsTr("Limits")
-                        imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                    }
-                }
-
-                Text {
-                    id: textLimits
-                    height: 32
-                    color: "#202020"
-                    text: qsTr("Limits")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.right: parent.right
-                    font.pixelSize: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: imageLimits.right
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 8
-                }
-
-                Image {
-                    id: imageLimits
-                    width: 22
-                    height: 22
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 6
-                    source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                    sourceSize: Qt.size(width, height)
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: Theme.colorText
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    hoverEnabled: true
-                    onEntered: buttonLimits.color = "#eaeaea"
-                    onExited: buttonLimits.color = "#e0e0e0"
-
-                    onClicked: {
-                        if (rectangleContent.state === "datas") {
-                            rectangleContent.state = "limits"
-                            textLimits.text = qsTr("Datas")
-                            imageLimits.source = "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                        } else {
-                            rectangleContent.state = "datas"
-                            textLimits.text = qsTr("Limits")
-                            imageLimits.source = "qrc:/assets/icons_material/baseline-iso-24px.svg"
-
-                            // Update color bars with new limits
-                            rectangleDeviceDatas.updateDatas()
-                        }
-                    }
-                }
-            }
         }
 
         Column {
@@ -296,9 +150,13 @@ Item {
 
                     font.pixelSize: 16
                     onEditingFinished: {
+                        if (text) {
+                            imageEditPlant.visible = false
+                        } else {
+                            imageEditPlant.visible = true
+                        }
                         myDevice.setPlantName(text)
                         focus = false
-                        imageEditPlant.visible = false
                     }
 
                     MouseArea {
@@ -307,7 +165,13 @@ Item {
                         //propagateComposedEvents: true
 
                         onEntered: { imageEditPlant.visible = true; }
-                        onExited: { imageEditPlant.visible = false; }
+                        onExited: {
+                            if (textInputPlant.text) {
+                                imageEditPlant.visible = false
+                            } else {
+                                imageEditPlant.visible = true
+                            }
+                        }
 
                         onClicked: {
                             imageEditPlant.visible = true;
@@ -325,8 +189,6 @@ Item {
 
                     Image {
                         id: imageEditPlant
-                        x: 456
-                        y: 4
                         width: 24
                         height: 24
                         anchors.left: parent.right
@@ -375,9 +237,14 @@ Item {
 
                     font.pixelSize: 16
                     onEditingFinished: {
+                        if (text) {
+                            imageEditLocation.visible = false
+                        } else {
+                            imageEditLocation.visible = true
+                        }
+
                         myDevice.setLocationName(text)
                         focus = false
-                        imageEditLocation.visible = false
                     }
 
                     MouseArea {
@@ -386,7 +253,13 @@ Item {
                         propagateComposedEvents: true
 
                         onEntered: { imageEditLocation.visible = true; }
-                        onExited: { imageEditLocation.visible = false; }
+                        onExited: {
+                            if (textInputLocation.text) {
+                                imageEditLocation.visible = false
+                            } else {
+                                imageEditLocation.visible = true
+                            }
+                        }
 
                         onClicked: {
                             imageEditLocation.visible = true;
@@ -888,7 +761,6 @@ Item {
 
         updateHeader()
 
-        buttonLimits.initButton()
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
@@ -902,12 +774,6 @@ Item {
         if (myDevice.deviceAddress.charAt(0) !== '{')
             textAddr.text = "[" + myDevice.deviceAddress + "]"
 
-        // Sensor location
-        if (myDevice.deviceLocationName !== "")
-            textInputLocation.text = myDevice.deviceLocationName
-        else
-            textInputLocation.text = qsTr("Location")
-
         // Firmware
         textFirmware.text = myDevice.deviceFirmware
         if (!myDevice.deviceFirmwareUpToDate) {
@@ -916,18 +782,6 @@ Item {
         } else {
             imageFwUpdate.visible = false
             textFwUpdate.visible = false
-        }
-
-        // Plant sensor?
-        if ((myDevice.deviceCapabilities & 64) != 0) {
-            itemPlant.visible = true
-
-            if (myDevice.devicePlantName !== "")
-                textInputPlant.text = myDevice.devicePlantName
-            else
-                textInputPlant.text = qsTr("Plant")
-        } else {
-            itemPlant.visible = false
         }
 
         // Sensor battery level
@@ -960,20 +814,25 @@ Item {
             battery.visible = false
         }
 
+        // Plant
+        if ((myDevice.deviceCapabilities & 64) != 0) {
+            itemPlant.visible = true
+
+            if (myDevice.devicePlantName === "")
+                imageEditPlant.visible = true
+
+            textInputPlant.text = myDevice.devicePlantName
+        } else {
+            itemPlant.visible = false
+        }
+
+        // Location
+        if (myDevice.deviceLocationName === "")
+            imageEditLocation.visible = true
+
+        textInputLocation.text = myDevice.deviceLocationName
+
         // Status
         updateStatusText()
-
-        // Update desktop buttons
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            desktopButtons.visible = false
-        } else {
-            desktopButtons.visible = true
-
-            if (myDevice.updating) {
-                refreshRotation.start()
-            } else {
-                refreshRotation.stop()
-            }
-        }
     }
 }

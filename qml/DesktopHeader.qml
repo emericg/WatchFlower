@@ -165,9 +165,9 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 8
+        anchors.rightMargin: 0
 
-        spacing: 0
+        spacing: 8
         visible: true
 
         ///////
@@ -200,21 +200,26 @@ Rectangle {
                 running: false
             }
         }
-        ItemMenuButton {
-            id: menuDeviceDatas
-            width: 64
-            height: 64
-            visible: content.state == "DeviceDetails"
-            source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-            onClicked: deviceDatasButtonClicked()
-        }
-        ItemMenuButton {
-            id: menuDeviceSettings
-            width: 64
-            height: 64
-            visible: content.state == "DeviceDetails"
-            source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
-            onClicked: deviceSettingsButtonClicked()
+
+        Row {
+            spacing: 0
+
+            ItemMenuButton {
+                id: menuDeviceDatas
+                width: 64
+                height: 64
+                visible: content.state == "DeviceDetails"
+                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                onClicked: deviceDatasButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuDeviceSettings
+                width: 64
+                height: 64
+                visible: content.state == "DeviceDetails"
+                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                onClicked: deviceSettingsButtonClicked()
+            }
         }
 
         ///////
@@ -275,26 +280,30 @@ Rectangle {
             }
         }
 
-        ItemMenuButton {
-            id: menuPlants
-            width: 64
-            height: 64
-            source: "qrc:/assets/watchflower_small.svg"
-            onClicked: plantsButtonClicked()
-        }
-        ItemMenuButton {
-            id: menuSettings
-            width: 64
-            height: 64
-            source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-            onClicked: settingsButtonClicked()
-        }
-        ItemMenuButton {
-            id: menuAbout
-            width: 64
-            height: 64
-            source: "qrc:/assets/icons_material/outline-info-24px.svg"
-            onClicked: aboutButtonClicked()
+        Row {
+            spacing: 0
+
+            ItemMenuButton {
+                id: menuPlants
+                width: 64
+                height: 64
+                source: "qrc:/assets/watchflower_small.svg"
+                onClicked: plantsButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuSettings
+                width: 64
+                height: 64
+                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                onClicked: settingsButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuAbout
+                width: 64
+                height: 64
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                onClicked: aboutButtonClicked()
+            }
         }
 
         ///////

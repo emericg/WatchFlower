@@ -467,7 +467,7 @@ QString Device::getLastUpdateString() const
 
 void Device::setLocationName(QString name)
 {
-    if (!name.isEmpty())
+    if (m_locationName != name)
     {
         m_locationName = name;
         qDebug() << "setLocationName(" << m_locationName << ")";
@@ -484,7 +484,7 @@ void Device::setLocationName(QString name)
 
 void Device::setPlantName(QString name)
 {
-    //if (!name.isEmpty())
+    if (m_plantName != name)
     {
         m_plantName = name;
         qDebug() << "setPlantName(" << m_plantName << ")";
