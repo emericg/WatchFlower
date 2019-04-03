@@ -729,13 +729,11 @@ Item {
             textStatus.text = ""
             if (myDevice.updating) {
                 textStatus.text = qsTr("Updating... ")
-                buttonRefreshText.text = qsTr("Refresh")
             } else {
                 if (!myDevice.available) {
                     textStatus.text = qsTr("Offline! ")
                     textStatus.color = Theme.colorRed
                     textStatus.font.bold = true
-                    buttonRefreshText.text = qsTr("Retry")
                 }
             }
 

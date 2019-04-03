@@ -36,7 +36,7 @@ Item {
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        console.log("loadGraph()")
+        //console.log("loadGraph()")
     }
 
     function updateGraph() {
@@ -99,13 +99,15 @@ Item {
             id: tempDatas
             color: Theme.colorGreen; width: 2;
             axisY: axisY0; axisX: axisTime;
+
+            onClicked: console.log("temp: " + point.x + ", " + point.y);
         }
         LineSeries {
             id: hygroDatas
             color: Theme.colorBlue; width: 3;
             axisY: axisY0; axisX: axisTime;
 
-            onClicked: console.log("onClicked: " + point.x + ", " + point.y);
+            onClicked: console.log("hygro: " + point.x + ", " + point.y);
         }
     }
 }

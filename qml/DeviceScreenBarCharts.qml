@@ -85,7 +85,7 @@ Item {
 
         if (graphDataSelected == "hygro") {
             axisY0.max = 66
-            myBarSet.color = Theme.colorBarHygro
+            myBarSet.color = Theme.colorBlue
             textHygro.font.bold = true
             textTemp.font.bold = false
             textLumi.font.bold = false
@@ -96,7 +96,7 @@ Item {
             highLimitSeries.append(1, myDevice.limitHygroMax);
         } else if (graphDataSelected == "temp") {
             axisY0.max = 40
-            myBarSet.color = Theme.colorBarTemp
+            myBarSet.color = Theme.colorGreen
             textHygro.font.bold = false
             textTemp.font.bold = true
             textLumi.font.bold = false
@@ -107,7 +107,7 @@ Item {
             highLimitSeries.append(1, myDevice.limitTempMax);
         } else if (graphDataSelected == "luminosity") {
             axisY0.max = 2000
-            myBarSet.color = Theme.colorBarLumi
+            myBarSet.color = Theme.colorYellow
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = true
@@ -118,7 +118,7 @@ Item {
             highLimitSeries.append(1, myDevice.limitLumiMax);
         } else if (graphDataSelected == "conductivity") {
             axisY0.max = 750
-            myBarSet.color = Theme.colorBarCond
+            myBarSet.color = Theme.colorRed
             textHygro.font.bold = false
             textTemp.font.bold = false
             textLumi.font.bold = false

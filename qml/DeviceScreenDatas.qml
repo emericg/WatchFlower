@@ -222,6 +222,7 @@ Item {
                 id: barHygro_low
                 x: 57
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -234,6 +235,7 @@ Item {
                 id: barHygro_good
                 x: 82
                 y: 31
+                radius: 1
                 width: 56
                 height: 8
                 color: Theme.colorNeutralDay
@@ -241,6 +243,7 @@ Item {
             Rectangle {
                 id: barHygro_high
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -289,6 +292,7 @@ Item {
                 id: barTemp_low
                 x: 48
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -301,6 +305,7 @@ Item {
                 id: barTemp_good
                 x: 82
                 y: 31
+                radius: 1
                 width: 56
                 height: 8
                 color: Theme.colorNeutralDay
@@ -308,6 +313,7 @@ Item {
             Rectangle {
                 id: barTemp_high
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -355,6 +361,7 @@ Item {
                 id: barLux_low
                 x: 48
                 y: 32
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -366,6 +373,7 @@ Item {
                 id: barLux_good
                 x: 82
                 y: 31
+                radius: 1
                 width: 56
                 height: 8
                 color: Theme.colorNeutralDay
@@ -373,6 +381,7 @@ Item {
             Rectangle {
                 id: barLux_high
                 y: 30
+                radius: 1
                 width: 28
                 height: 8
                 anchors.left: barLux_good.right
@@ -420,6 +429,7 @@ Item {
                 id: barCond_low
                 x: 48
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
@@ -431,6 +441,7 @@ Item {
                 id: barCond_good
                 x: 82
                 y: 31
+                radius: 1
                 width: 56
                 height: 8
                 color: Theme.colorNeutralDay
@@ -438,6 +449,7 @@ Item {
             Rectangle {
                 id: barCond_high
                 y: 27
+                radius: 1
                 width: 28
                 height: 8
                 color: Theme.colorNeutralDay
