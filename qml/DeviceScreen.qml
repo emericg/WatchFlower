@@ -106,7 +106,7 @@ Item {
             anchors.leftMargin: 16
 
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-            color: Theme.colorText
+            color: "#606060"
         }
 
         Column {

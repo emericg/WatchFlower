@@ -190,20 +190,14 @@ Item {
             height: 48
             color: "#00000000"
 
-            Image {
+            ImageSvg {
                 id: imageHygro
                 x: 8
                 y: 8
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: textHygro
@@ -260,20 +254,14 @@ Item {
             height: 48
             color: "#00000000"
 
-            Image {
+            ImageSvg {
                 id: imageTemp
                 x: 8
                 y: 8
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: textTemp
@@ -329,20 +317,14 @@ Item {
             height: 48
             color: "#00000000"
 
-            Image {
+            ImageSvg {
                 id: imageLuminosity
                 x: 8
                 y: 8
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: textLuminosity
@@ -397,20 +379,14 @@ Item {
             height: 48
             color: "#00000000"
 
-            Image {
+            ImageSvg {
                 id: imageConductivity
                 x: 8
                 y: 8
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: textConductivity
