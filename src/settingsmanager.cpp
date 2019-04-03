@@ -73,14 +73,14 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/startMinimized"))
             m_startMinimized = settings.value("settings/startMinimized").toBool();
 
+        if (settings.contains("settings/bluetoothEnabled"))
+            m_autoBluetoothEnabled = settings.value("settings/bluetoothEnabled").toBool();
+
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
 
         if (settings.contains("settings/notifsEnabled"))
             m_notificationsEnabled = settings.value("settings/notifsEnabled").toBool();
-
-        if (settings.contains("settings/bluetoothEnabled"))
-            m_autoBluetoothEnabled = settings.value("settings/bluetoothEnabled").toBool();
 
         if (settings.contains("settings/updateInterval"))
             m_updateInterval = settings.value("settings/updateInterval").toInt();
@@ -88,6 +88,8 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/degreUnit"))
             m_tempUnit = settings.value("settings/degreUnit").toString();
 
+        if (settings.contains("settings/graphMode"))
+            m_graphMode = settings.value("settings/graphMode").toString();
         if (settings.contains("settings/graphDefaultView"))
             m_graphDefaultView = settings.value("settings/graphDefaultView").toString();
         if (settings.contains("settings/graphDefaultData"))
@@ -114,12 +116,12 @@ bool SettingsManager::writeSettings()
     if (settings.isWritable())
     {
         settings.setValue("settings/startMinimized", m_startMinimized);
+        settings.setValue("settings/bluetoothEnabled", m_autoBluetoothEnabled);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
-        settings.setValue("settings/bluetoothEnabled", m_autoBluetoothEnabled);
-
         settings.setValue("settings/updateInterval", m_updateInterval);
         settings.setValue("settings/degreUnit", m_tempUnit);
+        settings.setValue("settings/graphMode", m_graphMode);
         settings.setValue("settings/graphDefaultView", m_graphDefaultView);
         settings.setValue("settings/graphDefaultData", m_graphDefaultData);
 
@@ -409,21 +411,29 @@ void SettingsManager::setUpdateInterval(int value)
     Q_EMIT intervalChanged();
 }
 
-void SettingsManager::setTempUnit(QString value)
+void SettingsManager::setTempUnit(const QString &value)
 {
     m_tempUnit = value;
     writeSettings();
     Q_EMIT tempunitChanged();
 }
 
-void SettingsManager::setGraphView(QString value)
+void SettingsManager::setGraph(const QString &value)
+{
+    qDebug() << "setGraph:" << value;
+    m_graphMode = value;
+    writeSettings();
+    Q_EMIT graphChanged();
+}
+
+void SettingsManager::setGraphView(const QString &value)
 {
     m_graphDefaultView = value;
     writeSettings();
     Q_EMIT graphviewChanged();
 }
 
-void SettingsManager::setGraphData(QString value)
+void SettingsManager::setGraphData(const QString &value)
 {
     m_graphDefaultData = value;
     writeSettings();

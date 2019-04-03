@@ -35,6 +35,12 @@ Item {
         if (typeof myDevice === "undefined") return
 
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
+        //console.log("DeviceScreenDatas // loadDatas() >> " + settingsManager.graph)
+
+        if (settingsManager.graph === 'bar')
+            pageLoader.source = "DeviceScreenBarCharts.qml"
+        else
+            pageLoader.source = "DeviceScreenAioCharts.qml"
 
         deviceScreenCharts.loadGraph()
         updateDatas()
@@ -436,9 +442,12 @@ Item {
         }
     }
 
-    DeviceScreenBarCharts {
-        id: deviceScreenCharts
+    property var deviceScreenCharts: pageLoader.item
+    Loader {
+        id: pageLoader
         anchors.top: flowData.bottom
         anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 }

@@ -50,6 +50,7 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
     Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
+    Q_PROPERTY(QString graph READ getGraph WRITE setGraph NOTIFY graphChanged)
     Q_PROPERTY(QString graphview READ getGraphView WRITE setGraphView NOTIFY graphviewChanged)
     Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
 
@@ -60,6 +61,7 @@ class SettingsManager: public QObject
 
     int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
+    QString m_graphMode = "bar";
     QString m_graphDefaultView = "daily";
     QString m_graphDefaultData = "hygro";
 
@@ -85,6 +87,7 @@ Q_SIGNALS:
     void bluetoothChanged();
     void intervalChanged();
     void tempunitChanged();
+    void graphChanged();
     void graphviewChanged();
     void graphdataChanged();
 
@@ -109,13 +112,16 @@ public:
     void setUpdateInterval(int value);
 
     QString getTempUnit() const { return m_tempUnit; }
-    void setTempUnit(QString value);
+    void setTempUnit(const QString &value);
+
+    QString getGraph() const { return m_graphMode; }
+    void setGraph(const QString &value);
 
     QString getGraphView() const { return m_graphDefaultView; }
-    void setGraphView(QString value);
+    void setGraphView(const QString &value);
 
     QString getGraphData() const { return m_graphDefaultData; }
-    void setGraphData(QString value);
+    void setGraphData(const QString &value);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
