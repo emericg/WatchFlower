@@ -439,11 +439,8 @@ Item {
             anchors.rightMargin: 0
             anchors.leftMargin: 0
 
-            // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
             ImageSvg {
-                id: image_data
+                id: image_graph
                 width: 24
                 height: 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -452,6 +449,100 @@ Item {
 
                 color: Theme.colorText
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+            }
+
+            Text {
+                id: text_graph
+                height: 40
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: image_graph.right
+                anchors.leftMargin: 16
+
+                text: qsTr("Preferred graph")
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            ThemedRadioButton {
+                id: radioDelegateBar
+                height: 40
+                text: qsTr("Bar")
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: radioDelegateLine.left
+
+                font.pixelSize: 16
+                checked: {
+                    if (settingsManager.graph === "bar") {
+                        radioDelegateBar.checked = true
+                        radioDelegateLine.checked = false
+                    } else {
+                        radioDelegateBar.checked = false
+                        radioDelegateLine.checked = true
+                    }
+                }
+                onCheckedChanged: {
+                    if (checked == true)
+                        settingsManager.graph = "bar"
+                }
+            }
+            ThemedRadioButton {
+                id: radioDelegateLine
+                height: 40
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("Line")
+                font.pixelSize: 16
+                checked: {
+                    if (settingsManager.graph === "line") {
+                        radioDelegateBar.checked = false
+                        radioDelegateLine.checked = true
+                    } else {
+                        radioDelegateLine.checked = false
+                        radioDelegateBar.checked = true
+                    }
+                }
+                onCheckedChanged: {
+                    if (checked == true)
+                        settingsManager.graph = "line"
+                }
+            }
+        }
+
+        Item {
+            id: element8
+            height: 48
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.leftMargin: 0
+
+            // desktop only
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && (settingsManager.graph === 'bar')
+
+            ImageSvg {
+                id: image_graph2
+                width: 24
+                height: 24
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+            }
+
+            Text {
+                id: text_graph2
+                height: 40
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: image_graph2.right
+                anchors.leftMargin: 16
+
+                text: qsTr("Preferred graph")
+                font.pixelSize: 16
+                verticalAlignment: Text.AlignVCenter
             }
 
             ComboBox {
@@ -505,22 +596,10 @@ Item {
                         cbinit = true
                 }
             }
-
-            Text {
-                id: text_graph
-                height: 40
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: image_data.right
-                anchors.leftMargin: 16
-
-                text: qsTr("Preferred graph")
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-            }
         }
 
         Item {
-            id: element8
+            id: element9
             height: 64
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -573,9 +652,7 @@ Item {
                     interval: 4000
                     running: false
                     repeat: false
-                    onTriggered: {
-                        rectangleReset.stopTheBlink()
-                    }
+                    onTriggered: rectangleReset.stopTheBlink()
                 }
 
                 Text {
@@ -592,9 +669,7 @@ Item {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: {
-                        rectangleReset.startTheBlink()
-                    }
+                    onClicked: rectangleReset.startTheBlink()
                 }
             }
         }

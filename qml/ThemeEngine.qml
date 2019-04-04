@@ -24,8 +24,8 @@ import QtQuick 2.7
 
 Item {
     // Headers
-    readonly property string colorHeaderDesktop: "#1abc9c" // #83d83a
-    readonly property string colorHeaderMobile: "#1abc9c" // #83d83a
+    readonly property string colorHeaderDesktop: "#07bf97" // #83d83a
+    readonly property string colorHeaderMobile: "#07bf97" // #83d83a
     readonly property string colorHeaderMobileStatusbar: "#009688" // #52a527
 
     // Actually used colors

@@ -13,7 +13,7 @@
    version="1.1"
    id="svg4"
    sodipodi:docname="menu_back.svg"
-   inkscape:version="0.92.2 2405546, 2018-03-11">
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -42,8 +42,8 @@
      id="namedview6"
      showgrid="true"
      inkscape:zoom="19.666668"
-     inkscape:cx="-3.2691775"
-     inkscape:cy="13.611378"
+     inkscape:cx="7.0782794"
+     inkscape:cy="14.679175"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -54,9 +54,9 @@
        id="grid812" />
   </sodipodi:namedview>
   <path
-     d="M 19.828429,31.55635 26.192389,25.192391 17,16 26.192388,6.807614 19.828428,0.4436524 4.2720754,16 Z"
+     d="M 19.328395,29.863927 25,24.192323 16.807679,16 24.999999,7.8076819 19.328394,2.1360751 5.4644643,16 Z"
      id="path2"
-     style="fill:#f4f4f4;fill-opacity:1;stroke:none;stroke-width:1.09265542;stroke-opacity:1"
+     style="fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:1.09265542;stroke-opacity:1"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccccccc" />
 </svg>

@@ -439,9 +439,6 @@ Item {
             anchors.rightMargin: 0
             anchors.leftMargin: 0
 
-            // desktop only
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
             ImageSvg {
                 id: image_graph
                 width: 24

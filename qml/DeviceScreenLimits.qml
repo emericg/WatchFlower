@@ -73,7 +73,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Image {
+            ImageSvg {
                 id: imageHygro
                 width: 32
                 height: 32
@@ -81,13 +81,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: text8
@@ -139,7 +133,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            Image {
+            ImageSvg {
                 id: imageTemp
                 width: 32
                 height: 32
@@ -147,13 +141,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: text3
@@ -205,7 +193,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            Image {
+            ImageSvg {
                 id: imageLumi
                 width: 32
                 height: 32
@@ -213,13 +201,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: text1
@@ -278,7 +260,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Image {
+            ImageSvg {
                 id: imageCondu
                 width: 32
                 height: 32
@@ -286,13 +268,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                sourceSize: Qt.size(width, height)
-
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: Theme.colorText
-                }
+                color: "#606060"
             }
             Text {
                 id: text7

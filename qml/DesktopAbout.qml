@@ -244,7 +244,7 @@ Item {
                     id: tutoImg
                     anchors.fill: parent
                     visible: false
-                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg.png"
+                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                 }

@@ -38,6 +38,7 @@ Rectangle {
     SwipeView {
         id: swipeView
         anchors.fill: parent
+        anchors.bottomMargin: 48
 
         currentIndex: 0
         onCurrentIndexChanged: {
@@ -48,52 +49,38 @@ Rectangle {
             }
         }
 
+        ////////
+
         Item {
             id: page1
 
-            Text {
-                id: element1
+            Column {
                 anchors.right: parent.right
-                anchors.rightMargin: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -88
-
-                text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' bluetooth devices.")
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                color: "white"
-                //horizontalAlignment: Text.AlignHCenter
-                //effectiveHorizontalAlignment: Text.AlignJustify
-                font.pixelSize: 20
-            }
-            Row {
-                height: 80
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: element1.bottom
-                anchors.topMargin: 32
                 spacing: 32
 
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/hygrotemp.svg"
+                Text {
+                    id: element1
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' bluetooth devices.")
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: "white"
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
                 }
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/ropot.svg"
-                    color: "white"
-                }
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/flowercare.svg"
-                    color: "white"
+                Image {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    source: "qrc:/assets/devices/welcome-devices.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
             }
         }
@@ -101,48 +88,33 @@ Rectangle {
         Item {
             id: page2
 
-            Text {
-                id: element2
+            Column {
                 anchors.right: parent.right
-                anchors.rightMargin: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -88
-
-                text: qsTr("To start using WatchFlower, you first need to search for compatible bluetooth devices near you.")
-                color: "white"
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                //horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 20
-            }
-            Row {
-                height: 80
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: element2.bottom
-                anchors.topMargin: 32
                 spacing: 32
 
-                ImageSvg {
-                    width: 64
-                    height: 64
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/flowercare.svg"
+                Text {
+                    id: element2
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible bluetooth devices</b> near you.")
                     color: "white"
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
                 }
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
-                    color: "white"
-                }
-                ImageSvg {
-                    width: 64
-                    height: 64
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/ropot.svg"
-                    color: "white"
+                Image {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
             }
         }
@@ -150,52 +122,53 @@ Rectangle {
         Item {
             id: page3
 
-            Text {
-                id: element3
+            Column {
                 anchors.right: parent.right
-                anchors.rightMargin: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -72
-
-                text: qsTr("Once devices are paired, the application will periodically sync these devices datas.\nYou can set name to your plants and customize settings like optimal water level...")
-                color: "white"
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                //horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 20
-            }
-            Row {
-                height: 80
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: element3.bottom
-                anchors.topMargin: 32
                 spacing: 32
 
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                Text {
+                    id: element3
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> these devices datas.")
                     color: "white"
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
                 }
-                ImageSvg {
-                    width: 64
-                    height: 64
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/devices/flowercare.svg"
-                    color: "white"
+                Image {
+                    id: element4
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    source: "qrc:/assets/devices/welcome-app-connected.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
-                ImageSvg {
-                    width: 80
-                    height: 80
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
+                Text {
+                    id: element5
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("You can also <b>name your plants</b>, and customize settings like <b>optimal water level</b>...")
                     color: "white"
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
                 }
             }
         }
     }
+
+    ////////
 
     Text {
         id: pagePrevious

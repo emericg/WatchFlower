@@ -56,12 +56,12 @@ Rectangle {
         if (content.state === "Tutorial") {
             title.text = qsTr("Welcome")
             menu.visible = false
-            buttonBack.source = "qrc:/assets/icons_material/baseline-close-24px.svg"
+            buttonBack.source = "qrc:/assets/menu_close.svg"
         } else {
             title.text = "WatchFlower"
             menu.visible = true
             if (content.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/watchflower.svg"
+                buttonBack.source = "qrc:/assets/menu_logo.svg"
             } else {
                 buttonBack.source = "qrc:/assets/menu_back.svg"
             }
@@ -69,16 +69,12 @@ Rectangle {
             if (content.state === "DeviceDetails") {
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
-                menuPlants.visible = false
-                menuAbout.visible = false
-                menuSettings.visible = false
+                menuMain.visible = false
                 setActiveDeviceDatas()
             } else {
                 buttonRefreshAll.visible = true
                 buttonRescan.visible = true
-                menuPlants.visible = true
-                menuAbout.visible = true
-                menuSettings.visible = true
+                menuMain.visible = true
 
                 if (content.state === "DeviceList") {
                     menuPlants.selected = true
@@ -202,6 +198,7 @@ Rectangle {
         }
 
         Row {
+            id: menuDevice
             spacing: 0
 
             ItemMenuButton {
@@ -281,12 +278,14 @@ Rectangle {
         }
 
         Row {
+            id: menuMain
             spacing: 0
 
             ItemMenuButton {
                 id: menuPlants
                 width: 64
                 height: 64
+                visible: (rectangleHeader.width > 600)
                 source: "qrc:/assets/watchflower_small.svg"
                 onClicked: plantsButtonClicked()
             }

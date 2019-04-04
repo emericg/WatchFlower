@@ -187,7 +187,7 @@ Item {
                         onPressAndHold: mouse.accepted = false;
                     }
 
-                    Image {
+                    ImageSvg {
                         id: imageEditPlant
                         width: 24
                         height: 24
@@ -197,13 +197,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: false
                         source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        sourceSize: Qt.size(width, height)
-
-                        ColorOverlay {
-                            anchors.fill: parent
-                            source: parent
-                            color: Theme.colorText
-                        }
+                        color: "#606060"
                     }
                 }
             }
@@ -275,7 +269,7 @@ Item {
                         onPressAndHold: mouse.accepted = false;
                     }
 
-                    Image {
+                    ImageSvg {
                         id: imageEditLocation
                         width: 24
                         height: 24
@@ -285,13 +279,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: false
                         source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        sourceSize: Qt.size(width, height)
-
-                        ColorOverlay {
-                            anchors.fill: parent
-                            source: parent
-                            color: Theme.colorText
-                        }
+                        color: "#606060"
                     }
                 }
             }

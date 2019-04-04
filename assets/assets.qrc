@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/assets">
         <file>logo.svg</file>
-        <file>watchflower.svg</file>
         <file>watchflower_small.svg</file>
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
@@ -9,8 +8,9 @@
         <file>devices/flowercare.svg</file>
         <file>devices/ropot.svg</file>
         <file>devices/hygrotemp.svg</file>
+        <file>menu_logo.svg</file>
         <file>menu_back.svg</file>
-        <file>menu_front.svg</file>
+        <file>menu_close.svg</file>
         <file>ble.svg</file>
         <file>ble_err.svg</file>
         <file>github.svg</file>
@@ -39,7 +39,6 @@
         <file>icons_material/baseline-exit_to_app-24px.svg</file>
         <file>icons_material/baseline-flash_on-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg</file>
-        <file>icons_material/baseline-import_contacts-24px.svg.png</file>
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-insert_link-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>
@@ -57,5 +56,8 @@
         <file>icons_material/baseline-tune-24px.svg</file>
         <file>icons_material/baseline-wb_sunny-24px.svg</file>
         <file>icons_material/outline-info-24px.svg</file>
+        <file>devices/welcome-devices.svg</file>
+        <file>devices/welcome-bluetooth-searching.svg</file>
+        <file>devices/welcome-app-connected.svg</file>
     </qresource>
 </RCC>
