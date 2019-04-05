@@ -28,7 +28,7 @@ Item {
     width: parent.width
     height: 90
 
-    property var boxDevice
+    property var boxDevice: null
 
     Connections {
         target: boxDevice

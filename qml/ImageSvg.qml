@@ -48,6 +48,6 @@ Item {
         visible: color ? true : false
 
         color: parent.color
-        cached: true
+        cached: visible
     }
 }

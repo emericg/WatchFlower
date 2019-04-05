@@ -75,6 +75,9 @@ ApplicationWindow {
         anchors.fill: parent
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
+            if (content.state === "Tutorial")
+                return;
+
             if (mouse.button === Qt.BackButton) {
                 content.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
@@ -94,12 +97,6 @@ ApplicationWindow {
         onActivated: {
             if (curentlySelectedDevice)
                 content.state = "DeviceDetails"
-        }
-    }
-    Item {
-        focus: true
-        Keys.onBackPressed: {
-            content.state = "DeviceList"
         }
     }
     onClosing: {

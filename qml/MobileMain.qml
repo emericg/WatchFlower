@@ -114,6 +114,8 @@ ApplicationWindow {
                 if (content.state === "DeviceList") {
                     // hide window?
                     //event.accepted = true;
+                } else if (content.state === "Tutorial") {
+                    // do nothing
                 } else {
                     if (content.state === "DeviceDetails" && screenDeviceDetails.content.state === "limits") {
                         screenDeviceDetails.content.state = "datas"

@@ -33,7 +33,7 @@ Rectangle {
     border.width: 1
     border.color: Theme.colorSeparators
 
-    property var boxDevice
+    property var boxDevice: null
 
     Connections {
         target: boxDevice
