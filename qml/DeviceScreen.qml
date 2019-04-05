@@ -22,7 +22,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
@@ -106,7 +105,7 @@ Item {
             anchors.leftMargin: 16
 
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-            color: "#606060"
+            color: Theme.colorIcons
         }
 
         Column {
@@ -197,7 +196,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: false
                         source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        color: "#606060"
+                        color: Theme.colorIcons
                     }
                 }
             }
@@ -279,7 +278,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: false
                         source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        color: "#606060"
+                        color: Theme.colorIcons
                     }
                 }
             }
@@ -387,7 +386,7 @@ Item {
                     text: qsTr("Update available!")
                     font.pixelSize: 16
                 }
-                Image {
+                ImageSvg {
                     id: imageFwUpdate
                     width: 24
                     height: 24
@@ -396,13 +395,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                    sourceSize: Qt.size(width, height)
-
-                    ColorOverlay {
-                        anchors.fill: parent
-                        source: parent
-                        color: Theme.colorText
-                    }
+                    color: Theme.colorIcons
 
                     MouseArea {
                         anchors.fill: parent

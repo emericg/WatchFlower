@@ -30,7 +30,7 @@ Rectangle {
     height: 640
     anchors.fill: parent
 
-    color: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? Theme.colorHeaderDesktop : Theme.colorHeaderMobile
+    color: Theme.colorHeader
 
     property string goBackTo: "DeviceList"
     onGoBackToChanged: swipeView.currentIndex = 0 // reset
@@ -69,7 +69,7 @@ Rectangle {
 
                     text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' bluetooth devices.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: "white"
+                    color: Theme.colorHeaderContent
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
                 }
@@ -102,7 +102,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible bluetooth devices</b> near you.")
-                    color: "white"
+                    color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
@@ -136,7 +136,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> these devices datas.")
-                    color: "white"
+                    color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
@@ -159,7 +159,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("You can also <b>name your plants</b>, and customize settings like <b>optimal water level</b>...")
-                    color: "white"
+                    color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
@@ -179,7 +179,7 @@ Rectangle {
         visible: (swipeView.currentIndex != 0)
 
         text: qsTr("Previous")
-        color: "white"
+        color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16
 
@@ -204,8 +204,8 @@ Rectangle {
         anchors.rightMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        text: (swipeView.currentIndex == 2) ? qsTr("Start!") : qsTr("Next")
-        color: "white"
+        text: (swipeView.currentIndex == 2) ? qsTr("Allright!") : qsTr("Next")
+        color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16
 
@@ -238,7 +238,7 @@ Rectangle {
             implicitHeight: 12
 
             radius: width / 2
-            color: "white"
+            color: Theme.colorHeaderContent
 
             opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
 

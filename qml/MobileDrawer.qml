@@ -22,7 +22,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Rectangle {
@@ -31,9 +30,9 @@ Rectangle {
     color: "#ffffff"
 
     function updateDrawerFocus() {
-        rectangleHome.color = "#00000000"
-        rectangleSettings.color = "#00000000"
-        rectangleAbout.color = "#00000000"
+        rectangleHome.color = "transparent"
+        rectangleSettings.color = "transparent"
+        rectangleAbout.color = "transparent"
 
         if (content.state === "DeviceList")
             rectangleHome.color = Theme.colorMaterialDarkGrey
@@ -107,7 +106,7 @@ Rectangle {
             height: 48
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
+            color: "transparent"
 
             MouseArea {
                 anchors.fill: parent
@@ -117,27 +116,16 @@ Rectangle {
                 }
             }
 
-            Item {
+            ImageSvg {
+                id: buttonPlantsImg
                 width: 24
                 height: 24
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonPlantsImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/watchflower_small.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: buttonPlantsImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/watchflower_small.svg"
+                color: Theme.colorText
             }
             Label {
                 anchors.left: parent.left
@@ -156,7 +144,7 @@ Rectangle {
             height: 48
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
+            color: "transparent"
 
             MouseArea {
                 anchors.fill: parent
@@ -166,27 +154,15 @@ Rectangle {
                 }
             }
 
-            Item {
+            ImageSvg {
                 width: 24
                 height: 24
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonSettingsImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: buttonSettingsImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
+                color: Theme.colorText
             }
             Label {
                 anchors.left: parent.left
@@ -205,7 +181,7 @@ Rectangle {
             height: 48
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#00000000"
+            color: "transparent"
 
             MouseArea {
                 anchors.fill: parent
@@ -215,27 +191,15 @@ Rectangle {
                 }
             }
 
-            Item {
+            ImageSvg {
                 width: 24
                 height: 24
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonAboutImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: buttonAboutImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                color: Theme.colorText
             }
             Label {
                 anchors.left: parent.left
@@ -258,7 +222,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#b3b3b3"
+            color: Theme.colorSeparators
         }
         Item {
             height: 8
@@ -280,7 +244,7 @@ Rectangle {
                 }
             }
 
-            Item {
+            ImageSvg {
                 id: buttonRefresh
                 width: 24
                 height: 24
@@ -288,20 +252,8 @@ Rectangle {
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonRefreshImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: buttonRefreshImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                color: Theme.colorText
 
                 NumberAnimation on rotation {
                     id: refreshAnimation
@@ -346,7 +298,7 @@ Rectangle {
                 }
             }
 
-            Item {
+            ImageSvg {
                 id: buttonRescan
                 width: 24
                 height: 24
@@ -354,20 +306,8 @@ Rectangle {
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonRescanImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: buttonRescanImg
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                color: Theme.colorText
 
                 OpacityAnimator {
                     id: rescanAnimation
@@ -410,7 +350,7 @@ Rectangle {
             height: 1
             anchors.right: parent.right
             anchors.left: parent.left
-            color: "#b3b3b3"
+            color: Theme.colorSeparators
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
         }
         Item {
@@ -432,27 +372,15 @@ Rectangle {
                 onClicked: settingsManager.exit()
             }
 
-            Item {
+            ImageSvg {
                 width: 24
                 height: 24
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                Image {
-                    id: buttonExitImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: buttonExitImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                color: Theme.colorText
             }
             Label {
                 anchors.left: parent.left

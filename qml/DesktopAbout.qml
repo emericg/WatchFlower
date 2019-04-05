@@ -22,7 +22,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
@@ -135,27 +134,15 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Item {
+            ImageSvg {
+                id: websiteImg
                 width: 32
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-
-                Image {
-                    id: websiteImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: websiteImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                color: Theme.colorText
             }
 
             Text {
@@ -183,27 +170,15 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Item {
+            ImageSvg {
+                id: githubImg
                 width: 28
                 height: 28
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 2
-
-                Image {
-                    id: githubImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/github.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: githubImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/github.svg"
+                color: Theme.colorText
             }
 
             Text {
@@ -232,28 +207,16 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            Item {
+            ImageSvg {
+                id: tutoImg
                 width: 30
                 height: 30
                 anchors.left: parent.left
                 anchors.leftMargin: 1
                 anchors.top: parent.top
                 anchors.topMargin: 8
-
-                Image {
-                    id: tutoImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: tutoImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                color: Theme.colorText
             }
 
             Text {
@@ -284,28 +247,15 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            Item {
+            ImageSvg {
+                id: descImg
                 width: 32
                 height: 32
-                anchors.top: parent.top
-                anchors.topMargin: 8
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-
-                Image {
-                    id: descImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: descImg
-                    anchors.fill: parent
-                    color: Theme.colorText
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                color: Theme.colorText
+                anchors.verticalCenter: description.verticalCenter
             }
             TextArea {
                 id: description
@@ -333,27 +283,15 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                Item {
+                ImageSvg {
+                    id: image3
                     width: 80
                     height: 80
                     anchors.left: itemMiddle.right
                     anchors.leftMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
-
-                    Image {
-                        id: image3
-                        anchors.fill: parent
-                        visible: false
-                        source: "qrc:/assets/devices/hygrotemp.svg"
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-                    ColorOverlay {
-                        source: image3
-                        anchors.fill: parent
-                        color: Theme.colorGreen
-                        cached: true
-                    }
+                    source: "qrc:/assets/devices/hygrotemp.svg"
+                    color: Theme.colorGreen
                 }
 
                 Item {
@@ -363,43 +301,23 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
-                    Image {
+                    ImageSvg {
                         id: image2
                         anchors.fill: parent
-                        visible: false
                         source: "qrc:/assets/devices/ropot.svg"
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-                    ColorOverlay {
-                        source: image2
-                        anchors.fill: parent
                         color: Theme.colorGreen
-                        cached: true
                     }
                 }
 
-                Item {
+                ImageSvg {
+                    id: image1
                     width: 80
                     height: 80
                     anchors.right: itemMiddle.left
                     anchors.rightMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
-
-                    Image {
-                        id: image1
-                        anchors.fill: parent
-                        visible: false
-                        source: "qrc:/assets/devices/flowercare.svg"
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-                    ColorOverlay {
-                        source: image1
-                        anchors.fill: parent
-                        color: Theme.colorGreen
-                        cached: true
-                    }
+                    source: "qrc:/assets/devices/flowercare.svg"
+                    color: Theme.colorGreen
                 }
             }
         }

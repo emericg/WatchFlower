@@ -76,7 +76,7 @@ Item {
 
         Text {
             id: textStatus
-            color: "#ffffff"
+            color: "white"
             text: qsTr("Status :-(")
             anchors.rightMargin: 16
             anchors.leftMargin: 16

@@ -22,24 +22,22 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Rectangle {
     id: rectangleHeader
     width: parent.width
     height: screenTopPadding + 56
-    color: Theme.colorHeaderMobile
+    color: Theme.colorHeader
 
     // Border can be good for material design
     //border.width: 1
-    //border.color: Theme.colorHeaderMobile
+    //border.color: Theme.colorHeader
 
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
 
     property string title: "WatchFlower"
-
     property string leftMenuMode: "drawer"
     property bool rightMenuEnabled: false
 
@@ -102,7 +100,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: title
-            color: "#FFFFFF"
+            color: Theme.colorHeaderContent
             font.bold: false
             font.pixelSize: 26
             antialiasing: true
@@ -117,27 +115,15 @@ Rectangle {
             anchors.top: parent.top
             onClicked: leftMenuClicked()
 
-            Item {
+            ImageSvg {
+                id: leftMenuImg
                 width: 28
                 height: 28
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
-
-                Image {
-                    id: leftMenuImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: leftMenuImg
-                    anchors.fill: parent
-                    color: "white"
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                color: Theme.colorHeaderContent
             }
         }
 
@@ -151,28 +137,16 @@ Rectangle {
             enabled:rightMenuEnabled
             onClicked: rightMenuClicked()
 
-            Item {
+            ImageSvg {
+                id: rightMenuImg
                 width: 28
                 height: 28
                 visible: rightMenuEnabled
                 anchors.right: parent.right
                 anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
-
-                Image {
-                    id: rightMenuImg
-                    anchors.fill: parent
-                    visible: false
-                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-                    sourceSize: Qt.size(width, height)
-                    fillMode: Image.PreserveAspectFit
-                }
-                ColorOverlay {
-                    source: rightMenuImg
-                    anchors.fill: parent
-                    color: "white"
-                    cached: true
-                }
+                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                color: Theme.colorHeaderContent
             }
         }
     }

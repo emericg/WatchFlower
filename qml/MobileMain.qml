@@ -42,8 +42,7 @@ ApplicationWindow {
 
     StatusBar {
         theme: Material.Dark
-        color: Theme.colorHeaderMobileStatusbar
-        //color: Material.color(Material.LightGreen, Material.Shade900)
+        color: Theme.colorHeaderStatusbar
     }
 
     Drawer {

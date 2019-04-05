@@ -85,7 +85,7 @@ Item {
 
             Text {
                 id: textStatus
-                color: "#ffffff"
+                color: "white"
                 text: qsTr("Status :-(")
                 anchors.verticalCenter: parent.verticalCenter
                 font.bold: true

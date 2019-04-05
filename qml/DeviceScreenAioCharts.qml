@@ -75,7 +75,9 @@ Item {
         antialiasing: true
         legend.visible: false // this will only work with Qt 5.10+
         backgroundRoundness: 0
-        backgroundColor: "#00000000"
+        backgroundColor: "transparent"
+
+        //animationOptions: ChartView.SeriesAnimations
 
         Component.onCompleted: updateGraph()
 

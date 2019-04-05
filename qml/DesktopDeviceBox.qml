@@ -21,7 +21,6 @@
 
 import QtQuick 2.7
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Rectangle {
@@ -29,9 +28,10 @@ Rectangle {
     width: parent.width
     height: 96
     radius: 4
+
+    color: "transparent"
     border.width: 1
-    border.color: "#D3D3D3"
-    color: "#00000000"
+    border.color: Theme.colorSeparators
 
     property var boxDevice
 
@@ -83,7 +83,7 @@ Rectangle {
             if (boxDevice.deviceTempC > 0) {
                 // if we have data cached, used the little indicator
                 ble.visible = true
-                bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
                 refreshAnimation2.running = true;
             } else {
                 // otherwise, fullsize
@@ -103,7 +103,7 @@ Rectangle {
                     // if we have data cached, used the little indicator
                     imageStatus.visible = false;
                     ble.visible = true
-                    bleImg.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    ble.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 } else {
                     // otherwise big one
                     ble.visible = false
@@ -192,26 +192,14 @@ Rectangle {
         anchors.right: dataArea.left
         anchors.rightMargin: 8
 
-        Item {
+        ImageSvg {
             id: ble
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            Image {
-                id: bleImg
-                anchors.fill: parent
-                visible: false
-                source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-            }
-            ColorOverlay {
-                source: bleImg
-                anchors.fill: parent
-                color: Theme.colorText
-                cached: true
-            }
+            source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+            color: Theme.colorText
 
             SequentialAnimation on opacity {
                 id: refreshAnimation2
@@ -223,26 +211,14 @@ Rectangle {
             }
         }
 
-        Item {
+        ImageSvg {
             id: water
             width: 20
             height: 20
             anchors.verticalCenter: parent.verticalCenter
 
-            Image {
-                id: waterImg
-                anchors.fill: parent
-                visible: false
-                source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-            }
-            ColorOverlay {
-                source: waterImg
-                anchors.fill: parent
-                color: Theme.colorBlue
-                cached: true
-            }
+            source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+            color: Theme.colorBlue
         }
     }
 
@@ -374,7 +350,6 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    border.color: "#00000000"
                 }
             }
 

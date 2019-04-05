@@ -22,7 +22,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
@@ -81,7 +80,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: text8
@@ -141,7 +140,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: text3
@@ -201,7 +200,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: text1
@@ -268,7 +267,7 @@ Item {
                 anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: text7

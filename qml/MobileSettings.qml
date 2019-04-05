@@ -658,7 +658,7 @@ Item {
                 Text {
                     id: textReset
                     anchors.fill: parent
-                    color: "#ffffff"
+                    color: "white"
                     text: qsTr("Reset sensors & datas!")
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter

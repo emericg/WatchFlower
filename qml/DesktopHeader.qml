@@ -27,7 +27,7 @@ Rectangle {
     id: rectangleHeader
     width: 720
     height: 64
-    color: Theme.colorHeaderDesktop
+    color: Theme.colorHeader
 
     signal backButtonClicked()
 
@@ -102,7 +102,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/watchflower.svg"
-        color: Theme.colorTitles
+        color: Theme.colorHeaderContent
 
         MouseArea {
             anchors.fill: parent
@@ -149,7 +149,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"
-        color: "#FFFFFF"
+        color: Theme.colorTitles
         font.bold: true
         font.pixelSize: 32
     }

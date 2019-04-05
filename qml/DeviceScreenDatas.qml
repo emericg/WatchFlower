@@ -22,7 +22,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
@@ -190,11 +189,10 @@ Item {
         anchors.left: parent.left
         anchors.top: parent.top
 
-        Rectangle {
+        Item {
             id: rectangleHygro
             width: 173
             height: 48
-            color: "#00000000"
 
             ImageSvg {
                 id: imageHygro
@@ -203,7 +201,7 @@ Item {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: textHygro
@@ -254,11 +252,10 @@ Item {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleTemp
             width: 173
             height: 48
-            color: "#00000000"
 
             ImageSvg {
                 id: imageTemp
@@ -267,7 +264,7 @@ Item {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: textTemp
@@ -317,11 +314,10 @@ Item {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleLuminosity
             width: 173
             height: 48
-            color: "#00000000"
 
             ImageSvg {
                 id: imageLuminosity
@@ -330,7 +326,7 @@ Item {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: textLuminosity
@@ -379,11 +375,10 @@ Item {
             }
         }
 
-        Rectangle {
+        Item {
             id: rectangleConductivity
             width: 173
             height: 48
-            color: "#00000000"
 
             ImageSvg {
                 id: imageConductivity
@@ -392,7 +387,7 @@ Item {
                 width: 32
                 height: 32
                 source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                color: "#606060"
+                color: Theme.colorIcons
             }
             Text {
                 id: textConductivity

@@ -24,41 +24,12 @@ Item {
 
         hoverEnabled: true
         onEntered: {
-            fadeIn.start()
+            bgFocus.opacity = 0.5
             itemMenuButton.highlighted = true
         }
         onExited: {
-            fadeIn.stop()
-            fadeOut.start()
+            bgFocus.opacity = 0
             itemMenuButton.highlighted = false
-        }
-    }
-
-    Rectangle {
-        id: bgFocus
-        visible: highlighted
-        anchors.fill: parent
-
-        color: "#25B298"
-        opacity: 0
-
-        PropertyAnimation {
-            id: fadeIn;
-            targets: [bgFocus];
-            property: "opacity";
-            from: 0;
-            to: 1;
-            duration: 333
-            running: false
-        }
-        PropertyAnimation {
-            id: fadeOut;
-            targets: [bgFocus];
-            property: "opacity";
-            from: 1;
-            to: 0;
-            duration: 333
-            running: false
         }
     }
 
@@ -69,7 +40,21 @@ Item {
         color: Theme.colorDarkGreen
     }
 
-    Image {
+    Rectangle {
+        id: bgFocus
+        anchors.fill: parent
+
+        color: Theme.colorDarkGreen
+        opacity: 0
+
+        Behavior on opacity {
+            OpacityAnimator {
+                duration: 250
+            }
+        }
+    }
+
+    ImageSvg {
         id: contentImage
         width: imgSize
         height: imgSize
@@ -79,13 +64,7 @@ Item {
 
         opacity: itemMenuButton.enabled ? 1.0 : 0.3
         source: itemMenuButton.source
-        sourceSize: Qt.size(width, height)
-
-        ColorOverlay {
-            anchors.fill: parent
-            source: parent
-            color: Theme.colorTitles
-        }
+        color: Theme.colorTitles
     }
 
     Text {

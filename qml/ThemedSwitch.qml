@@ -36,7 +36,7 @@ Switch {
 
         radius: 13
         //border.color: "#e0e0e0"
-        color: control.checked ? Theme.colorLightGreen : "#b3b3b3"
+        color: control.checked ? Theme.colorLightGreen : Theme.colorSeparators
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
