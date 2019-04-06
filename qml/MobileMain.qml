@@ -145,11 +145,11 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceDetails
         }
-        MobileSettings {
+        Settings {
             anchors.fill: parent
             id: screenSettings
         }
-        MobileAbout {
+        About {
             anchors.fill: parent
             id: screenAbout
         }

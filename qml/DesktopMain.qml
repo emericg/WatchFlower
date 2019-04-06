@@ -137,11 +137,11 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceDetails
         }
-        DesktopSettings {
+        Settings {
             anchors.fill: parent
             id: screenSettings
         }
-        DesktopAbout {
+        About {
             anchors.fill: parent
             id: screenAbout
         }

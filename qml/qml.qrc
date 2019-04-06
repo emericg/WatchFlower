@@ -5,14 +5,12 @@
         <file>MobileDrawer.qml</file>
         <file>MobileDeviceList.qml</file>
         <file>MobileDeviceBox.qml</file>
-        <file>MobileSettings.qml</file>
-        <file>MobileAbout.qml</file>
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
         <file>DesktopDeviceBox.qml</file>
         <file>DesktopDeviceList.qml</file>
-        <file>DesktopSettings.qml</file>
-        <file>DesktopAbout.qml</file>
+        <file>Settings.qml</file>
+        <file>About.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenLimits.qml</file>
