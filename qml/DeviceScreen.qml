@@ -25,14 +25,12 @@ import QtQuick.Controls 2.0
 import com.watchflower.theme 1.0
 
 Item {
-    id: deviceScreenRectangle
+    id: deviceScreenSensor
     width: 450
     height: 700
 
     property var myDevice: curentlySelectedDevice
     property var content: rectangleContent
-
-    Component.onCompleted: loadDevice()
 
     Connections {
         target: myDevice
@@ -411,13 +409,11 @@ Item {
 
                 Text {
                     id: textFwUpdate
-                    height: 26
                     text: myDevice.deviceFirmware
-                    verticalAlignment: Text.AlignVCenter
                     anchors.left: imageFwUpdate.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 15
+                    font.pixelSize: 14
                 }
             }
 
@@ -436,8 +432,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceBattery + "%"
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
 
                 Text {

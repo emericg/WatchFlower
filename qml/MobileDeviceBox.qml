@@ -141,7 +141,10 @@ Item {
 
         onClicked: {
             curentlySelectedDevice = boxDevice
-            content.state = "DeviceDetails"
+            if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                content.state = "DeviceThermo"
+            else
+                content.state = "DeviceSensor"
         }
 
         Image {

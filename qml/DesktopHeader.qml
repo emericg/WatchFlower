@@ -66,10 +66,16 @@ Rectangle {
                 buttonBack.source = "qrc:/assets/menu_back.svg"
             }
 
-            if (content.state === "DeviceDetails") {
+            if (content.state === "DeviceSensor") {
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false
+                setActiveDeviceDatas()
+            } else if (content.state === "DeviceThermo") {
+                buttonRefreshAll.visible = false
+                buttonRescan.visible = false
+                menuMain.visible = false
+                menuPlants
                 setActiveDeviceDatas()
             } else {
                 buttonRefreshAll.visible = true
@@ -173,7 +179,7 @@ Rectangle {
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter
-            visible: content.state == "DeviceDetails"
+            visible: content.state == "DeviceSensor"
 
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorTitles
@@ -205,7 +211,7 @@ Rectangle {
                 id: menuDeviceDatas
                 width: 64
                 height: 64
-                visible: content.state == "DeviceDetails"
+                visible: content.state == "DeviceSensor"
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: deviceDatasButtonClicked()
             }
@@ -213,7 +219,7 @@ Rectangle {
                 id: menuDeviceSettings
                 width: 64
                 height: 64
-                visible: content.state == "DeviceDetails"
+                visible: content.state == "DeviceSensor"
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                 onClicked: deviceSettingsButtonClicked()
             }

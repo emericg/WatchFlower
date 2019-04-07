@@ -27,10 +27,10 @@ import com.watchflower.theme 1.0
 ApplicationWindow {
     id: applicationWindow
 
-    width: 720
-    height: 480
-    minimumWidth: 480
-    minimumHeight: 480
+    width: 800
+    height: 540
+    minimumWidth: 540
+    minimumHeight: 540
 
     color: Theme.colorMaterialLightGrey
     visible: true // !settingsManager.minimized
@@ -82,7 +82,7 @@ ApplicationWindow {
                 content.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
                 if (curentlySelectedDevice)
-                    content.state = "DeviceDetails"
+                    content.state = "DeviceSensor"
             }
         }
     }
@@ -96,7 +96,7 @@ ApplicationWindow {
         sequence: StandardKey.Forward
         onActivated: {
             if (curentlySelectedDevice)
-                content.state = "DeviceDetails"
+                content.state = "DeviceSensor"
         }
     }
     onClosing: {
@@ -137,6 +137,10 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceDetails
         }
+        DeviceThermometer {
+            anchors.fill: parent
+            id: screenDeviceThermometer
+        }
         Settings {
             anchors.fill: parent
             id: screenSettings
@@ -166,6 +170,11 @@ ApplicationWindow {
                 }
                 PropertyChanges {
                     target: screenDeviceDetails
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenDeviceThermometer
                     enabled: false
                     visible: false
                 }
@@ -200,6 +209,11 @@ ApplicationWindow {
                     visible: false
                 }
                 PropertyChanges {
+                    target: screenDeviceThermometer
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
                     target: screenSettings
                     enabled: false
                     visible: false
@@ -211,7 +225,7 @@ ApplicationWindow {
                 }
             },
             State {
-                name: "DeviceDetails"
+                name: "DeviceSensor"
 
                 PropertyChanges {
                     target: screenTutorial
@@ -230,6 +244,11 @@ ApplicationWindow {
                     visible: true
                 }
                 PropertyChanges {
+                    target: screenDeviceThermometer
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
                     target: screenSettings
                     enabled: false
                     visible: false
@@ -242,6 +261,45 @@ ApplicationWindow {
                 StateChangeScript {
                     name: "secondScript"
                     script: screenDeviceDetails.loadDevice()
+                }
+            },
+            State {
+                name: "DeviceThermo"
+
+                PropertyChanges {
+                    target: screenTutorial
+                    enabled: false
+                    visible: false
+                }
+
+                PropertyChanges {
+                    target: screenDeviceList
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenDeviceDetails
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenDeviceThermometer
+                    enabled: true
+                    visible: true
+                }
+                PropertyChanges {
+                    target: screenSettings
+                    enabled: false
+                    visible: false
+                }
+                PropertyChanges {
+                    target: screenAbout
+                    visible: false
+                    enabled: false
+                }
+                StateChangeScript {
+                    name: "secondScript"
+                    script: screenDeviceThermometer.loadDevice()
                 }
             },
             State {
@@ -262,6 +320,11 @@ ApplicationWindow {
                     target: screenDeviceDetails
                     visible: false
                     enabled: false
+                }
+                PropertyChanges {
+                    target: screenDeviceThermometer
+                    enabled: false
+                    visible: false
                 }
                 PropertyChanges {
                     target: screenSettings
@@ -292,6 +355,11 @@ ApplicationWindow {
                     target: screenDeviceDetails
                     visible: false
                     enabled: false
+                }
+                PropertyChanges {
+                    target: screenDeviceThermometer
+                    enabled: false
+                    visible: false
                 }
                 PropertyChanges {
                     target: screenSettings
