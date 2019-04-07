@@ -122,8 +122,8 @@ Item {
         }
 
         //// VISIBILITY
-        hygroDatas.visible = (myDevice.deviceHygro > 0)
-        conduDatas.visible = (myDevice.deviceConductivity > 0)
+        hygroDatas.visible = !(myDevice.available && myDevice.deviceHygro <= 0)
+        conduDatas.visible = !(myDevice.available && myDevice.deviceConductivity <= 0)
 
         if (myDevice.deviceName === "Flower care" && myDevice.deviceHygro <= 0) {
             // Temp is primary

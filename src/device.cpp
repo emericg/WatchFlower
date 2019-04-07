@@ -344,6 +344,9 @@ bool Device::getSqlCachedDatas(int minutes)
         QString datetime = cachedDatas.value(4).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 
+        if (minutes < 60)
+            m_available = true;
+
         status = true;
         refreshDatasFinished(true, true);
     }

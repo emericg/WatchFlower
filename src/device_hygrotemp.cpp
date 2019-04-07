@@ -204,8 +204,8 @@ void DeviceHygrotemp::bleWriteDone(const QLowEnergyCharacteristic &, const QByte
 
 void DeviceHygrotemp::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    Q_UNUSED(c);
-    Q_UNUSED(value);
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 /*
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
@@ -242,6 +242,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
             m_temp = value.mid(2, 4).toFloat();
             m_hygro = value.mid(9, 4).toFloat(); // FIXME hygro could be a float too
 
+            m_available = true;
             m_lastUpdate = QDateTime::currentDateTime();
 
 #ifndef QT_NO_DEBUG

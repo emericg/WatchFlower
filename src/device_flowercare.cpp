@@ -191,6 +191,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             m_luminosity = data[3] + (data[4] << 8);
             m_conductivity = data[8] + (data[9] << 8);
 
+            m_available = true;
             m_lastUpdate = QDateTime::currentDateTime();
 
 #ifndef QT_NO_DEBUG
