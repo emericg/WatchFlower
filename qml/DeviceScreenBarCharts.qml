@@ -52,7 +52,7 @@ Item {
         if (graphDataSelected == "hygro") {
             if (myDevice.deviceName === "MJ_HT_V1")
                 graphDataSelected = "temp"
-            if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
+            else if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
                 graphDataSelected = "temp"
         }
 

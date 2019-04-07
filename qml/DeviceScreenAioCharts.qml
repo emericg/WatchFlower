@@ -35,28 +35,112 @@ Item {
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("loadGraph()")
+
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            tempDatas.visible = false // temp
+        }
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            hygroDatas.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            lumiDatas.visible = false
+        }
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            conduDatas.visible = false
+        }
     }
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         console.log("updateGraph()")
 
+        //// DATAS
         hygroDatas.clear()
         tempDatas.clear()
         lumiDatas.clear()
-        condDatas.clear()
+        conduDatas.clear()
 
-        myDevice.getTempDatas(axisTime, hygroDatas, tempDatas, lumiDatas, condDatas);
+        myDevice.getTempDatas(axisTime, hygroDatas, tempDatas, lumiDatas, conduDatas);
 
-        axisY0.min = 0
-        axisY0.max = 40
-        axisY1.min = 0
-        axisY1.max = 3000
-        axisY2.min = 0
-        axisY2.max = 500
+        //// AXIS
+        axisHygro.min = 0
+        axisHygro.max = 100
+        axisTemp.min = 0
+        axisTemp.max = 60
+        axisCondu.min = 0
+        axisCondu.max = 500
+        axisLumi.min = 0
+        axisLumi.max = 3000
+
+        var i = 0
+        var minmax_of_array = 0
+
+        // Max axis
+        i = 0
+        minmax_of_array = 0
+        for (;i < hygroDatas.count; i++)
+            if (hygroDatas.at(i).y > minmax_of_array)
+                minmax_of_array = hygroDatas.at(i).y
+        var minmax_of_legend = minmax_of_array*1.20;
+        if (minmax_of_legend > 100.0)
+            minmax_of_legend = 100.0; // no need to go higher than 100% hygrometry
+        else
+            axisHygro.max = minmax_of_legend;
+
+        // Max axis
+        i = 0
+        minmax_of_array = 0
+        for (;i < tempDatas.count; i++)
+            if (tempDatas.at(i).y > minmax_of_array)
+                minmax_of_array = tempDatas.at(i).y
+        minmax_of_legend = minmax_of_array*1.20;
+        axisTemp.max = minmax_of_legend;
+
+        hygroDatas.width = 2
+        tempDatas.width = 2
+
+        if (myDevice.deviceName === "MJ_HT_V1") {
+            // Temp is primary
+            tempDatas.width = 3
+            // Min axis
+            i = 0
+            minmax_of_array = 100
+            for (;i < hygroDatas.count; i++)
+                if (hygroDatas.at(i).y < minmax_of_array)
+                    minmax_of_array = hygroDatas.at(i).y
+            minmax_of_legend = minmax_of_array*0.80;
+            axisHygro.min = minmax_of_legend;
+            // Min axis
+            i = 0
+            minmax_of_array = 100
+            for (;i < tempDatas.count; i++)
+                if (tempDatas.at(i).y < minmax_of_array)
+                    minmax_of_array = tempDatas.at(i).y
+            minmax_of_legend = minmax_of_array*0.80;
+            axisTemp.min = minmax_of_legend;
+        }
+
+        //// VISIBILITY
+        hygroDatas.visible = (myDevice.deviceHygro > 0)
+        conduDatas.visible = (myDevice.deviceConductivity > 0)
+
+        if (myDevice.deviceName === "Flower care" && myDevice.deviceHygro <= 0) {
+            // Temp is primary
+            tempDatas.width = 3
+            // Show lumi when only have it and temp
+            lumiDatas.visible = true
+
+            i = 0
+            minmax_of_array = 0
+            for (;i < lumiDatas.count; i++)
+                if (lumiDatas.at(i).y > minmax_of_array)
+                    minmax_of_array = lumiDatas.at(i).y
+            minmax_of_legend = minmax_of_array*1.20;
+            axisLumi.max = minmax_of_legend;
+        }
+        else
+            lumiDatas.visible = false
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -81,33 +165,34 @@ Item {
 
         Component.onCompleted: updateGraph()
 
-        ValueAxis { id: axisY0; visible: false; gridVisible: true; }
-        ValueAxis { id: axisY1; visible: false; gridVisible: true; }
-        ValueAxis { id: axisY2; visible: false; gridVisible: true; }
+        ValueAxis { id: axisHygro; visible: false; gridVisible: true; }
+        ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
+        ValueAxis { id: axisLumi; visible: false; gridVisible: true; }
+        ValueAxis { id: axisCondu; visible: false; gridVisible: true; }
         DateTimeAxis { id: axisTime; visible: true; }
 
         LineSeries {
             id: lumiDatas
             color: Theme.colorYellow; width: 2;
             visible: false
-            axisY: axisY1; axisX: axisTime;
+            axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
-            id: condDatas
+            id: conduDatas
             color: Theme.colorRed; width: 2;
-            axisY: axisY2; axisX: axisTime;
+            axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
             id: tempDatas
             color: Theme.colorGreen; width: 2;
-            axisY: axisY0; axisX: axisTime;
+            axisY: axisTemp; axisX: axisTime;
 
             onClicked: console.log("temp: " + point.x + ", " + point.y);
         }
         LineSeries {
             id: hygroDatas
-            color: Theme.colorBlue; width: 3;
-            axisY: axisY0; axisX: axisTime;
+            color: Theme.colorBlue; width: 2;
+            axisY: axisHygro; axisX: axisTime;
 
             onClicked: console.log("hygro: " + point.x + ", " + point.y);
         }
