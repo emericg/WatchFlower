@@ -37,7 +37,6 @@ Item {
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"
 
-    readonly property string colorTitles: "#FFFFFF"
     readonly property string colorText: "#333333"
     readonly property string colorSubText: "#666666"
 

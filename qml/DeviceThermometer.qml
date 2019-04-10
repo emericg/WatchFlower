@@ -32,6 +32,12 @@ Item {
     property var myDevice: curentlySelectedDevice
 
     Connections {
+        target: myDevice
+        onStatusUpdated: updateHeader()
+        onDatasUpdated: updateDatas()
+    }
+
+    Connections {
         target: header
         onDeviceDatasButtonClicked: {
             header.setActiveDeviceDatas()
@@ -42,12 +48,6 @@ Item {
         onRightMenuClicked: {
             // mobile only
         }
-    }
-
-    Connections {
-        target: myDevice
-        onStatusUpdated: updateHeader()
-        onDatasUpdated: updateDatas()
     }
 
     Timer {
@@ -180,12 +180,12 @@ Item {
 
         Text {
             id: sensorTemp
-            anchors.verticalCenterOffset: -48
+            anchors.verticalCenterOffset: -40
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("22.0°")
-            font.bold: true
+            font.bold: false
             font.pixelSize: 48
             color: Theme.colorHeaderContent
         }
@@ -196,8 +196,8 @@ Item {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: qsTr("45%")
-            font.bold: true
+            text: qsTr("50%")
+            font.bold: false
             font.pixelSize: 24
             color: Theme.colorHeaderContent
         }

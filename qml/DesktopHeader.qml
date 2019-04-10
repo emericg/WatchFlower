@@ -75,7 +75,6 @@ Rectangle {
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false
-                menuPlants
                 setActiveDeviceDatas()
             } else {
                 buttonRefreshAll.visible = true
@@ -155,7 +154,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"
-        color: Theme.colorTitles
+        color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 32
     }
@@ -182,7 +181,7 @@ Rectangle {
             visible: content.state == "DeviceSensor"
 
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-            iconColor: Theme.colorTitles
+            iconColor: Theme.colorHeaderContent
             onClicked: deviceRefreshButtonClicked()
 
             NumberAnimation on rotation {
@@ -234,7 +233,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-            iconColor: Theme.colorTitles
+            iconColor: Theme.colorHeaderContent
             onClicked: refreshButtonClicked()
 
             NumberAnimation on rotation {
@@ -261,7 +260,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-            iconColor: Theme.colorTitles
+            iconColor: Theme.colorHeaderContent
             onClicked: rescanButtonClicked()
 
             OpacityAnimator {
@@ -335,7 +334,7 @@ Rectangle {
                 else
                     buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
             }
-            color: Theme.colorTitles
+            color: Theme.colorHeaderContent
 
             MouseArea {
                 anchors.fill: parent

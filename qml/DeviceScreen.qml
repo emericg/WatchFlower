@@ -30,15 +30,16 @@ Item {
     height: 700
 
     property var myDevice: curentlySelectedDevice
-    property var content: rectangleContent
 
     Connections {
         target: myDevice
         onStatusUpdated: updateHeader()
         onDatasUpdated: rectangleDeviceDatas.updateDatas()
     }
+
     Connections {
         target: header
+        // desktop only
         onDeviceDatasButtonClicked: {
             header.setActiveDeviceDatas()
             rectangleContent.state = "datas"
@@ -51,7 +52,137 @@ Item {
             plantPanel.visible = false
             devicePanel. visible = true
         }
+        // mobile only
+        onRightMenuClicked: {
+            if (!miniMenu.visible)
+                miniMenu.showMiniMenu()
+            else
+                miniMenu.hideMiniMenu()
+        }
     }
+
+    Timer {
+        interval: 60000; running: true; repeat: true;
+        onTriggered: updateStatusText()
+    }
+
+    function updateStatusText() {
+        if (typeof myDevice === "undefined") return
+        //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
+
+        textStatus.color = "#000"
+        textStatus.font.bold = false
+
+        if (myDevice) {
+            textStatus.text = ""
+            if (myDevice.updating) {
+                textStatus.text = qsTr("Updating... ")
+            } else {
+                if (!myDevice.available) {
+                    textStatus.text = qsTr("Offline! ")
+                    textStatus.color = Theme.colorRed
+                    textStatus.font.bold = true
+                }
+            }
+
+            if (myDevice.lastUpdateMin >= 0) {
+                if (myDevice.lastUpdateMin <= 1)
+                    textStatus.text += qsTr("Just updated!")
+                else if (myDevice.available)
+                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                else
+                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+            }
+        }
+    }
+
+    function loadDevice() {
+        if (typeof myDevice === "undefined") return
+        //console.log("DeviceScreen // loadDevice() >> " + myDevice)
+
+        rectangleContent.state = "datas"
+        miniMenu.visible = false
+        plantPanel.visible = true
+        devicePanel.visible = false
+
+        updateHeader()
+
+        rectangleDeviceDatas.loadDatas()
+        rectangleDeviceLimits.updateLimits()
+        rectangleDeviceLimits.updateLimitsVisibility()
+    }
+
+    function updateHeader() {
+        if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("DeviceScreen // updateHeader() >> " + myDevice)
+
+        // Sensor address
+        if (myDevice.deviceAddress.charAt(0) !== '{')
+            textAddr.text = "[" + myDevice.deviceAddress + "]"
+
+        // Firmware
+        textFirmware.text = myDevice.deviceFirmware
+        if (!myDevice.deviceFirmwareUpToDate) {
+            imageFwUpdate.visible = true
+            textFwUpdate.visible = true
+        } else {
+            imageFwUpdate.visible = false
+            textFwUpdate.visible = false
+        }
+
+        // Sensor battery level
+        if ((myDevice.deviceCapabilities & 1) == 1) {
+            imageBattery.visible = true
+            battery.visible = true
+
+            if (myDevice.deviceBattery > 95) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
+            } else if (myDevice.deviceBattery > 90) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
+            } else if (myDevice.deviceBattery > 70) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
+            } else if (myDevice.deviceBattery > 60) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
+            } else if (myDevice.deviceBattery > 40) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery > 30) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
+            } else if (myDevice.deviceBattery > 20) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
+            } else if (myDevice.deviceBattery > 1) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
+            } else {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            }
+        } else {
+            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            imageBattery.visible = false
+            battery.visible = false
+        }
+
+        // Plant
+        if ((myDevice.deviceCapabilities & 64) != 0) {
+            itemPlant.visible = true
+
+            if (myDevice.devicePlantName === "")
+                imageEditPlant.visible = true
+
+            textInputPlant.text = myDevice.devicePlantName
+        } else {
+            itemPlant.visible = false
+        }
+
+        // Location
+        if (myDevice.deviceLocationName === "")
+            imageEditLocation.visible = true
+
+        textInputLocation.text = myDevice.deviceLocationName
+
+        // Status
+        updateStatusText()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
         id: rectangleHeader
@@ -451,6 +582,8 @@ Item {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Item {
         id: rectangleContent
         anchors.top: rectangleHeader.bottom
@@ -676,137 +809,5 @@ Item {
                 }
             }
         }
-    }
-
-    Timer {
-        interval: 60000; running: true; repeat: true;
-        onTriggered: updateStatusText()
-    }
-
-    Connections {
-        target: header
-        onRightMenuClicked: {
-            // mobile only
-            if (!miniMenu.visible)
-                miniMenu.showMiniMenu()
-            else
-                miniMenu.hideMiniMenu()
-        }
-    }
-
-    function updateStatusText() {
-        if (typeof myDevice === "undefined") return
-        //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
-
-        textStatus.color = "#000"
-        textStatus.font.bold = false
-
-        if (myDevice) {
-            textStatus.text = ""
-            if (myDevice.updating) {
-                textStatus.text = qsTr("Updating... ")
-            } else {
-                if (!myDevice.available) {
-                    textStatus.text = qsTr("Offline! ")
-                    textStatus.color = Theme.colorRed
-                    textStatus.font.bold = true
-                }
-            }
-
-            if (myDevice.lastUpdateMin >= 0) {
-                if (myDevice.lastUpdateMin <= 1)
-                    textStatus.text += qsTr("Just updated!")
-                else if (myDevice.available)
-                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
-                else
-                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
-            }
-        }
-    }
-
-    function loadDevice() {
-        if (typeof myDevice === "undefined") return
-        //console.log("DeviceScreen // loadDevice() >> " + myDevice)
-
-        rectangleContent.state = "datas"
-        miniMenu.visible = false
-        plantPanel.visible = true
-        devicePanel.visible = false
-
-        updateHeader()
-
-        rectangleDeviceDatas.loadDatas()
-        rectangleDeviceLimits.updateLimits()
-        rectangleDeviceLimits.updateLimitsVisibility()
-    }
-
-    function updateHeader() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreen // updateHeader() >> " + myDevice)
-
-        // Sensor address
-        if (myDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = "[" + myDevice.deviceAddress + "]"
-
-        // Firmware
-        textFirmware.text = myDevice.deviceFirmware
-        if (!myDevice.deviceFirmwareUpToDate) {
-            imageFwUpdate.visible = true
-            textFwUpdate.visible = true
-        } else {
-            imageFwUpdate.visible = false
-            textFwUpdate.visible = false
-        }
-
-        // Sensor battery level
-        if ((myDevice.deviceCapabilities & 1) == 1) {
-            imageBattery.visible = true
-            battery.visible = true
-
-            if (myDevice.deviceBattery > 95) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 90) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 70) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 60) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 40) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 30) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 20) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery > 1) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
-            } else {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            }
-        } else {
-            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            imageBattery.visible = false
-            battery.visible = false
-        }
-
-        // Plant
-        if ((myDevice.deviceCapabilities & 64) != 0) {
-            itemPlant.visible = true
-
-            if (myDevice.devicePlantName === "")
-                imageEditPlant.visible = true
-
-            textInputPlant.text = myDevice.devicePlantName
-        } else {
-            itemPlant.visible = false
-        }
-
-        // Location
-        if (myDevice.deviceLocationName === "")
-            imageEditLocation.visible = true
-
-        textInputLocation.text = myDevice.deviceLocationName
-
-        // Status
-        updateStatusText()
     }
 }

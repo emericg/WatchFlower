@@ -64,7 +64,7 @@ Item {
 
         opacity: itemMenuButton.enabled ? 1.0 : 0.3
         source: itemMenuButton.source
-        color: Theme.colorTitles
+        color: "white"
     }
 
     Text {
@@ -77,7 +77,7 @@ Item {
         text: menuText
         font.pixelSize: 16
         font.bold: true
-        color: Theme.colorTitles
+        color: "white"
         verticalAlignment: Text.AlignVCenter
     }
 }

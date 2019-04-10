@@ -33,7 +33,7 @@ Item {
 
     Component.onCompleted: {
         if (deviceManager.bluetooth === false) {
-            rectangleStatus.setError(qsTr("No bluetooth :-("))
+            rectangleStatus.setError(qsTr("Bluetooth disabled :-("))
         } else if (deviceManager.areDevicesAvailable() === false) {
             rectangleStatus.setStatus(qsTr("No devices :-("))
         } else {
@@ -59,7 +59,7 @@ Item {
                 rectangleStatus.hide()
             }
         } else {
-            rectangleStatus.setError(qsTr("No bluetooth :-("))
+            rectangleStatus.setError(qsTr("Bluetooth disabled :-("))
         }
     }
 

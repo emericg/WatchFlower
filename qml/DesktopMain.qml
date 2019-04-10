@@ -81,8 +81,12 @@ ApplicationWindow {
             if (mouse.button === Qt.BackButton) {
                 content.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
-                if (curentlySelectedDevice)
-                    content.state = "DeviceSensor"
+                if (curentlySelectedDevice) {
+                    if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                        content.state = "DeviceThermo"
+                    else
+                        content.state = "DeviceSensor"
+                }
             }
         }
     }
@@ -135,7 +139,7 @@ ApplicationWindow {
         }
         DeviceScreen {
             anchors.fill: parent
-            id: screenDeviceDetails
+            id: screenDeviceSensor
         }
         DeviceThermometer {
             anchors.fill: parent
@@ -169,7 +173,7 @@ ApplicationWindow {
                     visible: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     enabled: false
                     visible: false
                 }
@@ -204,7 +208,7 @@ ApplicationWindow {
                     visible: true
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     enabled: false
                     visible: false
                 }
@@ -239,7 +243,7 @@ ApplicationWindow {
                     visible: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     enabled: true
                     visible: true
                 }
@@ -260,7 +264,7 @@ ApplicationWindow {
                 }
                 StateChangeScript {
                     name: "secondScript"
-                    script: screenDeviceDetails.loadDevice()
+                    script: screenDeviceSensor.loadDevice()
                 }
             },
             State {
@@ -278,7 +282,7 @@ ApplicationWindow {
                     visible: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     enabled: false
                     visible: false
                 }
@@ -317,7 +321,7 @@ ApplicationWindow {
                     enabled: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     visible: false
                     enabled: false
                 }
@@ -352,7 +356,7 @@ ApplicationWindow {
                     enabled: false
                 }
                 PropertyChanges {
-                    target: screenDeviceDetails
+                    target: screenDeviceSensor
                     visible: false
                     enabled: false
                 }
