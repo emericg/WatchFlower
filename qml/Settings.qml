@@ -83,7 +83,8 @@ Item {
         Column {
             id: column
             anchors.fill: parent
-            anchors.topMargin: 8
+            anchors.topMargin: 12
+            spacing: 4
 
             Item {
                 id: element1
@@ -124,7 +125,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
                 }
             }
@@ -169,16 +170,17 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
                 }
             }
 
             Text {
+                id: ledend_bluetooth
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
                 topPadding: -8
 
                 // mobile only
@@ -230,16 +232,17 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                 }
             }
 
             Text {
+                id: legend_worker
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
                 topPadding: -8
 
                 // mobile only
@@ -291,16 +294,17 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                 }
             }
 
             Text {
+                id: legend_notifications
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
                 topPadding: -8
 
                 // mobile only
@@ -354,7 +358,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
                 }
             }
@@ -434,7 +438,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 }
             }
@@ -455,7 +459,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 }
 
@@ -537,7 +541,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorText
+                    color: Theme.colorIcons
                     source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 }
 

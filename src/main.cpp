@@ -26,6 +26,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
+#include <QtQuickControls2/QQuickStyle>
 
 #include <statusbar.h>
 #include <singleapplication.h>
@@ -34,6 +35,7 @@
 #include "systraymanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
+#include "statusbar.h"
 
 /* ************************************************************************** */
 
@@ -49,10 +51,22 @@ int main(int argc, char *argv[])
 #endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    // Application icon
     QIcon appIcon(":/assets/desktop/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    // Set StatusBar color early
+    StatusBar sb;
+    sb.setTheme(StatusBar::Dark);
+    sb.setColor("#009688");
+
+    // Set QML material theme
+    //QQuickStyle::setStyle("material");
+#endif
+
+    // Application name
     app.setApplicationName("WatchFlower");
     app.setApplicationDisplayName("WatchFlower");
     app.setOrganizationName("WatchFlower");

@@ -443,17 +443,15 @@ Item {
 
             Text {
                 id: textTemp
-                y: 6
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 6
 
                 text: qsTr("25.0°")
                 color: "#333333"
-                font.wordSpacing: -1.2
-                font.letterSpacing: -1.4
-                renderType: Text.NativeRendering
                 font.pixelSize: 28
                 font.family: "Tahoma"
                 verticalAlignment: Text.AlignVCenter

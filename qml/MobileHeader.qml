@@ -103,6 +103,7 @@ Rectangle {
             color: Theme.colorHeaderContent
             font.bold: false
             font.pixelSize: 26
+            font.capitalization: Font.Capitalize
             antialiasing: true
         }
 
