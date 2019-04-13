@@ -53,7 +53,7 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .travis.yml \
-               assets/android/com/emeric/watchflower/NotificationAndroid.java \
+               assets/android/com/emeric/watchflower/NotificationAndroid.java
 
 ################################################################################
 # App features
@@ -152,8 +152,7 @@ android {
 
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
 
-    DISTFILES += assets/android/AndroidManifest.xml \
-                 assets/android/res/values/libs.xml
+    DISTFILES += assets/android/AndroidManifest.xml
 }
 
 ios {
