@@ -35,10 +35,11 @@ Item {
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("loadGraph()")
+
+        //console.log("DeviceScreenAioCharts // loadGraph() >> " + myDevice)
 
         if ((myDevice.deviceCapabilities & 2) == 0) {
-            tempDatas.visible = false // temp
+            tempDatas.visible = false
         }
         if ((myDevice.deviceCapabilities & 4) == 0) {
             hygroDatas.visible = false
@@ -53,7 +54,8 @@ Item {
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        console.log("updateGraph()")
+
+        //console.log("DeviceScreenAioCharts // updateGraph() >> " + myDevice)
 
         //// DATAS
         hygroDatas.clear()

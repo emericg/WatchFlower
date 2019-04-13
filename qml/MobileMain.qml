@@ -56,6 +56,12 @@ ApplicationWindow {
 
     // Events handling /////////////////////////////////////////////////////////
 
+    Component.onCompleted: {
+        if (!deviceManager.areDevicesAvailable()) {
+            content.state = "Tutorial"
+        }
+    }
+
     Connections {
         target: header
         onLeftMenuClicked: {
@@ -117,8 +123,8 @@ ApplicationWindow {
                 } else if (content.state === "Tutorial") {
                     // do nothing
                 } else {
-                    if (content.state === "DeviceSensor" && screenDeviceSensor.content.state === "limits") {
-                        screenDeviceSensor.content.state = "datas"
+                    if (content.state === "DeviceSensor" && screenDeviceSensor.contentState === "limits") {
+                        screenDeviceSensor.contentState = "datas"
                     } else {
                         content.state = "DeviceList"
                     }

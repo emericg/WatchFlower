@@ -56,7 +56,6 @@ Device::Device(QString &deviceAddr, QString &deviceName)
     bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
-    m_locationName = deviceName;
 
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
@@ -78,7 +77,6 @@ Device::Device(const QBluetoothDeviceInfo &d)
 {
     bleDevice = d;
     m_deviceName = bleDevice.name();
-    m_locationName = bleDevice.name();
 
 #if defined(Q_OS_OSX) || defined(Q_OS_iOS)
     m_deviceAddress = bleDevice.deviceUuid().toString();
@@ -173,8 +171,10 @@ void Device::refreshDatasFinished(bool status, bool cached)
                     QString message;
                     if (!m_plantName.isEmpty())
                         message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
-                    else
+                    else if (!m_locationName.isEmpty())
                         message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
+                    else
+                        message = QObject::tr("You need to water one of your plant!");
 
                     nm->setNotification(message);
                 }

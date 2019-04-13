@@ -45,6 +45,12 @@ ApplicationWindow {
 
     // Events handling /////////////////////////////////////////////////////////
 
+    Component.onCompleted: {
+        if (!deviceManager.areDevicesAvailable()) {
+            content.state = "Tutorial"
+        }
+    }
+
     Connections {
         target: header
         onBackButtonClicked: {

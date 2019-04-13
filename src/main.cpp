@@ -106,11 +106,13 @@ int main(int argc, char *argv[])
         }
     }
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     // Run a first scan, but only if we have no saved devices
     if (dm->areDevicesAvailable() == false)
     {
         dm->scanDevices();
     }
+#endif
 
     // Then we start the UI
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)

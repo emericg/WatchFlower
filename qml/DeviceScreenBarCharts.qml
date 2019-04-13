@@ -45,7 +45,7 @@ Item {
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        //console.log("DeviceScreenCharts // loadGraph() >> " + myDevice)
+        //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
 
         graphViewSelected = settingsManager.graphview
         graphDataSelected = settingsManager.graphdata
@@ -78,7 +78,7 @@ Item {
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        //console.log("DeviceScreenCharts // updateGraph() >> " + myDevice)
+        //console.log("DeviceScreenBarCharts // updateGraph() >> " + myDevice)
 
         lowLimitSeries.clear()
         highLimitSeries.clear()
