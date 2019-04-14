@@ -165,8 +165,6 @@ Item {
 
         //animationOptions: ChartView.SeriesAnimations
 
-        Component.onCompleted: updateGraph()
-
         ValueAxis { id: axisHygro; visible: false; gridVisible: true; }
         ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: true; }

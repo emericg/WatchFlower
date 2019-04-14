@@ -110,12 +110,13 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 128
 
+        anchors.top: parent.top
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -282,7 +283,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        id: scrollView
         clip: true
 
         anchors.top: rectangleHeader.bottom
@@ -293,6 +293,8 @@ Item {
         anchors.rightMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
+
+        Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
 
         Column {
             id: column

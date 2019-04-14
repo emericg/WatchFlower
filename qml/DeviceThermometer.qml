@@ -34,6 +34,7 @@ Item {
     Connections {
         target: myDevice
         onStatusUpdated: updateHeader()
+        onLimitsUpdated: updateDatas()
         onDatasUpdated: updateDatas()
     }
 
@@ -72,21 +73,7 @@ Item {
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceThermometer // updateHeader() >> " + myDevice)
-/*
-        // Sensor address
-        if (myDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = "[" + myDevice.deviceAddress + "]"
 
-        // Firmware
-        textFirmware.text = myDevice.deviceFirmware
-        if (!myDevice.deviceFirmwareUpToDate) {
-            imageFwUpdate.visible = true
-            textFwUpdate.visible = true
-        } else {
-            imageFwUpdate.visible = false
-            textFwUpdate.visible = false
-        }
-*/
         // Sensor battery level
         if (myDevice.deviceBattery > 95) {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";

@@ -91,7 +91,7 @@ Item {
         onTriggered: updateStatusText()
     }
 
-    property var deviceScreenCharts: pageLoader.item
+    property var deviceScreenCharts: null
 
     function updateStatusText() {
         if (typeof myDevice === "undefined") return
@@ -135,8 +135,11 @@ Item {
             pageLoader.source = "DeviceScreenBarCharts.qml"
         else
             pageLoader.source = "DeviceScreenAioCharts.qml"
+
+        deviceScreenCharts = pageLoader.item
         deviceScreenCharts.loadGraph()
 
+        updateHeader()
         updateDatas()
     }
 
@@ -167,6 +170,9 @@ Item {
             condu_indicator.text = myDevice.deviceConductivity + " µS/cm"
             condu_data.width = normalize(myDevice.deviceConductivity, 0, 750) * condu_bg.width
         }
+
+        //
+        deviceScreenCharts.updateGraph()
     }
 
     onWidthChanged: {
@@ -182,6 +188,8 @@ Item {
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 128
 
+        anchors.top: parent.top
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -419,7 +427,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        id: scrollView
         clip: true
 
         anchors.top: rectangleHeader.bottom
@@ -431,9 +438,10 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
+        Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
+
         Column {
             id: column
-            spacing: 0
             anchors.fill: parent
 
             Item { //////

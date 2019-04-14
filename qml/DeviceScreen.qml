@@ -35,6 +35,7 @@ Item {
     Connections {
         target: myDevice
         onStatusUpdated: rectangleDeviceDatas.updateHeader()
+        onLimitsUpdated: rectangleDeviceDatas.updateDatas()
         onDatasUpdated: rectangleDeviceDatas.updateDatas()
     }
 
@@ -60,12 +61,12 @@ Item {
 
     function loadDevice() {
         if (typeof myDevice === "undefined") return
+
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
         rectangleContent.state = "datas"
         miniMenu.visible = false
 
-        rectangleDeviceDatas.updateHeader()
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceLimits.updateHeader()
         rectangleDeviceLimits.updateLimits()
@@ -77,12 +78,7 @@ Item {
     Item {
         id: rectangleContent
         anchors.fill: parent
-/*
-        DeviceScreenDatas {
-            anchors.fill: parent
-            id: rectangleDeviceDatas
-        }
-*/
+
         ItemDeviceDatas {
             anchors.fill: parent
             id: rectangleDeviceDatas

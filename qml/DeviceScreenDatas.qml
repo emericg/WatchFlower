@@ -36,12 +36,15 @@ Item {
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
         //console.log("DeviceScreenDatas // loadDatas() >> " + settingsManager.graph)
 
+        // Load graph
         if (settingsManager.graph === 'bar')
             pageLoader.source = "DeviceScreenBarCharts.qml"
         else
             pageLoader.source = "DeviceScreenAioCharts.qml"
 
         deviceScreenCharts.loadGraph()
+
+        //
         updateDatas()
     }
 

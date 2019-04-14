@@ -371,8 +371,6 @@ Item {
 
         //animationOptions: ChartView.SeriesAnimations
 
-        Component.onCompleted: updateGraph()
-
         StackedBarSeries {
             id: myBarSeries
             barWidth: 0.90
