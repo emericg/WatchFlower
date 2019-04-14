@@ -57,10 +57,9 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    // Set StatusBar color early
+    // Keep the StatusBar the same color as the splashscreen until UI starts
     StatusBar sb;
-    sb.setTheme(StatusBar::Dark);
-    sb.setColor("#009688");
+    sb.setColor("#fff");
 
     // Set QML material theme
     //QQuickStyle::setStyle("material");
