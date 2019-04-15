@@ -49,9 +49,6 @@ public:
     DeviceRopot(const QBluetoothDeviceInfo &d);
     ~DeviceRopot();
 
-public slots:
-    QString getDataString() const;
-
 private:
     // QLowEnergyController related
     void serviceScanDone();

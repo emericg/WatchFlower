@@ -61,19 +61,6 @@ DeviceHygrotemp::~DeviceHygrotemp()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QString DeviceHygrotemp::getDataString() const
-{
-    QString dataString;
-
-    dataString += getTempString() + "  ";
-    dataString += QString::number(m_hygro) + "%  ";
-
-    return dataString;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
 void DeviceHygrotemp::serviceScanDone()
 {
     //qDebug() << "DeviceHygrotemp::serviceScanDone(" << m_deviceAddress << ")";

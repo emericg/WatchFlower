@@ -71,20 +71,6 @@ DeviceFlowercare::~DeviceFlowercare()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QString DeviceFlowercare::getDataString() const
-{
-    QString dataString;
-
-    dataString += QString::number(m_hygro) + "%  ";
-    dataString += getTempString() + "  ";
-    dataString += QString::number(m_luminosity) + " lm";
-
-    return dataString;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
 void DeviceFlowercare::serviceScanDone()
 {
     //qDebug() << "DeviceFlowercare::serviceScanDone(" << m_deviceAddress << ")";

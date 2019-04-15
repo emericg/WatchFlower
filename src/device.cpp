@@ -423,13 +423,6 @@ QString Device::getTempString() const
     return tempString;
 }
 
-QString Device::getDataString() const
-{
-    QString dataString = "default device: no datas";
-
-    return dataString;
-}
-
 int Device::getLastUpdateInt() const
 {
     int mins = -1;
@@ -529,6 +522,95 @@ bool Device::setDbLimits()
     Q_EMIT limitsUpdated();
 
     return status;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void Device::deviceConnected()
+{
+    //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
+
+    controller->discoverServices();
+}
+
+void Device::deviceDisconnected()
+{
+    //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
+
+    if (m_updating)
+    {
+        // This means we got forcibly disconnected by the device before completing the update
+        refreshDatasFinished(false);
+    }
+}
+
+void Device::errorReceived(QLowEnergyController::Error error)
+{
+    qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
+    refreshDatasFinished(false);
+}
+
+void Device::serviceScanDone()
+{
+    //qDebug() << "Device::serviceScanDone(" << m_deviceAddress << ")";
+}
+
+void Device::addLowEnergyService(const QBluetoothUuid &uuid)
+{
+    //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
+    Q_UNUSED(uuid);
+}
+
+void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
+{
+    //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
+    Q_UNUSED(newState);
+}
+
+bool Device::hasControllerError() const
+{
+    if (controller && controller->error() != QLowEnergyController::NoError)
+        return true;
+
+    return false;
+}
+
+void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
+{
+    //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
+}
+
+void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    Q_UNUSED(c);
+    Q_UNUSED(value);
+/*
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+    qDebug() << "Device::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "WE HAVE DATAS: 0x" \
+               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+*/
+}
+
+void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    Q_UNUSED(c);
+    Q_UNUSED(value);
+/*
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+    qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "WE HAVE DATAS: 0x" \
+               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[12]  << hex << data[13];
+*/
 }
 
 /* ************************************************************************** */
@@ -845,95 +927,6 @@ QVariantList Device::getBackgroundDaily(float maxValue)
     }
 
     return lastSevenDays;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-void Device::deviceConnected()
-{
-    //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
-
-    controller->discoverServices();
-}
-
-void Device::deviceDisconnected()
-{
-    //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
-
-    if (m_updating)
-    {
-        // This means we got forcibly disconnected by the device before completing the update
-        refreshDatasFinished(false);
-    }
-}
-
-void Device::errorReceived(QLowEnergyController::Error error)
-{
-    qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
-    refreshDatasFinished(false);
-}
-
-void Device::serviceScanDone()
-{
-    //qDebug() << "Device::serviceScanDone(" << m_deviceAddress << ")";
-}
-
-void Device::addLowEnergyService(const QBluetoothUuid &uuid)
-{
-    //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
-    Q_UNUSED(uuid);
-}
-
-void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
-{
-    //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-    Q_UNUSED(newState);
-}
-
-bool Device::hasControllerError() const
-{
-    if (controller && controller->error() != QLowEnergyController::NoError)
-        return true;
-
-    return false;
-}
-
-void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
-{
-    //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
-}
-
-void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
-{
-    Q_UNUSED(c);
-    Q_UNUSED(value);
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "Device::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
-}
-
-void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
-{
-    Q_UNUSED(c);
-    Q_UNUSED(value);
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-               << hex << data[12]  << hex << data[13];
-*/
 }
 
 /* ************************************************************************** */

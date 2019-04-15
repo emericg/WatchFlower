@@ -49,9 +49,6 @@ public:
     DeviceFlowercare(const QBluetoothDeviceInfo &d);
     ~DeviceFlowercare();
 
-public slots:
-    QString getDataString() const;
-
 private:
     // QLowEnergyController related
     void serviceScanDone();

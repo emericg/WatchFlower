@@ -69,19 +69,6 @@ DeviceRopot::~DeviceRopot()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QString DeviceRopot::getDataString() const
-{
-    QString dataString;
-
-    dataString += QString::number(m_hygro) + "%  ";
-    dataString += getTempString() + "  ";
-
-    return dataString;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
 void DeviceRopot::serviceScanDone()
 {
     //qDebug() << "DeviceRopot::serviceScanDone(" << m_deviceAddress << ")";

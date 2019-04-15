@@ -49,9 +49,6 @@ public:
     DeviceHygrotemp(const QBluetoothDeviceInfo &d);
     ~DeviceHygrotemp();
 
-public slots:
-    QString getDataString() const;
-
 private:
     // QLowEnergyController related
     void serviceScanDone();

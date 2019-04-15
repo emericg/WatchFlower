@@ -72,15 +72,16 @@ class Device: public QObject
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
     Q_PROPERTY(int deviceCapabilities READ getCapabilities NOTIFY datasUpdated)
-
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY datasUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
+
+    Q_PROPERTY(float deviceTemp READ getTemp NOTIFY datasUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
+    Q_PROPERTY(float deviceTempF READ getTempF NOTIFY datasUpdated)
     Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
-    Q_PROPERTY(QString dataString READ getDataString NOTIFY datasUpdated)
 
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
@@ -196,7 +197,6 @@ public slots:
     int getConductivity() const { return m_conductivity; }
 
     QString getTempString() const;
-    virtual QString getDataString() const;
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
 
@@ -241,6 +241,7 @@ public slots:
     QVariantList getBackgroundDaily(float maxValue);
 };
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 struct Version
