@@ -27,6 +27,7 @@
         <file>ItemImageButton.qml</file>
         <file>ItemDatasbar.qml</file>
         <file>ItemDeviceDatas.qml</file>
+        <file>ItemDeviceHistory.qml</file>
         <file>ImageSvg.qml</file>
         <file>WindowGeometrySaver.qml</file>
     </qresource>

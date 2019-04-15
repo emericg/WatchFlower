@@ -33,6 +33,7 @@ Rectangle {
 
     signal deviceRefreshButtonClicked()
     signal deviceDatasButtonClicked()
+    signal deviceHistoryButtonClicked()
     signal deviceSettingsButtonClicked()
 
     signal refreshButtonClicked()
@@ -44,22 +45,30 @@ Rectangle {
 
     function setActiveDeviceDatas() {
         menuDeviceDatas.selected = true
+        menuDeviceHistory.selected = false
+        menuDeviceSettings.selected = false
+    }
+    function setActiveDeviceHistory() {
+        menuDeviceDatas.selected = false
+        menuDeviceHistory.selected = true
         menuDeviceSettings.selected = false
     }
     function setActiveDeviceSettings() {
         menuDeviceDatas.selected = false
+        menuDeviceHistory.selected = false
         menuDeviceSettings.selected = true
     }
 
     function setActiveMenu() {
-
         if (content.state === "Tutorial") {
             title.text = qsTr("Welcome")
             menu.visible = false
+
             buttonBack.source = "qrc:/assets/menu_close.svg"
         } else {
             title.text = "WatchFlower"
             menu.visible = true
+
             if (content.state === "DeviceList") {
                 buttonBack.source = "qrc:/assets/menu_logo.svg"
             } else {
@@ -67,15 +76,16 @@ Rectangle {
             }
 
             if (content.state === "DeviceSensor") {
+                setActiveDeviceDatas()
+
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false
-                setActiveDeviceDatas()
             } else if (content.state === "DeviceThermo") {
+
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false
-                setActiveDeviceDatas()
             } else {
                 buttonRefreshAll.visible = true
                 buttonRescan.visible = true
@@ -97,6 +107,27 @@ Rectangle {
             }
         }
     }
+
+    Connections {
+        target: deviceManager
+        onScanningChanged: {
+            if (deviceManager.scanning)
+                rescanAnimation.start()
+            else
+                rescanAnimation.stop()
+        }
+        onRefreshingChanged: {
+            if (deviceManager.refreshing) {
+                refreshAnimation.start()
+                refreshAllAnimation.start()
+            } else {
+                refreshAnimation.stop()
+                refreshAllAnimation.stop()
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     ImageSvg {
         id: buttonBack
@@ -128,25 +159,6 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: deviceManager
-        onScanningChanged: {
-            if (deviceManager.scanning)
-                rescanAnimation.start()
-            else
-                rescanAnimation.stop()
-        }
-        onRefreshingChanged: {
-            if (deviceManager.refreshing) {
-                refreshAnimation.start()
-                refreshAllAnimation.start()
-            } else {
-                refreshAnimation.stop()
-                refreshAllAnimation.stop()
-            }
-        }
-    }
-
     Text {
         id: title
         anchors.left: parent.left
@@ -171,15 +183,15 @@ Rectangle {
         spacing: 8
         visible: true
 
-        ///////
+        ////////////
 
         ItemImageButton {
             id: buttonRefresh
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter
-            visible: content.state == "DeviceSensor"
 
+            visible: (content.state === "DeviceSensor")
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: deviceRefreshButtonClicked()
@@ -206,25 +218,32 @@ Rectangle {
             id: menuDevice
             spacing: 0
 
+            visible: (content.state === "DeviceSensor")
+
             ItemMenuButton {
                 id: menuDeviceDatas
                 width: 64
                 height: 64
-                visible: content.state == "DeviceSensor"
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: deviceDatasButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuDeviceHistory
+                width: 64
+                height: 64
+                source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
+                onClicked: deviceHistoryButtonClicked()
             }
             ItemMenuButton {
                 id: menuDeviceSettings
                 width: 64
                 height: 64
-                visible: content.state == "DeviceSensor"
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                 onClicked: deviceSettingsButtonClicked()
             }
         }
 
-        ///////
+        ////////////
 
         ItemImageButton {
             id: buttonRefreshAll
@@ -290,7 +309,7 @@ Rectangle {
                 id: menuPlants
                 width: 64
                 height: 64
-                visible: (rectangleHeader.width > 600)
+                visible: (rectangleHeader.width > 580)
                 source: "qrc:/assets/watchflower_small.svg"
                 onClicked: plantsButtonClicked()
             }
@@ -310,7 +329,7 @@ Rectangle {
             }
         }
 
-        ///////
+        ////////////////
 /*
         ImageSvg {
             id: buttonExit

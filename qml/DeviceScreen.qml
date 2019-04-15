@@ -46,6 +46,10 @@ Item {
             header.setActiveDeviceDatas()
             rectangleContent.state = "datas"
         }
+        onDeviceHistoryButtonClicked: {
+            header.setActiveDeviceHistory()
+            rectangleContent.state = "history"
+        }
         onDeviceSettingsButtonClicked: {
             header.setActiveDeviceSettings()
             rectangleContent.state = "limits"
@@ -83,6 +87,10 @@ Item {
             anchors.fill: parent
             id: rectangleDeviceDatas
         }
+        ItemDeviceHistory {
+            anchors.fill: parent
+            id: rectangleDeviceHistory
+        }
         DeviceScreenLimits {
             anchors.fill: parent
             id: rectangleDeviceLimits
@@ -97,6 +105,25 @@ Item {
                     visible: true
                 }
                 PropertyChanges {
+                    target: rectangleDeviceHistory
+                    visible: false
+                }
+                PropertyChanges {
+                    target: rectangleDeviceLimits
+                    visible: false
+                }
+            },
+            State {
+                name: "history"
+                PropertyChanges {
+                    target: rectangleDeviceDatas
+                    visible: false
+                }
+                PropertyChanges {
+                    target: rectangleDeviceHistory
+                    visible: true
+                }
+                PropertyChanges {
                     target: rectangleDeviceLimits
                     visible: false
                 }
@@ -105,6 +132,10 @@ Item {
                 name: "limits"
                 PropertyChanges {
                     target: rectangleDeviceDatas
+                    visible: false
+                }
+                PropertyChanges {
+                    target: rectangleDeviceHistory
                     visible: false
                 }
                 PropertyChanges {
