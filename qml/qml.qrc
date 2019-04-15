@@ -30,5 +30,6 @@
         <file>ItemDeviceHistory.qml</file>
         <file>ImageSvg.qml</file>
         <file>WindowGeometrySaver.qml</file>
+        <file>ItemBarCharts.qml</file>
     </qresource>
 </RCC>

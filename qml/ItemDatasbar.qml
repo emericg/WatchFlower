@@ -22,9 +22,9 @@
 import QtQuick 2.7
 import com.watchflower.theme 1.0
 
-Item { //////
+Item {
     id: item
-    height: 38
+    height: 36
     anchors.left: parent.left
     anchors.leftMargin: 0
     anchors.right: parent.right
@@ -40,10 +40,6 @@ Item { //////
     property int limitMin: -1
     property int limitMax: -1
 
-    function setValues() {
-        //
-    }
-
     Text {
         id: item_legend
         width: 90
@@ -58,11 +54,11 @@ Item { //////
 
     Rectangle {
         id: item_bg
-        color: Theme.colorSeparators
+        color: Theme.colorMaterialDarkGrey
         height: 8
         radius: 3
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 4
+        anchors.bottomMargin: 0
         anchors.left: item_legend.right
         anchors.leftMargin: 8
         anchors.right: parent.right
@@ -88,24 +84,24 @@ Item { //////
         Rectangle {
             id: item_limit_low
             width: 2
-            radius: 1
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
             visible: (limitMin > 0)
             x: normalize(limitMin, valueMin, valueMax) * item_bg.width
-            color: "white"
+            color: "black"
+            opacity: 0.5
         }
         Rectangle {
             id: item_limit_high
             width: 2
-            radius: 1
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
-            visible: (limitMax > 0)
+            visible: (limitMax > 0 && limitMax < valueMax)
             x: normalize(limitMax, valueMin, valueMax) * item_bg.width
-            color: "white"
+            color: "black"
+            opacity: 0.5
         }
 
         Text {

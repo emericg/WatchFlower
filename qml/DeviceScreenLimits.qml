@@ -459,7 +459,7 @@ Item {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
-                    from: 1
+                    from: 0
                     to: 5000
                     stepSize: 100
                     value: myDevice.limitLumiMin

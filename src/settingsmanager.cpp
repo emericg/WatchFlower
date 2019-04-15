@@ -420,7 +420,6 @@ void SettingsManager::setTempUnit(const QString &value)
 
 void SettingsManager::setGraph(const QString &value)
 {
-    qDebug() << "setGraph:" << value;
     m_graphMode = value;
     writeSettings();
     Q_EMIT graphChanged();

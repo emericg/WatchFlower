@@ -30,8 +30,8 @@ Rectangle {
     radius: 4
 
     color: "transparent"
-    border.width: 1
-    border.color: Theme.colorSeparators
+    border.width: 2
+    border.color: Theme.colorMaterialDarkGrey
 
     property var boxDevice: null
 

@@ -20,7 +20,11 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+
+// Qt 5.10 needed here...
+// You can change v2.2 into 2.1 but you'll need to comment the
+// ChartView / "legend.visible" line at the bottom of this file
+import QtCharts 2.2
 
 import com.watchflower.theme 1.0
 
@@ -31,14 +35,99 @@ Item {
 
     function updateHeader() {
         if (typeof myDevice === "undefined") return
+
+        // Sensor battery level
+        if ((myDevice.deviceCapabilities & 1) == 1) {
+            imageBattery.visible = true
+
+            if (myDevice.deviceBattery > 95) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
+            } else if (myDevice.deviceBattery > 90) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
+            } else if (myDevice.deviceBattery > 70) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
+            } else if (myDevice.deviceBattery > 60) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
+            } else if (myDevice.deviceBattery > 40) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery > 30) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
+            } else if (myDevice.deviceBattery > 20) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
+            } else if (myDevice.deviceBattery > 1) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
+            } else {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            }
+        } else {
+            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            imageBattery.visible = false
+        }
     }
 
     function loadDatas() {
         if (typeof myDevice === "undefined") return
+        //console.log("ItemDeviceHistory // loadDatas() >> " + myDevice)
+
+        graphCount = 0
+
+        if ((myDevice.deviceCapabilities & 2) == 0) {
+            tempLegend.visible = false
+            tempGraph.visible = false
+        } else {
+            tempLegend.visible = true
+            tempGraph.visible = true
+            tempGraph.loadGraph()
+            graphCount += 1
+        }
+        if ((myDevice.deviceCapabilities & 4) == 0) {
+            hygroLegend.visible = false
+            hygroGraph.visible = false
+        } else {
+            hygroLegend.visible = true
+            hygroGraph.visible = true
+            hygroGraph.loadGraph()
+            graphCount += 1
+        }
+        if ((myDevice.deviceCapabilities & 8) == 0) {
+            lumiLegend.visible = false
+            lumiGraph.visible = false
+        } else {
+            lumiGraph.visible = true
+            lumiGraph.visible = true
+            lumiGraph.loadGraph()
+            graphCount += 1
+        }
+        if ((myDevice.deviceCapabilities & 16) == 0) {
+            conduLegend.visible = false
+            conduGraph.visible = false
+        } else {
+            conduGraph.visible = false
+            conduGraph.visible = true
+            conduGraph.loadGraph()
+            graphCount += 1
+        }
+        graphHeight = (column.height - graphCount*hygroLegend.height) / graphCount
+
+        updateDatas()
     }
 
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
+        //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
+
+        if ((myDevice.deviceCapabilities & 2) != 0) {
+            tempGraph.updateGraph()
+        }
+        if ((myDevice.deviceCapabilities & 4) != 0) {
+            hygroGraph.updateGraph()
+        }
+        if ((myDevice.deviceCapabilities & 8) != 0) {
+            lumiGraph.updateGraph()
+        }
+        if ((myDevice.deviceCapabilities & 16) != 0) {
+            conduGraph.updateGraph()
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -46,7 +135,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 76
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -113,11 +202,10 @@ Item {
                     id: textStatus
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelStatus.right
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 12
 
                     text: qsTr("Loading...")
                     color: Theme.colorText
-                    padding: 4
                     font.pixelSize: 16
                 }
             }
@@ -126,11 +214,15 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    property int graphHeight: 256
+    property int graphCount: 4
+
+    Column {
+        id: column
         clip: true
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 8
+        anchors.topMargin: 12
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -138,13 +230,72 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
+        onHeightChanged: {
+            graphHeight = (height - graphCount*hygroLegend.height) / graphCount
+        }
 
-        Column {
-            id: column
-            anchors.fill: parent
+        Text {
+            id: hygroLegend
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            text: "Hygrometry"
+            color: Theme.colorIcons
+            font.bold: true
+            font.pointSize: 16
+        }
+        ItemBarCharts {
+            id: hygroGraph
+            height: graphHeight
+            graphDataSelected: "hygro"
+            graphViewSelected: "weekly"
+        }
 
-            //
+        Text {
+            id: tempLegend
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            text: qsTr("Temperature")
+            color: Theme.colorIcons
+            font.bold: true
+            font.pointSize: 16
+        }
+        ItemBarCharts {
+            id: tempGraph
+            height: graphHeight
+            graphDataSelected: "temp"
+            graphViewSelected: "weekly"
+        }
+
+        Text {
+            id: lumiLegend
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            text: qsTr("Luminosity")
+            color: Theme.colorIcons
+            font.bold: true
+            font.pointSize: 16
+        }
+        ItemBarCharts {
+            id: lumiGraph
+            height: graphHeight
+            graphDataSelected: "luminosity"
+            graphViewSelected: "weekly"
+        }
+
+        Text {
+            id: conduLegend
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            text: qsTr("Conductivity")
+            color: Theme.colorIcons
+            font.bold: true
+            font.pointSize: 16
+        }
+        ItemBarCharts {
+            id: conduGraph
+            height: graphHeight
+            graphDataSelected: "conductivity"
+            graphViewSelected: "weekly"
         }
     }
 }

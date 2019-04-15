@@ -72,6 +72,7 @@ Item {
         miniMenu.visible = false
 
         rectangleDeviceDatas.loadDatas()
+        rectangleDeviceHistory.loadDatas()
         rectangleDeviceLimits.updateHeader()
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()

@@ -30,6 +30,8 @@ Item {
     height: 300
 
     function updateHeader() {
+        if (typeof myDevice === "undefined") return
+
         if (myDevice) {
             // Sensor battery level
             if ((myDevice.deviceCapabilities & 1) == 1) {
