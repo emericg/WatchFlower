@@ -113,7 +113,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 128
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -124,12 +124,13 @@ Item {
 
         Column {
             id: devicePanel
-
-            anchors.fill: parent
-            anchors.topMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.left: parent.left
 
             Text {
                 id: textDeviceName
+                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 12
 
@@ -137,6 +138,7 @@ Item {
 
                 font.pixelSize: 24
                 text: myDevice.deviceName
+                verticalAlignment: Text.AlignVCenter
                 font.capitalization: Font.AllUppercase
                 color: Theme.colorText
 
@@ -164,7 +166,7 @@ Item {
 
                 Text {
                     id: labelAddress
-                    width: 70
+                    width: 72
                     anchors.leftMargin: 12
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -177,10 +179,11 @@ Item {
 
                 Text {
                     id: textAddr
-                    text: myDevice.deviceAddress
                     anchors.left: labelAddress.right
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
+
+                    text: myDevice.deviceAddress
                     font.pixelSize: 16
                 }
             }
@@ -195,19 +198,20 @@ Item {
 
                 Text {
                     id: labelFirmware
-                    width: 70
+                    width: 72
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
                     color: Theme.colorText
                     text: qsTr("Firmware")
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 15
-                    anchors.leftMargin: 12
                     horizontalAlignment: Text.AlignRight
                 }
                 Text {
                     id: textFirmware
                     anchors.left: labelFirmware.right
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update available!")
@@ -257,7 +261,7 @@ Item {
                 Text {
                     id: textBattery
                     anchors.left: labelBattery.right
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceBattery + "%"
@@ -266,7 +270,7 @@ Item {
 
                 Text {
                     id: labelBattery
-                    width: 70
+                    width: 72
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
                     anchors.leftMargin: 12
@@ -375,7 +379,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                     color: Theme.colorIcons
                 }
                 Text {

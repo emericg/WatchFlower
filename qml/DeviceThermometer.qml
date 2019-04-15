@@ -58,7 +58,7 @@ Item {
 
     onHeightChanged: {
         // update tempBox height
-        tempBox.height = ((height * 0.4) > 256) ? (height * 0.4) : 256
+        tempBox.height = ((height * 0.33) > 256) ? (height * 0.33) : 256
     }
 
     function loadDevice() {
@@ -93,6 +93,7 @@ Item {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
         } else {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            imageBattery.visible = false
         }
 
         // Location
@@ -116,7 +117,7 @@ Item {
         if (myDevice.deviceHygro > 0)
             sensorHygro.text = myDevice.deviceHygro + "%"
         else
-            sensorHygro.text = qsTr("loading...")
+            sensorHygro.text = ""
 
         deviceScreenChart.updateGraph()
     }
@@ -124,9 +125,6 @@ Item {
     function updateStatusText() {
         if (typeof myDevice === "undefined") return
         //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
-/*
-        textStatus.color = "#000"
-        textStatus.font.bold = false
 
         if (myDevice) {
             textStatus.text = ""
@@ -135,8 +133,6 @@ Item {
             } else {
                 if (!myDevice.available) {
                     textStatus.text = qsTr("Offline! ")
-                    textStatus.color = Theme.colorRed
-                    textStatus.font.bold = true
                 }
             }
 
@@ -149,7 +145,7 @@ Item {
                     textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
             }
         }
-*/
+
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -189,37 +185,79 @@ Item {
             color: Theme.colorHeaderContent
         }
 
+        Item {
+            id: status
+            height: 24
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+
+            ImageSvg {
+                id: imageStatus
+                width: 24
+                height: 24
+
+                source: "qrc:/assets/icons_material/baseline-access_time-24px.svg"
+                color: Theme.colorHeaderContent
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                id: textStatus
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: imageStatus.right
+                anchors.leftMargin: 8
+
+                text: qsTr("Updating...")
+                color: Theme.colorHeaderContent
+                font.pixelSize: 16
+                font.bold: true
+            }
+        }
+
         ImageSvg {
             id: imageBattery
             width: 32
             height: 32
-            rotation: 90
-            anchors.left: parent.left
-            anchors.leftMargin: 8
 
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
             color: Theme.colorHeaderContent
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
         }
 
         Item {
             id: itemLocation
-            height: 32
+            height: 24
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 8
 
+            ImageSvg {
+                id: imageLocation
+                width: 24
+                height: 24
+
+                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
+                color: Theme.colorHeaderContent
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
             TextInput {
                 id: textInputLocation
-                anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.right: imageLocation.left
+                anchors.rightMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 padding: 4
                 color: Theme.colorHeaderContent
-                font.pixelSize: 18
+                font.pixelSize: 16
                 font.bold: true
                 onEditingFinished: {
                     if (text) {

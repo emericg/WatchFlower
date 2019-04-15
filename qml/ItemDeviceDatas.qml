@@ -97,7 +97,7 @@ Item {
         if (typeof myDevice === "undefined") return
         //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
 
-        textStatus.color = "#000"
+        textStatus.color = "black"
         textStatus.font.bold = false
 
         if (myDevice) {
@@ -154,7 +154,6 @@ Item {
 
         // Has datas? always display them
         if (myDevice.deviceTempC > 0) {
-
             humi.visible = (myDevice.deviceHygro > 0) ? true : false
             humi_indicator.text = myDevice.deviceHygro + "%"
             humi_data.width = normalize(myDevice.deviceHygro, 0, 50) * humi_bg.width
@@ -169,6 +168,22 @@ Item {
             condu.visible = (myDevice.deviceConductivity > 0) ? true : false
             condu_indicator.text = myDevice.deviceConductivity + " µS/cm"
             condu_data.width = normalize(myDevice.deviceConductivity, 0, 750) * condu_bg.width
+        } else {
+            humi.visible = true
+            humi_indicator.text = " ? "
+            humi_data.width = 0
+
+            temp.visible = true
+            temp_indicator.text = " ? "
+            temp_data.width = 0
+
+            lumi.visible = true
+            lumi_indicator.text = " ? "
+            lumi_data.width = 0
+
+            condu.visible = true
+            condu_indicator.text = " ? "
+            condu_data.width = 0
         }
 
         //
@@ -186,7 +201,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 128
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -197,12 +212,13 @@ Item {
 
         Column {
             id: plantPanel
-
-            anchors.fill: parent
-            anchors.topMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.left: parent.left
 
             Text {
                 id: textDeviceName
+                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 12
 
@@ -210,6 +226,7 @@ Item {
 
                 font.pixelSize: 24
                 text: myDevice.deviceName
+                verticalAlignment: Text.AlignVCenter
                 font.capitalization: Font.AllUppercase
                 color: Theme.colorText
 
@@ -237,7 +254,7 @@ Item {
 
                 Text {
                     id: labelPlant
-                    width: 70
+                    width: 72
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -252,9 +269,11 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelPlant.right
                     anchors.leftMargin: 8
-                    padding: 4
 
+                    padding: 4
+                    color: "black"
                     font.pixelSize: 16
+
                     onEditingFinished: {
                         if (text) {
                             imageEditPlant.visible = false
@@ -278,7 +297,6 @@ Item {
                                 imageEditPlant.visible = true
                             }
                         }
-
                         onClicked: {
                             imageEditPlant.visible = true;
                             mouse.accepted = false;
@@ -292,7 +310,6 @@ Item {
                         onPositionChanged: mouse.accepted = false;
                         onPressAndHold: mouse.accepted = false;
                     }
-
                     ImageSvg {
                         id: imageEditPlant
                         width: 24
@@ -318,7 +335,7 @@ Item {
 
                 Text {
                     id: labelLocation
-                    width: 70
+                    width: 72
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -333,9 +350,11 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelLocation.right
                     anchors.leftMargin: 8
-                    padding: 4
 
+                    padding: 4
+                    color: "black"
                     font.pixelSize: 16
+
                     onEditingFinished: {
                         if (text) {
                             imageEditLocation.visible = false
@@ -346,7 +365,6 @@ Item {
                         myDevice.setLocationName(text)
                         focus = false
                     }
-
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -360,7 +378,6 @@ Item {
                                 imageEditLocation.visible = true
                             }
                         }
-
                         onClicked: {
                             imageEditLocation.visible = true;
                             mouse.accepted = false;
@@ -374,7 +391,6 @@ Item {
                         onPositionChanged: mouse.accepted = false;
                         onPressAndHold: mouse.accepted = false;
                     }
-
                     ImageSvg {
                         id: imageEditLocation
                         width: 24
@@ -400,7 +416,7 @@ Item {
 
                 Text {
                     id: labelStatus
-                    width: 70
+                    width: 72
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -417,6 +433,7 @@ Item {
                     anchors.leftMargin: 8
 
                     text: qsTr("Loading...")
+                    color: "black"
                     padding: 4
                     font.pixelSize: 16
                 }
@@ -430,7 +447,7 @@ Item {
         clip: true
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 8
+        anchors.topMargin: 4
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -454,12 +471,12 @@ Item {
 
                 Text {
                     id: humi_legend
-                    width: 96
+                    width: 90
                     color: Theme.colorText
                     text: qsTr("Humidity")
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: humi_bg.verticalCenter
                     font.pixelSize: 14
                 }
@@ -474,11 +491,11 @@ Item {
                     anchors.left: humi_legend.right
                     anchors.leftMargin: 12
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 20
 
                     Rectangle {
                         id: humi_data
-                        width: 150
+                        width: 0
                         color: Theme.colorBlue
                         radius: 3
                         anchors.top: parent.top
@@ -492,13 +509,13 @@ Item {
                     Text {
                         id: humi_indicator
                         x: {
-                            if (humi_data.width < width/2) { // left
+                            if (humi_data.width < (width/2 + 8)) { // left
                                 humi_indicator_triangle.anchors.horizontalCenterOffset = -width/2 + 4
                                 return 4
-                            } else if ((humi_bg.width - humi_data.width) < width/2) { // right
+                            } else if ((humi_bg.width - humi_data.width) < (width/2 + 8)) { // right
                                 humi_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
                                 return humi_bg.width - width - 4
-                            } else { //whatever
+                            } else { // whatever
                                 humi_indicator_triangle.anchors.horizontalCenterOffset = 0
                                 return humi_data.width - width/2 - 4
                             }
@@ -506,7 +523,7 @@ Item {
                         y: -22
                         height: 15
                         color: "white"
-                        text: qsTr("21%")
+                        text: " ? "
                         horizontalAlignment: Text.AlignHCenter
                         font.bold: true
                         font.pixelSize: 12
@@ -548,12 +565,12 @@ Item {
 
                 Text {
                     id: temp_legend
-                    width: 96
+                    width: 90
                     color: Theme.colorText
                     text: qsTr("Temperature")
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: temp_bg.verticalCenter
                     font.pixelSize: 14
                 }
@@ -568,11 +585,11 @@ Item {
                     anchors.left: temp_legend.right
                     anchors.leftMargin: 12
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 20
 
                     Rectangle {
                         id: temp_data
-                        width: 150
+                        width: 0
                         color: Theme.colorGreen
                         radius: 3
                         anchors.top: parent.top
@@ -586,13 +603,13 @@ Item {
                     Text {
                         id: temp_indicator
                         x: {
-                            if (temp_data.width < width/2) { // left
+                            if (temp_data.width < (width/2 + 8)) { // left
                                 temp_indicator_triangle.anchors.horizontalCenterOffset = -width/2 + 4
                                 return 4
-                            } else if ((temp_bg.width - temp_data.width) < width/2) { // right
+                            } else if ((temp_bg.width - temp_data.width) < (width/2 + 8)) { // right
                                 temp_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
                                 return temp_bg.width - width - 4
-                            } else { //whatever
+                            } else { // whatever
                                 temp_indicator_triangle.anchors.horizontalCenterOffset = 0
                                 return temp_data.width - width/2 - 4
                             }
@@ -600,7 +617,7 @@ Item {
                         y: -22
                         height: 15
                         color: "white"
-                        text: qsTr("21%")
+                        text: " ? "
                         horizontalAlignment: Text.AlignHCenter
                         font.bold: true
                         font.pixelSize: 12
@@ -642,12 +659,12 @@ Item {
 
                 Text {
                     id: lumi_legend
-                    width: 96
+                    width: 90
                     color: Theme.colorText
                     text: qsTr("Luminosity")
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: lumi_bg.verticalCenter
                     font.pixelSize: 14
                 }
@@ -662,11 +679,11 @@ Item {
                     anchors.left: lumi_legend.right
                     anchors.leftMargin: 12
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 20
 
                     Rectangle {
                         id: lumi_data
-                        width: 150
+                        width: 0
                         color: Theme.colorYellow
                         radius: 3
                         anchors.top: parent.top
@@ -680,13 +697,13 @@ Item {
                     Text {
                         id: lumi_indicator
                         x: {
-                            if (lumi_data.width < width/2) { // left
+                            if (lumi_data.width < (width/2 + 8)) { // left
                                 lumi_indicator_triangle.anchors.horizontalCenterOffset = -width/2 + 4
                                 return 4
-                            } else if ((lumi_bg.width - lumi_data.width) < width/2) { // right
+                            } else if ((lumi_bg.width - lumi_data.width) < (width/2 + 8)) { // right
                                 lumi_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
                                 return lumi_bg.width - width - 4
-                            } else { //whatever
+                            } else { // whatever
                                 lumi_indicator_triangle.anchors.horizontalCenterOffset = 0
                                 return lumi_data.width - width/2 - 4
                             }
@@ -694,7 +711,7 @@ Item {
                         y: -22
                         height: 15
                         color: "white"
-                        text: qsTr("21%")
+                        text: " ? "
                         horizontalAlignment: Text.AlignHCenter
                         font.bold: true
                         font.pixelSize: 12
@@ -736,7 +753,7 @@ Item {
 
                 Text {
                     id: condu_legend
-                    width: 96
+                    width: 90
                     color: Theme.colorText
                     text: qsTr("Conductivity")
                     horizontalAlignment: Text.AlignRight
@@ -754,13 +771,13 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 4
                     anchors.left: condu_legend.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 20
 
                     Rectangle {
                         id: condu_data
-                        width: 150
+                        width: 0
                         color: Theme.colorRed
                         radius: 3
                         anchors.top: parent.top
@@ -774,13 +791,13 @@ Item {
                     Text {
                         id: condu_indicator
                         x: {
-                            if (condu_data.width < width/2) { // left
+                            if (condu_data.width < (width/2 + 8)) { // left
                                 condu_indicator_triangle.anchors.horizontalCenterOffset = -width/2 + 4
                                 return 4
-                            } else if ((lumi_bg.width - condu_data.width) < width/2) { // right
+                            } else if ((condu_bg.width - condu_data.width) < (width/2 + 8)) { // right
                                 condu_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
-                                return lumi_bg.width - width - 4
-                            } else { //whatever
+                                return condu_bg.width - width - 4
+                            } else { // whatever
                                 condu_indicator_triangle.anchors.horizontalCenterOffset = 0
                                 return condu_data.width - width/2 - 4
                             }
@@ -788,7 +805,7 @@ Item {
                         y: -22
                         height: 15
                         color: "white"
-                        text: qsTr("21%")
+                        text: " ? "
                         horizontalAlignment: Text.AlignHCenter
                         font.bold: true
                         font.pixelSize: 12

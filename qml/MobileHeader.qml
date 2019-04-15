@@ -27,12 +27,14 @@ import com.watchflower.theme 1.0
 Rectangle {
     id: rectangleHeader
     width: parent.width
-    height: screenTopPadding + 56
+    height: screenTopPadding + barHeight
     color: Theme.colorHeader
 
     // Border can be good for material design
     //border.width: 1
     //border.color: Theme.colorHeader
+
+    property int barHeight: 52
 
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
@@ -109,8 +111,8 @@ Rectangle {
 
         MouseArea {
             id: leftArea
-            width: 56
-            height: 56
+            width: barHeight
+            height: barHeight
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.top: parent.top
@@ -118,8 +120,8 @@ Rectangle {
 
             ImageSvg {
                 id: leftMenuImg
-                width: 28
-                height: 28
+                width: barHeight/2
+                height: barHeight/2
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -130,8 +132,8 @@ Rectangle {
 
         MouseArea {
             id: rightArea
-            width: 44
-            height: 56
+            width: barHeight
+            height: barHeight
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.top: parent.top
@@ -140,8 +142,8 @@ Rectangle {
 
             ImageSvg {
                 id: rightMenuImg
-                width: 28
-                height: 28
+                width: barHeight/2
+                height: barHeight/2
                 visible: rightMenuEnabled
                 anchors.right: parent.right
                 anchors.rightMargin: 8
