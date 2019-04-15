@@ -25,6 +25,7 @@
         <file>ThemedRangeSlider.qml</file>
         <file>ItemMenuButton.qml</file>
         <file>ItemImageButton.qml</file>
+        <file>ItemDatasbar.qml</file>
         <file>ItemDeviceDatas.qml</file>
         <file>ImageSvg.qml</file>
         <file>WindowGeometrySaver.qml</file>
