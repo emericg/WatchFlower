@@ -93,7 +93,7 @@ Item {
             lumiLegend.visible = false
             lumiGraph.visible = false
         } else {
-            lumiGraph.visible = true
+            lumiLegend.visible = true
             lumiGraph.visible = true
             lumiGraph.loadGraph()
             graphCount += 1
@@ -102,7 +102,7 @@ Item {
             conduLegend.visible = false
             conduGraph.visible = false
         } else {
-            conduGraph.visible = false
+            conduLegend.visible = true
             conduGraph.visible = true
             conduGraph.loadGraph()
             graphCount += 1
@@ -247,7 +247,7 @@ Item {
             id: hygroGraph
             height: graphHeight
             graphDataSelected: "hygro"
-            graphViewSelected: "weekly"
+            graphViewSelected: "monthly"
         }
 
         Text {
@@ -263,7 +263,7 @@ Item {
             id: tempGraph
             height: graphHeight
             graphDataSelected: "temp"
-            graphViewSelected: "weekly"
+            graphViewSelected: "monthly"
         }
 
         Text {
@@ -279,7 +279,7 @@ Item {
             id: lumiGraph
             height: graphHeight
             graphDataSelected: "luminosity"
-            graphViewSelected: "weekly"
+            graphViewSelected: "monthly"
         }
 
         Text {
@@ -295,7 +295,7 @@ Item {
             id: conduGraph
             height: graphHeight
             graphDataSelected: "conductivity"
-            graphViewSelected: "weekly"
+            graphViewSelected: "monthly"
         }
     }
 }

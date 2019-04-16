@@ -292,8 +292,8 @@ Item {
                     }
                     ImageSvg {
                         id: imageEditPlant
-                        width: 24
-                        height: 24
+                        width: 20
+                        height: 20
                         anchors.left: parent.right
                         anchors.leftMargin: 6
                         anchors.verticalCenterOffset: 0
@@ -373,8 +373,8 @@ Item {
                     }
                     ImageSvg {
                         id: imageEditLocation
-                        width: 24
-                        height: 24
+                        width: 20
+                        height: 20
                         anchors.left: parent.right
                         anchors.leftMargin: 6
                         anchors.verticalCenterOffset: 0

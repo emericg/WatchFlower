@@ -145,7 +145,6 @@ Item {
                     textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
             }
         }
-
     }
 
     ////////////////////////////////////////////////////////////////////////////

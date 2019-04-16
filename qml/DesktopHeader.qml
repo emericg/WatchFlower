@@ -141,6 +141,10 @@ Rectangle {
         color: Theme.colorHeaderContent
 
         MouseArea {
+            anchors.rightMargin: -8
+            anchors.leftMargin: -8
+            anchors.bottomMargin: -8
+            anchors.topMargin: -8
             anchors.fill: parent
 
             onPressed: {

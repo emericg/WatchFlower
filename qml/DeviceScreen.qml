@@ -72,6 +72,7 @@ Item {
         miniMenu.visible = false
 
         rectangleDeviceDatas.loadDatas()
+        rectangleDeviceHistory.updateHeader()
         rectangleDeviceHistory.loadDatas()
         rectangleDeviceLimits.updateHeader()
         rectangleDeviceLimits.updateLimits()
@@ -276,14 +277,14 @@ Item {
                             rectangleContent.state = "datas"
 
                             // Update color bars with new limits
-                            rectangleDeviceDatas.updateDatas()
+                            //rectangleDeviceDatas.updateDatas()
                         }
                     }
                 }
             }
-/*
+
             Rectangle {
-                id: menuInfos
+                id: menuHistory
                 height: 40
                 color: "#ffffff"
                 anchors.right: parent.right
@@ -292,7 +293,7 @@ Item {
                 anchors.leftMargin: 0
 
                 Text {
-                    id: menuInfosText
+                    id: menuHistoryText
                     anchors.top: parent.top
                     anchors.topMargin: 0
                     anchors.bottom: parent.bottom
@@ -300,7 +301,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
-                    text: qsTr("Device infos")
+                    text: qsTr("Datas history")
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 18
                 }
@@ -310,20 +311,13 @@ Item {
                     anchors.fill: parent
 
                     onClicked: {
-                        menuInfos.color = Theme.colorMaterialDarkGrey
+                        menuHistory.color = Theme.colorMaterialDarkGrey
                         miniMenu.hideMiniMenu()
 
-                        if (plantPanel.visible) {
-                            plantPanel.visible = false
-                            devicePanel.visible = true
-                        } else {
-                            plantPanel.visible = true
-                            devicePanel.visible = false
-                        }
+                        rectangleContent.state = "history"
                     }
                 }
             }
-*/
         }
     }
 }

@@ -230,15 +230,20 @@ public slots:
     Q_INVOKABLE void getTempDatas(QDateTimeAxis *axis, QLineSeries *hygro, QLineSeries *temp, QLineSeries *lumi, QLineSeries *cond);
 
     // Daily graph
+    QVariantList getMonth();
+    QVariantList getMonthDatas(QString dataName);
+    QVariantList getMonthBackground(float maxValue);
+
+    // Daily graph
     QVariantList getDays();
     QVariantList getDatasDaily(QString dataName);
+    QVariantList getBackgroundDaily(float maxValue);
 
     // Hourly graph
     QVariantList getHours();
     QVariantList getDatasHourly(QString dataName);
     QVariantList getBackgroundHourly(float maxValue);
     QVariantList getBackgroundNightly(float maxValue);
-    QVariantList getBackgroundDaily(float maxValue);
 };
 
 /* ************************************************************************** */

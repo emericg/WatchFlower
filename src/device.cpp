@@ -617,6 +617,107 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 /* ************************************************************************** */
 
 /*!
+ * \brief Device::getMonth
+ * \return Last 30 days
+ *
+ * First day is always xxx
+ */
+QVariantList Device::getMonth()
+{
+    QVariantList lastSevenDays;
+
+    // first day is always today
+    QDate currentDay = QDate::currentDate();
+    lastSevenDays.prepend(currentDay.toString("dd"));
+
+    // then fill the 6 days before that
+    while (lastSevenDays.size() < 30)
+    {
+        currentDay = currentDay.addDays(-1);
+        lastSevenDays.prepend(currentDay.toString("dd"));
+    }
+
+    return lastSevenDays;
+/*
+    // format days (ex: "mon.")
+    QVariantList lastSevenDaysFormated;
+    for (int i = 0; i < lastSevenDays.size(); i++)
+    {
+        QString day = qvariant_cast<QString>(lastSevenDays.at(i));
+        day.truncate(2);
+        day += ".";
+        lastSevenDaysFormated.append(day);
+    }
+    */
+/*
+    qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
+    for (auto d: lastSevenDaysFormated)
+        qDebug() << d;
+*/
+    //return lastSevenDaysFormated;
+}
+
+QVariantList Device::getMonthDatas(QString dataName)
+{
+    QVariantList datas;
+    QDate nextDayToHandle = QDate::currentDate();
+
+    QSqlQuery datasPerDay;
+    datasPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
+                        "FROM datas WHERE deviceAddr = :deviceAddr " \
+                        "GROUP BY cast(strftime('%d', ts) as datetime) " \
+                        "ORDER BY ts DESC;");
+    datasPerDay.bindValue(":deviceAddr", getAddress());
+
+    if (datasPerDay.exec() == false)
+        qDebug() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
+
+    while (datasPerDay.next() && (datas.size() < 30))
+    {
+        int currentDay = datasPerDay.value(1).toInt();
+
+        // fill holes
+        while (currentDay != nextDayToHandle.day() && (datas.size() < 30))
+        {
+            datas.prepend(0);
+            //qDebug() << "> filling hole for day" << nextDayToHandle.day();
+
+            nextDayToHandle = nextDayToHandle.addDays(-1);
+        }
+        nextDayToHandle = nextDayToHandle.addDays(-1);
+
+        datas.prepend(datasPerDay.value(2));
+        //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
+    }
+
+    // add front padding if we don't have 7 days
+    while (datas.size() < 30)
+    {
+        datas.prepend(0);
+    }
+/*
+    // debug
+    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
+    for (auto d: datas)
+        qDebug() << d;
+*/
+    return datas;}
+QVariantList Device::getMonthBackground(float maxValue)
+{
+    QVariantList lastSevenDays;
+
+    while (lastSevenDays.size() < 30)
+    {
+        lastSevenDays.append(maxValue);
+    }
+
+    return lastSevenDays;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+/*!
  * \brief Device::getDays
  * \return List of days of the week
  *

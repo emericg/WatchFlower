@@ -36,14 +36,14 @@ Item {
     property string graphViewSelected: settingsManager.graphview
     property string graphDataSelected: settingsManager.graphdata
 
-    property string bgDayGraphColor: Theme.colorMaterialDarkGrey
+    property string bgDayGraphColor: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
     property string bgNightGraphColor: "#E1E1E1"
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
 
+        axisY0.min = 0;
         if (graphDataSelected == "hygro") {
             axisY0.max = 66
             myBarSet.color = Theme.colorBlue
@@ -59,7 +59,7 @@ Item {
         }
 
         // Decorations
-        if (graphViewSelected == "hourly") {
+        if (graphViewSelected == "daily") {
             backgroundDayBars.borderColor = "transparent"
             backgroundDayBars.color = bgDayGraphColor
             backgroundNightBars.borderColor = "transparent"
@@ -74,18 +74,21 @@ Item {
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("DeviceScreenBarCharts // updateGraph() >> " + myDevice)
 
         // Get datas
-        if (graphViewSelected == "hourly") {
+        if (graphViewSelected === "daily") {
             myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
-        } else {
+        } else if (graphViewSelected === "weekly") {
             myBarSeries.barWidth = 0.60
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
+        } else {
+            myBarSeries.barWidth = 0.80
+            axisX0.categories = myDevice.getMonth()
+            myBarSet.values = myDevice.getMonthDatas(graphDataSelected)
         }
 
         // Min axis
@@ -101,11 +104,13 @@ Item {
         axisY0.max = max_of_legend;
 
         // Decorations
-        if (graphViewSelected == "hourly") {
+        if (graphViewSelected == "daily") {
             backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
             backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
-        } else {
+        } else if (graphViewSelected == "weekly") {
             backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
+        } else {
+            backgroundDayBars.values = myDevice.getMonthBackground(max_of_legend)
         }
     }
 
@@ -114,7 +119,7 @@ Item {
     ChartView {
         id: myBarGraph
         anchors.fill: parent
-        anchors.topMargin: -20
+        anchors.topMargin: -25
         anchors.bottomMargin: -20
         anchors.leftMargin: -20
         anchors.rightMargin: -20
@@ -133,7 +138,7 @@ Item {
             labelsVisible: false
 
             axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
-            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false; labelsFont.pixelSize: 12; }
+            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false; labelsFont.pixelSize: 8; }
 
             BarSet { id: myBarSet; }
             BarSet { id: backgroundDayBars; }

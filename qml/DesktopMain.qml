@@ -59,10 +59,7 @@ ApplicationWindow {
             }
         }
 
-        onDeviceRefreshButtonClicked: {
-            if (curentlySelectedDevice)
-                curentlySelectedDevice.refreshDatas()
-        }
+        onDeviceRefreshButtonClicked: if (curentlySelectedDevice) curentlySelectedDevice.refreshDatas()
         onRefreshButtonClicked: deviceManager.refreshDevices()
         onRescanButtonClicked: deviceManager.scanDevices()
 
@@ -72,9 +69,7 @@ ApplicationWindow {
     }
     Connections {
         target: systrayManager
-        onSettingsClicked: {
-            content.state = "Settings"
-        }
+        onSettingsClicked: content.state = "Settings"
     }
 
     MouseArea {
