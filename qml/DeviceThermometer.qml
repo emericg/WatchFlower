@@ -220,12 +220,11 @@ Item {
             id: imageBattery
             width: 32
             height: 32
-
-            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-            color: Theme.colorHeaderContent
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
+            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+            color: Theme.colorHeaderContent
         }
 
         Item {
@@ -300,10 +299,10 @@ Item {
 
             ImageSvg {
                 id: imageEditLocation
-                width: 24
-                height: 24
+                width: 20
+                height: 20
                 anchors.left: textInputLocation.left
-                anchors.leftMargin: -24
+                anchors.leftMargin: -20
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: parent.verticalCenter
 

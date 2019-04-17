@@ -123,11 +123,7 @@ ApplicationWindow {
                 } else if (content.state === "Tutorial") {
                     // do nothing
                 } else {
-                    if (content.state === "DeviceSensor" && screenDeviceSensor.contentState === "limits") {
-                        screenDeviceSensor.contentState = "datas"
-                    } else {
-                        content.state = "DeviceList"
-                    }
+                    content.state = "DeviceList"
                 }
             } else {
                 content.state = "DeviceList"
@@ -302,10 +298,6 @@ ApplicationWindow {
                     visible: false
                     enabled: false
                 }
-                StateChangeScript {
-                    name: "secondScript"
-                    script: screenDeviceSensor.loadDevice()
-                }
             },
             State {
                 name: "DeviceThermo"
@@ -343,10 +335,6 @@ ApplicationWindow {
                     target: screenAbout
                     visible: false
                     enabled: false
-                }
-                StateChangeScript {
-                    name: "secondScript"
-                    script: screenDeviceThermometer.loadDevice()
                 }
             },
             State {

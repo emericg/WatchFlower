@@ -32,7 +32,6 @@ Item {
 
     function loadDatas() {
         if (typeof myDevice === "undefined") return
-
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
         //console.log("DeviceScreenDatas // loadDatas() >> " + settingsManager.graph)
 
@@ -50,7 +49,6 @@ Item {
 
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
-
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
         // Update graph

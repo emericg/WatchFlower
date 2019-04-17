@@ -76,13 +76,10 @@ Rectangle {
             }
 
             if (content.state === "DeviceSensor") {
-                setActiveDeviceDatas()
-
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false
             } else if (content.state === "DeviceThermo") {
-
                 buttonRefreshAll.visible = false
                 buttonRescan.visible = false
                 menuMain.visible = false

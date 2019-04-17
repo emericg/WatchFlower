@@ -263,10 +263,6 @@ ApplicationWindow {
                     visible: false
                     enabled: false
                 }
-                StateChangeScript {
-                    name: "secondScript"
-                    script: screenDeviceSensor.loadDevice()
-                }
             },
             State {
                 name: "DeviceThermo"
@@ -301,10 +297,6 @@ ApplicationWindow {
                     target: screenAbout
                     visible: false
                     enabled: false
-                }
-                StateChangeScript {
-                    name: "secondScript"
-                    script: screenDeviceThermometer.loadDevice()
                 }
             },
             State {

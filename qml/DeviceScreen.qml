@@ -44,15 +44,15 @@ Item {
         // desktop only
         onDeviceDatasButtonClicked: {
             header.setActiveDeviceDatas()
-            rectangleContent.state = "datas"
+            swipeView.currentIndex = 0
         }
         onDeviceHistoryButtonClicked: {
             header.setActiveDeviceHistory()
-            rectangleContent.state = "history"
+            swipeView.currentIndex = 1
         }
         onDeviceSettingsButtonClicked: {
             header.setActiveDeviceSettings()
-            rectangleContent.state = "limits"
+            swipeView.currentIndex = 2
         }
         // mobile only
         onRightMenuClicked: {
@@ -65,10 +65,11 @@ Item {
 
     function loadDevice() {
         if (typeof myDevice === "undefined") return
-
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
         rectangleContent.state = "datas"
+        header.setActiveDeviceDatas()
+        swipeView.currentIndex = 0
         miniMenu.visible = false
 
         rectangleDeviceDatas.loadDatas()
@@ -85,67 +86,34 @@ Item {
         id: rectangleContent
         anchors.fill: parent
 
-        ItemDeviceDatas {
+        SwipeView {
+            id: swipeView
             anchors.fill: parent
-            id: rectangleDeviceDatas
-        }
-        ItemDeviceHistory {
-            anchors.fill: parent
-            id: rectangleDeviceHistory
-        }
-        DeviceScreenLimits {
-            anchors.fill: parent
-            id: rectangleDeviceLimits
-        }
+            //anchors.bottomMargin: 48
 
-        state: "datas"
-        states: [
-            State {
-                name: "datas"
-                PropertyChanges {
-                    target: rectangleDeviceDatas
-                    visible: true
-                }
-                PropertyChanges {
-                    target: rectangleDeviceHistory
-                    visible: false
-                }
-                PropertyChanges {
-                    target: rectangleDeviceLimits
-                    visible: false
-                }
-            },
-            State {
-                name: "history"
-                PropertyChanges {
-                    target: rectangleDeviceDatas
-                    visible: false
-                }
-                PropertyChanges {
-                    target: rectangleDeviceHistory
-                    visible: true
-                }
-                PropertyChanges {
-                    target: rectangleDeviceLimits
-                    visible: false
-                }
-            },
-            State {
-                name: "limits"
-                PropertyChanges {
-                    target: rectangleDeviceDatas
-                    visible: false
-                }
-                PropertyChanges {
-                    target: rectangleDeviceHistory
-                    visible: false
-                }
-                PropertyChanges {
-                    target: rectangleDeviceLimits
-                    visible: true
-                }
+            currentIndex: 0
+            onCurrentIndexChanged: {
+                if (swipeView.currentIndex === 0)
+                    header.setActiveDeviceDatas()
+                else if (swipeView.currentIndex === 1)
+                    header.setActiveDeviceHistory()
+                else if (swipeView.currentIndex === 2)
+                  header.setActiveDeviceSettings()
             }
-        ]
+
+            ItemDeviceDatas {
+                //anchors.fill: parent
+                id: rectangleDeviceDatas
+            }
+            ItemDeviceHistory {
+                //anchors.fill: parent
+                id: rectangleDeviceHistory
+            }
+            DeviceScreenLimits {
+                //anchors.fill: parent
+                id: rectangleDeviceLimits
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -163,11 +131,7 @@ Item {
         function showMiniMenu() {
             menuRefresh.color = "#ffffff"
             menuLimits.color = "#ffffff"
-
-            if (rectangleContent.state === "datas")
-                menuLimitsText.text = qsTr("Edit limits")
-            else
-                menuLimitsText.text = qsTr("Show datas")
+            menuHistory.color = "#ffffff"
 
             if (!visible) {
                 visible = true
@@ -234,8 +198,9 @@ Item {
 
                     onClicked: {
                         menuRefresh.color = Theme.colorMaterialDarkGrey
-                        myDevice.refreshDatas()
                         miniMenu.hideMiniMenu()
+
+                        myDevice.refreshDatas()
                     }
                 }
             }
@@ -271,14 +236,7 @@ Item {
                         menuLimits.color = Theme.colorMaterialDarkGrey
                         miniMenu.hideMiniMenu()
 
-                        if (rectangleContent.state === "datas") {
-                            rectangleContent.state = "limits"
-                        } else {
-                            rectangleContent.state = "datas"
-
-                            // Update color bars with new limits
-                            //rectangleDeviceDatas.updateDatas()
-                        }
+                        //
                     }
                 }
             }
@@ -314,7 +272,7 @@ Item {
                         menuHistory.color = Theme.colorMaterialDarkGrey
                         miniMenu.hideMiniMenu()
 
-                        rectangleContent.state = "history"
+                        //
                     }
                 }
             }

@@ -140,7 +140,15 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            curentlySelectedDevice = boxDevice
+            if (curentlySelectedDevice != boxDevice) {
+                curentlySelectedDevice = boxDevice
+
+                if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                    screenDeviceThermometer.loadDevice()
+                else
+                    screenDeviceSensor.loadDevice()
+            }
+
             if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
                 content.state = "DeviceThermo"
             else
