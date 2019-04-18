@@ -423,9 +423,8 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Item { // ScrollView {
         clip: true
-        contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 4
@@ -436,7 +435,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
+        //Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
 
         Column {
             id: column

@@ -21,17 +21,14 @@
 
 import QtQuick 2.7
 
-// Qt 5.10 needed here...
-// You can change v2.2 into 2.1 but you'll need to comment the
-// ChartView / "legend.visible" line at the bottom of this file
-import QtCharts 2.2
-
 import com.watchflower.theme 1.0
 
 Item {
     id: deviceDatas
     width: 400
     height: 300
+
+    property string graphMode: "weekly"
 
     function updateHeader() {
         if (typeof myDevice === "undefined") return
@@ -135,7 +132,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 76
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 64 : 96
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -144,70 +141,80 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        Column {
-            id: plantPanel
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.left: parent.left
+        Row {
+            id: buttonPanel
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 16
+            anchors.top: parent.top
+            anchors.topMargin: 52
 
-            Text {
-                id: textDeviceName
+            ThemedButton {
+                id: buttonDone
+                width: 96
                 height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 12
+                text: qsTr("Month")
+                font.pointSize: 14
 
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
-                font.pixelSize: 24
-                text: myDevice.deviceName
-                verticalAlignment: Text.AlignVCenter
-                font.capitalization: Font.AllUppercase
-                color: Theme.colorText
-
-                ImageSvg {
-                    id: imageBattery
-                    width: 32
-                    height: 32
-                    rotation: 90
-                    anchors.verticalCenter: textDeviceName.verticalCenter
-                    anchors.left: textDeviceName.right
-                    anchors.leftMargin: 16
-
-                    source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                    color: Theme.colorIcons
+                onClicked: {
+                    graphMode = "monthly"
+                    updateDatas()
                 }
             }
 
-            Item {
-                id: status
-                height: 28
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+            ThemedButton {
+                id: buttonDone1
+                width: 96
+                height: 32
+                text: qsTr("Week")
+                font.pointSize: 14
 
-                Text {
-                    id: labelStatus
-                    width: 72
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Status")
-                    horizontalAlignment: Text.AlignRight
-                    color: Theme.colorText
-                    font.pixelSize: 15
+                onClicked: {
+                    graphMode = "weekly"
+                    updateDatas()
                 }
-                Text {
-                    id: textStatus
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: labelStatus.right
-                    anchors.leftMargin: 12
+            }
 
-                    text: qsTr("Loading...")
-                    color: Theme.colorText
-                    font.pixelSize: 16
+            ThemedButton {
+                id: buttonDone2
+                width: 96
+                height: 32
+                text: qsTr("Day")
+                font.pointSize: 14
+
+                onClicked: {
+                    graphMode = "daily"
+                    updateDatas()
                 }
+            }
+        }
+
+        Text {
+            id: textDeviceName
+            height: 32
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+
+            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+            font.pixelSize: 24
+            text: myDevice.deviceName
+            verticalAlignment: Text.AlignVCenter
+            font.capitalization: Font.AllUppercase
+            color: Theme.colorText
+
+            ImageSvg {
+                id: imageBattery
+                width: 32
+                height: 32
+                rotation: 90
+                anchors.verticalCenter: textDeviceName.verticalCenter
+                anchors.left: textDeviceName.right
+                anchors.leftMargin: 16
+
+                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                color: Theme.colorIcons
             }
         }
     }
@@ -247,7 +254,7 @@ Item {
             id: hygroGraph
             height: graphHeight
             graphDataSelected: "hygro"
-            graphViewSelected: "monthly"
+            graphViewSelected: graphMode
         }
 
         Text {
@@ -263,7 +270,7 @@ Item {
             id: tempGraph
             height: graphHeight
             graphDataSelected: "temp"
-            graphViewSelected: "monthly"
+            graphViewSelected: graphMode
         }
 
         Text {
@@ -279,7 +286,7 @@ Item {
             id: lumiGraph
             height: graphHeight
             graphDataSelected: "luminosity"
-            graphViewSelected: "monthly"
+            graphViewSelected: graphMode
         }
 
         Text {
@@ -295,7 +302,7 @@ Item {
             id: conduGraph
             height: graphHeight
             graphDataSelected: "conductivity"
-            graphViewSelected: "monthly"
+            graphViewSelected: graphMode
         }
     }
 }

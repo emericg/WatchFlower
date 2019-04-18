@@ -36,7 +36,10 @@ Item {
         target: myDevice
         onStatusUpdated: rectangleDeviceDatas.updateHeader()
         onLimitsUpdated: rectangleDeviceDatas.updateDatas()
-        onDatasUpdated: rectangleDeviceDatas.updateDatas()
+        onDatasUpdated: {
+            rectangleDeviceDatas.updateDatas()
+            rectangleDeviceHistory.updateDatas()
+        }
     }
 
     Connections {
@@ -67,8 +70,7 @@ Item {
         if (typeof myDevice === "undefined") return
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
-        rectangleContent.state = "datas"
-        header.setActiveDeviceDatas()
+        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") header.setActiveDeviceDatas()
         swipeView.currentIndex = 0
         miniMenu.visible = false
 
@@ -93,12 +95,14 @@ Item {
 
             currentIndex: 0
             onCurrentIndexChanged: {
-                if (swipeView.currentIndex === 0)
-                    header.setActiveDeviceDatas()
-                else if (swipeView.currentIndex === 1)
-                    header.setActiveDeviceHistory()
-                else if (swipeView.currentIndex === 2)
-                  header.setActiveDeviceSettings()
+                if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
+                    if (swipeView.currentIndex === 0)
+                        header.setActiveDeviceDatas()
+                    else if (swipeView.currentIndex === 1)
+                        header.setActiveDeviceHistory()
+                    else if (swipeView.currentIndex === 2)
+                        header.setActiveDeviceSettings()
+                }
             }
 
             ItemDeviceDatas {

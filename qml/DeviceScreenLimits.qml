@@ -286,7 +286,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Item { // ScrollView {
         clip: true
 
         anchors.top: rectangleHeader.bottom
@@ -298,7 +298,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
+        //Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
 
         Column {
             id: column
@@ -550,28 +550,6 @@ Item {
                     anchors.left: imageCondu.right
                 }
             }
-/*
-            Item {
-                id: itemDone
-                height: 64
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-
-                ThemedButton {
-                    id: buttonDone
-                    width: 140
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("OK I'm done!")
-                    font.pointSize: 14
-                    onClicked: rectangleContent.state = "datas"
-                }
-            }
-*/
         }
     }
 }
