@@ -35,7 +35,6 @@ Item {
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("DeviceScreenAioCharts // loadGraph() >> " + myDevice)
 
         if ((myDevice.deviceCapabilities & 2) == 0) {
@@ -54,7 +53,6 @@ Item {
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("DeviceScreenAioCharts // updateGraph() >> " + myDevice)
 
         //// DATAS
@@ -124,8 +122,8 @@ Item {
         }
 
         //// VISIBILITY
-        hygroDatas.visible = !(myDevice.available && myDevice.deviceHygro <= 0)
-        conduDatas.visible = !(myDevice.available && myDevice.deviceConductivity <= 0)
+        hygroDatas.visible = (myDevice.available && myDevice.deviceHygro > 0)
+        conduDatas.visible = (myDevice.available && myDevice.deviceConductivity > 0)
 
         if (myDevice.deviceName === "Flower care" && myDevice.deviceHygro <= 0) {
             // Temp is primary

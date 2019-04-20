@@ -62,7 +62,7 @@ class SettingsManager: public QObject
     int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphMode = "bar";
-    QString m_graphDefaultView = "daily";
+    QString m_graphDefaultView = "monthly";
     QString m_graphDefaultData = "hygro";
 
     bool readSettings();

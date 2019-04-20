@@ -28,6 +28,7 @@ Button {
     id: control
 
     property string color: Theme.colorText
+    property bool selected: false
 
     contentItem: Text {
         text: control.text
@@ -44,7 +45,7 @@ Button {
         implicitHeight: 40
         radius: 4
         opacity: enabled ? 1 : 0.3
-        color: control.down ? (control.color === "white" ? "#66FFFFFF" : "#66666666") : "transparent"
+        color: control.down || control.selected ? (control.color === "white" ? "#66FFFFFF" : "#CCFFFFFF") : "transparent"
 
         border.width: 2
         border.color: control.color

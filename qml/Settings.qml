@@ -324,10 +324,10 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
-                SpinBox {
+                ThemedSpinBox {
                     id: spinBox_update
                     width: 128
-                    height: 40
+                    height: 36
                     value: 60
                     onValueChanged: settingsManager.interval = value
                     to: 180
@@ -470,142 +470,54 @@ Item {
                     anchors.left: image_graph.right
                     anchors.leftMargin: 16
 
-                    text: qsTr("Preferred graph")
+                    text: qsTr("Default history mode")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 ThemedRadioButton {
-                    id: radioDelegateBar
+                    id: radioDelegateGraphMonthly
                     height: 40
-                    text: qsTr("Bar")
+                    text: qsTr("Monthly")
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: radioDelegateLine.left
+                    anchors.right: radioDelegateGraphWeekly.left
 
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.graph === "bar") {
-                            radioDelegateBar.checked = true
-                            radioDelegateLine.checked = false
+                        if (settingsManager.graphview === "monthly") {
+                            radioDelegateGraphMonthly.checked = true
+                            radioDelegateGraphWeekly.checked = false
                         } else {
-                            radioDelegateBar.checked = false
-                            radioDelegateLine.checked = true
+                            radioDelegateGraphMonthly.checked = false
+                            radioDelegateGraphWeekly.checked = true
                         }
                     }
                     onCheckedChanged: {
                         if (checked == true)
-                            settingsManager.graph = "bar"
+                            settingsManager.graphview = "monthly"
                     }
                 }
                 ThemedRadioButton {
-                    id: radioDelegateLine
+                    id: radioDelegateGraphWeekly
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
 
-                    text: qsTr("Line")
+                    text: qsTr("Weekly")
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.graph === "line") {
-                            radioDelegateBar.checked = false
-                            radioDelegateLine.checked = true
+                        if (settingsManager.graphview === "weekly") {
+                            radioDelegateGraphMonthly.checked = false
+                            radioDelegateGraphWeekly.checked = true
                         } else {
-                            radioDelegateLine.checked = false
-                            radioDelegateBar.checked = true
+                            radioDelegateGraphWeekly.checked = false
+                            radioDelegateGraphMonthly.checked = true
                         }
                     }
                     onCheckedChanged: {
                         if (checked == true)
-                            settingsManager.graph = "line"
-                    }
-                }
-            }
-
-            Item {
-                id: element8
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-
-                // desktop only
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && (settingsManager.graph === 'bar')
-
-                ImageSvg {
-                    id: image_graph2
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorIcons
-                    source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                }
-
-                Text {
-                    id: text_graph2
-                    height: 40
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: image_graph2.right
-                    anchors.leftMargin: 16
-
-                    text: qsTr("Preferred graph")
-                    font.pixelSize: 16
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                ComboBox {
-                    id: comboBox_data
-                    anchors.top: comboBox_view.top
-                    anchors.topMargin: 0
-                    model: ListModel {
-                        id: cbItemsData
-                        ListElement { text: qsTr("hygro"); }
-                        ListElement { text: qsTr("temp"); }
-                        ListElement { text: qsTr("luminosity"); }
-                        ListElement { text: qsTr("conductivity"); }
-                    }
-                    Component.onCompleted: {
-                        currentIndex = find(settingsManager.graphdata)
-                        if (currentIndex === -1) { currentIndex = 0 }
-                    }
-                    property bool cbinit: false
-                    width: 100
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    onCurrentIndexChanged: {
-                        if (cbinit)
-                            settingsManager.graphdata = cbItemsData.get(currentIndex).text
-                        else
-                            cbinit = true
-                    }
-                }
-
-                ComboBox {
-                    id: comboBox_view
-                    model: ListModel {
-                        id: cbItemsView
-                        ListElement { text: qsTr("daily"); }
-                        ListElement { text: qsTr("hourly"); }
-                    }
-                    Component.onCompleted: {
-                        currentIndex = find(settingsManager.graphview)
-                        if (currentIndex === -1) { currentIndex = 0 }
-                    }
-                    property bool cbinit: false
-                    width: 100
-                    anchors.right: comboBox_data.left
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-                    onCurrentIndexChanged: {
-                        if (cbinit)
-                            settingsManager.graphview = cbItemsView.get(currentIndex).text
-                        else
-                            cbinit = true
+                            settingsManager.graphview = "weekly"
                     }
                 }
             }

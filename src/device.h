@@ -44,7 +44,7 @@ QT_CHARTS_USE_NAMESPACE
 enum DeviceCapabilities {
     DEVICE_BATTERY      = (1 << 0), //!< Can report its battery level
     DEVICE_TEMP         = (1 << 1), //!< Has a temperature sensor
-    DEVICE_HYGRO        = (1 << 2), //!< Has a hygrometry sensor
+    DEVICE_HYGRO        = (1 << 2), //!< Has a hygrometry (or humidity) sensor
     DEVICE_LUMINOSITY   = (1 << 3), //!< Has a luminosity sensor
     DEVICE_CONDUCTIVITY = (1 << 4), //!< Has a conductivity sensor
 
@@ -182,8 +182,8 @@ public slots:
 
     int getCapabilities() const { return m_capabilities; }
 
-    bool isAvailable() const { return m_available; }
-    bool isUpdating() const { return m_updating; }
+    bool isAvailable() const { return m_available; }    //!< Has at least >12h old datas
+    bool isUpdating() const { return m_updating; }      //!< Is currently being updated
 
     // BLE device infos
     QString getFirmware() const { return m_firmware; }
@@ -191,11 +191,10 @@ public slots:
     int getBattery() const { return m_battery; }
 
     // BLE device datas
-    float getTemp() const;
     int getHygro() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
-
+    float getTemp() const;
     QString getTempString() const;
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;

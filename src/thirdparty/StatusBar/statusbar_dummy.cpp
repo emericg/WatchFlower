@@ -29,10 +29,10 @@ bool StatusBarPrivate::isAvailable_sys()
 
 void StatusBarPrivate::setColor_sys(const QColor &color)
 {
-    Q_UNUSED(color);
+    Q_UNUSED(color)
 }
 
 void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
 {
-    Q_UNUSED(theme);
+    Q_UNUSED(theme)
 }

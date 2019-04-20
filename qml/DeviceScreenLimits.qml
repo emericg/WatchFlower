@@ -219,8 +219,8 @@ Item {
                 }
                 ImageSvg {
                     id: imageFwUpdate
-                    width: 24
-                    height: 24
+                    width: 20
+                    height: 20
                     anchors.left: textFirmware.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -342,7 +342,7 @@ Item {
                     anchors.leftMargin: 4
                     anchors.rightMargin: 4
 
-                    from: 1
+                    from: 0
                     to: 66
                     stepSize: 1
                     first.value: myDevice.limitHygroMin
@@ -530,8 +530,8 @@ Item {
                     anchors.leftMargin: 4
                     anchors.rightMargin: 4
 
-                    from: 100
-                    to: 1000
+                    from: 0
+                    to: 750
                     stepSize: 10
                     first.value: myDevice.limitConduMin
                     second.value: myDevice.limitConduMax

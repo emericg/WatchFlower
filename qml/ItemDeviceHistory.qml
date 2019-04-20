@@ -28,7 +28,7 @@ Item {
     width: 400
     height: 300
 
-    property string graphMode: "weekly"
+    property string graphMode: settingsManager.graphview
 
     function updateHeader() {
         if (typeof myDevice === "undefined") return
@@ -132,7 +132,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 64 : 96
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 56 : 96
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -146,7 +146,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 16
             anchors.top: parent.top
-            anchors.topMargin: 52
+            anchors.topMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 12 : 52
 
             ThemedButton {
                 id: buttonDone
@@ -154,6 +154,7 @@ Item {
                 height: 32
                 text: qsTr("Month")
                 font.pointSize: 14
+                selected: (graphMode === "monthly")
 
                 onClicked: {
                     graphMode = "monthly"
@@ -167,6 +168,7 @@ Item {
                 height: 32
                 text: qsTr("Week")
                 font.pointSize: 14
+                selected: (graphMode === "weekly")
 
                 onClicked: {
                     graphMode = "weekly"
@@ -180,6 +182,7 @@ Item {
                 height: 32
                 text: qsTr("Day")
                 font.pointSize: 14
+                selected: (graphMode === "daily")
 
                 onClicked: {
                     graphMode = "daily"

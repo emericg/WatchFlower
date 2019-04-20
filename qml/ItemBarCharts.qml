@@ -33,8 +33,8 @@ Item {
     width: parent.width
     anchors.margins: 0
 
-    property string graphViewSelected: settingsManager.graphview
-    property string graphDataSelected: settingsManager.graphdata
+    property string graphViewSelected
+    property string graphDataSelected
 
     property string bgDayGraphColor: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
     property string bgNightGraphColor: "#E1E1E1"

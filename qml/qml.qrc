@@ -20,15 +20,16 @@
         <file>DeviceScreenBarCharts.qml</file>
         <file>ThemeEngine.qml</file>
         <file>ThemedButton.qml</file>
-        <file>ThemedSwitch.qml</file>
         <file>ThemedRadioButton.qml</file>
         <file>ThemedRangeSlider.qml</file>
+        <file>ThemedSpinBox.qml</file>
+        <file>ThemedSwitch.qml</file>
+        <file>ImageSvg.qml</file>
         <file>ItemMenuButton.qml</file>
         <file>ItemImageButton.qml</file>
         <file>ItemDatasbar.qml</file>
         <file>ItemDeviceDatas.qml</file>
         <file>ItemDeviceHistory.qml</file>
-        <file>ImageSvg.qml</file>
         <file>WindowGeometrySaver.qml</file>
         <file>ItemBarCharts.qml</file>
     </qresource>

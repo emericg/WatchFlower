@@ -162,6 +162,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getNotifs())
         {
+            // Only if the sensor has a plant
             if ((m_capabilities & DEVICE_PLANT) != 0 &&
                 m_hygro > 0 && m_hygro < m_limitHygroMin)
             {
@@ -559,13 +560,13 @@ void Device::serviceScanDone()
 void Device::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
-    Q_UNUSED(uuid);
+    Q_UNUSED(uuid)
 }
 
 void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 {
     //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-    Q_UNUSED(newState);
+    Q_UNUSED(newState)
 }
 
 bool Device::hasControllerError() const
@@ -583,8 +584,8 @@ void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 
 void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    Q_UNUSED(c);
-    Q_UNUSED(value);
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 /*
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
@@ -599,8 +600,8 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
 
 void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    Q_UNUSED(c);
-    Q_UNUSED(value);
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 /*
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
@@ -703,6 +704,7 @@ QVariantList Device::getMonthDatas(QString dataName)
 */
     return datas;
 }
+
 QVariantList Device::getMonthBackground(float maxValue)
 {
     QVariantList lastSevenDays;
@@ -1066,9 +1068,9 @@ void Device::getTempDatas(QDateTimeAxis *axis,
         }
         int64_t timecode = date.toMSecsSinceEpoch();
 
-        temp->append(timecode, graphDatas.value(0).toFloat());
-        hygro->append(timecode, graphDatas.value(1).toFloat());
-        lumi->append(timecode, graphDatas.value(2).toFloat());
-        cond->append(timecode, graphDatas.value(3).toFloat());
+        temp->append(timecode, graphDatas.value(0).toReal());
+        hygro->append(timecode, graphDatas.value(1).toReal());
+        lumi->append(timecode, graphDatas.value(2).toReal());
+        cond->append(timecode, graphDatas.value(3).toReal());
     }
 }

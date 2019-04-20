@@ -35,7 +35,7 @@ RadioButton {
         x: control.leftPadding
         y: parent.height / 2 - height / 2
         radius: 13
-        border.color: control.down ? Theme.colorGreen : Theme.colorMaterialDarkGrey
+        border.color: control.down ? Theme.colorGreen : Theme.colorBorders
 
         Rectangle {
             width: 16

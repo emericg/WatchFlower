@@ -93,6 +93,8 @@ Item {
             anchors.fill: parent
             //anchors.bottomMargin: 48
 
+            interactive: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
             currentIndex: 0
             onCurrentIndexChanged: {
                 if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {

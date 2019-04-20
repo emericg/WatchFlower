@@ -42,6 +42,7 @@ Item {
 
     readonly property string colorIcons: "#606060"
     readonly property string colorSeparators: "#d3d3d3"
+    readonly property string colorBorders: "#b3b3b3"
 
     // Palette
     readonly property string colorLightGreen: "#09debc"
