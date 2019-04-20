@@ -20,6 +20,8 @@
  */
 
 import QtQuick 2.7
+import QtQuick.Layouts 1.12
+import QtQuick.Window 2.2
 
 import com.watchflower.theme 1.0
 
@@ -69,44 +71,65 @@ Item {
         graphCount = 0
 
         if ((myDevice.deviceCapabilities & 2) == 0) {
-            tempLegend.visible = false
             tempGraph.visible = false
         } else {
-            tempLegend.visible = true
             tempGraph.visible = true
             tempGraph.loadGraph()
             graphCount += 1
         }
         if ((myDevice.deviceCapabilities & 4) == 0) {
-            hygroLegend.visible = false
             hygroGraph.visible = false
         } else {
-            hygroLegend.visible = true
-            hygroGraph.visible = true
-            hygroGraph.loadGraph()
-            graphCount += 1
+            if (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0) {
+                hygroGraph.visible = true
+                hygroGraph.loadGraph()
+                graphCount += 1
+            } else  {
+                hygroGraph.visible = false
+            }
         }
         if ((myDevice.deviceCapabilities & 8) == 0) {
-            lumiLegend.visible = false
             lumiGraph.visible = false
         } else {
-            lumiLegend.visible = true
             lumiGraph.visible = true
             lumiGraph.loadGraph()
             graphCount += 1
         }
         if ((myDevice.deviceCapabilities & 16) == 0) {
-            conduLegend.visible = false
             conduGraph.visible = false
         } else {
-            conduLegend.visible = true
-            conduGraph.visible = true
-            conduGraph.loadGraph()
-            graphCount += 1
+            if (myDevice.deviceConductivity > 0 || myDevice.countDatas("conductivity") > 0) {
+                conduGraph.visible = true
+                conduGraph.loadGraph()
+                graphCount += 1
+            } else  {
+                conduGraph.visible = false
+            }
         }
-        graphHeight = (column.height - graphCount*hygroLegend.height) / graphCount
+
+        updateSize()
 
         updateDatas()
+    }
+
+    function updateSize() {
+        //console.log("width: " + graphGrid.width)
+        //console.log("height: " + graphGrid.height)
+
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+            if (Screen.primaryOrientation === 1 /*Qt::PortraitOrientation*/)
+                graphGrid.columns = 1
+            else
+                graphGrid.columns = 2
+        } else {
+            if (graphGrid.width < 1080)
+                graphGrid.columns = 1
+            else
+                graphGrid.columns = 2
+        }
+
+        graphWidth = (graphGrid.width) / graphGrid.columns
+        graphHeight = (graphGrid.height) / (graphCount / graphGrid.columns)
     }
 
     function updateDatas() {
@@ -225,11 +248,13 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     property int graphHeight: 256
+    property int graphWidth: 256
     property int graphCount: 4
 
-    Column {
-        id: column
+    Grid {
+        id: graphGrid
         clip: true
+        columns: 1
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 12
@@ -240,72 +265,80 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        onHeightChanged: {
-            graphHeight = (height - graphCount*hygroLegend.height) / graphCount
-        }
+        onColumnsChanged: updateSize()
+        onWidthChanged: updateSize()
+        onHeightChanged: updateSize()
 
-        Text {
-            id: hygroLegend
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            text: "Hygrometry"
-            color: Theme.colorIcons
-            font.bold: true
-            font.pointSize: 16
-        }
-        ItemBarCharts {
+        ItemDataChart {
             id: hygroGraph
             height: graphHeight
+            width: graphWidth
             graphDataSelected: "hygro"
             graphViewSelected: graphMode
+
+            Text {
+                id: hygroLegend
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                text: "Hygrometry"
+                color: Theme.colorIcons
+                font.bold: false
+                font.pointSize: 16
+            }
         }
 
-        Text {
-            id: tempLegend
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            text: qsTr("Temperature")
-            color: Theme.colorIcons
-            font.bold: true
-            font.pointSize: 16
-        }
-        ItemBarCharts {
+        ItemDataChart {
             id: tempGraph
             height: graphHeight
+            width: graphWidth
             graphDataSelected: "temp"
             graphViewSelected: graphMode
+
+            Text {
+                id: tempLegend
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                text: qsTr("Temperature")
+                color: Theme.colorIcons
+                font.bold: false
+                font.pointSize: 16
+            }
         }
 
-        Text {
-            id: lumiLegend
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            text: qsTr("Luminosity")
-            color: Theme.colorIcons
-            font.bold: true
-            font.pointSize: 16
-        }
-        ItemBarCharts {
+        ItemDataChart {
             id: lumiGraph
             height: graphHeight
+            width: graphWidth
             graphDataSelected: "luminosity"
             graphViewSelected: graphMode
+
+            Text {
+                id: lumiLegend
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                text: qsTr("Luminosity")
+                color: Theme.colorIcons
+                font.bold: false
+                font.pointSize: 16
+            }
         }
 
-        Text {
-            id: conduLegend
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            text: qsTr("Conductivity")
-            color: Theme.colorIcons
-            font.bold: true
-            font.pointSize: 16
-        }
-        ItemBarCharts {
+        ItemDataChart {
             id: conduGraph
             height: graphHeight
+            width: graphWidth
             graphDataSelected: "conductivity"
             graphViewSelected: graphMode
+
+            Text {
+                id: conduLegend
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                text: qsTr("Conductivity")
+                color: Theme.colorIcons
+                font.bold: false
+                font.pointSize: 16
+            }
         }
     }
 }

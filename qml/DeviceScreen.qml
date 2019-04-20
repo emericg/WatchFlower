@@ -107,11 +107,11 @@ Item {
                 }
             }
 
-            ItemDeviceDatas {
+            DeviceScreenDatas {
                 //anchors.fill: parent
                 id: rectangleDeviceDatas
             }
-            ItemDeviceHistory {
+            DeviceScreenHistory {
                 //anchors.fill: parent
                 id: rectangleDeviceHistory
             }

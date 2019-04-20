@@ -80,7 +80,7 @@ Rectangle {
 
         // Update notif
         if (boxDevice.isUpdating()) {
-            if (boxDevice.deviceTempC > 0) {
+            if (boxDevice.lastUpdateMin < 720) {
                 // if we have data cached, used the little indicator
                 ble.visible = true
                 ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
@@ -99,7 +99,7 @@ Rectangle {
                 imageStatus.visible = false;
                 ble.visible = false
             } else {
-                if (boxDevice.deviceTempC > 0) {
+                if (boxDevice.lastUpdateMin < 720) {
                     // if we have data cached, used the little indicator
                     imageStatus.visible = false;
                     ble.visible = true
@@ -115,7 +115,7 @@ Rectangle {
         }
 
         // Has datas? always display them
-        if (boxDevice.deviceTempC > 0) {
+        if (boxDevice.lastUpdateMin < 720) {
             if (boxDevice.deviceName === "MJ_HT_V1") {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
@@ -145,19 +145,21 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            if (curentlySelectedDevice != boxDevice) {
-                curentlySelectedDevice = boxDevice
+            if (boxDevice.hasDatas()) {
+                if (curentlySelectedDevice != boxDevice) {
+                    curentlySelectedDevice = boxDevice
+
+                    if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                        screenDeviceThermometer.loadDevice()
+                    else
+                        screenDeviceSensor.loadDevice()
+                }
 
                 if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
-                    screenDeviceThermometer.loadDevice()
+                    content.state = "DeviceThermo"
                 else
-                    screenDeviceSensor.loadDevice()
+                    content.state = "DeviceSensor"
             }
-
-            if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
-                content.state = "DeviceThermo"
-            else
-                content.state = "DeviceSensor"
         }
     }
 

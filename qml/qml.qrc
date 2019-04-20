@@ -15,9 +15,14 @@
         <file>DeviceThermometer.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
+        <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
-        <file>DeviceScreenAioCharts.qml</file>
-        <file>DeviceScreenBarCharts.qml</file>
+        <file>ItemDataBar.qml</file>
+        <file>ItemDataChart.qml</file>
+        <file>ItemAioBarCharts.qml</file>
+        <file>ItemAioLineCharts.qml</file>
+        <file>ItemMenuButton.qml</file>
+        <file>ItemImageButton.qml</file>
         <file>ThemeEngine.qml</file>
         <file>ThemedButton.qml</file>
         <file>ThemedRadioButton.qml</file>
@@ -25,12 +30,6 @@
         <file>ThemedSpinBox.qml</file>
         <file>ThemedSwitch.qml</file>
         <file>ImageSvg.qml</file>
-        <file>ItemMenuButton.qml</file>
-        <file>ItemImageButton.qml</file>
-        <file>ItemDatasbar.qml</file>
-        <file>ItemDeviceDatas.qml</file>
-        <file>ItemDeviceHistory.qml</file>
         <file>WindowGeometrySaver.qml</file>
-        <file>ItemBarCharts.qml</file>
     </qresource>
 </RCC>

@@ -326,7 +326,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        DeviceScreenAioCharts {
+        ItemAioLineCharts {
             id: deviceScreenChart
             anchors.fill: parent
         }

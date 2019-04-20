@@ -199,6 +199,9 @@ public slots:
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
 
+    bool hasDatas() const;
+    int countDatas(const QString &dataName, int days = 31) const;
+
     // BLE device associated datas
     QString getLocationName() { return m_locationName; }
     void setLocationName(QString name);

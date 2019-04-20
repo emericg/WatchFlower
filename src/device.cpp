@@ -617,6 +617,52 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool Device::hasDatas() const
+{
+    // If we have immediate datas (<12h old)
+    if (m_hygro || m_temp > 0.0 || m_luminosity || m_conductivity)
+        return true;
+
+    // Otherwise, check if we have stored datas
+    QSqlQuery hasDatas;
+    hasDatas.prepare("SELECT COUNT(*) FROM datas WHERE deviceAddr = :deviceAddr;");
+    hasDatas.bindValue(":deviceAddr", getAddress());
+
+    if (hasDatas.exec() == false)
+        qDebug() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
+
+    while (hasDatas.next())
+    {
+        if (hasDatas.value(0).toInt() > 0) // datas count
+            return true;
+    }
+
+    return false;
+}
+
+int Device::countDatas(const QString &dataName, int days) const
+{
+    QSqlQuery datasCount;
+    datasCount.prepare("SELECT COUNT(" + dataName + ")" \
+                       "FROM datas " \
+                       "WHERE deviceAddr = :deviceAddr " \
+                            "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');" );
+    datasCount.bindValue(":deviceAddr", getAddress());
+
+    if (datasCount.exec() == false)
+        qDebug() << "> datasCount.exec() ERROR" << datasCount.lastError().type() << ":"  << datasCount.lastError().text();
+
+    while (datasCount.next())
+    {
+        return datasCount.value(0).toInt();
+    }
+
+    return 0;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
 /*!
  * \brief Device::getMonth
  * \return Last 30 days
@@ -663,19 +709,19 @@ QVariantList Device::getMonthDatas(QString dataName)
     QVariantList datas;
     QDate nextDayToHandle = QDate::currentDate();
 
-    QSqlQuery datasPerDay;
-    datasPerDay.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
+    QSqlQuery datasPerMonth;
+    datasPerMonth.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
                         "FROM datas WHERE deviceAddr = :deviceAddr " \
                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
                         "ORDER BY ts DESC;");
-    datasPerDay.bindValue(":deviceAddr", getAddress());
+    datasPerMonth.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerDay.exec() == false)
-        qDebug() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
+    if (datasPerMonth.exec() == false)
+        qDebug() << "> datasPerMonth.exec() ERROR" << datasPerMonth.lastError().type() << ":"  << datasPerMonth.lastError().text();
 
-    while (datasPerDay.next() && (datas.size() < 30))
+    while (datasPerMonth.next() && (datas.size() < 30))
     {
-        int currentDay = datasPerDay.value(0).toInt();
+        int currentDay = datasPerMonth.value(0).toInt();
 
         // fill holes
         while (currentDay != nextDayToHandle.day() && (datas.size() < 30))
@@ -687,7 +733,7 @@ QVariantList Device::getMonthDatas(QString dataName)
         }
         nextDayToHandle = nextDayToHandle.addDays(-1);
 
-        datas.prepend(datasPerDay.value(1));
+        datas.prepend(datasPerMonth.value(1));
         //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
     }
 

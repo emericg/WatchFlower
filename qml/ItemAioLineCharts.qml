@@ -122,11 +122,11 @@ Item {
         }
 
         //// VISIBILITY
-        hygroDatas.visible = (myDevice.available && myDevice.deviceHygro > 0)
-        conduDatas.visible = (myDevice.available && myDevice.deviceConductivity > 0)
+        hygroDatas.visible = (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0)
+        conduDatas.visible = (myDevice.deviceConductivity > 0 || myDevice.countDatas("conductivity") > 0)
 
-        if (myDevice.deviceName === "Flower care" && myDevice.deviceHygro <= 0) {
-            // Temp is primary
+        if (myDevice.deviceName === "Flower care" && (!hygroDatas.visible && !conduDatas.visible)) {
+            // Flower Care without hygro&conduDatas, temp is primary
             tempDatas.width = 3
             // Show lumi when only have it and temp
             lumiDatas.visible = true

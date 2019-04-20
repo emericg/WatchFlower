@@ -48,7 +48,7 @@ Item {
     readonly property string colorLightGreen: "#09debc"
     readonly property string colorGreen: "#07bf97"
     readonly property string colorDarkGreen: "#1ea892"
-    readonly property string colorBlue: "#408ab4"
+    readonly property string colorBlue: "#4CA1D5"
     readonly property string colorYellow: "#ffba5a"
     readonly property string colorRed: "#ff7657"
     readonly property string colorGrey: "#555151"

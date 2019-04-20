@@ -58,17 +58,41 @@ Item {
             myBarSet.color = Theme.colorRed
         }
 
-        // Decorations
-        if (graphViewSelected == "daily") {
-            backgroundDayBars.borderColor = "transparent"
-            backgroundDayBars.color = bgDayGraphColor
-            backgroundNightBars.borderColor = "transparent"
-            backgroundNightBars.color = bgNightGraphColor
-        } else {
-            backgroundDayBars.borderColor = "transparent"
-            backgroundDayBars.color = bgDayGraphColor
-            backgroundNightBars.borderColor = "transparent"
-            backgroundNightBars.values = [0]
+        loadAxis()
+    }
+
+    property string lastMode: ""
+    function loadAxis() {
+        if (lastMode != graphViewSelected) {
+            lastMode = graphViewSelected
+
+            // Decorations
+            if (graphViewSelected == "daily") {
+                backgroundDayBars.borderColor = "transparent"
+                backgroundDayBars.color = bgDayGraphColor
+                backgroundNightBars.borderColor = "transparent"
+                backgroundNightBars.color = bgNightGraphColor
+            } else {
+                backgroundDayBars.borderColor = "transparent"
+                backgroundDayBars.color = bgDayGraphColor
+                backgroundNightBars.borderColor = "transparent"
+                backgroundNightBars.values = [0]
+            }
+
+            //
+            if (graphViewSelected === "daily") {
+                myBarSeries.barWidth = 0.90
+                axisX0.labelsFont.pixelSize = 8
+                axisX0.categories = myDevice.getHours()
+            } else if (graphViewSelected === "weekly") {
+                myBarSeries.barWidth = 0.60
+                axisX0.labelsFont.pixelSize = 12
+                axisX0.categories = myDevice.getDays()
+            } else {
+                myBarSeries.barWidth = 0.80
+                axisX0.labelsFont.pixelSize = 6
+                axisX0.categories = myDevice.getMonth()
+            }
         }
     }
 
@@ -76,21 +100,14 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreenBarCharts // updateGraph() >> " + myDevice)
 
+        loadAxis()
+
         // Get datas
         if (graphViewSelected === "daily") {
-            myBarSeries.barWidth = 0.90
-            axisX0.labelsFont.pixelSize = 8
-            axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
         } else if (graphViewSelected === "weekly") {
-            myBarSeries.barWidth = 0.60
-            axisX0.labelsFont.pixelSize = 12
-            axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
         } else {
-            myBarSeries.barWidth = 0.80
-            axisX0.labelsFont.pixelSize = 6
-            axisX0.categories = myDevice.getMonth()
             myBarSet.values = myDevice.getMonthDatas(graphDataSelected)
         }
 
@@ -122,7 +139,7 @@ Item {
     ChartView {
         id: myBarGraph
         anchors.fill: parent
-        anchors.topMargin: -25
+        anchors.topMargin: 0
         anchors.bottomMargin: -20
         anchors.leftMargin: -20
         anchors.rightMargin: -20
