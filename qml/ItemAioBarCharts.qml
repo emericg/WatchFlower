@@ -44,7 +44,6 @@ Item {
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-
         //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
 
         graphViewSelected = settingsManager.graphview
@@ -61,16 +60,16 @@ Item {
         dL.visible = true
         dC.visible = true
 
-        if ((myDevice.deviceCapabilities & 2) == 0) {
+        if (!myDevice.hasTemperatureSensor()) {
             dT.visible = false
         }
-        if ((myDevice.deviceCapabilities & 4) == 0) {
+        if (!myDevice.hasHygrometrySensor()) {
             dH.visible = false
         }
-        if ((myDevice.deviceCapabilities & 8) == 0) {
+        if (!myDevice.hasLuminositySensor()) {
             dL.visible = false
         }
-        if ((myDevice.deviceCapabilities & 16) == 0) {
+        if (!myDevice.hasConductivitySensor()) {
             dC.visible = false
         }
     }

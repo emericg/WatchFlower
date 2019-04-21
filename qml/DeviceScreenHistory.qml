@@ -36,7 +36,7 @@ Item {
         if (typeof myDevice === "undefined") return
 
         // Sensor battery level
-        if ((myDevice.deviceCapabilities & 1) == 1) {
+        if (myDevice.hasBatteryLevel()) {
             imageBattery.visible = true
 
             if (myDevice.deviceBattery > 95) {
@@ -70,16 +70,14 @@ Item {
 
         graphCount = 0
 
-        if ((myDevice.deviceCapabilities & 2) == 0) {
-            tempGraph.visible = false
-        } else {
+        if (myDevice.hasTemperatureSensor()) {
             tempGraph.visible = true
             tempGraph.loadGraph()
             graphCount += 1
-        }
-        if ((myDevice.deviceCapabilities & 4) == 0) {
-            hygroGraph.visible = false
         } else {
+            tempGraph.visible = false
+        }
+        if (myDevice.hasHygrometrySensor())  {
             if (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
@@ -87,17 +85,17 @@ Item {
             } else  {
                 hygroGraph.visible = false
             }
-        }
-        if ((myDevice.deviceCapabilities & 8) == 0) {
-            lumiGraph.visible = false
         } else {
+            hygroGraph.visible = false
+        }
+        if (myDevice.hasLuminositySensor()) {
             lumiGraph.visible = true
             lumiGraph.loadGraph()
             graphCount += 1
-        }
-        if ((myDevice.deviceCapabilities & 16) == 0) {
-            conduGraph.visible = false
         } else {
+            lumiGraph.visible = false
+        }
+        if (myDevice.hasConductivitySensor())  {
             if (myDevice.deviceConductivity > 0 || myDevice.countDatas("conductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
@@ -105,6 +103,8 @@ Item {
             } else  {
                 conduGraph.visible = false
             }
+        } else {
+            conduGraph.visible = false
         }
 
         updateSize()
@@ -136,16 +136,16 @@ Item {
         if (typeof myDevice === 'undefined' || !myDevice) return
         //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
 
-        if ((myDevice.deviceCapabilities & 2) != 0) {
+        if (myDevice.hasTemperatureSensor()) {
             tempGraph.updateGraph()
         }
-        if ((myDevice.deviceCapabilities & 4) != 0) {
+        if (myDevice.hasHygrometrySensor()) {
             hygroGraph.updateGraph()
         }
-        if ((myDevice.deviceCapabilities & 8) != 0) {
+        if (myDevice.hasLuminositySensor()) {
             lumiGraph.updateGraph()
         }
-        if ((myDevice.deviceCapabilities & 16) != 0) {
+        if (myDevice.hasConductivitySensor()) {
             conduGraph.updateGraph()
         }
     }

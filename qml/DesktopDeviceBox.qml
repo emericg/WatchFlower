@@ -129,7 +129,7 @@ Rectangle {
                 bat_data.height = (boxDevice.deviceBattery / 100) * dataArea.height
 
                 hygro_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
-                lumi_bg.visible = (boxDevice.deviceLuminosity >= 0)
+                lumi_bg.visible = boxDevice.hasLuminositySensor()
                 cond_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
             }
         }

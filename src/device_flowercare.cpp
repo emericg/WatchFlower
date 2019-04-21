@@ -41,8 +41,8 @@ DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName):
     Device(deviceAddr, deviceName)
 {
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMP;
-    m_capabilities += DEVICE_HYGRO;
+    m_capabilities += DEVICE_TEMPERATURE;
+    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_LUMINOSITY;
     m_capabilities += DEVICE_CONDUCTIVITY;
 
@@ -54,8 +54,8 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d):
     Device(d)
 {
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMP;
-    m_capabilities += DEVICE_HYGRO;
+    m_capabilities += DEVICE_TEMPERATURE;
+    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_LUMINOSITY;
     m_capabilities += DEVICE_CONDUCTIVITY;
 

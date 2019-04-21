@@ -34,7 +34,7 @@ Item {
 
         if (myDevice) {
             // Sensor battery level
-            if ((myDevice.deviceCapabilities & 1) == 1) {
+            if (myDevice.hasBatteryLevel()) {
                 imageBattery.visible = true
 
                 if (myDevice.deviceBattery > 95) {
@@ -62,7 +62,7 @@ Item {
             }
 
             // Plant
-            if ((myDevice.deviceCapabilities & 64) != 0) {
+            if (myDevice.hasPlant()) {
                 itemPlant.visible = true
 
                 if (myDevice.devicePlantName === "")
@@ -148,22 +148,16 @@ Item {
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
 
-        if (myDevice.deviceName === "MJ_HT_V1") {
-            //
-        } else {
-            //
-        }
-
         // Has datas? always display them
         if (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720) {
             humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
             lumi.visible = (myDevice.deviceLuminosity >= 0)
             condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
         } else {
-            humi.visible = true
-            temp.visible = true
-            lumi.visible = ((myDevice.deviceCapabilities & 8) != 0)
-            condu.visible = true
+            humi.visible = myDevice.hasHygrometrySensor()
+            temp.visible = myDevice.hasTemperatureSensor()
+            lumi.visible = myDevice.hasLuminositySensor()
+            condu.visible = myDevice.hasConductivitySensor()
         }
 
         //

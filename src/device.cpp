@@ -621,7 +621,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 bool Device::hasDatas() const
 {
     // If we have immediate datas (<12h old)
-    if (m_hygro || m_temp > 0.f || m_luminosity || m_conductivity)
+    if (m_hygro > 0 || m_temp > 0.f || m_luminosity > 0 || m_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored datas

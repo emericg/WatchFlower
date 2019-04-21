@@ -41,8 +41,8 @@ DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName):
     Device(deviceAddr, deviceName)
 {
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMP;
-    m_capabilities += DEVICE_HYGRO;
+    m_capabilities += DEVICE_TEMPERATURE;
+    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_CONDUCTIVITY;
 
     m_capabilities += DEVICE_PLANT;
@@ -53,8 +53,8 @@ DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d):
     Device(d)
 {
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMP;
-    m_capabilities += DEVICE_HYGRO;
+    m_capabilities += DEVICE_TEMPERATURE;
+    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_CONDUCTIVITY;
 
     m_capabilities += DEVICE_PLANT;

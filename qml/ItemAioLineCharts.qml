@@ -37,16 +37,16 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreenAioCharts // loadGraph() >> " + myDevice)
 
-        if ((myDevice.deviceCapabilities & 2) == 0) {
+        if (!myDevice.hasTemperatureSensor()) {
             tempDatas.visible = false
         }
-        if ((myDevice.deviceCapabilities & 4) == 0) {
+        if (!myDevice.hasHygrometrySensor()) {
             hygroDatas.visible = false
         }
-        if ((myDevice.deviceCapabilities & 8) == 0) {
+        if (!myDevice.hasLuminositySensor()) {
             lumiDatas.visible = false
         }
-        if ((myDevice.deviceCapabilities & 16) == 0) {
+        if (!myDevice.hasConductivitySensor()) {
             conduDatas.visible = false
         }
     }
@@ -122,8 +122,8 @@ Item {
         }
 
         //// VISIBILITY
-        hygroDatas.visible = (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0)
-        conduDatas.visible = (myDevice.deviceConductivity > 0 || myDevice.countDatas("conductivity") > 0)
+        hygroDatas.visible = myDevice.hasHygrometrySensor() && (myDevice.deviceHygro > 0 || myDevice.deviceConductivity > 0)
+        conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.deviceHygro > 0 || myDevice.deviceConductivity > 0)
 
         if (myDevice.deviceName === "Flower care" && (!hygroDatas.visible && !conduDatas.visible)) {
             // Flower Care without hygro&conduDatas, temp is primary

@@ -43,8 +43,8 @@ QT_CHARTS_USE_NAMESPACE
 
 enum DeviceCapabilities {
     DEVICE_BATTERY      = (1 << 0), //!< Can report its battery level
-    DEVICE_TEMP         = (1 << 1), //!< Has a temperature sensor
-    DEVICE_HYGRO        = (1 << 2), //!< Has a hygrometry (or humidity) sensor
+    DEVICE_TEMPERATURE  = (1 << 1), //!< Has a temperature sensor
+    DEVICE_HYGROMETRY   = (1 << 2), //!< Has a hygrometry (or humidity) sensor
     DEVICE_LUMINOSITY   = (1 << 3), //!< Has a luminosity sensor
     DEVICE_CONDUCTIVITY = (1 << 4), //!< Has a conductivity sensor
 
@@ -71,7 +71,6 @@ class Device: public QObject
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY datasUpdated)
     Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
 
-    Q_PROPERTY(int deviceCapabilities READ getCapabilities NOTIFY datasUpdated)
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY datasUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
@@ -181,7 +180,12 @@ public slots:
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
 
-    int getCapabilities() const { return m_capabilities; }
+    bool hasHygrometrySensor() const { return (m_capabilities & DEVICE_HYGROMETRY); }
+    bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
+    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
+    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_CONDUCTIVITY); }
+    bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
+    bool hasPlant() const { return (m_capabilities & DEVICE_PLANT); }
 
     bool isAvailable() const { return m_available; }    //!< Has at least >12h old datas
     bool isUpdating() const { return m_updating; }      //!< Is currently being updated

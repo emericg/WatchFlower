@@ -30,7 +30,7 @@ Item {
     function updateHeader() {
         if (myDevice) {
             // Sensor battery level
-            if ((myDevice.deviceCapabilities & 1) == 1) {
+            if (myDevice.hasBatteryLevel()) {
                 imageBattery.visible = true
                 battery.visible = true
 
@@ -93,16 +93,16 @@ Item {
             itemLumi.visible = true
             itemCondu.visible = true
 
-            if ((myDevice.deviceCapabilities & 2) == 0) {
+            if (!myDevice.hasTemperatureSensor()) {
                 itemTemp.visible = false
             }
-            if ((myDevice.deviceCapabilities & 4) == 0) {
+            if (!myDevice.hasHygrometrySensor()) {
                 itemHygro.visible = false
             }
-            if ((myDevice.deviceCapabilities & 8) == 0) {
+            if (!myDevice.hasLuminositySensor()) {
                 itemLumi.visible = false
             }
-            if ((myDevice.deviceCapabilities & 16) == 0) {
+            if (!myDevice.hasConductivitySensor()) {
                 itemCondu.visible = false
             }
         }
