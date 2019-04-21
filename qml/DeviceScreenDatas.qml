@@ -155,14 +155,14 @@ Item {
         }
 
         // Has datas? always display them
-        if (myDevice.deviceTempC > 0) {
-            humi.visible = (myDevice.deviceHygro > 0) ? true : false
-            lumi.visible = (myDevice.deviceLuminosity > 0) ? true : false
-            condu.visible = (myDevice.deviceConductivity > 0) ? true : false
+        if (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720) {
+            humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
+            lumi.visible = (myDevice.deviceLuminosity >= 0)
+            condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
         } else {
             humi.visible = true
             temp.visible = true
-            lumi.visible = true
+            lumi.visible = ((myDevice.deviceCapabilities & 8) != 0)
             condu.visible = true
         }
 
@@ -442,10 +442,10 @@ Item {
             id: imageOffline
             width: 96
             height: 96
-            anchors.horizontalCenter: datasColumns.horizontalCenter
-            anchors.verticalCenter: datasColumns.verticalCenter
+            anchors.top: element.top
+            anchors.horizontalCenter: element.horizontalCenter
 
-            visible: !(myDevice.available || myDevice.lastUpdateMin < 720)
+            visible: !(myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
@@ -458,7 +458,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            visible: (myDevice.available || myDevice.lastUpdateMin < 720)
+            visible: (myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
 
             ItemDataBar {
                 id: humi

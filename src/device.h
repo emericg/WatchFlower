@@ -162,6 +162,12 @@ protected:
     void refreshDatasCanceled();
     void refreshDatasFinished(bool status, bool cached = false);
 
+    void setUpdateTimerInterval(int updateIntervalMin = 0);
+
+    bool getSqlDatas();
+    virtual bool getSqlCachedDatas(int minutes);
+    bool getBleDatas();
+
 public:
     Device(QString &deviceAddr, QString &deviceName);
     Device(const QBluetoothDeviceInfo &d);
@@ -170,11 +176,6 @@ public:
 public slots:
     bool refreshDatas();
     bool refreshDatasCached(int minutes = 1);
-    void setUpdateTimerInterval(int updateIntervalMin = 0);
-
-    bool getSqlDatas();
-    bool getSqlCachedDatas(int minutes);
-    bool getBleDatas();
 
     // BLE device
     QString getName() const { return m_deviceName; }

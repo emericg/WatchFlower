@@ -339,7 +339,8 @@ bool Device::getSqlCachedDatas(int minutes)
     {
         m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
-        m_luminosity =  cachedDatas.value(2).toInt();
+        if ((m_capabilities & DEVICE_LUMINOSITY) != 0)
+            m_luminosity = cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
 
         QString datetime = cachedDatas.value(4).toString();
@@ -620,7 +621,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 bool Device::hasDatas() const
 {
     // If we have immediate datas (<12h old)
-    if (m_hygro || m_temp > 0.0 || m_luminosity || m_conductivity)
+    if (m_hygro || m_temp > 0.f || m_luminosity || m_conductivity)
         return true;
 
     // Otherwise, check if we have stored datas

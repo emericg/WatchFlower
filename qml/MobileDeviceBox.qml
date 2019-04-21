@@ -77,7 +77,7 @@ Item {
 
         // Update notif
         if (boxDevice.isUpdating()) {
-            if (boxDevice.lastUpdateMin < 720) {
+            if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
                 // if we have data cached, used the little indicator
                 ble.visible = true
                 ble.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
@@ -96,7 +96,7 @@ Item {
                 imageStatus.visible = false;
                 ble.visible = false
             } else {
-                if (boxDevice.lastUpdateMin < 720) {
+                if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
                     // if we have data cached, used the little indicator
                     imageStatus.visible = false;
                     ble.visible = true
@@ -112,7 +112,7 @@ Item {
         }
 
         // Has datas? always display them
-        if (boxDevice.lastUpdateMin < 720) {
+        if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
             if (boxDevice.deviceName === "MJ_HT_V1") {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
@@ -125,9 +125,9 @@ Item {
                 cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * dataArea.height
                 bat_data.height = (boxDevice.deviceBattery / 100) * dataArea.height
 
-                hygro_bg.visible = (boxDevice.deviceHygro > 0) ? true : false
-                lumi_bg.visible = (boxDevice.deviceLuminosity > 0) ? true : false
-                cond_bg.visible = (boxDevice.deviceConductivity > 0) ? true : false
+                hygro_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
+                lumi_bg.visible = (boxDevice.deviceLuminosity >= 0)
+                cond_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
             }
         }
     }
