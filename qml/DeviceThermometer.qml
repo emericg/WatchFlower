@@ -40,14 +40,16 @@ Item {
 
     Connections {
         target: header
+        // desktop only
         onDeviceDatasButtonClicked: {
             header.setActiveDeviceDatas()
         }
         onDeviceSettingsButtonClicked: {
             header.setActiveDeviceSettings()
         }
+        // mobile only
         onRightMenuClicked: {
-            // mobile only
+            //
         }
     }
 

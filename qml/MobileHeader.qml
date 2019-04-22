@@ -40,11 +40,13 @@ Rectangle {
     property int screenTopPadding: 0
 
     property string title: "WatchFlower"
-    property string leftMenuMode: "drawer"
+    property string leftMenuMode: "drawer" // drawer / back / exit
+    property bool deviceRefreshButtonEnabled: false
     property bool rightMenuEnabled: false
 
     signal leftMenuClicked()
     signal rightMenuClicked()
+    signal deviceRefreshButtonClicked()
 
     function handleNotches() {
         if (typeof quickWindow === "undefined" || !quickWindow) return
@@ -132,26 +134,75 @@ Rectangle {
             }
         }
 
-        MouseArea {
-            id: rightArea
-            width: barHeight
-            height: barHeight
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
+        Row {
+            id: menu
             anchors.top: parent.top
-            enabled:rightMenuEnabled
-            onClicked: rightMenuClicked()
+            anchors.topMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 8
 
-            ImageSvg {
-                id: rightMenuImg
-                width: barHeight/2
-                height: barHeight/2
+            spacing: 0
+            visible: true
+
+            ////////////
+
+            MouseArea {
+                id: refreshButton
+                width: barHeight
+                height: barHeight
+
+                visible: deviceRefreshButtonEnabled
+                onClicked: deviceRefreshButtonClicked()
+
+                ImageSvg {
+                    id: refreshButtonImg
+                    width: barHeight/2
+                    height: barHeight/2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                    color: Theme.colorHeaderContent
+
+                    NumberAnimation on rotation {
+                        id: refreshAnimation
+                        duration: 2000
+                        from: 0
+                        to: 360
+                        loops: Animation.Infinite
+                        running: deviceManager.refreshing
+                        onStopped: refreshAnimationStop.start()
+                    }
+                    NumberAnimation on rotation {
+                        id: refreshAnimationStop
+                        duration: 1000;
+                        to: 360;
+                        easing.type: Easing.OutExpo
+                        running: false
+                    }
+                }
+            }
+
+            MouseArea {
+                id: rightMenu
+                width: barHeight
+                height: barHeight
+
                 visible: rightMenuEnabled
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-                color: Theme.colorHeaderContent
+                onClicked: rightMenuClicked()
+
+                ImageSvg {
+                    id: rightMenuImg
+                    width: barHeight/2
+                    height: barHeight/2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                    color: Theme.colorHeaderContent
+                }
             }
         }
     }

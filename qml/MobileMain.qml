@@ -70,6 +70,10 @@ ApplicationWindow {
             else
                 content.state = "DeviceList"
         }
+        onDeviceRefreshButtonClicked: {
+            if (curentlySelectedDevice)
+                curentlySelectedDevice.refreshDatas()
+        }
         onRightMenuClicked: {
             //
         }
@@ -178,10 +182,13 @@ ApplicationWindow {
             else
                 drawer.interactive = true;
 
-            if (state === "DeviceSensor" || state === "DeviceThermo")
-                header.rightMenuEnabled = true
-            else
+            if (state === "DeviceSensor" || state === "DeviceThermo") {
+                header.deviceRefreshButtonEnabled = true
                 header.rightMenuEnabled = false
+            } else {
+                header.deviceRefreshButtonEnabled = false
+                header.rightMenuEnabled = false
+            }
         }
 
         states: [

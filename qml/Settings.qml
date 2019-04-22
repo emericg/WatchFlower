@@ -470,7 +470,7 @@ Item {
                     anchors.left: image_graph.right
                     anchors.leftMargin: 16
 
-                    text: qsTr("Default history mode")
+                    text: qsTr("History graph")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
