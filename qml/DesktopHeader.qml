@@ -92,11 +92,11 @@ Rectangle {
                     menuPlants.selected = true
                     menuAbout.selected = false
                     menuSettings.selected = false
-                } else if (content.state == "Settings") {
+                } else if (content.state === "Settings") {
                     menuPlants.selected = false
                     menuAbout.selected = false
                     menuSettings.selected = true
-                } else if (content.state == "About") {
+                } else if (content.state === "About") {
                     menuPlants.selected = false
                     menuAbout.selected = true
                     menuSettings.selected = false

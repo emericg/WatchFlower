@@ -47,6 +47,8 @@ Rectangle {
     signal rightMenuClicked()
 
     function handleNotches() {
+        if (typeof quickWindow === "undefined" || !quickWindow) return
+
         var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
         if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)
             screenTopPadding = 30
@@ -84,14 +86,14 @@ Rectangle {
     Component.onCompleted: {
         handleNotches()
     }
-
+/*
     Connections {
         target: quickWindow
         onChanged: {
-            //
+            //handleNotches()
         }
     }
-
+*/
     Item {
         anchors.fill: parent
         anchors.topMargin: screenTopPadding

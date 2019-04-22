@@ -401,7 +401,7 @@ Item {
                         }
                     }
                     onCheckedChanged: {
-                        if (checked == true)
+                        if (checked === true)
                             settingsManager.tempunit = 'C'
                     }
                 }
@@ -425,7 +425,7 @@ Item {
                         }
                     }
                     onCheckedChanged: {
-                        if (checked == true)
+                        if (checked === true)
                             settingsManager.tempunit = 'F'
                     }
                 }
@@ -493,7 +493,7 @@ Item {
                         }
                     }
                     onCheckedChanged: {
-                        if (checked == true)
+                        if (checked === true)
                             settingsManager.graphview = "monthly"
                     }
                 }
@@ -516,7 +516,7 @@ Item {
                         }
                     }
                     onCheckedChanged: {
-                        if (checked == true)
+                        if (checked === true)
                             settingsManager.graphview = "weekly"
                     }
                 }

@@ -33,7 +33,7 @@ Item {
     property string graphMode: settingsManager.graphview
 
     function updateHeader() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
@@ -65,7 +65,7 @@ Item {
     }
 
     function loadDatas() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("ItemDeviceHistory // loadDatas() >> " + myDevice)
 
         graphCount = 0

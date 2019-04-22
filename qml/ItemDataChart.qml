@@ -44,16 +44,16 @@ Item {
         //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
 
         axisY0.min = 0;
-        if (graphDataSelected == "hygro") {
+        if (graphDataSelected === "hygro") {
             axisY0.max = 66
             myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected == "temp") {
+        } else if (graphDataSelected === "temp") {
             axisY0.max = 40
             myBarSet.color = Theme.colorGreen
-        } else if (graphDataSelected == "luminosity") {
+        } else if (graphDataSelected === "luminosity") {
             axisY0.max = 2000
             myBarSet.color = Theme.colorYellow
-        } else if (graphDataSelected == "conductivity") {
+        } else if (graphDataSelected === "conductivity") {
             axisY0.max = 750
             myBarSet.color = Theme.colorRed
         }
@@ -67,7 +67,7 @@ Item {
             lastMode = graphViewSelected
 
             // Decorations
-            if (graphViewSelected == "daily") {
+            if (graphViewSelected === "daily") {
                 backgroundDayBars.borderColor = "transparent"
                 backgroundDayBars.color = bgDayGraphColor
                 backgroundNightBars.borderColor = "transparent"
@@ -118,16 +118,16 @@ Item {
         // Max axis
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
-        if (graphDataSelected == "hygro" && max_of_legend > 100.0) {
+        if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% hygrometry
         }
         axisY0.max = max_of_legend;
 
         // Decorations
-        if (graphViewSelected == "daily") {
+        if (graphViewSelected === "daily") {
             backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
             backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
-        } else if (graphViewSelected == "weekly") {
+        } else if (graphViewSelected === "weekly") {
             backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
         } else {
             backgroundDayBars.values = myDevice.getMonthBackground(max_of_legend)

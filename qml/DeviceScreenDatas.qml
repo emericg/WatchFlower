@@ -30,7 +30,7 @@ Item {
     height: 300
 
     function updateHeader() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         if (myDevice) {
             // Sensor battery level
@@ -96,7 +96,7 @@ Item {
     property var aioLineCharts: null
 
     function updateStatusText() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
 
         textStatus.color = "black"
@@ -131,7 +131,7 @@ Item {
     }
 
     function loadDatas() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         if (settingsManager.graph === 'bar')
             pageLoader.source = "ItemAioBarCharts.qml"
@@ -165,7 +165,7 @@ Item {
     }
 
     onWidthChanged: {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
 
         updateDatas()
     }

@@ -62,7 +62,7 @@ Item {
     }
 
     function loadDevice() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
 
         deviceScreenChart.loadGraph()

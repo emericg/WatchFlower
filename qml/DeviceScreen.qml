@@ -67,7 +67,7 @@ Item {
     }
 
     function loadDevice() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
         if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") header.setActiveDeviceDatas()

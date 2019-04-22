@@ -204,7 +204,7 @@ Rectangle {
         anchors.rightMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        text: (swipeView.currentIndex == 2) ? qsTr("Allright!") : qsTr("Next")
+        text: (swipeView.currentIndex === 2) ? qsTr("Allright!") : qsTr("Next")
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16

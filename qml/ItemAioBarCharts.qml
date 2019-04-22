@@ -48,7 +48,7 @@ Item {
 
         graphViewSelected = settingsManager.graphview
         graphDataSelected = settingsManager.graphdata
-        if (graphDataSelected == "hygro") {
+        if (graphDataSelected === "hygro") {
             if (myDevice.deviceName === "MJ_HT_V1")
                 graphDataSelected = "temp"
             else if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
@@ -82,7 +82,7 @@ Item {
         lowLimitSeries.clear()
         highLimitSeries.clear()
 
-        if (graphDataSelected == "hygro") {
+        if (graphDataSelected === "hygro") {
             axisY0.max = 66
             myBarSet.color = Theme.colorBlue
             textHygro.font.bold = true
@@ -93,7 +93,7 @@ Item {
             lowLimitSeries.append(1, myDevice.limitHygroMin);
             highLimitSeries.append(0, myDevice.limitHygroMax);
             highLimitSeries.append(1, myDevice.limitHygroMax);
-        } else if (graphDataSelected == "temp") {
+        } else if (graphDataSelected === "temp") {
             axisY0.max = 40
             myBarSet.color = Theme.colorGreen
             textHygro.font.bold = false
@@ -104,7 +104,7 @@ Item {
             lowLimitSeries.append(1, myDevice.limitTempMin);
             highLimitSeries.append(0, myDevice.limitTempMax);
             highLimitSeries.append(1, myDevice.limitTempMax);
-        } else if (graphDataSelected == "luminosity") {
+        } else if (graphDataSelected === "luminosity") {
             axisY0.max = 2000
             myBarSet.color = Theme.colorYellow
             textHygro.font.bold = false
@@ -115,7 +115,7 @@ Item {
             lowLimitSeries.append(1, myDevice.limitLumiMin);
             highLimitSeries.append(0, myDevice.limitLumiMax);
             highLimitSeries.append(1, myDevice.limitLumiMax);
-        } else if (graphDataSelected == "conductivity") {
+        } else if (graphDataSelected === "conductivity") {
             axisY0.max = 750
             myBarSet.color = Theme.colorRed
             textHygro.font.bold = false
@@ -129,7 +129,7 @@ Item {
         }
 
         // Get datas
-        if (graphViewSelected == "hourly") {
+        if (graphViewSelected === "hourly") {
             myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
@@ -146,13 +146,13 @@ Item {
         // Max axis
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
-        if (graphDataSelected == "hygro" && max_of_legend > 100.0) {
+        if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% hygrometry
         }
         axisY0.max = max_of_legend;
 
         // Decorations
-        if (graphViewSelected == "hourly") {
+        if (graphViewSelected === "hourly") {
             textDays.font.bold = false
             textHours.font.bold = true
             backgroundDayBars.color = bgDayGraphColor
