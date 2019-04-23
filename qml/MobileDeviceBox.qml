@@ -119,8 +119,8 @@ Item {
                 textHygro.text = boxDevice.deviceHygro + "%"
             } else {
                 rectangleSensors.visible = true
-                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin, boxDevice.limitHygroMax) * dataArea.height
-                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin, boxDevice.limitTempMax) * dataArea.height
+                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * dataArea.height
+                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * dataArea.height
                 lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * dataArea.height
                 cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * dataArea.height
                 bat_data.height = (boxDevice.deviceBattery / 100) * dataArea.height

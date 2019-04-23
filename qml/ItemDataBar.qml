@@ -66,7 +66,7 @@ Item {
 
         Rectangle {
             id: item_data
-            width: normalize(value, valueMin, valueMax) * item_bg.width
+            width: normalize(value, valueMin, valueMax) * item_bg.width + (value === 0 ? 0 : 1.5*radius) // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
             color: item.color
             radius: 3
             anchors.top: parent.top
