@@ -144,7 +144,7 @@ bool DeviceManager::hasDatabase() const
 
 /* ************************************************************************** */
 
-void DeviceManager::enableBluetooth()
+void DeviceManager::enableBluetooth(bool checkPermission)
 {
     // TODO // We only try the "first" available bluetooth adapter
     if (!m_bluetoothAdapter)
@@ -156,13 +156,23 @@ void DeviceManager::enableBluetooth()
     {
         m_btA = true;
 
-        SettingsManager *sm = SettingsManager::getInstance();
-        if (sm && sm->getBluetooth())
+        if (checkPermission)
+        {
+            SettingsManager *sm = SettingsManager::getInstance();
+            if (sm && sm->getBluetooth())
+            {
+                // Make sure its powered on
+                // Doesn't work on all platforms...
+                m_bluetoothAdapter->powerOn();
+            }
+        }
+        else
         {
             // Make sure its powered on
             // Doesn't work on all platforms...
             m_bluetoothAdapter->powerOn();
         }
+
 #if defined(Q_OS_ANDROID)
         if (m_bluetoothAdapter->isValid() && m_bluetoothAdapter->hostMode() > 0)
         {
@@ -170,6 +180,7 @@ void DeviceManager::enableBluetooth()
             m_bluetoothAdapter->powerOn();
         }
 #endif
+
         // Keep us informed of availability changes
         // On some platform it can only inform us about disconnection, not reconnection
         connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::bluetoothModeChanged);
@@ -194,7 +205,7 @@ void DeviceManager::checkBluetooth()
     }
 */
     // Enables adapter
-    enableBluetooth();
+    enableBluetooth(true);
 
     // Check availability
     if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
@@ -237,6 +248,14 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
     if (state > 0)
     {
         m_btE = true;
+
+        // Refresh devices
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (!dd->isAvailable())
+                dd->refreshDatas();
+        }
     }
     else
     {
@@ -361,17 +380,19 @@ void DeviceManager::deviceDiscoveryFinished()
             }
         }
     }
-/*
-    for (auto d: devices)
-    {
-        DeviceInfo *dd = qobject_cast<DeviceInfo*>(d);
-        dd->refreshDatas();
-    }
-*/
+
     m_scanning = false;
 
     Q_EMIT devicesUpdated();
     Q_EMIT scanningChanged();
+
+    // Refresh devices
+    for (auto d: m_devices)
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (!dd->isAvailable())
+            dd->refreshDatas();
+    }
 }
 
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
