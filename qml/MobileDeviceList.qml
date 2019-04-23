@@ -29,37 +29,32 @@ Item {
     anchors.fill: parent
 
     property bool deviceScanning: deviceManager.scanning
+    property bool deviceAvailable: deviceManager.devices
     property bool bluetoothAvailable: deviceManager.bluetooth
 
-    Component.onCompleted: {
-        if (deviceManager.bluetooth === false) {
-            rectangleStatus.setError(qsTr("Bluetooth disabled :-("))
-        } else if (deviceManager.areDevicesAvailable() === false) {
-            rectangleStatus.setStatus(qsTr("No devices :-("))
-        } else {
-            rectangleStatus.hide()
-        }
-    }
-
     onDeviceScanningChanged: {
-        if (!deviceManager.scanning) {
-            if (deviceManager.areDevicesAvailable()) {
-                rectangleStatus.hide()
+        //
+    }
+    onDeviceAvailableChanged: {
+        if (deviceManager.bluetooth) {
+            if (deviceManager.devices === false) {
+                rectangleStatus.setDeviceWarning()
             } else {
-                rectangleStatus.setStatus(qsTr("No devices :-("))
+                rectangleStatus.hide()
             }
+        } else {
+            rectangleStatus.setBluetoothWarning()
         }
     }
-
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-            if (deviceManager.areDevicesAvailable() === false) {
-                rectangleStatus.setStatus(qsTr("No devices :-("))
+            if (deviceManager.devices === false) {
+                rectangleStatus.setDeviceWarning()
             } else {
                 rectangleStatus.hide()
             }
         } else {
-            rectangleStatus.setError(qsTr("Bluetooth disabled :-("))
+            rectangleStatus.setBluetoothWarning()
         }
     }
 
@@ -86,7 +81,7 @@ Item {
             Text {
                 id: textStatus
                 color: "white"
-                text: qsTr("Status :-(")
+                text: ""
                 anchors.verticalCenter: parent.verticalCenter
                 font.bold: true
                 font.pixelSize: 20
@@ -118,29 +113,36 @@ Item {
         function hide() {
             rectangleStatus.visible = false;
             rectangleStatus.height = 0;
+
+            itemStatus.source = ""
         }
-        function setError(message) {
+        function setBluetoothWarning() {
             rectangleStatus.visible = true;
             rectangleStatus.height = 48;
-            textStatus.text = message;
 
-            if (!deviceManager.hasBluetooth()) {
-                buttonEnables.visible = true
-            } else {
-                buttonEnables.visible = false
-            }
+            itemStatus.source = "ItemNoBluetooth.qml"
+            textStatus.text = qsTr("Bluetooth disabled :-(");
+            buttonBluetooth.visible = true
+            buttonSearch.visible = false
         }
-        function setStatus(message) {
+        function setDeviceWarning() {
             rectangleStatus.visible = true;
             rectangleStatus.height = 48;
-            textStatus.text = message;
 
-            if (!deviceManager.hasBluetooth()) {
-                buttonEnables.visible = true
-            } else {
-                buttonEnables.visible = false
-            }
+            itemStatus.source = "ItemNoDevice.qml"
+            textStatus.text = qsTr("No devices :-(");
+            buttonBluetooth.visible = false
+            buttonSearch.visible = true
         }
+    }
+
+    Loader {
+        id: itemStatus
+        width: 256
+        height: 256
+        anchors.verticalCenterOffset: 24
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     ListView {

@@ -621,7 +621,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 bool Device::hasDatas() const
 {
     // If we have immediate datas (<12h old)
-    if (m_hygro > 0 || m_temp > 0.f || m_luminosity > 0 || m_conductivity > 0)
+    if (m_hygro > 0 || m_temp > -20.f || m_luminosity > 0 || m_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored datas
@@ -641,8 +641,38 @@ bool Device::hasDatas() const
     return false;
 }
 
+bool Device::hasDatas(const QString &dataName) const
+{
+    // If we have immediate datas (<12h old)
+    if (dataName == "hygro" && m_hygro > 0)
+        return true;
+    if (dataName == "temp" && m_temp > -20.f)
+        return true;
+    if (dataName == "luminosity" && m_luminosity > 0)
+        return true;
+    if (dataName == "conductivity" && m_conductivity > 0)
+        return true;
+
+    // Otherwise, check if we have stored datas
+    QSqlQuery hasDatas;
+    hasDatas.prepare("SELECT COUNT(" + dataName + ") FROM datas WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
+    hasDatas.bindValue(":deviceAddr", getAddress());
+
+    if (hasDatas.exec() == false)
+        qDebug() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
+
+    while (hasDatas.next())
+    {
+        if (hasDatas.value(0).toInt() > 0) // datas count
+            return true;
+    }
+
+    return false;
+}
+
 int Device::countDatas(const QString &dataName, int days) const
 {
+    // Count stored datas
     QSqlQuery datasCount;
     datasCount.prepare("SELECT COUNT(" + dataName + ")" \
                        "FROM datas " \

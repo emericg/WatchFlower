@@ -205,6 +205,7 @@ public slots:
     int getLastUpdateInt() const;
 
     bool hasDatas() const;
+    bool hasDatas(const QString &dataName) const;
     int countDatas(const QString &dataName, int days = 31) const;
 
     // BLE device associated datas

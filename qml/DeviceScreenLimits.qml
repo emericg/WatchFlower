@@ -88,23 +88,10 @@ Item {
 
     function updateLimitsVisibility() {
         if (myDevice) {
-            itemTemp.visible = true
-            itemHygro.visible = true
-            itemLumi.visible = true
-            itemCondu.visible = true
-
-            if (!myDevice.hasTemperatureSensor()) {
-                itemTemp.visible = false
-            }
-            if (!myDevice.hasHygrometrySensor()) {
-                itemHygro.visible = false
-            }
-            if (!myDevice.hasLuminositySensor()) {
-                itemLumi.visible = false
-            }
-            if (!myDevice.hasConductivitySensor()) {
-                itemCondu.visible = false
-            }
+            itemTemp.visible = myDevice.hasTemperatureSensor()
+            itemHygro.visible = myDevice.hasHygrometrySensor()
+            itemLumi.visible = myDevice.hasLuminositySensor()
+            itemCondu.visible = myDevice.hasConductivitySensor()
         }
     }
 

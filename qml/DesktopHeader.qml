@@ -105,25 +105,6 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: deviceManager
-        onScanningChanged: {
-            if (deviceManager.scanning)
-                rescanAnimation.start()
-            else
-                rescanAnimation.stop()
-        }
-        onRefreshingChanged: {
-            if (deviceManager.refreshing) {
-                refreshAnimation.start()
-                refreshAllAnimation.start()
-            } else {
-                refreshAnimation.stop()
-                refreshAllAnimation.stop()
-            }
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     ImageSvg {
@@ -286,19 +267,20 @@ Rectangle {
             OpacityAnimator {
                 id: rescanAnimation
                 target: buttonRescan
-                running: deviceManager.scanning
-                loops: Animation.Infinite
-                to: 1
-                from: 0.5
                 duration: 1000
+                from: 0.33
+                to: 1
+                loops: Animation.Infinite
+                running: deviceManager.scanning
+                onStopped: rescanAnimationStop.start()
             }
             OpacityAnimator {
                 id: rescanAnimationStop
                 target: buttonRescan
-                running: false
-                easing.type: Easing.OutExpo
-                to: 1
                 duration: 500
+                to: 1
+                easing.type: Easing.OutExpo
+                running: false
             }
         }
 

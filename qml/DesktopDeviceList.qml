@@ -29,43 +29,38 @@ Item {
     anchors.fill: parent
 
     property bool deviceScanning: deviceManager.scanning
+    property bool deviceAvailable: deviceManager.devices
     property bool bluetoothAvailable: deviceManager.bluetooth
 
-    Component.onCompleted: {
-        if (deviceManager.bluetooth === false) {
-            rectangleStatus.setError(qsTr("No bluetooth :-("))
-        } else if (deviceManager.areDevicesAvailable() === false) {
-            rectangleStatus.setStatus(qsTr("No devices :-("))
-        } else {
-            rectangleStatus.hide()
-        }
-    }
-
     onDeviceScanningChanged: {
-        if (!deviceManager.scanning) {
-            if (deviceManager.areDevicesAvailable()) {
-                rectangleStatus.hide()
+        //
+    }
+    onDeviceAvailableChanged: {
+        if (deviceManager.bluetooth) {
+            if (deviceManager.devices === false) {
+                rectangleStatus.setDeviceWarning()
             } else {
-                rectangleStatus.setStatus(qsTr("No devices :-("))
+                rectangleStatus.hide()
             }
+        } else {
+            rectangleStatus.setBluetoothWarning()
         }
     }
-
     onBluetoothAvailableChanged: {
         if (deviceManager.bluetooth) {
-            if (deviceManager.areDevicesAvailable() === false) {
-                rectangleStatus.setStatus(qsTr("No devices :-("))
+            if (deviceManager.devices === false) {
+                rectangleStatus.setDeviceWarning()
             } else {
                 rectangleStatus.hide()
             }
         } else {
-            rectangleStatus.setError(qsTr("No bluetooth :-("))
+            rectangleStatus.setBluetoothWarning()
         }
     }
 
     Rectangle {
         id: rectangleStatus
-        height: 48
+        height: 52
         color: Theme.colorYellow
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -77,7 +72,7 @@ Item {
         Text {
             id: textStatus
             color: "white"
-            text: qsTr("Status :-(")
+            text: ""
             anchors.rightMargin: 16
             anchors.leftMargin: 16
             font.bold: true
@@ -88,7 +83,7 @@ Item {
         }
 
         ThemedButton {
-            id: buttonEnables
+            id: buttonBluetooth
             width: 128
             height: 30
             anchors.right: parent.right
@@ -104,33 +99,56 @@ Item {
                 deviceManager.checkBluetooth()
             }
         }
+        ThemedButton {
+            id: buttonSearch
+            width: 128
+            height: 30
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: qsTr("Scan devices")
+            color: "white"
+            opacity: 0.9
+
+            onClicked: {
+                deviceManager.scanDevices()
+            }
+        }
 
         function hide() {
             rectangleStatus.visible = false;
             rectangleStatus.height = 0;
-        }
-        function setError(message) {
-            rectangleStatus.visible = true;
-            rectangleStatus.height = 48;
-            textStatus.text = message;
 
-            if (!deviceManager.hasBluetooth()) {
-                buttonEnables.visible = true
-            } else {
-                buttonEnables.visible = false
-            }
+            itemStatus.source = ""
         }
-        function setStatus(message) {
+        function setBluetoothWarning() {
             rectangleStatus.visible = true;
-            rectangleStatus.height = 48;
-            textStatus.text = message;
+            rectangleStatus.height = 52;
 
-            if (!deviceManager.hasBluetooth()) {
-                buttonEnables.visible = true
-            } else {
-                buttonEnables.visible = false
-            }
+            itemStatus.source = "ItemNoBluetooth.qml"
+            textStatus.text = qsTr("No bluetooth :-(");
+            buttonBluetooth.visible = true
+            buttonSearch.visible = false
         }
+        function setDeviceWarning() {
+            rectangleStatus.visible = true;
+            rectangleStatus.height = 52;
+
+            itemStatus.source = "ItemNoDevice.qml"
+            textStatus.text = qsTr("No devices :-(");
+            buttonBluetooth.visible = false
+            buttonSearch.visible = true
+        }
+    }
+
+    Loader {
+        id: itemStatus
+        width: 256
+        height: 256
+        anchors.verticalCenterOffset: 26
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     GridView {

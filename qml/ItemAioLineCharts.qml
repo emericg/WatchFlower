@@ -37,18 +37,10 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreenAioCharts // loadGraph() >> " + myDevice)
 
-        if (!myDevice.hasTemperatureSensor()) {
-            tempDatas.visible = false
-        }
-        if (!myDevice.hasHygrometrySensor()) {
-            hygroDatas.visible = false
-        }
-        if (!myDevice.hasLuminositySensor()) {
-            lumiDatas.visible = false
-        }
-        if (!myDevice.hasConductivitySensor()) {
-            conduDatas.visible = false
-        }
+        tempDatas.visible = myDevice.hasTemperatureSensor()
+        hygroDatas.visible = myDevice.hasHygrometrySensor()
+        lumiDatas.visible = false
+        conduDatas.visible = myDevice.hasConductivitySensor()
     }
 
     function updateGraph() {
@@ -97,13 +89,8 @@ Item {
         minmax_of_legend = minmax_of_array*1.20;
         axisTemp.max = minmax_of_legend;
 
-        hygroDatas.width = 2
-        tempDatas.width = 2
-
+        // Min axis computation, only for thermometers
         if (myDevice.deviceName === "MJ_HT_V1") {
-            // Temp is primary
-            tempDatas.width = 3
-            // Min axis
             i = 0
             minmax_of_array = 100
             for (;i < hygroDatas.count; i++)
@@ -121,26 +108,41 @@ Item {
             axisTemp.min = minmax_of_legend;
         }
 
-        //// VISIBILITY
-        hygroDatas.visible = myDevice.hasHygrometrySensor() && (myDevice.deviceHygro > 0 || myDevice.deviceConductivity > 0)
-        conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.deviceHygro > 0 || myDevice.deviceConductivity > 0)
+        //// ADJUSTMENTS
+        hygroDatas.width = 2
+        tempDatas.width = 2
 
-        if (myDevice.deviceName === "Flower care" && (!hygroDatas.visible && !conduDatas.visible)) {
-            // Flower Care without hygro&conduDatas, temp is primary
-            tempDatas.width = 3
-            // Show lumi when only have it and temp
-            lumiDatas.visible = true
-
-            i = 0
-            minmax_of_array = 0
-            for (;i < lumiDatas.count; i++)
-                if (lumiDatas.at(i).y > minmax_of_array)
-                    minmax_of_array = lumiDatas.at(i).y
-            minmax_of_legend = minmax_of_array*1.20;
-            axisLumi.max = minmax_of_legend;
+        if (myDevice.deviceName === "ropot") {
+            hygroDatas.width = 3 // Hygrometry is primary
         }
-        else
-            lumiDatas.visible = false
+
+        if (myDevice.deviceName === "MJ_HT_V1") {
+            tempDatas.width = 3 // Temperature is primary
+        }
+
+        if (myDevice.deviceName === "Flower care") {
+            // not planted? don't show hygro and condu
+            hygroDatas.visible = myDevice.hasHygrometrySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
+            conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
+
+            // Flower Care without hygro & conductivity datas
+            if (!hygroDatas.visible && !conduDatas.visible) {
+                // Show luminosity and make temperature primary
+                lumiDatas.visible = true
+                tempDatas.width = 3
+
+                // Luminosity can have min/max, cause values have a very wide range
+                i = 0
+                minmax_of_array = 0
+                for (;i < lumiDatas.count; i++)
+                    if (lumiDatas.at(i).y > minmax_of_array)
+                        minmax_of_array = lumiDatas.at(i).y
+                minmax_of_legend = minmax_of_array*1.20;
+                axisLumi.max = minmax_of_legend;
+            } else {
+                hygroDatas.width = 3 // Hygrometry is primary
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

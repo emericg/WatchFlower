@@ -42,22 +42,6 @@ Rectangle {
             rectangleAbout.color = Theme.colorMaterialDarkGrey
     }
 
-    Connections {
-        target: deviceManager
-        onScanningChanged: {
-            if (deviceManager.scanning)
-                rescanAnimation.start()
-            else
-                rescanAnimation.stop()
-        }
-        onRefreshingChanged: {
-            if (deviceManager.refreshing)
-                refreshAnimation.start()
-            else
-                refreshAnimation.stop()
-        }
-    }
-
     Item {
         id: rectangleHeader
         height: 80
@@ -313,7 +297,7 @@ Rectangle {
                     id: rescanAnimation
                     target: buttonRescan
                     duration: 1000
-                    from: 0.5
+                    from: 0.33
                     to: 1
                     loops: Animation.Infinite
                     running: deviceManager.scanning

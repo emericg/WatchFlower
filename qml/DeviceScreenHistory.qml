@@ -136,18 +136,10 @@ Item {
         if (typeof myDevice === 'undefined' || !myDevice) return
         //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
 
-        if (myDevice.hasTemperatureSensor()) {
-            tempGraph.updateGraph()
-        }
-        if (myDevice.hasHygrometrySensor()) {
-            hygroGraph.updateGraph()
-        }
-        if (myDevice.hasLuminositySensor()) {
-            lumiGraph.updateGraph()
-        }
-        if (myDevice.hasConductivitySensor()) {
-            conduGraph.updateGraph()
-        }
+        if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
+        if (myDevice.hasHygrometrySensor()) { hygroGraph.updateGraph() }
+        if (myDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
+        if (myDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
     }
 
     ////////////////////////////////////////////////////////////////////////////

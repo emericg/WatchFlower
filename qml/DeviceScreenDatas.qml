@@ -436,8 +436,8 @@ Item {
             id: imageOffline
             width: 96
             height: 96
-            anchors.top: element.top
-            anchors.horizontalCenter: element.horizontalCenter
+            anchors.horizontalCenter: datasColumns.horizontalCenter
+            anchors.verticalCenter: datasColumns.verticalCenter
 
             visible: !(myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
 

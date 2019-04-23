@@ -55,23 +55,10 @@ Item {
                 graphDataSelected = "temp"
         }
 
-        dT.visible = true
-        dH.visible = true
-        dL.visible = true
-        dC.visible = true
-
-        if (!myDevice.hasTemperatureSensor()) {
-            dT.visible = false
-        }
-        if (!myDevice.hasHygrometrySensor()) {
-            dH.visible = false
-        }
-        if (!myDevice.hasLuminositySensor()) {
-            dL.visible = false
-        }
-        if (!myDevice.hasConductivitySensor()) {
-            dC.visible = false
-        }
+        dT.visible = myDevice.hasTemperatureSensor()
+        dH.visible = myDevice.hasHygrometrySensor()
+        dL.visible = myDevice.hasLuminositySensor()
+        dC.visible = myDevice.hasConductivitySensor()
     }
 
     function updateGraph() {

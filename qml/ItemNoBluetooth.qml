@@ -20,34 +20,23 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 
-import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Item {
-    implicitWidth: 32
-    implicitHeight: 32
+    id: element
+    width: parent.width
+    height: parent.height
 
-    property string source
-    property string color
-    property int fillMode: Image.PreserveAspectFit
+    ImageSvg {
+        id: image
+        width: 256
+        height: 256
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
-    Image {
-        id: sourceImg
-        anchors.fill: parent
-        visible: color ? false : true
-
-        source: parent.source
-        sourceSize: Qt.size(width, height)
-        fillMode: parent.fillMode
-    }
-    ColorOverlay {
-        source: sourceImg
-        anchors.fill: parent
-        visible: color ? true : false
-
-        color: parent.color
-        cached: visible
+        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+        fillMode: Image.PreserveAspectFit
+        color: Theme.colorIcons
     }
 }

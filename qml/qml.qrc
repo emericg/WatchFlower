@@ -23,6 +23,8 @@
         <file>ItemAioLineCharts.qml</file>
         <file>ItemMenuButton.qml</file>
         <file>ItemImageButton.qml</file>
+        <file>ItemNoBluetooth.qml</file>
+        <file>ItemNoDevice.qml</file>
         <file>ThemeEngine.qml</file>
         <file>ThemedButton.qml</file>
         <file>ThemedRadioButton.qml</file>

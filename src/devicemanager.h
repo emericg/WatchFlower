@@ -45,6 +45,7 @@ class DeviceManager: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool devices READ areDevicesAvailable NOTIFY devicesUpdated)
     Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
