@@ -433,10 +433,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                     qDebug() << "+ Adding device: " << d->getName() << "/" << d->getAddress() << "to local database";
 
                     QSqlQuery addDevice;
-                    addDevice.prepare("INSERT INTO devices (deviceAddr, deviceName, customName) VALUES (:deviceAddr, :deviceName, :customName)");
+                    addDevice.prepare("INSERT INTO devices (deviceAddr, deviceName) VALUES (:deviceAddr, :deviceName)");
                     addDevice.bindValue(":deviceAddr", d->getAddress());
                     addDevice.bindValue(":deviceName", d->getName());
-                    addDevice.bindValue(":customName", d->getName());
                     addDevice.exec();
                 }
             }
