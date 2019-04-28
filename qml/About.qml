@@ -83,6 +83,7 @@ Item {
 
         Column {
             id: column
+            spacing: 8
             anchors.fill: parent
             anchors.topMargin: 8
             anchors.bottomMargin: 16
@@ -123,13 +124,13 @@ Item {
                 Text {
                     id: element1
                     anchors.top: parent.top
-                    anchors.topMargin: 14
+                    anchors.topMargin: 12
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 
                     text: qsTr("WatchFlower")
                     color: Theme.colorText
-                    font.pixelSize: 32
+                    font.pixelSize: 36
                 }
             }
 
@@ -159,7 +160,7 @@ Item {
 
                     color: Theme.colorText
                     text: "Website"
-                    font.pixelSize: 17
+                    font.pixelSize: 16
 
                     MouseArea {
                         id: mouseArea
@@ -197,7 +198,7 @@ Item {
 
                     color: Theme.colorText
                     text: "GitHub page"
-                    font.pixelSize: 17
+                    font.pixelSize: 16
 
                     MouseArea {
                         anchors.fill: parent
@@ -233,7 +234,7 @@ Item {
 
                     text: qsTr("Open the tutorial")
                     color: Theme.colorText
-                    font.pixelSize: 17
+                    font.pixelSize: 16
 
                     MouseArea {
                         id: mouseArea1
@@ -264,10 +265,9 @@ Item {
                     color: Theme.colorText
                     anchors.verticalCenter: description.verticalCenter
                 }
+
                 TextArea {
                     id: description
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
                     anchors.top: parent.top
                     anchors.topMargin: 0
                     anchors.left: parent.left
@@ -275,66 +275,28 @@ Item {
 
                     color: Theme.colorText
                     text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' bluetooth devices.")
-                    wrapMode: Text.WordWrap
-                    readOnly: true
-                    font.pixelSize: 18
-                }
-
-                Item {
-                    id: rectangleIcons
-                    height: 102
-                    anchors.top: description.bottom
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
                     anchors.right: parent.right
                     anchors.rightMargin: 0
+                    wrapMode: Text.WordWrap
+                    readOnly: true
+                    font.pixelSize: 16
+                }
 
-                    ImageSvg {
-                        id: image3
-                        width: 80
-                        height: 80
-                        anchors.left: itemMiddle.right
-                        anchors.leftMargin: 32
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:/assets/devices/hygrotemp.svg"
-                        color: Theme.colorGreen
-                    }
+                ImageSvg {
+                    id: imageDevices
+                    height: 96
+                    anchors.left: description.left
+                    anchors.leftMargin: 0
+                    anchors.right: description.right
+                    anchors.rightMargin: 0
 
-                    Item {
-                        id: itemMiddle
-                        width: 80
-                        height: 80
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        ImageSvg {
-                            id: image2
-                            anchors.fill: parent
-                            source: "qrc:/assets/devices/ropot.svg"
-                            color: Theme.colorGreen
-                        }
-                    }
-
-                    ImageSvg {
-                        id: image1
-                        width: 80
-                        height: 80
-                        anchors.right: itemMiddle.left
-                        anchors.rightMargin: 32
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:/assets/devices/flowercare.svg"
-                        color: Theme.colorGreen
-                    }
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/assets/devices/welcome-devices.svg"
+                    color: Theme.colorGreen
+                    anchors.top: description.bottom
+                    anchors.topMargin: 16
                 }
             }
         }
     }
 }
-
-
-
-/*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
- ##^##*/

@@ -109,12 +109,25 @@ Rectangle {
                 }
                 Image {
                     anchors.right: parent.right
+                    anchors.rightMargin: 64
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+
+                    source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
+                    fillMode: Image.PreserveAspectFit
+                }
+                Text {
+                    id: element55
+                    anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
-                    fillMode: Image.PreserveAspectFit
+                    text: ""
+                    color: Theme.colorHeaderContent
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
                 }
             }
         }

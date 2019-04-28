@@ -84,7 +84,7 @@ Item {
             id: column
             anchors.fill: parent
             anchors.topMargin: 12
-            spacing: 4
+            spacing: 8
 
             Item {
                 id: element1
@@ -181,12 +181,12 @@ Item {
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 16
-                topPadding: -8
+                topPadding: -12
 
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                text: qsTr("WatchFlower can enable your device's bluetooth in order to operate")
+                text: qsTr("WatchFlower can enable your device's bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -243,7 +243,7 @@ Item {
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 16
-                topPadding: -8
+                topPadding: -12
 
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
@@ -305,12 +305,12 @@ Item {
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 16
-                topPadding: -8
+                topPadding: -12
 
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                text: qsTr("If a plant needs water, we'll be sure to bring it to your attention")
+                text: qsTr("If a plant needs water, we'll be sure to bring it to your attention!")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
