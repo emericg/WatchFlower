@@ -13,6 +13,7 @@
         <file>About.qml</file>
         <file>Settings.qml</file>
         <file>DeviceThermometer.qml</file>
+        <file>DeviceWidget.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenHistory.qml</file>
