@@ -46,10 +46,8 @@ Item {
 
         Text {
             id: textTitle
-            anchors.right: parent.right
-            anchors.rightMargin: 12
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: 16
             anchors.top: parent.top
             anchors.topMargin: 12
 
@@ -64,7 +62,7 @@ Item {
             text: qsTr("Change persistent settings here!")
             font.pixelSize: 16
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
         }
@@ -176,7 +174,7 @@ Item {
             }
 
             Text {
-                id: ledend_bluetooth
+                id: legend_bluetooth
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right

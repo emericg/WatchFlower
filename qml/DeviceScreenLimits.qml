@@ -161,7 +161,7 @@ Item {
                     text: qsTr("Address")
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
 
                 Text {
@@ -192,7 +192,7 @@ Item {
 
                     color: Theme.colorText
                     text: qsTr("Firmware")
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                     horizontalAlignment: Text.AlignRight
                 }
                 Text {
@@ -265,7 +265,7 @@ Item {
 
                     text: qsTr("Battery")
                     color: Theme.colorText
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
             }
         }
@@ -438,10 +438,11 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 14
+                    font.pixelSize: 12
                 }
-                SpinBox {
+                ThemedSpinBox {
                     id: spinBox1
+                    height: 36
                     anchors.left: text1.right
                     anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
@@ -452,8 +453,9 @@ Item {
                     value: myDevice.limitLumiMin
                     onValueChanged: myDevice.limitLumiMin = value;
                 }
-                SpinBox {
+                ThemedSpinBox {
                     id: spinBox2
+                    height: 36
                     anchors.left: spinBox1.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -474,7 +476,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 14
+                    font.pixelSize: 12
                 }
             }
 

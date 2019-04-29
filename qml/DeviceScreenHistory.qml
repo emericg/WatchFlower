@@ -129,7 +129,7 @@ Item {
         }
 
         graphWidth = (graphGrid.width) / graphGrid.columns
-        graphHeight = (graphGrid.height) / (graphCount / graphGrid.columns)
+        graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
     }
 
     function updateDatas() {

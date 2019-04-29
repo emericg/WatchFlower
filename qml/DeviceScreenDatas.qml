@@ -116,11 +116,13 @@ Item {
 
             if (myDevice.lastUpdateMin >= 0) {
                 if (myDevice.lastUpdateMin <= 1)
-                    textStatus.text += qsTr("Just updated!")
+                    textStatus.text += qsTr("Just synced!")
                 else if (myDevice.available)
-                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
-                else
-                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text += qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                else {
+                    textStatus.color = Theme.colorYellow
+                    textStatus.text += qsTr("Last sync") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                }
             }
         }
     }
@@ -236,7 +238,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
                 TextInput {
                     id: textInputPlant
@@ -317,7 +319,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
                 TextInput {
                     id: textInputLocation
@@ -398,7 +400,7 @@ Item {
                     text: qsTr("Status")
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                 }
                 Text {
                     id: textStatus

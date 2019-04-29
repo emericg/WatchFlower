@@ -29,8 +29,8 @@ ApplicationWindow {
 
     width: 800
     height: 540
-    minimumWidth: 540
-    minimumHeight: 540
+    minimumWidth: 480
+    minimumHeight: 480
 
     color: Theme.colorMaterialLightGrey
     visible: true // !settingsManager.minimized

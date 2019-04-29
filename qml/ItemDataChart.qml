@@ -85,11 +85,11 @@ Item {
                 axisX0.labelsFont.pixelSize = 8
                 axisX0.categories = myDevice.getHours()
             } else if (graphViewSelected === "weekly") {
-                myBarSeries.barWidth = 0.60
+                myBarSeries.barWidth = 0.75
                 axisX0.labelsFont.pixelSize = 12
                 axisX0.categories = myDevice.getDays()
             } else {
-                myBarSeries.barWidth = 0.80
+                myBarSeries.barWidth = 0.90
                 axisX0.labelsFont.pixelSize = 6
                 axisX0.categories = myDevice.getMonth()
             }

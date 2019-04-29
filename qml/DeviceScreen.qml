@@ -70,7 +70,6 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") header.setActiveDeviceDatas()
         swipeView.currentIndex = 0
         miniMenu.visible = false
 
@@ -80,6 +79,8 @@ Item {
         rectangleDeviceLimits.updateHeader()
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
+
+        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") header.setActiveDeviceDatas()
     }
 
     ////////////////////////////////////////////////////////////////////////////

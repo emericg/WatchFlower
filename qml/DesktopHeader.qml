@@ -112,7 +112,7 @@ Rectangle {
         width: 24
         height: 24
         anchors.left: parent.left
-        anchors.leftMargin: 12
+        anchors.leftMargin: 20
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/watchflower.svg"
@@ -144,7 +144,7 @@ Rectangle {
     Text {
         id: title
         anchors.left: parent.left
-        anchors.leftMargin: 48
+        anchors.leftMargin: 64
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"

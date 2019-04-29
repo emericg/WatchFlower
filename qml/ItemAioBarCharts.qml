@@ -121,7 +121,10 @@ Item {
             axisX0.categories = myDevice.getHours()
             myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
         } else {
-            myBarSeries.barWidth = 0.70
+            if (graphViewSelected === "daily")
+                myBarSeries.barWidth = 0.80
+            else
+                myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getDays()
             myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
         }

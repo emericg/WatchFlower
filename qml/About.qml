@@ -46,10 +46,8 @@ Item {
 
         Text {
             id: textTitle
-            anchors.right: parent.right
-            anchors.rightMargin: 12
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: 16
             anchors.top: parent.top
             anchors.topMargin: 12
 
@@ -62,7 +60,7 @@ Item {
         Text {
             id: textSubtitle
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
 
@@ -294,7 +292,7 @@ Item {
                     source: "qrc:/assets/devices/welcome-devices.svg"
                     color: Theme.colorGreen
                     anchors.top: description.bottom
-                    anchors.topMargin: 16
+                    anchors.topMargin: 24
                 }
             }
         }

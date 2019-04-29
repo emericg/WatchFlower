@@ -154,26 +154,27 @@ Item {
 
     GridView {
         id: devicesview
-        clip: true
 
         anchors.fill: parent
-        anchors.topMargin: rectangleStatus.height + 16
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 12
-        anchors.rightMargin: -12
+        anchors.topMargin: rectangleStatus.height + 6
+        anchors.bottomMargin: 6
+        anchors.leftMargin: 6
+        anchors.rightMargin: 6
 
-        property int boxHeight: 96
+        property int boxHeight: 100
+        property bool singleColumn: true
 
-        property int cellSizeTarget: 350
-        property int cellSize: 350
-        property int cellMarginTarget: 12
-        property int cellMargin: 12
+        property int cellSizeTarget: 300
+        property int cellSize: 300
+        property int cellMarginTarget: 0
+        property int cellMargin: 0
         cellWidth: cellSizeTarget + cellMarginTarget
         cellHeight: boxHeight + cellMarginTarget
 
         function computeCellSize() {
             var availableWidth = devicesview.width - cellMarginTarget
             var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
+            singleColumn = (cellColumnsTarget === 1)
             // 1 // Adjust only cellSize
             cellSize = (availableWidth - cellMarginTarget * cellColumnsTarget) / cellColumnsTarget
             // Recompute
@@ -183,6 +184,6 @@ Item {
 
         onWidthChanged: computeCellSize()
         model: deviceManager.devicesList
-        delegate: DesktopDeviceBox { boxDevice: modelData; width: devicesview.cellSize;}
+        delegate: DeviceWidget { boxDevice: modelData; width: devicesview.cellSize; singleColumn: devicesview.singleColumn }
     }
 }
