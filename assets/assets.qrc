@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/assets">
         <file>logo.svg</file>
-        <file>watchflower_small.svg</file>
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
         <file>desktop/watchflower_tray_dark.svg</file>
