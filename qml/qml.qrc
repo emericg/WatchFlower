@@ -3,18 +3,15 @@
         <file>MobileMain.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
-        <file>MobileDeviceList.qml</file>
-        <file>MobileDeviceBox.qml</file>
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
-        <file>DesktopDeviceBox.qml</file>
-        <file>DesktopDeviceList.qml</file>
         <file>Tutorial.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
-        <file>DeviceThermometer.qml</file>
+        <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>
         <file>DeviceScreen.qml</file>
+        <file>DeviceThermometer.qml</file>
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>

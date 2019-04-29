@@ -134,7 +134,7 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenTutorial
         }
-        DesktopDeviceList {
+        DeviceList {
             anchors.fill: parent
             id: screenDeviceList
         }
