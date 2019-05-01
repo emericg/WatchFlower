@@ -145,7 +145,7 @@ Rectangle {
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-tune-24px.svg"
+                source: "qrc:/assets/icons_material/outline-settings-24px.svg"
                 color: Theme.colorText
             }
             Label {
@@ -252,7 +252,7 @@ Rectangle {
                     id: refreshAnimationStop
                     duration: 1000;
                     to: 360;
-                    easing.type: Easing.OutExpo
+                    easing.type: Easing.Linear
                     running: false
                 }
             }
@@ -293,23 +293,14 @@ Rectangle {
                 source: "qrc:/assets/icons_material/baseline-search-24px.svg"
                 color: Theme.colorText
 
-                OpacityAnimator {
+                SequentialAnimation on opacity {
                     id: rescanAnimation
-                    target: buttonRescan
-                    duration: 1000
-                    from: 0.33
-                    to: 1
                     loops: Animation.Infinite
                     running: deviceManager.scanning
-                    onStopped: rescanAnimationStop.start()
-                }
-                OpacityAnimator {
-                    id: rescanAnimationStop
-                    target: buttonRescan
-                    duration: 500
-                    to: 1
-                    easing.type: Easing.OutExpo
-                    running: false
+                    onStopped: buttonRescan.opacity = 1;
+
+                    PropertyAnimation { to: 0.33; duration: 750; }
+                    PropertyAnimation { to: 1; duration: 750; }
                 }
             }
             Label {

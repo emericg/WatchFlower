@@ -29,12 +29,11 @@ Item {
 
         hoverEnabled: highlightMode !== "off"
         onEntered: {
-            fadeIn.start()
+            bgRect.opacity = 1
             itemImageButton.highlighted = true
         }
         onExited: {
-            fadeIn.stop()
-            fadeOut.start()
+            bgRect.opacity = background ? 0.66 : 0
             itemImageButton.highlighted = false
         }
     }
@@ -46,23 +45,8 @@ Item {
         color: parent.highlightColor
         opacity: background ? 0.66 : 0
 
-        PropertyAnimation {
-            id: fadeIn;
-            targets: [bgRect, tooltip];
-            property: "opacity";
-            from: background ? 0.66 : 0;
-            to: 1;
-            duration: 333;
-            running: false;
-        }
-        PropertyAnimation {
-            id: fadeOut;
-            targets: [bgRect, tooltip];
-            property: "opacity";
-            from: 1;
-            to: background ? 0.66 : 0;
-            duration: 333;
-            running: false;
+        Behavior on opacity {
+            OpacityAnimator { duration: 333 }
         }
     }
 

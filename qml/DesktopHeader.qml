@@ -148,9 +148,10 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"
+        anchors.verticalCenterOffset: -1
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 32
+        font.pixelSize: 30
     }
 
     Row {
@@ -162,7 +163,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        spacing: 8
+        spacing: 4
         visible: true
 
         ////////////
@@ -191,7 +192,7 @@ Rectangle {
                 id: refreshAnimationStop
                 duration: 1000;
                 to: 360;
-                easing.type: Easing.OutExpo
+                easing.type: Easing.Linear
                 running: false
             }
         }
@@ -250,7 +251,7 @@ Rectangle {
                 id: refreshAllAnimationStop
                 duration: 1000;
                 to: 360;
-                easing.type: Easing.OutExpo
+                easing.type: Easing.Linear
                 running: false
             }
         }
@@ -264,23 +265,14 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             onClicked: rescanButtonClicked()
 
-            OpacityAnimator {
+            SequentialAnimation on opacity {
                 id: rescanAnimation
-                target: buttonRescan
-                duration: 1000
-                from: 0.33
-                to: 1
                 loops: Animation.Infinite
                 running: deviceManager.scanning
-                onStopped: rescanAnimationStop.start()
-            }
-            OpacityAnimator {
-                id: rescanAnimationStop
-                target: buttonRescan
-                duration: 500
-                to: 1
-                easing.type: Easing.OutExpo
-                running: false
+                onStopped: buttonRescan.opacity = 1;
+
+                PropertyAnimation { to: 0.33; duration: 750; }
+                PropertyAnimation { to: 1; duration: 750; }
             }
         }
 

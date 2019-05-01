@@ -197,9 +197,7 @@ Rectangle {
         font.pixelSize: 16
 
         Behavior on opacity {
-            OpacityAnimator {
-                duration: 100
-            }
+            OpacityAnimator { duration: 100 }
         }
 
         MouseArea {
@@ -223,9 +221,7 @@ Rectangle {
         font.pixelSize: 16
 
         Behavior on opacity {
-            OpacityAnimator {
-                duration: 100
-            }
+            OpacityAnimator { duration: 100 }
         }
 
         MouseArea {
@@ -256,9 +252,7 @@ Rectangle {
             opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
 
             Behavior on opacity {
-                OpacityAnimator {
-                    duration: 100
-                }
+                OpacityAnimator { duration: 100 }
             }
         }
     }

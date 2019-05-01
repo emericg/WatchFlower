@@ -92,6 +92,7 @@ Item {
         } else if (myDevice.deviceBattery > 20) {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
         } else if (myDevice.deviceBattery > 1) {
+            imageBattery.color = Theme.colorRed
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
         } else {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
@@ -140,11 +141,11 @@ Item {
 
             if (myDevice.lastUpdateMin >= 0) {
                 if (myDevice.lastUpdateMin <= 1)
-                    textStatus.text += qsTr("Just updated!")
+                    textStatus.text = qsTr("Synced")
                 else if (myDevice.available)
-                    textStatus.text += qsTr("Updated") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
                 else
-                    textStatus.text += qsTr("Last update") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
             }
         }
     }

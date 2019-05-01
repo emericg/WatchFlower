@@ -4,14 +4,9 @@
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
         <file>desktop/watchflower_tray_dark.svg</file>
-        <file>devices/flowercare.svg</file>
-        <file>devices/ropot.svg</file>
-        <file>devices/hygrotemp.svg</file>
         <file>menu_logo.svg</file>
         <file>menu_back.svg</file>
         <file>menu_close.svg</file>
-        <file>ble.svg</file>
-        <file>ble_err.svg</file>
         <file>github.svg</file>
         <file>icons_material/baseline-access_time-24px.svg</file>
         <file>icons_material/baseline-ac_unit-24px.svg</file>
@@ -53,9 +48,13 @@
         <file>icons_material/baseline-search-24px.svg</file>
         <file>icons_material/baseline-settings-20px.svg</file>
         <file>icons_material/baseline-timer-24px.svg</file>
+        <file>icons_material/baseline-trip_origin-24px.svg</file>
         <file>icons_material/baseline-tune-24px.svg</file>
         <file>icons_material/baseline-wb_sunny-24px.svg</file>
         <file>icons_material/outline-info-24px.svg</file>
+        <file>icons_material/outline-local_florist-24px.svg</file>
+        <file>icons_material/outline-settings_remote-24px.svg</file>
+        <file>icons_material/outline-settings-24px.svg</file>
         <file>devices/welcome-devices.svg</file>
         <file>devices/welcome-bluetooth-searching.svg</file>
         <file>devices/welcome-app-connected.svg</file>

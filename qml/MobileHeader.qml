@@ -179,7 +179,7 @@ Rectangle {
                         id: refreshAnimationStop
                         duration: 1000;
                         to: 360;
-                        easing.type: Easing.OutExpo
+                        easing.type: Easing.Linear
                         running: false
                     }
                 }

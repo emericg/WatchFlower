@@ -52,11 +52,11 @@ Item {
 
         // Device picture
         if (boxDevice.deviceName === "MJ_HT_V1") {
-            imageDevice.source = "qrc:/assets/devices/hygrotemp.svg"
+            imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "ropot") {
-            imageDevice.source = "qrc:/assets/devices/ropot.svg"
+            imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         } else {
-            imageDevice.source = "qrc:/assets/devices/flowercare.svg"
+            imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px"
         }
 
         // Sensor battery level
@@ -78,6 +78,7 @@ Item {
             } else if (boxDevice.deviceBattery > 20) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
             } else if (boxDevice.deviceBattery > 1) {
+                imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
@@ -95,6 +96,7 @@ Item {
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
         water.visible = false
+        temp.visible = false
 
         // Texts
         if (boxDevice.deviceName === "MJ_HT_V1") {
@@ -115,15 +117,19 @@ Item {
         if (boxDevice.updating) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Connecting...")
+            opa.start()
         } else if (boxDevice.available) {
             textStatus.color = Theme.colorGreen
             textStatus.text = qsTr("Synced")
+            opa.stop()
         } else if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 12*60) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Synced") /* + " " + boxDevice.lastUpdateMin + " " + qsTr("min. ago") */
+            opa.stop()
         } else {
             textStatus.color = Theme.colorRed
             textStatus.text = qsTr("Offline")
+            opa.stop()
         }
 
         // Water me notif
@@ -134,15 +140,22 @@ Item {
                 }
             }
         }
+        // Extreme temperature notif
+        if (boxDevice.deviceTemp > 40) {
+            temp.visible = true
+            temp.color = Theme.colorYellow
+        } else if (boxDevice.deviceTemp > -80 && boxDevice.deviceTemp  <= 0) {
+            temp.visible = true
+            temp.color = Theme.colorBlue
+        }
 
         // Update notif
         if (boxDevice.isUpdating()) {
             if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
-                // if we have data cached, used the little indicator
+                // if we have data cached, no indicator
             } else {
-                // otherwise, fullsize
                 imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/ble.svg";
+                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg";
                 refreshAnimation.running = true;
             }
         } else {
@@ -152,13 +165,11 @@ Item {
                 imageStatus.visible = false;
             } else {
                 if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
-                    // if we have data cached, used the little indicator
+                    // if we have data cached, no indicator
                     imageStatus.visible = false;
                 } else {
-                    // otherwise big one
                     imageStatus.visible = true;
-                    imageStatus.source = "qrc:/assets/ble_err.svg";
-                    imageStatus.opacity = 1;
+                    imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
                 }
             }
         }
@@ -279,8 +290,8 @@ Item {
 
                     ImageSvg {
                         id: imageBattery
-                        width: 30
-                        height: 32
+                        width: 28
+                        height: 30
 
                         color: Theme.colorIcons
                         anchors.verticalCenter: parent.verticalCenter
@@ -292,9 +303,19 @@ Item {
                     Text {
                         id: textStatus
                         text: qsTr("Synced")
+                        anchors.verticalCenterOffset: 0
                         anchors.verticalCenter: parent.verticalCenter
                         verticalAlignment: Text.AlignVCenter
-                        font.pixelSize: 16
+                        font.pixelSize: 15
+
+                        SequentialAnimation on opacity {
+                            id: opa
+                            loops: Animation.Infinite
+                            onStopped: textStatus.opacity = 1;
+
+                            PropertyAnimation { to: 0.2; duration: 750; }
+                            PropertyAnimation { to: 1; duration: 750; }
+                        }
                     }
                 }
             }
@@ -328,6 +349,15 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
                     color: Theme.colorBlue
                 }
+                ImageSvg {
+                    id: temp
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    color: Theme.colorYellow
+                }
             }
 
             Item {
@@ -338,7 +368,7 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
 
-                Image {
+                ImageSvg {
                     id: imageStatus
                     width: 32
                     height: 32
@@ -346,16 +376,17 @@ Item {
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/ble.svg"
-                    sourceSize: Qt.size(width, height)
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                     visible: false
+                    color: Theme.colorIcons
 
                     SequentialAnimation on opacity {
                         id: refreshAnimation
                         loops: Animation.Infinite
-                        running: true
-                        OpacityAnimator { from: 0; to: 1; duration: 600 }
-                        OpacityAnimator { from: 1; to: 0;  duration: 600 }
+                        running: false
+                        onStopped: imageStatus.opacity = 1
+                        OpacityAnimator { from: 0; to: 1; duration: 750 }
+                        OpacityAnimator { from: 1; to: 0;  duration: 750 }
                     }
                 }
 
@@ -551,7 +582,7 @@ Item {
         id: bottomSeparator
         color: Theme.colorMaterialDarkGrey
         visible: singleColumn
-        height: 2
+        height: 1
 
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
