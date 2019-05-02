@@ -1,8 +1,7 @@
-WatchFlower
-===========
+# ![WatchFlower](assets/android/res/mipmap-xhdpi/splashicon.png)
 
-[![Travis](https://img.shields.io/travis/emericg/WatchFlower.svg?style=flat-square)](https://travis-ci.org/emericg/WatchFlower)
-[![AppVeyor](https://img.shields.io/appveyor/ci/emericg/WatchFlower.svg?style=flat-square)](https://ci.appveyor.com/project/emericg/watchflower)
+[![Travis](https://img.shields.io/travis/emericg/WatchFlower.svg?style=flat-square&logo=travis)](https://travis-ci.org/emericg/WatchFlower)
+[![AppVeyor](https://img.shields.io/appveyor/ci/emericg/WatchFlower.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/emericg/watchflower)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
@@ -37,7 +36,7 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 
 ## Special thanks
 
-* Christian Díaz <christiandiaz.design@gmail.com> for the application logo.
+* Christian Díaz <christiandiaz.design@gmail.com> for his work on the application design and logo!
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
