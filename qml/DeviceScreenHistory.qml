@@ -83,7 +83,7 @@ Item {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
-            } else  {
+            } else {
                 hygroGraph.visible = false
             }
         } else {
@@ -101,7 +101,7 @@ Item {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
                 graphCount += 1
-            } else  {
+            } else {
                 conduGraph.visible = false
             }
         } else {
@@ -118,15 +118,34 @@ Item {
         //console.log("height: " + graphGrid.height)
 
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            if (Screen.primaryOrientation === 1 /*Qt::PortraitOrientation*/)
+            if (Screen.primaryOrientation === 1 /*Qt::PortraitOrientation*/) {
                 graphGrid.columns = 1
-            else
+                rectangleHeader.visible = true
+                rectangleHeader.height = 56
+            } else {
                 graphGrid.columns = 2
+                rectangleHeader.visible = false
+                rectangleHeader.height = 0
+            }
         } else {
-            if (graphGrid.width < 1080)
+            if (graphGrid.width < 1080) {
                 graphGrid.columns = 1
-            else
+            } else {
                 graphGrid.columns = 2
+            }
+            if (graphGrid.width < 550) {
+                buttonPanel.anchors.topMargin = 52
+                buttonPanel.anchors.rightMargin = 0
+                buttonPanel.anchors.right = undefined
+                buttonPanel.anchors.horizontalCenter = rectangleHeader.horizontalCenter
+                rectangleHeader.height = 96
+            } else {
+                buttonPanel.anchors.topMargin = 8
+                buttonPanel.anchors.rightMargin = 8
+                buttonPanel.anchors.horizontalCenter = undefined
+                buttonPanel.anchors.right = rectangleHeader.right
+                rectangleHeader.height = 48
+            }
         }
 
         graphWidth = (graphGrid.width) / graphGrid.columns
