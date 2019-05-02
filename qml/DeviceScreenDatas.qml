@@ -287,17 +287,36 @@ Item {
                         onPositionChanged: mouse.accepted = false;
                         onPressAndHold: mouse.accepted = false;
                     }
-                    ImageSvg {
-                        id: imageEditPlant
+
+                    MouseArea {
                         width: 20
                         height: 20
                         anchors.left: parent.right
                         anchors.leftMargin: 6
                         anchors.verticalCenterOffset: 0
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: false
-                        source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        color: Theme.colorIcons
+
+                        hoverEnabled: true
+
+                        onEntered: { imageEditPlant.visible = true; }
+                        onExited: {
+                            if (textInputPlant.text) {
+                                imageEditPlant.visible = false
+                            } else {
+                                imageEditPlant.visible = true
+                            }
+                        }
+                        onClicked: textInputPlant.forceActiveFocus()
+                        onPressed: textInputPlant.forceActiveFocus()
+
+                        ImageSvg {
+                            id: imageEditPlant
+                            anchors.fill: parent
+
+                            visible: false
+                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            color: Theme.colorIcons
+                        }
                     }
                 }
             }
@@ -368,17 +387,36 @@ Item {
                         onPositionChanged: mouse.accepted = false;
                         onPressAndHold: mouse.accepted = false;
                     }
-                    ImageSvg {
-                        id: imageEditLocation
+
+                    MouseArea {
                         width: 20
                         height: 20
                         anchors.left: parent.right
                         anchors.leftMargin: 6
                         anchors.verticalCenterOffset: 0
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: false
-                        source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                        color: Theme.colorIcons
+
+                        hoverEnabled: true
+
+                        onEntered: { imageEditLocation.visible = true; }
+                        onExited: {
+                            if (textInputLocation.text) {
+                                imageEditLocation.visible = false
+                            } else {
+                                imageEditLocation.visible = true
+                            }
+                        }
+                        onClicked: textInputLocation.forceActiveFocus()
+                        onPressed: textInputLocation.forceActiveFocus()
+
+                        ImageSvg {
+                            id: imageEditLocation
+                            anchors.fill: parent
+
+                            visible: false
+                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            color: Theme.colorIcons
+                        }
                     }
                 }
             }
