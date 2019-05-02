@@ -75,7 +75,9 @@ Item {
         contentWidth: -1
 
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleAboutTitle.bottom : parent.top
+        anchors.topMargin: 8
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
 
@@ -83,8 +85,6 @@ Item {
             id: column
             spacing: 8
             anchors.fill: parent
-            anchors.topMargin: 8
-            anchors.bottomMargin: 16
             anchors.rightMargin: 16
             anchors.leftMargin: 16
 

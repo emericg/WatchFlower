@@ -141,10 +141,10 @@ Item {
             }
         }
         // Extreme temperature notif
-        if (boxDevice.deviceTemp > 40) {
+        if (boxDevice.deviceTempC > 40) {
             temp.visible = true
             temp.color = Theme.colorYellow
-        } else if (boxDevice.deviceTemp > -80 && boxDevice.deviceTemp  <= 0) {
+        } else if (boxDevice.deviceTempC > -80 && boxDevice.deviceTempC  <= 0) {
             temp.visible = true
             temp.color = Theme.colorBlue
         }

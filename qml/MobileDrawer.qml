@@ -83,10 +83,11 @@ Rectangle {
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
+        anchors.topMargin: 0
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
         anchors.left: parent.left
-        anchors.topMargin: 0
 
         Column {
             id: row
