@@ -77,295 +77,303 @@ Rectangle {
         }
     }
 
-    Column {
-        id: row
+    ScrollView {
+        id: scrollView
+        clip: true
+        contentWidth: -1
+
         anchors.top: rectangleHeader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.topMargin: 0
 
-        Rectangle {
-            id: rectangleHome
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "transparent"
+        Column {
+            id: row
+            anchors.fill: parent
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    content.state = "DeviceList"
-                    drawer.close()
+            Rectangle {
+                id: rectangleHome
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: "transparent"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        content.state = "DeviceList"
+                        drawer.close()
+                    }
+                }
+
+                ImageSvg {
+                    id: buttonPlantsImg
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+                    color: Theme.colorText
+                }
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("My plants")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
                 }
             }
 
-            ImageSvg {
-                id: buttonPlantsImg
-                width: 24
-                height: 24
+            Rectangle {
+                id: rectangleSettings
+                height: 48
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+                color: "transparent"
 
-                source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
-                color: Theme.colorText
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        content.state = "Settings"
+                        drawer.close()
+                    }
+                }
 
-                text: qsTr("My plants")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
-            }
-        }
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
-        Rectangle {
-            id: rectangleSettings
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "transparent"
+                    source: "qrc:/assets/icons_material/outline-settings-24px.svg"
+                    color: Theme.colorText
+                }
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    content.state = "Settings"
-                    drawer.close()
+                    text: qsTr("Settings")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
                 }
             }
 
-            ImageSvg {
-                width: 24
-                height: 24
+            Rectangle {
+                id: rectangleAbout
+                height: 48
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+                color: "transparent"
 
-                source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                color: Theme.colorText
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        content.state = "About"
+                        drawer.close()
+                    }
+                }
 
-                text: qsTr("Settings")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
-            }
-        }
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
-        Rectangle {
-            id: rectangleAbout
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: "transparent"
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorText
+                }
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    content.state = "About"
-                    drawer.close()
+                    text: qsTr("About")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
                 }
             }
 
-            ImageSvg {
-                width: 24
-                height: 24
+            Item { // spacer
+                height: 8
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                color: Theme.colorText
             }
-            Label {
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("About")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
+                color: Theme.colorSeparators
             }
-        }
+            Item {
+                height: 8
+                anchors.right: parent.right
+                anchors.left: parent.left
+            }
 
-        Item { // spacer
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-        }
-        Rectangle {
-            height: 1
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: Theme.colorSeparators
-        }
-        Item {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-        }
+            Item {
+                id: rectangleRefresh
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
 
-        Item {
-            id: rectangleRefresh
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        deviceManager.refreshDevices()
+                        drawer.close()
+                    }
+                }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deviceManager.refreshDevices()
-                    drawer.close()
+                ImageSvg {
+                    id: buttonRefresh
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                    color: Theme.colorText
+
+                    NumberAnimation on rotation {
+                        id: refreshAnimation
+                        duration: 2000
+                        from: 0
+                        to: 360
+                        loops: Animation.Infinite
+                        running: deviceManager.refreshing
+                        onStopped: refreshAnimationStop.start()
+                    }
+                    NumberAnimation on rotation {
+                        id: refreshAnimationStop
+                        duration: 1000;
+                        to: 360;
+                        easing.type: Easing.Linear
+                        running: false
+                    }
+                }
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Refresh sensors")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
                 }
             }
 
-            ImageSvg {
-                id: buttonRefresh
-                width: 24
-                height: 24
+            Item {
+                id: rectangleScan
+                height: 48
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                color: Theme.colorText
-
-                NumberAnimation on rotation {
-                    id: refreshAnimation
-                    duration: 2000
-                    from: 0
-                    to: 360
-                    loops: Animation.Infinite
-                    running: deviceManager.refreshing
-                    onStopped: refreshAnimationStop.start()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        deviceManager.scanDevices()
+                        drawer.close()
+                    }
                 }
-                NumberAnimation on rotation {
-                    id: refreshAnimationStop
-                    duration: 1000;
-                    to: 360;
-                    easing.type: Easing.Linear
-                    running: false
+
+                ImageSvg {
+                    id: buttonRescan
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                    color: Theme.colorText
+
+                    SequentialAnimation on opacity {
+                        id: rescanAnimation
+                        loops: Animation.Infinite
+                        running: deviceManager.scanning
+                        onStopped: buttonRescan.opacity = 1;
+
+                        PropertyAnimation { to: 0.33; duration: 750; }
+                        PropertyAnimation { to: 1; duration: 750; }
+                    }
                 }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Refresh sensors")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
-            }
-        }
-
-        Item {
-            id: rectangleScan
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deviceManager.scanDevices()
-                    drawer.close()
+                    text: qsTr("Search for new devices")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
                 }
             }
 
-            ImageSvg {
-                id: buttonRescan
-                width: 24
-                height: 24
+            Item {
+                height: 8
+                anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            }
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparators
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            }
+            Item {
+                height: 8
+                anchors.right: parent.right
+                anchors.left: parent.left
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+            }
 
-                source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                color: Theme.colorText
+            Item {
+                id: rectangleExit
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                SequentialAnimation on opacity {
-                    id: rescanAnimation
-                    loops: Animation.Infinite
-                    running: deviceManager.scanning
-                    onStopped: buttonRescan.opacity = 1;
-
-                    PropertyAnimation { to: 0.33; duration: 750; }
-                    PropertyAnimation { to: 1; duration: 750; }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: settingsManager.exit()
                 }
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Search for new devices")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
-            }
-        }
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
-        Item {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-        }
-        Rectangle {
-            height: 1
-            anchors.right: parent.right
-            anchors.left: parent.left
-            color: Theme.colorSeparators
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-        }
-        Item {
-            height: 8
-            anchors.right: parent.right
-            anchors.left: parent.left
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-        }
+                    source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                    color: Theme.colorText
+                }
+                Label {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
 
-        Item {
-            id: rectangleExit
-            height: 48
-            anchors.right: parent.right
-            anchors.left: parent.left
-            visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: settingsManager.exit()
-            }
-
-            ImageSvg {
-                width: 24
-                height: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-                color: Theme.colorText
-            }
-            Label {
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Exit")
-                font.pixelSize: 13
-                font.bold: true
-                color: Theme.colorText
+                    text: qsTr("Exit")
+                    font.pixelSize: 13
+                    font.bold: true
+                    color: Theme.colorText
+                }
             }
         }
     }
