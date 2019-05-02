@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.7
+import QtQuick 2.9
 
 // Qt 5.10 needed here...
 // You can change v2.2 into 2.1 but you'll need to comment the

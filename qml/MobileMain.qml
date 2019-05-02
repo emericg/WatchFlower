@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.0
 
 import StatusBar 0.1

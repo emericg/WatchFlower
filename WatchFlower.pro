@@ -10,12 +10,12 @@ android { QT += androidextras }
 ios | android { QT += gui-private }
 
 # Validate Qt version
-if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 7)) {
-    error("You really need AT LEAST Qt 5.7 to build WatchFlower, sorry...")
+if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 9)) {
+    error("You really need AT LEAST Qt 5.9 to build WatchFlower, sorry...")
 }
 if (lessThan(QT_MINOR_VERSION, 10)) {
     warning("You need Qt 5.10 to build WatchFlower with proper data charts." \
-            "You can use Qt 5.7 but you'll need to make a small adjustment into DeviceScreenCharts.qml...")
+            "You can use Qt 5.9 but you'll need to make a small adjustment into DeviceScreenCharts.qml...")
 }
 
 ################################################################################

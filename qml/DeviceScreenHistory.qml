@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.7
-import QtQuick.Layouts 1.12
+import QtQuick 2.9
+import QtQuick.Layouts 1.2
 import QtQuick.Window 2.2
 
 import com.watchflower.theme 1.0

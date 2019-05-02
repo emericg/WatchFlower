@@ -24,7 +24,7 @@ It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries a
 
 ### Dependencies
 
-You will need a C++11 capable compiler and Qt 5.7+ (versions 5.11+ are recommended however).
+You will need a C++11 compiler and Qt 5.9+ (versions 5.12+ are recommended however).
 WatchFlower will take advantages of sqlite if it's available on your system.
 
 ### Building WatchFlower
