@@ -45,25 +45,25 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
-    Q_PROPERTY(bool bluetooth READ getBluetooth WRITE setBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
 
-    Q_PROPERTY(uint interval READ getUpdateInterval WRITE setUpdateInterval NOTIFY intervalChanged)
-    Q_PROPERTY(QString tempunit READ getTempUnit WRITE setTempUnit NOTIFY tempunitChanged)
-    Q_PROPERTY(QString graph READ getGraph WRITE setGraph NOTIFY graphChanged)
-    Q_PROPERTY(QString graphview READ getGraphView WRITE setGraphView NOTIFY graphviewChanged)
-    Q_PROPERTY(QString graphdata READ getGraphData WRITE setGraphData NOTIFY graphdataChanged)
+    Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
+    Q_PROPERTY(bool bluetoothCompat READ getBluetoothCompat WRITE setBluetoothCompat NOTIFY bluetoothCompatChanged)
+
+    Q_PROPERTY(uint updateInterval READ getUpdateInterval WRITE setUpdateInterval NOTIFY updateIntervalChanged)
+    Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
+    Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
 
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
-    bool m_autoBluetoothEnabled = false;
+    bool m_bluetoothControl = false;
+    bool m_bluetoothCompat = false;
 
     int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
+
     QString m_tempUnit = "C";
-    QString m_graphMode = "bar";
-    QString m_graphDefaultView = "monthly";
-    QString m_graphDefaultData = "hygro";
+    QString m_graphHistory = "monthly";
 
     bool readSettings();
     bool writeSettings();
@@ -72,8 +72,6 @@ class SettingsManager: public QObject
     bool loadDatabase();
     void closeDatabase();
     void resetDatabase();
-
-    bool readDevices();
 
     static SettingsManager *instance;
 
@@ -84,12 +82,11 @@ Q_SIGNALS:
     void minimizedChanged();
     void systrayChanged();
     void notifsChanged();
-    void bluetoothChanged();
-    void intervalChanged();
-    void tempunitChanged();
-    void graphChanged();
-    void graphviewChanged();
-    void graphdataChanged();
+    void bluetoothControlChanged();
+    void bluetoothCompatChanged();
+    void updateIntervalChanged();
+    void tempUnitChanged();
+    void graphHistoryChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -105,8 +102,11 @@ public:
     bool getNotifs() const { return m_notificationsEnabled; }
     void setNotifs(bool value);
 
-    bool getBluetooth() const { return m_autoBluetoothEnabled; }
-    void setBluetooth(bool value);
+    bool getBluetoothControl() const { return m_bluetoothControl; }
+    void setBluetoothControl(bool value);
+
+    bool getBluetoothCompat() const { return m_bluetoothCompat; }
+    void setBluetoothCompat(bool value);
 
     int getUpdateInterval() const { return m_updateInterval; }
     void setUpdateInterval(int value);
@@ -114,14 +114,8 @@ public:
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);
 
-    QString getGraph() const { return m_graphMode; }
-    void setGraph(const QString &value);
-
-    QString getGraphView() const { return m_graphDefaultView; }
-    void setGraphView(const QString &value);
-
-    QString getGraphData() const { return m_graphDefaultData; }
-    void setGraphData(const QString &value);
+    QString getGraphHistory() const { return m_graphHistory; }
+    void setGraphHistory(const QString &value);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);

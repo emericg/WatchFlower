@@ -53,7 +53,7 @@ Item {
         lumiDatas.clear()
         conduDatas.clear()
 
-        myDevice.getTempDatas(axisTime, hygroDatas, tempDatas, lumiDatas, conduDatas);
+        myDevice.getAioDatas(axisTime, hygroDatas, tempDatas, lumiDatas, conduDatas);
 
         //// AXIS
         axisHygro.min = 0

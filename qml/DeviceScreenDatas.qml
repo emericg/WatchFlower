@@ -471,7 +471,7 @@ Item {
             ItemDataBar {
                 id: temp
                 legend: qsTr("Temperature")
-                unit: "°" + settingsManager.tempunit
+                unit: "°" + settingsManager.tempUnit
                 color: Theme.colorGreen
                 value: myDevice.deviceTempC
                 valueMin: 0

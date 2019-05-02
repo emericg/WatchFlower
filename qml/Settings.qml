@@ -84,6 +84,8 @@ Item {
             anchors.topMargin: 12
             spacing: 8
 
+            ////////
+
             Item {
                 id: element1
                 height: 48
@@ -128,6 +130,8 @@ Item {
                 }
             }
 
+            ////////
+
             Item {
                 id: element2
                 height: 48
@@ -140,9 +144,9 @@ Item {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 Text {
-                    id: text_bluetooth
+                    id: text_bluetoothControl
                     height: 40
-                    anchors.left: image_bluetooth.right
+                    anchors.left: image_bluetoothControl.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -152,16 +156,16 @@ Item {
                 }
 
                 ThemedSwitch {
-                    id: switch_bluetooth
+                    id: switch_bluetoothControl
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
-                    Component.onCompleted: checked = settingsManager.bluetooth
-                    onCheckedChanged: settingsManager.bluetooth = checked
+                    Component.onCompleted: checked = settingsManager.bluetoothControl
+                    onCheckedChanged: settingsManager.bluetoothControl = checked
                 }
 
                 ImageSvg {
-                    id: image_bluetooth
+                    id: image_bluetoothControl
                     width: 24
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
@@ -169,12 +173,11 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorIcons
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_connected-24px.svg"
                 }
             }
-
             Text {
-                id: legend_bluetooth
+                id: legend_bluetoothControl
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
@@ -189,6 +192,71 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: 14
             }
+
+            ////////
+
+            Item {
+                id: element22
+                height: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                // mobile only
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                Text {
+                    id: text_bluetoothCompat
+                    height: 40
+                    anchors.left: image_bluetoothCompat.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Bluetooth compatibility mode")
+                    font.pixelSize: 16
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ThemedSwitch {
+                    id: switch_bluetoothCompat
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    Component.onCompleted: checked = settingsManager.bluetoothCompat
+                    onCheckedChanged: settingsManager.bluetoothCompat = checked
+                }
+
+                ImageSvg {
+                    id: image_bluetoothCompat
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorIcons
+                    source: "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg"
+                }
+            }
+            Text {
+                id: legend_bluetoothCompat
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                topPadding: -12
+
+                // mobile only
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                text: qsTr("Improve bluetooth compatibility when your device show poor synchronization performance. You can disable it to improve sync speed.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
 
             Item {
                 id: element3
@@ -234,7 +302,6 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                 }
             }
-
             Text {
                 id: legend_worker
                 anchors.left: parent.left
@@ -251,6 +318,8 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: 14
             }
+
+            ////////
 
             Item {
                 id: element4
@@ -296,7 +365,6 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                 }
             }
-
             Text {
                 id: legend_notifications
                 anchors.left: parent.left
@@ -314,6 +382,8 @@ Item {
                 font.pixelSize: 14
             }
 
+            ////////
+
             Item {
                 id: element5
                 height: 48
@@ -326,8 +396,8 @@ Item {
                     id: spinBox_update
                     width: 128
                     height: 36
-                    value: 60
-                    onValueChanged: settingsManager.interval = value
+                    value: settingsManager.updateInterval
+                    onValueChanged: settingsManager.updateInterval = value
                     to: 180
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -361,6 +431,8 @@ Item {
                 }
             }
 
+            ////////
+
             Item {
                 id: element6
                 height: 48
@@ -390,7 +462,7 @@ Item {
 
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.tempunit === 'C') {
+                        if (settingsManager.tempUnit === 'C') {
                             radioDelegateCelsius.checked = true
                             radioDelegateFahrenheit.checked = false
                         } else {
@@ -400,7 +472,7 @@ Item {
                     }
                     onCheckedChanged: {
                         if (checked === true)
-                            settingsManager.tempunit = 'C'
+                            settingsManager.tempUnit = 'C'
                     }
                 }
 
@@ -414,7 +486,7 @@ Item {
                     text: qsTr("°F")
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.tempunit === 'F') {
+                        if (settingsManager.tempUnit === 'F') {
                             radioDelegateCelsius.checked = false
                             radioDelegateFahrenheit.checked = true
                         } else {
@@ -424,7 +496,7 @@ Item {
                     }
                     onCheckedChanged: {
                         if (checked === true)
-                            settingsManager.tempunit = 'F'
+                            settingsManager.tempUnit = 'F'
                     }
                 }
 
@@ -440,6 +512,8 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 }
             }
+
+            ////////
 
             Item {
                 id: element7
@@ -482,7 +556,7 @@ Item {
 
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.graphview === "monthly") {
+                        if (settingsManager.graphHistory === "monthly") {
                             radioDelegateGraphMonthly.checked = true
                             radioDelegateGraphWeekly.checked = false
                         } else {
@@ -492,7 +566,7 @@ Item {
                     }
                     onCheckedChanged: {
                         if (checked === true)
-                            settingsManager.graphview = "monthly"
+                            settingsManager.graphHistory = "monthly"
                     }
                 }
                 ThemedRadioButton {
@@ -505,7 +579,7 @@ Item {
                     text: qsTr("Weekly")
                     font.pixelSize: 16
                     checked: {
-                        if (settingsManager.graphview === "weekly") {
+                        if (settingsManager.graphHistory === "weekly") {
                             radioDelegateGraphMonthly.checked = false
                             radioDelegateGraphWeekly.checked = true
                         } else {
@@ -515,10 +589,12 @@ Item {
                     }
                     onCheckedChanged: {
                         if (checked === true)
-                            settingsManager.graphview = "weekly"
+                            settingsManager.graphHistory = "weekly"
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: element9

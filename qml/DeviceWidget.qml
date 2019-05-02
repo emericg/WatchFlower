@@ -527,7 +527,7 @@ Item {
 
                     Connections {
                         target: settingsManager
-                        onTempunitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+                        onTempUnitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
                     }
 
                     Text {

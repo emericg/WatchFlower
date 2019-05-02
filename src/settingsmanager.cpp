@@ -74,7 +74,7 @@ bool SettingsManager::readSettings()
             m_startMinimized = settings.value("settings/startMinimized").toBool();
 
         if (settings.contains("settings/bluetoothEnabled"))
-            m_autoBluetoothEnabled = settings.value("settings/bluetoothEnabled").toBool();
+            m_bluetoothControl = settings.value("settings/bluetoothEnabled").toBool();
 
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
@@ -85,15 +85,11 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/updateInterval"))
             m_updateInterval = settings.value("settings/updateInterval").toInt();
 
-        if (settings.contains("settings/degreUnit"))
-            m_tempUnit = settings.value("settings/degreUnit").toString();
+        if (settings.contains("settings/tempUnit"))
+            m_tempUnit = settings.value("settings/tempUnit").toString();
 
-        if (settings.contains("settings/graphMode"))
-            m_graphMode = settings.value("settings/graphMode").toString();
-        if (settings.contains("settings/graphDefaultView"))
-            m_graphDefaultView = settings.value("settings/graphDefaultView").toString();
-        if (settings.contains("settings/graphDefaultData"))
-            m_graphDefaultData = settings.value("settings/graphDefaultData").toString();
+        if (settings.contains("settings/graphHistory"))
+            m_graphHistory = settings.value("settings/graphHistory").toString();
 
         status = true;
     }
@@ -116,14 +112,13 @@ bool SettingsManager::writeSettings()
     if (settings.isWritable())
     {
         settings.setValue("settings/startMinimized", m_startMinimized);
-        settings.setValue("settings/bluetoothEnabled", m_autoBluetoothEnabled);
+        settings.setValue("settings/bluetoothControl", m_bluetoothControl);
+        settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
         settings.setValue("settings/updateInterval", m_updateInterval);
-        settings.setValue("settings/degreUnit", m_tempUnit);
-        settings.setValue("settings/graphMode", m_graphMode);
-        settings.setValue("settings/graphDefaultView", m_graphDefaultView);
-        settings.setValue("settings/graphDefaultData", m_graphDefaultData);
+        settings.setValue("settings/tempUnit", m_tempUnit);
+        settings.setValue("settings/graphHistory", m_graphHistory);
 
         settings.sync();
 
@@ -328,17 +323,17 @@ void SettingsManager::resetSettings()
     Q_EMIT systrayChanged();
     m_notificationsEnabled = false;
     Q_EMIT notifsChanged();
-    m_autoBluetoothEnabled = false;
-    Q_EMIT bluetoothChanged();
+    m_bluetoothControl = false;
+    Q_EMIT bluetoothControlChanged();
+    m_bluetoothCompat = false;
+    Q_EMIT bluetoothCompatChanged();
 
     m_updateInterval = DEFAULT_UPDATE_INTERVAL;
-    Q_EMIT intervalChanged();
+    Q_EMIT updateIntervalChanged();
     m_tempUnit = "C";
-    Q_EMIT tempunitChanged();
-    m_graphDefaultView = "daily";
-    Q_EMIT graphviewChanged();
-    m_graphDefaultData = "hygro";
-    Q_EMIT graphdataChanged();
+    Q_EMIT tempUnitChanged();
+    m_graphHistory = "daily";
+    Q_EMIT graphHistoryChanged();
 
     // Database
     resetDatabase();
@@ -346,13 +341,6 @@ void SettingsManager::resetSettings()
 }
 
 /* ************************************************************************** */
-/* ************************************************************************** */
-
-bool SettingsManager::readDevices()
-{
-    return false;
-}
-
 /* ************************************************************************** */
 
 QString SettingsManager::getAppVersion()
@@ -397,46 +385,39 @@ void SettingsManager::setNotifs(bool value)
     Q_EMIT notifsChanged();
 }
 
-void SettingsManager::setBluetooth(bool value)
+void SettingsManager::setBluetoothControl(bool value)
 {
-    m_autoBluetoothEnabled = value;
+    m_bluetoothControl = value;
     writeSettings();
-    Q_EMIT bluetoothChanged();
+    Q_EMIT bluetoothControlChanged();
+}
+
+void SettingsManager::setBluetoothCompat(bool value)
+{
+    m_bluetoothCompat = value;
+    writeSettings();
+    Q_EMIT bluetoothCompatChanged();
 }
 
 void SettingsManager::setUpdateInterval(int value)
 {
     m_updateInterval = value;
     writeSettings();
-    Q_EMIT intervalChanged();
+    Q_EMIT updateIntervalChanged();
 }
 
 void SettingsManager::setTempUnit(const QString &value)
 {
     m_tempUnit = value;
     writeSettings();
-    Q_EMIT tempunitChanged();
+    Q_EMIT tempUnitChanged();
 }
 
-void SettingsManager::setGraph(const QString &value)
+void SettingsManager::setGraphHistory(const QString &value)
 {
-    m_graphMode = value;
+    m_graphHistory = value;
     writeSettings();
-    Q_EMIT graphChanged();
-}
-
-void SettingsManager::setGraphView(const QString &value)
-{
-    m_graphDefaultView = value;
-    writeSettings();
-    Q_EMIT graphviewChanged();
-}
-
-void SettingsManager::setGraphData(const QString &value)
-{
-    m_graphDefaultData = value;
-    writeSettings();
-    Q_EMIT graphdataChanged();
+    Q_EMIT graphHistoryChanged();
 }
 
 /* ************************************************************************** */

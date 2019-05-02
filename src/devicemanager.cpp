@@ -159,7 +159,7 @@ void DeviceManager::enableBluetooth(bool checkPermission)
         if (checkPermission)
         {
             SettingsManager *sm = SettingsManager::getInstance();
-            if (sm && sm->getBluetooth())
+            if (sm && sm->getBluetoothControl())
             {
                 // Make sure its powered on
                 // Doesn't work on all platforms...

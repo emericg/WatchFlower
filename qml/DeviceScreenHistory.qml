@@ -30,7 +30,7 @@ Item {
     width: 400
     height: 300
 
-    property string graphMode: settingsManager.graphview
+    property string graphMode: settingsManager.graphHistory
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return

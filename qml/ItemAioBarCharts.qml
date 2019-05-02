@@ -33,8 +33,8 @@ Item {
     width: parent.width
     anchors.margins: 0
 
-    property string graphViewSelected: settingsManager.graphview
-    property string graphDataSelected: settingsManager.graphdata
+    property string graphViewSelected: settingsManager.graphHistory
+    property string graphDataSelected: "hygro"
 
     property string bgDayGraphColor: "#F1F1F1"
     property string bgNightGraphColor: "#E1E1E1"
@@ -46,8 +46,8 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
 
-        graphViewSelected = settingsManager.graphview
-        graphDataSelected = settingsManager.graphdata
+        graphViewSelected = settingsManager.graphHistory
+        graphDataSelected = "hygro"
         if (graphDataSelected === "hygro") {
             if (myDevice.deviceName === "MJ_HT_V1")
                 graphDataSelected = "temp"

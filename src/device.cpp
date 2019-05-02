@@ -1113,9 +1113,9 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::getTempDatas(QDateTimeAxis *axis,
-                          QLineSeries *hygro, QLineSeries *temp,
-                          QLineSeries *lumi, QLineSeries *cond)
+void Device::getAioDatas(QDateTimeAxis *axis,
+                         QLineSeries *hygro, QLineSeries *temp,
+                         QLineSeries *lumi, QLineSeries *cond)
 {
     if (!axis || !hygro || !temp || !lumi || !cond)
         return;
@@ -1128,7 +1128,7 @@ void Device::getTempDatas(QDateTimeAxis *axis,
 
     if (graphDatas.exec() == false)
     {
-        qDebug() << "> cachedDatas.exec() ERROR" << graphDatas.lastError().type() << ":"  << graphDatas.lastError().text();
+        qDebug() << "> graphDatas.exec() ERROR" << graphDatas.lastError().type() << ":"  << graphDatas.lastError().text();
         return;
     }
 

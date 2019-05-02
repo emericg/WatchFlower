@@ -235,9 +235,9 @@ public slots:
     bool setDbLimits();
 
     // AIO graph
-    Q_INVOKABLE void getTempDatas(QDateTimeAxis *axis, QLineSeries *hygro, QLineSeries *temp, QLineSeries *lumi, QLineSeries *cond);
+    Q_INVOKABLE void getAioDatas(QDateTimeAxis *axis, QLineSeries *hygro, QLineSeries *temp, QLineSeries *lumi, QLineSeries *cond);
 
-    // Daily graph
+    // Monthly graph
     QVariantList getMonth();
     QVariantList getMonthDatas(QString dataName);
     QVariantList getMonthBackground(float maxValue);
