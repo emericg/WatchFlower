@@ -677,7 +677,7 @@ int Device::countDatas(const QString &dataName, int days) const
     datasCount.prepare("SELECT COUNT(" + dataName + ")" \
                        "FROM datas " \
                        "WHERE deviceAddr = :deviceAddr " \
-                            "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');" );
+                            "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');");
     datasCount.bindValue(":deviceAddr", getAddress());
 
     if (datasCount.exec() == false)

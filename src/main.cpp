@@ -41,8 +41,62 @@
 
 int main(int argc, char *argv[])
 {
+    // Arguments parsing
+    bool start_minimized = false;
+    bool refresh_only = false;
+    bool background_service = false;
+    for (int i = 1; i < argc; i++)
+    {
+        if (argv[i])
+        {
+            //qDebug() << "> arg >" << argv[i];
+
+            if (QString::fromLocal8Bit(argv[i]) == "--start-minimized")
+                start_minimized = true;
+            if (QString::fromLocal8Bit(argv[i]) == "--service")
+                background_service = true;
+            if (QString::fromLocal8Bit(argv[i]) == "--refresh")
+                refresh_only = true;
+        }
+    }
+
+    // Background service application //////////////////////////////////////////
+
+    if (background_service || refresh_only)
+    {
+        SettingsManager *sm = SettingsManager::getInstance();
+        SystrayManager *st = SystrayManager::getInstance();
+        NotificationManager *nm = NotificationManager::getInstance();
+        DeviceManager *dm = new DeviceManager;
+
+        if (!sm || !st || !dm)
+            return EXIT_FAILURE;
+
+        // Refresh datas in the background, without starting the UI, then exit
+        if (refresh_only)
+        {
+            //QCoreApplication
+            if (dm->areDevicesAvailable() == true)
+            {
+                dm->refreshDevices();
+                return EXIT_SUCCESS;
+            }
+        }
+        if (background_service)
+        {
+            //QAndroidService app(argc, argv);
+            // TODO
+            //return app.exec();
+        }
+
+        return EXIT_SUCCESS;
+    }
+
+    // GUI application /////////////////////////////////////////////////////////
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     QApplication app(argc, argv);
@@ -71,42 +125,16 @@ int main(int argc, char *argv[])
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
 
-    // Arguments
-    bool start_minimized = false;
-    bool refresh_only = false;
-    for (int i = 1; i < argc; i++)
-    {
-        if (argv[i])
-        {
-            //qDebug() << "> arg >" << argv[i];
-
-            if (QString::fromLocal8Bit(argv[i]) == "--start-minimized")
-                start_minimized = true;
-            if (QString::fromLocal8Bit(argv[i]) == "--refresh")
-                refresh_only = true;
-        }
-    }
-
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
 
-    if (!sm || !st || !dm )
+    if (!sm || !st || !dm)
         return EXIT_FAILURE;
 
-    // Refresh datas in the background, without starting the UI, then exit
-    if (refresh_only)
-    {
-        if (dm->areDevicesAvailable() == true)
-        {
-            dm->refreshDevices();
-            return EXIT_SUCCESS;
-        }
-    }
-
+    // Run a first scan, but only if we are on desktop, and have no saved devices
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    // Run a first scan, but only if we have no saved devices
     if (dm->areDevicesAvailable() == false)
     {
         dm->scanDevices();

@@ -102,7 +102,7 @@ void NotificationManager::updateAndroidNotification()
 {
 #ifdef Q_OS_ANDROID
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString(m_notification);
-    QAndroidJniObject::callStaticMethod<void>("com/emeric/watchflower/NotificationAndroid",
+    QAndroidJniObject::callStaticMethod<void>("com/emeric/watchflower/NotificationDispatcher",
                                               "notify",
                                               "(Ljava/lang/String;)V",
                                               javaNotification.object<jstring>());

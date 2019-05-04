@@ -313,7 +313,7 @@ Item {
                             loops: Animation.Infinite
                             onStopped: textStatus.opacity = 1;
 
-                            PropertyAnimation { to: 0.2; duration: 750; }
+                            PropertyAnimation { to: 0.5; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }
                         }
                     }

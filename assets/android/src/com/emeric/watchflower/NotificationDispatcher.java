@@ -51,7 +51,7 @@ public class NotificationDispatcher extends org.qtproject.qt5.android.bindings.Q
         if (m_notificationManager == null) {
             m_notificationManager = (NotificationManager)m_instance.getSystemService(Context.NOTIFICATION_SERVICE);
             m_builder = new Notification.Builder(m_instance);
-            m_builder.setSmallIcon(R.drawable.icon);
+            m_builder.setSmallIcon(R.drawable.ic_stat_logo);
             m_builder.setContentTitle("WatchFlower");
         }
 
