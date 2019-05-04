@@ -7,7 +7,7 @@ os:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-add-repository ppa:beineri/opt-qt-5.12.0-xenial -y;
+      sudo apt-add-repository ppa:beineri/opt-qt-5.12.3-xenial -y;
       sudo apt-get update -q;
     fi
 
@@ -30,15 +30,15 @@ script:
   - make -j$(nproc)
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make INSTALL_ROOT=appdir -j$(nproc) install; find appdir/;
-      wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/linuxdeployqt-5-x86_64.AppImage";
-      chmod a+x linuxdeployqt-5-x86_64.AppImage;
+      wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage";
+      chmod a+x linuxdeployqt-6-x86_64.AppImage;
       unset QTDIR; unset QT_PLUGIN_PATH; unset LD_LIBRARY_PATH;
       export VERSION=$(git rev-parse --short HEAD);
       mkdir -p appdir/usr/plugins/imageformats/ appdir/usr/plugins/iconengines/;
       cp /opt/qt512/plugins/imageformats/libqsvg.so appdir/usr/plugins/imageformats/;
       cp /opt/qt512/plugins/iconengines/libqsvgicon.so appdir/usr/plugins/iconengines/;
-      ./linuxdeployqt-5-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so;
-      ./linuxdeployqt-5-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -appimage;
+      ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -unsupported-allow-new-glibc -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so;
+      ./linuxdeployqt-6-x86_64.AppImage appdir/usr/share/applications/*.desktop -qmldir=qml/ -unsupported-allow-new-glibc -appimage;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       make install;
@@ -48,11 +48,11 @@ after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq;
       curl --upload-file WatchFlower*.AppImage https://transfer.sh/WatchFlower-git.$(git rev-parse --short HEAD)-linux64.AppImage;
-      echo '>> Uploading to transfer.sh completed';
+      printf '\n>> Uploading to transfer.sh completed';
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       cd bin/;
       zip -r -X WatchFlower.zip WatchFlower.app;
       curl --upload-file WatchFlower*.zip https://transfer.sh/WatchFlower-git.$(git rev-parse --short HEAD)-macOS.zip;
-      echo '>> Uploading to transfer.sh completed';
+      printf '\n>> Uploading to transfer.sh completed';
     fi
