@@ -53,7 +53,7 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .travis.yml \
-               assets/android/com/emeric/watchflower/NotificationAndroid.java
+               assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
 
 ################################################################################
 # App features
