@@ -49,11 +49,16 @@ HEADERS  += src/settingsmanager.h \
             src/device_hygrotemp.h \
             src/device_ropot.h
 
+TRANSLATIONS = i18n/watchflower_fr.ts
+
 RESOURCES   += qml/qml.qrc \
+               i18n/i18n.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .travis.yml \
                assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
+
+lupdate_only { SOURCES += qml/*.qml qml/*.js }
 
 ################################################################################
 # App features

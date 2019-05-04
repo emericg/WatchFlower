@@ -67,7 +67,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' bluetooth devices.")
+                    text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' Bluetooth devices.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: Theme.colorHeaderContent
                     horizontalAlignment: Text.AlignHCenter
@@ -101,7 +101,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible bluetooth devices</b> near you.")
+                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible Bluetooth devices</b> near you.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -148,7 +148,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> these devices datas.")
+                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> their datas.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter

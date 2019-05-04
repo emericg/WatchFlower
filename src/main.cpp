@@ -21,7 +21,9 @@
 
 #include <QApplication>
 #include <QSystemTrayIcon>
-#include <QMenu>
+
+#include <QTranslator>
+#include <QLibraryInfo>
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -125,6 +127,16 @@ int main(int argc, char *argv[])
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
 
+    // i18n
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&qtTranslator);
+
+    QTranslator appTranslator;
+    appTranslator.load(":/i18n/watchflower.qm");
+    app.installTranslator(&appTranslator);
+
+    // Init WatchFlower components
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();

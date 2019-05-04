@@ -185,7 +185,7 @@ Item {
 
             ThemedButton {
                 id: buttonDone
-                width: 96
+                width: 100
                 height: 32
                 text: qsTr("Month")
                 font.pointSize: 14
@@ -199,7 +199,7 @@ Item {
 
             ThemedButton {
                 id: buttonDone1
-                width: 96
+                width: 100
                 height: 32
                 text: qsTr("Week")
                 font.pointSize: 14
@@ -213,7 +213,7 @@ Item {
 
             ThemedButton {
                 id: buttonDone2
-                width: 96
+                width: 100
                 height: 32
                 text: qsTr("Day")
                 font.pointSize: 14

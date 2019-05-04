@@ -128,7 +128,7 @@ Item {
             rectangleStatus.height = 52;
 
             itemStatus.source = "ItemNoBluetooth.qml"
-            textStatus.text = qsTr("No bluetooth :-(");
+            textStatus.text = qsTr("No Bluetooth :-(");
             buttonBluetooth.visible = true
             buttonSearch.visible = false
         }

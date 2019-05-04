@@ -115,7 +115,7 @@ Item {
                     anchors.bottomMargin: 10
 
                     color: Theme.colorSubText
-                    text: qsTr("version") + " " + settingsManager.getAppVersion()
+                    text: qsTr("version %1").arg(settingsManager.getAppVersion())
                     font.pixelSize: 16
                 }
 
@@ -126,7 +126,7 @@ Item {
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 
-                    text: qsTr("WatchFlower")
+                    text: "WatchFlower"
                     color: Theme.colorText
                     font.pixelSize: 36
                 }
@@ -272,7 +272,7 @@ Item {
                     anchors.leftMargin: 40
 
                     color: Theme.colorText
-                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' bluetooth devices.")
+                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' Bluetooth devices.")
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     wrapMode: Text.WordWrap

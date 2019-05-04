@@ -67,7 +67,7 @@ Rectangle {
         Text {
             id: element
             color: "#4b4747"
-            text: qsTr("WatchFlower")
+            text: "WatchFlower"
             font.bold: true
             anchors.verticalCenterOffset: 2
             anchors.left: imageHeader.right
@@ -269,7 +269,7 @@ Rectangle {
                     anchors.leftMargin: 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Refresh sensors")
+                    text: qsTr("Refresh sensors datas")
                     font.pixelSize: 13
                     font.bold: true
                     color: Theme.colorText

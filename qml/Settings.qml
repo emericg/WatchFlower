@@ -151,7 +151,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Allow bluetooth control")
+                    text: qsTr("Allow Bluetooth control")
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -188,7 +188,7 @@ Item {
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                text: qsTr("WatchFlower can enable your device's bluetooth in order to operate.")
+                text: qsTr("WatchFlower can enable your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -251,7 +251,7 @@ Item {
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                text: qsTr("Improve bluetooth compatibility when your device show poor synchronization performance. You can disable it to improve sync speed.")
+                text: qsTr("Improve Bluetooth compatibility when your device has trouble connecting to sensors. You can disable it to improve sync speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -314,7 +314,7 @@ Item {
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if bluetooth or bluetooth control is enabled.")
+                text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if Bluetooth or Bluetooth control is enabled.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

@@ -96,17 +96,17 @@ void SystrayManager::initSystray()
         m_sysTrayMenu = new QMenu();
         if (m_sysTrayMenu)
         {
-            m_actionShow = new QAction(QObject::tr("Hide"));
+            m_actionShow = new QAction(tr("Hide"));
             if (!m_saved_view ||
                 m_saved_view->isVisible() == false ||
                 m_saved_view->visibility() == QWindow::Hidden ||
                 m_saved_view->visibility() == QWindow::Minimized)
             {
-                m_actionShow->setText(QObject::tr("Show"));
+                m_actionShow->setText(tr("Show"));
             }
 
-            m_actionSettings = new QAction(QObject::tr("Settings"));
-            m_actionExit = new QAction(QObject::tr("Exit"));
+            m_actionSettings = new QAction(tr("Settings"));
+            m_actionExit = new QAction(tr("Exit"));
             m_sysTrayMenu->addAction(m_actionShow);
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
@@ -149,7 +149,7 @@ bool SystrayManager::installSystray()
             QObject::connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
             // Show greetings
-            //m_sysTray->showMessage("WatchFlower", QObject::tr("WatchFlower is running in the background!"));
+            //m_sysTray->showMessage("WatchFlower", tr("WatchFlower is running in the background!"));
 
             status = true;
         }
@@ -264,11 +264,11 @@ void SystrayManager::visibilityChanged()
 {
     if (m_saved_view->isVisible())
     {
-        m_actionShow->setText(QObject::tr("Hide"));
+        m_actionShow->setText(tr("Hide"));
     }
     else
     {
-        m_actionShow->setText(QObject::tr("Show"));
+        m_actionShow->setText(tr("Show"));
     }
 }
 

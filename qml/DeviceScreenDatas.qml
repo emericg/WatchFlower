@@ -119,10 +119,10 @@ Item {
                 if (myDevice.lastUpdateMin <= 1)
                     textStatus.text += qsTr("Just synced!")
                 else if (myDevice.available)
-                    textStatus.text += qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
                 else {
                     textStatus.color = Theme.colorYellow
-                    textStatus.text += qsTr("Last sync") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Last synced %1 ago").arg(myDevice.lastUpdateStr)
                 }
             }
         }

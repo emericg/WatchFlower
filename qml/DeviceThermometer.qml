@@ -143,9 +143,9 @@ Item {
                 if (myDevice.lastUpdateMin <= 1)
                     textStatus.text = qsTr("Synced")
                 else if (myDevice.available)
-                    textStatus.text = qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
                 else
-                    textStatus.text = qsTr("Synced") + " " + myDevice.lastUpdateStr + " " + qsTr("ago")
+                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
             }
         }
     }
@@ -169,7 +169,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("22.0°")
+            text: "22.0°"
             font.bold: false
             font.pixelSize: 48
             color: Theme.colorHeaderContent
@@ -181,7 +181,7 @@ Item {
             anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: qsTr("50%")
+            text: "50%"
             font.bold: false
             font.pixelSize: 24
             color: Theme.colorHeaderContent

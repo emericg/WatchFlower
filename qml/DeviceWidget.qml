@@ -124,7 +124,8 @@ Item {
             opa.stop()
         } else if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 12*60) {
             textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Synced") /* + " " + boxDevice.lastUpdateMin + " " + qsTr("min. ago") */
+            textStatus.text = qsTr("Synced")
+            //textStatus.text = qsTr("Synced %1 min. ago").arg(boxDevice.lastUpdateMin)
             opa.stop()
         } else {
             textStatus.color = Theme.colorRed
@@ -537,7 +538,7 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
 
-                        text: qsTr("25.0°")
+                        text: "25.0°"
                         color: "#333333"
                         font.wordSpacing: -1.2
                         font.letterSpacing: -1.4
@@ -554,7 +555,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 0
 
-                        text: qsTr("55%")
+                        text: "55%"
                         color: "#666666"
                         font.pixelSize: 24
                         font.family: "Tahoma"

@@ -146,7 +146,7 @@ bool DeviceManager::hasDatabase() const
 
 void DeviceManager::enableBluetooth(bool checkPermission)
 {
-    // TODO // We only try the "first" available bluetooth adapter
+    // TODO // We only try the "first" available Bluetooth adapter
     if (!m_bluetoothAdapter)
     {
         m_bluetoothAdapter = new QBluetoothLocalDevice();
@@ -190,7 +190,7 @@ void DeviceManager::enableBluetooth(bool checkPermission)
 void DeviceManager::checkBluetooth()
 {
 /*
-    // List bluetooth adapters
+    // List Bluetooth adapters
     QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
     if (adaptersList.size() > 0)
     {
@@ -201,7 +201,7 @@ void DeviceManager::checkBluetooth()
     }
     else
     {
-        qDebug() << "> No bluetooth adapter found...";
+        qDebug() << "> No Bluetooth adapter found...";
     }
 */
     // Enables adapter
@@ -261,7 +261,7 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
     {
         m_btE = false;
 
-        // Check bluetooth again?
+        // Check Bluetooth again?
     }
 
     Q_EMIT bluetoothChanged();
@@ -286,7 +286,7 @@ void DeviceManager::scanDevices()
         qDeleteAll(m_devices);
         m_devices.clear();
 
-        qDebug() << "Scanning (bluetooth) for devices...";
+        qDebug() << "Scanning (Bluetooth) for devices...";
 
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
         if (m_discoveryAgent->isActive())

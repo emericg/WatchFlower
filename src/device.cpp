@@ -171,11 +171,11 @@ void Device::refreshDatasFinished(bool status, bool cached)
                 {
                     QString message;
                     if (!m_plantName.isEmpty())
-                        message = QObject::tr("You need to water your '") + m_plantName + QObject::tr("' now!");
+                        message = tr("You need to water your '%1' now!").arg(m_plantName);
                     else if (!m_locationName.isEmpty())
-                        message = QObject::tr("You need to water the plant on '") + m_locationName + "'";
+                        message = tr("You need to water the plant near '%1'").arg(m_locationName);
                     else
-                        message = QObject::tr("You need to water one of your plant!");
+                        message = tr("You need to water one of your (unnamed) plant!");
 
                     nm->setNotification(message);
                 }
