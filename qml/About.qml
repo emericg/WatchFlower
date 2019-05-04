@@ -157,7 +157,7 @@ Item {
                     anchors.leftMargin: 48
 
                     color: Theme.colorText
-                    text: "Website"
+                    text: qsTr("Website")
                     font.pixelSize: 16
 
                     MouseArea {
@@ -195,7 +195,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
 
                     color: Theme.colorText
-                    text: "GitHub page"
+                    text: qsTr("GitHub project's page")
                     font.pixelSize: 16
 
                     MouseArea {

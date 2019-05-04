@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/About.qml" line="57"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="67"/>
@@ -17,6 +17,20 @@
         <location filename="../qml/About.qml" line="118"/>
         <source>version %1</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../qml/About.qml" line="160"/>
+        <source>Website</source>
+        <translation>Site Internet</translation>
+    </message>
+    <message>
+        <location filename="../qml/About.qml" line="198"/>
+        <source>GitHub project&apos;s page</source>
+        <translation>Page du projet sur GitHub</translation>
+    </message>
+    <message>
+        <source>GitHub page</source>
+        <translation type="vanished">Page du projet sur GitHub</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="233"/>
@@ -204,6 +218,11 @@
         <translation>Jour</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenHistory.qml" line="295"/>
+        <source>Hygrometry</source>
+        <translation>Hygrométrie</translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="313"/>
         <source>Temperature</source>
         <translation>Température</translation>
@@ -310,7 +329,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="132"/>
         <source>Offline</source>
-        <translation>Hors ligne !</translation>
+        <translation>Hors ligne</translation>
     </message>
 </context>
 <context>
@@ -430,7 +449,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="217"/>
         <source>Bluetooth compatibility mode</source>
-        <translation>Mode de compatibilité Bluetooth</translation>
+        <translation type="unfinished">Compatibilité Bluetooth</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="254"/>
@@ -440,12 +459,12 @@
     <message>
         <location filename="../qml/Settings.qml" line="289"/>
         <source>Enable background updates</source>
-        <translation type="unfinished">Activer les mises à jours en arrière plan</translation>
+        <translation type="unfinished">Mises à jour en arrière plan</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="154"/>
         <source>Allow Bluetooth control</source>
-        <translation>Permettre le contrôle du Bluetooth</translation>
+        <translation type="unfinished">Contrôle du Bluetooth</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="191"/>

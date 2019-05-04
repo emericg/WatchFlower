@@ -292,7 +292,7 @@ Item {
                 id: hygroLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: "Hygrometry"
+                text: qsTr("Hygrometry")
                 color: Theme.colorIcons
                 font.bold: false
                 font.pointSize: 16
