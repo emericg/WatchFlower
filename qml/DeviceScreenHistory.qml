@@ -38,24 +38,25 @@ Item {
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
             imageBattery.visible = true
+            imageBattery.color = Theme.colorIcons
 
             if (myDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 90) {
+            } else if (myDevice.deviceBattery > 85) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 70) {
+            } else if (myDevice.deviceBattery > 75) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 60) {
+            } else if (myDevice.deviceBattery > 55) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 40) {
+            } else if (myDevice.deviceBattery > 45) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 30) {
+            } else if (myDevice.deviceBattery > 25) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 20) {
+            } else if (myDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
             } else if (myDevice.deviceBattery > 1) {
                 imageBattery.color = Theme.colorRed
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }

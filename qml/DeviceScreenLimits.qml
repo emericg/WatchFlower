@@ -28,72 +28,71 @@ Item {
     id: deviceScreenLimits
 
     function updateHeader() {
-        if (myDevice) {
-            // Sensor battery level
-            if (myDevice.hasBatteryLevel()) {
-                imageBattery.visible = true
-                battery.visible = true
+        if (typeof myDevice === "undefined" || !myDevice) return
 
-                if (myDevice.deviceBattery > 95) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-                } else if (myDevice.deviceBattery > 90) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-                } else if (myDevice.deviceBattery > 70) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-                } else if (myDevice.deviceBattery > 60) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-                } else if (myDevice.deviceBattery > 40) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-                } else if (myDevice.deviceBattery > 30) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-                } else if (myDevice.deviceBattery > 20) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-                } else if (myDevice.deviceBattery > 1) {
-                    imageBattery.color = Theme.colorRed
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
-                } else {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-                }
+        // Sensor battery level
+        if (myDevice.hasBatteryLevel()) {
+            imageBattery.visible = true
+            imageBattery.color = Theme.colorIcons
+
+            if (myDevice.deviceBattery > 95) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
+            } else if (myDevice.deviceBattery > 85) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
+            } else if (myDevice.deviceBattery > 75) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
+            } else if (myDevice.deviceBattery > 55) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
+            } else if (myDevice.deviceBattery > 45) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery > 25) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
+            } else if (myDevice.deviceBattery > 15) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
+            } else if (myDevice.deviceBattery > 1) {
+                imageBattery.color = Theme.colorRed
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-                imageBattery.visible = false
-                battery.visible = false
             }
+        } else {
+            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            imageBattery.visible = false
+        }
 
-            // Sensor address
-            if (myDevice.deviceAddress.charAt(0) !== '{')
-                textAddr.text = "[" + myDevice.deviceAddress + "]"
+        // Sensor address
+        if (myDevice.deviceAddress.charAt(0) !== '{')
+            textAddr.text = "[" + myDevice.deviceAddress + "]"
 
-            // Firmware
-            textFirmware.text = myDevice.deviceFirmware
-            if (!myDevice.deviceFirmwareUpToDate) {
-                imageFwUpdate.visible = true
-                textFwUpdate.visible = true
-            } else {
-                imageFwUpdate.visible = false
-                textFwUpdate.visible = false
-            }
+        // Firmware
+        textFirmware.text = myDevice.deviceFirmware
+        if (!myDevice.deviceFirmwareUpToDate) {
+            imageFwUpdate.visible = true
+            textFwUpdate.visible = true
+        } else {
+            imageFwUpdate.visible = false
+            textFwUpdate.visible = false
         }
     }
 
     function updateLimits() {
-        if (myDevice) {
-            rangeSlider_hygro.first.value = myDevice.limitHygroMin
-            rangeSlider_hygro.second.value = myDevice.limitHygroMax
-            rangeSlider_temp.first.value = myDevice.limitTempMin
-            rangeSlider_temp.second.value = myDevice.limitTempMax
-            rangeSlider_condu.first.value = myDevice.limitConduMin
-            rangeSlider_condu.second.value = myDevice.limitConduMax
-        }
+        if (typeof myDevice === "undefined" || !myDevice) return
+
+        rangeSlider_hygro.first.value = myDevice.limitHygroMin
+        rangeSlider_hygro.second.value = myDevice.limitHygroMax
+        rangeSlider_temp.first.value = myDevice.limitTempMin
+        rangeSlider_temp.second.value = myDevice.limitTempMax
+        rangeSlider_condu.first.value = myDevice.limitConduMin
+        rangeSlider_condu.second.value = myDevice.limitConduMax
     }
 
     function updateLimitsVisibility() {
-        if (myDevice) {
-            itemTemp.visible = myDevice.hasTemperatureSensor()
-            itemHygro.visible = myDevice.hasHygrometrySensor()
-            itemLumi.visible = myDevice.hasLuminositySensor()
-            itemCondu.visible = myDevice.hasConductivitySensor()
-        }
+        if (typeof myDevice === "undefined" || !myDevice) return
+
+        itemTemp.visible = myDevice.hasTemperatureSensor()
+        itemHygro.visible = myDevice.hasHygrometrySensor()
+        itemLumi.visible = myDevice.hasLuminositySensor()
+        itemCondu.visible = myDevice.hasConductivitySensor()
     }
 
     ////////////////////////////////////////////////////////////////////////////

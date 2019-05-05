@@ -32,61 +32,60 @@ Item {
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        if (myDevice) {
-            // Sensor battery level
-            if (myDevice.hasBatteryLevel()) {
-                imageBattery.visible = true
+        // Sensor battery level
+        if (myDevice.hasBatteryLevel()) {
+            imageBattery.visible = true
+            imageBattery.color = Theme.colorIcons
 
-                if (myDevice.deviceBattery > 95) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-                } else if (myDevice.deviceBattery > 90) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-                } else if (myDevice.deviceBattery > 70) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-                } else if (myDevice.deviceBattery > 60) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-                } else if (myDevice.deviceBattery > 40) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-                } else if (myDevice.deviceBattery > 30) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-                } else if (myDevice.deviceBattery > 20) {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-                } else if (myDevice.deviceBattery > 1) {
-                    imageBattery.color = Theme.colorRed
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_alert-24px.svg";
-                } else {
-                    imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-                }
+            if (myDevice.deviceBattery > 95) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
+            } else if (myDevice.deviceBattery > 85) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
+            } else if (myDevice.deviceBattery > 75) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
+            } else if (myDevice.deviceBattery > 55) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
+            } else if (myDevice.deviceBattery > 45) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
+            } else if (myDevice.deviceBattery > 25) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
+            } else if (myDevice.deviceBattery > 15) {
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
+            } else if (myDevice.deviceBattery > 1) {
+                imageBattery.color = Theme.colorRed
+                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-                imageBattery.visible = false
             }
-
-            // Plant
-            if (myDevice.hasPlant()) {
-                itemPlant.visible = true
-
-                if (myDevice.devicePlantName === "")
-                    imageEditPlant.visible = true
-                else
-                    imageEditPlant.visible = false
-
-                textInputPlant.text = myDevice.devicePlantName
-            } else {
-                itemPlant.visible = false
-            }
-
-            // Location
-            if (myDevice.deviceLocationName === "")
-                imageEditLocation.visible = true
-            else
-                imageEditLocation.visible = false
-
-            textInputLocation.text = myDevice.deviceLocationName
-
-            // Status
-            updateStatusText()
+        } else {
+            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
+            imageBattery.visible = false
         }
+
+        // Plant
+        if (myDevice.hasPlant()) {
+            itemPlant.visible = true
+
+            if (myDevice.devicePlantName === "")
+                imageEditPlant.visible = true
+            else
+                imageEditPlant.visible = false
+
+            textInputPlant.text = myDevice.devicePlantName
+        } else {
+            itemPlant.visible = false
+        }
+
+        // Location
+        if (myDevice.deviceLocationName === "")
+            imageEditLocation.visible = true
+        else
+            imageEditLocation.visible = false
+
+        textInputLocation.text = myDevice.deviceLocationName
+
+        // Status
+        updateStatusText()
     }
 
     Timer {
@@ -103,27 +102,25 @@ Item {
         textStatus.color = "black"
         textStatus.font.bold = false
 
-        if (myDevice) {
-            textStatus.text = ""
-            if (myDevice.updating) {
-                textStatus.text = qsTr("Updating... ")
-            } else {
-                if (!myDevice.available) {
-                    textStatus.text = qsTr("Offline! ")
-                    textStatus.color = Theme.colorRed
-                    textStatus.font.bold = true
-                }
+        textStatus.text = ""
+        if (myDevice.updating) {
+            textStatus.text = qsTr("Updating... ")
+        } else {
+            if (!myDevice.available) {
+                textStatus.text = qsTr("Offline! ")
+                textStatus.color = Theme.colorRed
+                textStatus.font.bold = true
             }
+        }
 
-            if (myDevice.lastUpdateMin >= 0) {
-                if (myDevice.lastUpdateMin <= 1)
-                    textStatus.text += qsTr("Just synced!")
-                else if (myDevice.available)
-                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
-                else {
-                    textStatus.color = Theme.colorYellow
-                    textStatus.text = qsTr("Last synced %1 ago").arg(myDevice.lastUpdateStr)
-                }
+        if (myDevice.lastUpdateMin >= 0) {
+            if (myDevice.lastUpdateMin <= 1)
+                textStatus.text += qsTr("Just synced!")
+            else if (myDevice.available)
+                textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
+            else {
+                textStatus.color = Theme.colorYellow
+                textStatus.text = qsTr("Last synced %1 ago").arg(myDevice.lastUpdateStr)
             }
         }
     }
