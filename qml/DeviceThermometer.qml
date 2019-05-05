@@ -125,7 +125,7 @@ Item {
         else
             sensorTemp.text = "?"
         if (myDevice.deviceHygro > 0)
-            sensorHygro.text = myDevice.deviceHygro + "%"
+            sensorHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
         else
             sensorHygro.text = ""
 
@@ -190,7 +190,7 @@ Item {
 
             text: "50%"
             font.bold: false
-            font.pixelSize: 24
+            font.pixelSize: 22
             color: Theme.colorHeaderContent
         }
 

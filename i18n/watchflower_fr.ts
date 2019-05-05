@@ -131,17 +131,17 @@
 <context>
     <name>DeviceScreenDatas</name>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="109"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="107"/>
         <source>Updating... </source>
         <translation>Mise à jour...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="112"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="110"/>
         <source>Offline! </source>
         <translation>Hors ligne !</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="120"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="118"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
@@ -150,52 +150,52 @@
         <translation type="vanished">Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="122"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="120"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="125"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="123"/>
         <source>Last synced %1 ago</source>
         <translation>Dernière synchronisation il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="238"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="235"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="338"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="335"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="439"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="436"/>
         <source>Status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="450"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="447"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="500"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="497"/>
         <source>Hygrometry</source>
         <translation>Hygrométrie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="511"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="508"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="522"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="519"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="533"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="530"/>
         <source>Conductivity</source>
         <translation>Conductivité</translation>
     </message>
@@ -203,37 +203,37 @@
 <context>
     <name>DeviceScreenHistory</name>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="190"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="191"/>
         <source>Month</source>
         <translation>Mois</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="204"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="205"/>
         <source>Week</source>
         <translation>Semaine</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="218"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="219"/>
         <source>Day</source>
         <translation>Jour</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="295"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="296"/>
         <source>Hygrometry</source>
         <translation>Hygrométrie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="313"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="314"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="331"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="332"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="349"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="350"/>
         <source>Conductivity</source>
         <translation>Conductivité</translation>
     </message>
@@ -241,39 +241,39 @@
 <context>
     <name>DeviceScreenLimits</name>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="162"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="161"/>
         <source>Address</source>
         <translation>Addresse</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="195"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="194"/>
         <source>Firmware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="205"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="226"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="233"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="204"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="225"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
         <source>Update available!</source>
         <translation>MAJ disponible!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="223"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="222"/>
         <source>Use official app to upgrade</source>
         <translation>Utilisez l&apos;appli officielle pour MAJ</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="267"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="266"/>
         <source>Battery</source>
         <translation>Batterie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="437"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="436"/>
         <source>MIN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="473"/>
         <source>MAX</source>
         <translation></translation>
     </message>
@@ -281,28 +281,33 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="135"/>
+        <location filename="../qml/DeviceThermometer.qml" line="128"/>
+        <source>humidity</source>
+        <translation>Humidité</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceThermometer.qml" line="142"/>
         <source>Updating... </source>
         <translation>Mise à jour...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="138"/>
+        <location filename="../qml/DeviceThermometer.qml" line="145"/>
         <source>Offline! </source>
         <translation>Hors ligne !</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="144"/>
+        <location filename="../qml/DeviceThermometer.qml" line="151"/>
         <source>Synced</source>
         <translation>Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="146"/>
-        <location filename="../qml/DeviceThermometer.qml" line="148"/>
+        <location filename="../qml/DeviceThermometer.qml" line="153"/>
+        <location filename="../qml/DeviceThermometer.qml" line="155"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="215"/>
+        <location filename="../qml/DeviceThermometer.qml" line="222"/>
         <source>Updating...</source>
         <translation>Mise à jour...</translation>
     </message>
@@ -310,24 +315,24 @@
 <context>
     <name>DeviceWidget</name>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="103"/>
+        <location filename="../qml/DeviceWidget.qml" line="104"/>
         <source>Thermometer</source>
         <translation>Thermomètre</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="119"/>
+        <location filename="../qml/DeviceWidget.qml" line="120"/>
         <source>Connecting...</source>
         <translation>Connection...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="123"/>
-        <location filename="../qml/DeviceWidget.qml" line="127"/>
-        <location filename="../qml/DeviceWidget.qml" line="306"/>
+        <location filename="../qml/DeviceWidget.qml" line="124"/>
+        <location filename="../qml/DeviceWidget.qml" line="128"/>
+        <location filename="../qml/DeviceWidget.qml" line="307"/>
         <source>Synced</source>
         <translation>Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="132"/>
+        <location filename="../qml/DeviceWidget.qml" line="133"/>
         <source>Offline</source>
         <translation>Hors ligne</translation>
     </message>

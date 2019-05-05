@@ -170,6 +170,16 @@ Item {
         updateDatas()
     }
 
+    // Fahrenheit to celsius
+    function tempFahrenheitToCelsius(temp) {
+        return (temp - 32) / 1.8;
+    }
+
+    // Celsius to fahrenheit
+    function tempCelsiusToFahrenheit(temp) {
+        return (temp * 1.8 + 32);
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
@@ -508,11 +518,11 @@ Item {
                 legend: qsTr("Temperature")
                 unit: "°" + settingsManager.tempUnit
                 color: Theme.colorGreen
-                value: myDevice.deviceTempC
-                valueMin: 0
-                valueMax: 40
-                limitMin: myDevice.limitTempMin
-                limitMax: myDevice.limitTempMax
+                value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
+                valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
+                valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
+                limitMin: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
+                limitMax: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
             }
             ItemDataBar {
                 id: lumi
