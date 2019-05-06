@@ -469,8 +469,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Item {
-        id: element // ScrollView {
-        clip: true
+        id: element
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 4
@@ -480,8 +479,6 @@ Item {
         anchors.rightMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-
-        //Item { anchors.fill: parent } // HACK // so the scrollview content resizes?
 
         ImageSvg {
             id: imageOffline

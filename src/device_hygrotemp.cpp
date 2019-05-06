@@ -101,8 +101,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // DeviceHygrotemp Information
     {
-        if (serviceInfo)
-            delete serviceInfo;
+        delete serviceInfo;
 
         serviceInfo = controller->createServiceObject(uuid);
         if (!serviceInfo)
@@ -114,8 +113,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
         m_capabilities += DEVICE_BATTERY;
         Q_EMIT statusUpdated();
 
-        if (serviceBattery)
-            delete serviceBattery;
+        delete serviceBattery;
 
         serviceBattery = controller->createServiceObject(uuid);
         if (!serviceBattery)
@@ -124,8 +122,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // datas
     {
-        if (serviceData)
-            delete serviceData;
+        delete serviceData;
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)

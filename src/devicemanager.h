@@ -75,7 +75,7 @@ public:
     ~DeviceManager();
 
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
-    Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.size() == 0) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
+    Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
     Q_INVOKABLE void enableBluetooth(bool checkPremisson = false);
 

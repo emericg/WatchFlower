@@ -57,13 +57,6 @@ Item {
             header.setActiveDeviceSettings()
             swipeView.currentIndex = 2
         }
-        // mobile only
-        onRightMenuClicked: {
-            if (!miniMenu.visible)
-                miniMenu.showMiniMenu()
-            else
-                miniMenu.hideMiniMenu()
-        }
     }
 
     function loadDevice() {
@@ -71,7 +64,6 @@ Item {
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
         swipeView.currentIndex = 0
-        miniMenu.visible = false
 
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceHistory.updateHeader()
@@ -119,169 +111,6 @@ Item {
             DeviceScreenLimits {
                 //anchors.fill: parent
                 id: rectangleDeviceLimits
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Rectangle {
-        id: miniMenu
-        width: 150
-        height: 80
-        color: "#ffffff"
-        anchors.top: parent.top
-        anchors.topMargin: -8
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-
-        function showMiniMenu() {
-            menuRefresh.color = "#ffffff"
-            menuLimits.color = "#ffffff"
-            menuHistory.color = "#ffffff"
-
-            if (!visible) {
-                visible = true
-                opacity = 0
-                fadeIn.start()
-            }
-        }
-        function hideMiniMenu() {
-            if (visible) {
-                opacity = 1
-                fadeOut.start()
-            }
-        }
-
-        OpacityAnimator {
-            id: fadeIn
-            target: miniMenu
-            from: 0
-            to: 1
-            duration: 133
-            running: true
-        }
-        OpacityAnimator {
-            id: fadeOut
-            target: miniMenu
-            from: 1
-            to: 0
-            duration: 133
-            running: true
-
-            onStopped: {
-                miniMenu.visible = false
-            }
-        }
-
-        Column {
-            anchors.fill: parent
-
-            Rectangle {
-                id: menuRefresh
-                height: 40
-                color: "#ffffff"
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: element
-                    text: qsTr("Refresh")
-                    verticalAlignment: Text.AlignVCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    font.pixelSize: 18
-                }
-
-                MouseArea {
-                    id: mouseAreaRefresh
-                    anchors.fill: parent
-
-                    onClicked: {
-                        menuRefresh.color = Theme.colorMaterialDarkGrey
-                        miniMenu.hideMiniMenu()
-
-                        myDevice.refreshDatas()
-                    }
-                }
-            }
-
-            Rectangle {
-                id: menuLimits
-                height: 40
-                color: "#ffffff"
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Text {
-                    id: menuLimitsText
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    text: qsTr("Edit limits")
-                    font.pixelSize: 18
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                MouseArea {
-                    id: mouseAreaLimits
-                    anchors.fill: parent
-
-                    onClicked: {
-                        menuLimits.color = Theme.colorMaterialDarkGrey
-                        miniMenu.hideMiniMenu()
-
-                        //
-                    }
-                }
-            }
-
-            Rectangle {
-                id: menuHistory
-                height: 40
-                color: "#ffffff"
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Text {
-                    id: menuHistoryText
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    text: qsTr("Datas history")
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 18
-                }
-
-                MouseArea {
-                    id: mouseAreaDeviceInfos
-                    anchors.fill: parent
-
-                    onClicked: {
-                        menuHistory.color = Theme.colorMaterialDarkGrey
-                        miniMenu.hideMiniMenu()
-
-                        //
-                    }
-                }
             }
         }
     }

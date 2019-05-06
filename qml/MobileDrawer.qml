@@ -27,7 +27,7 @@ import com.watchflower.theme 1.0
 Rectangle {
     width: parent.width
     height: parent.height
-    color: "#ffffff"
+    color: "white"
 
     function updateDrawerFocus() {
         rectangleHome.color = "transparent"
@@ -44,13 +44,15 @@ Rectangle {
 
     Item {
         id: rectangleHeader
-        height: 80
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
+
+        z: 1
+        height: 80
 
         Image {
             id: imageHeader
@@ -79,7 +81,6 @@ Rectangle {
 
     ScrollView {
         id: scrollView
-        clip: true
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom

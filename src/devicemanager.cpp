@@ -470,10 +470,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
 bool DeviceManager::areDevicesAvailable() const
 {
-    if (m_devices.size() > 0)
-        return true;
-    else
-        return false;
+    return !m_devices.empty();
 }
 
 /* ************************************************************************** */

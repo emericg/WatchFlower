@@ -145,6 +145,8 @@ void Device::refreshDatasCanceled()
 
 void Device::refreshDatasFinished(bool status, bool cached)
 {
+    Q_UNUSED(cached)
+
     m_updating = false;
     m_available = status;
 
@@ -408,8 +410,8 @@ float Device::getTemp() const
     SettingsManager *s = SettingsManager::getInstance();
     if (s->getTempUnit() == "F")
         return getTempF();
-    else
-        return getTempC();
+
+    return getTempC();
 }
 
 QString Device::getTempString() const
@@ -431,7 +433,7 @@ int Device::getLastUpdateInt() const
 
     if (m_lastUpdate.isValid())
     {
-        mins = std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0);
+        mins = static_cast<int>(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0));
     }
 
     return mins;
@@ -463,7 +465,7 @@ QString Device::getLastUpdateString() const
     return lastUpdate;
 }
 
-void Device::setLocationName(QString name)
+void Device::setLocationName(const QString &name)
 {
     if (m_locationName != name)
     {
@@ -480,7 +482,7 @@ void Device::setLocationName(QString name)
     }
 }
 
-void Device::setPlantName(QString name)
+void Device::setPlantName(const QString &name)
 {
     if (m_plantName != name)
     {
@@ -735,7 +737,7 @@ QVariantList Device::getMonth()
     //return lastSevenDaysFormated;
 }
 
-QVariantList Device::getMonthDatas(QString dataName)
+QVariantList Device::getMonthDatas(const QString &dataName)
 {
     QVariantList datas;
     QDate nextDayToHandle = QDate::currentDate();
@@ -820,9 +822,9 @@ QVariantList Device::getDays()
 
     // format days (ex: "mon.")
     QVariantList lastSevenDaysFormated;
-    for (int i = 0; i < lastSevenDays.size(); i++)
+    for (const auto & lastSevenDay : lastSevenDays)
     {
-        QString day = qvariant_cast<QString>(lastSevenDays.at(i));
+        QString day = qvariant_cast<QString>(lastSevenDay);
         day.truncate(3);
         day += ".";
         lastSevenDaysFormated.append(day);
@@ -835,7 +837,7 @@ QVariantList Device::getDays()
     return lastSevenDaysFormated;
 }
 
-QVariantList Device::getDatasDaily(QString dataName)
+QVariantList Device::getDatasDaily(const QString &dataName)
 {
     QVariantList datas;
     QDate nextDayToHandle = QDate::currentDate();
@@ -942,7 +944,7 @@ QVariantList Device::getHours()
     return lastTwentyfourHours;
 }
 
-QVariantList Device::getDatasHourly(QString dataName)
+QVariantList Device::getDatasHourly(const QString &dataName)
 {
     QVariantList datas;
     QTime nexHourToHandle = QTime::currentTime();
@@ -1113,9 +1115,9 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::getAioDatas(QDateTimeAxis *axis,
-                         QLineSeries *hygro, QLineSeries *temp,
-                         QLineSeries *lumi, QLineSeries *cond)
+void Device::getAioDatas(QtCharts::QDateTimeAxis *axis,
+                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                         QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
 {
     if (!axis || !hygro || !temp || !lumi || !cond)
         return;

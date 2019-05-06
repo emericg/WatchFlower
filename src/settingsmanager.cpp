@@ -41,10 +41,8 @@ SettingsManager *SettingsManager::getInstance()
         instance = new SettingsManager();
         return instance;
     }
-    else
-    {
-        return instance;
-    }
+
+    return instance;
 }
 
 SettingsManager::SettingsManager()

@@ -31,8 +31,9 @@ Item {
     anchors.fill: parent
 
     Rectangle {
-        id: rectangleSettingsTitle
+        id: rectangleHeader
         height: 80
+        z: 1
         color: Theme.colorMaterialDarkGrey
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
@@ -70,10 +71,9 @@ Item {
 
     ScrollView {
         id: scrollView
-        clip: true
         contentWidth: -1
 
-        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleSettingsTitle.bottom : parent.top
+        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
         anchors.topMargin: 12
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0

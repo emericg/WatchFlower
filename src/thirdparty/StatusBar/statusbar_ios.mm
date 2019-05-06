@@ -41,7 +41,7 @@ bool StatusBarPrivate::isAvailable_sys()
 
 void StatusBarPrivate::setColor_sys(const QColor &color)
 {
-    Q_UNUSED(color);
+    Q_UNUSED(color)
 }
 
 static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)

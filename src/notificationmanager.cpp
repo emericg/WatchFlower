@@ -40,10 +40,8 @@ NotificationManager *NotificationManager::getInstance()
         instance = new NotificationManager();
         return instance;
     }
-    else
-    {
-        return instance;
-    }
+
+    return instance;
 }
 
 NotificationManager::NotificationManager()

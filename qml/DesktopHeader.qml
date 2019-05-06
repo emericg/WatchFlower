@@ -28,6 +28,7 @@ Rectangle {
     width: 720
     height: 64
     color: Theme.colorHeader
+    z: 10
 
     signal backButtonClicked()
 

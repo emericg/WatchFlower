@@ -29,6 +29,7 @@ Rectangle {
     width: parent.width
     height: screenTopPadding + barHeight
     color: Theme.colorHeader
+    z: 10
 
     // Border can be good for material design
     //border.width: 1

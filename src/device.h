@@ -33,7 +33,6 @@
 
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
-QT_CHARTS_USE_NAMESPACE
 
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE    "3.1.8"
 #define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.5"
@@ -210,10 +209,10 @@ public slots:
 
     // BLE device associated datas
     QString getLocationName() { return m_locationName; }
-    void setLocationName(QString name);
+    void setLocationName(const QString &name);
 
     QString getPlantName() { return m_plantName; }
-    void setPlantName(QString name);
+    void setPlantName(const QString &name);
 
     // BLE device limits
     int getLimitHygroMin() const { return m_limitHygroMin; }
@@ -235,21 +234,23 @@ public slots:
     bool setDbLimits();
 
     // AIO graph
-    Q_INVOKABLE void getAioDatas(QDateTimeAxis *axis, QLineSeries *hygro, QLineSeries *temp, QLineSeries *lumi, QLineSeries *cond);
+    Q_INVOKABLE void getAioDatas(QtCharts::QDateTimeAxis *axis,
+                                 QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                                 QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 
     // Monthly graph
     QVariantList getMonth();
-    QVariantList getMonthDatas(QString dataName);
+    QVariantList getMonthDatas(const QString &dataName);
     QVariantList getMonthBackground(float maxValue);
 
     // Daily graph
     QVariantList getDays();
-    QVariantList getDatasDaily(QString dataName);
+    QVariantList getDatasDaily(const QString &dataName);
     QVariantList getBackgroundDaily(float maxValue);
 
     // Hourly graph
     QVariantList getHours();
-    QVariantList getDatasHourly(QString dataName);
+    QVariantList getDatasHourly(const QString &dataName);
     QVariantList getBackgroundHourly(float maxValue);
     QVariantList getBackgroundNightly(float maxValue);
 };
@@ -261,7 +262,7 @@ struct Version
 {
     int major = 0, minor = 0, revision = 0, build = 0;
 
-    Version(QString version_qstr)
+    Version(const QString &version_qstr)
     {
         sscanf(version_qstr.toLatin1().constData(), "%d.%d.%d.%d",
                &major, &minor, &revision, &build);

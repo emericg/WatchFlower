@@ -37,7 +37,7 @@ SpinBox {
         font: control.font
         color: Theme.colorText
         selectionColor: Theme.colorText
-        selectedTextColor: "#ffffff"
+        selectedTextColor: "white"
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
 

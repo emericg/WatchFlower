@@ -27,7 +27,6 @@ import com.watchflower.theme 1.0
 Item {
     id: background
     anchors.fill: parent
-    clip: true
 
     property bool deviceScanning: deviceManager.scanning
     property bool deviceAvailable: deviceManager.devices

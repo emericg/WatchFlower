@@ -267,7 +267,6 @@ Item {
 
     Grid {
         id: graphGrid
-        clip: true
         columns: 1
 
         anchors.top: rectangleHeader.bottom

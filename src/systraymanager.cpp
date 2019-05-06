@@ -38,10 +38,8 @@ SystrayManager *SystrayManager::getInstance()
         instance = new SystrayManager();
         return instance;
     }
-    else
-    {
-        return instance;
-    }
+
+    return instance;
 }
 
 SystrayManager::SystrayManager()

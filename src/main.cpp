@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         if (refresh_only)
         {
             //QCoreApplication
-            if (dm->areDevicesAvailable() == true)
+            if (dm->areDevicesAvailable())
             {
                 dm->refreshDevices();
                 return EXIT_SUCCESS;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
     // Run a first scan, but only if we are on desktop, and have no saved devices
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    if (dm->areDevicesAvailable() == false)
+    if (!dm->areDevicesAvailable())
     {
         dm->scanDevices();
     }

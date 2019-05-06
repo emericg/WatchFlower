@@ -275,8 +275,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Item { // ScrollView {
-        clip: true
-
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 8
         anchors.left: parent.left
