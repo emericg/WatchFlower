@@ -78,8 +78,13 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../qml/DeviceList.qml" line="94"/>
-        <source>Try again</source>
+        <location filename="../qml/DeviceList.qml" line="95"/>
+        <source>Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="95"/>
+        <source>Retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -89,12 +94,12 @@
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="131"/>
-        <source>No Bluetooth :-(</source>
+        <source>Bluetooth disabled...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="140"/>
-        <source>No devices :-(</source>
+        <location filename="../qml/DeviceList.qml" line="141"/>
+        <source>No devices configured...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -351,6 +356,19 @@
     <message>
         <location filename="../qml/ItemAioBarCharts.qml" line="326"/>
         <source>Hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemNoDevice</name>
+    <message>
+        <location filename="../qml/ItemNoDevice.qml" line="71"/>
+        <source>On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/ItemNoDevice.qml" line="82"/>
+        <source>Official informations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

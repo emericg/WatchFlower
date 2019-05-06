@@ -90,8 +90,17 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../qml/DeviceList.qml" line="94"/>
         <source>Try again</source>
+        <translation type="vanished">Réessayer</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="95"/>
+        <source>Enable</source>
+        <translation>Activation</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="95"/>
+        <source>Retry</source>
         <translation>Réessayer</translation>
     </message>
     <message>
@@ -101,13 +110,21 @@
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="131"/>
-        <source>No Bluetooth :-(</source>
-        <translation>Pas de Bluetooth :-(</translation>
+        <source>Bluetooth disabled...</source>
+        <translation>Bluetooth désactivé...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="140"/>
+        <location filename="../qml/DeviceList.qml" line="141"/>
+        <source>No devices configured...</source>
+        <translation>Pas d&apos;appareil configurés...</translation>
+    </message>
+    <message>
+        <source>No Bluetooth :-(</source>
+        <translation type="vanished">Pas de Bluetooth :-(</translation>
+    </message>
+    <message>
         <source>No devices :-(</source>
-        <translation>Pas d&apos;appareils :-(</translation>
+        <translation type="vanished">Pas d&apos;appareils :-(</translation>
     </message>
 </context>
 <context>
@@ -376,6 +393,19 @@
         <location filename="../qml/ItemAioBarCharts.qml" line="326"/>
         <source>Hours</source>
         <translation>Heures</translation>
+    </message>
+</context>
+<context>
+    <name>ItemNoDevice</name>
+    <message>
+        <location filename="../qml/ItemNoDevice.qml" line="71"/>
+        <source>On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.</source>
+        <translation>Avec Android 6+, la recherche de périphériques Bluetooth basses consommations nécessite des permissions de localisation. L&apos;application n&apos;utilise pas ni ne conserve votre position GPS.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ItemNoDevice.qml" line="82"/>
+        <source>Official informations</source>
+        <translation>Informations officielles</translation>
     </message>
 </context>
 <context>
