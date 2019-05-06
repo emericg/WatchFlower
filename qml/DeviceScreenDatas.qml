@@ -537,7 +537,7 @@ Item {
             }
             ItemDataBar {
                 id: condu
-                legend: qsTr("Conductivity")
+                legend: qsTr("Fertility")
                 unit: " µS/cm"
                 color: Theme.colorRed
                 value: myDevice.deviceConductivity

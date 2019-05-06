@@ -347,7 +347,7 @@ Item {
                 id: conduLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: qsTr("Conductivity")
+                text: qsTr("Fertility")
                 color: Theme.colorIcons
                 font.bold: false
                 font.pointSize: 16
