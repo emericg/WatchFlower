@@ -20,42 +20,67 @@
  */
 
 import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 import com.watchflower.theme 1.0
 
 Item {
     id: element
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
 
-    ImageSvg {
-        id: image
-        width: 256
-        height: 256
+    Column {
+        id: column
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-        fillMode: Image.PreserveAspectFit
-        color: Theme.colorIcons
+        ImageSvg {
+            id: image
+            width: 256
+            height: 256
+            anchors.horizontalCenter: parent.horizontalCenter
 
-        OpacityAnimator {
-            id: rescanAnimation
-            target: image
-            duration: 1000
-            from: 0.33
-            to: 1
-            loops: Animation.Infinite
-            running: deviceManager.scanning
-            onStopped: rescanAnimationStop.start()
+            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+            fillMode: Image.PreserveAspectFit
+            color: Theme.colorIcons
+
+            OpacityAnimator {
+                id: rescanAnimation
+                target: image
+                duration: 1000
+                from: 0.33
+                to: 1
+                loops: Animation.Infinite
+                running: deviceManager.scanning
+                onStopped: rescanAnimationStop.start()
+            }
+            OpacityAnimator {
+                id: rescanAnimationStop
+                target: image
+                duration: 500
+                to: 1
+                easing.type: Easing.OutExpo
+                running: false
+            }
         }
-        OpacityAnimator {
-            id: rescanAnimationStop
-            target: image
-            duration: 500
-            to: 1
-            easing.type: Easing.OutExpo
-            running: false
+
+        Text {
+            width: 400
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: (Qt.platform.os === "android")
+
+            text: qsTr("On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.")
+            wrapMode: Text.WordWrap
+            font.pixelSize: 16
+        }
+
+        Item { width: 1; height: 16; }
+
+        ThemedButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: (Qt.platform.os === "android")
+
+            text: qsTr("Official informations")
+            onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
         }
     }
 }

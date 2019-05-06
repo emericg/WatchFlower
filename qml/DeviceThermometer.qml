@@ -79,7 +79,7 @@ Item {
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
             imageBattery.visible = true
-            imageBattery.color = Theme.colorIcons
+            imageBattery.color = Theme.colorHeaderContent
 
             if (myDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";

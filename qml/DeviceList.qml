@@ -62,25 +62,26 @@ Item {
     Rectangle {
         id: rectangleStatus
         height: 52
-        color: Theme.colorYellow
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        color: Theme.colorYellow
 
         Text {
             id: textStatus
-            color: "white"
-            text: ""
+            anchors.fill: parent
             anchors.rightMargin: 16
             anchors.leftMargin: 16
-            font.bold: true
+
+            color: "white"
+            text: ""
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
-            anchors.fill: parent
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: 16
         }
 
         ThemedButton {
@@ -91,9 +92,8 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("Try again")
+            text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
             color: "white"
-            opacity: 0.9
 
             onClicked: {
                 deviceManager.enableBluetooth()
@@ -110,7 +110,6 @@ Item {
 
             text: qsTr("Scan devices")
             color: "white"
-            opacity: 0.9
 
             onClicked: {
                 deviceManager.scanDevices()
@@ -127,8 +126,9 @@ Item {
             rectangleStatus.visible = true;
             rectangleStatus.height = 52;
 
-            itemStatus.source = "ItemNoBluetooth.qml"
-            textStatus.text = qsTr("No Bluetooth :-(");
+            if (!deviceManager.devices) itemStatus.source = "ItemNoBluetooth.qml"
+
+            textStatus.text = qsTr("Bluetooth disabled...");
             buttonBluetooth.visible = true
             buttonSearch.visible = false
         }
@@ -137,19 +137,11 @@ Item {
             rectangleStatus.height = 52;
 
             itemStatus.source = "ItemNoDevice.qml"
-            textStatus.text = qsTr("No devices :-(");
+
+            textStatus.text = qsTr("No devices configured...");
             buttonBluetooth.visible = false
             buttonSearch.visible = true
         }
-    }
-
-    Loader {
-        id: itemStatus
-        width: 256
-        height: 256
-        anchors.verticalCenterOffset: 26
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
     }
 
     GridView {
@@ -185,5 +177,12 @@ Item {
         onWidthChanged: computeCellSize()
         model: deviceManager.devicesList
         delegate: DeviceWidget { boxDevice: modelData; width: devicesview.cellSize; singleColumn: devicesview.singleColumn }
+    }
+
+    Loader {
+        id: itemStatus
+        anchors.verticalCenterOffset: 26
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 }

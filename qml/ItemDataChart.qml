@@ -139,7 +139,7 @@ Item {
     ChartView {
         id: myBarGraph
         anchors.fill: parent
-        anchors.topMargin: 0
+        anchors.topMargin: -5
         anchors.bottomMargin: -20
         anchors.leftMargin: -20
         anchors.rightMargin: -20

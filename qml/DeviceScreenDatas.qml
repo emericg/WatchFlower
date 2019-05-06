@@ -25,12 +25,13 @@ import QtQuick.Controls 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: deviceDatas
+    id: deviceScreenDatas
     width: 400
     height: 300
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("DeviceScreenDatas // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
@@ -97,7 +98,7 @@ Item {
 
     function updateStatusText() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreen // updateStatusText() >> " + myDevice)
+        //console.log("DeviceScreenDatas // updateStatusText() >> " + myDevice)
 
         textStatus.color = "black"
         textStatus.font.bold = false
@@ -132,6 +133,7 @@ Item {
 
     function loadDatas() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
 
         if (settingsManager.graph === 'bar')
             pageLoader.source = "ItemAioBarCharts.qml"
@@ -147,11 +149,12 @@ Item {
 
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
+        //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
         // Has datas? always display them
         if (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720) {
             humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
-            lumi.visible = (myDevice.deviceLuminosity >= 0)
+            lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
         } else {
             humi.visible = myDevice.hasHygrometrySensor()

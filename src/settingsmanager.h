@@ -29,7 +29,7 @@
 #include <QObject>
 #include <QApplication>
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_IOS)
 #include <QQuickWindow>
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
@@ -117,7 +117,7 @@ public:
     QString getGraphHistory() const { return m_graphHistory; }
     void setGraphHistory(const QString &value);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 #endif
 

@@ -26,7 +26,7 @@ import QtQuick.Window 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: deviceDatas
+    id: deviceScreenHistory
     width: 400
     height: 300
 
@@ -34,6 +34,7 @@ Item {
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("DeviceScreenHistory // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
@@ -68,7 +69,7 @@ Item {
 
     function loadDatas() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("ItemDeviceHistory // loadDatas() >> " + myDevice)
+        //console.log("DeviceScreenHistory // loadDatas() >> " + myDevice)
 
         graphCount = 0
 
@@ -134,7 +135,7 @@ Item {
             } else {
                 graphGrid.columns = 2
             }
-            if (graphGrid.width < 550) {
+            if (graphGrid.width < 575) {
                 buttonPanel.anchors.topMargin = 52
                 buttonPanel.anchors.rightMargin = 0
                 buttonPanel.anchors.right = undefined
@@ -189,7 +190,7 @@ Item {
                 width: 100
                 height: 32
                 text: qsTr("Month")
-                font.pointSize: 14
+                font.pixelSize: 14
                 selected: (graphMode === "monthly")
 
                 onClicked: {
@@ -203,7 +204,7 @@ Item {
                 width: 100
                 height: 32
                 text: qsTr("Week")
-                font.pointSize: 14
+                font.pixelSize: 14
                 selected: (graphMode === "weekly")
 
                 onClicked: {
@@ -217,7 +218,7 @@ Item {
                 width: 100
                 height: 32
                 text: qsTr("Day")
-                font.pointSize: 14
+                font.pixelSize: 14
                 selected: (graphMode === "daily")
 
                 onClicked: {
@@ -296,7 +297,7 @@ Item {
                 text: qsTr("Hygrometry")
                 color: Theme.colorIcons
                 font.bold: false
-                font.pointSize: 16
+                font.pixelSize: 18
             }
         }
 
@@ -314,7 +315,7 @@ Item {
                 text: qsTr("Temperature")
                 color: Theme.colorIcons
                 font.bold: false
-                font.pointSize: 16
+                font.pixelSize: 18
             }
         }
 
@@ -332,7 +333,7 @@ Item {
                 text: qsTr("Luminosity")
                 color: Theme.colorIcons
                 font.bold: false
-                font.pointSize: 16
+                font.pixelSize: 18
             }
         }
 
@@ -350,7 +351,7 @@ Item {
                 text: qsTr("Fertility")
                 color: Theme.colorIcons
                 font.bold: false
-                font.pointSize: 16
+                font.pixelSize: 18
             }
         }
     }

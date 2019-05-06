@@ -29,6 +29,7 @@ Item {
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("DeviceScreenLimits // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {

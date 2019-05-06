@@ -421,7 +421,7 @@ void SettingsManager::setGraphHistory(const QString &value)
 }
 
 /* ************************************************************************** */
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_IOS)
 
 QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
 {
@@ -452,5 +452,5 @@ QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
     return map;
 }
 
-#endif // defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#endif // defined(Q_OS_IOS)
 /* ************************************************************************** */

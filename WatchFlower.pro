@@ -7,7 +7,7 @@ CONFIG += c++11
 QT     += core bluetooth sql
 QT     += gui widgets svg qml quick quickcontrols2 charts
 android { QT += androidextras }
-ios | android { QT += gui-private }
+ios { QT += gui-private }
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 9)) {

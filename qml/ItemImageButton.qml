@@ -94,6 +94,6 @@ Item {
         text: tooltipText
         color: Theme.colorText
         visible: tooltipText && highlighted
-        font.pointSize: 12
+        font.pixelSize: 14
     }
 }
