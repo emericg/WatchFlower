@@ -75,7 +75,7 @@ Item {
 
         Item { width: 1; height: 16; }
 
-        ThemedButton {
+        ButtonThemed {
             anchors.horizontalCenter: parent.horizontalCenter
             visible: (Qt.platform.os === "android")
 

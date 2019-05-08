@@ -16,20 +16,20 @@
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
         <file>ThemeEngine.qml</file>
-        <file>components_themed/ButtonThemed.qml</file>
-        <file>components_themed/RadioButtonThemed.qml</file>
-        <file>components_themed/RangeSliderThemed.qml</file>
-        <file>components_themed/SpinBoxThemed.qml</file>
-        <file>components_themed/SwitchThemed.qml</file>
-        <file>components_themed/ImageSvg.qml</file>
-        <file>components/ItemDataBar.qml</file>
-        <file>components/ItemDataChart.qml</file>
-        <file>components/ItemAioBarCharts.qml</file>
-        <file>components/ItemAioLineCharts.qml</file>
-        <file>components/ItemNoBluetooth.qml</file>
-        <file>components/ItemNoDevice.qml</file>
-        <file>components/ItemMenuButton.qml</file>
-        <file>components/ItemImageButton.qml</file>
-        <file>components/WindowGeometrySaver.qml</file>
+        <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
+        <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
+        <file alias="RangeSliderThemed.qml">components_themed/RangeSliderThemed.qml</file>
+        <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
+        <file alias="SwitchThemed.qml">components_themed/SwitchThemed.qml</file>
+        <file alias="ImageSvg.qml">components_themed/ImageSvg.qml</file>
+        <file alias="ItemDataBar.qml">components/ItemDataBar.qml</file>
+        <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
+        <file alias="ItemAioBarCharts.qml">components/ItemAioBarCharts.qml</file>
+        <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
+        <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
+        <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+        <file alias="ItemMenuButton.qml">components/ItemMenuButton.qml</file>
+        <file alias="ItemImageButton.qml">components/ItemImageButton.qml</file>
+        <file alias="WindowGeometrySaver.qml">components/WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>
