@@ -83,7 +83,7 @@ Item {
             font.pixelSize: 16
         }
 
-        ThemedButton {
+        ButtonThemed {
             id: buttonBluetooth
             width: 128
             height: 30
@@ -99,7 +99,7 @@ Item {
                 deviceManager.checkBluetooth()
             }
         }
-        ThemedButton {
+        ButtonThemed {
             id: buttonSearch
             width: 128
             height: 30

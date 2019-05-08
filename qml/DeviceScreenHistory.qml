@@ -185,7 +185,7 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 12 : 52
 
-            ThemedButton {
+            ButtonThemed {
                 id: buttonDone
                 width: 100
                 height: 32
@@ -199,7 +199,7 @@ Item {
                 }
             }
 
-            ThemedButton {
+            ButtonThemed {
                 id: buttonDone1
                 width: 100
                 height: 32
@@ -213,7 +213,7 @@ Item {
                 }
             }
 
-            ThemedButton {
+            ButtonThemed {
                 id: buttonDone2
                 width: 100
                 height: 32

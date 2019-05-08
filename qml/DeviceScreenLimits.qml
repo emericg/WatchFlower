@@ -319,7 +319,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     anchors.left: imageHygro.right
                 }
-                ThemedRangeSlider {
+                RangeSliderThemed {
                     id: rangeSlider_hygro
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
@@ -379,7 +379,7 @@ Item {
                     anchors.left: imageTemp.right
                     font.pixelSize: 14
                 }
-                ThemedRangeSlider {
+                RangeSliderThemed {
                     id: rangeSlider_temp
                     height: 40
                     anchors.right: text5.left
@@ -439,7 +439,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                 }
-                ThemedSpinBox {
+                SpinBoxThemed {
                     id: spinBox1
                     height: 36
                     anchors.left: text1.right
@@ -452,7 +452,7 @@ Item {
                     value: myDevice.limitLumiMin
                     onValueChanged: myDevice.limitLumiMin = value;
                 }
-                ThemedSpinBox {
+                SpinBoxThemed {
                     id: spinBox2
                     height: 36
                     anchors.left: spinBox1.right
@@ -509,7 +509,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                 }
-                ThemedRangeSlider {
+                RangeSliderThemed {
                     id: rangeSlider_condu
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter

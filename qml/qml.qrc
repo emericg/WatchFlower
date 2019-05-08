@@ -5,9 +5,9 @@
         <file>MobileDrawer.qml</file>
         <file>DesktopMain.qml</file>
         <file>DesktopHeader.qml</file>
-        <file>Tutorial.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
+        <file>Tutorial.qml</file>
         <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>
         <file>DeviceScreen.qml</file>
@@ -15,21 +15,21 @@
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
-        <file>ItemDataBar.qml</file>
-        <file>ItemDataChart.qml</file>
-        <file>ItemAioBarCharts.qml</file>
-        <file>ItemAioLineCharts.qml</file>
-        <file>ItemMenuButton.qml</file>
-        <file>ItemImageButton.qml</file>
-        <file>ItemNoBluetooth.qml</file>
-        <file>ItemNoDevice.qml</file>
         <file>ThemeEngine.qml</file>
-        <file>ThemedButton.qml</file>
-        <file>ThemedRadioButton.qml</file>
-        <file>ThemedRangeSlider.qml</file>
-        <file>ThemedSpinBox.qml</file>
-        <file>ThemedSwitch.qml</file>
-        <file>ImageSvg.qml</file>
-        <file>WindowGeometrySaver.qml</file>
+        <file>components_themed/ButtonThemed.qml</file>
+        <file>components_themed/RadioButtonThemed.qml</file>
+        <file>components_themed/RangeSliderThemed.qml</file>
+        <file>components_themed/SpinBoxThemed.qml</file>
+        <file>components_themed/SwitchThemed.qml</file>
+        <file>components_themed/ImageSvg.qml</file>
+        <file>components/ItemDataBar.qml</file>
+        <file>components/ItemDataChart.qml</file>
+        <file>components/ItemAioBarCharts.qml</file>
+        <file>components/ItemAioLineCharts.qml</file>
+        <file>components/ItemNoBluetooth.qml</file>
+        <file>components/ItemNoDevice.qml</file>
+        <file>components/ItemMenuButton.qml</file>
+        <file>components/ItemImageButton.qml</file>
+        <file>components/WindowGeometrySaver.qml</file>
     </qresource>
 </RCC>

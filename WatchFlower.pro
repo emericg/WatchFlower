@@ -18,18 +18,16 @@ if (lessThan(QT_MINOR_VERSION, 10)) {
             "You can use Qt 5.9 but you'll need to make a small adjustment into DeviceScreenCharts.qml...")
 }
 
-################################################################################
+# Build artifacts ##############################################################
 
-# Build artifacts
 OBJECTS_DIR = build/
 MOC_DIR     = build/
 RCC_DIR     = build/
 UI_DIR      = build/
 DESTDIR     = bin/
 
-################################################################################
+# Project files ################################################################
 
-# Project files
 SOURCES  += src/main.cpp \
             src/settingsmanager.cpp \
             src/systraymanager.cpp \
@@ -61,8 +59,7 @@ TRANSLATIONS = i18n/watchflower_fr.ts \
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js }
 
-################################################################################
-# App features
+# App features #################################################################
 
 # Use Qt Quick compiler
 ios | android { CONFIG += qtquickcompiler }

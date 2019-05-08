@@ -109,7 +109,7 @@ Item {
                     font.pixelSize: 16
                 }
 
-                ThemedSwitch {
+                SwitchThemed {
                     id: switch_minimized
                     anchors.right: parent.right
                     anchors.rightMargin: 12
@@ -156,7 +156,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                ThemedSwitch {
+                SwitchThemed {
                     id: switch_bluetoothControl
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -219,7 +219,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                ThemedSwitch {
+                SwitchThemed {
                     id: switch_bluetoothCompat
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -270,7 +270,7 @@ Item {
                 // desktop only
                 //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                ThemedSwitch {
+                SwitchThemed {
                     id: switch_worker
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -333,7 +333,7 @@ Item {
                 // desktop only
                 //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                ThemedSwitch {
+                SwitchThemed {
                     id: switch_notifiations
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -393,7 +393,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
-                ThemedSpinBox {
+                SpinBoxThemed {
                     id: spinBox_update
                     width: 128
                     height: 36
@@ -454,7 +454,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                ThemedRadioButton {
+                RadioButtonThemed {
                     id: radioDelegateCelsius
                     height: 40
                     text: qsTr("°C")
@@ -477,7 +477,7 @@ Item {
                     }
                 }
 
-                ThemedRadioButton {
+                RadioButtonThemed {
                     id: radioDelegateFahrenheit
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
@@ -548,7 +548,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                ThemedRadioButton {
+                RadioButtonThemed {
                     id: radioDelegateGraphMonthly
                     height: 40
                     text: qsTr("Monthly")
@@ -570,7 +570,7 @@ Item {
                             settingsManager.graphHistory = "monthly"
                     }
                 }
-                ThemedRadioButton {
+                RadioButtonThemed {
                     id: radioDelegateGraphWeekly
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
