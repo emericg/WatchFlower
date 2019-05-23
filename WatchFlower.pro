@@ -57,7 +57,7 @@ OTHER_FILES += .travis.yml \
 TRANSLATIONS = i18n/watchflower_fr.ts \
                i18n/watchflower_es.ts i18n/watchflower_gl.ts
 
-lupdate_only { SOURCES += qml/*.qml qml/*.js }
+lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml qml/components_themed/*.qml }
 
 # App features #################################################################
 

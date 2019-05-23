@@ -260,7 +260,7 @@ Item {
                     id: textCondu
                     x: 26
                     y: 9
-                    text: qsTr("Condu")
+                    text: qsTr("Fertility")
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: Text.AlignVCenter

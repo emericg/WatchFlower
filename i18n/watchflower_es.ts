@@ -4,12 +4,12 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../qml/About.qml" line="57"/>
+        <location filename="../qml/About.qml" line="58"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="67"/>
+        <location filename="../qml/About.qml" line="68"/>
         <source>What do you want to know?</source>
         <translation>¿Qué quieres saber?</translation>
     </message>
@@ -42,7 +42,7 @@
 <context>
     <name>DesktopHeader</name>
     <message>
-        <location filename="../qml/DesktopHeader.qml" line="64"/>
+        <location filename="../qml/DesktopHeader.qml" line="65"/>
         <source>Welcome</source>
         <translation>Bienvenido</translation>
     </message>
@@ -50,27 +50,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../src/device.cpp" line="174"/>
+        <location filename="../src/device.cpp" line="176"/>
         <source>You need to water your &apos;%1&apos; now!</source>
         <translation>¡Necesitas regar tu &apos;%1&apos; ahora!</translation>
     </message>
     <message>
-        <location filename="../src/device.cpp" line="176"/>
+        <location filename="../src/device.cpp" line="178"/>
         <source>You need to water the plant near &apos;%1&apos;</source>
         <translation>Necesitas regar &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/device.cpp" line="178"/>
+        <location filename="../src/device.cpp" line="180"/>
         <source>You need to water one of your (unnamed) plant!</source>
         <translation>¡Necesitas regar tu planta (unnamed)!</translation>
     </message>
     <message>
-        <location filename="../src/device.cpp" line="455"/>
+        <location filename="../src/device.cpp" line="457"/>
         <source> min.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/device.cpp" line="458"/>
+        <location filename="../src/device.cpp" line="460"/>
         <source> hours</source>
         <translation> horas</translation>
     </message>
@@ -78,27 +78,27 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../qml/DeviceList.qml" line="95"/>
+        <location filename="../qml/DeviceList.qml" line="85"/>
         <source>Enable</source>
         <translation>Habilitar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="95"/>
+        <location filename="../qml/DeviceList.qml" line="85"/>
         <source>Retry</source>
         <translation>Reintertar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="111"/>
+        <location filename="../qml/DeviceList.qml" line="101"/>
         <source>Scan devices</source>
         <translation>Escanear dispositivos</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="131"/>
+        <location filename="../qml/DeviceList.qml" line="121"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth desactivado...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="141"/>
+        <location filename="../qml/DeviceList.qml" line="131"/>
         <source>No devices configured...</source>
         <translation>No hay dispositivos configurados...</translation>
     </message>
@@ -106,19 +106,16 @@
 <context>
     <name>DeviceScreen</name>
     <message>
-        <location filename="../qml/DeviceScreen.qml" line="191"/>
         <source>Refresh</source>
-        <translation>Recargar</translation>
+        <translation type="vanished">Recargar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreen.qml" line="233"/>
         <source>Edit limits</source>
-        <translation>Editar límites</translation>
+        <translation type="vanished">Editar límites</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreen.qml" line="269"/>
         <source>Datas history</source>
-        <translation>Historial de datos</translation>
+        <translation type="vanished">Historial de datos</translation>
     </message>
 </context>
 <context>
@@ -169,22 +166,22 @@
         <translation>Cargando...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="510"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="507"/>
         <source>Hygrometry</source>
         <translation>Higrometría</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="521"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="518"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="532"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="529"/>
         <source>Luminosity</source>
         <translation>Luminosidad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="543"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="540"/>
         <source>Fertility</source>
         <translation>Fertilidad</translation>
     </message>
@@ -207,22 +204,22 @@
         <translation>Día</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="297"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="296"/>
         <source>Hygrometry</source>
         <translation>Higrometría</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="315"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="314"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="333"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="332"/>
         <source>Luminosity</source>
         <translation>Luminosidad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="351"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="350"/>
         <source>Fertility</source>
         <translation>Fertilidad</translation>
     </message>
@@ -257,12 +254,12 @@
         <translation>Batería</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="437"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="435"/>
         <source>MIN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="472"/>
         <source>MAX</source>
         <translation></translation>
     </message>
@@ -329,32 +326,32 @@
 <context>
     <name>ItemAioBarCharts</name>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="187"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="187"/>
         <source>Hygro</source>
         <translation>Higro</translation>
     </message>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="213"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="213"/>
         <source>Temp</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="238"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="238"/>
         <source>Lumi</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="263"/>
-        <source>Condu</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="263"/>
+        <source>Fertility</source>
+        <translation>Fertilidad</translation>
     </message>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="298"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="298"/>
         <source>Days</source>
         <translation>Días</translation>
     </message>
     <message>
-        <location filename="../qml/ItemAioBarCharts.qml" line="326"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="326"/>
         <source>Hours</source>
         <translation>Horas</translation>
     </message>
@@ -362,12 +359,12 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/ItemNoDevice.qml" line="71"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="71"/>
         <source>On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.</source>
         <translation>En Android 6+, el escaneado para dispositivos bluetooth con baja energía necesita permisos de localización. La aplicación no usa ni guarda la localización GPS. Disculpa las molestias.</translation>
     </message>
     <message>
-        <location filename="../qml/ItemNoDevice.qml" line="82"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="82"/>
         <source>Official informations</source>
         <translation>Información oficial</translation>
     </message>
@@ -375,32 +372,32 @@
 <context>
     <name>MobileDrawer</name>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="127"/>
+        <location filename="../qml/MobileDrawer.qml" line="128"/>
         <source>My plants</source>
         <translation>Mis plantas</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="164"/>
+        <location filename="../qml/MobileDrawer.qml" line="165"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="201"/>
+        <location filename="../qml/MobileDrawer.qml" line="202"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="272"/>
+        <location filename="../qml/MobileDrawer.qml" line="273"/>
         <source>Refresh sensors datas</source>
         <translation>Recargar datos de los sensores</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="319"/>
+        <location filename="../qml/MobileDrawer.qml" line="320"/>
         <source>Search for new devices</source>
         <translation>Buscar nuevos dispositivos</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="373"/>
+        <location filename="../qml/MobileDrawer.qml" line="374"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
@@ -408,12 +405,12 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="352"/>
+        <location filename="../qml/MobileMain.qml" line="353"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="390"/>
+        <location filename="../qml/MobileMain.qml" line="391"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
@@ -421,12 +418,12 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../qml/Settings.qml" line="55"/>
+        <location filename="../qml/Settings.qml" line="56"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="62"/>
+        <location filename="../qml/Settings.qml" line="63"/>
         <source>Change persistent settings here!</source>
         <translation>¡Cambia los ajustes!</translation>
     </message>
@@ -525,24 +522,24 @@
 <context>
     <name>SystrayManager</name>
     <message>
-        <location filename="../src/systraymanager.cpp" line="99"/>
-        <location filename="../src/systraymanager.cpp" line="267"/>
+        <location filename="../src/systraymanager.cpp" line="97"/>
+        <location filename="../src/systraymanager.cpp" line="265"/>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
     <message>
-        <location filename="../src/systraymanager.cpp" line="105"/>
-        <location filename="../src/systraymanager.cpp" line="271"/>
+        <location filename="../src/systraymanager.cpp" line="103"/>
+        <location filename="../src/systraymanager.cpp" line="269"/>
         <source>Show</source>
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="../src/systraymanager.cpp" line="108"/>
+        <location filename="../src/systraymanager.cpp" line="106"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../src/systraymanager.cpp" line="109"/>
+        <location filename="../src/systraymanager.cpp" line="107"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
