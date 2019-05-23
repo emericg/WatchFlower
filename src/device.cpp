@@ -434,6 +434,13 @@ int Device::getLastUpdateInt() const
     if (m_lastUpdate.isValid())
     {
         mins = static_cast<int>(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0));
+
+        if (mins < 0)
+        {
+            // this can happen if the computer clock is changed between two updates...
+            qDebug() << "getLastUpdateInt() has a negative value (" << mins << "). Clock mismatch?";
+            mins = std::abs(mins);
+        }
     }
 
     return mins;
@@ -453,10 +460,10 @@ QString Device::getLastUpdateString() const
         if (mins > 0)
         {
             if (mins < 60) {
-                lastUpdate = QString::number(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 60.0));
+                lastUpdate = QString::number(mins);
                 lastUpdate += tr(" min.");
             } else {
-                lastUpdate = QString::number(std::floor(m_lastUpdate.secsTo(QDateTime::currentDateTime()) / 3600.0));
+                lastUpdate = QString::number(std::floor(mins / 60.0));
                 lastUpdate += tr(" hours");
             }
         }
