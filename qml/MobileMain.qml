@@ -22,6 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.0
+import QtQuick.Window 2.2
 
 import StatusBar 0.1
 import com.watchflower.theme 1.0
@@ -33,7 +34,7 @@ ApplicationWindow {
 
     color: "white"
     visible: true
-    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+    flags: Qt.MaximizeUsingFullscreenGeometryHint
 
     // Mobile stuff
 

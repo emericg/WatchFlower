@@ -21,9 +21,7 @@
 
 import QtQuick 2.9
 import QtQuick.Controls 2.2
-
 import QtGraphicalEffects 1.0
-import com.watchflower.theme 1.0
 
 Item {
     implicitWidth: 32
@@ -31,7 +29,7 @@ Item {
 
     property string source
     property string color
-    property int fillMode: Image.PreserveAspectFit
+    property int fillMode: Image.PreserveAspectCrop
 
     Image {
         id: sourceImg

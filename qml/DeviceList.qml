@@ -28,25 +28,14 @@ Item {
     id: background
     anchors.fill: parent
 
-    property bool deviceScanning: deviceManager.scanning
     property bool deviceAvailable: deviceManager.devices
     property bool bluetoothAvailable: deviceManager.bluetooth
 
-    onDeviceScanningChanged: {
-        //
-    }
-    onDeviceAvailableChanged: {
-        if (deviceManager.bluetooth) {
-            if (deviceManager.devices === false) {
-                rectangleStatus.setDeviceWarning()
-            } else {
-                rectangleStatus.hide()
-            }
-        } else {
-            rectangleStatus.setBluetoothWarning()
-        }
-    }
-    onBluetoothAvailableChanged: {
+    Component.onCompleted: checkStatus()
+    onDeviceAvailableChanged: checkStatus()
+    onBluetoothAvailableChanged: checkStatus()
+
+    function checkStatus() {
         if (deviceManager.bluetooth) {
             if (deviceManager.devices === false) {
                 rectangleStatus.setDeviceWarning()
@@ -68,6 +57,8 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
         color: Theme.colorYellow
+
+        visible: false
 
         Text {
             id: textStatus

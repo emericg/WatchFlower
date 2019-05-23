@@ -281,7 +281,7 @@ bool DeviceManager::isRefreshing() const
 
 void DeviceManager::scanDevices()
 {
-    if (m_btA)
+    if (hasBluetooth())
     {
         qDeleteAll(m_devices);
         m_devices.clear();
@@ -299,7 +299,7 @@ void DeviceManager::scanDevices()
 
 void DeviceManager::refreshDevices()
 {
-    if (m_btA && !m_devices.empty())
+    if (hasBluetooth() && !m_devices.empty())
     {
         m_refreshing = true;
 
@@ -316,7 +316,7 @@ void DeviceManager::refreshDevices()
 
 void DeviceManager::refreshCheck()
 {
-    if (m_btA)
+    if (hasBluetooth())
     {
         bool refreshing = false;
 
