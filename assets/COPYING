@@ -1,17 +1,13 @@
 
-# Application icon:
-- assets/desktop/watchflower.svg    // Christian Díaz <christiandiaz.design@gmail.com>
+# Application logo and icons:
+- assets/logo.svg                 // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+- assets/menu_logo.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+- assets/desktop/watchflower*.svg // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
 
-# Devices:
-- assets/flowercare.svg         // Emeric Grange // CC BY-SA 4.0
-- assets/bletemphygro.svg       // Emeric Grange // CC BY-SA 4.0
-- assets/ropot.svg              // Emeric Grange // CC BY-SA 4.0
-# Menu:
-- assets/menu_front.svg         // Emeric Grange // CC BY-SA 4.0
-- assets/menu_back.svg          // Emeric Grange // CC BY-SA 4.0
+# Google Material Design icons:
+- assets/icons_material/*         // Google // CC BY-SA 4.0
 
-# assets/icons_material
-- *                             // Google Material Design icons // CC BY-SA 4.0
-
-# other:
-- assets/github.png   // https://github.com/logos // proprietary
+# Others:
+- assets/welcome-*.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+- assets/menu_back.svg            // Emeric Grange // CC BY-SA 4.0
+- assets/github.svg               // https://github.com/logos // proprietary

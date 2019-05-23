@@ -5,10 +5,18 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / Mijia "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
-It works with all versions of the devices, doesn't require an account creation, nor your GPS location or any other private datas from you.
+WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / MiJia "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
+It works with international and chinese devices, doesn't require an account creation, your GPS location, nor any other personnal datas from you.
 
 It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
+
+### Compatible devices
+
+| MiJia "Flower Care" | Ropot | BLE Hygro & Temp |
+| ------------------- | ----- | ---------------- |
+| ![FlowerCare](assets/devices/flowercare.svg) | ![Ropot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) |
+
+Many Bluetooth devices could be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done! 
 
 ### Desktop screenshots
 
@@ -23,8 +31,7 @@ It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries a
 
 ### Dependencies
 
-You will need a C++ compiler and Qt 5.9+ (versions 5.12+ are recommended however).
-WatchFlower will take advantages of sqlite if it's available on your system.
+You will need a C++11 compiler and Qt 5.9 (Qt 5.12+ is recommended however) with Qt Charts.
 
 ### Building WatchFlower
 
@@ -40,7 +47,7 @@ WatchFlower will take advantages of sqlite if it's available on your system.
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
-* Graphical resources: please read [assets/COPYING](assets/COPYING)
+* Graphical resources details in [assets/COPYING](assets/COPYING)
 
 
 ## Get involved!

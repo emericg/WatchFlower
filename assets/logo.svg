@@ -15,7 +15,7 @@
    version="1.1"
    id="svg4545"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
-   sodipodi:docname="WatchFlower-icon.svg">
+   sodipodi:docname="logo.svg">
   <title
      id="title845">WatchFlower icon base</title>
   <defs
@@ -132,7 +132,24 @@
           </cc:Agent>
         </dc:creator>
         <dc:description>christiandiaz.design@gmail.com</dc:description>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
       </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
   <g
