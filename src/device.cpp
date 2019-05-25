@@ -131,6 +131,14 @@ bool Device::refreshDatasCached(int minutes)
     return status;
 }
 
+void Device::disconnectDevice()
+{
+    if (controller->state() != QLowEnergyController::UnconnectedState)
+    {
+        controller->disconnectFromDevice();
+    }
+}
+
 void Device::refreshDatasCanceled()
 {
     controller->disconnectFromDevice();

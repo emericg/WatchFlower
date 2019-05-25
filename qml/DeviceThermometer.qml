@@ -34,8 +34,9 @@ Item {
     Connections {
         target: myDevice
         onStatusUpdated: updateHeader()
-        onLimitsUpdated: updateDatas()
+        onSensorUpdated: updateHeader()
         onDatasUpdated: updateDatas()
+        onLimitsUpdated: updateDatas()
     }
 
     Connections {
@@ -67,9 +68,9 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
 
-        deviceScreenChart.loadGraph()
         updateHeader()
         updateDatas()
+        deviceScreenChart.loadGraph()
     }
 
     function updateHeader() {

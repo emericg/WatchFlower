@@ -284,7 +284,7 @@ Rectangle {
                 id: menuPlants
                 width: 64
                 height: 64
-                visible: (rectangleHeader.width > 580)
+                visible: (rectangleHeader.width >= 560)
                 source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
             }

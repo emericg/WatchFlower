@@ -37,8 +37,9 @@ Item {
     Connections {
         target: boxDevice
         onStatusUpdated: updateBoxDatas()
-        onLimitsUpdated: updateBoxDatas()
+        onSensorUpdated: updateBoxDatas()
         onDatasUpdated: updateBoxDatas()
+        onLimitsUpdated: updateBoxDatas()
     }
 
     Component.onCompleted: initBoxDatas()

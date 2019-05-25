@@ -60,19 +60,21 @@ class Device: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool connected READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
-    Q_PROPERTY(QString deviceName READ getName NOTIFY datasUpdated)
-    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY datasUpdated)
-    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY datasUpdated)
-    Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY datasUpdated)
+    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY sensorUpdated)
 
-    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY datasUpdated)
-    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY datasUpdated)
-    Q_PROPERTY(int deviceBattery READ getBattery NOTIFY datasUpdated)
+    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
+    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
 
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY datasUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
@@ -92,6 +94,7 @@ class Device: public QObject
 
 Q_SIGNALS:
     void statusUpdated();
+    void sensorUpdated();
     void datasUpdated();
     void limitsUpdated();
 
@@ -174,6 +177,7 @@ public:
 public slots:
     bool refreshDatas();
     bool refreshDatasCached(int minutes = 1);
+    void disconnectDevice();
 
     // BLE device
     QString getName() const { return m_deviceName; }

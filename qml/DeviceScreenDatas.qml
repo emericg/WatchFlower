@@ -167,12 +167,6 @@ Item {
         aioLineCharts.updateGraph()
     }
 
-    onWidthChanged: {
-        if (typeof myDevice === "undefined" || !myDevice) return
-
-        updateDatas()
-    }
-
     // Fahrenheit to celsius
     function tempFahrenheitToCelsius(temp) {
         return (temp - 32) / 1.8;

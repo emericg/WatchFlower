@@ -35,11 +35,12 @@ Item {
     Connections {
         target: myDevice
         onStatusUpdated: rectangleDeviceDatas.updateHeader()
-        onLimitsUpdated: rectangleDeviceDatas.updateDatas()
+        onSensorUpdated: rectangleDeviceDatas.updateHeader()
         onDatasUpdated: {
             rectangleDeviceDatas.updateDatas()
             rectangleDeviceHistory.updateDatas()
         }
+        onLimitsUpdated: rectangleDeviceDatas.updateDatas()
     }
 
     Connections {
