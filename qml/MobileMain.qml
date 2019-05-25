@@ -34,7 +34,7 @@ ApplicationWindow {
 
     color: "white"
     visible: true
-    flags: Qt.MaximizeUsingFullscreenGeometryHint
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     // Mobile stuff
 

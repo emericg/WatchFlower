@@ -24,12 +24,10 @@ import QtQuick 2.9
 import com.watchflower.theme 1.0
 
 Item {
-    id: element
     width: parent.width
     height: parent.height
 
     ImageSvg {
-        id: image
         width: 256
         height: 256
         anchors.horizontalCenter: parent.horizontalCenter

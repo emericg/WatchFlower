@@ -29,13 +29,13 @@ import QtCharts 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: deviceScreenAioCharts
+    id: itemAioLineCharts
     width: parent.width
     anchors.margins: 0
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenAioCharts // loadGraph() >> " + myDevice)
+        //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
 
         tempDatas.visible = myDevice.hasTemperatureSensor()
         hygroDatas.visible = myDevice.hasHygrometrySensor()
@@ -45,7 +45,13 @@ Item {
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenAioCharts // updateGraph() >> " + myDevice)
+        //console.log("itemAioLineCharts // updateGraph() >> " + myDevice)
+
+        if (myDevice.countDatas("temp", 14) > 0) {
+            itemAioLineCharts.visible = true
+        } else {
+            itemAioLineCharts.visible = false
+        }
 
         //// DATAS
         hygroDatas.clear()

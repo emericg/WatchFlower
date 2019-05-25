@@ -29,7 +29,7 @@ import QtCharts 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: deviceScreenBarCharts
+    id: itemDataCharts
     width: parent.width
     anchors.margins: 0
 
@@ -41,7 +41,7 @@ Item {
 
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenBarCharts // loadGraph() >> " + myDevice)
+        //console.log("itemDataCharts // loadGraph() >> " + myDevice)
 
         axisY0.min = 0;
         if (graphDataSelected === "hygro") {
@@ -98,7 +98,7 @@ Item {
 
     function updateGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenBarCharts // updateGraph() >> " + myDevice)
+        //console.log("itemDataCharts // updateGraph() >> " + myDevice)
 
         loadAxis()
 

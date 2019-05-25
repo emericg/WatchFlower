@@ -25,7 +25,6 @@ import QtQuick.Controls 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: element
     anchors.fill: parent
 
     Column {

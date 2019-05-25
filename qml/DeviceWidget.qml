@@ -53,10 +53,11 @@ Item {
         // Device picture
         if (boxDevice.deviceName === "MJ_HT_V1") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
-        } else if (boxDevice.deviceName === "ropot") {
-            imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         } else {
-            imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px"
+            if (boxDevice.hasDatas("hygro"))
+                imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+            else
+                imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
         // Sensor battery level

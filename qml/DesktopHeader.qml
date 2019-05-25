@@ -149,10 +149,9 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"
-        anchors.verticalCenterOffset: -1
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 30
+        font.pixelSize: 28
     }
 
     Row {

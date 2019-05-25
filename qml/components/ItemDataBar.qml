@@ -23,7 +23,7 @@ import QtQuick 2.9
 import com.watchflower.theme 1.0
 
 Item {
-    id: item
+    id: itemDataBar
     height: 36
     anchors.left: parent.left
     anchors.leftMargin: 0
@@ -67,7 +67,7 @@ Item {
         Rectangle {
             id: item_data
             width: normalize(value, valueMin, valueMax) * item_bg.width + (value === 0 ? 0 : 1.5*radius) // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
-            color: item.color
+            color: itemDataBar.color
             radius: 3
             anchors.top: parent.top
             anchors.topMargin: 0
@@ -151,7 +151,7 @@ Item {
 
             Rectangle {
                 height: 18
-                color: item.color
+                color: itemDataBar.color
                 radius: 1
                 anchors.left: parent.left
                 anchors.leftMargin: -4
@@ -166,7 +166,7 @@ Item {
                     height: 6
                     radius: 1
                     rotation: 45
-                    color: item.color
+                    color: itemDataBar.color
                     anchors.top: parent.bottom
                     anchors.topMargin: -3
                     anchors.horizontalCenter: parent.horizontalCenter
