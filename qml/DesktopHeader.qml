@@ -174,7 +174,7 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (content.state === "DeviceSensor")
+            visible: (content.state === "DeviceSensor") || (content.state === "DeviceThermo")
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: deviceRefreshButtonClicked()
@@ -195,6 +195,12 @@ Rectangle {
                 easing.type: Easing.Linear
                 running: false
             }
+        }
+        Item { // spacer
+            width: 12
+            height: 12
+            anchors.verticalCenter: parent.verticalCenter
+            visible: (content.state === "DeviceThermo")
         }
 
         Row {
