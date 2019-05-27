@@ -66,6 +66,7 @@ Item {
 
     function loadDevice() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
 
         updateHeader()
@@ -75,7 +76,8 @@ Item {
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceThermometer // updateHeader() >> " + myDevice)
+        if (myDevice.deviceName !== "MJ_HT_V1") return
+        console.log("DeviceThermometer // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
@@ -119,6 +121,7 @@ Item {
 
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
+        if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // updateDatas() >> " + myDevice)
 
         if (myDevice.deviceTempC > -40)
@@ -135,6 +138,7 @@ Item {
 
     function updateStatusText() {
         if (typeof myDevice === "undefined") return
+        if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
 
         if (myDevice) {

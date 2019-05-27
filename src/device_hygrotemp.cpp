@@ -107,7 +107,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
         if (!serviceInfo)
             qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
     }
-
+/*
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // (unknown service) // battery
     {
         m_capabilities += DEVICE_BATTERY;
@@ -119,7 +119,7 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
         if (!serviceBattery)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
-
+*/
     if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // datas
     {
         delete serviceData;

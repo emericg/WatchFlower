@@ -31,6 +31,7 @@ Item {
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // updateHeader() >> " + myDevice)
 
         // Sensor battery level
@@ -98,6 +99,7 @@ Item {
 
     function updateStatusText() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // updateStatusText() >> " + myDevice)
 
         textStatus.color = "black"
@@ -133,6 +135,7 @@ Item {
 
     function loadDatas() {
         if (typeof myDevice === "undefined" || !myDevice) return
+        if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
 
         if (settingsManager.graph === 'bar')
@@ -149,6 +152,7 @@ Item {
 
     function updateDatas() {
         if (typeof myDevice === 'undefined' || !myDevice) return
+        if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
         // Has datas? always display them
