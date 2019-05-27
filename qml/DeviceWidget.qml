@@ -32,7 +32,7 @@ Item {
     property var boxDevice: null
 
     property bool mobileMode: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-    property bool wideAssMode: (width > 400)
+    property bool wideAssMode: (width >= 380)
     property bool bigAssMode: false
     property bool singleColumn: true
 

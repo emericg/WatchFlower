@@ -28,8 +28,8 @@ import com.watchflower.theme 1.0
 ApplicationWindow {
     id: applicationWindow
 
-    width: (Qt.platform.os === "macx") ? 800 : 1280
-    height: (Qt.platform.os === "macx") ? 540 : 720
+    width: (Qt.platform.os === "osx") ? 800 : 1280
+    height: (Qt.platform.os === "osx") ? 480 : 720
     minimumWidth: 480
     minimumHeight: 480
 
@@ -106,7 +106,7 @@ ApplicationWindow {
         }
     }
     onClosing: {
-        if (settingsManager.systray || Qt.platform.os === "macx") {
+        if (settingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false;
             applicationWindow.hide()
         }

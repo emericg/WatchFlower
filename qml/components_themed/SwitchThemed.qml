@@ -32,7 +32,7 @@ Switch {
         implicitWidth: 40
         implicitHeight: 16
         x: control.leftPadding
-        y: parent.width / 2 - width / 2
+        y: parent.height / 2 - height / 2
 
         radius: 13
         //border.color: Theme.colorBorders
