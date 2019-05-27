@@ -89,6 +89,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/graphHistory"))
             m_graphHistory = settings.value("settings/graphHistory").toString();
 
+        if (settings.contains("settings/bigWidget"))
+            m_bigWidget = settings.value("settings/bigWidget").toBool();
+
         status = true;
     }
     else
@@ -117,6 +120,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/updateInterval", m_updateInterval);
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/graphHistory", m_graphHistory);
+        settings.setValue("settings/bigWidget", m_bigWidget);
 
         settings.sync();
 
@@ -330,8 +334,10 @@ void SettingsManager::resetSettings()
     Q_EMIT updateIntervalChanged();
     m_tempUnit = "C";
     Q_EMIT tempUnitChanged();
-    m_graphHistory = "daily";
+    m_graphHistory = "monthly";
     Q_EMIT graphHistoryChanged();
+    m_bigWidget = false;
+    Q_EMIT bigWidgetChanged();
 
     // Database
     resetDatabase();
@@ -416,6 +422,13 @@ void SettingsManager::setGraphHistory(const QString &value)
     m_graphHistory = value;
     writeSettings();
     Q_EMIT graphHistoryChanged();
+}
+
+void SettingsManager::setBigWidget(bool value)
+{
+    m_bigWidget = value;
+    writeSettings();
+    Q_EMIT bigWidgetChanged();
 }
 
 /* ************************************************************************** */

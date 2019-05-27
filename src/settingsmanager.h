@@ -53,6 +53,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(uint updateInterval READ getUpdateInterval WRITE setUpdateInterval NOTIFY updateIntervalChanged)
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
+    Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
@@ -61,9 +62,9 @@ class SettingsManager: public QObject
     bool m_bluetoothCompat = false;
 
     int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
-
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
+    bool m_bigWidget = false;
 
     bool readSettings();
     bool writeSettings();
@@ -87,6 +88,7 @@ Q_SIGNALS:
     void updateIntervalChanged();
     void tempUnitChanged();
     void graphHistoryChanged();
+    void bigWidgetChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -116,6 +118,9 @@ public:
 
     QString getGraphHistory() const { return m_graphHistory; }
     void setGraphHistory(const QString &value);
+
+    bool getBigWidget() const { return m_bigWidget; }
+    void setBigWidget(bool value);
 
 #if defined(Q_OS_IOS)
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);

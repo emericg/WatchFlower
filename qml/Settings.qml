@@ -435,6 +435,52 @@ Item {
             ////////
 
             Item {
+                id: element8
+                height: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                // desktop only
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+                Text {
+                    id: text_bigwidget
+                    height: 40
+                    text: qsTr("Use bigger widgets")
+                    anchors.left: image_bigwidget.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 16
+                }
+
+                SwitchThemed {
+                    id: switch_bigwidget
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    Component.onCompleted: checked = settingsManager.bigWidget
+                    onCheckedChanged: settingsManager.bigWidget = checked
+                }
+
+                ImageSvg {
+                    id: image_bigwidget
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorIcons
+                    source: "qrc:/assets/icons_material/baseline-format_size-24px.svg"
+                }
+            }
+
+            ////////
+
+            Item {
                 id: element6
                 height: 48
                 anchors.left: parent.left

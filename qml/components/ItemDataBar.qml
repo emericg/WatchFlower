@@ -20,7 +20,9 @@
  */
 
 import QtQuick 2.9
+
 import com.watchflower.theme 1.0
+import "UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemDataBar
@@ -66,7 +68,7 @@ Item {
 
         Rectangle {
             id: item_data
-            width: normalize(value, valueMin, valueMax) * item_bg.width + (value === 0 ? 0 : 1.5*radius) // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
+            width: UtilsNumber.normalize(value, valueMin, valueMax) * item_bg.width + (value === 0 ? 0 : 1.5*radius) // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
             color: itemDataBar.color
             radius: 3
             anchors.top: parent.top
@@ -88,7 +90,7 @@ Item {
             anchors.bottom: parent.bottom
 
             visible: (limitMin > 0)
-            x: normalize(limitMin, valueMin, valueMax) * item_bg.width
+            x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
             color: "black"
             opacity: 0.5
         }
@@ -99,7 +101,7 @@ Item {
             anchors.bottom: parent.bottom
 
             visible: (limitMax > 0 && limitMax < valueMax)
-            x: normalize(limitMax, valueMin, valueMax) * item_bg.width
+            x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
             color: "black"
             opacity: 0.5
         }

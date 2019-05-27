@@ -23,6 +23,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 import com.watchflower.theme 1.0
+import "UtilsNumber.js" as UtilsNumber
 
 Item {
     id: deviceScreenLimits
@@ -94,16 +95,6 @@ Item {
         itemHygro.visible = myDevice.hasHygrometrySensor()
         itemLumi.visible = myDevice.hasLuminositySensor()
         itemCondu.visible = myDevice.hasConductivitySensor()
-    }
-
-    // Fahrenheit to celsius
-    function tempFahrenheitToCelsius(temp) {
-        return (temp - 32) / 1.8;
-    }
-
-    // Celsius to fahrenheit
-    function tempCelsiusToFahrenheit(temp) {
-        return (temp * 1.8 + 32);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -382,7 +373,7 @@ Item {
                     id: text3
                     width: 40
                     height: 40
-                    text: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)
+                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     anchors.verticalCenter: parent.verticalCenter
@@ -410,7 +401,7 @@ Item {
                     id: text5
                     width: 40
                     height: 40
-                    text: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)
+                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right

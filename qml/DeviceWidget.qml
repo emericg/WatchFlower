@@ -22,16 +22,18 @@
 import QtQuick 2.9
 
 import com.watchflower.theme 1.0
+import "UtilsNumber.js" as UtilsNumber
 
 Item {
     implicitWidth: 640
-    implicitHeight: 100
+    implicitHeight: bigAssMode ? 140 : 100
     anchors.fill: parent.width
 
     property var boxDevice: null
 
     property bool mobileMode: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-    property bool wideMode: (width > 350)
+    property bool wideAssMode: (width > 400)
+    property bool bigAssMode: false
     property bool singleColumn: true
 
     Connections {
@@ -43,11 +45,6 @@ Item {
     }
 
     Component.onCompleted: initBoxDatas()
-
-    function normalize(value, min, max) {
-        if (value <= 0) return 0
-        return Math.min(((value - min) / (max - min)), 1)
-    }
 
     function initBoxDatas() {
 
@@ -186,10 +183,10 @@ Item {
                 textHygro.text = boxDevice.deviceHygro + "%"
             } else {
                 rectangleSensors.visible = true
-                hygro_data.height = normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * dataArea.height
-                temp_data.height = normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * dataArea.height
-                lumi_data.height = normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * dataArea.height
-                cond_data.height = normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * dataArea.height
+                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+                temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
+                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * rowRight.height
+                cond_data.height = UtilsNumber.normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
                 hygro_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
@@ -237,23 +234,25 @@ Item {
 
         Row {
             id: rowLeft
-            width: 298
-            spacing: 24
+            clip: true
+            anchors.right: rowRight.left
+            anchors.rightMargin: 0
+            spacing: bigAssMode ? 20 : 24
             anchors.top: parent.top
-            anchors.topMargin: 8
+            anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.left: parent.left
-            anchors.leftMargin: singleColumn ? 8 : 12
+            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 8 : 12)
 
             ImageSvg {
                 id: imageDevice
-                width: 24
-                height: 24
+                width: bigAssMode ? 32 : 24
+                height: bigAssMode ? 32 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: "black"
-                visible: wideMode
+                visible: wideAssMode || bigAssMode
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -263,39 +262,40 @@ Item {
 
                 Text {
                     id: textPlant
-                    anchors.rightMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: bigAssMode ? 0 : 8
 
                     color: Theme.colorText
                     text: boxDevice.deviceLocationName
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     anchors.left: parent.left
-                    font.pixelSize: 20
+                    font.pixelSize: bigAssMode ? 22 : 20
                 }
 
                 Text {
                     id: textLocation
-                    anchors.rightMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: bigAssMode ? 0 : 8
 
                     color: Theme.colorSubText
                     text: boxDevice.deviceAddress
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     anchors.left: parent.left
-                    font.pixelSize: 18
+                    font.pixelSize: bigAssMode ? 20 : 18
                 }
 
                 Row {
                     id: row
-                    width: 256
-                    height: 22
+                    height: bigAssMode ? 26 : 22
                     spacing: 8
                     anchors.left: parent.left
 
                     ImageSvg {
                         id: imageBattery
-                        width: 28
-                        height: 30
+                        width: bigAssMode ? 30 : 28
+                        height: bigAssMode ? 32 : 30
 
                         color: Theme.colorIcons
                         anchors.verticalCenter: parent.verticalCenter
@@ -306,11 +306,10 @@ Item {
 
                     Text {
                         id: textStatus
-                        text: qsTr("Synced")
                         anchors.verticalCenterOffset: 0
                         anchors.verticalCenter: parent.verticalCenter
                         verticalAlignment: Text.AlignVCenter
-                        font.pixelSize: 15
+                        font.pixelSize: bigAssMode ? 16 : 15
 
                         SequentialAnimation on opacity {
                             id: opa
@@ -331,11 +330,11 @@ Item {
             id: rowRight
             spacing: 8
             anchors.top: parent.top
-            anchors.topMargin: 8
+            anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? 0 : 10
+            anchors.rightMargin: singleColumn ? 0 : (bigAssMode ? 16 : 10)
 
             Row {
                 id: lilIcons
@@ -364,207 +363,169 @@ Item {
                 }
             }
 
-            Item {
-                id: dataArea
-                width: 80
-                anchors.top: parent.top
-                anchors.topMargin: 0
+            Row {
+                id: rectangleSensors
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
+                anchors.top: parent.top
 
-                ImageSvg {
-                    id: imageStatus
-                    width: 32
-                    height: 32
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
+                visible: true
+                spacing: 8
+                property int sensorWidth: mobileMode ? 8 : (bigAssMode ? 12 : 10)
+                property int sensorRadius: 2
 
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                    visible: false
-                    color: Theme.colorIcons
-
-                    SequentialAnimation on opacity {
-                        id: refreshAnimation
-                        loops: Animation.Infinite
-                        running: false
-                        onStopped: imageStatus.opacity = 1
-                        OpacityAnimator { from: 0; to: 1; duration: 750 }
-                        OpacityAnimator { from: 1; to: 0;  duration: 750 }
-                    }
-                }
-
-                Row {
-                    id: rectangleSensors
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
+                Item {
+                    id: hygro_bg
+                    width: rectangleSensors.sensorWidth
                     anchors.top: parent.top
+                    anchors.topMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
 
-                    visible: true
-                    spacing: 8
-                    property int sensorWidth: mobileMode ? 8 : 10
-                    property int sensorRadius: 2
-
-                    Item {
-                        id: hygro_bg
-                        width: rectangleSensors.sensorWidth
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        Rectangle {
-                            id: bg1
-                            anchors.fill: parent
-                            color: Theme.colorBlue
-                            opacity: 0.33
-                            radius: rectangleSensors.sensorRadius
-                        }
-                        Rectangle {
-                            id: hygro_data
-                            height: 12
-                            color: Theme.colorBlue
-                            radius: rectangleSensors.sensorRadius
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                            anchors.bottomMargin: 0
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 0
-                        }
+                    Rectangle {
+                        id: bg1
+                        anchors.fill: parent
+                        color: Theme.colorBlue
+                        opacity: 0.33
+                        radius: rectangleSensors.sensorRadius
                     }
-
-                    Item {
-                        id: temp_bg
-                        width: rectangleSensors.sensorWidth
-                        anchors.bottom: parent.bottom
+                    Rectangle {
+                        id: hygro_data
+                        height: 12
+                        color: Theme.colorBlue
+                        radius: rectangleSensors.sensorRadius
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
                         anchors.bottomMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-
-                        Rectangle {
-                            id: bg2
-                            anchors.fill: parent
-                            color: Theme.colorGreen
-                            opacity: 0.33
-                            radius: rectangleSensors.sensorRadius
-                        }
-                        Rectangle {
-                            id: temp_data
-                            height: 6
-                            color: Theme.colorGreen
-                            radius: rectangleSensors.sensorRadius
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                            visible: true
-                            anchors.bottomMargin: 0
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 0
-                        }
-                    }
-
-                    Item {
-                        id: lumi_bg
-                        width: rectangleSensors.sensorWidth
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        Rectangle {
-                            id: bg3
-                            anchors.fill: parent
-                            color: Theme.colorYellow
-                            opacity: 0.33
-                            radius: rectangleSensors.sensorRadius
-                        }
-                        Rectangle {
-                            id: lumi_data
-                            height: 8
-                            color: Theme.colorYellow
-                            radius: rectangleSensors.sensorRadius
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                            anchors.bottomMargin: 0
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 0
-                        }
-                    }
-
-                    Item {
-                        id: cond_bg
-                        width: rectangleSensors.sensorWidth
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        Rectangle {
-                            id: bg4
-                            anchors.fill: parent
-                            color: Theme.colorRed
-                            opacity: 0.33
-                            radius: rectangleSensors.sensorRadius
-                        }
-                        Rectangle {
-                            id: cond_data
-                            height: 10
-                            color: Theme.colorRed
-                            radius: rectangleSensors.sensorRadius
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                            anchors.bottomMargin: 0
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 0
-                        }
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
                     }
                 }
 
-                Column {
-                    id: rectangleHygroTemp
-                    anchors.verticalCenter: parent.verticalCenter
+                Item {
+                    id: temp_bg
+                    width: rectangleSensors.sensorWidth
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+
+                    Rectangle {
+                        id: bg2
+                        anchors.fill: parent
+                        color: Theme.colorGreen
+                        opacity: 0.33
+                        radius: rectangleSensors.sensorRadius
+                    }
+                    Rectangle {
+                        id: temp_data
+                        height: 6
+                        color: Theme.colorGreen
+                        radius: rectangleSensors.sensorRadius
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        visible: true
+                        anchors.bottomMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                    }
+                }
+
+                Item {
+                    id: lumi_bg
+                    width: rectangleSensors.sensorWidth
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+
+                    Rectangle {
+                        id: bg3
+                        anchors.fill: parent
+                        color: Theme.colorYellow
+                        opacity: 0.33
+                        radius: rectangleSensors.sensorRadius
+                    }
+                    Rectangle {
+                        id: lumi_data
+                        height: 8
+                        color: Theme.colorYellow
+                        radius: rectangleSensors.sensorRadius
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                    }
+                }
+
+                Item {
+                    id: cond_bg
+                    width: rectangleSensors.sensorWidth
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+
+                    Rectangle {
+                        id: bg4
+                        anchors.fill: parent
+                        color: Theme.colorRed
+                        opacity: 0.33
+                        radius: rectangleSensors.sensorRadius
+                    }
+                    Rectangle {
+                        id: cond_data
+                        height: 10
+                        color: Theme.colorRed
+                        radius: rectangleSensors.sensorRadius
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                    }
+                }
+            }
+
+            Column {
+                id: rectangleHygroTemp
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    id: textTemp
                     anchors.right: parent.right
-                    anchors.left: parent.left
+                    anchors.rightMargin: 0
+
+                    text: "25.0°"
+                    color: "#333333"
+                    font.wordSpacing: -1.2
+                    font.letterSpacing: -1.4
+                    font.pixelSize: bigAssMode ? 32 : 30
+                    font.family: "Tahoma"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
 
                     Connections {
                         target: settingsManager
                         onTempUnitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
                     }
+                }
 
-                    Text {
-                        id: textTemp
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
+                Text {
+                    id: textHygro
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
 
-                        text: "25.0°"
-                        color: "#333333"
-                        font.wordSpacing: -1.2
-                        font.letterSpacing: -1.4
-                        font.pixelSize: 30
-                        font.family: "Tahoma"
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignRight
-                    }
-
-                    Text {
-                        id: textHygro
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-
-                        text: "55%"
-                        color: "#666666"
-                        font.pixelSize: 24
-                        font.family: "Tahoma"
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignRight
-                    }
+                    text: "55%"
+                    color: "#666666"
+                    font.pixelSize: bigAssMode ? 26 : 24
+                    font.family: "Tahoma"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
                 }
             }
 
@@ -578,6 +539,28 @@ Item {
                 sourceSize: Qt.size(width, height)
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+            }
+        }
+
+        ImageSvg {
+            id: imageStatus
+            width: 32
+            height: 32
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: singleColumn ? 56 : 36
+
+            source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+            visible: false
+            color: Theme.colorIcons
+
+            SequentialAnimation on opacity {
+                id: refreshAnimation
+                loops: Animation.Infinite
+                running: false
+                onStopped: imageStatus.opacity = 1
+                OpacityAnimator { from: 0; to: 1; duration: 750 }
+                OpacityAnimator { from: 1; to: 0;  duration: 750 }
             }
         }
     }

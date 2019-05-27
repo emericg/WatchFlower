@@ -23,6 +23,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 import com.watchflower.theme 1.0
+import "UtilsNumber.js" as UtilsNumber
 
 Item {
     id: deviceScreenDatas
@@ -128,11 +129,6 @@ Item {
         }
     }
 
-    function normalize(value, min, max) {
-        if (value <= 0) return 0
-        return Math.min(((value - min) / (max - min)), 1)
-    }
-
     function loadDatas() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.deviceName === "MJ_HT_V1") return
@@ -169,16 +165,6 @@ Item {
 
         //
         aioLineCharts.updateGraph()
-    }
-
-    // Fahrenheit to celsius
-    function tempFahrenheitToCelsius(temp) {
-        return (temp - 32) / 1.8;
-    }
-
-    // Celsius to fahrenheit
-    function tempCelsiusToFahrenheit(temp) {
-        return (temp * 1.8 + 32);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -519,8 +505,8 @@ Item {
                 value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
                 valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
                 valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
-                limitMin: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
-                limitMax: (settingsManager.tempUnit === "F") ? tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
+                limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
+                limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
             }
             ItemDataBar {
                 id: lumi

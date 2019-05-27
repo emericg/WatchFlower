@@ -28,8 +28,8 @@ import com.watchflower.theme 1.0
 ApplicationWindow {
     id: applicationWindow
 
-    width: 800
-    height: 540
+    width: (Qt.platform.os === "macx") ? 800 : 1280
+    height: (Qt.platform.os === "macx") ? 540 : 720
     minimumWidth: 480
     minimumHeight: 480
 

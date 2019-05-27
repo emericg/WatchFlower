@@ -143,17 +143,21 @@ Item {
         anchors.leftMargin: 6
         anchors.rightMargin: 6
 
-        property int boxHeight: 100
         property bool singleColumn: true
+        property bool bigWidget: settingsManager.bigWidget
+        property int boxHeight: bigWidget ? 140 : 100
 
-        property int cellSizeTarget: 300
-        property int cellSize: 300
+        property int cellSizeTarget: bigWidget ? 400 : 300
+        property int cellSize: bigWidget ? 400 : 300
         property int cellMarginTarget: 0
         property int cellMargin: 0
         cellWidth: cellSizeTarget + cellMarginTarget
         cellHeight: boxHeight + cellMarginTarget
 
         function computeCellSize() {
+            cellSizeTarget = bigWidget ? 400 : 300
+            boxHeight = bigWidget ? 140 : 100
+
             var availableWidth = devicesview.width - cellMarginTarget
             var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
             singleColumn = (cellColumnsTarget === 1)
@@ -164,9 +168,11 @@ Item {
             cellHeight = boxHeight + cellMarginTarget
         }
 
+        onBigWidgetChanged: computeCellSize()
         onWidthChanged: computeCellSize()
+
         model: deviceManager.devicesList
-        delegate: DeviceWidget { boxDevice: modelData; width: devicesview.cellSize; singleColumn: devicesview.singleColumn }
+        delegate: DeviceWidget { boxDevice: modelData; width: devicesview.cellSize; singleColumn: devicesview.singleColumn; bigAssMode: devicesview.bigWidget; }
     }
 
     Loader {

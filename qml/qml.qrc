@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/qml">
+        <file>UtilsNumber.js</file>
         <file>MobileMain.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
