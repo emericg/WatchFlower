@@ -120,7 +120,7 @@ Item {
     }
 
     function updateDatas() {
-        if (typeof myDevice === 'undefined' || !myDevice) return
+        if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // updateDatas() >> " + myDevice)
 
@@ -137,7 +137,7 @@ Item {
     }
 
     function updateStatusText() {
-        if (typeof myDevice === "undefined") return
+        if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
 

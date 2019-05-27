@@ -102,6 +102,9 @@ Item {
                     id: text_minimized
                     height: 40
                     text: qsTr("Start application minimized")
+                    wrapMode: Text.WordWrap
+                    anchors.right: switch_minimized.left
+                    anchors.rightMargin: 16
                     anchors.left: image_minimized.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -111,6 +114,7 @@ Item {
 
                 SwitchThemed {
                     id: switch_minimized
+                    z: 1
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -152,12 +156,16 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Allow Bluetooth control")
+                    anchors.right: switch_bluetoothControl.left
+                    anchors.rightMargin: 16
+                    wrapMode: Text.WordWrap
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 SwitchThemed {
                     id: switch_bluetoothControl
+                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
@@ -215,12 +223,16 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth compatibility mode")
+                    wrapMode: Text.WordWrap
+                    anchors.right: switch_bluetoothCompat.left
+                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 SwitchThemed {
                     id: switch_bluetoothCompat
+                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
@@ -272,6 +284,7 @@ Item {
 
                 SwitchThemed {
                     id: switch_worker
+                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     checked: settingsManager.systray
@@ -287,6 +300,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable background updates")
+                    anchors.right: switch_worker.left
+                    anchors.rightMargin: 16
+                    wrapMode: Text.WordWrap
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -335,6 +351,7 @@ Item {
 
                 SwitchThemed {
                     id: switch_notifiations
+                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
@@ -350,6 +367,9 @@ Item {
                     anchors.leftMargin: 16
 
                     text: qsTr("Enable notifications")
+                    wrapMode: Text.WordWrap
+                    anchors.right: switch_notifiations.left
+                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -397,6 +417,7 @@ Item {
                     id: spinBox_update
                     width: 128
                     height: 36
+                    z: 1
                     value: settingsManager.updateInterval
                     onValueChanged: settingsManager.updateInterval = value
                     to: 180
@@ -415,6 +436,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
+                    wrapMode: Text.WordWrap
+                    anchors.right: spinBox_update.left
+                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -449,6 +473,9 @@ Item {
                     id: text_bigwidget
                     height: 40
                     text: qsTr("Use bigger widgets")
+                    anchors.right: switch_bigwidget.left
+                    anchors.rightMargin: 16
+                    wrapMode: Text.WordWrap
                     anchors.left: image_bigwidget.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -458,6 +485,7 @@ Item {
 
                 SwitchThemed {
                     id: switch_bigwidget
+                    z: 1
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -496,6 +524,9 @@ Item {
                     anchors.leftMargin: 16
 
                     text: qsTr("Temperature unit")
+                    wrapMode: Text.WordWrap
+                    anchors.right: radioDelegateCelsius.left
+                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -504,6 +535,7 @@ Item {
                     id: radioDelegateCelsius
                     height: 40
                     text: qsTr("°C")
+                    z: 1
                     anchors.verticalCenter: text_unit.verticalCenter
                     anchors.right: radioDelegateFahrenheit.left
 
@@ -531,6 +563,7 @@ Item {
                     anchors.rightMargin: 12
 
                     text: qsTr("°F")
+                    z: 1
                     font.pixelSize: 16
                     checked: {
                         if (settingsManager.tempUnit === 'F') {
@@ -589,7 +622,10 @@ Item {
                     anchors.left: image_graph.right
                     anchors.leftMargin: 16
 
-                    text: qsTr("History graph")
+                    text: qsTr("Histograms")
+                    wrapMode: Text.WordWrap
+                    anchors.right: radioDelegateGraphMonthly.left
+                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -598,6 +634,7 @@ Item {
                     id: radioDelegateGraphMonthly
                     height: 40
                     text: qsTr("Monthly")
+                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: radioDelegateGraphWeekly.left
 
@@ -624,6 +661,7 @@ Item {
                     anchors.rightMargin: 12
 
                     text: qsTr("Weekly")
+                    z: 1
                     font.pixelSize: 16
                     checked: {
                         if (settingsManager.graphHistory === "weekly") {

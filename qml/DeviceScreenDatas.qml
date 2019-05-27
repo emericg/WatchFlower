@@ -147,7 +147,7 @@ Item {
     }
 
     function updateDatas() {
-        if (typeof myDevice === 'undefined' || !myDevice) return
+        if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
