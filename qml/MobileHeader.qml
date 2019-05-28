@@ -51,6 +51,7 @@ Rectangle {
 
     function handleNotches() {
         if (typeof quickWindow === "undefined" || !quickWindow) return
+        if (Qt.platform !== "ios") return
 
         var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
         if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)

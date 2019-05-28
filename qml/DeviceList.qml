@@ -67,7 +67,6 @@ Item {
             anchors.leftMargin: 16
 
             color: "white"
-            text: ""
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
             font.bold: true
@@ -116,7 +115,8 @@ Item {
             rectangleStatus.visible = true;
             rectangleStatus.height = 52;
 
-            if (!deviceManager.devices) itemStatus.source = "ItemNoBluetooth.qml"
+            if (!deviceManager.devices)
+                itemStatus.source = "ItemNoBluetooth.qml"
 
             textStatus.text = qsTr("Bluetooth disabled...");
             buttonBluetooth.visible = true

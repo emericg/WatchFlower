@@ -133,22 +133,29 @@ bool Device::refreshDatasCached(int minutes)
 
 void Device::disconnectDevice()
 {
-    if (controller->state() != QLowEnergyController::UnconnectedState)
+    if (controller && controller->state() != QLowEnergyController::UnconnectedState)
     {
         controller->disconnectFromDevice();
+
+        m_updating = false;
+        m_available = false;
+        Q_EMIT statusUpdated();
     }
 }
 
 void Device::refreshDatasCanceled()
 {
-    controller->disconnectFromDevice();
+    if (controller)
+    {
+        controller->disconnectFromDevice();
 
-    m_updating = false;
-    m_available = false;
-    Q_EMIT statusUpdated();
+        m_updating = false;
+        m_available = false;
+        Q_EMIT statusUpdated();
 
-    // Set error timer value
-    setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
+        // Set error timer value
+        setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
+    }
 }
 
 void Device::refreshDatasFinished(bool status, bool cached)

@@ -6,11 +6,12 @@
 
 
 WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / MiJia "Flower Care", "Ropot" and "Bluetooth temperature and humidity sensor" devices.
-It works with international and chinese devices, doesn't require an account creation, your GPS location, nor any other personnal datas from you.
+It works with international and Chinese devices, doesn't require an account creation, your GPS location, nor any other personal datas from you.
 
 It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
+Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).
 
-### Compatible devices
+### Supported devices
 
 | MiJia "Flower Care" | Ropot | BLE Hygro & Temp |
 | ------------------- | ----- | ---------------- |
@@ -18,7 +19,7 @@ It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries a
 
 Many Bluetooth devices could be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done! 
 
-### Desktop screenshots
+### Desktop screenshot
 
 ![GUI_DESKTOP](https://i.imgur.com/SYuxbCa.png)
 
@@ -64,6 +65,6 @@ You can help us find and report bugs, propose new features, help with the docume
 ## License
 
 WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
-Read the [LICENSE](LICENSE) file or [consult the licence on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
+Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
 Emeric Grange <emeric.grange@gmail.com>
