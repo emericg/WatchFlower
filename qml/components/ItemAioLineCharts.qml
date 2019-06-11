@@ -38,7 +38,7 @@ Item {
         //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
 
         tempDatas.visible = myDevice.hasTemperatureSensor()
-        hygroDatas.visible = myDevice.hasHygrometrySensor()
+        hygroDatas.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
         lumiDatas.visible = false
         conduDatas.visible = myDevice.hasConductivitySensor()
     }
@@ -128,7 +128,7 @@ Item {
 
         if (myDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroDatas.visible = myDevice.hasHygrometrySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
+            hygroDatas.visible = (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
             conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
 
             // Flower Care without hygro & conductivity datas

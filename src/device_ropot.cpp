@@ -20,6 +20,7 @@
  */
 
 #include "device_ropot.h"
+#include "versionchecker.h"
 
 #include <cmath>
 
@@ -32,7 +33,6 @@
 #include <QSqlError>
 
 #include <QDateTime>
-#include <QTimer>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -42,11 +42,8 @@ DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName):
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
-    m_capabilities += DEVICE_CONDUCTIVITY;
-
-    m_capabilities += DEVICE_PLANT;
-    m_capabilities += DEVICE_LIMITS;
+    m_capabilities += DEVICE_SOIL_MOISTURE;
+    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
 DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d):
@@ -54,11 +51,8 @@ DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d):
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
-    m_capabilities += DEVICE_CONDUCTIVITY;
-
-    m_capabilities += DEVICE_PLANT;
-    m_capabilities += DEVICE_LIMITS;
+    m_capabilities += DEVICE_SOIL_MOISTURE;
+    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
 DeviceRopot::~DeviceRopot()

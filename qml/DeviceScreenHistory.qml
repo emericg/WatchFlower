@@ -80,7 +80,7 @@ Item {
         } else {
             tempGraph.visible = false
         }
-        if (myDevice.hasHygrometrySensor())  {
+        if (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor())  {
             if (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
@@ -159,7 +159,7 @@ Item {
         //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
 
         if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
-        if (myDevice.hasHygrometrySensor()) { hygroGraph.updateGraph() }
+        if (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
         if (myDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
         if (myDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
     }

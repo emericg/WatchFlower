@@ -56,7 +56,7 @@ Item {
         }
 
         dT.visible = myDevice.hasTemperatureSensor()
-        dH.visible = myDevice.hasHygrometrySensor()
+        dH.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
         dL.visible = myDevice.hasLuminositySensor()
         dC.visible = myDevice.hasConductivitySensor()
     }

@@ -20,6 +20,7 @@
  */
 
 #include "device_hygrotemp.h"
+#include "versionchecker.h"
 
 #include <cmath>
 
@@ -31,8 +32,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include <QDateTime>
-#include <QTimer>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -224,7 +223,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
                 return;
 
             m_temp = value.mid(2, 4).toFloat();
-            m_hygro = value.mid(9, 4).toFloat(); // FIXME hygro could be a float too
+            m_hygro = static_cast<int>(value.mid(9, 4).toFloat()); // FIXME hygro could be a float too
 
             m_available = true;
             m_lastUpdate = QDateTime::currentDateTime();

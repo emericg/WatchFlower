@@ -41,14 +41,12 @@
 /* ************************************************************************** */
 
 enum DeviceCapabilities {
-    DEVICE_BATTERY      = (1 << 0), //!< Can report its battery level
-    DEVICE_TEMPERATURE  = (1 << 1), //!< Has a temperature sensor
-    DEVICE_HYGROMETRY   = (1 << 2), //!< Has a hygrometry (or humidity) sensor
-    DEVICE_LUMINOSITY   = (1 << 3), //!< Has a luminosity sensor
-    DEVICE_CONDUCTIVITY = (1 << 4), //!< Has a conductivity sensor
-
-    DEVICE_LIMITS       = (1 << 5), //!< Can use limits
-    DEVICE_PLANT        = (1 << 6), //!< Is associated to a plant
+    DEVICE_BATTERY           = (1 << 0), //!< Can report its battery level
+    DEVICE_TEMPERATURE       = (1 << 1), //!< Has a temperature sensor
+    DEVICE_HYGROMETRY        = (1 << 2), //!< Has a hygrometry (or humidity) sensor
+    DEVICE_LUMINOSITY        = (1 << 3), //!< Has a luminosity sensor
+    DEVICE_SOIL_MOISTURE     = (1 << 4), //!< Has a soil moisture sensor (can be associated to a plant)
+    DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
 };
 
 /* ************************************************************************** */
@@ -184,11 +182,11 @@ public slots:
     QString getAddress() const { return m_deviceAddress; }
 
     bool hasHygrometrySensor() const { return (m_capabilities & DEVICE_HYGROMETRY); }
+    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
     bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
     bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
-    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_CONDUCTIVITY); }
+    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
-    bool hasPlant() const { return (m_capabilities & DEVICE_PLANT); }
 
     bool isAvailable() const { return m_available; }    //!< Has at least >12h old datas
     bool isUpdating() const { return m_updating; }      //!< Is currently being updated
@@ -259,108 +257,5 @@ public slots:
     QVariantList getBackgroundNightly(float maxValue);
 };
 
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-struct Version
-{
-    int major = 0, minor = 0, revision = 0, build = 0;
-
-    Version(const QString &version_qstr)
-    {
-        sscanf(version_qstr.toLatin1().constData(), "%d.%d.%d.%d",
-               &major, &minor, &revision, &build);
-    }
-
-    bool operator == (const Version &other)
-    {
-        return (major == other.major
-                && minor == other.minor
-                && revision == other.revision
-                && build == other.build);
-    }
-    bool operator < (const Version &other)
-    {
-/*
-        qDebug() << "operator <";
-        qDebug() << major << "." << minor << "." << revision << "." << build;
-        qDebug() << other.major << "." << other.minor << "." << other.revision << "." << other.build;
-*/
-        if (major < other.major)
-            return true;
-        if (major > other.major)
-            return false;
-        if (minor < other.minor)
-            return true;
-        if (minor > other.minor)
-            return false;
-        if (revision < other.revision)
-            return true;
-        if (revision > other.revision)
-            return false;
-        if (build < other.build)
-            return true;
-        if (build > other.build)
-            return false;
-
-        return false;
-    }
-    bool operator <= (const Version &other)
-    {
-        if (*this < other || *this == other)
-            return true;
-
-        return false;
-    }
-    bool operator >= (const Version &other)
-    {
-        if (*this > other || *this == other)
-            return true;
-
-        return false;
-    }
-    bool operator > (const Version &other)
-    {
-        if (!(*this == other) && !(*this < other))
-            return true;
-
-        return false;
-    }
-};
-/*
-static void testVersionStringComparison()
-{
-    assert( (Version("3.7.8.0") ==  Version("3.7.8.0") )    == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7.8") )      == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7.8") )      == true);
-    assert( (Version("3.7.0.0") ==  Version("3.7") )        == true);
-    assert( (Version("3.0.0.0") ==  Version("3") )          == true);
-    assert( (Version("3")       ==  Version("3.0.0.0") )    == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7") )        == false);
-    assert( (Version("3.7.8.0") ==  Version("3.6.8") )      == false);
-    assert( (Version("3.7.8.0") ==  Version("5") )          == false);
-    assert( (Version("3.7.8.0") ==  Version("2.7.8") )      == false);
-
-    assert( (Version("3")       <   Version("3.7.9") )  == true);
-    assert( (Version("1.7.9")   <   Version("3.1") )    == true);
-    assert( (Version("3.7.8.0") <   Version("3.7.8") )  == false);
-    assert( (Version("3.7.9")   <   Version("3.7.8") )  == false);
-    assert( (Version("3.7.8")   <   Version("3.7.9") )  == true);
-    assert( (Version("3.7")     <  Version("3.7.0"))    == false);
-    assert( (Version("3.7.8.0") <   Version("3.7.8"))   == false);
-    assert( (Version("2.7.9")   <   Version("3.8.8"))   == true);
-    assert( (Version("3.7.9")   <   Version("3.8.8"))   == true);
-    assert( (Version("4")       <   Version("3.7.9"))   == false);
-
-    assert( (Version("4")       >   Version("3.7.9"))   == true);
-    assert( (Version("3.7.9")   >   Version("3.7.8"))   == true);
-    assert( (Version("4.7.9")   >   Version("3.1"))     == true);
-    assert( (Version("3.10")    >   Version("3.8.8"))   == true);
-    assert( (Version("3.7")     >   Version("3.7.0"))   == false);
-    assert( (Version("3.7.8.0") >   Version("3.7.8"))   == false);
-    assert( (Version("2.7.9")   >   Version("3.8.8"))   == false);
-    assert( (Version("3.7.9")   >   Version("3.8.8"))   == false);
-}
-*/
 /* ************************************************************************** */
 #endif // DEVICE_H

@@ -66,7 +66,7 @@ Item {
         }
 
         // Plant
-        if (myDevice.hasPlant()) {
+        if (myDevice.hasSoilMoistureSensor()) {
             itemPlant.visible = true
 
             if (myDevice.devicePlantName === "")
@@ -157,7 +157,7 @@ Item {
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
         } else {
-            humi.visible = myDevice.hasHygrometrySensor()
+            humi.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
             temp.visible = myDevice.hasTemperatureSensor()
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = myDevice.hasConductivitySensor()

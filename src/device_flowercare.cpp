@@ -20,6 +20,7 @@
  */
 
 #include "device_flowercare.h"
+#include "versionchecker.h"
 
 #include <cmath>
 
@@ -31,8 +32,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include <QDateTime>
-#include <QTimer>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -42,12 +41,9 @@ DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName):
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_LUMINOSITY;
-    m_capabilities += DEVICE_CONDUCTIVITY;
-
-    m_capabilities += DEVICE_PLANT;
-    m_capabilities += DEVICE_LIMITS;
+    m_capabilities += DEVICE_SOIL_MOISTURE;
+    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
 DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d):
@@ -55,12 +51,9 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d):
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
     m_capabilities += DEVICE_LUMINOSITY;
-    m_capabilities += DEVICE_CONDUCTIVITY;
-
-    m_capabilities += DEVICE_PLANT;
-    m_capabilities += DEVICE_LIMITS;
+    m_capabilities += DEVICE_SOIL_MOISTURE;
+    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
 DeviceFlowercare::~DeviceFlowercare()

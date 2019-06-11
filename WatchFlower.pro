@@ -40,6 +40,7 @@ SOURCES  += src/main.cpp \
 
 HEADERS  += src/settingsmanager.h \
             src/systraymanager.h \
+            src/versionchecker.h \
             src/notificationmanager.h \
             src/devicemanager.h \
             src/device.h \

@@ -22,6 +22,7 @@
 #include "device.h"
 #include "settingsmanager.h"
 #include "notificationmanager.h"
+#include "versionchecker.h"
 
 #include <cmath>
 
@@ -356,8 +357,7 @@ bool Device::getSqlCachedDatas(int minutes)
     {
         m_temp = cachedDatas.value(0).toFloat();
         m_hygro =  cachedDatas.value(1).toInt();
-        if ((m_capabilities & DEVICE_LUMINOSITY) != 0)
-            m_luminosity = cachedDatas.value(2).toInt();
+        m_luminosity = cachedDatas.value(2).toInt();
         m_conductivity = cachedDatas.value(3).toInt();
 
         QString datetime = cachedDatas.value(4).toString();

@@ -27,8 +27,6 @@
 
 #include <QObject>
 #include <QList>
-#include <QTimer>
-#include <QDateTime>
 
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
