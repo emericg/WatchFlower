@@ -181,7 +181,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
         if (sm && sm->getNotifs())
         {
             // Only if the sensor has a plant
-            if ((m_capabilities & DEVICE_PLANT) != 0 &&
+            if (hasSoilMoistureSensor() &&
                 m_hygro > 0 && m_hygro < m_limitHygroMin)
             {
                 NotificationManager *nm = NotificationManager::getInstance();
