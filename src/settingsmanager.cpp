@@ -23,8 +23,9 @@
 #include "systraymanager.h"
 
 #include <QStandardPaths>
-#include <QSettings>
+#include <QLocale>
 #include <QDir>
+#include <QSettings>
 #include <QDebug>
 
 #include <QSqlQuery>
@@ -85,6 +86,15 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/tempUnit"))
             m_tempUnit = settings.value("settings/tempUnit").toString();
+        else
+        {
+            // If we have no measurement system saved, use system's one
+            QLocale lo;
+            if (lo.measurementSystem() == QLocale::MetricSystem)
+                m_tempUnit = "C";
+            else
+                m_tempUnit = "F";
+        }
 
         if (settings.contains("settings/graphHistory"))
             m_graphHistory = settings.value("settings/graphHistory").toString();
@@ -332,7 +342,11 @@ void SettingsManager::resetSettings()
 
     m_updateInterval = DEFAULT_UPDATE_INTERVAL;
     Q_EMIT updateIntervalChanged();
-    m_tempUnit = "C";
+    QLocale lo;
+    if (lo.measurementSystem() == QLocale::MetricSystem)
+        m_tempUnit = "C";
+    else
+        m_tempUnit = "F";
     Q_EMIT tempUnitChanged();
     m_graphHistory = "monthly";
     Q_EMIT graphHistoryChanged();
