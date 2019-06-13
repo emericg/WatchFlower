@@ -232,7 +232,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        deviceManager.refreshDevices()
+                        deviceManager.refreshDevices_start()
                         drawer.close()
                     }
                 }

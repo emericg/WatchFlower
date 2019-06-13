@@ -61,20 +61,21 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     if (bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
-    // Load limits and initial datas
-    getSqlDatas();
+    // Load limits
+    getSqlInfos();
+    // Load initial datas into the GUI (if they are no more than 12h old)
+    getSqlDatas(12*60, true);
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    m_timeoutTimer.setInterval(m_timeout*1000);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
 
-    // Configure update timer
+    // Configure update timer (only on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    setUpdateTimerInterval();
 }
 
-Device::Device(const QBluetoothDeviceInfo &d)
+Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
+
 {
     bleDevice = d;
     m_deviceName = bleDevice.name();
@@ -89,11 +90,14 @@ Device::Device(const QBluetoothDeviceInfo &d)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
     // Load limits and initial datas
-    getSqlDatas();
+    getSqlInfos();
 
-    // Set update timer
+    // Configure timeout timer
+    m_timeoutTimer.setSingleShot(true);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
+
+    // Configure update timer (only on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
-    setUpdateTimerInterval();
 }
 
 Device::~Device()
@@ -112,21 +116,17 @@ void Device::refreshDatasStarted()
 
 bool Device::refreshDatas()
 {
-    return refreshDatasCached();
+    return refreshDatasFresh();
 }
 
-bool Device::refreshDatasCached(int minutes)
+bool Device::refreshDatasFresh(int minutes)
 {
     bool status = false;
 
-    refreshDatasStarted();
-
-    if (getSqlCachedDatas(minutes) == false)
+    if (getSqlDatas(minutes) == false)
     {
-        if (getBleDatas() == false)
-        {
-            refreshDatasFinished(false);
-        }
+        refreshDatasStarted();
+        getBleDatas();
     }
 
     return status;
@@ -139,7 +139,7 @@ void Device::disconnectDevice()
         controller->disconnectFromDevice();
 
         m_updating = false;
-        m_available = false;
+        m_connected = false;
         Q_EMIT statusUpdated();
     }
 }
@@ -151,30 +151,36 @@ void Device::refreshDatasCanceled()
         controller->disconnectFromDevice();
 
         m_updating = false;
-        m_available = false;
         Q_EMIT statusUpdated();
 
         // Set error timer value
-        setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
+        setUpdateTimer(ERROR_UPDATE_INTERVAL);
     }
 }
 
-void Device::refreshDatasFinished(bool status, bool cached)
+void Device::refreshDatasFinished(bool status, bool cached, bool initialUpdate)
 {
-    Q_UNUSED(cached)
-
-    m_updating = false;
-    m_available = status;
+    //qDebug() << "refreshDatasFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
+
+    m_updating = false;
+    if (cached)
+        m_updated_from_sql= status;
+    else
+        m_updated_from_ble = status;
+    Q_EMIT statusUpdated();
 
     if (status == true)
     {
         // Only update datas on success
         Q_EMIT datasUpdated();
 
-        // Check timer
-        setUpdateTimerInterval();
+        // Reset update timer
+        setUpdateTimer();
+
+        // Reset last error
+        m_lastError = QDateTime();
 
         // 'Water me' notification, if enabled
         SettingsManager *sm = SettingsManager::getInstance();
@@ -203,17 +209,23 @@ void Device::refreshDatasFinished(bool status, bool cached)
     else
     {
         // Set error timer value
-        setUpdateTimerInterval(ERROR_UPDATE_INTERVAL);
+        setUpdateTimer(ERROR_UPDATE_INTERVAL);
     }
 
-    Q_EMIT statusUpdated();
+    // Inform device manager
+    if (!initialUpdate)
+        Q_EMIT deviceUpdated(this);
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::setUpdateTimerInterval(int updateInterval)
+void Device::setUpdateTimer(int updateInterval)
 {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_iOS)
+    return; // we do not update every x hours on mobile, we update everytime the app is on the
+#endif
+
     // If no interval is provided, load the one from settings
     if (updateInterval <= 0)
     {
@@ -233,9 +245,21 @@ void Device::setUpdateTimerInterval(int updateInterval)
     }
 }
 
+void Device::setTimeoutTimer()
+{
+    SettingsManager *sm = SettingsManager::getInstance();
+    if (sm->getBluetoothCompat())
+        m_timeout = 10;
+    else
+        m_timeout = 15;
+
+    m_timeoutTimer.setInterval(m_timeout*1000);
+    m_timeoutTimer.start();
+}
+
 /* ************************************************************************** */
 
-bool Device::getSqlDatas()
+bool Device::getSqlInfos()
 {
     //qDebug() << "Device::getSqlDatas(" << m_deviceAddress << ")";
     bool status = false;
@@ -305,6 +329,8 @@ bool Device::getSqlDatas()
         status = true;
     }
 
+    Q_EMIT sensorUpdated();
+
     QSqlQuery getLimits;
     getLimits.prepare("SELECT hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
                       "FROM limits WHERE deviceAddr = :deviceAddr");
@@ -320,20 +346,15 @@ bool Device::getSqlDatas()
         m_limitLumiMax = getLimits.value(5).toInt();
         m_limitConduMin = getLimits.value(6).toInt();
         m_limitConduMax = getLimits.value(7).toInt();
-        status = true;
-    }
-    Q_EMIT limitsUpdated();
 
-    // We always load datas into the GUI (if they are no more than 12h old)
-    if (getSqlCachedDatas(12*60))
-    {
-        Q_EMIT datasUpdated();
+        status = true;
+        Q_EMIT limitsUpdated();
     }
 
     return status;
 }
 
-bool Device::getSqlCachedDatas(int minutes)
+bool Device::getSqlDatas(int minutes, bool initialUpdate)
 {
     bool status = false;
 
@@ -349,7 +370,7 @@ bool Device::getSqlCachedDatas(int minutes)
     {
 #ifndef QT_NO_DEBUG
         qDebug() << "* Device update:" << getAddress();
-        qDebug() << "> using cachedDatas";
+        qDebug() << "> using cachedDatas...";
 #endif
     }
 
@@ -363,12 +384,10 @@ bool Device::getSqlCachedDatas(int minutes)
         QString datetime = cachedDatas.value(4).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 
-        if (minutes < 60)
-            m_available = true;
-
         status = true;
-        refreshDatasFinished(true, true);
     }
+
+    refreshDatasFinished(status, true, initialUpdate);
 
     return status;
 }
@@ -379,7 +398,7 @@ bool Device::getSqlCachedDatas(int minutes)
  */
 bool Device::getBleDatas()
 {
-    //qDebug() << "Device::getDatas(" << m_deviceAddress << ")";
+    qDebug() << "Device::getBleDatas(" << m_deviceAddress << ")";
 
     if (!controller)
     {
@@ -389,6 +408,7 @@ bool Device::getBleDatas()
             if (controller->role() != QLowEnergyController::CentralRole)
             {
                 qWarning() << "BLE controller doesn't have the QLowEnergyController::CentralRole";
+                refreshDatasFinished(false, false);
                 return false;
             }
 
@@ -402,6 +422,7 @@ bool Device::getBleDatas()
         else
         {
             qWarning() << "Unable to create BLE controller";
+            refreshDatasFinished(false, false);
             return false;
         }
     }
@@ -410,7 +431,7 @@ bool Device::getBleDatas()
         //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
     }
 
-    m_timeoutTimer.start();
+    setTimeoutTimer();
 
     controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
     controller->connectToDevice();
@@ -454,6 +475,29 @@ int Device::getLastUpdateInt() const
         {
             // this can happen if the computer clock is changed between two updates...
             qDebug() << "getLastUpdateInt() has a negative value (" << mins << "). Clock mismatch?";
+
+            // TODO start by a modulo 60?
+            mins = std::abs(mins);
+        }
+    }
+
+    return mins;
+}
+
+int Device::getLastErrorInt() const
+{
+    int mins = -1;
+
+    if (m_lastError.isValid())
+    {
+        mins = static_cast<int>(std::floor(m_lastError.secsTo(QDateTime::currentDateTime()) / 60.0));
+
+        if (mins < 0)
+        {
+            // this can happen if the computer clock is changed between two errors...
+            qDebug() << "getLastErrorInt() has a negative value (" << mins << "). Clock mismatch?";
+
+            // TODO start by a modulo 60?
             mins = std::abs(mins);
         }
     }
@@ -557,6 +601,7 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
+    m_connected = true;
     controller->discoverServices();
 }
 
@@ -567,6 +612,7 @@ void Device::deviceDisconnected()
     if (m_updating)
     {
         // This means we got forcibly disconnected by the device before completing the update
+        m_lastError = QDateTime::currentDateTime();
         refreshDatasFinished(false);
     }
 }
@@ -574,6 +620,8 @@ void Device::deviceDisconnected()
 void Device::errorReceived(QLowEnergyController::Error error)
 {
     qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
+
+    m_lastError = QDateTime::currentDateTime();
     refreshDatasFinished(false);
 }
 

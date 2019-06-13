@@ -72,31 +72,38 @@ ApplicationWindow {
                 content.state = "DeviceList"
         }
         onDeviceRefreshButtonClicked: {
-            if (curentlySelectedDevice)
-                curentlySelectedDevice.refreshDatas()
+            if (curentlySelectedDevice) {
+                deviceManager.updateDevice(curentlySelectedDevice.deviceAddress)
+            }
         }
         onRightMenuClicked: {
             //
         }
     }
-/*
+
     Connections {
         target: Qt.application
         onStateChanged: {
             switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 console.log("Qt.ApplicationSuspended")
+                deviceManager.refreshDevices_stop();
                 break
             case Qt.ApplicationHidden:
                 console.log("Qt.ApplicationHidden")
+                deviceManager.refreshDevices_stop();
+                break
+            case Qt.ApplicationInactive:
+                console.log("Qt.ApplicationInactive")
                 break
             case Qt.ApplicationActive:
                 console.log("Qt.ApplicationActive")
+                deviceManager.refreshDevices_check();
                 break
             }
         }
     }
-*/
+
     onClosing: {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
             close.accepted = false;

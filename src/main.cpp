@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
             //QCoreApplication
             if (dm->areDevicesAvailable())
             {
-                dm->refreshDevices();
+                dm->refreshDevices_check();
                 return EXIT_SUCCESS;
             }
         }

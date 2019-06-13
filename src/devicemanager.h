@@ -25,6 +25,8 @@
 
 #include "settingsmanager.h"
 
+class Device;
+
 #include <QObject>
 #include <QVariant>
 #include <QList>
@@ -55,48 +57,60 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
 
+    bool m_db = false;
     bool m_btA = false;
     bool m_btE = false;
-    bool m_db = false;
-
-    bool m_scanning = false;
-    bool m_refreshing = false;
-    QTimer m_refreshingTimer;
-    QTimer m_updateTimer;
 
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyController *m_controller = nullptr;
 
+    bool m_scanning = false;
+    bool m_refreshing = false;
+    QTimer m_refreshTimer;
+
     QList<QObject*> m_devices;
+    QList<QObject*> m_devices_updatelist;
 
 public:
     DeviceManager();
     ~DeviceManager();
 
+    bool hasDatabase() const;
+    void checkDatabase();
+
+    bool hasBluetooth() const;
+    bool hasBluetoothAdapter() const;
+    bool hasBluetoothEnabled() const;
+    Q_INVOKABLE void checkBluetooth();
+    Q_INVOKABLE void enableBluetooth(bool checkPremisson = false);
+
+    Q_INVOKABLE void scanDevices();
+    bool isScanning() const;
+
+    Q_INVOKABLE bool areDevicesAvailable() const { return !m_devices.empty(); }
+
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
     Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
-    Q_INVOKABLE void enableBluetooth(bool checkPremisson = false);
-
-    Q_INVOKABLE void checkBluetooth();
-    Q_INVOKABLE void checkDatabase();
-
 public slots:
-    void scanDevices();
-    bool isScanning() const;
+    /*!
+     * \brief Refresh devices with datas >xh old
+     */
+    void refreshDevices_check();
+    /*!
+     * \brief Refresh every devices
+     */
+    void refreshDevices_start();
 
-    void refreshDevices();
-    void refreshCheck();
+    void refreshDevices_continue();
+    void refreshDevices_finished(Device *dev);
+    void refreshDevices_stop();
     bool isRefreshing() const;
 
-    bool hasBluetoothAdapter() const;
-    bool hasBluetoothEnabled() const;
+    void updateDevice(const QString &address);
 
-    bool hasBluetooth() const;
-    bool hasDatabase() const;
-
-    bool areDevicesAvailable() const;
+    void removeDevice(const QString &address);
 
 private slots:
     // QBluetoothLocalDevice related

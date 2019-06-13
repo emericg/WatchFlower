@@ -225,7 +225,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
             m_temp = value.mid(2, 4).toFloat();
             m_hygro = static_cast<int>(value.mid(9, 4).toFloat()); // FIXME hygro could be a float too
 
-            m_available = true;
+            m_updated_from_ble = true;
             m_lastUpdate = QDateTime::currentDateTime();
 
 #ifndef QT_NO_DEBUG

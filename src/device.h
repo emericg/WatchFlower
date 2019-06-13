@@ -58,8 +58,9 @@ class Device: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool connected READ isAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+    //Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
@@ -96,6 +97,8 @@ Q_SIGNALS:
     void datasUpdated();
     void limitsUpdated();
 
+    void deviceUpdated(Device *d);
+
 protected:
     QString m_deviceName;
     QString m_deviceAddress;
@@ -103,9 +106,15 @@ protected:
 
     int m_capabilities = 0;
 
-    bool m_available = false;
+    bool m_connected = false;
     bool m_updating = false;
+
+    bool m_updated_from_ble = false;    //!< updated (from ble) this session
+    bool m_updated_from_sql = false;    //!< fresh enough datas (from sql)
+
     QDateTime m_lastUpdate;
+    QDateTime m_lastError; // TODO?
+
     QTimer m_updateTimer;
     QTimer m_timeoutTimer;
 
@@ -135,16 +144,12 @@ protected:
     int m_limitConduMax = 1000;
 
     // BLE
-    int m_timeout = 20;
-    int m_retries = 2;
+    int m_timeout = 10;
     int m_update_interval = 0;
 
     // QLowEnergyController related
     QLowEnergyController *controller = nullptr;
     bool hasControllerError() const;
-
-    float getTempC() const { return m_temp; }
-    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
 
     void deviceConnected();
     void deviceDisconnected();
@@ -159,12 +164,13 @@ protected:
 
     void refreshDatasStarted();
     void refreshDatasCanceled();
-    void refreshDatasFinished(bool status, bool cached = false);
+    void refreshDatasFinished(bool status, bool cached = false, bool initialUpdate = false);
 
-    void setUpdateTimerInterval(int updateIntervalMin = 0);
+    void setUpdateTimer(int updateIntervalMin = 0);
+    void setTimeoutTimer();
 
-    bool getSqlDatas();
-    virtual bool getSqlCachedDatas(int minutes);
+    bool getSqlInfos();
+    virtual bool getSqlDatas(int minutes, bool initialUpdate = false);
     bool getBleDatas();
 
 public:
@@ -172,10 +178,11 @@ public:
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
+    void disconnectDevice();
+
 public slots:
     bool refreshDatas();
-    bool refreshDatasCached(int minutes = 1);
-    void disconnectDevice();
+    bool refreshDatasFresh(int minutes = 1);
 
     // BLE device
     QString getName() const { return m_deviceName; }
@@ -188,8 +195,17 @@ public slots:
     bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
 
-    bool isAvailable() const { return m_available; }    //!< Has at least >12h old datas
+    bool isConnected() const { return m_connected; }    //!< Is currently connected
     bool isUpdating() const { return m_updating; }      //!< Is currently being updated
+    bool isAvailable() const { return (m_updated_from_sql || m_updated_from_ble); } //!< Has datas
+    bool isFresh() const { //!< Has at least >12h old datas
+        if (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60)
+            return true;
+
+        return false;
+    }
+    bool isErrored() const {
+        return getLastErrorInt() <= 12*60; }
 
     // BLE device infos
     QString getFirmware() const { return m_firmware; }
@@ -201,9 +217,13 @@ public slots:
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
     float getTemp() const;
+    float getTempC() const { return m_temp; }
+    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
     QString getTempString() const;
+
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
+    int getLastErrorInt() const;
 
     bool hasDatas() const;
     bool hasDatas(const QString &dataName) const;

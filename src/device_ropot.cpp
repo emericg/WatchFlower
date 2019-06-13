@@ -163,7 +163,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             m_hygro = data[7];
             m_conductivity = data[8] + (data[9] << 8);
 
-            m_available = true;
+            m_updated_from_ble = true;
             m_lastUpdate = QDateTime::currentDateTime();
 
 #ifndef QT_NO_DEBUG

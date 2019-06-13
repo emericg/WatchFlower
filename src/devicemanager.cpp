@@ -67,17 +67,14 @@ DeviceManager::DeviceManager()
         qWarning() << "Unable to create BLE discovery agent...";
     }
 
-    //
-    int updateInterval = 5;
-    SettingsManager *sm = SettingsManager::getInstance();
-    if (sm) { updateInterval = sm->getUpdateInterval(); }
-
-    // Add static devices first?
-    qDebug() << "Scanning (database) for devices...";
+    // Load saved devices
     if (m_db)
     {
+        // Make sure the list is clean
         qDeleteAll(m_devices);
         m_devices.clear();
+
+        qDebug() << "Scanning (database) for devices...";
 
         QSqlQuery queryDevices;
         queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
@@ -87,29 +84,29 @@ DeviceManager::DeviceManager()
             QString deviceAddr = queryDevices.value(1).toString();
 
             //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
+
             Device *d = nullptr;
 
             if (deviceName == "Flower care" || deviceName == "Flower mate")
-                d = new DeviceFlowercare(deviceAddr, deviceName);
+                d = new DeviceFlowercare(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
-                d = new DeviceRopot(deviceAddr, deviceName);
+                d = new DeviceRopot(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
-                d = new DeviceHygrotemp(deviceAddr, deviceName);
+                d = new DeviceHygrotemp(deviceAddr, deviceName, this);
             else
-                d = new Device(deviceAddr, deviceName);
+                d = new Device(deviceAddr, deviceName, this);
 
             if (d)
             {
-                if (hasBluetooth()) d->refreshDatasCached(updateInterval);
+                connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
                 m_devices.append(d);
             }
         }
+
+        Q_EMIT devicesUpdated();
     }
 
-    // Set "refresh check" timer
-    connect(&m_refreshingTimer, &QTimer::timeout, this, &DeviceManager::refreshCheck);
-    m_refreshingTimer.setInterval(1000);
-    m_refreshingTimer.start();
+    refreshDevices_check();
 }
 
 DeviceManager::~DeviceManager()
@@ -138,56 +135,6 @@ bool DeviceManager::hasBluetoothAdapter() const
 bool DeviceManager::hasBluetoothEnabled() const
 {
     return m_btE;
-}
-
-bool DeviceManager::hasDatabase() const
-{
-    return m_db;
-}
-
-/* ************************************************************************** */
-
-void DeviceManager::enableBluetooth(bool checkPermission)
-{
-    // TODO // We only try the "first" available Bluetooth adapter
-    if (!m_bluetoothAdapter)
-    {
-        m_bluetoothAdapter = new QBluetoothLocalDevice();
-    }
-
-    if (m_bluetoothAdapter)
-    {
-        m_btA = true;
-
-        if (checkPermission)
-        {
-            SettingsManager *sm = SettingsManager::getInstance();
-            if (sm && sm->getBluetoothControl())
-            {
-                // Make sure its powered on
-                // Doesn't work on all platforms...
-                m_bluetoothAdapter->powerOn();
-            }
-        }
-        else
-        {
-            // Make sure its powered on
-            // Doesn't work on all platforms...
-            m_bluetoothAdapter->powerOn();
-        }
-
-#if defined(Q_OS_ANDROID)
-        if (m_bluetoothAdapter->isValid() && m_bluetoothAdapter->hostMode() > 0)
-        {
-            // Already powered on? Power on again anyway. It helps on android...
-            m_bluetoothAdapter->powerOn();
-        }
-#endif
-
-        // Keep us informed of availability changes
-        // On some platform it can only inform us about disconnection, not reconnection
-        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged, this, &DeviceManager::bluetoothModeChanged);
-    }
 }
 
 void DeviceManager::checkBluetooth()
@@ -225,24 +172,49 @@ void DeviceManager::checkBluetooth()
     Q_EMIT bluetoothChanged();
 }
 
-void DeviceManager::checkDatabase()
+void DeviceManager::enableBluetooth(bool checkPermission)
 {
-    if (QSqlDatabase::isDriverAvailable("QSQLITE"))
+    // TODO // We only try the "first" available Bluetooth adapter
+    if (!m_bluetoothAdapter)
     {
-        qDebug() << "> SQLite available";
-
-        QSqlDatabase db = QSqlDatabase::database();
-
-        m_db = db.isValid();
+        m_bluetoothAdapter = new QBluetoothLocalDevice();
     }
-    else
+
+    if (m_bluetoothAdapter)
     {
-        m_db = false;
+        m_btA = true;
+
+        if (checkPermission)
+        {
+            SettingsManager *sm = SettingsManager::getInstance();
+            if (sm && sm->getBluetoothControl())
+            {
+                // Make sure its powered on
+                // Doesn't work on all platforms...
+                m_bluetoothAdapter->powerOn();
+            }
+        }
+        else
+        {
+            // Make sure its powered on
+            // Doesn't work on all platforms...
+            m_bluetoothAdapter->powerOn();
+        }
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+        if (m_bluetoothAdapter->isValid() && m_bluetoothAdapter->hostMode() > 0)
+        {
+            // Already powered on? Power on again anyway. It helps on android...
+            m_bluetoothAdapter->powerOn();
+        }
+#endif
+
+        // Keep us informed of availability changes
+        // On some platform it can only inform us about disconnection, not reconnection
+        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
+                this, &DeviceManager::bluetoothModeChanged);
     }
 }
-
-/* ************************************************************************** */
-/* ************************************************************************** */
 
 void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 {
@@ -272,14 +244,33 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 
 /* ************************************************************************** */
 
+bool DeviceManager::hasDatabase() const
+{
+    return m_db;
+}
+
+void DeviceManager::checkDatabase()
+{
+    if (QSqlDatabase::isDriverAvailable("QSQLITE"))
+    {
+        qDebug() << "> SQLite available";
+
+        QSqlDatabase db = QSqlDatabase::database();
+
+        m_db = db.isValid();
+    }
+    else
+    {
+        m_db = false;
+    }
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
 bool DeviceManager::isScanning() const
 {
     return m_scanning;
-}
-
-bool DeviceManager::isRefreshing() const
-{
-    return m_refreshing;
 }
 
 void DeviceManager::scanDevices()
@@ -300,49 +291,14 @@ void DeviceManager::scanDevices()
     }
 }
 
-void DeviceManager::refreshDevices()
-{
-    if (hasBluetooth() && !m_devices.empty())
-    {
-        m_refreshing = true;
-
-        for (auto d: m_devices)
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd) dd->refreshDatasCached();
-        }
-
-        Q_EMIT refreshingChanged();
-        Q_EMIT devicesUpdated();
-    }
-}
-
-void DeviceManager::refreshCheck()
-{
-    if (hasBluetooth())
-    {
-        bool refreshing = false;
-
-        for (auto d: m_devices)
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd)
-                refreshing |= dd->isUpdating();
-        }
-
-        if (m_refreshing != refreshing)
-        {
-            m_refreshing = refreshing;
-            Q_EMIT refreshingChanged();
-        }
-    }
-}
-
 void DeviceManager::deviceDiscoveryFinished()
 {
-    qDebug() << "Scanning (database) for devices...";
+    qDebug() << "deviceDiscoveryFinished()";
+
     if (m_db)
     {
+        qDebug() << "Scanning (database) for (duplicated) devices...";
+
         QSqlQuery queryDevices;
         queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
         while (queryDevices.next())
@@ -368,18 +324,19 @@ void DeviceManager::deviceDiscoveryFinished()
                 Device *d = nullptr;
 
                 if (deviceName == "Flower care" || deviceName == "Flower mate")
-                    d = new DeviceFlowercare(deviceAddr, deviceName);
+                    d = new DeviceFlowercare(deviceAddr, deviceName, this);
                 else if (deviceName == "ropot")
-                    d = new DeviceRopot(deviceAddr, deviceName);
+                    d = new DeviceRopot(deviceAddr, deviceName, this);
                 else if (deviceName == "MJ_HT_V1")
-                    d = new DeviceHygrotemp(deviceAddr, deviceName);
+                    d = new DeviceHygrotemp(deviceAddr, deviceName, this);
                 else
-                    d = new Device(deviceAddr, deviceName);
+                    d = new Device(deviceAddr, deviceName, this);
 
-                if (!d)
-                    continue;
-
-                m_devices.append(d);
+                if (d)
+                {
+                    connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+                    m_devices.append(d);
+                }
             }
         }
     }
@@ -389,13 +346,8 @@ void DeviceManager::deviceDiscoveryFinished()
     Q_EMIT devicesUpdated();
     Q_EMIT scanningChanged();
 
-    // Refresh devices
-    for (auto d: m_devices)
-    {
-        Device *dd = qobject_cast<Device*>(d);
-        if (!dd->isAvailable())
-            dd->refreshDatas();
-    }
+    // Now refresh devices datas
+    refreshDevices_start();
 }
 
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
@@ -411,6 +363,191 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
     Q_EMIT devicesUpdated();
     Q_EMIT scanningChanged();
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceManager::refreshDevices_start()
+{
+    qDebug() << "DeviceManager::refreshDevices_start()";
+
+    // TODO // check if we are not already doing something?
+
+    if (hasBluetooth() && !m_devices.empty())
+    {
+        m_devices_updatelist.clear();
+
+        SettingsManager *sm = SettingsManager::getInstance();
+        if (sm->getBluetoothCompat())
+        { // v2
+            m_devices_updatelist = m_devices;
+            //m_devices_updatelist += m_devices; // will retry once
+
+            qDebug() << "starting update for" << m_devices_updatelist.size() << "devices";
+            refreshDevices_continue();
+        }
+        else
+        { // v1
+            for (auto d: m_devices)
+            {
+                Device *dd = qobject_cast<Device*>(d);
+                if (dd) dd->refreshDatas();
+            }
+
+            m_refreshing = true;
+            Q_EMIT refreshingChanged();
+        }
+    }
+}
+
+void DeviceManager::refreshDevices_check()
+{
+    qDebug() << "DeviceManager::refreshDevices_check()";
+
+    // TODO // check if we are not already doing something?
+
+    if (hasBluetooth() && !m_devices.empty())
+    {
+        m_devices_updatelist.clear();
+
+        SettingsManager *sm = SettingsManager::getInstance();
+        if (sm->getBluetoothCompat())
+        { // v2
+            for (auto d: m_devices)
+            {
+                Device *dd = qobject_cast<Device*>(d);
+
+                if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
+                    m_devices_updatelist.push_back(dd); // old or no datas
+            }
+            refreshDevices_continue();
+        }
+        else
+        { // v1
+            for (auto d: m_devices)
+            {
+                Device *dd = qobject_cast<Device*>(d);
+                if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
+                    dd->refreshDatas();
+            }
+
+            m_refreshing = true;
+            Q_EMIT refreshingChanged();
+        }
+    }
+}
+
+void DeviceManager::refreshDevices_continue()
+{
+    qDebug() << "DeviceManager::refreshDevices_continue()";
+
+    if (hasBluetooth() && !m_devices_updatelist.empty())
+    {
+        m_refreshing = true;
+        Q_EMIT refreshingChanged();
+
+        // update next device in the list
+
+        Device *dd = qobject_cast<Device*>(m_devices_updatelist.first());
+        if (dd) dd->refreshDatas();
+    }
+}
+
+void DeviceManager::refreshDevices_finished(Device *dev)
+{
+    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device left";
+
+    if (dev && !m_devices_updatelist.isEmpty())
+    {
+        for (auto d: m_devices_updatelist)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd && dd->getAddress() == dev->getAddress())
+            {
+                m_devices_updatelist.removeAll(d);
+                break;
+            }
+        }
+    }
+
+    if (m_devices_updatelist.empty())
+    {
+        m_refreshing = false;
+        Q_EMIT refreshingChanged();
+    }
+    else
+    {
+        // update next device in the list
+        refreshDevices_continue();
+    }
+}
+
+void DeviceManager::refreshDevices_stop()
+{
+    qDebug() << "DeviceManager::refreshDevices_stop()";
+
+    //if (isRefreshing())
+    {
+        m_devices_updatelist.clear();
+
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd) dd->disconnectDevice();
+        }
+
+        m_refreshing = false;
+        Q_EMIT refreshingChanged();
+    }
+}
+
+bool DeviceManager::isRefreshing() const
+{
+    if (m_refreshing || !m_devices_updatelist.empty())
+        return true;
+
+    return false;
+}
+
+void DeviceManager::updateDevice(const QString &address)
+{
+    qDebug() << "DeviceManager::updateDevice() " << address;
+
+    // TODO // check if we are not already doing something?
+
+    if (hasBluetooth())
+    {
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd->getAddress() == address)
+            {
+                SettingsManager *sm = SettingsManager::getInstance();
+                if (sm->getBluetoothCompat())
+                { // v2
+                    if (m_devices_updatelist.isEmpty())
+                    {
+                        m_devices_updatelist += dd;
+                        refreshDevices_continue();
+                    }
+                    else
+                    {
+                        m_devices_updatelist += dd;
+                    }
+                }
+                else
+                { // v1
+                    dd->refreshDatas();
+
+                    m_refreshing = true;
+                    Q_EMIT refreshingChanged();
+                }
+
+                break;
+            }
+        }
+    }
 }
 
 /* ************************************************************************** */
@@ -471,9 +608,27 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     }
 }
 
-bool DeviceManager::areDevicesAvailable() const
+void DeviceManager::removeDevice(const QString &address)
 {
-    return !m_devices.empty();
+    for (auto d: m_devices)
+    {
+        Device *dd = qobject_cast<Device*>(d);
+
+        if (dd->getAddress() == address)
+        {
+            // Make sure its not being used
+            //disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+            //dd->disconnectDevice();
+            //m_devices_updatelist.removeAll(d);
+
+            // Remove device
+            //m_devices.removeAll(dd);
+
+            qDebug() << "Device removed: " << dd->getName() << "/" << dd->getAddress();
+            delete dd;
+            Q_EMIT devicesUpdated();
+        }
+    }
 }
 
 /* ************************************************************************** */
