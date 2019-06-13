@@ -109,9 +109,9 @@ void SystrayManager::initSystray()
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
 
-            QObject::connect(m_actionShow, &QAction::triggered, this, &SystrayManager::showHideButton);
-            QObject::connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingsButton);
-            QObject::connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
+            connect(m_actionShow, &QAction::triggered, this, &SystrayManager::showHideButton);
+            connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingsButton);
+            connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
 
 #ifdef TARGET_OS_OSX
@@ -137,14 +137,14 @@ bool SystrayManager::installSystray()
         if (m_sysTray != nullptr && m_sysTrayMenu != nullptr && m_sysTrayIcon != nullptr)
         {
 #if !defined(TARGET_OS_OSX)
-            QObject::connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
+            connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
 #endif
             m_sysTray->setIcon(*m_sysTrayIcon);
             m_sysTray->setContextMenu(m_sysTrayMenu);
             m_sysTray->show();
 
-            QObject::connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
-            QObject::connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+            connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+            connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
             // Show greetings
             //m_sysTray->showMessage("WatchFlower", tr("WatchFlower is running in the background!"));
@@ -199,9 +199,9 @@ void SystrayManager::removeSystray()
     if (m_sysTray)
     {
         m_retryTimer.stop();
-        QObject::disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
-        QObject::disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
-        QObject::disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
+        disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+        disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
+        disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
 
         retryCount = 6;
 

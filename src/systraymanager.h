@@ -23,6 +23,7 @@
 #define SYSTRAY_MANAGER_H
 /* ************************************************************************** */
 
+#include <QObject>
 #include <QSystemTrayIcon>
 #include <QTimer>
 

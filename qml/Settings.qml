@@ -88,7 +88,7 @@ Item {
             ////////
 
             Item {
-                id: element1
+                id: element_minimized
                 height: 48
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -138,7 +138,7 @@ Item {
             ////////
 
             Item {
-                id: element2
+                id: element_bluetoothControl
                 height: 48
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -193,8 +193,7 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: -12
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: element_bluetoothControl.visible
 
                 text: qsTr("WatchFlower can enable your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
@@ -205,7 +204,7 @@ Item {
             ////////
 
             Item {
-                id: element22
+                id: element_bluetoothCompat
                 height: 48
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -260,8 +259,7 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: -12
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: element_bluetoothCompat.visible
 
                 text: qsTr("Improve Bluetooth compatibility when your device has trouble connecting to sensors. You can disable it to improve sync speed.")
                 wrapMode: Text.WordWrap
@@ -272,7 +270,7 @@ Item {
             ////////
 
             Item {
-                id: element3
+                id: element_worker
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -327,8 +325,7 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: -12
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: element_worker.visible
 
                 text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if Bluetooth or Bluetooth control is enabled.")
                 wrapMode: Text.WordWrap
@@ -339,7 +336,7 @@ Item {
             ////////
 
             Item {
-                id: element4
+                id: element_notifiations
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -394,8 +391,7 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: -12
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: element_notifiations.visible
 
                 text: qsTr("If a plant needs water, we'll be sure to bring it to your attention!")
                 wrapMode: Text.WordWrap
@@ -406,7 +402,7 @@ Item {
             ////////
 
             Item {
-                id: element5
+                id: element_update
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -459,7 +455,7 @@ Item {
             ////////
 
             Item {
-                id: element8
+                id: element_bigwidget
                 height: 48
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -509,7 +505,7 @@ Item {
             ////////
 
             Item {
-                id: element6
+                id: element_unit
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -596,7 +592,7 @@ Item {
             ////////
 
             Item {
-                id: element7
+                id: element_graph
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -682,7 +678,7 @@ Item {
             ////////
 
             Item {
-                id: element9
+                id: element_reset
                 height: 64
                 anchors.left: parent.left
                 anchors.leftMargin: 0

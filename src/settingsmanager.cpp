@@ -72,8 +72,11 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/startMinimized"))
             m_startMinimized = settings.value("settings/startMinimized").toBool();
 
-        if (settings.contains("settings/bluetoothEnabled"))
-            m_bluetoothControl = settings.value("settings/bluetoothEnabled").toBool();
+        if (settings.contains("settings/bluetoothControl"))
+            m_bluetoothControl = settings.value("settings/bluetoothControl").toBool();
+
+        if (settings.contains("settings/bluetoothCompat"))
+            m_bluetoothCompat = settings.value("settings/bluetoothCompat").toBool();
 
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
