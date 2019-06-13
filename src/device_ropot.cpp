@@ -37,8 +37,8 @@
 
 /* ************************************************************************** */
 
-DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName):
-    Device(deviceAddr, deviceName)
+DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent):
+    Device(deviceAddr, deviceName, parent)
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
@@ -46,8 +46,8 @@ DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName):
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
-DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d):
-    Device(d)
+DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
+    Device(d, parent)
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;

@@ -36,8 +36,8 @@
 
 /* ************************************************************************** */
 
-DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName):
-    Device(deviceAddr, deviceName)
+DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName, QObject *parent):
+    Device(deviceAddr, deviceName, parent)
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
@@ -46,8 +46,8 @@ DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName):
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
 }
 
-DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d):
-    Device(d)
+DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *parent):
+    Device(d, parent)
 {
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;

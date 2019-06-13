@@ -55,9 +55,12 @@ DeviceManager::DeviceManager()
     {
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
 
-        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered, this, &DeviceManager::addBleDevice);
-        connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error), this, &DeviceManager::deviceDiscoveryError);
-        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this, &DeviceManager::deviceDiscoveryFinished);
+        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                this, &DeviceManager::addBleDevice);
+        connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
+                this, &DeviceManager::deviceDiscoveryError);
+        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                this, &DeviceManager::deviceDiscoveryFinished);
     }
     else
     {
@@ -425,9 +428,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             if (info.name() == "Flower care" || info.name() == "Flower mate")
                 d = new DeviceFlowercare(info);
             else if (info.name() == "ropot")
-                    d = new DeviceRopot(info);
+                d = new DeviceRopot(info);
             else if (info.name() == "MJ_HT_V1")
-                    d = new DeviceHygrotemp(info);
+                d = new DeviceHygrotemp(info);
             else
                 d = new Device(info);
 

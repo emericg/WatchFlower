@@ -78,8 +78,8 @@ class DeviceFlowercare: public Device
     Q_OBJECT
 
 public:
-    DeviceFlowercare(QString &deviceAddr, QString &deviceName);
-    DeviceFlowercare(const QBluetoothDeviceInfo &d);
+    DeviceFlowercare(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowercare();
 
 private:

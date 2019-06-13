@@ -43,8 +43,8 @@ class DeviceRopot: public Device
     Q_OBJECT
 
 public:
-    DeviceRopot(QString &deviceAddr, QString &deviceName);
-    DeviceRopot(const QBluetoothDeviceInfo &d);
+    DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceRopot();
 
 private:

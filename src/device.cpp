@@ -40,7 +40,7 @@
 
 /* ************************************************************************** */
 
-Device::Device(QString &deviceAddr, QString &deviceName)
+Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObject(parent)
 {
 #if defined(Q_OS_OSX) || defined(Q_OS_iOS)
     if (deviceAddr.size() != 38)

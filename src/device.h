@@ -168,8 +168,8 @@ protected:
     bool getBleDatas();
 
 public:
-    Device(QString &deviceAddr, QString &deviceName);
-    Device(const QBluetoothDeviceInfo &d);
+    Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
 public slots:
