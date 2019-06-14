@@ -113,7 +113,7 @@ protected:
     bool m_updated_from_sql = false;    //!< fresh enough datas (from sql)
 
     QDateTime m_lastUpdate;
-    QDateTime m_lastError; // TODO?
+    QDateTime m_lastError;
 
     QTimer m_updateTimer;
     QTimer m_timeoutTimer;
@@ -164,13 +164,13 @@ protected:
 
     void refreshDatasStarted();
     void refreshDatasCanceled();
-    void refreshDatasFinished(bool status, bool cached = false, bool initialUpdate = false);
+    void refreshDatasFinished(bool status, bool cached = false);
 
     void setUpdateTimer(int updateIntervalMin = 0);
     void setTimeoutTimer();
 
     bool getSqlInfos();
-    virtual bool getSqlDatas(int minutes, bool initialUpdate = false);
+    virtual bool getSqlDatas(int minutes);
     bool getBleDatas();
 
 public:

@@ -77,7 +77,7 @@ Item {
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.deviceName !== "MJ_HT_V1") return
-        console.log("DeviceThermometer // updateHeader() >> " + myDevice)
+        //console.log("DeviceThermometer // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {

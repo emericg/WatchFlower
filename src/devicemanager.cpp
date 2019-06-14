@@ -370,7 +370,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
 void DeviceManager::refreshDevices_start()
 {
-    qDebug() << "DeviceManager::refreshDevices_start()";
+    //qDebug() << "DeviceManager::refreshDevices_start()";
 
     // TODO // check if we are not already doing something?
 
@@ -403,7 +403,7 @@ void DeviceManager::refreshDevices_start()
 
 void DeviceManager::refreshDevices_check()
 {
-    qDebug() << "DeviceManager::refreshDevices_check()";
+    //qDebug() << "DeviceManager::refreshDevices_check()";
 
     // TODO // check if we are not already doing something?
 
@@ -440,7 +440,7 @@ void DeviceManager::refreshDevices_check()
 
 void DeviceManager::refreshDevices_continue()
 {
-    qDebug() << "DeviceManager::refreshDevices_continue()";
+    //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_updatelist.size() << "device left";
 
     if (hasBluetooth() && !m_devices_updatelist.empty())
     {
@@ -485,16 +485,16 @@ void DeviceManager::refreshDevices_finished(Device *dev)
 
 void DeviceManager::refreshDevices_stop()
 {
-    qDebug() << "DeviceManager::refreshDevices_stop()";
+    //qDebug() << "DeviceManager::refreshDevices_stop()";
 
-    //if (isRefreshing())
+    if (isRefreshing())
     {
         m_devices_updatelist.clear();
 
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd) dd->disconnectDevice();
+            if (dd && dd->isUpdating()) dd->disconnectDevice();
         }
 
         m_refreshing = false;
@@ -512,7 +512,7 @@ bool DeviceManager::isRefreshing() const
 
 void DeviceManager::updateDevice(const QString &address)
 {
-    qDebug() << "DeviceManager::updateDevice() " << address;
+    //qDebug() << "DeviceManager::updateDevice() " << address;
 
     // TODO // check if we are not already doing something?
 
