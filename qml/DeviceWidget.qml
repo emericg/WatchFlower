@@ -213,16 +213,16 @@ Item {
 
             onClicked: {
                 if (boxDevice.hasDatas()) {
-                    if (curentlySelectedDevice != boxDevice) {
-                        curentlySelectedDevice = boxDevice
+                    if (currentlySelectedDevice != boxDevice) {
+                        currentlySelectedDevice = boxDevice
 
-                        if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                        if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
                             screenDeviceThermometer.loadDevice()
                         else
                             screenDeviceSensor.loadDevice()
                     }
 
-                    if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                    if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
                         content.state = "DeviceThermo"
                     else
                         content.state = "DeviceSensor"

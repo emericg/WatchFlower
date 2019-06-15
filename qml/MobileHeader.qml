@@ -174,7 +174,7 @@ Rectangle {
                         from: 0
                         to: 360
                         loops: Animation.Infinite
-                        running: deviceManager.refreshing
+                        running: currentlySelectedDevice.updating
                         onStopped: refreshAnimationStop.start()
                     }
                     NumberAnimation on rotation {

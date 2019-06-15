@@ -29,7 +29,7 @@ Item {
     width: 450
     height: 700
 
-    property var myDevice: curentlySelectedDevice
+    property var myDevice: currentlySelectedDevice
 
     Connections {
         target: myDevice

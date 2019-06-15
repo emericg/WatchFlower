@@ -42,7 +42,7 @@ Rectangle {
             rectangleAbout.color = Theme.colorMaterialDarkGrey
     }
 
-    Item {
+    Rectangle {
         id: rectangleHeader
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -50,6 +50,7 @@ Rectangle {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
+        color: "white"
 
         z: 1
         height: 80

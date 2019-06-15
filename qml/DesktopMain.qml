@@ -61,8 +61,8 @@ ApplicationWindow {
         }
 
         onDeviceRefreshButtonClicked: {
-            if (curentlySelectedDevice) {
-                deviceManager.updateDevice(curentlySelectedDevice.deviceAddress)
+            if (currentlySelectedDevice) {
+                deviceManager.updateDevice(currentlySelectedDevice.deviceAddress)
             }
         }
         onRefreshButtonClicked: deviceManager.refreshDevices_start()
@@ -87,8 +87,8 @@ ApplicationWindow {
             if (mouse.button === Qt.BackButton) {
                 content.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
-                if (curentlySelectedDevice) {
-                    if (curentlySelectedDevice.deviceName === "MJ_HT_V1")
+                if (currentlySelectedDevice) {
+                    if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
                         content.state = "DeviceThermo"
                     else
                         content.state = "DeviceSensor"
@@ -105,7 +105,7 @@ ApplicationWindow {
     Shortcut {
         sequence: StandardKey.Forward
         onActivated: {
-            if (curentlySelectedDevice)
+            if (currentlySelectedDevice)
                 content.state = "DeviceSensor"
         }
     }
@@ -118,7 +118,7 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var curentlySelectedDevice: null
+    property var currentlySelectedDevice: null
 
     DesktopHeader {
         id: header

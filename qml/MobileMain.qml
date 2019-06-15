@@ -72,8 +72,8 @@ ApplicationWindow {
                 content.state = "DeviceList"
         }
         onDeviceRefreshButtonClicked: {
-            if (curentlySelectedDevice) {
-                deviceManager.updateDevice(curentlySelectedDevice.deviceAddress)
+            if (currentlySelectedDevice) {
+                deviceManager.updateDevice(currentlySelectedDevice.deviceAddress)
             }
         }
         onRightMenuClicked: {
@@ -115,7 +115,7 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var curentlySelectedDevice: null
+    property var currentlySelectedDevice: null
 
     MobileHeader {
         id: header
@@ -281,7 +281,7 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: header
-                    title: curentlySelectedDevice.deviceName
+                    title: currentlySelectedDevice.deviceName
                 }
                 PropertyChanges {
                     target: screenTutorial
