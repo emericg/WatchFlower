@@ -109,22 +109,17 @@ Device::~Device()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool Device::refreshDatas()
+void Device::refreshDatas()
 {
-    return refreshDatasFresh();
-}
-
-bool Device::refreshDatasFresh(int minutes)
-{
-    bool status = false;
-
-    if (getSqlDatas(minutes) == false)
+    if (getLastUpdateInt() < 0 || getLastUpdateInt() > 1)
     {
         refreshDatasStarted();
         getBleDatas();
     }
-
-    return status;
+    else
+    {
+        Q_EMIT deviceUpdated(this);
+    }
 }
 
 void Device::disconnectDevice()
@@ -171,12 +166,13 @@ void Device::refreshDatasFinished(bool status, bool cached)
     //qDebug() << "refreshDatasFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
-
     m_updating = false;
+
     if (cached)
         m_updated_from_sql= status;
     else
         m_updated_from_ble = status;
+
     Q_EMIT statusUpdated();
 
     if (status == true)

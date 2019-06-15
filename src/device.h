@@ -181,8 +181,7 @@ public:
     void disconnectDevice();
 
 public slots:
-    bool refreshDatas();
-    bool refreshDatasFresh(int minutes = 1);
+    void refreshDatas();
 
     // BLE device
     QString getName() const { return m_deviceName; }
@@ -195,17 +194,11 @@ public slots:
     bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
 
-    bool isConnected() const { return m_connected; }    //!< Is currently connected
-    bool isUpdating() const { return m_updating; }      //!< Is currently being updated
+    bool isConnected() const { return m_connected; } //!< Is currently connected
+    bool isUpdating() const { return m_updating; } //!< Is currently being updated
     bool isAvailable() const { return (m_updated_from_sql || m_updated_from_ble); } //!< Has datas
-    bool isFresh() const { //!< Has at least >12h old datas
-        if (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60)
-            return true;
-
-        return false;
-    }
-    bool isErrored() const {
-        return getLastErrorInt() <= 12*60; }
+    bool isFresh() const { return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60); } //!< Has at least >12h old datas
+    bool isErrored() const { return (getLastErrorInt() <= 12*60); }
 
     // BLE device infos
     QString getFirmware() const { return m_firmware; }
