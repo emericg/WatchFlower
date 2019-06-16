@@ -87,9 +87,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            Behavior on width {
-                NumberAnimation { duration: 333 }
-            }
+            Behavior on width { NumberAnimation { duration: 333 } }
         }
 
         Rectangle {

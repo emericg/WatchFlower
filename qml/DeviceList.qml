@@ -49,15 +49,16 @@ Item {
 
     Rectangle {
         id: rectangleStatus
-        height: 52
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
-        color: Theme.colorYellow
 
+        z: 1
+        height: 52
+        color: Theme.colorYellow
         visible: false
 
         Text {

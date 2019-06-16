@@ -23,6 +23,8 @@
 #define VERSION_CHECKER_H
 /* ************************************************************************** */
 
+#include <QString>
+
 struct Version
 {
     int major = 0, minor = 0, revision = 0, build = 0;

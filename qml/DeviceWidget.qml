@@ -36,6 +36,8 @@ Item {
     property bool bigAssMode: false
     property bool singleColumn: true
 
+    property bool selected: flase
+
     Connections {
         target: boxDevice
         onStatusUpdated: updateBoxDatas()
@@ -390,15 +392,18 @@ Item {
                     }
                     Rectangle {
                         id: hygro_data
-                        height: 12
-                        color: Theme.colorBlue
-                        radius: rectangleSensors.sensorRadius
+
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+
+                        height: 0
+                        color: Theme.colorBlue
+                        radius: rectangleSensors.sensorRadius
+                        Behavior on height { NumberAnimation { duration: 333 } }
                     }
                 }
 
@@ -419,16 +424,18 @@ Item {
                     }
                     Rectangle {
                         id: temp_data
-                        height: 6
-                        color: Theme.colorGreen
-                        radius: rectangleSensors.sensorRadius
                         anchors.right: parent.right
                         anchors.rightMargin: 0
-                        visible: true
                         anchors.bottomMargin: 0
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+
+                        height: 0
+                        visible: true
+                        color: Theme.colorGreen
+                        radius: rectangleSensors.sensorRadius
+                        Behavior on height { NumberAnimation { duration: 333 } }
                     }
                 }
 
@@ -449,15 +456,18 @@ Item {
                     }
                     Rectangle {
                         id: lumi_data
-                        height: 8
-                        color: Theme.colorYellow
-                        radius: rectangleSensors.sensorRadius
+
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+
+                        height: 0
+                        color: Theme.colorYellow
+                        radius: rectangleSensors.sensorRadius
+                        Behavior on height { NumberAnimation { duration: 333 } }
                     }
                 }
 
@@ -478,15 +488,18 @@ Item {
                     }
                     Rectangle {
                         id: cond_data
-                        height: 10
-                        color: Theme.colorRed
-                        radius: rectangleSensors.sensorRadius
+
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+
+                        height: 0
+                        color: Theme.colorRed
+                        radius: rectangleSensors.sensorRadius
+                        Behavior on height { NumberAnimation { duration: 333 } }
                     }
                 }
             }
