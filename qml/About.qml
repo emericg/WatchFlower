@@ -33,7 +33,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         height: 80
-        z: 1
+        z: 5
         color: Theme.colorMaterialDarkGrey
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")

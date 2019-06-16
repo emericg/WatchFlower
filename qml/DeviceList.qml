@@ -25,7 +25,7 @@ import QtQuick.Controls 2.2
 import com.watchflower.theme 1.0
 
 Item {
-    id: background
+    id: screenDeviceList
     anchors.fill: parent
 
     property bool deviceAvailable: deviceManager.devices
@@ -47,102 +47,263 @@ Item {
         }
     }
 
-    Rectangle {
-        id: rectangleStatus
+    property var selectionMode: false
+    property var selectionList: []
+    property var selectionCount: 0
+
+    function selectDevice(index) {
+        selectionMode = true;
+        selectionList.push(index);
+        selectionCount++;
+    }
+    function deselectDevice(index) {
+        var i = selectionList.indexOf(index);
+        if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
+        if (selectionList.length === 0) selectionMode = false;
+    }
+    function exitSelectionMode() {
+        for (var child in devicesView.contentItem.children) {
+            if (devicesView.contentItem.children[child].selected) {
+                devicesView.contentItem.children[child].selected = false;
+            }
+        }
+
+        selectionMode = false;
+        selectionList = [];
+        selectionCount = 0;
+    }
+
+    function updateSelectedDevice() {
+        for (var child in devicesView.contentItem.children) {
+            if (devicesView.contentItem.children[child].selected) {
+                deviceManager.updateDevice(devicesView.contentItem.children[child].boxDevice.deviceAddress)
+            }
+        }
+        exitSelectionMode()
+    }
+    function removeSelectedDevice() {
+        for (var child in devicesView.contentItem.children) {
+            if (devicesView.contentItem.children[child].selected) {
+                deviceManager.removeDevice(devicesView.contentItem.children[child].boxDevice.deviceAddress)
+            }
+        }
+        exitSelectionMode()
+    }
+
+    Column {
+        id: rowbar
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        z: 2
 
-        z: 1
-        height: 52
-        color: Theme.colorYellow
-        visible: false
-
-        Text {
-            id: textStatus
-            anchors.fill: parent
-            anchors.rightMargin: 16
-            anchors.leftMargin: 16
-
-            color: "white"
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignLeft
-            font.bold: true
-            font.pixelSize: 16
-        }
-
-        ButtonThemed {
-            id: buttonBluetooth
-            width: 128
-            height: 30
+        Rectangle {
+            id: rectangleStatus
             anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
 
-            text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
-            color: "white"
+            height: 52
+            color: Theme.colorYellow
+            visible: false
+            opacity: 0
+/*
+            Behavior on opacity {
+                OpacityAnimator {
+                    duration: 333;
+                    onStopped: {
+                        console.log("opacity on stopped")
+                        if (rectangleStatus.opacity === 0)
+                            rectangleStatus.visible = false
+                    }
+                    onFinished: { // Qt 5.12 :(
+                        console.log("opacity on finished")
+                        if (rectangleStatus.opacity === 0)
+                            rectangleStatus.visible = false
+                    }
+                }
+            }
+*/
+            Text {
+                id: textStatus
+                anchors.fill: parent
+                anchors.rightMargin: 16
+                anchors.leftMargin: 16
 
-            onClicked: {
-                deviceManager.enableBluetooth()
-                deviceManager.checkBluetooth()
+                color: "white"
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                font.bold: true
+                font.pixelSize: 16
+            }
+
+            ButtonThemed {
+                id: buttonBluetooth
+                width: 128
+                height: 30
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: false
+                text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
+                color: "white"
+
+                onClicked: {
+                    deviceManager.enableBluetooth()
+                    deviceManager.checkBluetooth()
+                }
+            }
+            ButtonThemed {
+                id: buttonSearch
+                width: 128
+                height: 30
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: false
+                text: qsTr("Scan devices")
+                color: "white"
+
+                onClicked: {
+                    deviceManager.scanDevices()
+                }
+            }
+
+            function hide() {
+                rectangleStatus.visible = false;
+                rectangleStatus.opacity = 0;
+
+                itemStatus.source = ""
+            }
+            function setBluetoothWarning() {
+                rectangleStatus.visible = true;
+                rectangleStatus.opacity = 1;
+
+                if (!deviceManager.devices)
+                    itemStatus.source = "ItemNoBluetooth.qml"
+
+                textStatus.text = qsTr("Bluetooth disabled...");
+                buttonBluetooth.visible = true
+                buttonSearch.visible = false
+            }
+            function setDeviceWarning() {
+                rectangleStatus.visible = true;
+                rectangleStatus.opacity = 1;
+
+                itemStatus.source = "ItemNoDevice.qml"
+
+                textStatus.text = qsTr("No devices configured...");
+                buttonBluetooth.visible = false
+                buttonSearch.visible = true
             }
         }
-        ButtonThemed {
-            id: buttonSearch
-            width: 128
-            height: 30
+
+        Rectangle {
+            id: rectangleActions
             anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
 
-            text: qsTr("Scan devices")
-            color: "white"
+            height: 52
+            color: Theme.colorYellow
+            visible: (screenDeviceList.selectionCount)
 
-            onClicked: {
-                deviceManager.scanDevices()
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
+
+                ItemImageButton {
+                    id: buttonRefresh
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                    iconColor: Theme.colorHeaderContent
+                    onClicked: screenDeviceList.updateSelectedDevice()
+
+                    NumberAnimation on rotation {
+                        id: refreshAnimation
+                        duration: 2000
+                        from: 0
+                        to: 360
+                        loops: Animation.Infinite
+                        running: deviceManager.refreshing
+                        onStopped: refreshAnimationStop.start()
+                    }
+                    NumberAnimation on rotation {
+                        id: refreshAnimationStop
+                        duration: 1000;
+                        to: 360;
+                        easing.type: Easing.Linear
+                        running: false
+                    }
+                }
+
+                ItemImageButton {
+                    id: buttonDelete
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
+                    iconColor: Theme.colorHeaderContent
+                    onClicked: screenDeviceList.removeSelectedDevice()
+                }
             }
-        }
 
-        function hide() {
-            rectangleStatus.visible = false;
-            rectangleStatus.height = 0;
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
 
-            itemStatus.source = ""
-        }
-        function setBluetoothWarning() {
-            rectangleStatus.visible = true;
-            rectangleStatus.height = 52;
+                Text {
+                    id: textActions
+                    anchors.verticalCenter: parent.verticalCenter
 
-            if (!deviceManager.devices)
-                itemStatus.source = "ItemNoBluetooth.qml"
+                    text: qsTr("%1 device(s) selected").arg(screenDeviceList.selectionCount)
+                    color: "white"
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.bold: true
+                    font.pixelSize: 16
+                }
 
-            textStatus.text = qsTr("Bluetooth disabled...");
-            buttonBluetooth.visible = true
-            buttonSearch.visible = false
-        }
-        function setDeviceWarning() {
-            rectangleStatus.visible = true;
-            rectangleStatus.height = 52;
+                ItemImageButton {
+                    id: buttonClear
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
 
-            itemStatus.source = "ItemNoDevice.qml"
-
-            textStatus.text = qsTr("No devices configured...");
-            buttonBluetooth.visible = false
-            buttonSearch.visible = true
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: Theme.colorHeaderContent
+                    onClicked: screenDeviceList.exitSelectionMode()
+                }
+            }
         }
     }
 
     GridView {
-        id: devicesview
+        id: devicesView
 
-        anchors.fill: parent
-        anchors.topMargin: rectangleStatus.height + 6
-        anchors.bottomMargin: 6
+        anchors.top: rowbar.bottom
+        anchors.topMargin: 6
+        anchors.left: screenDeviceList.left
         anchors.leftMargin: 6
+        anchors.right: screenDeviceList.right
         anchors.rightMargin: 6
+        anchors.bottom: screenDeviceList.bottom
+        anchors.bottomMargin: 6
 
         property bool singleColumn: true
         property bool bigWidget: settingsManager.bigWidget
@@ -159,7 +320,7 @@ Item {
             cellSizeTarget = bigWidget ? 400 : 300
             boxHeight = bigWidget ? 140 : 100
 
-            var availableWidth = devicesview.width - cellMarginTarget
+            var availableWidth = devicesView.width - cellMarginTarget
             var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
             singleColumn = (cellColumnsTarget === 1)
             // 1 // Adjust only cellSize
@@ -173,7 +334,7 @@ Item {
         onWidthChanged: computeCellSize()
 
         model: deviceManager.devicesList
-        delegate: DeviceWidget { boxDevice: modelData; width: devicesview.cellSize; singleColumn: devicesview.singleColumn; bigAssMode: devicesview.bigWidget; }
+        delegate: DeviceWidget { boxDevice: modelData; width: devicesView.cellSize; singleColumn: devicesView.singleColumn; bigAssMode: devicesView.bigWidget; }
     }
 
     Loader {

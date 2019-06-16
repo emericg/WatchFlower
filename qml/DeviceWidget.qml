@@ -25,6 +25,7 @@ import com.watchflower.theme 1.0
 import "UtilsNumber.js" as UtilsNumber
 
 Item {
+    id: deviceWidget
     implicitWidth: 640
     implicitHeight: bigAssMode ? 140 : 100
     anchors.fill: parent.width
@@ -198,23 +199,23 @@ Item {
     }
 
     Rectangle {
-        id: deviceWidget
-        radius: 2
+        id: deviceWidgetRectangle
         anchors.rightMargin: 6
         anchors.leftMargin: 6
         anchors.bottomMargin: 6
         anchors.topMargin: 6
         anchors.fill: parent
 
-        color: "transparent"
+        color: deviceWidget.selected ? Theme.colorMaterialDarkGrey : "transparent"
         border.width: 2
         border.color: (singleColumn) ? "transparent" : Theme.colorMaterialDarkGrey
+        radius: 2
 
         MouseArea {
             anchors.fill: parent
 
             onClicked: {
-                if (boxDevice.hasDatas()) {
+                if (boxDevice && boxDevice.hasDatas()) {
                     if (currentlySelectedDevice != boxDevice) {
                         currentlySelectedDevice = boxDevice
 
@@ -228,6 +229,18 @@ Item {
                         content.state = "DeviceThermo"
                     else
                         content.state = "DeviceSensor"
+                }
+            }
+
+            onPressAndHold: {
+                if (!devicesView.selectionMode) {
+                    if (!selected) {
+                        selected = true;
+                        screenDeviceList.selectDevice(index);
+                    } else {
+                        selected = false;
+                        screenDeviceList.deselectDevice(index);
+                    }
                 }
             }
         }

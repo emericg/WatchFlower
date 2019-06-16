@@ -174,6 +174,8 @@ void DeviceManager::checkBluetooth()
 
 void DeviceManager::enableBluetooth(bool checkPermission)
 {
+    qDebug() << "enableBluetooth()";
+
     // TODO // We only try the "first" available Bluetooth adapter
     if (!m_bluetoothAdapter)
     {
@@ -617,13 +619,20 @@ void DeviceManager::removeDevice(const QString &address)
         if (dd->getAddress() == address)
         {
             // Make sure its not being used
-            //disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-            //dd->disconnectDevice();
-            //m_devices_updatelist.removeAll(d);
+            disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+            dd->disconnectDevice();
+            refreshDevices_finished(dd);
+/*
+            // Remove from database // don't remove the actual datas
+            qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "to local database";
 
+            QSqlQuery removeDevice;
+            removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
+            removeDevice.bindValue(":deviceAddr", dd->getAddress());
+            removeDevice.exec();
+*/
             // Remove device
-            //m_devices.removeAll(dd);
-
+            m_devices.removeAll(dd);
             qDebug() << "Device removed: " << dd->getName() << "/" << dd->getAddress();
             delete dd;
             Q_EMIT devicesUpdated();

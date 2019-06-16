@@ -52,7 +52,7 @@ Rectangle {
         anchors.rightMargin: 0
         color: "white"
 
-        z: 1
+        z: 5
         height: 80
 
         Image {
