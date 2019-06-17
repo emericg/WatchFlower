@@ -375,8 +375,17 @@ void DeviceManager::refreshDevices_start()
 {
     //qDebug() << "DeviceManager::refreshDevices_start()";
 
-    // TODO // check if we are not already doing something?
+    // Already refreshing? Cancel and bail
+    if (isRefreshing())
+    {
+        refreshDevices_stop();
+        return;
+    }
 
+    // Make sure Bluetooth is on (some plateforms don't report disconnection)
+    checkBluetooth();
+
+    // Start refresh
     if (hasBluetooth() && !m_devices.empty())
     {
         m_devices_updatelist.clear();
@@ -408,8 +417,17 @@ void DeviceManager::refreshDevices_check()
 {
     //qDebug() << "DeviceManager::refreshDevices_check()";
 
-    // TODO // check if we are not already doing something?
+    // Already refreshing? Cancel and bail
+    if (isRefreshing())
+    {
+        refreshDevices_stop();
+        return;
+    }
 
+    // Make sure Bluetooth is on (some plateforms don't report disconnection)
+    checkBluetooth();
+
+    // Start refresh (if needed)
     if (hasBluetooth() && !m_devices.empty())
     {
         m_devices_updatelist.clear();
