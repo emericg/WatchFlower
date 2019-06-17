@@ -77,6 +77,13 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/bluetoothCompat"))
             m_bluetoothCompat = settings.value("settings/bluetoothCompat").toBool();
+        else
+        {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_iOS)
+            // bluetooth compat is default true on mobile
+            m_bluetoothCompat = true;
+#endif
+        }
 
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();

@@ -83,8 +83,6 @@ DeviceManager::DeviceManager()
             QString deviceName = queryDevices.value(0).toString();
             QString deviceAddr = queryDevices.value(1).toString();
 
-            //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
-
             Device *d = nullptr;
 
             if (deviceName == "Flower care" || deviceName == "Flower mate")
@@ -100,6 +98,8 @@ DeviceManager::DeviceManager()
             {
                 connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
                 m_devices.append(d);
+
+                //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
             }
         }
 
@@ -222,7 +222,7 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 {
     qDebug() << "Bluetooth host mode changed, now:" << state;
 
-    if (state > 0)
+    if (state > QBluetoothLocalDevice::HostPoweredOff)
     {
         m_btE = true;
 
@@ -238,7 +238,8 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
     {
         m_btE = false;
 
-        // Check Bluetooth again?
+        // Bluetooth disappeared, force disconnection
+        refreshDevices_stop();
     }
 
     Q_EMIT bluetoothChanged();
@@ -308,8 +309,6 @@ void DeviceManager::deviceDiscoveryFinished()
             QString deviceName = queryDevices.value(0).toString();
             QString deviceAddr = queryDevices.value(1).toString();
 
-            qDebug() << "* Device added (from BLE discovery): " << deviceName << "/" << deviceAddr;
-
             // device lookup
             bool found = false;
             for (auto d: m_devices)
@@ -338,6 +337,8 @@ void DeviceManager::deviceDiscoveryFinished()
                 {
                     connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
                     m_devices.append(d);
+
+                    qDebug() << "* Device added (from SQL database): " << deviceName << "/" << deviceAddr;
                 }
             }
         }
@@ -516,8 +517,6 @@ void DeviceManager::updateDevice(const QString &address)
 {
     //qDebug() << "DeviceManager::updateDevice() " << address;
 
-    // TODO // check if we are not already doing something?
-
     if (hasBluetooth())
     {
         for (auto d: m_devices)
@@ -577,9 +576,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 return;
 
             m_devices.append(d);
-
-            qDebug() << "Device added: " << d->getName() << "/" << d->getAddress();
             Q_EMIT devicesUpdated();
+
+            qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
 
             // Also add it to the database?
             if (m_db)
