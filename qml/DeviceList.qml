@@ -32,8 +32,11 @@ Item {
     property bool bluetoothAvailable: deviceManager.bluetooth
 
     Component.onCompleted: checkStatus()
-    onDeviceAvailableChanged: checkStatus()
     onBluetoothAvailableChanged: checkStatus()
+    onDeviceAvailableChanged: {
+        checkStatus()
+        exitSelectionMode()
+    }
 
     function checkStatus() {
         if (deviceManager.bluetooth) {
@@ -62,6 +65,8 @@ Item {
         if (selectionList.length === 0) selectionMode = false;
     }
     function exitSelectionMode() {
+        if (selectionList.length === 0) return;
+
         for (var child in devicesView.contentItem.children) {
             if (devicesView.contentItem.children[child].selected) {
                 devicesView.contentItem.children[child].selected = false;
@@ -104,6 +109,8 @@ Item {
         anchors.leftMargin: 0
         z: 2
 
+        ////////////////
+
         Rectangle {
             id: rectangleStatus
             anchors.right: parent.right
@@ -111,7 +118,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            height: 52
+            height: 48
             color: Theme.colorYellow
             visible: false
             opacity: 0
@@ -208,6 +215,8 @@ Item {
             }
         }
 
+        ////////////////
+
         Rectangle {
             id: rectangleActions
             anchors.right: parent.right
@@ -215,13 +224,13 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            height: 52
+            height: 48
             color: Theme.colorYellow
             visible: (screenDeviceList.selectionCount)
 
             Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
@@ -246,13 +255,12 @@ Item {
                     }
                     NumberAnimation on rotation {
                         id: refreshAnimationStop
-                        duration: 1000;
-                        to: 360;
+                        duration: 1000
+                        to: 360
                         easing.type: Easing.Linear
                         running: false
                     }
                 }
-
                 ItemImageButton {
                     id: buttonDelete
                     width: 36
@@ -263,13 +271,46 @@ Item {
                     iconColor: Theme.colorHeaderContent
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }
+/*
+                ButtonThemed {
+                    id: buttonRefresh
+                    width: 96
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: "white"
+                    text: qsTr("Refresh")
+                    onClicked: screenDeviceList.updateSelectedDevice()
+                }
+                ButtonThemed {
+                    id: buttonDelete
+                    width: 96
+                    height: 30
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: "white"
+                    text: qsTr("Delete")
+                    onClicked: screenDeviceList.removeSelectedDevice()
+                }
+*/
             }
 
             Row {
-                anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.left: parent.left
+                anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
+
+                ItemImageButton {
+                    id: buttonClear
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: Theme.colorHeaderContent
+                    onClicked: screenDeviceList.exitSelectionMode()
+                }
 
                 Text {
                     id: textActions
@@ -282,20 +323,11 @@ Item {
                     font.bold: true
                     font.pixelSize: 16
                 }
-
-                ItemImageButton {
-                    id: buttonClear
-                    width: 36
-                    height: 36
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: Theme.colorHeaderContent
-                    onClicked: screenDeviceList.exitSelectionMode()
-                }
             }
         }
     }
+
+    ////////////////
 
     GridView {
         id: devicesView

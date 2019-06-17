@@ -216,19 +216,34 @@ Item {
 
             onClicked: {
                 if (boxDevice && boxDevice.hasDatas()) {
-                    if (currentlySelectedDevice != boxDevice) {
-                        currentlySelectedDevice = boxDevice
+
+                    if (mouse.button === Qt.LeftButton) {
+                        if (currentlySelectedDevice != boxDevice) {
+                            currentlySelectedDevice = boxDevice
+
+                            if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
+                                screenDeviceThermometer.loadDevice()
+                            else
+                                screenDeviceSensor.loadDevice()
+                        }
 
                         if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
-                            screenDeviceThermometer.loadDevice()
+                            content.state = "DeviceThermo"
                         else
-                            screenDeviceSensor.loadDevice()
+                            content.state = "DeviceSensor"
                     }
 
-                    if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
-                        content.state = "DeviceThermo"
-                    else
-                        content.state = "DeviceSensor"
+                    if (mouse.button === Qt.MiddleButton) {
+                        if (!devicesView.selectionMode) {
+                            if (!selected) {
+                                selected = true;
+                                screenDeviceList.selectDevice(index);
+                            } else {
+                                selected = false;
+                                screenDeviceList.deselectDevice(index);
+                            }
+                        }
+                    }
                 }
             }
 

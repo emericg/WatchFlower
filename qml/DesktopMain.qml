@@ -133,7 +133,10 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        onStateChanged: header.setActiveMenu()
+        onStateChanged: {
+            header.setActiveMenu()
+            screenDeviceList.exitSelectionMode()
+        }
 
         Tutorial {
             anchors.fill: parent
