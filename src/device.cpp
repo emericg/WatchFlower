@@ -314,7 +314,7 @@ bool Device::getSqlInfos()
     }
 
     QSqlQuery getLocationName;
-    getLocationName.prepare("SELECT customName FROM devices WHERE deviceAddr = :deviceAddr");
+    getLocationName.prepare("SELECT locationName FROM devices WHERE deviceAddr = :deviceAddr");
     getLocationName.bindValue(":deviceAddr", getAddress());
     getLocationName.exec();
     while (getLocationName.next())
@@ -374,7 +374,7 @@ bool Device::getSqlDatas(int minutes)
     {
 #ifndef QT_NO_DEBUG
         qDebug() << "* Device update:" << getAddress();
-        qDebug() << "> using cachedDatas...";
+        qDebug() << "> SQL datas available...";
 #endif
     }
 
@@ -543,11 +543,11 @@ void Device::setLocationName(const QString &name)
         m_locationName = name;
         qDebug() << "setLocationName(" << m_locationName << ")";
 
-        QSqlQuery updateName;
-        updateName.prepare("UPDATE devices SET customName = :name WHERE deviceAddr = :deviceAddr");
-        updateName.bindValue(":name", name);
-        updateName.bindValue(":deviceAddr", getAddress());
-        updateName.exec();
+        QSqlQuery updateLocation;
+        updateLocation.prepare("UPDATE devices SET locationName = :name WHERE deviceAddr = :deviceAddr");
+        updateLocation.bindValue(":name", name);
+        updateLocation.bindValue(":deviceAddr", getAddress());
+        updateLocation.exec();
 
         Q_EMIT datasUpdated();
     }

@@ -204,12 +204,20 @@ bool SettingsManager::loadDatabase()
                                                   "deviceName VARCHAR(255),"  \
                                                   "deviceFirmware VARCHAR(255),"  \
                                                   "deviceBattery INT," \
-                                                  "customName VARCHAR(255)," \
+                                                  "locationName VARCHAR(255)," \
                                                   "plantName VARCHAR(255)" \
                                                   ");");
 
                             if (createDevices.exec() == false)
                                 qDebug() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
+                        }
+
+                        {
+                            // RENAME OLD TABLE // TO BE REMOVED
+                            QSqlQuery renameLocation;
+                            renameLocation.prepare("ALTER TABLE devices RENAME COLUMN customName TO locationName");
+                            if (renameLocation.exec() == false)
+                                qDebug() << "> renameLocation.exec() ERROR" << renameLocation.lastError().type() << ":"  << renameLocation.lastError().text();
                         }
 
                         QSqlQuery checkDatas;
@@ -263,7 +271,7 @@ bool SettingsManager::loadDatabase()
                         // DATETIME: YYY-MM-JJ HH:MM:SS
 
                         QSqlQuery sanitizeDatas;
-                        sanitizeDatas.exec("DELETE FROM datas WHERE ts <  DATE('now', '-30 days')");
+                        sanitizeDatas.prepare("DELETE FROM datas WHERE ts <  DATE('now', '-30 days')");
 
                         if (sanitizeDatas.exec() == false)
                             qDebug() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
