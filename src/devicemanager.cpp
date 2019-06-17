@@ -622,20 +622,22 @@ void DeviceManager::removeDevice(const QString &address)
             disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
             dd->disconnectDevice();
             refreshDevices_finished(dd);
-/*
-            // Remove from database // don't remove the actual datas
+
+            // Remove from database // don't remove the actual datas, nor limits
             qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "to local database";
 
             QSqlQuery removeDevice;
             removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
             removeDevice.bindValue(":deviceAddr", dd->getAddress());
             removeDevice.exec();
-*/
+
             // Remove device
             m_devices.removeAll(dd);
             qDebug() << "Device removed: " << dd->getName() << "/" << dd->getAddress();
             delete dd;
             Q_EMIT devicesUpdated();
+
+            break;
         }
     }
 }

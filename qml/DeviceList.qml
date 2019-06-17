@@ -82,10 +82,14 @@ Item {
         exitSelectionMode()
     }
     function removeSelectedDevice() {
+        var devicesAddr = [];
         for (var child in devicesView.contentItem.children) {
             if (devicesView.contentItem.children[child].selected) {
-                deviceManager.removeDevice(devicesView.contentItem.children[child].boxDevice.deviceAddress)
+                devicesAddr.push(devicesView.contentItem.children[child].boxDevice.deviceAddress)
             }
+        }
+        for (var count = 0; count < devicesAddr.length; count++) {
+            deviceManager.removeDevice(devicesAddr[count])
         }
         exitSelectionMode()
     }
