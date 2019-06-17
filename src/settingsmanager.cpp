@@ -212,14 +212,6 @@ bool SettingsManager::loadDatabase()
                                 qDebug() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
                         }
 
-                        {
-                            // RENAME OLD TABLE // TO BE REMOVED
-                            QSqlQuery renameLocation;
-                            renameLocation.prepare("ALTER TABLE devices RENAME COLUMN customName TO locationName");
-                            if (renameLocation.exec() == false)
-                                qDebug() << "> renameLocation.exec() ERROR" << renameLocation.lastError().type() << ":"  << renameLocation.lastError().text();
-                        }
-
                         QSqlQuery checkDatas;
                         checkDatas.exec("PRAGMA table_info(datas);");
                         if (!checkDatas.next())
