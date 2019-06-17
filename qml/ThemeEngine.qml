@@ -23,6 +23,15 @@ pragma Singleton
 import QtQuick 2.9
 
 Item {
+    enum ThemeNames {
+        GREEN = 0,
+        LIGHT = 1,
+        DARK = 2,
+
+        LAST_THEME
+    }
+    property int currentTheme: -1
+
     // Headers
     readonly property string colorHeader: "#07bf97"
     readonly property string colorHeaderStatusbar: "#009688"

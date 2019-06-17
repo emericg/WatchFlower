@@ -32,7 +32,7 @@ Many Bluetooth devices could be added to WatchFlower. If you have a device in mi
 
 ### Dependencies
 
-You will need a C++11 compiler and Qt 5.9 (Qt 5.12+ is recommended however) with Qt Charts.
+You will need a C++11 compiler and Qt 5.10 (Qt 5.12+ is recommended however) with Qt Charts.
 
 ### Building WatchFlower
 
