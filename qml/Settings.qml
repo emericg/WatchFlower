@@ -285,7 +285,7 @@ Item {
                     z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    checked: settingsManager.systray
+                    Component.onCompleted: checked = settingsManager.systray
                     onCheckedChanged: settingsManager.systray = checked
                     anchors.rightMargin: 12
                 }
@@ -414,7 +414,7 @@ Item {
                     width: 128
                     height: 36
                     z: 1
-                    value: settingsManager.updateInterval
+                    Component.onCompleted: value = settingsManager.updateInterval
                     onValueChanged: settingsManager.updateInterval = value
                     to: 180
                     anchors.verticalCenter: parent.verticalCenter
@@ -676,7 +676,7 @@ Item {
             }
 
             ////////
-
+/*
             Item {
                 id: element_reset
                 height: 64
@@ -685,13 +685,13 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                // desktop only
+                // desktop only // we keep this button here ONLY for debugging
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
                 Rectangle {
                     id: rectangleReset
                     height: 40
-                    width: 300
+                    width: 320
                     color: Theme.colorRed
                     radius: 20
                     anchors.verticalCenter: parent.verticalCenter
@@ -752,6 +752,7 @@ Item {
                     }
                 }
             }
+*/
         }
     }
 }
