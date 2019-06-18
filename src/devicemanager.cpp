@@ -46,6 +46,9 @@
 
 DeviceManager::DeviceManager()
 {
+    // Enables adapter // if off and permission given ONLY
+    enableBluetooth(true);
+
     checkBluetooth();
     checkDatabase();
 
@@ -135,9 +138,49 @@ bool DeviceManager::hasBluetoothEnabled() const
     return m_btE;
 }
 
-void DeviceManager::checkBluetooth()
+bool DeviceManager::checkBluetooth()
 {
     //qDebug() << "checkBluetooth()";
+    bool status = false;
+
+    bool btA_was = m_btA;
+    bool btE_was = m_btE;
+
+    // Check availability
+    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
+    {
+        m_btA = true;
+
+        if (m_bluetoothAdapter->hostMode() > 0)
+        {
+            m_btE = true;
+            status = true;
+            qDebug() << "> Bluetooth adapter available";
+        }
+        else
+        {
+            m_btE = false;
+            qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter->hostMode();
+        }
+    }
+    else
+    {
+        m_btA = false;
+        m_btE = false;
+    }
+
+    if (btA_was != m_btA || btE_was != m_btE)
+        Q_EMIT bluetoothChanged(); // this function did changed the Bluetooth status
+
+    return status;
+}
+
+void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
+{
+    //qDebug() << "enableBluetooth()";
+
+    bool btA_was = m_btA;
+    bool btE_was = m_btE;
 /*
     // List Bluetooth adapters
     QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
@@ -153,68 +196,68 @@ void DeviceManager::checkBluetooth()
         qDebug() << "> No Bluetooth adapter found...";
     }
 */
-    // Enables adapter
-    enableBluetooth(true);
-
-    // Check availability
-    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
+    // Invalid adapter? (ex: plugged off)
+    if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
     {
-        if (m_bluetoothAdapter->hostMode() > 0)
-        {
-            m_btE = true;
-            qDebug() << "> Bluetooth adapter available";
-        }
-        else
-            qDebug() << "Bluetooth adapter host mode:" << m_bluetoothAdapter->hostMode();
+        delete m_bluetoothAdapter;
     }
 
-    Q_EMIT bluetoothChanged();
-}
-
-void DeviceManager::enableBluetooth(bool checkPermission)
-{
-    //qDebug() << "enableBluetooth()";
-
-    // TODO // We only try the "first" available Bluetooth adapter
+    // We only try the "first" available Bluetooth adapter
+    // TODO // Handle multiple adapters?
     if (!m_bluetoothAdapter)
     {
         m_bluetoothAdapter = new QBluetoothLocalDevice();
+        if (m_bluetoothAdapter)
+        {
+            // Keep us informed of availability changes
+            // On some platform, this can only inform us about disconnection, not reconnection
+            connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
+                    this, &DeviceManager::bluetoothModeChanged);
+        }
     }
 
-    if (m_bluetoothAdapter)
+    if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())
     {
         m_btA = true;
 
-        if (checkPermission)
+        if (m_bluetoothAdapter->hostMode() > 0)
         {
-            SettingsManager *sm = SettingsManager::getInstance();
-            if (sm && sm->getBluetoothControl())
-            {
-                // Make sure its powered on
-                // Doesn't work on all platforms...
-                m_bluetoothAdapter->powerOn();
-            }
-        }
-        else
-        {
-            // Make sure its powered on
-            // Doesn't work on all platforms...
-            m_bluetoothAdapter->powerOn();
-        }
+            m_btE = true; // was already activated
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-        if (m_bluetoothAdapter->isValid() && m_bluetoothAdapter->hostMode() > 0)
-        {
             // Already powered on? Power on again anyway. It helps on android...
             m_bluetoothAdapter->powerOn();
-        }
 #endif
-
-        // Keep us informed of availability changes
-        // On some platform it can only inform us about disconnection, not reconnection
-        connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
-                this, &DeviceManager::bluetoothModeChanged);
+        }
+        else // Try to activate the adapter
+        {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+            // mobile? check if we have the user's permission to do so
+            if (enforceUserPermissionCheck)
+            {
+                SettingsManager *sm = SettingsManager::getInstance();
+                if (sm && sm->getBluetoothControl())
+                {
+                    m_bluetoothAdapter->powerOn(); // Doesn't work on all platforms...
+                }
+            }
+            else
+#endif
+            // desktop (or mobile but with user action)
+            {
+                Q_UNUSED(enforceUserPermissionCheck)
+                m_bluetoothAdapter->powerOn(); // Doesn't work on all platforms...
+            }
+        }
     }
+    else
+    {
+        m_btA = false;
+        m_btE = false;
+    }
+
+    if (btA_was != m_btA || btE_was != m_btE)
+        Q_EMIT bluetoothChanged(); // this function did changed the Bluetooth status
 }
 
 void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
@@ -379,11 +422,8 @@ void DeviceManager::refreshDevices_start()
         return;
     }
 
-    // Make sure Bluetooth is on (some plateforms don't report disconnection)
-    checkBluetooth();
-
     // Start refresh
-    if (hasBluetooth() && !m_devices.empty())
+    if (checkBluetooth() && !m_devices.empty())
     {
         m_devices_updatelist = m_devices;
         Q_EMIT refreshingChanged();
@@ -420,11 +460,8 @@ void DeviceManager::refreshDevices_check()
         return;
     }
 
-    // Make sure Bluetooth is on (some plateforms don't report disconnection)
-    checkBluetooth();
-
     // Start refresh (if needed)
-    if (hasBluetooth() && !m_devices.empty())
+    if (checkBluetooth() && !m_devices.empty())
     {
         m_devices_updatelist.clear();
 

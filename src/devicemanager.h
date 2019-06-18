@@ -82,8 +82,8 @@ public:
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;
     bool hasBluetoothEnabled() const;
-    Q_INVOKABLE void checkBluetooth();
-    Q_INVOKABLE void enableBluetooth(bool checkPremisson = false);
+    Q_INVOKABLE bool checkBluetooth();
+    Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
     Q_INVOKABLE void scanDevices();
     bool isScanning() const;

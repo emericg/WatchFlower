@@ -164,10 +164,7 @@ Item {
                 text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
                 color: "white"
 
-                onClicked: {
-                    deviceManager.enableBluetooth()
-                    deviceManager.checkBluetooth()
-                }
+                onClicked: deviceManager.enableBluetooth()
             }
             ButtonThemed {
                 id: buttonSearch
