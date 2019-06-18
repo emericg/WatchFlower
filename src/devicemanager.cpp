@@ -415,11 +415,14 @@ void DeviceManager::refreshDevices_start()
 {
     //qDebug() << "DeviceManager::refreshDevices_start()";
 
-    // Already refreshing? Cancel and bail
+    // Already refreshing?
     if (isRefreshing())
     {
-        refreshDevices_stop();
-        return;
+        // Here we can do:
+
+        // nothing, and queue another refresh
+        //refreshDevices_stop(); // or cancel current refresh
+        return; // or bail
     }
 
     // Start refresh
@@ -453,11 +456,14 @@ void DeviceManager::refreshDevices_check()
 {
     //qDebug() << "DeviceManager::refreshDevices_check()";
 
-    // Already refreshing? Cancel and bail
+    // Already refreshing?
     if (isRefreshing())
     {
-        refreshDevices_stop();
-        return;
+        // Here we can do:
+
+        // nothing, and queue another refresh
+        //refreshDevices_stop(); // or cancel current refresh
+        return; // or bail
     }
 
     // Start refresh (if needed)
