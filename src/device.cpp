@@ -54,11 +54,11 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     QBluetoothAddress bleAddr(deviceAddr);
 #endif
 
-    bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
+    m_bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
 
-    if (bleDevice.isValid() == false)
+    if (m_bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
     // Load device infos and limits
@@ -71,21 +71,21 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
 
     // Configure update timer (only on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
+    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 }
 
 Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 {
-    bleDevice = d;
-    m_deviceName = bleDevice.name();
+    m_bleDevice = d;
+    m_deviceName = m_bleDevice.name();
 
 #if defined(Q_OS_OSX) || defined(Q_OS_iOS)
-    m_deviceAddress = bleDevice.deviceUuid().toString();
+    m_deviceAddress = m_bleDevice.deviceUuid().toString();
 #else
-    m_deviceAddress = bleDevice.address().toString();
+    m_deviceAddress = m_bleDevice.address().toString();
 #endif
 
-    if (bleDevice.isValid() == false)
+    if (m_bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
     // Load device infos and limits
@@ -98,7 +98,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
 
     // Configure update timer (only on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshDatas);
+    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 }
 
 Device::~Device()
@@ -109,7 +109,13 @@ Device::~Device()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::refreshDatas()
+void Device::refreshQueue()
+{
+    m_status = 1; // queued
+    Q_EMIT statusUpdated();
+}
+
+void Device::refreshStart()
 {
     if (getLastUpdateInt() < 0 || getLastUpdateInt() > 1)
     {
@@ -122,7 +128,7 @@ void Device::refreshDatas()
     }
 }
 
-void Device::disconnectDevice()
+void Device::refreshStop()
 {
     //qDebug() << "disconnectDevice()" << getAddress() << getName();
 
@@ -135,6 +141,7 @@ void Device::disconnectDevice()
     {
         m_updating = false;
         m_connected = false;
+        m_status = 0; // disconnected
         Q_EMIT statusUpdated();
     }
 }
@@ -158,6 +165,7 @@ void Device::refreshDatasCanceled()
 void Device::refreshDatasStarted()
 {
     m_updating = true;
+    m_status = 2; // connecting
     Q_EMIT statusUpdated();
 }
 
@@ -166,13 +174,9 @@ void Device::refreshDatasFinished(bool status, bool cached)
     //qDebug() << "refreshDatasFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
+
     m_updating = false;
-
-    if (cached)
-        m_updated_from_sql= status;
-    else
-        m_updated_from_ble = status;
-
+    m_status = 0; // disconnected
     Q_EMIT statusUpdated();
 
     if (status == true)
@@ -406,7 +410,7 @@ bool Device::getBleDatas()
 
     if (!controller)
     {
-        controller = new QLowEnergyController(bleDevice);
+        controller = new QLowEnergyController(m_bleDevice);
         if (controller)
         {
             if (controller->role() != QLowEnergyController::CentralRole)
@@ -607,6 +611,7 @@ void Device::deviceConnected()
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
     m_connected = true;
+    m_status = 3; // updating
     Q_EMIT statusUpdated();
 
     controller->discoverServices();
@@ -617,6 +622,7 @@ void Device::deviceDisconnected()
     //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
 
     m_connected = false;
+    m_status = 0; // disconnected
     Q_EMIT statusUpdated();
 
     if (m_updating)

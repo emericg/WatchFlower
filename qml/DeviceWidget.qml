@@ -117,23 +117,31 @@ Item {
         }
 
         // Status
-        if (boxDevice.updating) {
+        if (boxDevice.status === 1) {
+            textStatus.color = Theme.colorYellow
+            textStatus.text = qsTr("Queued")
+            opa.stop()
+        } else if (boxDevice.status === 2) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Connecting...")
             opa.start()
-        } else if (boxDevice.available) {
-            textStatus.color = Theme.colorGreen
-            textStatus.text = qsTr("Synced")
-            opa.stop()
-        } else if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 12*60) {
+        } else if (boxDevice.status === 3) {
             textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Synced")
-            //textStatus.text = qsTr("Synced %1 min. ago").arg(boxDevice.lastUpdateMin)
-            opa.stop()
+            textStatus.text = qsTr("Updating...")
+            opa.start()
         } else {
-            textStatus.color = Theme.colorRed
-            textStatus.text = qsTr("Offline")
             opa.stop()
+            if (boxDevice.isFresh()) {
+                textStatus.color = Theme.colorGreen
+                textStatus.text = qsTr("Synced")
+            } else if (boxDevice.isAvailable()) {
+                textStatus.color = Theme.colorYellow
+                textStatus.text = qsTr("Synced")
+                //qsTr("Synced %1 min. ago").arg(boxDevice.lastUpdateMin)
+            } else /*if (boxDevice.status === 0)*/ {
+                textStatus.color = Theme.colorRed
+                textStatus.text = qsTr("Offline")
+            }
         }
 
         // Water me notif

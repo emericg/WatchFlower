@@ -66,10 +66,10 @@ class DeviceManager: public QObject
     QLowEnergyController *m_controller = nullptr;
 
     bool m_scanning = false;
-    bool m_refreshing = false;
-    QTimer m_refreshTimer;
 
     QList<QObject*> m_devices;
+
+    QTimer m_refreshTimer;
     QList<QObject*> m_devices_updatelist;
 
 public:

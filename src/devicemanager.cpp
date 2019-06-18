@@ -227,12 +227,7 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
         m_btE = true;
 
         // Refresh devices
-        for (auto d: m_devices)
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (!dd->isAvailable())
-                dd->refreshDatas();
-        }
+        refreshDevices_check();
     }
     else
     {
@@ -388,27 +383,26 @@ void DeviceManager::refreshDevices_start()
     // Start refresh
     if (hasBluetooth() && !m_devices.empty())
     {
-        m_devices_updatelist.clear();
+        m_devices_updatelist = m_devices;
+        Q_EMIT refreshingChanged();
 
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm->getBluetoothCompat())
-        { // v2
-            m_devices_updatelist = m_devices;
-            //m_devices_updatelist += m_devices; // will retry once
-
-            qDebug() << "starting update for" << m_devices_updatelist.size() << "devices";
-            refreshDevices_continue();
-        }
-        else
-        { // v1
+        {
             for (auto d: m_devices)
             {
                 Device *dd = qobject_cast<Device*>(d);
-                if (dd) dd->refreshDatas();
+                if (dd) dd->refreshQueue(); // sync
             }
-
-            m_refreshing = true;
-            Q_EMIT refreshingChanged();
+            refreshDevices_continue(); // sync
+        }
+        else
+        {
+            for (auto d: m_devices)
+            {
+                Device *dd = qobject_cast<Device*>(d);
+                if (dd) dd->refreshStart(); // async
+            }
         }
     }
 }
@@ -433,27 +427,26 @@ void DeviceManager::refreshDevices_check()
         m_devices_updatelist.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
-        if (sm->getBluetoothCompat())
-        { // v2
-            for (auto d: m_devices)
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
             {
-                Device *dd = qobject_cast<Device*>(d);
+                // old or no datas: go for refresh
+                m_devices_updatelist.push_back(dd);
 
-                if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
-                    m_devices_updatelist.push_back(dd); // old or no datas
+                if (sm->getBluetoothCompat())
+                    dd->refreshQueue(); // sync
+                else
+                    dd->refreshStart(); // async
             }
-            refreshDevices_continue();
         }
-        else
-        { // v1
-            for (auto d: m_devices)
-            {
-                Device *dd = qobject_cast<Device*>(d);
-                if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
-                    dd->refreshDatas();
-            }
 
-            m_refreshing = true;
+        if (!m_devices_updatelist.empty())
+        {
+            if (sm->getBluetoothCompat())
+                refreshDevices_continue(); // sync
+
             Q_EMIT refreshingChanged();
         }
     }
@@ -465,13 +458,10 @@ void DeviceManager::refreshDevices_continue()
 
     if (hasBluetooth() && !m_devices_updatelist.empty())
     {
-        m_refreshing = true;
-        Q_EMIT refreshingChanged();
-
         // update next device in the list
 
         Device *dd = qobject_cast<Device*>(m_devices_updatelist.first());
-        if (dd) dd->refreshDatas();
+        if (dd) dd->refreshStart();
     }
 }
 
@@ -494,7 +484,6 @@ void DeviceManager::refreshDevices_finished(Device *dev)
 
     if (m_devices_updatelist.empty())
     {
-        m_refreshing = false;
         Q_EMIT refreshingChanged();
     }
     else
@@ -508,27 +497,23 @@ void DeviceManager::refreshDevices_stop()
 {
     //qDebug() << "DeviceManager::refreshDevices_stop()";
 
-    if (isRefreshing())
+    if (!m_devices_updatelist.empty())
     {
         m_devices_updatelist.clear();
 
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && dd->isUpdating()) dd->disconnectDevice();
+            if (dd && dd->isUpdating()) dd->refreshStop();
         }
 
-        m_refreshing = false;
         Q_EMIT refreshingChanged();
     }
 }
 
 bool DeviceManager::isRefreshing() const
 {
-    if (m_refreshing || !m_devices_updatelist.empty())
-        return true;
-
-    return false;
+    return !m_devices_updatelist.empty();
 }
 
 void DeviceManager::updateDevice(const QString &address)
@@ -542,26 +527,11 @@ void DeviceManager::updateDevice(const QString &address)
             Device *dd = qobject_cast<Device*>(d);
             if (dd->getAddress() == address)
             {
-                SettingsManager *sm = SettingsManager::getInstance();
-                if (sm->getBluetoothCompat())
-                { // v2
-                    if (m_devices_updatelist.isEmpty())
-                    {
-                        m_devices_updatelist += dd;
-                        refreshDevices_continue();
-                    }
-                    else
-                    {
-                        m_devices_updatelist += dd;
-                    }
-                }
-                else
-                { // v1
-                    dd->refreshDatas();
+                m_devices_updatelist += dd;
 
-                    m_refreshing = true;
-                    Q_EMIT refreshingChanged();
-                }
+                SettingsManager *sm = SettingsManager::getInstance();
+                if (!sm->getBluetoothCompat() || m_devices_updatelist.size() == 1)
+                    refreshDevices_continue();
 
                 break;
             }
@@ -637,7 +607,7 @@ void DeviceManager::removeDevice(const QString &address)
         {
             // Make sure its not being used
             disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-            dd->disconnectDevice();
+            dd->refreshStop();
             refreshDevices_finished(dd);
 
             // Remove from database // don't remove the actual datas, nor limits

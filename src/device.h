@@ -58,11 +58,13 @@ class Device: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
+
     Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
-    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     //Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
-    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
+    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
@@ -102,15 +104,13 @@ Q_SIGNALS:
 protected:
     QString m_deviceName;
     QString m_deviceAddress;
-    QBluetoothDeviceInfo bleDevice;
+    QBluetoothDeviceInfo m_bleDevice;
 
     int m_capabilities = 0;
 
+    int m_status = 0; // disconnected > queued > connecting > updating
     bool m_connected = false;
     bool m_updating = false;
-
-    bool m_updated_from_ble = false;    //!< updated (from ble) this session
-    bool m_updated_from_sql = false;    //!< fresh enough datas (from sql)
 
     QDateTime m_lastUpdate;
     QDateTime m_lastError;
@@ -178,10 +178,10 @@ public:
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
-    void disconnectDevice();
-
 public slots:
-    void refreshDatas();
+    void refreshQueue();
+    void refreshStart();
+    void refreshStop();
 
     // BLE device
     QString getName() const { return m_deviceName; }
@@ -194,10 +194,12 @@ public slots:
     bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
 
+    int getStatus() const { return m_status; }
     bool isConnected() const { return m_connected; } //!< Is currently connected
     bool isUpdating() const { return m_updating; } //!< Is currently being updated
-    bool isAvailable() const { return (m_updated_from_sql || m_updated_from_ble); } //!< Has datas
+
     bool isFresh() const { return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60); } //!< Has at least >12h old datas
+    bool isAvailable() const { return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 1*60); } //!< Has at least >Xh old datas
     bool isErrored() const { return (getLastErrorInt() <= 12*60); }
 
     // BLE device infos
