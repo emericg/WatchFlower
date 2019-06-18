@@ -9,19 +9,19 @@
  <description>
    <p>
     WatchFlower is a plant monitoring application that reads and plots datas from
-    your Xiaomi / Mijia "Flower Care", "Ropot" and "Bluetooth temperature and
-    humidity sensor" devices. It works with all versions of the devices, and 
-    doesn't require an account creation, nor your GPS location or any other 
-    private datas from you, unlike the official application.
+    your Xiaomi / MiJia "Flower Care", "Ropot" and "Bluetooth temperature and
+    humidity sensor" devices. It works with all versions of the devices, and
+    doesn't require an account creation, your GPS location nor any other
+    private datas from you!
    </p>
  </description>
  <screenshots>
   <screenshot type="default">
-   <image>https://i.imgur.com/rasL730.png</image>
+   <image>https://i.imgur.com/SYuxbCa.png</image>
    <caption>Device screen</caption>
   </screenshot>
   <screenshot>
-   <image>https://i.imgur.com/xSFZ5nB.png</image>
+   <image>https://i.imgur.com/nXotThA.png</image>
    <caption>Mobile screens</caption>
   </screenshot>
  </screenshots>
@@ -30,7 +30,8 @@
  <keywords>
    <keyword>xiaomi</keyword>
    <keyword>mijia</keyword>
-   <keyword>ble</keyword>
+   <keyword>miflora</keyword>
+   <keyword>bluetooth</keyword>
    <keyword>plants</keyword>
    <keyword>flower care</keyword>
    <keyword>ropot</keyword>
