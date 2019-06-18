@@ -105,8 +105,6 @@ DeviceManager::DeviceManager()
 
         Q_EMIT devicesUpdated();
     }
-
-    refreshDevices_check();
 }
 
 DeviceManager::~DeviceManager()
@@ -139,6 +137,7 @@ bool DeviceManager::hasBluetoothEnabled() const
 
 void DeviceManager::checkBluetooth()
 {
+    //qDebug() << "checkBluetooth()";
 /*
     // List Bluetooth adapters
     QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
@@ -174,7 +173,7 @@ void DeviceManager::checkBluetooth()
 
 void DeviceManager::enableBluetooth(bool checkPermission)
 {
-    qDebug() << "enableBluetooth()";
+    //qDebug() << "enableBluetooth()";
 
     // TODO // We only try the "first" available Bluetooth adapter
     if (!m_bluetoothAdapter)
@@ -226,14 +225,14 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
     {
         m_btE = true;
 
-        // Refresh devices
+        // Bluetooth enabled, refresh devices
         refreshDevices_check();
     }
     else
     {
         m_btE = false;
 
-        // Bluetooth disappeared, force disconnection
+        // Bluetooth disabled, force disconnection
         refreshDevices_stop();
     }
 
@@ -241,11 +240,14 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool DeviceManager::hasDatabase() const
 {
     return m_db;
 }
+
+/* ************************************************************************** */
 
 void DeviceManager::checkDatabase()
 {

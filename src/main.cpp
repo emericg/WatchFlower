@@ -145,10 +145,16 @@ int main(int argc, char *argv[])
     if (!sm || !st || !dm)
         return EXIT_FAILURE;
 
-    // Run a first scan, but only if we are on desktop, and have no saved devices
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    if (!dm->areDevicesAvailable())
+    // Desktop only
+    if (dm->areDevicesAvailable())
     {
+        // If we have devices, update them
+        dm->refreshDevices_check();
+    }
+    else
+    {
+        // If we have no devices, run a first scan
         dm->scanDevices();
     }
 #endif

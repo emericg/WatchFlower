@@ -155,7 +155,7 @@ Item {
     }
 
     function updateDatas() {
-        if (typeof myDevice === 'undefined' || !myDevice) return
+        if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
 
         if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }

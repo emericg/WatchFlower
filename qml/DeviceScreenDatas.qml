@@ -106,26 +106,26 @@ Item {
         textStatus.color = "black"
         textStatus.font.bold = false
 
-        textStatus.text = ""
-        if (myDevice.updating) {
+        if (myDevice.status === 1) {
+            textStatus.text = qsTr("Update queued. ")
+        } else if (myDevice.status === 2) {
+            textStatus.text = qsTr("Connecting... ")
+        } else if (myDevice.status === 3) {
             textStatus.text = qsTr("Updating... ")
         } else {
             if (!myDevice.available) {
                 textStatus.text = qsTr("Offline! ")
                 textStatus.color = Theme.colorRed
                 textStatus.font.bold = true
+            } else {
+                textStatus.text = ""
             }
         }
 
-        if (myDevice.lastUpdateMin >= 0) {
-            if (myDevice.lastUpdateMin <= 1) {
-                textStatus.text += qsTr("Just synced!")
-            } else if (myDevice.available) {
-                textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
-            } else {
-                textStatus.color = Theme.colorYellow
-                textStatus.text = qsTr("Last synced %1 ago").arg(myDevice.lastUpdateStr)
-            }
+        if (myDevice.isFresh()) {
+            textStatus.text = qsTr("Just synced!")
+        } else if (myDevice.isAvailable()) {
+            textStatus.text += qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
         }
     }
 
@@ -134,7 +134,7 @@ Item {
         if (myDevice.deviceName === "MJ_HT_V1") return
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
 
-        if (settingsManager.graph === 'bar')
+        if (settingsManager.graph === "bar")
             pageLoader.source = "ItemAioBarCharts.qml"
         else
             pageLoader.source = "ItemAioLineCharts.qml"
@@ -152,7 +152,7 @@ Item {
         //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
 
         // Has datas? always display them
-        if (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720) {
+        if (myDevice.isAvailable()) {
             humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)

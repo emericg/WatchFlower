@@ -141,24 +141,24 @@ Item {
         if (myDevice.deviceName !== "MJ_HT_V1") return
         //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
 
-        if (myDevice) {
-            textStatus.text = ""
-            if (myDevice.updating) {
-                textStatus.text = qsTr("Updating... ")
+        if (myDevice.status === 1) {
+            textStatus.text = qsTr("Update queued. ")
+        } else if (myDevice.status === 2) {
+            textStatus.text = qsTr("Connecting... ")
+        } else if (myDevice.status === 3) {
+            textStatus.text = qsTr("Updating... ")
+        } else {
+            if (!myDevice.available) {
+                textStatus.text = qsTr("Offline! ")
             } else {
-                if (!myDevice.available) {
-                    textStatus.text = qsTr("Offline! ")
-                }
+                textStatus.text = ""
             }
+        }
 
-            if (myDevice.lastUpdateMin >= 0) {
-                if (myDevice.lastUpdateMin <= 1)
-                    textStatus.text = qsTr("Synced")
-                else if (myDevice.available)
-                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
-                else
-                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
-            }
+        if (myDevice.isFresh()) {
+            textStatus.text = qsTr("Just synced!")
+        } else if (myDevice.isAvailable()) {
+            textStatus.text += qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
         }
     }
 

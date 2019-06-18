@@ -49,6 +49,13 @@ enum DeviceCapabilities {
     DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
 };
 
+enum DeviceStatus {
+    DEVICE_OFFLINE           = 0, //!< Not connected
+    DEVICE_QUEUED            = 1, //!< In the update queue, not started
+    DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
+    DEVICE_UPDATING          = 3, //!< Connected, update in progress
+};
+
 /* ************************************************************************** */
 
 /*!
@@ -59,12 +66,12 @@ class Device: public QObject
     Q_OBJECT
 
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
-
-    Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
-    //Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
+    Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
+
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
@@ -106,11 +113,10 @@ protected:
     QString m_deviceAddress;
     QBluetoothDeviceInfo m_bleDevice;
 
-    int m_capabilities = 0;
+    int m_capabilities = 0;     //!< See DeviceCapabilities enum
 
-    int m_status = 0; // disconnected > queued > connecting > updating
-    bool m_connected = false;
-    bool m_updating = false;
+    int m_status = 0;           //!< See DeviceStatus enum
+    bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
 
     QDateTime m_lastUpdate;
     QDateTime m_lastError;
@@ -195,12 +201,10 @@ public slots:
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
 
     int getStatus() const { return m_status; }
-    bool isConnected() const { return m_connected; } //!< Is currently connected
     bool isUpdating() const { return m_updating; } //!< Is currently being updated
-
-    bool isFresh() const { return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60); } //!< Has at least >12h old datas
-    bool isAvailable() const { return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 1*60); } //!< Has at least >Xh old datas
-    bool isErrored() const { return (getLastErrorInt() <= 12*60); }
+    bool isErrored() const;     //!< Has emitted a BLE error
+    bool isFresh() const;       //!< Has at least >Xh (user set) old datas
+    bool isAvailable() const;   //!< Has at least >12h old datas
 
     // BLE device infos
     QString getFirmware() const { return m_firmware; }

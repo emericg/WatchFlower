@@ -111,12 +111,14 @@ Device::~Device()
 
 void Device::refreshQueue()
 {
-    m_status = 1; // queued
+    m_status = DEVICE_QUEUED;
     Q_EMIT statusUpdated();
 }
 
 void Device::refreshStart()
 {
+   // qDebug() << "Device::refreshStart()" << getAddress() << getName();
+
     if (getLastUpdateInt() < 0 || getLastUpdateInt() > 1)
     {
         refreshDatasStarted();
@@ -130,25 +132,24 @@ void Device::refreshStart()
 
 void Device::refreshStop()
 {
-    //qDebug() << "disconnectDevice()" << getAddress() << getName();
+    //qDebug() << "Device::refreshStop()" << getAddress() << getName();
 
     if (controller && controller->state() != QLowEnergyController::UnconnectedState)
     {
         controller->disconnectFromDevice();
     }
 
-    if (m_updating || m_connected)
+    if (m_updating || m_status != DEVICE_OFFLINE)
     {
         m_updating = false;
-        m_connected = false;
-        m_status = 0; // disconnected
+        m_status = DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }
 
 void Device::refreshDatasCanceled()
 {
-    //qDebug() << "refreshDatasCanceled()" << getAddress() << getName();
+    //qDebug() << "Device::refreshDatasCanceled()" << getAddress() << getName();
 
     if (controller)
     {
@@ -164,19 +165,21 @@ void Device::refreshDatasCanceled()
 
 void Device::refreshDatasStarted()
 {
+    //qDebug() << "Device::refreshDatasStarted()" << getAddress() << getName();
+
     m_updating = true;
-    m_status = 2; // connecting
+    m_status = DEVICE_CONNECTING;
     Q_EMIT statusUpdated();
 }
 
 void Device::refreshDatasFinished(bool status, bool cached)
 {
-    //qDebug() << "refreshDatasFinished()" << getAddress() << getName();
+    //qDebug() << "Device::refreshDatasFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
 
     m_updating = false;
-    m_status = 0; // disconnected
+    m_status = DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
 
     if (status == true)
@@ -266,10 +269,11 @@ void Device::setTimeoutTimer()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool Device::getSqlInfos()
 {
-    //qDebug() << "Device::getSqlDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlInfos(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery getFirmware;
@@ -364,6 +368,7 @@ bool Device::getSqlInfos()
 
 bool Device::getSqlDatas(int minutes)
 {
+    //qDebug() << "Device::getSqlDatas(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery cachedDatas;
@@ -446,6 +451,25 @@ bool Device::getBleDatas()
     controller->connectToDevice();
 
     return true;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+bool Device::isErrored() const
+{
+    return (getLastErrorInt() >= 0 && getLastErrorInt() <= 12*60);
+}
+
+bool Device::isFresh() const
+{
+    SettingsManager *sm = SettingsManager::getInstance();
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= sm->getUpdateInterval());
+}
+
+bool Device::isAvailable() const
+{
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
 }
 
 /* ************************************************************************** */
@@ -610,8 +634,8 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
-    m_connected = true;
-    m_status = 3; // updating
+    m_updating = true;
+    m_status = DEVICE_UPDATING;
     Q_EMIT statusUpdated();
 
     controller->discoverServices();
@@ -621,15 +645,17 @@ void Device::deviceDisconnected()
 {
     //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
 
-    m_connected = false;
-    m_status = 0; // disconnected
-    Q_EMIT statusUpdated();
-
-    if (m_updating)
+    if (m_status == DEVICE_CONNECTING || m_status == DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
         m_lastError = QDateTime::currentDateTime();
         refreshDatasFinished(false);
+    }
+    else
+    {
+        m_updating = false;
+        m_status = DEVICE_OFFLINE;
+        Q_EMIT statusUpdated();
     }
 }
 
@@ -661,6 +687,8 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 
 bool Device::hasControllerError() const
 {
+    //qWarning() << "Device::hasControllerError(" << m_deviceAddress << ") error:" << error;
+
     if (controller && controller->error() != QLowEnergyController::NoError)
         return true;
 
@@ -815,7 +843,7 @@ QVariantList Device::getMonth()
         day += ".";
         lastSevenDaysFormated.append(day);
     }
-    */
+*/
 /*
     qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
     for (auto d: lastSevenDaysFormated)

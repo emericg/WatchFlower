@@ -137,8 +137,7 @@ Item {
             } else if (boxDevice.isAvailable()) {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
-                //qsTr("Synced %1 min. ago").arg(boxDevice.lastUpdateMin)
-            } else /*if (boxDevice.status === 0)*/ {
+            } else {
                 textStatus.color = Theme.colorRed
                 textStatus.text = qsTr("Offline")
             }
@@ -163,7 +162,7 @@ Item {
 
         // Update notif
         if (boxDevice.isUpdating()) {
-            if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
+            if (boxDevice.isAvailable()) {
                 // if we have data cached, no indicator
             } else {
                 imageStatus.visible = true;
@@ -176,18 +175,13 @@ Item {
             if (boxDevice.isAvailable()) {
                 imageStatus.visible = false;
             } else {
-                if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
-                    // if we have data cached, no indicator
-                    imageStatus.visible = false;
-                } else {
-                    imageStatus.visible = true;
-                    imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
-                }
+                imageStatus.visible = true;
+                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
             }
         }
 
         // Has datas? always display them
-        if (boxDevice.lastUpdateMin >= 0 && boxDevice.lastUpdateMin <= 720) {
+        if (boxDevice.isAvailable()) {
             if (boxDevice.deviceName === "MJ_HT_V1") {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
