@@ -46,12 +46,6 @@ ApplicationWindow {
 
     // Events handling /////////////////////////////////////////////////////////
 
-    Component.onCompleted: {
-        if (!deviceManager.areDevicesAvailable()) {
-            content.state = "Tutorial"
-        }
-    }
-
     Connections {
         target: header
         onBackButtonClicked: {
@@ -72,6 +66,7 @@ ApplicationWindow {
         onSettingsButtonClicked: content.state = "Settings"
         onAboutButtonClicked: content.state = "About"
     }
+
     Connections {
         target: systrayManager
         onSettingsClicked: content.state = "Settings"
@@ -109,6 +104,7 @@ ApplicationWindow {
                 content.state = "DeviceSensor"
         }
     }
+
     onClosing: {
         if (settingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false;
@@ -132,11 +128,6 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-
-        onStateChanged: {
-            header.setActiveMenu()
-            screenDeviceList.exitSelectionMode()
-        }
 
         Tutorial {
             anchors.fill: parent
@@ -164,7 +155,12 @@ ApplicationWindow {
         }
 
         // Initial state
-        state: "DeviceList"
+        state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
+
+        onStateChanged: {
+            header.setActiveMenu()
+            screenDeviceList.exitSelectionMode()
+        }
 
         states: [
             State {

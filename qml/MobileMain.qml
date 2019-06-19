@@ -36,7 +36,7 @@ ApplicationWindow {
     visible: true
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
-    // Mobile stuff
+    // Mobile stuff ////////////////////////////////////////////////////////////
 
     Material.theme: Material.Dark
     Material.accent: Material.LightGreen
@@ -56,12 +56,6 @@ ApplicationWindow {
     }
 
     // Events handling /////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        if (!deviceManager.areDevicesAvailable()) {
-            content.state = "Tutorial"
-        }
-    }
 
     Connections {
         target: header
@@ -105,12 +99,7 @@ ApplicationWindow {
     }
 
     onClosing: {
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            close.accepted = false;
-        } else {
-            close.accepted = false;
-            applicationWindow.hide()
-        }
+        close.accepted = false;
     }
 
     // QML /////////////////////////////////////////////////////////////////////
@@ -125,13 +114,19 @@ ApplicationWindow {
 
     FocusScope {
         id: content
+        anchors.top: header.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
 
         focus: true
         Keys.onBackPressed: {
             if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
                 if (content.state === "DeviceList") {
-                    // hide window?
-                    //event.accepted = true;
+                    if (screenDeviceList.selectionList.length !== 0)
+                        screenDeviceList.exitSelectionMode()
+                    //else
+                    //    Qt.quit()
                 } else if (content.state === "Tutorial") {
                     // do nothing
                 } else {
@@ -141,11 +136,6 @@ ApplicationWindow {
                 content.state = "DeviceList"
             }
         }
-
-        anchors.top: header.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
 
         Tutorial {
             anchors.fill: parent
@@ -173,7 +163,7 @@ ApplicationWindow {
         }
 
         // Initial state
-        state: "DeviceList"
+        state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
 
         onStateChanged: {
             drawerscreen.updateDrawerFocus()

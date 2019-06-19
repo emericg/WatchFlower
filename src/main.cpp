@@ -28,7 +28,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
-#include <QtQuickControls2/QQuickStyle>
+//#include <QtQuickControls2/QQuickStyle>
 
 #include <statusbar.h>
 #include <singleapplication.h>
