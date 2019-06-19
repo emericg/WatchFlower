@@ -31,6 +31,9 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#include <QScreen>
+#include <cmath>
+
 /* ************************************************************************** */
 
 SettingsManager *SettingsManager::instance = nullptr;
@@ -453,6 +456,34 @@ void SettingsManager::setBigWidget(bool value)
     m_bigWidget = value;
     writeSettings();
     Q_EMIT bigWidgetChanged();
+}
+
+/* ************************************************************************** */
+
+void SettingsManager::getScreenInfos()
+{
+    QScreen *scr = qApp->screens().at(0);
+    if (scr)
+    {
+        qDebug() << "SettingsManager::getScreenInfos()";
+        qDebug() << "- physicalSize (mm) " << scr->physicalSize();
+        qDebug() << "- dpi " << scr->physicalDotsPerInch();
+        qDebug() << "- pixel ratio " << scr->devicePixelRatio();
+
+        if (scr->devicePixelRatio() == 1.0)
+        {
+            qDebug() << "- pixel size" << scr->size();
+        }
+        else
+        {
+            qDebug() << "- pixel size (hdpi corrected)" << scr->size();
+            qDebug() << "- pixel size (physical) " << scr->size() * scr->devicePixelRatio();
+        }
+
+        // TODO // On Android, physicalSize().height probably ignore the button or status bar
+
+        qDebug() << "- inches count: " << std::sqrt(std::pow(scr->physicalSize().width(), 2) + std::pow(scr->physicalSize().height(), 2)) / (2.54 * 10.0) ;
+    }
 }
 
 /* ************************************************************************** */

@@ -126,9 +126,12 @@ public:
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 #endif
 
+    Q_INVOKABLE void getScreenInfos();
+
+    Q_INVOKABLE static QString getAppVersion();
+    Q_INVOKABLE void resetSettings();
+
 public slots:
-    static QString getAppVersion();
-    void resetSettings();
     void exit() { QApplication::exit(); }
 };
 
