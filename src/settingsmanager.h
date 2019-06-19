@@ -27,12 +27,9 @@
 #define ERROR_UPDATE_INTERVAL       10 // minutes
 
 #include <QObject>
+#include <QString>
 #include <QApplication>
-
-#if defined(Q_OS_IOS)
 #include <QQuickWindow>
-#include <QtGui/qpa/qplatformwindow.h>
-#endif
 
 /* ************************************************************************** */
 
@@ -122,17 +119,17 @@ public:
     bool getBigWidget() const { return m_bigWidget; }
     void setBigWidget(bool value);
 
-#if defined(Q_OS_IOS)
-    Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
-#endif
+    // Utils:
+
+    Q_INVOKABLE static QString getAppVersion() { return QString::fromLatin1(APP_VERSION); }
 
     Q_INVOKABLE void getScreenInfos();
 
-    Q_INVOKABLE static QString getAppVersion();
+    Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
+
     Q_INVOKABLE void resetSettings();
 
-public slots:
-    void exit() { QApplication::exit(); }
+    Q_INVOKABLE void exit() { QApplication::exit(); }
 };
 
 /* ************************************************************************** */

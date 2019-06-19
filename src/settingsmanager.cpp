@@ -31,6 +31,10 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#if defined(Q_OS_IOS)
+#include <QtGui/qpa/qplatformwindow.h>
+#endif
+
 #include <QScreen>
 #include <cmath>
 
@@ -374,13 +378,6 @@ void SettingsManager::resetSettings()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QString SettingsManager::getAppVersion()
-{
-    return QString::fromLatin1(APP_VERSION);
-}
-
-/* ************************************************************************** */
-
 void SettingsManager::setSysTray(bool value)
 {
     bool trayEnable_saved = m_systrayEnabled;
@@ -487,7 +484,6 @@ void SettingsManager::getScreenInfos()
 }
 
 /* ************************************************************************** */
-#if defined(Q_OS_IOS)
 
 QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
 {
@@ -495,6 +491,7 @@ QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
 
     if (window)
     {
+#if defined(Q_OS_IOS)
         QPlatformWindow *platformWindow = static_cast<QPlatformWindow *>(window->handle());
         if (platformWindow)
         {
@@ -507,16 +504,16 @@ QVariantMap SettingsManager::getSafeAreaMargins(QQuickWindow *window)
         }
         else
         {
-            qDebug() << "No platformWindow";
+            qDebug() << "getSafeAreaMargins() No QPlatformWindow available";
         }
+#endif // defined(Q_OS_IOS)
     }
     else
     {
-        qDebug() << "No window";
+        qDebug() << "getSafeAreaMargins() No QQuickWindow available";
     }
 
     return map;
 }
 
-#endif // defined(Q_OS_IOS)
 /* ************************************************************************** */
