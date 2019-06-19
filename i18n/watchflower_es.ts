@@ -88,24 +88,27 @@
         <translation>Reintertar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="181"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Scan devices</source>
         <translation>Escanear dispositivos</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="202"/>
+        <location filename="../qml/DeviceList.qml" line="199"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth desactivado...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="212"/>
+        <location filename="../qml/DeviceList.qml" line="209"/>
         <source>No devices configured...</source>
         <translation>No hay dispositivos configurados...</translation>
     </message>
-    <message>
-        <location filename="../qml/DeviceList.qml" line="319"/>
-        <source>%1 device(s) selected</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../qml/DeviceList.qml" line="315"/>
+        <source>%n device(s) selected</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -441,12 +444,12 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="361"/>
+        <location filename="../qml/MobileMain.qml" line="351"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="399"/>
+        <location filename="../qml/MobileMain.qml" line="389"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>

@@ -312,8 +312,7 @@ Item {
                 Text {
                     id: textActions
                     anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("%1 device(s) selected").arg(screenDeviceList.selectionCount)
+                    text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
                     color: "white"
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft

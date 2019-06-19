@@ -148,17 +148,15 @@ Item {
         } else if (myDevice.status === 3) {
             textStatus.text = qsTr("Updating... ")
         } else {
-            if (!myDevice.available) {
-                textStatus.text = qsTr("Offline! ")
+            if (myDevice.available) {
+                if (myDevice.isFresh()) {
+                    textStatus.text = qsTr("Just synced!")
+                } else if (myDevice.isAvailable()) {
+                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
+                }
             } else {
-                textStatus.text = ""
+                textStatus.text = qsTr("Offline! ")
             }
-        }
-
-        if (myDevice.isFresh()) {
-            textStatus.text = qsTr("Just synced!")
-        } else if (myDevice.isAvailable()) {
-            textStatus.text += qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
         }
     }
 

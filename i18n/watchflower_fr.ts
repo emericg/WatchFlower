@@ -104,24 +104,31 @@
         <translation>Réessayer</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="181"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Scan devices</source>
         <translation>Rechercher des appareils</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="202"/>
+        <location filename="../qml/DeviceList.qml" line="199"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth désactivé...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="212"/>
+        <location filename="../qml/DeviceList.qml" line="209"/>
         <source>No devices configured...</source>
         <translation>Pas d&apos;appareil configurés...</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../qml/DeviceList.qml" line="315"/>
+        <source>%n device(s) selected</source>
+        <translation>
+            <numerusform>%n appareil sélectionné</numerusform>
+            <numerusform>%n appareils sélectionnés</numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="319"/>
         <source>%1 device(s) selected</source>
-        <translation>%1 appareil(s) selectionné(s)</translation>
+        <translation type="vanished">%1 appareil(s) selectionné(s)</translation>
     </message>
     <message>
         <source>No Bluetooth :-(</source>
@@ -484,12 +491,12 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="361"/>
+        <location filename="../qml/MobileMain.qml" line="351"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="399"/>
+        <location filename="../qml/MobileMain.qml" line="389"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
