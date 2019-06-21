@@ -148,12 +148,11 @@ Item {
         } else if (myDevice.status === 3) {
             textStatus.text = qsTr("Updating... ")
         } else {
-            if (myDevice.available) {
-                if (myDevice.isFresh()) {
+            if (myDevice.isFresh() || myDevice.isAvailable()) {
+                if (myDevice.getLastUpdateInt() <= 1)
                     textStatus.text = qsTr("Just synced!")
-                } else if (myDevice.isAvailable()) {
+                else
                     textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
-                }
             } else {
                 textStatus.text = qsTr("Offline! ")
             }

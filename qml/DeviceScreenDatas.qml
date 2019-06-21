@@ -122,10 +122,11 @@ Item {
             }
         }
 
-        if (myDevice.isFresh()) {
-            textStatus.text = qsTr("Just synced!")
-        } else if (myDevice.isAvailable()) {
-            textStatus.text += qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
+        if (myDevice.isFresh() || myDevice.isAvailable()) {
+            if (myDevice.getLastUpdateInt() <= 1)
+                textStatus.text = qsTr("Just synced!")
+            else
+                textStatus.text += qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
         }
     }
 
