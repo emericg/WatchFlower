@@ -573,6 +573,7 @@ void DeviceManager::updateDevice(const QString &address)
             if (dd->getAddress() == address)
             {
                 m_devices_updatelist += dd;
+                dd->refreshQueue();
 
                 SettingsManager *sm = SettingsManager::getInstance();
                 if (!sm->getBluetoothCompat() || m_devices_updatelist.size() == 1)
