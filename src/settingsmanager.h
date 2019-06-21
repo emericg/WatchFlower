@@ -23,8 +23,8 @@
 #define SETTINGS_MANAGER_H
 /* ************************************************************************** */
 
-#define DEFAULT_UPDATE_INTERVAL     60 // minutes
-#define ERROR_UPDATE_INTERVAL       10 // minutes
+#define DEFAULT_UPDATE_INTERVAL    180 // minutes
+#define ERROR_UPDATE_INTERVAL       60 // minutes
 
 #include <QObject>
 #include <QString>
