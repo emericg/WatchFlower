@@ -456,7 +456,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="76"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation type="unfinished">Avec Android 6+, la recherche de périphériques Bluetooth &quot;basses consommations&quot; nécessite la permission de localisation. L&apos;application n&apos;utilise ni ne conserve votre position. Désolé du dérangement.</translation>
+        <translation>Avec Android 6+, la recherche de périphériques Bluetooth &quot;basses consommations&quot; nécessite la permission de localisation. L&apos;application n&apos;utilise ni ne conserve votre position. Désolé pour le dérangement.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="91"/>

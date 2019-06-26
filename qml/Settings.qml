@@ -277,8 +277,8 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
-                // desktop only
-                //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                // desktop only // for now...
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
                 SwitchThemed {
                     id: switch_worker
@@ -343,8 +343,8 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
-                // desktop only
-                //visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                // desktop only // for now...
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
                 SwitchThemed {
                     id: switch_notifiations
