@@ -302,9 +302,6 @@ void DeviceManager::scanDevices()
 {
     if (hasBluetooth())
     {
-        qDeleteAll(m_devices);
-        m_devices.clear();
-
         qDebug() << "Scanning (Bluetooth) for devices...";
 
         // BLE discovery agent
@@ -396,7 +393,7 @@ void DeviceManager::deviceDiscoveryFinished()
     Q_EMIT scanningChanged();
 
     // Now refresh devices datas
-    refreshDevices_start();
+    refreshDevices_check();
 }
 
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
@@ -601,6 +598,21 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1")
         {
+            // Check if it's not already in the UI
+            for (auto ed: m_devices)
+            {
+                Device *edd = qobject_cast<Device*>(ed);
+#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+                if (edd && edd->getAddress() == info.deviceUuid().toString())
+#else
+                if (edd && edd->getAddress() == info.address().toString())
+#endif
+                {
+                    return;
+                }
+            }
+
+            // Add it to the UI
             Device *d = nullptr;
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
@@ -620,7 +632,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
 
-            // Also add it to the database?
+            // Add it to the database?
             if (m_db)
             {
                 // if
