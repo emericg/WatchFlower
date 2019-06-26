@@ -233,8 +233,14 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        deviceManager.refreshDevices_start()
-                        drawer.close()
+                        if (!deviceManager.scanning) {
+                            if (deviceManager.refreshing) {
+                                deviceManager.refreshDevices_stop()
+                            } else {
+                                deviceManager.refreshDevices_start()
+                            }
+                            drawer.close()
+                        }
                     }
                 }
 
@@ -287,8 +293,10 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        deviceManager.scanDevices()
-                        drawer.close()
+                        if (!deviceManager.scanning && !deviceManager.refreshing) {
+                            deviceManager.scanDevices()
+                            drawer.close()
+                        }
                     }
                 }
 

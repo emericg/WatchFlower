@@ -111,8 +111,11 @@ Device::~Device()
 
 void Device::refreshQueue()
 {
-    m_status = DEVICE_QUEUED;
-    Q_EMIT statusUpdated();
+    if (m_status == DEVICE_OFFLINE)
+    {
+        m_status = DEVICE_QUEUED;
+        Q_EMIT statusUpdated();
+    }
 }
 
 void Device::refreshStart()

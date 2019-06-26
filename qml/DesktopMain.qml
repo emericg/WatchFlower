@@ -59,8 +59,16 @@ ApplicationWindow {
                 deviceManager.updateDevice(currentlySelectedDevice.deviceAddress)
             }
         }
-        onRefreshButtonClicked: deviceManager.refreshDevices_start()
-        onRescanButtonClicked: deviceManager.scanDevices()
+        onRefreshButtonClicked: {
+            if (!deviceManager.scanning && !deviceManager.refreshing) {
+                deviceManager.refreshDevices_start()
+            }
+        }
+        onRescanButtonClicked: {
+            if (!deviceManager.scanning && !deviceManager.refreshing) {
+                deviceManager.scanDevices()
+            }
+        }
 
         onPlantsButtonClicked: content.state = "DeviceList"
         onSettingsButtonClicked: content.state = "Settings"
