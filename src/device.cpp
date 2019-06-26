@@ -117,7 +117,7 @@ void Device::refreshQueue()
 
 void Device::refreshStart()
 {
-   // qDebug() << "Device::refreshStart()" << getAddress() << getName();
+    //qDebug() << "Device::refreshStart()" << getAddress() << getName();
 
     if (getLastUpdateInt() < 0 || getLastUpdateInt() > 1)
     {

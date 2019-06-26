@@ -89,21 +89,21 @@
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="178"/>
-        <source>Scan devices</source>
+        <source>Launch detection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="199"/>
+        <location filename="../qml/DeviceList.qml" line="197"/>
         <source>Bluetooth disabled...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="209"/>
-        <source>No devices configured...</source>
+        <location filename="../qml/DeviceList.qml" line="207"/>
+        <source>No device...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="315"/>
+        <location filename="../qml/DeviceList.qml" line="313"/>
         <source>%n device(s) selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -134,52 +134,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="126"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="127"/>
         <source>Just synced!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="128"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="129"/>
         <source>Synced %1 ago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="232"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="233"/>
         <source>Plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="332"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="333"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="433"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="434"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="444"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="445"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="491"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="492"/>
         <source>Hygrometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="502"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="503"/>
         <source>Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="513"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="514"/>
         <source>Luminosity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="524"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="525"/>
         <source>Fertility</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,22 +285,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="152"/>
-        <source>Offline! </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/DeviceThermometer.qml" line="159"/>
+        <location filename="../qml/DeviceThermometer.qml" line="153"/>
         <source>Just synced!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="161"/>
+        <location filename="../qml/DeviceThermometer.qml" line="155"/>
         <source>Synced %1 ago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="227"/>
+        <location filename="../qml/DeviceThermometer.qml" line="157"/>
+        <source>Offline! </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceThermometer.qml" line="224"/>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,13 +375,18 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="70"/>
-        <source>On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.</source>
+        <location filename="../qml/components/ItemNoDevice.qml" line="76"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="81"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="91"/>
         <source>Official informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="97"/>
+        <source>Launch detection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -420,6 +425,16 @@
 </context>
 <context>
     <name>MobileMain</name>
+    <message>
+        <location filename="../qml/MobileMain.qml" line="199"/>
+        <source>Welcome</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/MobileMain.qml" line="313"/>
+        <source>Thermometer</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="351"/>
         <source>Settings</source>

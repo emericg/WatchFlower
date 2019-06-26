@@ -175,12 +175,10 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: false
-                text: qsTr("Scan devices")
+                text: qsTr("Launch detection")
                 color: "white"
 
-                onClicked: {
-                    deviceManager.scanDevices()
-                }
+                onClicked: deviceManager.scanDevices()
             }
 
             function hide() {
@@ -206,7 +204,7 @@ Item {
 
                 itemStatus.source = "ItemNoDevice.qml"
 
-                textStatus.text = qsTr("No devices configured...");
+                textStatus.text = qsTr("No device...");
                 buttonBluetooth.visible = false
                 buttonSearch.visible = true
             }
@@ -371,8 +369,6 @@ Item {
 
     Loader {
         id: itemStatus
-        anchors.verticalCenterOffset: 26
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
     }
 }

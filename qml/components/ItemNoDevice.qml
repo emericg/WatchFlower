@@ -29,13 +29,16 @@ Item {
 
     Column {
         id: column
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 32
+        anchors.right: parent.right
+        anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
 
         ImageSvg {
             id: image
-            width: 256
-            height: 256
+            width: 200
+            height: 200
             anchors.horizontalCenter: parent.horizontalCenter
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -63,23 +66,38 @@ Item {
         }
 
         Text {
-            width: 400
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.right: parent.right
+            anchors.left: parent.left
+
             visible: (Qt.platform.os === "android")
 
-            text: qsTr("On Android 6+, scanning for Bluetooth low energy devices needs location permissions. The application is not using or storing GPS, sorry for the inconveniance.")
+            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.")
+            font.pixelSize: 14
+            color: Theme.colorSubText
             wrapMode: Text.WordWrap
-            font.pixelSize: 16
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        Item { width: 1; height: 16; }
+        Item { width: 1; height: 16; anchors.horizontalCenter: parent.horizontalCenter } // spacer
 
-        ButtonThemed {
+        Row {
+            id: row
             anchors.horizontalCenter: parent.horizontalCenter
-            visible: (Qt.platform.os === "android")
+            spacing: 16
 
-            text: qsTr("Official informations")
-            onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
+            ButtonThemed {
+                visible: (Qt.platform.os === "android")
+
+                text: qsTr("Official informations")
+                color: Theme.colorSubText
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
+            }
+
+            ButtonThemed {
+                text: qsTr("Launch detection")
+                color: Theme.colorGreen
+                onClicked: deviceManager.scanDevices()
+            }
         }
     }
 }

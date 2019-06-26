@@ -52,24 +52,6 @@ DeviceManager::DeviceManager()
     checkBluetooth();
     checkDatabase();
 
-    // BLE discovery agent
-    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
-    if (m_discoveryAgent)
-    {
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
-
-        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                this, &DeviceManager::addBleDevice);
-        connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
-                this, &DeviceManager::deviceDiscoveryError);
-        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                this, &DeviceManager::deviceDiscoveryFinished);
-    }
-    else
-    {
-        qWarning() << "Unable to create BLE discovery agent...";
-    }
-
     // Load saved devices
     if (m_db)
     {
@@ -325,11 +307,35 @@ void DeviceManager::scanDevices()
 
         qDebug() << "Scanning (Bluetooth) for devices...";
 
-        m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-        if (m_discoveryAgent->isActive())
+        // BLE discovery agent
+        if (!m_discoveryAgent)
         {
-            m_scanning = true;
-            Q_EMIT scanningChanged();
+            m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+            if (m_discoveryAgent)
+            {
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
+
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                        this, &DeviceManager::addBleDevice);
+                connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
+                        this, &DeviceManager::deviceDiscoveryError);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                        this, &DeviceManager::deviceDiscoveryFinished);
+            }
+            else
+            {
+                qWarning() << "Unable to create BLE discovery agent...";
+            }
+        }
+
+        if (m_discoveryAgent)
+        {
+            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+            if (m_discoveryAgent->isActive())
+            {
+                m_scanning = true;
+                Q_EMIT scanningChanged();
+            }
         }
     }
 }
@@ -340,7 +346,7 @@ void DeviceManager::deviceDiscoveryFinished()
 
     if (m_db)
     {
-        qDebug() << "Scanning (database) for (duplicated) devices...";
+        qDebug() << "Scanning (database) for saved devices (not found by scanning)...";
 
         QSqlQuery queryDevices;
         queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
@@ -609,8 +615,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             if (!d)
                 return;
 
+            connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
             m_devices.append(d);
-            Q_EMIT devicesUpdated();
 
             qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
 
@@ -635,6 +641,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                     addDevice.exec();
                 }
             }
+
+            Q_EMIT devicesUpdated();
         }
         else
         {

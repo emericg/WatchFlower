@@ -42,7 +42,7 @@ Item {
     Connections {
         target: boxDevice
         onStatusUpdated: updateBoxDatas()
-        onSensorUpdated: updateBoxDatas()
+        onSensorUpdated: updateSensorDatas()
         onDatasUpdated: updateBoxDatas()
         onLimitsUpdated: updateBoxDatas()
     }
@@ -50,7 +50,6 @@ Item {
     Component.onCompleted: initBoxDatas()
 
     function initBoxDatas() {
-
         // Device picture
         if (boxDevice.deviceName === "MJ_HT_V1") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
@@ -61,6 +60,11 @@ Item {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
+        updateSensorDatas()
+        updateBoxDatas()
+    }
+
+    function updateSensorDatas() {
         // Sensor battery level
         if (boxDevice.hasBatteryLevel()) {
             imageBattery.visible = true
@@ -81,7 +85,7 @@ Item {
             } else if (boxDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
             } else if (boxDevice.deviceBattery > 1) {
-                imageBattery.color = Theme.colorRed
+                imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
@@ -90,8 +94,6 @@ Item {
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             imageBattery.visible = false
         }
-
-        updateBoxDatas()
     }
 
     function updateBoxDatas() {

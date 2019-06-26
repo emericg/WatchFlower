@@ -115,13 +115,14 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
                 if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT datasUpdated();
                 }
                 if (Version(m_firmware) <= Version("2.6.6"))
                 {
                     need_firstsend = false;
                 }
             }
+
+            Q_EMIT sensorUpdated();
 
             if (need_firstsend) // if firmware > 2.6.6
             {

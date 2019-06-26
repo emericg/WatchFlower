@@ -99,7 +99,7 @@ Item {
             } else if (myDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
             } else if (myDevice.deviceBattery > 1) {
-                imageBattery.color = Theme.colorRed
+                imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";

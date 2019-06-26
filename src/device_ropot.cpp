@@ -114,9 +114,10 @@ void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newSt
                 if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT datasUpdated();
                 }
             }
+
+            Q_EMIT sensorUpdated();
 
             if (need_firstsend) // always?
             {

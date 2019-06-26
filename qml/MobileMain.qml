@@ -196,7 +196,7 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: header
-                    title: "Welcome"
+                    title: qsTr("Welcome")
                 }
                 PropertyChanges {
                     target: screenTutorial
@@ -310,7 +310,7 @@ ApplicationWindow {
 
                 PropertyChanges {
                     target: header
-                    title: "Thermometer"
+                    title: qsTr("Thermometer")
                 }
                 PropertyChanges {
                     target: screenTutorial

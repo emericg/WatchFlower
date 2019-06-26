@@ -177,6 +177,8 @@ void DeviceHygrotemp::serviceDetailsDiscovered(QLowEnergyService::ServiceState n
                 }
             }
         }
+
+        Q_EMIT sensorUpdated();
     }
 }
 
