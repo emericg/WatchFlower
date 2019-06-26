@@ -100,8 +100,6 @@ Item {
 
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
-        water.visible = false
-        temp.visible = false
 
         // Texts
         if (boxDevice.deviceName === "MJ_HT_V1") {
@@ -146,11 +144,14 @@ Item {
         }
 
         // Water me notif
-        if (boxDevice.deviceHygro > 0) {
-            if (boxDevice.deviceName !== "MJ_HT_V1") {
-                if (boxDevice.deviceHygro < boxDevice.limitHygroMin) {
-                    water.visible = true
-                }
+        water.visible = false
+        if (boxDevice.deviceName !== "MJ_HT_V1") {
+            if (boxDevice.deviceHygro > 0 && boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+                water.visible = true
+                temp.color = Theme.colorBlue
+            } else if (boxDevice.deviceHygro > boxDevice.limitHygroMax) {
+                water.visible = true
+                temp.color = Theme.colorYellow
             }
         }
         // Extreme temperature notif
@@ -160,6 +161,8 @@ Item {
         } else if (boxDevice.deviceTempC > -80 && boxDevice.deviceTempC  <= 0) {
             temp.visible = true
             temp.color = Theme.colorBlue
+        } else {
+            temp.visible = false
         }
 
         // Update notif
