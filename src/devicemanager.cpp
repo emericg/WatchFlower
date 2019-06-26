@@ -552,7 +552,7 @@ void DeviceManager::refreshDevices_stop()
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && dd->isUpdating()) dd->refreshStop();
+            if (dd) dd->refreshStop();
         }
 
         Q_EMIT refreshingChanged();
@@ -577,6 +577,8 @@ void DeviceManager::updateDevice(const QString &address)
             {
                 m_devices_updatelist += dd;
                 dd->refreshQueue();
+
+                Q_EMIT refreshingChanged();
 
                 SettingsManager *sm = SettingsManager::getInstance();
                 if (!sm->getBluetoothCompat() || m_devices_updatelist.size() == 1)
