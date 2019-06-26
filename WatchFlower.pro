@@ -5,7 +5,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
 QT     += core bluetooth sql
-QT     += gui widgets svg qml quick quickcontrols2 charts
+QT     += qml quickcontrols2 charts svg
 android { QT += androidextras }
 ios { QT += gui-private }
 
