@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
         SettingsManager *sm = SettingsManager::getInstance();
         SystrayManager *st = SystrayManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
+        Q_UNUSED(nm)
         DeviceManager *dm = new DeviceManager;
 
         if (!sm || !st || !dm)
@@ -140,6 +141,7 @@ int main(int argc, char *argv[])
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
+    Q_UNUSED(nm)
     DeviceManager *dm = new DeviceManager;
 
     if (!sm || !st || !dm)

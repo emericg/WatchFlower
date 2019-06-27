@@ -84,6 +84,8 @@ Item {
         rangeSlider_hygro.second.value = myDevice.limitHygroMax
         rangeSlider_temp.first.value = myDevice.limitTempMin
         rangeSlider_temp.second.value = myDevice.limitTempMax
+        spinBox1.value = myDevice.limitLumiMin
+        spinBox2.value = myDevice.limitLumiMax
         rangeSlider_condu.first.value = myDevice.limitConduMin
         rangeSlider_condu.second.value = myDevice.limitConduMax
     }
@@ -220,12 +222,8 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
-                        onEntered: {
-                            textFwUpdate.text = qsTr("Use official app to upgrade")
-                        }
-                        onExited: {
-                            textFwUpdate.text = qsTr("Update available!")
-                        }
+                        onEntered: textFwUpdate.text = qsTr("Use official app to upgrade")
+                        onExited: textFwUpdate.text = qsTr("Update available!")
                     }
                 }
 
@@ -313,12 +311,13 @@ Item {
                     id: text8
                     width: 40
                     height: 40
-                    text: rangeSlider_hygro.first.value.toFixed(0)
                     anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
-                    verticalAlignment: Text.AlignVCenter
                     anchors.left: imageHygro.right
+
+                    text: rangeSlider_hygro.first.value.toFixed(0)
+                    font.pixelSize: 14
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
                 RangeSliderThemed {
                     id: rangeSlider_hygro
@@ -332,22 +331,27 @@ Item {
                     from: 0
                     to: 66
                     stepSize: 1
-                    first.value: myDevice.limitHygroMin
-                    second.value: myDevice.limitHygroMax
-                    first.onValueChanged: myDevice.limitHygroMin = first.value.toFixed(0);
-                    second.onValueChanged: myDevice.limitHygroMax = second.value.toFixed(0);
+                    first.onValueChanged: if (myDevice) myDevice.limitHygroMin = first.value.toFixed(0);
+                    second.onValueChanged: if (myDevice) myDevice.limitHygroMax = second.value.toFixed(0);
+                    Component.onCompleted: {
+                        if (myDevice) {
+                            first.value = myDevice.limitHygroMin
+                            second.value = myDevice.limitHygroMax
+                        }
+                    }
                 }
                 Text {
                     id: text9
                     width: 40
                     height: 40
-                    text: rangeSlider_hygro.second.value.toFixed(0)
                     anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
-                    verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 4
+
+                    text: rangeSlider_hygro.second.value.toFixed(0)
+                    font.pixelSize: 14
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
 
@@ -373,12 +377,13 @@ Item {
                     id: text3
                     width: 40
                     height: 40
-                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageTemp.right
+
+                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)
                     font.pixelSize: 14
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
                 RangeSliderThemed {
                     id: rangeSlider_temp
@@ -392,22 +397,27 @@ Item {
                     from: 0
                     to: 40
                     stepSize: 1
-                    first.value: myDevice.limitTempMin
-                    second.value: myDevice.limitTempMax
-                    first.onValueChanged: myDevice.limitTempMin = first.value.toFixed(0);
-                    second.onValueChanged: myDevice.limitTempMax = second.value.toFixed(0);
+                    first.onValueChanged: if (myDevice) myDevice.limitTempMin = first.value.toFixed(0);
+                    second.onValueChanged: if (myDevice) myDevice.limitTempMax = second.value.toFixed(0);
+                    Component.onCompleted: {
+                        if (myDevice) {
+                            first.value = myDevice.limitTempMin
+                            second.value = myDevice.limitTempMax
+                        }
+                    }
                 }
                 Text {
                     id: text5
                     width: 40
                     height: 40
-                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
+
+                    text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)
                     font.pixelSize: 14
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
 
@@ -433,12 +443,13 @@ Item {
                     id: text1
                     width: 40
                     height: 40
-                    text: qsTr("MIN")
                     anchors.left: imageLumi.right
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("MIN")
+                    font.pixelSize: 12
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 12
                 }
                 SpinBoxThemed {
                     id: spinBox1
@@ -450,8 +461,8 @@ Item {
                     from: 0
                     to: 5000
                     stepSize: 100
-                    value: myDevice.limitLumiMin
-                    onValueChanged: myDevice.limitLumiMin = value;
+                    Component.onCompleted: if (myDevice) value = myDevice.limitLumiMin;
+                    onValueChanged: if (myDevice) myDevice.limitLumiMin = value;
                 }
                 SpinBoxThemed {
                     id: spinBox2
@@ -463,8 +474,8 @@ Item {
                     from: 500
                     to: 50000
                     stepSize: 100
-                    value: myDevice.limitLumiMax
-                    onValueChanged: myDevice.limitLumiMax = value;
+                    Component.onCompleted: if (myDevice) value = myDevice.limitLumiMax;
+                    onValueChanged: if (myDevice) myDevice.limitLumiMax = value;
                 }
                 Text {
                     id: text2
@@ -502,13 +513,14 @@ Item {
                     id: text7
                     width: 40
                     height: 40
-                    text: rangeSlider_condu.second.value.toFixed(0)
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
-                    verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: rangeSlider_condu.second.value.toFixed(0)
+                    font.pixelSize: 14
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                 }
                 RangeSliderThemed {
                     id: rangeSlider_condu
@@ -522,21 +534,26 @@ Item {
                     from: 0
                     to: 750
                     stepSize: 10
-                    first.value: myDevice.limitConduMin
-                    second.value: myDevice.limitConduMax
-                    first.onValueChanged: myDevice.limitConduMin = first.value.toFixed(0);
-                    second.onValueChanged: myDevice.limitConduMax = second.value.toFixed(0);
+                    first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
+                    second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);
+                    Component.onCompleted: {
+                        if (myDevice) {
+                            first.value = myDevice.limitConduMin
+                            second.value = myDevice.limitConduMax
+                        }
+                    }
                 }
                 Text {
                     id: text6
                     width: 40
                     height: 40
-                    text: rangeSlider_condu.first.value.toFixed(0)
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 14
-                    verticalAlignment: Text.AlignVCenter
                     anchors.left: imageCondu.right
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: rangeSlider_condu.first.value.toFixed(0)
+                    font.pixelSize: 14
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }
