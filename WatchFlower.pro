@@ -102,6 +102,8 @@ linux:!android {
 }
 
 macx {
+    message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
+
     # OS icon
     ICON = assets/desktop/$$lower($${TARGET}).icns
 
@@ -109,11 +111,11 @@ macx {
     #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
 
     # Automatic bundle packaging
-    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/
+    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/ -appstore-compliant
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
-    # Installation
+    # Installation (require deploy step)
     target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
     target.path = $$(HOME)/Applications
     INSTALLS += target
@@ -142,19 +144,13 @@ win32 {
 }
 
 android {
-    #x86
-    #x86_64
-    #armeabi-v7a
-    #arm64-v8a
-    equals(ANDROID_TARGET_ARCH, "arm64-v8a") {
-        #
-    }
+    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
+    message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
-
-    DISTFILES += assets/android/AndroidManifest.xml
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
 }
 
 ios {
-    #
+    message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 }
