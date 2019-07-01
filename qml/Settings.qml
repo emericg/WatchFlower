@@ -318,16 +318,31 @@ Item {
                 }
             }
             Text {
-                id: legend_worker
+                id: legend_worker_mobile
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
 
-                visible: element_worker.visible
+                visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
 
-                text: qsTr("Wake up at a pre-defined intervals to update sensors datas. Only if Bluetooth or Bluetooth control is enabled.")
+                text: qsTr("Wake up at a pre-defined intervals to update sensor datas. Only if Bluetooth or Bluetooth control is enabled.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+            Text {
+                id: legend_worker_desktop
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                topPadding: -12
+
+                visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
+
+                text: qsTr("WatchFlower will stay in the system tray and regularly update sensor datas.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
