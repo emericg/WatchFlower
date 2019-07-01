@@ -36,7 +36,8 @@
 /*!
  * \brief The DeviceHygrotemp class
  *
- * Xiaomi Mijia "BLE Temperature and Humidity sensor with LCD"
+ * Xiaomi MiJia "bluetooth Temperature and Humidity sensor with LCD"
+ * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
  *
  * Protocol infos:
  * - https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18

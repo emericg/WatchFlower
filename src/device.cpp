@@ -306,7 +306,23 @@ bool Device::getSqlInfos()
         }
         else if ((m_deviceName == "MJ_HT_V1") && (m_firmware.size() == 8))
         {
-            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT datasUpdated();
+            }
+        }
+        else if ((m_deviceName == "cleargrass temp & rh") && (m_firmware.size() == 8))
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT datasUpdated();
+            }
+        }
+        else if ((m_deviceName == "LYWSD02") && (m_firmware.size() == 10))
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT datasUpdated();

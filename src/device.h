@@ -34,9 +34,11 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
 
-#define LATEST_KNOWN_FIRMWARE_FLOWERCARE    "3.1.8"
-#define LATEST_KNOWN_FIRMWARE_ROPOT         "1.1.5"
-#define LATEST_KNOWN_FIRMWARE_HYGROTEMP     "00.00.66"
+#define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.1.9"
+#define LATEST_KNOWN_FIRMWARE_ROPOT             "1.1.5"
+#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD     "00.00.66"
+#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK    "00.00.66"
+#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
 
 /* ************************************************************************** */
 
@@ -47,6 +49,7 @@ enum DeviceCapabilities {
     DEVICE_LUMINOSITY        = (1 << 3), //!< Has a luminosity sensor
     DEVICE_SOIL_MOISTURE     = (1 << 4), //!< Has a soil moisture sensor (can be associated to a plant)
     DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
+    DEVICE_CLOCK             = (1 << 6), //!< Has an onboard clock
 };
 
 enum DeviceStatus {

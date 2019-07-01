@@ -51,8 +51,10 @@ Item {
 
     function initBoxDatas() {
         // Device picture
-        if (boxDevice.deviceName === "MJ_HT_V1") {
+        if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "cleargrass temp & rh") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
+        } else if (boxDevice.deviceName === "LYWSD02") {
+            imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
         } else {
             if (boxDevice.hasDatas("hygro"))
                 imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
