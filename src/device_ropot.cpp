@@ -80,7 +80,7 @@ void DeviceRopot::serviceScanDone()
 
 void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    //qDebug() << "addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceRopot::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
@@ -94,10 +94,10 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 {
-    //qDebug() << "DeviceRopot::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
+        //qDebug() << "DeviceRopot::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
+
         if (serviceData)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38

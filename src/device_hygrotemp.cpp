@@ -129,23 +129,36 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
     }
 }
 
-void DeviceHygrotemp::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
+void DeviceHygrotemp::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    //qDebug() << "DeviceHygrotemp::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        if (serviceData)
-        {
-            // Characteristic "Temp&Humi"
-            QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handler 0x??
-            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-            m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+        //qDebug() << "DeviceHygrotemp::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-            // Characteristic "Message"
-            //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handler 0x??
+        // Characteristic "Firmware Revision String"
+        QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x19
+        QLowEnergyCharacteristic chc = serviceInfo->characteristic(c);
+        if (chc.value().size() > 0)
+        {
+           m_firmware = chc.value();
         }
+
+        if (m_firmware.size() == 8)
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
+    }
+}
+
+void DeviceHygrotemp::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceHygrotemp::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 /*
         if (serviceBattery)
         {
@@ -158,27 +171,26 @@ void DeviceHygrotemp::serviceDetailsDiscovered(QLowEnergyService::ServiceState n
             }
         }
 */
-        if (serviceInfo)
+    }
+}
+
+void DeviceHygrotemp::serviceDetailsDiscovered_datas(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceHygrotemp::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceData)
         {
-            // Characteristic "Firmware Revision String"
-            QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x19
-            QLowEnergyCharacteristic chc = serviceInfo->characteristic(c);
-            if (chc.value().size() > 0)
-            {
-               m_firmware = chc.value();
-            }
+            // Characteristic "Temp&Humi"
+            QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handler 0x??
+            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+            m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
 
-            if (m_firmware.size() == 8)
-            {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP))
-                {
-                    m_firmware_uptodate = true;
-                    Q_EMIT datasUpdated();
-                }
-            }
+            // Characteristic "Message"
+            //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handler 0x??
         }
-
-        Q_EMIT sensorUpdated();
     }
 }
 

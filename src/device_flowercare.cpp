@@ -81,7 +81,7 @@ void DeviceFlowercare::serviceScanDone()
 
 void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    //qDebug() << "addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceFlowercare::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
@@ -95,10 +95,10 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
 {
-    //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
+        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
+
         if (serviceData)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
