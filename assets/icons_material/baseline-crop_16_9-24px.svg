@@ -12,7 +12,7 @@
    viewBox="0 0 24 24"
    version="1.1"
    id="svg6"
-   sodipodi:docname="baseline-crop_16_9-24px (copie).svg"
+   sodipodi:docname="baseline-crop_16_9-24px.svg"
    inkscape:version="0.92.4 5da689c313, 2019-01-14">
   <metadata
      id="metadata12">
@@ -40,18 +40,18 @@
      inkscape:window-height="480"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="31.949567"
-     inkscape:cx="13.66741"
-     inkscape:cy="12.470912"
+     inkscape:zoom="45.183511"
+     inkscape:cx="12.705417"
+     inkscape:cy="13.123311"
      inkscape:current-layer="svg6" />
   <path
      d="M0 0h24v24H0z"
      fill="none"
      id="path2" />
   <path
-     d="M 20.028249,5.1186443 H 3.9717516 c -1.261582,0 -2.2937854,1.0322034 -2.2937854,2.2937854 v 9.1751413 c 0,1.261582 1.0322034,2.293786 2.2937854,2.293786 H 20.028249 c 1.261582,0 2.293786,-1.032204 2.293786,-2.293786 V 7.4124297 c 0,-1.261582 -1.032204,-2.2937854 -2.293786,-2.2937854 z M 19.828,16.388 H 4.1720001 L 4.1719377,7.612 H 19.827938 Z"
+     d="M 20.28386,4.8995488 H 3.7161403 c -1.3017495,0 -2.3668172,1.0650676 -2.3668172,2.366817 v 9.4672672 c 0,1.30175 1.0650677,2.366819 2.3668172,2.366819 H 20.28386 c 1.301748,0 2.366817,-1.065069 2.366817,-2.366819 V 7.2663658 c 0,-1.3017494 -1.065069,-2.366817 -2.366817,-2.366817 z M 19.677032,16.128 H 4.4230322 L 4.4229677,7.872 H 19.676968 Z"
      id="path4"
      inkscape:connector-curvature="0"
-     style="stroke-width:1"
+     style="stroke-width:0.99999994"
      sodipodi:nodetypes="sssssssssccccc" />
 </svg>

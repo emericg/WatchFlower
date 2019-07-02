@@ -32,6 +32,7 @@ SOURCES  += src/main.cpp \
             src/device.cpp \
             src/device_flowercare.cpp \
             src/device_hygrotemp.cpp \
+            src/device_hygrotemp_clock.cpp \
             src/device_ropot.cpp
 
 HEADERS  += src/settingsmanager.h \
@@ -42,6 +43,7 @@ HEADERS  += src/settingsmanager.h \
             src/device.h \
             src/device_flowercare.h \
             src/device_hygrotemp.h \
+            src/device_hygrotemp_clock.h \
             src/device_ropot.h
 
 RESOURCES   += qml/qml.qrc \

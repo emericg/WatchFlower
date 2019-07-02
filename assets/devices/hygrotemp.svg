@@ -14,7 +14,7 @@
    viewBox="0 0 21.166666 21.166667"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.2 2405546, 2018-03-11"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
    sodipodi:docname="hygrotemp.svg">
   <defs
      id="defs2" />
@@ -25,9 +25,9 @@
      borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.4"
-     inkscape:cx="47.937348"
-     inkscape:cy="37.74454"
+     inkscape:zoom="15.839192"
+     inkscape:cx="16.847583"
+     inkscape:cy="42.223628"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -155,29 +155,6 @@
        d="m 7.1074301,291.76997 a 6.5109009,6.5084272 0 0 0 3.7001109,1.15492 6.5109009,6.5084272 0 0 0 3.690088,-1.15492 z"
        id="path4543-8"
        inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-7.9375"
-       y="285.09375"
-       id="text4600"><tspan
-         sodipodi:role="line"
-         id="tspan4598"
-         x="-7.9375"
-         y="285.09375"
-         style="stroke-width:0.26458332"> </tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:9.50563622px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="23.875738"
-       y="280.53006"
-       id="text830"
-       transform="scale(1.00019,0.99981002)"><tspan
-         sodipodi:role="line"
-         id="tspan828"
-         x="23.875738"
-         y="280.53006"
-         style="stroke-width:0.26458332"> </tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -186,25 +163,25 @@
      style="display:none">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="5.4411774"
-       y="10.573541"
+       style="font-style:normal;font-weight:normal;font-size:7.81282139px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#dadada;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="7.0362158"
+       y="10.081363"
        id="text4547-7"><tspan
          sodipodi:role="line"
          id="tspan4545-5"
-         x="5.4411774"
-         y="10.573541"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:7.76111126px;font-family:'URW Gothic';-inkscape-font-specification:'URW Gothic Semi-Bold';fill:#b1b1b1;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1">24. </tspan></text>
+         x="7.0362158"
+         y="10.081363"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.72940302px;font-family:'URW Gothic';-inkscape-font-specification:'URW Gothic Semi-Bold';fill:#dadada;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1">24. </tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="6.5295377"
-       y="16.045097"
+       style="font-style:normal;font-weight:normal;font-size:8.85094357px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#dadada;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="7.3789358"
+       y="15.065795"
        id="text4557-3"><tspan
          sodipodi:role="line"
          id="tspan4555-5"
-         x="6.5295377"
-         y="16.045097"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.93888903px;font-family:'URW Gothic';-inkscape-font-specification:'URW Gothic Semi-Bold';fill:#b1b1b1;fill-opacity:1;stroke-width:0.26458332">50</tspan></text>
+         x="7.3789358"
+         y="15.065795"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:4.13044024px;font-family:'URW Gothic';-inkscape-font-specification:'URW Gothic Semi-Bold';fill:#dadada;fill-opacity:1;stroke-width:0.26458332">50</tspan></text>
   </g>
 </svg>
