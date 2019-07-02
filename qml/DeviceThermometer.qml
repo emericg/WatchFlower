@@ -128,8 +128,8 @@ Item {
             sensorTemp.text = myDevice.getTempString()
         else
             sensorTemp.text = "?"
-        if (myDevice.deviceHygro > 0)
-            sensorHygro.text = myDevice.deviceHygro + "% " + qsTr("humidity")
+        if (myDevice.deviceHumidity > 0)
+            sensorHygro.text = myDevice.deviceHumidity + "% " + qsTr("humidity")
         else
             sensorHygro.text = ""
 

@@ -119,7 +119,7 @@ Item {
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
         if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
-            max_of_legend = 100.0; // no need to go higher than 100% hygrometry
+            max_of_legend = 100.0; // no need to go higher than 100% humidity
         }
         axisY0.max = max_of_legend;
 

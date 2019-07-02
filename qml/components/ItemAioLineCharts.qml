@@ -38,7 +38,7 @@ Item {
         //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
 
         tempDatas.visible = myDevice.hasTemperatureSensor()
-        hygroDatas.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
+        hygroDatas.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
         lumiDatas.visible = false
         conduDatas.visible = myDevice.hasConductivitySensor()
     }
@@ -82,7 +82,7 @@ Item {
                 minmax_of_array = hygroDatas.at(i).y
         var minmax_of_legend = minmax_of_array*1.20;
         if (minmax_of_legend > 100.0)
-            minmax_of_legend = 100.0; // no need to go higher than 100% hygrometry
+            minmax_of_legend = 100.0; // no need to go higher than 100% soil moisture
         else
             axisHygro.max = minmax_of_legend;
 
@@ -119,7 +119,7 @@ Item {
         tempDatas.width = 2
 
         if (myDevice.deviceName === "ropot") {
-            hygroDatas.width = 3 // Hygrometry is primary
+            hygroDatas.width = 3 // Humidity is primary
         }
 
         if (!myDevice.hasSoilMoistureSensor()) {
@@ -128,7 +128,7 @@ Item {
 
         if (myDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroDatas.visible = (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
+            hygroDatas.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
             conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
 
             // Flower Care without hygro & conductivity datas
@@ -146,7 +146,7 @@ Item {
                 minmax_of_legend = minmax_of_array*1.20;
                 axisLumi.max = minmax_of_legend;
             } else {
-                hygroDatas.width = 3 // Hygrometry is primary
+                hygroDatas.width = 3 // Soil moisture is primary
             }
         }
     }

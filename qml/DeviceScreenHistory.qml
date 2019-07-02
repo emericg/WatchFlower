@@ -80,8 +80,8 @@ Item {
         } else {
             tempGraph.visible = false
         }
-        if (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor())  {
-            if (myDevice.deviceHygro > 0 || myDevice.countDatas("hygro") > 0) {
+        if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor())  {
+            if (myDevice.deviceHumidity > 0 || myDevice.countDatas("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
@@ -159,7 +159,7 @@ Item {
         //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
 
         if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
-        if (myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
+        if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
         if (myDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
         if (myDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
     }
@@ -293,7 +293,7 @@ Item {
                 id: hygroLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: qsTr("Hygrometry")
+                text: qsTr("Humidity")
                 color: Theme.colorIcons
                 font.bold: false
                 font.pixelSize: 18

@@ -40,14 +40,14 @@ DeviceHygrotemp::DeviceHygrotemp(QString &deviceAddr, QString &deviceName, QObje
     Device(deviceAddr, deviceName, parent)
 {
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
+    m_capabilities += DEVICE_HUMIDITY;
 }
 
 DeviceHygrotemp::DeviceHygrotemp(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HYGROMETRY;
+    m_capabilities += DEVICE_HUMIDITY;
 }
 
 DeviceHygrotemp::~DeviceHygrotemp()

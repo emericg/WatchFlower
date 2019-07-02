@@ -51,12 +51,12 @@ Item {
         if (graphDataSelected === "hygro") {
             if (!myDevice.hasSoilMoistureSensor())
                 graphDataSelected = "temp"
-            else if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
+            else if (myDevice.deviceHumidity <= 0 && myDevice.deviceConductivity <= 0)
                 graphDataSelected = "temp"
         }
 
         dT.visible = myDevice.hasTemperatureSensor()
-        dH.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
+        dH.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
         dL.visible = myDevice.hasLuminositySensor()
         dC.visible = myDevice.hasConductivitySensor()
     }
@@ -137,7 +137,7 @@ Item {
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
         if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
-            max_of_legend = 100.0; // no need to go higher than 100% hygrometry
+            max_of_legend = 100.0; // no need to go higher than 100% soil moisture
         }
         axisY0.max = max_of_legend;
 

@@ -57,7 +57,7 @@
  *    - byte 2: unknown
  *    - bytes 3-4: brightness in lumens
  *    - bytes 5-6: unknown
- *    - byte 7: hygrometry
+ *    - byte 7: humidity
  *    - byte 8-9: conductivity in µS/cm
  *    - bytes 10-15: unknown
  * 5/ Disconnect (or let the device disconnect you after a couple of seconds)

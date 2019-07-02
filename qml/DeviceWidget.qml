@@ -148,10 +148,10 @@ Item {
         // Water me notif
         water.visible = false
         if (boxDevice.hasSoilMoistureSensor()) {
-            if (boxDevice.deviceHygro > 0 && boxDevice.deviceHygro < boxDevice.limitHygroMin) {
+            if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
                 water.visible = true
                 temp.color = Theme.colorBlue
-            } else if (boxDevice.deviceHygro > boxDevice.limitHygroMax) {
+            } else if (boxDevice.deviceHumidity > boxDevice.limitHygroMax) {
                 water.visible = true
                 temp.color = Theme.colorYellow
             }
@@ -191,18 +191,18 @@ Item {
         if (boxDevice.isAvailable()) {
             if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
-                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHumidity, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
                 lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
-                hygro_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
+                hygro_bg.visible = (boxDevice.deviceHumidity > 0 || boxDevice.deviceConductivity > 0)
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
-                cond_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
+                cond_bg.visible = (boxDevice.deviceHumidity > 0 || boxDevice.deviceConductivity > 0)
             } else {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
-                textHygro.text = boxDevice.deviceHygro + "%"
+                textHygro.text = boxDevice.deviceHumidity + "%"
             }
         }
     }

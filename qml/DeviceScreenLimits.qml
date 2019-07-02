@@ -94,7 +94,7 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
 
         itemTemp.visible = myDevice.hasTemperatureSensor()
-        itemHygro.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
+        itemHygro.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
         itemLumi.visible = myDevice.hasLuminositySensor()
         itemCondu.visible = myDevice.hasConductivitySensor()
     }

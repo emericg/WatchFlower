@@ -45,7 +45,7 @@
 enum DeviceCapabilities {
     DEVICE_BATTERY           = (1 << 0), //!< Can report its battery level
     DEVICE_TEMPERATURE       = (1 << 1), //!< Has a temperature sensor
-    DEVICE_HYGROMETRY        = (1 << 2), //!< Has a hygrometry (or humidity) sensor
+    DEVICE_HUMIDITY          = (1 << 2), //!< Has an humidity sensor
     DEVICE_LUMINOSITY        = (1 << 3), //!< Has a luminosity sensor
     DEVICE_SOIL_MOISTURE     = (1 << 4), //!< Has a soil moisture sensor (can be associated to a plant)
     DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
@@ -90,7 +90,7 @@ class Device: public QObject
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY datasUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY datasUpdated)
-    Q_PROPERTY(int deviceHygro READ getHygro NOTIFY datasUpdated)
+    Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
 
@@ -196,12 +196,13 @@ public slots:
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
 
-    bool hasHygrometrySensor() const { return (m_capabilities & DEVICE_HYGROMETRY); }
-    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
-    bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
-    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
-    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
+    bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
+    bool hasHumiditySensor() const { return (m_capabilities & DEVICE_HUMIDITY); }
+    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
+    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
+    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
+    bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
 
     int getStatus() const { return m_status; }
     bool isUpdating() const { return m_updating; } //!< Is currently being updated
@@ -215,7 +216,7 @@ public slots:
     int getBattery() const { return m_battery; }
 
     // BLE device datas
-    int getHygro() const { return m_hygro; }
+    int getHumidity() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
     float getTemp() const;

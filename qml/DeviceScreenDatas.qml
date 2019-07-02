@@ -154,11 +154,11 @@ Item {
 
         // Has datas? always display them
         if (myDevice.isAvailable()) {
-            humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
+            humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
             lumi.visible = myDevice.hasLuminositySensor()
-            condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHygro > 0)
+            condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
         } else {
-            humi.visible = myDevice.hasHygrometrySensor() || myDevice.hasSoilMoistureSensor()
+            humi.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
             temp.visible = myDevice.hasTemperatureSensor()
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = myDevice.hasConductivitySensor()
@@ -489,10 +489,10 @@ Item {
 
             ItemDataBar {
                 id: humi
-                legend: qsTr("Hygrometry")
+                legend: qsTr("Moisture")
                 unit: "%"
                 color: Theme.colorBlue
-                value: myDevice.deviceHygro
+                value: myDevice.deviceHumidity
                 valueMin: 0
                 valueMax: 50
                 limitMin: myDevice.limitHygroMin
