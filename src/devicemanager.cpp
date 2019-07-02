@@ -468,10 +468,9 @@ void DeviceManager::refreshDevices_check()
     if (isRefreshing())
     {
         // Here we can do:
-
-        // nothing, and queue another refresh
-        //refreshDevices_stop(); // or cancel current refresh
-        return; // or bail
+                                    // - nothing, and queue another refresh
+        //refreshDevices_stop();    // - or cancel current refresh
+        return;                     // - or bail
     }
 
     // Start refresh (if needed)
@@ -520,7 +519,7 @@ void DeviceManager::refreshDevices_continue()
 
 void DeviceManager::refreshDevices_finished(Device *dev)
 {
-    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device left";
+    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device in queue";
 
     if (dev && !m_devices_updatelist.isEmpty())
     {
@@ -534,6 +533,8 @@ void DeviceManager::refreshDevices_finished(Device *dev)
             }
         }
     }
+
+    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device left";
 
     if (m_devices_updatelist.empty())
     {
@@ -578,17 +579,22 @@ void DeviceManager::updateDevice(const QString &address)
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd->getAddress() == address)
+            if (dd && dd->getAddress() == address)
             {
                 m_devices_updatelist += dd;
                 dd->refreshQueue();
 
-                Q_EMIT refreshingChanged();
-
                 SettingsManager *sm = SettingsManager::getInstance();
-                if (!sm->getBluetoothCompat() || m_devices_updatelist.size() == 1)
+                if (!sm->getBluetoothCompat())
+                {
+                    dd->refreshStart();
+                }
+                if (sm->getBluetoothCompat() && m_devices_updatelist.size() == 1)
+                {
                     refreshDevices_continue();
+                }
 
+                Q_EMIT refreshingChanged();
                 break;
             }
         }

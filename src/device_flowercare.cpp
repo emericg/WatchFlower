@@ -58,7 +58,7 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *paren
 
 DeviceFlowercare::~DeviceFlowercare()
 {
-    delete serviceData;
+    delete serviceDatas;
 }
 
 /* ************************************************************************** */
@@ -68,13 +68,13 @@ void DeviceFlowercare::serviceScanDone()
 {
     //qDebug() << "DeviceFlowercare::serviceScanDone(" << m_deviceAddress << ")";
 
-    if (serviceData)
+    if (serviceDatas)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
-            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
-            serviceData->discoverDetails();
+            connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
+            connect(serviceDatas, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
+            serviceDatas->discoverDetails();
         }
     }
 }
@@ -85,10 +85,10 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
-        delete serviceData;
+        delete serviceDatas;
 
-        serviceData = controller->createServiceObject(uuid);
-        if (!serviceData)
+        serviceDatas = controller->createServiceObject(uuid);
+        if (!serviceDatas)
             qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
     }
 }
@@ -99,10 +99,10 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
     {
         //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        if (serviceDatas)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
-            QLowEnergyCharacteristic chc = serviceData->characteristic(c);
+            QLowEnergyCharacteristic chc = serviceDatas->characteristic(c);
             if (chc.value().size() > 0)
             {
                 m_battery = chc.value().at(0);
@@ -127,13 +127,13 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
             if (need_firstsend) // if firmware > 2.6.6
             {
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
+                QLowEnergyCharacteristic cha = serviceDatas->characteristic(a);
+                serviceDatas->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
             QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handler 0x35
-            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-            serviceData->readCharacteristic(chb);
+            QLowEnergyCharacteristic chb = serviceDatas->characteristic(b);
+            serviceDatas->readCharacteristic(chb);
         }
     }
 }

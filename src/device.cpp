@@ -129,6 +129,11 @@ void Device::refreshStart()
     }
     else
     {
+        if (m_status != DEVICE_OFFLINE)
+        {
+            m_status = DEVICE_OFFLINE;
+            Q_EMIT statusUpdated();
+        }
         Q_EMIT deviceUpdated(this);
     }
 }

@@ -52,9 +52,9 @@ DeviceHygrotemp::DeviceHygrotemp(const QBluetoothDeviceInfo &d, QObject *parent)
 
 DeviceHygrotemp::~DeviceHygrotemp()
 {
-    delete serviceData;
+    delete serviceDatas;
     delete serviceBattery;
-    delete serviceInfo;
+    delete serviceInfos;
 }
 
 /* ************************************************************************** */
@@ -64,32 +64,32 @@ void DeviceHygrotemp::serviceScanDone()
 {
     //qDebug() << "DeviceHygrotemp::serviceScanDone(" << m_deviceAddress << ")";
 
+    if (serviceInfos)
+    {
+        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered_infos); // custom
+            serviceInfos->discoverDetails();
+        }
+    }
+
     if (serviceBattery)
     {
         if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered);
+            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered_battery);
             serviceBattery->discoverDetails();
         }
     }
 
-    if (serviceData)
+    if (serviceDatas)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered);
-            connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotemp::confirmedDescriptorWrite);
-            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotemp::bleReadNotify);
-            serviceData->discoverDetails();
-        }
-    }
-
-    if (serviceInfo)
-    {
-        if (serviceInfo->state() == QLowEnergyService::DiscoveryRequired)
-        {
-            connect(serviceInfo, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered); // custom
-            serviceInfo->discoverDetails();
+            connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceHygrotemp::serviceDetailsDiscovered_datas);
+            connect(serviceDatas, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotemp::confirmedDescriptorWrite);
+            connect(serviceDatas, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotemp::bleReadNotify);
+            serviceDatas->discoverDetails();
         }
     }
 }
@@ -100,10 +100,10 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // DeviceHygrotemp Information
     {
-        delete serviceInfo;
+        delete serviceInfos;
 
-        serviceInfo = controller->createServiceObject(uuid);
-        if (!serviceInfo)
+        serviceInfos = controller->createServiceObject(uuid);
+        if (!serviceInfos)
             qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
     }
 /*
@@ -121,10 +121,10 @@ void DeviceHygrotemp::addLowEnergyService(const QBluetoothUuid &uuid)
 */
     if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // datas
     {
-        delete serviceData;
+        delete serviceDatas;
 
-        serviceData = controller->createServiceObject(uuid);
-        if (!serviceData)
+        serviceDatas = controller->createServiceObject(uuid);
+        if (!serviceDatas)
             qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
     }
 }
@@ -137,7 +137,7 @@ void DeviceHygrotemp::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
         // Characteristic "Firmware Revision String"
         QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x19
-        QLowEnergyCharacteristic chc = serviceInfo->characteristic(c);
+        QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
         if (chc.value().size() > 0)
         {
            m_firmware = chc.value();
@@ -180,13 +180,13 @@ void DeviceHygrotemp::serviceDetailsDiscovered_datas(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceHygrotemp::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        if (serviceDatas)
         {
             // Characteristic "Temp&Humi"
             QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handler 0x??
-            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+            QLowEnergyCharacteristic cha = serviceDatas->characteristic(a);
             m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+            serviceDatas->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
 
             // Characteristic "Message"
             //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handler 0x??
@@ -211,7 +211,7 @@ void DeviceHygrotemp::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
                << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+               << hex << data[12] << hex << data[13] << hex << data[14] << hex << data[15];
 */
 }
 
@@ -224,7 +224,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
                << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-               << hex << data[12]  << hex << data[13];
+               << hex << data[12] << hex << data[13];
 */
     if (c.uuid().toString() == "{226caa55-6476-4566-7562-66734470666d}")
     {

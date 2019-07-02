@@ -36,7 +36,7 @@
 /*!
  * \brief The DeviceRopot class
  *
- * Xiaomi Mijia "Ropot" / "Flowerpot" / "Smart flower pot"
+ * Xiaomi MiJia "Ropot" / "Flowerpot" / "Smart flower pot"
  */
 class DeviceRopot: public Device
 {
