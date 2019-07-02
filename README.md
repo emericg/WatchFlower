@@ -13,11 +13,12 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 ### Supported devices
 
-| MiJia "Flower Care" | Ropot | BLE Hygro & Temp |
-| ------------------- | ----- | ---------------- |
-| ![FlowerCare](assets/devices/flowercare.svg) | ![Ropot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) |
+| Flower Care | Ropot | Hygro & Temp sensor | Digital Hygrometer Clock |
+| ----------- | ----- | ------------------- | ------------------------ |
+| ![FlowerCare](assets/devices/flowercare.svg) | ![Ropot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) |
+| International and Chinese versions | | (MiJia LCD and ClearGrass EInk) | |
 
-Various Bluetooth devices can be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done! 
+Various Bluetooth devices can be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done!
 
 ### Desktop screenshot
 
@@ -59,7 +60,7 @@ You can browse the code on the GitHub page, submit patches and pull requests! Yo
 
 ### Users
 
-You can help us find and report bugs, propose new features, help with the documentation and more! Visit the Issues section of the GitHub page to start!
+You can help us find and report bugs, propose new features, help with translation, documentation and more! Visit the Issues section of the GitHub page to start!
 
 
 ## License

@@ -5,7 +5,7 @@
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
  <name>WatchFlower</name>
- <summary>WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / Mijia 'Flower Care' and 'Ropot' devices!</summary>
+ <summary>WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / MiJia 'Flower Care' and 'Ropot' devices!</summary>
  <description>
    <p>
     WatchFlower is a plant monitoring application that reads and plots datas from
@@ -32,6 +32,8 @@
    <keyword>mijia</keyword>
    <keyword>miflora</keyword>
    <keyword>bluetooth</keyword>
+   <keyword>ble</keyword>
+   <keyword>plant</keyword>
    <keyword>plants</keyword>
    <keyword>flower care</keyword>
    <keyword>ropot</keyword>

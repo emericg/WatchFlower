@@ -91,7 +91,7 @@ ApplicationWindow {
                 content.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
                 if (currentlySelectedDevice) {
-                    if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
+                    if (!currentlySelectedDevice.hasSoilMoistureSensor())
                         content.state = "DeviceThermo"
                     else
                         content.state = "DeviceSensor"

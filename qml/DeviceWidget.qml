@@ -104,7 +104,7 @@ Item {
         rectangleHygroTemp.visible = false
 
         // Texts
-        if (boxDevice.deviceName === "MJ_HT_V1") {
+        if (!boxDevice.hasSoilMoistureSensor()) {
             textPlant.text = qsTr("Thermometer")
         } else if (boxDevice.devicePlantName !== "") {
             textPlant.text = boxDevice.devicePlantName
@@ -147,7 +147,7 @@ Item {
 
         // Water me notif
         water.visible = false
-        if (boxDevice.deviceName !== "MJ_HT_V1") {
+        if (boxDevice.hasSoilMoistureSensor()) {
             if (boxDevice.deviceHygro > 0 && boxDevice.deviceHygro < boxDevice.limitHygroMin) {
                 water.visible = true
                 temp.color = Theme.colorBlue
@@ -189,11 +189,7 @@ Item {
 
         // Has datas? always display them
         if (boxDevice.isAvailable()) {
-            if (boxDevice.deviceName === "MJ_HT_V1") {
-                rectangleHygroTemp.visible = true
-                textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
-                textHygro.text = boxDevice.deviceHygro + "%"
-            } else {
+            if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHygro, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
@@ -203,6 +199,10 @@ Item {
                 hygro_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
                 cond_bg.visible = (boxDevice.deviceHygro > 0 || boxDevice.deviceConductivity > 0)
+            } else {
+                rectangleHygroTemp.visible = true
+                textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+                textHygro.text = boxDevice.deviceHygro + "%"
             }
         }
     }
@@ -230,16 +230,16 @@ Item {
                         if (currentlySelectedDevice != boxDevice) {
                             currentlySelectedDevice = boxDevice
 
-                            if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
-                                screenDeviceThermometer.loadDevice()
-                            else
+                            if (currentlySelectedDevice.hasSoilMoistureSensor())
                                 screenDeviceSensor.loadDevice()
+                            else
+                                screenDeviceThermometer.loadDevice()
                         }
 
-                        if (currentlySelectedDevice.deviceName === "MJ_HT_V1")
-                            content.state = "DeviceThermo"
-                        else
+                        if (currentlySelectedDevice.hasSoilMoistureSensor())
                             content.state = "DeviceSensor"
+                        else
+                            content.state = "DeviceThermo"
                     }
 
                     if (mouse.button === Qt.MiddleButton) {

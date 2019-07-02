@@ -49,7 +49,7 @@ Item {
         graphViewSelected = settingsManager.graphHistory
         graphDataSelected = "hygro"
         if (graphDataSelected === "hygro") {
-            if (myDevice.deviceName === "MJ_HT_V1")
+            if (!myDevice.hasSoilMoistureSensor())
                 graphDataSelected = "temp"
             else if (myDevice.deviceHygro <= 0 && myDevice.deviceConductivity <= 0)
                 graphDataSelected = "temp"

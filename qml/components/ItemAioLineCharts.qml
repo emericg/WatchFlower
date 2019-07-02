@@ -96,7 +96,7 @@ Item {
         axisTemp.max = minmax_of_legend;
 
         // Min axis computation, only for thermometers
-        if (myDevice.deviceName === "MJ_HT_V1") {
+        if (!myDevice.hasSoilMoistureSensor()) {
             i = 0
             minmax_of_array = 100
             for (;i < hygroDatas.count; i++)
@@ -122,7 +122,7 @@ Item {
             hygroDatas.width = 3 // Hygrometry is primary
         }
 
-        if (myDevice.deviceName === "MJ_HT_V1") {
+        if (!myDevice.hasSoilMoistureSensor()) {
             tempDatas.width = 3 // Temperature is primary
         }
 
