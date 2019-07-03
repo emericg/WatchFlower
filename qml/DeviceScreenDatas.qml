@@ -69,23 +69,21 @@ Item {
         if (myDevice.hasSoilMoistureSensor()) {
             itemPlant.visible = true
 
-            if (myDevice.devicePlantName === "")
-                imageEditPlant.visible = true
-            else
-                imageEditPlant.visible = false
-
             textInputPlant.text = myDevice.devicePlantName
+            if (textInputPlant.text && !textInputPlant.focus)
+                imageEditPlant.visible = false
+            else
+                imageEditPlant.visible = true
         } else {
             itemPlant.visible = false
         }
 
         // Location
-        if (myDevice.deviceLocationName === "")
-            imageEditLocation.visible = true
-        else
-            imageEditLocation.visible = false
-
         textInputLocation.text = myDevice.deviceLocationName
+        if (textInputLocation.text && !textInputLocation.focus)
+            imageEditLocation.visible = false
+        else
+            imageEditLocation.visible = true
 
         // Status
         updateStatusText()

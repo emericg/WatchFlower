@@ -110,10 +110,11 @@ Item {
         }
 
         // Location
-        if (myDevice.deviceLocationName === "")
-            imageEditLocation.visible = true
-
         textInputLocation.text = myDevice.deviceLocationName
+        if (textInputLocation.text && !textInputLocation.focus)
+            imageEditLocation.visible = false
+        else
+            imageEditLocation.visible = true
 
         // Status
         updateStatusText()
@@ -341,7 +342,7 @@ Item {
 
                     onEntered: { imageEditLocation.visible = true; }
                     onExited: {
-                        if (textInputLocation.text) {
+                        if (textInputLocation.text && !textInputLocation.focus) {
                             imageEditLocation.visible = false
                         } else {
                             imageEditLocation.visible = true
