@@ -27,6 +27,7 @@ import QtQuick 2.9
 import QtCharts 2.2
 
 import com.watchflower.theme 1.0
+import "qrc:/qml/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemAioLineCharts
@@ -41,6 +42,10 @@ Item {
         hygroDatas.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
         lumiDatas.visible = false
         conduDatas.visible = myDevice.hasConductivitySensor()
+
+        dateIndicator.visible = false
+        datasIndicator.visible = false
+        verticalIndicator.visible = false
     }
 
     function updateGraph() {
@@ -151,24 +156,19 @@ Item {
         }
     }
 
+    function qpoint_lerp(p0, p1, x) { return (p0.y + (x - p0.x) * ((p1.y - p0.y) / (p1.x - p0.x))) }
+
     ////////////////////////////////////////////////////////////////////////////
 
     ChartView {
         id: aioGraph
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.topMargin: -20
-        anchors.bottomMargin: -20
-        anchors.leftMargin: -20
-        anchors.rightMargin: -20
+        anchors.fill: parent
+        anchors.margins: -20
 
         antialiasing: true
-        legend.visible: false // this will only work with Qt 5.10+
+        legend.visible: false // works only with Qt 5.10+
         backgroundRoundness: 0
         backgroundColor: "transparent"
-
         //animationOptions: ChartView.SeriesAnimations
 
         ValueAxis { id: axisHygro; visible: false; gridVisible: true; }
@@ -192,15 +192,171 @@ Item {
             id: tempDatas
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
-
-            onClicked: console.log("temp: " + point.x + ", " + point.y);
         }
         LineSeries {
             id: hygroDatas
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
+        }
 
-            onClicked: console.log("hygro: " + point.x + ", " + point.y);
+        MouseArea {
+            id: clickableGraphArea
+            anchors.fill: aioGraph
+            //propagateComposedEvents: true
+            //hoverEnabled: true
+
+            onClicked: {
+                var mmm = Qt.point(mouse.x, mouse.y)
+                mouse.accepted = true
+
+                // we adjust coordinates with graph area margins
+                var ppp = Qt.point(mouse.x, mouse.y)
+                ppp.x = ppp.x + aioGraph.anchors.rightMargin
+                ppp.y = ppp.y - aioGraph.anchors.topMargin
+
+                // map mouse position to graph value // mpmp.x is the timestamp
+                var mpmp = aioGraph.mapToValue(mmm, tempDatas)
+
+                //console.log("clicked " + mouse.x + " " + mouse.y)
+                //console.log("clicked adjusted " + ppp.x + " " + ppp.y)
+                //console.log("clicked mapped " + mpmp.x + " " + mpmp.y)
+
+                // did we actually clicked inside the axis?
+                if (mpmp.x >= tempDatas.at(0).x && mpmp.x <= tempDatas.at(tempDatas.count-1).x) {
+                    // indicators visible
+                    dateIndicator.visible = true
+                    verticalIndicator.visible = true
+                    verticalIndicator.x = ppp.x
+                    // set date
+                    var date = new Date(mpmp.x)
+                    var date_string = date.getDate() + "/" + date.getMonth() + " " + qsTr("at") + " " + date.getHours() + ":" + date.getSeconds()
+                    textTime.text = date_string
+
+                    // search index corresponding to the timestamp
+                    var x1 = -1
+                    var x2 = -1
+                    for (var i = 0; i < tempDatas.count; i++) {
+                        var graph_at_x = tempDatas.at(i).x
+                        var dist = (graph_at_x - mpmp.x) / 1000000
+
+                        if (Math.abs(dist) < 1) {
+                            // nearest neighbor
+                            if (content.state === "DeviceSensor") {
+                                updateDatasBars(tempDatas.at(i).y, lumiDatas.at(i).y,
+                                                hygroDatas.at(i).y, conduDatas.at(i).y)
+                            } else if (content.state === "DeviceThermo") {
+                                datasIndicator.visible = true
+                                textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDatas.at(i).y).toFixed(1) + "°F" : tempDatas.at(i).y.toFixed(1) + "°C"
+                                textDatas.text += " " + hygroDatas.at(i).y.toFixed(0) + "%"
+                            }
+                            break;
+                        } else {
+                            if (dist < 0) {
+                                if (x1 < i) x1 = i
+                            } else {
+                                x2 = i
+                                break
+                            }
+                        }
+                    }
+
+                    if (x1 >= 0 && x2 > x1) {
+                        // linear interpolation
+                        if (content.state === "DeviceSensor") {
+                            updateDatasBars(qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x),
+                                            qpoint_lerp(lumiDatas.at(x1), lumiDatas.at(x2), mpmp.x),
+                                            qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x),
+                                            qpoint_lerp(conduDatas.at(x1), conduDatas.at(x2), mpmp.x))
+                        } else if (content.state === "DeviceThermo") {
+                            datasIndicator.visible = true
+                            var temmp = qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x)
+                            textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                            textDatas.text += " " + qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x).toFixed(0) + "%"
+                        }
+                    }
+                } else {
+                    dateIndicator.visible = false
+                    datasIndicator.visible = false
+                    verticalIndicator.visible = false
+                    if (content.state === "DeviceSensor") resetDatasBars()
+                }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: verticalIndicator
+        x: 0
+        width: 1
+        visible: false
+        color: Theme.colorLightGrey
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 32
+
+        Behavior on x { NumberAnimation { duration: 333 } }
+    }
+
+    Row {
+        id: indicators
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        spacing: 12
+
+        Rectangle {
+            id: dateIndicator
+            width: textTime.width + 12
+            height: textTime.height + 12
+
+            color: Theme.colorLightGrey
+            radius: 8
+            anchors.verticalCenter: parent.verticalCenter
+            visible: false
+
+            Text {
+                id: textTime
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                font.pixelSize: 16
+                font.bold: true
+                color: Theme.colorHeaderContent
+            }
+        }
+
+        Rectangle {
+            id: datasIndicator
+            width: textDatas.width + 12
+            height: textDatas.height + 12
+
+            color: Theme.colorLightGrey
+            radius: 8
+            anchors.verticalCenter: parent.verticalCenter
+            visible: false
+
+            Text {
+                id: textDatas
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                font.pixelSize: 16
+                font.bold: true
+                color: Theme.colorHeaderContent
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: indicators
+        onClicked: {
+            dateIndicator.visible = false
+            datasIndicator.visible = false
+            verticalIndicator.visible = false
+            if (content.state === "DeviceSensor") resetDatasBars()
         }
     }
 }

@@ -144,6 +144,7 @@ Item {
         aioLineCharts.loadGraph()
 
         updateHeader()
+        resetDatasBars()
         updateDatas()
     }
 
@@ -166,6 +167,20 @@ Item {
 
         //
         aioLineCharts.updateGraph()
+    }
+
+    function updateDatasBars(tempD, lumiD, hygroD, conduD) {
+        temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
+        humi.value = hygroD
+        lumi.value = lumiD
+        condu.value = conduD
+    }
+
+    function resetDatasBars() {
+        humi.value = myDevice.deviceHumidity
+        temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
+        lumi.value = myDevice.deviceLuminosity
+        condu.value = myDevice.deviceConductivity
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -519,6 +534,7 @@ Item {
             ItemDataBar {
                 id: temp
                 legend: qsTr("Temperature")
+                floatprecision: 1
                 unit: "°" + settingsManager.tempUnit
                 color: Theme.colorGreen
                 value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
@@ -545,7 +561,7 @@ Item {
                 color: Theme.colorRed
                 value: myDevice.deviceConductivity
                 valueMin: 0
-                valueMax: 750
+                valueMax: 500
                 limitMin: myDevice.limitConduMin
                 limitMax: myDevice.limitConduMax
             }

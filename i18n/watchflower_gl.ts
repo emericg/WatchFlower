@@ -144,42 +144,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="233"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="248"/>
         <source>Plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="333"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="356"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="434"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="466"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="445"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="478"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="492"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="525"/>
         <source>Moisture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="503"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="536"/>
         <source>Temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="514"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="547"/>
         <source>Luminosity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="525"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="558"/>
         <source>Fertility</source>
         <translation type="unfinished"></translation>
     </message>
@@ -300,7 +300,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="224"/>
+        <location filename="../qml/DeviceThermometer.qml" line="243"/>
         <source>Updating...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -369,6 +369,14 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="326"/>
         <source>Hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemAioLineCharts</name>
+    <message>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="232"/>
+        <source>at</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

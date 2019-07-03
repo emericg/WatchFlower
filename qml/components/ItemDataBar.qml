@@ -22,7 +22,7 @@
 import QtQuick 2.9
 
 import com.watchflower.theme 1.0
-import "UtilsNumber.js" as UtilsNumber
+import "qrc:/qml/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemDataBar
@@ -35,6 +35,7 @@ Item {
     property string legend: "legend"
     property string unit: ""
     property string color: "blue"
+    property int floatprecision: 0
 
     property real value: 0
     property int valueMin: 0
@@ -150,7 +151,7 @@ Item {
                     if (value % 1 === 0)
                         return value + unit
                     else
-                        return value.toFixed(1) + unit
+                        return value.toFixed(floatprecision) + unit
                 }
             }
 
