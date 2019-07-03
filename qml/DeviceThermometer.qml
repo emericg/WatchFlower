@@ -309,7 +309,7 @@ Item {
 
                     onEntered: { imageEditLocation.visible = true; }
                     onExited: {
-                        if (textInputLocation.text) {
+                        if (textInputLocation.text && !textInputLocation.focus) {
                             imageEditLocation.visible = false
                         } else {
                             imageEditLocation.visible = true
@@ -331,7 +331,7 @@ Item {
 
                 MouseArea {
                     id: mouseArea1
-                    width: 28
+                    width: 26
                     height: 28
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: textInputLocation.left

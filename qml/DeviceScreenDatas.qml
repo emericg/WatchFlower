@@ -236,6 +236,7 @@ Item {
                     color: Theme.colorText
                     font.pixelSize: 16
                 }
+
                 TextInput {
                     id: textInputPlant
                     height: 28
@@ -264,7 +265,7 @@ Item {
 
                         onEntered: { imageEditPlant.visible = true; }
                         onExited: {
-                            if (textInputPlant.text) {
+                            if (textInputPlant.text && !textInputPlant.focus) {
                                 imageEditPlant.visible = false
                             } else {
                                 imageEditPlant.visible = true
@@ -298,7 +299,7 @@ Item {
 
                         onEntered: { imageEditPlant.visible = true; }
                         onExited: {
-                            if (textInputPlant.text) {
+                            if (textInputPlant.text && !textInputPlant.focus) {
                                 imageEditPlant.visible = false
                             } else {
                                 imageEditPlant.visible = true
@@ -343,6 +344,7 @@ Item {
                     color: Theme.colorText
                     font.pixelSize: 16
                 }
+
                 TextInput {
                     id: textInputLocation
                     height: 28
@@ -372,7 +374,7 @@ Item {
 
                         onEntered: { imageEditLocation.visible = true; }
                         onExited: {
-                            if (textInputLocation.text) {
+                            if (textInputLocation.text && !textInputLocation.focus) {
                                 imageEditLocation.visible = false
                             } else {
                                 imageEditLocation.visible = true
@@ -406,7 +408,7 @@ Item {
 
                         onEntered: { imageEditLocation.visible = true; }
                         onExited: {
-                            if (textInputLocation.text) {
+                            if (textInputLocation.text && !textInputLocation.focus) {
                                 imageEditLocation.visible = false
                             } else {
                                 imageEditLocation.visible = true
