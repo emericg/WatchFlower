@@ -161,6 +161,25 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Item {
+        id: graphBox
+        anchors.top: tempBox.bottom
+        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+
+        ItemAioLineCharts {
+            id: deviceScreenChart
+            anchors.fill: parent
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: tempBox
         height: 256
@@ -230,8 +249,8 @@ Item {
 
         ImageSvg {
             id: imageBattery
-            width: 32
-            height: 32
+            width: 28
+            height: 28
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
@@ -242,6 +261,7 @@ Item {
         Item {
             id: itemLocation
             height: 24
+            width: 96
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.right: parent.right
@@ -251,24 +271,26 @@ Item {
                 id: imageLocation
                 width: 24
                 height: 24
-
-                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
-                color: Theme.colorHeaderContent
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
+                color: Theme.colorHeaderContent
             }
 
             TextInput {
                 id: textInputLocation
+                height: 28
                 anchors.right: imageLocation.left
                 anchors.rightMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 padding: 4
-                color: Theme.colorHeaderContent
                 font.pixelSize: 16
                 font.bold: true
+                color: Theme.colorHeaderContent
+
                 onEditingFinished: {
                     if (text) {
                         imageEditLocation.visible = false
@@ -293,7 +315,6 @@ Item {
                             imageEditLocation.visible = true
                         }
                     }
-
                     onClicked: {
                         imageEditLocation.visible = true;
                         mouse.accepted = false;
@@ -307,40 +328,40 @@ Item {
                     onPositionChanged: mouse.accepted = false;
                     onPressAndHold: mouse.accepted = false;
                 }
+
+                MouseArea {
+                    id: mouseArea1
+                    width: 28
+                    height: 28
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: textInputLocation.left
+                    anchors.rightMargin: 0
+
+                    hoverEnabled: true
+
+                    onEntered: { imageEditLocation.visible = true; }
+                    onExited: {
+                        if (textInputLocation.text) {
+                            imageEditLocation.visible = false
+                        } else {
+                            imageEditLocation.visible = true
+                        }
+                    }
+                    onClicked: textInputLocation.forceActiveFocus()
+                    onPressed: textInputLocation.forceActiveFocus()
+
+                    ImageSvg {
+                        id: imageEditLocation
+                        width: 20
+                        height: 20
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        visible: false
+                        source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                        color: Theme.colorHeaderContent
+                    }
+                }
             }
-
-            ImageSvg {
-                id: imageEditLocation
-                width: 20
-                height: 20
-                anchors.left: textInputLocation.left
-                anchors.leftMargin: -20
-                anchors.verticalCenterOffset: 0
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: false
-                source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                color: Theme.colorHeaderContent
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Item {
-        id: graphBox
-        anchors.top: tempBox.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        ItemAioLineCharts {
-            id: deviceScreenChart
-            anchors.fill: parent
         }
     }
 }

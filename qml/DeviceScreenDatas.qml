@@ -238,6 +238,7 @@ Item {
                 }
                 TextInput {
                     id: textInputPlant
+                    height: 28
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelPlant.right
                     anchors.leftMargin: 8
@@ -284,12 +285,14 @@ Item {
                     }
 
                     MouseArea {
-                        width: 20
-                        height: 20
+                        id: mouseArea
+                        width: 26
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
                         anchors.left: parent.right
-                        anchors.leftMargin: 6
-                        anchors.verticalCenterOffset: 0
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: 0
 
                         hoverEnabled: true
 
@@ -306,11 +309,15 @@ Item {
 
                         ImageSvg {
                             id: imageEditPlant
-                            anchors.fill: parent
+                            width: 20
+                            height: 20
 
                             visible: false
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                             color: Theme.colorIcons
+                            anchors.right: parent.right
+                            anchors.rightMargin: 0
+                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
                 }
@@ -338,6 +345,7 @@ Item {
                 }
                 TextInput {
                     id: textInputLocation
+                    height: 28
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelLocation.right
                     anchors.leftMargin: 8
@@ -356,6 +364,7 @@ Item {
                         myDevice.setLocationName(text)
                         focus = false
                     }
+
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -384,12 +393,14 @@ Item {
                     }
 
                     MouseArea {
-                        width: 20
-                        height: 20
+                        id: mouseArea1
+                        width: 26
                         anchors.left: parent.right
-                        anchors.leftMargin: 6
-                        anchors.verticalCenterOffset: 0
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
 
                         hoverEnabled: true
 
@@ -406,11 +417,15 @@ Item {
 
                         ImageSvg {
                             id: imageEditLocation
-                            anchors.fill: parent
+                            width: 20
+                            height: 20
 
                             visible: false
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                             color: Theme.colorIcons
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.right: parent.right
+                            anchors.rightMargin: 0
                         }
                     }
                 }
@@ -438,6 +453,7 @@ Item {
                 }
                 Text {
                     id: textStatus
+                    height: 28
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: labelStatus.right
                     anchors.leftMargin: 8
