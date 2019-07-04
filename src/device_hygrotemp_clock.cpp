@@ -67,14 +67,14 @@ DeviceHygrotempClock::~DeviceHygrotempClock()
 
 void DeviceHygrotempClock::serviceScanDone()
 {
-    qDebug() << "DeviceHygrotempClock::serviceScanDone(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceHygrotempClock::serviceScanDone(" << m_deviceAddress << ")";
 
     if (serviceDatas)
     {
         if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_datas);
-            connect(serviceDatas, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempClock::confirmedDescriptorWrite);
+            //connect(serviceDatas, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempClock::confirmedDescriptorWrite);
             //connect(serviceDatas, &QLowEnergyService::characteristicRead, this, &DeviceHygrotempClock::bleReadDone);
             connect(serviceDatas, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempClock::bleReadNotify);
 
@@ -120,7 +120,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_datas(QLowEnergyService::Ser
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceDatas)
         {
@@ -176,7 +176,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_datas(QLowEnergyService::Ser
                 // So we don't use a single minute mismatch, but 5, to avoid reseting clock everytime
                 if (std::abs(epoch_read - epoch_now) > 5*60)
                 {
-                    qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
+                    //qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
 
                     QByteArray timedatas_write;
                     timedatas_write.resize(5);
@@ -206,7 +206,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceInfos)
         {
@@ -232,7 +232,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 
 void DeviceHygrotempClock::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    qDebug() << "DeviceHygrotempClock::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceHygrotempClock::bleWriteDone(" << m_deviceAddress << ")";
 }
 
 void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -329,7 +329,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
 
 void DeviceHygrotempClock::confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value)
 {
-    qDebug() << "DeviceHygrotempClock::confirmedDescriptorWrite!";
+    //qDebug() << "DeviceHygrotempClock::confirmedDescriptorWrite!";
 
     if (d.isValid() && d == m_notificationDesc && value == QByteArray::fromHex("0000"))
     {
