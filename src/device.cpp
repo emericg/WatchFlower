@@ -368,7 +368,7 @@ bool Device::getSqlInfos()
     Q_EMIT sensorUpdated();
 
     QSqlQuery getLimits;
-    getLimits.prepare("SELECT hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
+    getLimits.prepare("SELECT hygroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
                       "FROM limits WHERE deviceAddr = :deviceAddr");
     getLimits.bindValue(":deviceAddr", getAddress());
     getLimits.exec();
@@ -630,10 +630,10 @@ bool Device::setDbLimits()
     bool status = false;
 
     QSqlQuery updateLimits;
-    updateLimits.prepare("REPLACE INTO limits (deviceAddr, hyroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax)"
-                         " VALUES (:deviceAddr, :hyroMin, :hygroMax, :tempMin, :tempMax, :lumiMin, :lumiMax, :conduMin, :conduMax)");
+    updateLimits.prepare("REPLACE INTO limits (deviceAddr, hygroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax)"
+                         " VALUES (:deviceAddr, :hygroMin, :hygroMax, :tempMin, :tempMax, :lumiMin, :lumiMax, :conduMin, :conduMax)");
     updateLimits.bindValue(":deviceAddr", getAddress());
-    updateLimits.bindValue(":hyroMin", m_limitHygroMin);
+    updateLimits.bindValue(":hygroMin", m_limitHygroMin);
     updateLimits.bindValue(":hygroMax", m_limitHygroMax);
     updateLimits.bindValue(":tempMin", m_limitTempMin);
     updateLimits.bindValue(":tempMax", m_limitTempMax);

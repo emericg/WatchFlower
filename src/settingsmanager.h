@@ -26,6 +26,8 @@
 #define DEFAULT_UPDATE_INTERVAL    180 // minutes
 #define ERROR_UPDATE_INTERVAL       60 // minutes
 
+#define CURRENT_DB_VERSION           1
+
 #include <QObject>
 #include <QString>
 #include <QApplication>

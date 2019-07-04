@@ -204,6 +204,62 @@ bool SettingsManager::loadDatabase()
                     {
                         m_db = true;
 
+                        // Migrations //////////////////////////////////////////
+
+                        QSqlQuery checkVersion;
+                        checkVersion.exec("PRAGMA table_info(version);");
+                        if (!checkVersion.next())
+                        {
+                            qDebug() << "+ Adding 'version' table to local database";
+
+                            QSqlQuery createVersion;
+                            createVersion.prepare("CREATE TABLE version (dbVersion INT);");
+                            if (createVersion.exec())
+                            {
+                                QSqlQuery addVersion;
+                                addVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
+                                addVersion.bindValue(":dbVersion", 1);
+                                addVersion.exec();
+                            }
+                            else
+                            {
+                                qDebug() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":"  << createVersion.lastError().text();
+                            }
+                        }
+
+                        int dbVersion = 0;
+
+                        QSqlQuery readVersion;
+                        readVersion.prepare("SELECT dbVersion FROM version");
+                        readVersion.exec();
+                        if (readVersion.next())
+                        {
+                            dbVersion = readVersion.value(0).toInt();
+                            //qDebug() << "dbVersion is #" << dbVersion;
+                        }
+
+                        if (dbVersion > 0 && dbVersion != CURRENT_DB_VERSION)
+                        {
+                            bool migration_status = false;
+/*
+                            // Migration exemple: correct a typo
+                            QSqlQuery renameHygro;
+                            renameHygro.prepare("ALTER TABLE limits RENAME COLUMN hyroMin TO hygroMin");
+                            migration_status = renameHygro.exec();
+                            if (migration_status == false)
+                                qDebug() << "> renameHygro.exec() ERROR" << renameHygro.lastError().type() << ":"  << renameHygro.lastError().text();
+*/
+                            // Then update version
+                            if (migration_status)
+                            {
+                                QSqlQuery updateDbVersion;
+                                updateDbVersion.prepare("UPDATE version SET dbVersion=:dbVersion");
+                                updateDbVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
+                                if (updateDbVersion.exec() == false)
+                                    qDebug() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":"  << updateDbVersion.lastError().text();
+                            }
+                        }
+
                         // Check if our tables exists //////////////////////////
 
                         QSqlQuery checkDevices;
@@ -257,7 +313,7 @@ bool SettingsManager::loadDatabase()
                             QSqlQuery createLimits;
                             createLimits.prepare("CREATE TABLE limits (" \
                                                  "deviceAddr CHAR(17)," \
-                                                   "hyroMin INT," \
+                                                   "hygroMin INT," \
                                                    "hygroMax INT," \
                                                    "tempMin INT," \
                                                    "tempMax INT," \
