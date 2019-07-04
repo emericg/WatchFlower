@@ -358,8 +358,8 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
-                // desktop only // for now...
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                // desktop only // for now... // also, need the systray
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && settingsManager.systray
 
                 SwitchThemed {
                     id: switch_notifiations
