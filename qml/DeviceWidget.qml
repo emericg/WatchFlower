@@ -100,7 +100,6 @@ Item {
     }
 
     function updateBoxDatas() {
-
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
 
@@ -146,9 +145,12 @@ Item {
             }
         }
 
-        // Water me notif
         water.visible = false
+        temp.visible = false
+
+        // Warnings are only for plants
         if (boxDevice.hasSoilMoistureSensor()) {
+            // Water me notif
             if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
                 water.visible = true
                 temp.color = Theme.colorBlue
@@ -156,16 +158,23 @@ Item {
                 water.visible = true
                 temp.color = Theme.colorYellow
             }
-        }
-        // Extreme temperature notif
-        if (boxDevice.deviceTempC > 40) {
-            temp.visible = true
-            temp.color = Theme.colorYellow
-        } else if (boxDevice.deviceTempC > -80 && boxDevice.deviceTempC  <= 0) {
-            temp.visible = true
-            temp.color = Theme.colorBlue
-        } else {
-            temp.visible = false
+
+            // Extreme temperature notif
+            if (boxDevice.deviceTempC > 40) {
+                temp.visible = true
+                temp.color = Theme.colorYellow
+                temp.source = "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
+            } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
+                temp.visible = true
+                temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+
+                if (boxDevice.deviceTempC <= -4)
+                    temp.color = Theme.colorRed
+                else if (boxDevice.deviceTempC <= -2)
+                    temp.color = Theme.colorYellow
+                else
+                    temp.color = Theme.colorBlue
+            }
         }
 
         // Update notif
