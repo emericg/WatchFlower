@@ -524,8 +524,10 @@ void SettingsManager::setBigWidget(bool value)
 
 /* ************************************************************************** */
 
-void SettingsManager::getScreenInfos()
+double SettingsManager::getScreenInfos()
 {
+    double screenSize = 1.0;
+
     QScreen *scr = qApp->screens().at(0);
     if (scr)
     {
@@ -544,10 +546,13 @@ void SettingsManager::getScreenInfos()
             qDebug() << "- pixel size (physical) " << scr->size() * scr->devicePixelRatio();
         }
 
-        // TODO // On Android, physicalSize().height probably ignore the button or status bar
+        // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
 
-        qDebug() << "- inches count: " << std::sqrt(std::pow(scr->physicalSize().width(), 2) + std::pow(scr->physicalSize().height(), 2)) / (2.54 * 10.0) ;
+        screenSize = std::sqrt(std::pow(scr->physicalSize().width(), 2.0) + std::pow(scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+        qDebug() << "- inches count: " << screenSize;
     }
+
+    return screenSize;
 }
 
 /* ************************************************************************** */

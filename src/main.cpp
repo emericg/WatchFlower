@@ -173,7 +173,10 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
-    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
+    if (sm->getScreenInfos() >= 7.0)
+        engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
+    else
+        engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
 #endif

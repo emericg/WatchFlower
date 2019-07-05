@@ -131,7 +131,7 @@ public:
 
     Q_INVOKABLE static QString getAppVersion() { return QString::fromLatin1(APP_VERSION); }
 
-    Q_INVOKABLE void getScreenInfos();
+    Q_INVOKABLE double getScreenInfos();
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 

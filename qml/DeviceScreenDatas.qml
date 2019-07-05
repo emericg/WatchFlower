@@ -21,6 +21,7 @@
 
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Window 2.2
 
 import com.watchflower.theme 1.0
 import "UtilsNumber.js" as UtilsNumber
@@ -484,8 +485,23 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item {
-        id: element
+    Grid {
+        id: datasGrid
+        columns: 1
+        rows: 2
+        spacing: (rows > 1) ? 12 : 0
+
+        onWidthChanged: {
+            if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
+                if (Screen.primaryOrientation === 1 /*Qt::PortraitOrientation*/) {
+                    datasGrid.columns = 1
+                    datasGrid.rows = 2
+                } else {
+                    datasGrid.columns = 2
+                    datasGrid.rows = 1
+                }
+            }
+        }
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 4
@@ -500,8 +516,8 @@ Item {
             id: imageOffline
             width: 96
             height: 96
-            anchors.horizontalCenter: datasColumns.horizontalCenter
-            anchors.verticalCenter: datasColumns.verticalCenter
+            //anchors.horizontalCenter: datasColumns.horizontalCenter
+            //anchors.verticalCenter: datasColumns.verticalCenter
 
             visible: !(myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
 
@@ -512,9 +528,7 @@ Item {
 
         Column {
             id: datasColumns
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
+            width: datasGrid.width / datasGrid.columns
 
             visible: (myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
 
@@ -567,11 +581,8 @@ Item {
 
         Loader {
             id: pageLoader
-            anchors.top: datasColumns.bottom
-            anchors.topMargin: 16
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            width: (datasGrid.width / datasGrid.columns)
+            height: (datasGrid.columns == 1) ? (datasGrid.height - datasColumns.height - (datasGrid.rows > 1 ? datasGrid.spacing : 0)) : datasGrid.height
 
             visible: myDevice.hasDatas()
         }
