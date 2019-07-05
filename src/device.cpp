@@ -266,12 +266,6 @@ void Device::setUpdateTimer(int updateInterval)
 
 void Device::setTimeoutTimer()
 {
-    SettingsManager *sm = SettingsManager::getInstance();
-    if (sm->getBluetoothCompat())
-        m_timeout = 10;
-    else
-        m_timeout = 15;
-
     m_timeoutTimer.setInterval(m_timeout*1000);
     m_timeoutTimer.start();
 }
@@ -735,7 +729,7 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
                << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
 }
@@ -751,7 +745,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
                << hex << data[12]  << hex << data[13];
 */
 }

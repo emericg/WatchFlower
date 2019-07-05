@@ -146,7 +146,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
                << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")

@@ -153,7 +153,7 @@ protected:
     int m_limitConduMax = 1000;
 
     // BLE
-    int m_timeout = 10;
+    int m_timeout = 15;
     int m_update_interval = 0;
 
     // QLowEnergyController related

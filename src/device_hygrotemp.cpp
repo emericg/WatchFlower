@@ -210,7 +210,7 @@ void DeviceHygrotemp::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
                << hex << data[12] << hex << data[13] << hex << data[14] << hex << data[15];
 */
 }
@@ -223,7 +223,7 @@ void DeviceHygrotemp::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
     qDebug() << "WE HAVE DATAS: 0x" \
                << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
                << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
                << hex << data[12] << hex << data[13];
 */
     if (c.uuid().toString() == "{226caa55-6476-4566-7562-66734470666d}")

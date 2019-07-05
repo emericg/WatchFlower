@@ -81,14 +81,14 @@ Item {
     function updateLimits() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        rangeSlider_hygro.first.value = myDevice.limitHygroMin
         rangeSlider_hygro.second.value = myDevice.limitHygroMax
-        rangeSlider_temp.first.value = myDevice.limitTempMin
+        rangeSlider_hygro.first.value = myDevice.limitHygroMin
         rangeSlider_temp.second.value = myDevice.limitTempMax
-        spinBox1.value = myDevice.limitLumiMin
+        rangeSlider_temp.first.value = myDevice.limitTempMin
         spinBox2.value = myDevice.limitLumiMax
-        rangeSlider_condu.first.value = myDevice.limitConduMin
+        spinBox1.value = myDevice.limitLumiMin
         rangeSlider_condu.second.value = myDevice.limitConduMax
+        rangeSlider_condu.first.value = myDevice.limitConduMin
     }
 
     function updateLimitsVisibility() {
@@ -334,12 +334,6 @@ Item {
                     stepSize: 1
                     first.onValueChanged: if (myDevice) myDevice.limitHygroMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitHygroMax = second.value.toFixed(0);
-                    Component.onCompleted: {
-                        if (myDevice) {
-                            first.value = myDevice.limitHygroMin
-                            second.value = myDevice.limitHygroMax
-                        }
-                    }
                 }
                 Text {
                     id: text9
@@ -400,12 +394,6 @@ Item {
                     stepSize: 1
                     first.onValueChanged: if (myDevice) myDevice.limitTempMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitTempMax = second.value.toFixed(0);
-                    Component.onCompleted: {
-                        if (myDevice) {
-                            first.value = myDevice.limitTempMin
-                            second.value = myDevice.limitTempMax
-                        }
-                    }
                 }
                 Text {
                     id: text5
@@ -462,7 +450,6 @@ Item {
                     from: 0
                     to: 5000
                     stepSize: 100
-                    Component.onCompleted: if (myDevice) value = myDevice.limitLumiMin;
                     onValueChanged: if (myDevice) myDevice.limitLumiMin = value;
                 }
                 SpinBoxThemed {
@@ -475,7 +462,6 @@ Item {
                     from: 500
                     to: 50000
                     stepSize: 100
-                    Component.onCompleted: if (myDevice) value = myDevice.limitLumiMax;
                     onValueChanged: if (myDevice) myDevice.limitLumiMax = value;
                 }
                 Text {
@@ -537,12 +523,6 @@ Item {
                     stepSize: 10
                     first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);
-                    Component.onCompleted: {
-                        if (myDevice) {
-                            first.value = myDevice.limitConduMin
-                            second.value = myDevice.limitConduMax
-                        }
-                    }
                 }
                 Text {
                     id: text6

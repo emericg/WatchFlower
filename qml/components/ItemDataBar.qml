@@ -127,12 +127,6 @@ Item {
 
                     return 4
                 } else if ((item_bg.width - item_data.width) < (width/2)) { // right
-                    //if ((item_bg.width - item_data.width) > 12)
-                     //   item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width/2))
-                   // else
-                    //    item_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
-
-                    //item_indicator_triangle.anchors.horizontalCenterOffset = width/2 - 4
                     item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width/2)) - 4
 
                     return item_bg.width - width - 4
