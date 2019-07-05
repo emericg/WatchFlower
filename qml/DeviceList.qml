@@ -148,7 +148,6 @@ Item {
                 color: "white"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
-                font.bold: true
                 font.pixelSize: 16
             }
 

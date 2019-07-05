@@ -13,6 +13,8 @@ Item {
     property bool selected: false
     property bool highlighted: false
 
+    property string colorContent: Theme.colorHeaderContent
+    property string colorBackground: Theme.colorHeaderStatusbar
     property string menuText: ""
     property string tooltipText: ""
     property url source: ""
@@ -37,14 +39,14 @@ Item {
         id: bgRect
         anchors.fill: parent
         visible: selected
-        color: Theme.colorDarkGreen
+        color: parent.colorBackground
     }
 
     Rectangle {
         id: bgFocus
         anchors.fill: parent
 
-        color: Theme.colorDarkGreen
+        color: parent.colorBackground
         opacity: 0
 
         Behavior on opacity {
@@ -62,7 +64,7 @@ Item {
 
         opacity: itemMenuButton.enabled ? 1.0 : 0.3
         source: itemMenuButton.source
-        color: "white"
+        color: parent.colorContent
     }
 
     Text {
@@ -75,7 +77,7 @@ Item {
         text: menuText
         font.pixelSize: 16
         font.bold: true
-        color: "white"
+        color: parent.colorContent
         verticalAlignment: Text.AlignVCenter
     }
 }

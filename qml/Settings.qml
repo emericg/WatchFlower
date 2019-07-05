@@ -32,9 +32,9 @@ Item {
 
     Rectangle {
         id: rectangleHeader
+        color: Theme.colorForeground
         height: 80
         z: 5
-        color: Theme.colorMaterialDarkGrey
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
@@ -52,20 +52,22 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 12
 
-            color: Theme.colorText
             text: qsTr("Settings")
             font.bold: true
             font.pixelSize: 26
+            color: Theme.colorText
         }
 
         Text {
             id: textSubtitle
-            text: qsTr("Change persistent settings here!")
-            font.pixelSize: 16
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
+
+            text: qsTr("Change persistent settings here!")
+            font.pixelSize: 16
+            color: Theme.colorSubText
         }
     }
 
@@ -88,6 +90,110 @@ Item {
             ////////
 
             Item {
+                id: element_theme
+                height: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                ImageSvg {
+                    id: image_theme
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorHighContrast
+                    source: "qrc:/assets/icons_material/baseline-style-24px.svg"
+                }
+
+                Text {
+                    id: text_theme
+                    height: 40
+                    anchors.right: theme_selector.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_theme.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Application theme")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                Row {
+                    id: theme_selector
+                    anchors.right: parent.right
+                    anchors.rightMargin: 20
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    z: 1
+                    spacing: 8
+
+                    Rectangle {
+                        id: rectangle1
+                        width: 32
+                        height: 32
+                        color: "#09debc"
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        border.color: Theme.colorHighlight
+                        border.width: (settingsManager.theme === "green") ? 2 : 0
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                Theme.loadTheme(0)
+                                settingsManager.theme = "green"
+                            }
+                        }
+                    }
+                    Rectangle {
+                        id: rectangle2
+                        width: 32
+                        height: 32
+                        color: "#e4e4e4"
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        border.color: Theme.colorHighlight
+                        border.width: (settingsManager.theme === "day") ? 2 : 0
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                Theme.loadTheme(1)
+                                settingsManager.theme = "day"
+                            }
+                        }
+                    }
+                    Rectangle {
+                        id: rectangle3
+                        width: 32
+                        height: 32
+                        color: "#555151"
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        border.color: Theme.colorHighlight
+                        border.width: (settingsManager.theme === "night") ? 2 : 0
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                Theme.loadTheme(2)
+                                settingsManager.theme = "night"
+                            }
+                        }
+                    }
+                }
+            }
+
+            ////////
+
+            Item {
                 id: element_minimized
                 height: 48
                 anchors.right: parent.right
@@ -101,15 +207,17 @@ Item {
                 Text {
                     id: text_minimized
                     height: 40
-                    text: qsTr("Start application minimized")
-                    wrapMode: Text.WordWrap
                     anchors.right: switch_minimized.left
                     anchors.rightMargin: 16
                     anchors.left: image_minimized.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
+
+                    text: qsTr("Start application minimized")
                     font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
                 }
 
                 SwitchThemed {
@@ -130,7 +238,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
                 }
             }
@@ -153,13 +261,14 @@ Item {
                     height: 40
                     anchors.left: image_bluetoothControl.right
                     anchors.leftMargin: 16
+                    anchors.right: switch_bluetoothControl.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Allow Bluetooth control")
-                    anchors.right: switch_bluetoothControl.left
-                    anchors.rightMargin: 16
                     wrapMode: Text.WordWrap
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -181,7 +290,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-bluetooth_connected-24px.svg"
                 }
             }
@@ -226,6 +335,7 @@ Item {
                     anchors.right: switch_bluetoothCompat.left
                     anchors.rightMargin: 16
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -247,7 +357,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg"
                 }
             }
@@ -296,12 +406,13 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: image_worker.right
                     anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Enable background updates")
                     anchors.right: switch_worker.left
                     anchors.rightMargin: 16
+
+                    text: qsTr("Enable background updates")
                     wrapMode: Text.WordWrap
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -313,7 +424,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                 }
             }
@@ -377,12 +488,13 @@ Item {
                     anchors.left: image_notifications.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: 16
+                    anchors.right: switch_notifiations.left
+                    anchors.rightMargin: 16
 
                     text: qsTr("Enable notifications")
                     wrapMode: Text.WordWrap
-                    anchors.right: switch_notifiations.left
-                    anchors.rightMargin: 16
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -394,7 +506,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                 }
             }
@@ -445,12 +557,13 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: image_update.right
                     anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Update interval")
-                    wrapMode: Text.WordWrap
                     anchors.right: spinBox_update.left
                     anchors.rightMargin: 16
+
+                    text: qsTr("Update interval")
                     font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -462,7 +575,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
                 }
             }
@@ -483,15 +596,17 @@ Item {
                 Text {
                     id: text_bigwidget
                     height: 40
-                    text: qsTr("Use bigger widgets")
                     anchors.right: switch_bigwidget.left
                     anchors.rightMargin: 16
-                    wrapMode: Text.WordWrap
                     anchors.left: image_bigwidget.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    verticalAlignment: Text.AlignVCenter
+
+                    text: qsTr("Use bigger widgets")
                     font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
                 }
 
                 SwitchThemed {
@@ -512,7 +627,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-format_size-24px.svg"
                 }
             }
@@ -533,24 +648,26 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_unit.right
                     anchors.leftMargin: 16
+                    anchors.right: radioDelegateCelsius.left
+                    anchors.rightMargin: 16
 
                     text: qsTr("Temperature unit")
                     wrapMode: Text.WordWrap
-                    anchors.right: radioDelegateCelsius.left
-                    anchors.rightMargin: 16
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 RadioButtonThemed {
                     id: radioDelegateCelsius
                     height: 40
-                    text: qsTr("°C")
-                    z: 1
                     anchors.verticalCenter: text_unit.verticalCenter
                     anchors.right: radioDelegateFahrenheit.left
 
+                    z: 1
+                    text: qsTr("°C")
                     font.pixelSize: 16
+
                     checked: {
                         if (settingsManager.tempUnit === 'C') {
                             radioDelegateCelsius.checked = true
@@ -573,9 +690,10 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
 
-                    text: qsTr("°F")
                     z: 1
+                    text: qsTr("°F")
                     font.pixelSize: 16
+
                     checked: {
                         if (settingsManager.tempUnit === 'F') {
                             radioDelegateCelsius.checked = false
@@ -599,7 +717,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 }
             }
@@ -622,7 +740,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                     source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 }
 
@@ -632,24 +750,26 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_graph.right
                     anchors.leftMargin: 16
+                    anchors.right: radioDelegateGraphMonthly.left
+                    anchors.rightMargin: 16
 
                     text: qsTr("Histograms")
                     wrapMode: Text.WordWrap
-                    anchors.right: radioDelegateGraphMonthly.left
-                    anchors.rightMargin: 16
                     font.pixelSize: 16
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 RadioButtonThemed {
                     id: radioDelegateGraphMonthly
                     height: 40
-                    text: qsTr("Monthly")
-                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: radioDelegateGraphWeekly.left
 
+                    z: 1
+                    text: qsTr("Monthly")
                     font.pixelSize: 16
+
                     checked: {
                         if (settingsManager.graphHistory === "monthly") {
                             radioDelegateGraphMonthly.checked = true
@@ -671,9 +791,10 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
 
-                    text: qsTr("Weekly")
                     z: 1
+                    text: qsTr("Weekly")
                     font.pixelSize: 16
+
                     checked: {
                         if (settingsManager.graphHistory === "weekly") {
                             radioDelegateGraphMonthly.checked = false

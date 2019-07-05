@@ -27,20 +27,7 @@ import com.watchflower.theme 1.0
 Rectangle {
     width: parent.width
     height: parent.height
-    color: "white"
-
-    function updateDrawerFocus() {
-        rectangleHome.color = "transparent"
-        rectangleSettings.color = "transparent"
-        rectangleAbout.color = "transparent"
-
-        if (content.state === "DeviceList")
-            rectangleHome.color = Theme.colorMaterialDarkGrey
-        else if (content.state === "Settings")
-            rectangleSettings.color = Theme.colorMaterialDarkGrey
-        else if (content.state === "About")
-            rectangleAbout.color = Theme.colorMaterialDarkGrey
-    }
+    color: Theme.colorBackground
 
     Rectangle {
         id: rectangleHeader
@@ -50,7 +37,7 @@ Rectangle {
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        color: "white"
+        color: Theme.colorBackground // to hide scrollview content
 
         z: 5
         height: 80
@@ -69,13 +56,14 @@ Rectangle {
 
         Text {
             id: element
-            color: "#4b4747"
-            text: "WatchFlower"
-            font.bold: true
             anchors.verticalCenterOffset: 2
             anchors.left: imageHeader.right
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
+
+            text: "WatchFlower"
+            color: Theme.colorText
+            font.bold: true
             font.pixelSize: 22
         }
     }
@@ -100,7 +88,7 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: "transparent"
+                color: (content.state === "DeviceList") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
@@ -138,7 +126,7 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: "transparent"
+                color: (content.state === "Settings") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
@@ -175,7 +163,7 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: "transparent"
+                color: (content.state === "About") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
@@ -216,7 +204,7 @@ Rectangle {
                 height: 1
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: Theme.colorSeparators
+                color: Theme.colorBordersDrawer
             }
             Item {
                 height: 8
@@ -343,7 +331,7 @@ Rectangle {
                 height: 1
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: Theme.colorSeparators
+                color: Theme.colorBordersDrawer
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
             }
             Item {

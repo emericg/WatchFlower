@@ -112,8 +112,14 @@ Item {
         }
 
         updateSize()
-
         updateDatas()
+    }
+
+    function updateColors() {
+        tempGraph.updateColors()
+        hygroGraph.updateColors()
+        lumiGraph.updateColors()
+        conduGraph.updateColors()
     }
 
     function updateSize() {
@@ -169,7 +175,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
+        color: Theme.colorForeground
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 56 : 96
 
         anchors.top: parent.top

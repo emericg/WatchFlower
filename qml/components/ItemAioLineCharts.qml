@@ -175,7 +175,7 @@ Item {
         ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: true; }
         ValueAxis { id: axisCondu; visible: false; gridVisible: true; }
-        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 13; }
+        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 13; labelsColor: Theme.colorText; }
 
         LineSeries {
             id: lumiDatas
@@ -275,10 +275,7 @@ Item {
                         }
                     }
                 } else {
-                    dateIndicator.visible = false
-                    datasIndicator.visible = false
-                    verticalIndicator.visible = false
-                    if (content.state === "DeviceSensor") resetDatasBars()
+                    resetIndicator()
                 }
             }
         }
@@ -352,11 +349,17 @@ Item {
 
     MouseArea {
         anchors.fill: indicators
-        onClicked: {
-            dateIndicator.visible = false
-            datasIndicator.visible = false
-            verticalIndicator.visible = false
-            if (content.state === "DeviceSensor") resetDatasBars()
-        }
+        onClicked: resetIndicator()
+    }
+
+    onWidthChanged: resetIndicator()
+
+    function resetIndicator() {
+        dateIndicator.visible = false
+        datasIndicator.visible = false
+        verticalIndicator.visible = false
+
+        if (typeof deviceScreenDatas === "undefined" || !deviceScreenDatas) return
+        if (content.state === "DeviceSensor") deviceScreenDatas.resetDatasBars()
     }
 }

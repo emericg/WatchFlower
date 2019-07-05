@@ -245,7 +245,7 @@ Item {
                 text: qsTr("Updating...")
                 color: Theme.colorHeaderContent
                 font.pixelSize: 16
-                font.bold: true
+                font.bold: false
             }
         }
 
@@ -290,7 +290,7 @@ Item {
 
                 padding: 4
                 font.pixelSize: 16
-                font.bold: true
+                font.bold: false
                 color: Theme.colorHeaderContent
 
                 onEditingFinished: {

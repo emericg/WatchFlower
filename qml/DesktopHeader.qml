@@ -25,9 +25,9 @@ import com.watchflower.theme 1.0
 
 Rectangle {
     id: rectangleHeader
+    color: Theme.colorHeader
     width: 720
     height: 64
-    color: Theme.colorHeader
     z: 10
 
     signal backButtonClicked()

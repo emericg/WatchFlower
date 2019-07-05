@@ -36,9 +36,6 @@ Item {
     property string graphViewSelected
     property string graphDataSelected
 
-    property string bgDayGraphColor: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
-    property string bgNightGraphColor: "#E1E1E1"
-
     function loadGraph() {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("itemDataCharts // loadGraph() >> " + myDevice)
@@ -57,6 +54,7 @@ Item {
             axisY0.max = 750
             myBarSet.color = Theme.colorRed
         }
+        myBarSet.borderColor = "transparent"
 
         loadAxis()
     }
@@ -69,12 +67,12 @@ Item {
             // Decorations
             if (graphViewSelected === "daily") {
                 backgroundDayBars.borderColor = "transparent"
-                backgroundDayBars.color = bgDayGraphColor
+                backgroundDayBars.color = Theme.colorForeground
                 backgroundNightBars.borderColor = "transparent"
-                backgroundNightBars.color = bgNightGraphColor
+                backgroundNightBars.color = (settingsManager.theme === "night") ? "#111111": "#dddddd"
             } else {
                 backgroundDayBars.borderColor = "transparent"
-                backgroundDayBars.color = bgDayGraphColor
+                backgroundDayBars.color = Theme.colorForeground
                 backgroundNightBars.borderColor = "transparent"
                 backgroundNightBars.values = [0]
             }
@@ -89,10 +87,40 @@ Item {
                 axisX0.labelsFont.pixelSize = 12
                 axisX0.categories = myDevice.getDays()
             } else {
-                myBarSeries.barWidth = 0.90
+                myBarSeries.barWidth = 0.94
                 axisX0.labelsFont.pixelSize = 6
                 axisX0.categories = myDevice.getMonth()
             }
+        }
+    }
+
+    function updateColors() {
+        if (typeof myDevice === "undefined" || !myDevice) return
+        //console.log("itemDataCharts // updateColors() >> " + myDevice)
+
+        // Bars
+        if (graphDataSelected === "hygro") {
+            myBarSet.color = Theme.colorBlue
+        } else if (graphDataSelected === "temp") {
+            myBarSet.color = Theme.colorGreen
+        } else if (graphDataSelected === "luminosity") {
+            myBarSet.color = Theme.colorYellow
+        } else if (graphDataSelected === "conductivity") {
+            myBarSet.color = Theme.colorRed
+        }
+        myBarSet.borderColor = "transparent"
+
+        // Decorations
+        if (graphViewSelected === "daily") {
+            backgroundDayBars.borderColor = "transparent"
+            backgroundDayBars.color = Theme.colorForeground
+            backgroundNightBars.borderColor = "transparent"
+            backgroundNightBars.color = (settingsManager.theme === "night") ? "#111111": "#dddddd"
+        } else {
+            backgroundDayBars.borderColor = "transparent"
+            backgroundDayBars.color = Theme.colorForeground
+            backgroundNightBars.borderColor = "transparent"
+            backgroundNightBars.values = [0]
         }
     }
 
@@ -157,7 +185,7 @@ Item {
             labelsVisible: false
 
             axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
-            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false; labelsFont.pixelSize: 8; }
+            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false; labelsFont.pixelSize: 8; labelsColor: Theme.colorText; }
 
             BarSet { id: myBarSet; }
             BarSet { id: backgroundDayBars; }

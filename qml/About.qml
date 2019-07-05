@@ -32,9 +32,9 @@ Item {
 
     Rectangle {
         id: rectangleHeader
+        color: Theme.colorForeground
         height: 80
         z: 5
-        color: Theme.colorMaterialDarkGrey
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
@@ -66,6 +66,7 @@ Item {
             anchors.bottomMargin: 14
 
             text: qsTr("What do you want to know?")
+            color: Theme.colorSubText
             font.pixelSize: 16
         }
     }
@@ -290,7 +291,7 @@ Item {
 
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/devices/welcome-devices.svg"
-                    color: Theme.colorGreen
+                    color: Theme.colorHighlight
                     anchors.top: description.bottom
                     anchors.topMargin: 24
                 }

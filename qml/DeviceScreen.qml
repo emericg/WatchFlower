@@ -44,6 +44,16 @@ Item {
     }
 
     Connections {
+        target: settingsManager
+        onThemeChanged: {
+            rectangleDeviceDatas.updateHeader()
+            rectangleDeviceHistory.updateHeader()
+            rectangleDeviceHistory.updateColors()
+            rectangleDeviceLimits.updateHeader()
+        }
+    }
+
+    Connections {
         target: header
         // desktop only
         onDeviceDatasButtonClicked: {

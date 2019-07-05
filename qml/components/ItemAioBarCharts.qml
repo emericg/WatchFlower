@@ -375,14 +375,14 @@ Item {
 
         LineSeries {
             id: lowLimitSeries
-            color: Theme.colorBad
+            color: "#ffba5a"
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false
         }
         LineSeries {
             id: highLimitSeries
-            color: Theme.colorBad
+            color: "#ffba5a"
             width: 2
             axisX: ValueAxis { visible:false; }
             visible:false

@@ -48,7 +48,7 @@ SpinBox {
             z: -1
             anchors.fill: parent
             anchors.margins: -8
-            color: "white"
+            color: Theme.colorForeground
         }
     }
 
@@ -57,7 +57,7 @@ SpinBox {
         height: parent.height
         implicitWidth: 40
         implicitHeight: 40
-        color: control.up.pressed ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
+        color: control.up.pressed ? Theme.colorBgDownComponents : Theme.colorBgUpComponents
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
         radius: 4
 
@@ -77,7 +77,7 @@ SpinBox {
         height: parent.height
         implicitWidth: 40
         implicitHeight: 40
-        color: control.down.pressed ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
+        color: control.down.pressed ? Theme.colorBgDownComponents : Theme.colorBgUpComponents
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
         radius: 4
 
@@ -96,7 +96,7 @@ SpinBox {
         implicitWidth: 128
         z: 3
         color: "transparent"
-        border.color: Theme.colorBorders
+        border.color: Theme.colorBordersComponents
         radius: 4
     }
 }

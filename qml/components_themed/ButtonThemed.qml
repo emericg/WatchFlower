@@ -34,7 +34,7 @@ Button {
         text: control.text
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: control.down ? control.color : control.color
+        color: control.color
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
@@ -44,8 +44,8 @@ Button {
         implicitWidth: 128
         implicitHeight: 40
         radius: 4
-        opacity: enabled ? 1 : 0.3
-        color: control.down || control.selected ? (control.color === "white" ? "#66FFFFFF" : "#CCFFFFFF") : "transparent"
+        opacity: enabled ? 0.1 : 0.3
+        color: (control.down || control.selected) ? (Theme.colorHighContrast) : "transparent"
 
         border.width: 2
         border.color: control.color

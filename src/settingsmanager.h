@@ -42,6 +42,7 @@ class SettingsManager: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString theme READ getTheme WRITE setTheme NOTIFY themeChanged)
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
@@ -54,6 +55,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
+    QString m_appTheme = "green";
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
@@ -79,6 +81,7 @@ class SettingsManager: public QObject
     ~SettingsManager();
 
 Q_SIGNALS:
+    void themeChanged();
     void minimizedChanged();
     void systrayChanged();
     void notifsChanged();
@@ -93,6 +96,9 @@ public:
     static SettingsManager *getInstance();
 
     bool hasDatabase() const { return m_db; }
+
+    QString getTheme() const { return m_appTheme; }
+    void setTheme(QString value);
 
     bool getMinimized() const { return m_startMinimized; }
     void setMinimized(bool value);

@@ -32,7 +32,7 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 640
 
-    color: "white"
+    color: Theme.colorBackground
     visible: true
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
@@ -51,7 +51,6 @@ ApplicationWindow {
         width: 0.80 * applicationWindow.width
         height: applicationWindow.height
 
-        onOpenedChanged: drawerscreen.updateDrawerFocus()
         MobileDrawer { id: drawerscreen }
     }
 
@@ -166,7 +165,6 @@ ApplicationWindow {
         state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
 
         onStateChanged: {
-            drawerscreen.updateDrawerFocus()
             screenDeviceList.exitSelectionMode()
 
             if (state === "DeviceList")

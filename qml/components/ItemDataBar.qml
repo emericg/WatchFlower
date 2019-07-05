@@ -45,19 +45,20 @@ Item {
 
     Text {
         id: item_legend
-        width: 90
-        color: Theme.colorText
-        text: legend
-        horizontalAlignment: Text.AlignRight
+        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 90
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: item_bg.verticalCenter
+
+        text: legend
         font.pixelSize: 14
+        color: Theme.colorText
+        horizontalAlignment: Text.AlignRight
     }
 
     Rectangle {
         id: item_bg
-        color: Theme.colorMaterialDarkGrey
+        color: Theme.colorForeground
         height: 8
         radius: 3
         anchors.bottom: parent.bottom
@@ -79,14 +80,15 @@ Item {
 
                return res
             }
-            color: itemDataBar.color
-            radius: 3
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
+
+            radius: 3
+            color: itemDataBar.color
 
             Behavior on width { NumberAnimation { duration: 333 } }
         }
@@ -99,7 +101,7 @@ Item {
 
             visible: (limitMin > 0)
             x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
-            color: "black"
+            color: Theme.colorHighContrast
             opacity: 0.5
         }
         Rectangle {
@@ -110,7 +112,7 @@ Item {
 
             visible: (limitMax > 0 && limitMax < valueMax)
             x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
-            color: "black"
+            color: Theme.colorHighContrast
             opacity: 0.5
         }
 
@@ -155,26 +157,28 @@ Item {
 
             Rectangle {
                 height: 18
-                color: itemDataBar.color
-                radius: 1
                 anchors.left: parent.left
                 anchors.leftMargin: -4
                 anchors.right: parent.right
                 anchors.rightMargin: -4
                 anchors.verticalCenter: parent.verticalCenter
+
                 z: -1
+                radius: 1
+                color: itemDataBar.color
 
                 Rectangle {
                     id: item_indicator_triangle
                     width: 6
                     height: 6
-                    radius: 1
-                    rotation: 45
-                    color: itemDataBar.color
                     anchors.top: parent.bottom
                     anchors.topMargin: -3
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.horizontalCenterOffset: 0
+
+                    radius: 1
+                    rotation: 45
+                    color: itemDataBar.color
                 }
             }
         }

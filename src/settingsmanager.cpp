@@ -76,6 +76,9 @@ bool SettingsManager::readSettings()
 
     if (settings.status() == QSettings::NoError)
     {
+        if (settings.contains("settings/appTheme"))
+            m_appTheme = settings.value("settings/appTheme").toString();
+
         if (settings.contains("settings/startMinimized"))
             m_startMinimized = settings.value("settings/startMinimized").toBool();
 
@@ -139,6 +142,7 @@ bool SettingsManager::writeSettings()
 
     if (settings.isWritable())
     {
+        settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
@@ -453,6 +457,13 @@ void SettingsManager::setSysTray(bool value)
             Q_EMIT systrayChanged();
         }
     }
+}
+
+void SettingsManager::setTheme(QString value)
+{
+    m_appTheme = value;
+    writeSettings();
+    Q_EMIT themeChanged();
 }
 
 void SettingsManager::setMinimized(bool value)

@@ -33,7 +33,7 @@ ApplicationWindow {
     minimumWidth: 480
     minimumHeight: 480
 
-    color: Theme.colorMaterialLightGrey
+    color: Theme.colorBackground
     visible: true // !settingsManager.minimized
     flags: Qt.Window
 

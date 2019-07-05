@@ -104,7 +104,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
+        color: Theme.colorForeground
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
 
         anchors.top: parent.top
@@ -177,6 +177,7 @@ Item {
 
                     text: myDevice.deviceAddress
                     font.pixelSize: 16
+                    color: Theme.colorHighContrast
                 }
             }
 
@@ -208,6 +209,7 @@ Item {
 
                     text: qsTr("Update available!")
                     font.pixelSize: 16
+                    color: Theme.colorHighContrast
                 }
                 ImageSvg {
                     id: imageFwUpdate
@@ -230,11 +232,13 @@ Item {
 
                 Text {
                     id: textFwUpdate
-                    text: qsTr("Update available!")
                     anchors.left: imageFwUpdate.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Update available!")
                     font.pixelSize: 14
+                    color: Theme.colorHighContrast
                 }
             }
 
@@ -254,6 +258,7 @@ Item {
 
                     text: myDevice.deviceBattery + "%"
                     font.pixelSize: 16
+                    color: Theme.colorHighContrast
                 }
 
                 Text {
@@ -306,7 +311,7 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                 }
                 Text {
                     id: text8
@@ -317,6 +322,7 @@ Item {
 
                     text: rangeSlider_hygro.first.value.toFixed(0)
                     font.pixelSize: 14
+                    color: Theme.colorText
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -344,6 +350,7 @@ Item {
                     anchors.rightMargin: 4
 
                     text: rangeSlider_hygro.second.value.toFixed(0)
+                    color: Theme.colorText
                     font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -366,7 +373,7 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                 }
                 Text {
                     id: text3
@@ -377,6 +384,7 @@ Item {
 
                     text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)
                     font.pixelSize: 14
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -405,6 +413,7 @@ Item {
 
                     text: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)
                     font.pixelSize: 14
+                    color: Theme.colorText
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -426,7 +435,7 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                 }
                 Text {
                     id: text1
@@ -437,6 +446,7 @@ Item {
 
                     text: qsTr("MIN")
                     font.pixelSize: 12
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -468,13 +478,15 @@ Item {
                     id: text2
                     width: 40
                     height: 40
-                    text: qsTr("MAX")
                     anchors.left: spinBox2.right
                     anchors.leftMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("MAX")
+                    font.pixelSize: 12
+                    color: Theme.colorText
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 12
                 }
             }
 
@@ -494,7 +506,7 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorHighContrast
                 }
                 Text {
                     id: text7
@@ -506,6 +518,7 @@ Item {
 
                     text: rangeSlider_condu.second.value.toFixed(0)
                     font.pixelSize: 14
+                    color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -533,6 +546,7 @@ Item {
 
                     text: rangeSlider_condu.first.value.toFixed(0)
                     font.pixelSize: 14
+                    color: Theme.colorText
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }

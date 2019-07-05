@@ -102,7 +102,7 @@ Item {
         if (!myDevice.hasSoilMoistureSensor()) return
         //console.log("DeviceScreenDatas // updateStatusText() >> " + myDevice)
 
-        textStatus.color = "black"
+        textStatus.color = Theme.colorHighContrast
         textStatus.font.bold = false
 
         if (myDevice.status === 1) {
@@ -115,7 +115,6 @@ Item {
             if (!myDevice.available) {
                 textStatus.text = qsTr("Offline! ")
                 textStatus.color = Theme.colorRed
-                textStatus.font.bold = true
             } else {
                 textStatus.text = ""
             }
@@ -141,9 +140,9 @@ Item {
 
         aioLineCharts = pageLoader.item
         aioLineCharts.loadGraph()
+        aioLineCharts.resetIndicator()
 
         updateHeader()
-        resetDatasBars()
         updateDatas()
     }
 
@@ -186,7 +185,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? Theme.colorMaterialLightGrey : Theme.colorMaterialDarkGrey
+        color: Theme.colorForeground
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
 
         anchors.top: parent.top
@@ -259,7 +258,7 @@ Item {
                     anchors.leftMargin: 8
 
                     padding: 4
-                    color: "black"
+                    color: Theme.colorHighContrast
                     font.pixelSize: 16
 
                     onEditingFinished: {
@@ -367,7 +366,7 @@ Item {
                     anchors.leftMargin: 8
 
                     padding: 4
-                    color: "black"
+                    color: Theme.colorHighContrast
                     font.pixelSize: 16
 
                     onEditingFinished: {
@@ -475,7 +474,7 @@ Item {
                     anchors.leftMargin: 8
 
                     text: qsTr("Loading...")
-                    color: "black"
+                    color: Theme.colorHighContrast
                     padding: 4
                     font.pixelSize: 16
                 }

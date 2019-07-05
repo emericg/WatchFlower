@@ -47,6 +47,14 @@ Item {
         onLimitsUpdated: updateBoxDatas()
     }
 
+    Connections {
+        target: settingsManager
+        onThemeChanged: {
+            updateSensorDatas()
+            updateBoxDatas()
+        }
+    }
+
     Component.onCompleted: initBoxDatas()
 
     function initBoxDatas() {
@@ -62,8 +70,8 @@ Item {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
-        updateSensorDatas()
         updateBoxDatas()
+        updateSensorDatas()
     }
 
     function updateSensorDatas() {
@@ -225,9 +233,9 @@ Item {
         anchors.topMargin: 6
         anchors.fill: parent
 
-        color: deviceWidget.selected ? Theme.colorMaterialDarkGrey : "transparent"
+        color: deviceWidget.selected ? Theme.colorBordersWidget : "transparent"
         border.width: 2
-        border.color: (singleColumn) ? "transparent" : Theme.colorMaterialDarkGrey
+        border.color: (singleColumn) ? "transparent" : Theme.colorBordersWidget
         radius: 2
 
         MouseArea {
@@ -300,7 +308,7 @@ Item {
                 height: bigAssMode ? 32 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: "black"
+                color: Theme.colorHighContrast
                 visible: wideAssMode || bigAssMode
                 fillMode: Image.PreserveAspectFit
             }
@@ -359,13 +367,14 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         verticalAlignment: Text.AlignVCenter
                         font.pixelSize: bigAssMode ? 16 : 15
+                        color: Theme.colorGreen
 
                         SequentialAnimation on opacity {
                             id: opa
                             loops: Animation.Infinite
                             onStopped: textStatus.opacity = 1;
 
-                            PropertyAnimation { to: 0.5; duration: 750; }
+                            PropertyAnimation { to: 0.33; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }
                         }
                     }
@@ -561,7 +570,7 @@ Item {
                     anchors.rightMargin: 0
 
                     text: "25.0°"
-                    color: "#333333"
+                    color: Theme.colorText
                     font.wordSpacing: -1.2
                     font.letterSpacing: -1.4
                     font.pixelSize: bigAssMode ? 32 : 30
@@ -581,7 +590,7 @@ Item {
                     anchors.rightMargin: 0
 
                     text: "55%"
-                    color: "#666666"
+                    color: Theme.colorSubText
                     font.pixelSize: bigAssMode ? 26 : 24
                     font.family: "Tahoma"
                     verticalAlignment: Text.AlignVCenter
@@ -589,15 +598,16 @@ Item {
                 }
             }
 
-            Image {
+            ImageSvg {
                 id: imageForward
                 width: 32
                 height: 32
                 anchors.verticalCenterOffset: 0
-                visible: singleColumn
-                z: 1
-                sourceSize: Qt.size(width, height)
                 anchors.verticalCenter: parent.verticalCenter
+
+                z: 1
+                visible: singleColumn
+                color: Theme.colorHighContrast
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             }
         }
@@ -627,7 +637,7 @@ Item {
 
     Rectangle {
         id: bottomSeparator
-        color: Theme.colorMaterialDarkGrey
+        color: Theme.colorBordersWidget
         visible: singleColumn
         height: 1
 

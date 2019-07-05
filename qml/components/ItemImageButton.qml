@@ -15,8 +15,8 @@ Item {
 
     // settings
     property string highlightMode: "circle" // circle / color / off
-    property string highlightColor: "#25B298"
-    property string iconColor: Theme.iconColor
+    property string highlightColor: Theme.colorHighlight2
+    property string iconColor: Theme.colorIcons
     property bool background: false
     property string tooltipText: ""
 
@@ -45,9 +45,7 @@ Item {
         color: parent.highlightColor
         opacity: background ? 0.66 : 0
 
-        Behavior on opacity {
-            OpacityAnimator { duration: 333 }
-        }
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
     }
 
     Image {

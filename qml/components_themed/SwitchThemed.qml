@@ -35,8 +35,8 @@ Switch {
         y: parent.height / 2 - height / 2
 
         radius: 13
-        //border.color: Theme.colorBorders
-        color: control.checked ? "#8dd9ca" : Theme.colorBorders
+        //border.color: Theme.colorBordersComponents
+        color: control.checked ? Theme.colorHighlight2 : Theme.colorBordersComponents
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
@@ -44,8 +44,8 @@ Switch {
             width: 24
             height: 24
             radius: 12
-            color: control.checked ? Theme.colorGreen : "#e0e0e0"
-            border.color: control.checked ? Theme.colorGreen : "#e0e0e0"
+            color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
+            border.color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
         }
     }
 
