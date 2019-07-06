@@ -532,7 +532,7 @@ Item {
                     anchors.rightMargin: 4
 
                     from: 0
-                    to: 750
+                    to: 500
                     stepSize: 10
                     first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);

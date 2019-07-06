@@ -175,7 +175,8 @@ Item {
         ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: true; }
         ValueAxis { id: axisCondu; visible: false; gridVisible: true; }
-        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 13; labelsColor: Theme.colorText; }
+        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 13;
+            labelsColor: Theme.colorText; gridLineColor: Theme.colorBordersWidget; }
 
         LineSeries {
             id: lumiDatas
