@@ -7,6 +7,7 @@ RangeSlider {
     id: control
     first.value: 0.25
     second.value: 0.75
+    snapMode: RangeSlider.SnapAlways
 
     background: Rectangle {
         x: control.leftPadding

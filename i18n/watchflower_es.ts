@@ -111,7 +111,7 @@
         <translation type="vanished">No hay dispositivos configurados...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="312"/>
+        <location filename="../qml/DeviceList.qml" line="313"/>
         <source>%n device(s) selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -137,22 +137,22 @@
 <context>
     <name>DeviceScreenDatas</name>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="113"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="114"/>
         <source>Updating... </source>
         <translation>Actualizando... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="116"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="117"/>
         <source>Offline! </source>
         <translation>¡Desconectado! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="125"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="126"/>
         <source>Just synced!</source>
         <translation>¡Sincronizado!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="127"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="128"/>
         <source>Synced %1 ago</source>
         <translation>Sincronizado hace %1</translation>
     </message>
@@ -161,37 +161,37 @@
         <translation type="vanished">Última sincronización hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="109"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="110"/>
         <source>Update queued. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="111"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="112"/>
         <source>Connecting... </source>
         <translation>Conectando... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="246"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="248"/>
         <source>Plant</source>
         <translation>Planta</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="354"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="356"/>
         <source>Location</source>
         <translation>Ubicación</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="464"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="466"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="476"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="478"/>
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="523"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="538"/>
         <source>Moisture</source>
         <translation type="unfinished">Humedad</translation>
     </message>
@@ -200,17 +200,17 @@
         <translation type="vanished">Higrometría</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="534"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="549"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="546"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="561"/>
         <source>Luminosity</source>
         <translation>Luminosidad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="557"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="572"/>
         <source>Fertility</source>
         <translation>Fertilidad</translation>
     </message>
@@ -218,17 +218,17 @@
 <context>
     <name>DeviceScreenHistory</name>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="199"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="200"/>
         <source>Month</source>
         <translation>Mes</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="213"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="214"/>
         <source>Week</source>
         <translation>Semana</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenHistory.qml" line="227"/>
+        <location filename="../qml/DeviceScreenHistory.qml" line="228"/>
         <source>Day</source>
         <translation>Día</translation>
     </message>
@@ -260,41 +260,71 @@
 <context>
     <name>DeviceScreenLimits</name>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="166"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="167"/>
         <source>Address</source>
         <translation>Dirección</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="200"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="201"/>
         <source>Firmware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="210"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="229"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="239"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="211"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="230"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="240"/>
         <source>Update available!</source>
         <translation>¡Actualización disponible!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="228"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="229"/>
         <source>Use official app to upgrade</source>
         <translation>Utiliza la aplicación oficial para actualizar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="272"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="273"/>
         <source>Battery</source>
         <translation>Batería</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="447"/>
-        <source>MIN</source>
-        <translation></translation>
+        <location filename="../qml/DeviceScreenLimits.qml" line="375"/>
+        <source>Usual soil moisture window is 15 to 50% for indoor plants. Succulent can go as low as 7%. Tropical plants can live with more water. Also, be careful: too much water over long periods of time can be just as lethal as not enough!&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; Water your plants more frequently during growth period.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="485"/>
-        <source>MAX</source>
-        <translation></translation>
+        <location filename="../qml/DeviceScreenLimits.qml" line="454"/>
+        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below. Constant temperature is usually more important than the absolute values.&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="523"/>
+        <source>low</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="533"/>
+        <source>indirect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="543"/>
+        <source>direct light (indoor)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="553"/>
+        <source>sunlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="585"/>
+        <source>Some plants like direct sun exposition. Some can accommodate it for part of the day. Many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="662"/>
+        <source>Soil fertility is more of an indication than an absolute value to take into account. However, be sure to have the right soil composition for your plant.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -414,7 +444,7 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="232"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="236"/>
         <source>at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -459,17 +489,17 @@
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="268"/>
+        <location filename="../qml/MobileDrawer.qml" line="270"/>
         <source>Refresh sensors datas</source>
         <translation>Recargar datos de los sensores</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="317"/>
+        <location filename="../qml/MobileDrawer.qml" line="321"/>
         <source>Search for new devices</source>
         <translation>Buscar nuevos dispositivos</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="371"/>
+        <location filename="../qml/MobileDrawer.qml" line="375"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
@@ -477,22 +507,22 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="197"/>
+        <location filename="../qml/MobileMain.qml" line="189"/>
         <source>Welcome</source>
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="311"/>
+        <location filename="../qml/MobileMain.qml" line="303"/>
         <source>Thermometer</source>
         <translation>Termómetro</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="349"/>
+        <location filename="../qml/MobileMain.qml" line="341"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="387"/>
+        <location filename="../qml/MobileMain.qml" line="379"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>

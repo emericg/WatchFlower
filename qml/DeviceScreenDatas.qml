@@ -188,6 +188,7 @@ Item {
         id: rectangleHeader
         color: Theme.colorForeground
         height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
+        z: 5
 
         anchors.top: parent.top
         anchors.topMargin: 0

@@ -145,11 +145,11 @@ protected:
     // BLE device limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
-    int m_limitTempMin = 8;
-    int m_limitTempMax = 32;
-    int m_limitLumiMin = 3000;
-    int m_limitLumiMax = 10000;
-    int m_limitConduMin = 250;
+    int m_limitTempMin = 15;
+    int m_limitTempMax = 25;
+    int m_limitLumiMin = 1000;
+    int m_limitLumiMax = 3000;
+    int m_limitConduMin = 0;
     int m_limitConduMax = 500;
 
     // BLE
