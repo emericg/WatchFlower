@@ -178,14 +178,6 @@ ApplicationWindow {
                 drawer.interactive = false;
             else
                 drawer.interactive = true;
-
-            if (state === "DeviceSensor" || state === "DeviceThermo") {
-                header.deviceRefreshButtonEnabled = true
-                header.rightMenuEnabled = false
-            } else {
-                header.deviceRefreshButtonEnabled = false
-                header.rightMenuEnabled = false
-            }
         }
 
         states: [

@@ -44,7 +44,7 @@ Button {
         implicitWidth: 128
         implicitHeight: 40
         radius: 4
-        opacity: enabled ? 0.1 : 0.3
+        opacity: enabled ? 0.2 : 0.5
         color: (control.down || control.selected) ? (Theme.colorHighContrast) : "transparent"
 
         border.width: 2

@@ -32,10 +32,14 @@ Item {
     }
     property int currentTheme: -1
 
-    // Headers
+    // Header
     property string colorHeader
-    property string colorHeaderStatusbar
     property string colorHeaderContent
+    property string colorHeaderStatusbar
+
+    // Status bar
+    property string colorStatusbar
+    property string colorStatusbarContent
 
     // Content
     property string colorBackground
@@ -56,13 +60,13 @@ Item {
     property string colorBgDownComponents
 
     // Palette colors
-    //property string colorLightGreen: "#09debc"
+    property string colorLightGreen: "#09debc" // unused
     property string colorGreen
-    //property string colorDarkGreen: "#1ea892"
+    property string colorDarkGreen: "#1ea892" // unused
     property string colorBlue
     property string colorYellow
     property string colorRed
-    //property string colorGrey: "#555151"
+    property string colorGrey: "#555151" // unused
     property string colorLightGrey
 
     // Fixed colors
@@ -91,9 +95,18 @@ Item {
 
         if (themeIndex === ThemeEngine.THEME_GREEN) {
 
-            colorHeader = "#07bf97"
+            colorGreen = "#07bf97"
+            colorBlue = "#4CA1D5"
+            colorYellow = "#ffba5a"
+            colorRed = "#ff7657"
+            colorLightGrey = "#a9bcb8"
+
+            colorHeader = colorGreen
             colorHeaderStatusbar = "#009688"
             colorHeaderContent = "white"
+
+            colorStatusbar = colorYellow
+            colorStatusbarContent = "white"
 
             colorBackground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
             colorForeground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : colorMaterialDarkGrey
@@ -108,21 +121,24 @@ Item {
             colorBgUpComponents = colorMaterialDarkGrey
             colorBgDownComponents = colorMaterialLightGrey
 
-            colorHighlight = "#07bf97"
+            colorHighlight = colorGreen
             colorHighlight2 = "#8dd9ca"
             colorHighContrast = "black"
 
-            colorGreen = "#07bf97"
-            colorBlue = "#4CA1D5"
-            colorYellow = "#ffba5a"
+        } else if (themeIndex === ThemeEngine.THEME_DAY) {
+
+            colorGreen = "#8cd200"
+            colorBlue = "#4cafe9"
+            colorYellow = "#ffcf00"
             colorRed = "#ff7657"
             colorLightGrey = "#a9bcb8"
-
-        } else if (themeIndex === ThemeEngine.THEME_DAY) {
 
             colorHeader = "#ffcf00"
             colorHeaderStatusbar = colorNeutralNight
             colorHeaderContent = "white"
+
+            colorStatusbar = colorGreen
+            colorStatusbarContent = "white"
 
             colorBackground = "white"
             colorForeground = colorMaterialLightGrey
@@ -138,20 +154,23 @@ Item {
             colorBgDownComponents = colorMaterialLightGrey
 
             colorHighlight = "#ffd700"
-            colorHighlight2 = colorNeutralNight
+            colorHighlight2 = colorHeaderStatusbar
             colorHighContrast = "#303030"
 
-            colorGreen = "#8cd200"
-            colorBlue = "#4cafe9"
-            colorYellow = "#ffcf00"
-            colorRed = "#ff7657"
-            colorLightGrey = "#a9bcb8"
-
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
+
+            colorGreen = "#58b870"
+            colorBlue = "#4dceeb"
+            colorYellow = "#fcc632"
+            colorRed = "#e8635a"
+            colorLightGrey = "#a9bcb8"
 
             colorHeader = "#b16bee"
             colorHeaderStatusbar = "#725595"
             colorHeaderContent = "white"
+
+            colorStatusbar = colorBlue
+            colorStatusbarContent = "white"
 
             colorBackground = "#313236"
             colorForeground = "#292929"
@@ -167,14 +186,8 @@ Item {
             colorBgDownComponents = "#292929"
 
             colorHighlight = "#bb86fc"
-            colorHighlight2 = "#725595"
+            colorHighlight2 = colorHeaderStatusbar
             colorHighContrast = "white"
-
-            colorGreen = "#58b870"
-            colorBlue = "#4dceeb"
-            colorYellow = "#fcc632"
-            colorRed = "#e8635a"
-            colorLightGrey = "#a9bcb8"
         }
     }
 }

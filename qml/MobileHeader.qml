@@ -42,8 +42,6 @@ Rectangle {
 
     property string title: "WatchFlower"
     property string leftMenuMode: "drawer" // drawer / back / exit
-    property bool deviceRefreshButtonEnabled: false
-    property bool rightMenuEnabled: false
 
     signal leftMenuClicked()
     signal rightMenuClicked()
@@ -155,7 +153,7 @@ Rectangle {
                 width: barHeight
                 height: barHeight
 
-                visible: deviceRefreshButtonEnabled
+                visible: (deviceManager.bluetooth && ((content.state === "DeviceSensor") || (content.state === "DeviceThermo")))
                 onClicked: deviceRefreshButtonClicked()
 
                 ImageSvg {
@@ -192,7 +190,7 @@ Rectangle {
                 width: barHeight
                 height: barHeight
 
-                visible: rightMenuEnabled
+                visible: false // (content.state === "DeviceSensor" || content.state === "DeviceThermo")
                 onClicked: rightMenuClicked()
 
                 ImageSvg {

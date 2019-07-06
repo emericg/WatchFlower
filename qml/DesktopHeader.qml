@@ -75,34 +75,6 @@ Rectangle {
             } else {
                 buttonBack.source = "qrc:/assets/menu_back.svg"
             }
-
-            if (content.state === "DeviceSensor") {
-                buttonRefreshAll.visible = false
-                buttonRescan.visible = false
-                menuMain.visible = false
-            } else if (content.state === "DeviceThermo") {
-                buttonRefreshAll.visible = false
-                buttonRescan.visible = false
-                menuMain.visible = false
-            } else {
-                buttonRefreshAll.visible = true
-                buttonRescan.visible = true
-                menuMain.visible = true
-
-                if (content.state === "DeviceList") {
-                    menuPlants.selected = true
-                    menuAbout.selected = false
-                    menuSettings.selected = false
-                } else if (content.state === "Settings") {
-                    menuPlants.selected = false
-                    menuAbout.selected = false
-                    menuSettings.selected = true
-                } else if (content.state === "About") {
-                    menuPlants.selected = false
-                    menuAbout.selected = true
-                    menuSettings.selected = false
-                }
-            }
         }
     }
 
@@ -149,9 +121,9 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "WatchFlower"
-        color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 28
+        color: Theme.colorHeaderContent
     }
 
     Row {
@@ -161,9 +133,9 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.rightMargin: buttonExit.visible ? 8 : 0
 
-        spacing: 4
+        spacing: 8
         visible: true
 
         ////////////
@@ -174,7 +146,7 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (content.state === "DeviceSensor") || (content.state === "DeviceThermo")
+            visible: (deviceManager.bluetooth && ((content.state === "DeviceSensor") || (content.state === "DeviceThermo")))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: deviceRefreshButtonClicked()
@@ -240,6 +212,8 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
+            visible: (deviceManager.bluetooth && menuMain.visible)
+
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: refreshButtonClicked()
@@ -267,6 +241,8 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
+            visible: (deviceManager.bluetooth && menuMain.visible)
+
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: rescanButtonClicked()
@@ -285,12 +261,16 @@ Rectangle {
         Row {
             id: menuMain
             spacing: 0
+            visible: (content.state === "DeviceList" ||
+                      content.state === "Settings" ||
+                      content.state === "About")
 
             ItemMenuButton {
                 id: menuPlants
                 width: 64
                 height: 64
                 visible: (rectangleHeader.width >= 560)
+                selected: (content.state === "DeviceList")
                 source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
             }
@@ -298,6 +278,7 @@ Rectangle {
                 id: menuSettings
                 width: 64
                 height: 64
+                selected: (content.state === "Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 onClicked: settingsButtonClicked()
             }
@@ -305,47 +286,25 @@ Rectangle {
                 id: menuAbout
                 width: 64
                 height: 64
+                selected: (content.state === "About")
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
                 onClicked: aboutButtonClicked()
             }
         }
 
         ////////////////
-/*
-        ImageSvg {
+
+        ItemImageButton {
             id: buttonExit
-            width: 32
-            height: 32
+            width: 48
+            height: 48
             anchors.verticalCenter: parent.verticalCenter
+            iconColor: Theme.colorHeaderContent
 
-            Connections {
-                target: settingsManager
-                onSystrayChanged: {
-                    if (settingsManager.systray)
-                        buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
-                    else
-                        buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-                }
-            }
+            visible: false // (rectangleHeader.width >= 720)
 
-            source: {
-                if (settingsManager.systray)
-                    buttonExit.source = "qrc:/assets/icons_material/baseline-minimize-24px.svg"
-                else
-                    buttonExit.source = "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
-            }
-            color: Theme.colorHeaderContent
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (settingsManager.systray)
-                        applicationWindow.hide()
-                    else
-                        settingsManager.exit()
-                }
-            }
+            source: (settingsManager.systray) ? "qrc:/assets/icons_material/baseline-minimize-24px.svg" : "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+            onClicked: (settingsManager.systray) ? applicationWindow.hide(): settingsManager.exit()
         }
-*/
     }
 }

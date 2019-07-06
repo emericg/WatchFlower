@@ -213,7 +213,7 @@ Item {
 
             text: "50%"
             font.bold: false
-            font.pixelSize: 22
+            font.pixelSize: 24
             color: Theme.colorHeaderContent
         }
 
@@ -244,7 +244,7 @@ Item {
 
                 text: qsTr("Updating...")
                 color: Theme.colorHeaderContent
-                font.pixelSize: 16
+                font.pixelSize: 17
                 font.bold: false
             }
         }
@@ -289,7 +289,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 padding: 4
-                font.pixelSize: 16
+                font.pixelSize: 17
                 font.bold: false
                 color: Theme.colorHeaderContent
 

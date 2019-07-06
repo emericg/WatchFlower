@@ -119,7 +119,7 @@ Item {
             anchors.leftMargin: 0
 
             height: 48
-            color: Theme.colorYellow
+            color: Theme.colorStatusbar
             visible: false
             opacity: 0
 /*
@@ -145,7 +145,7 @@ Item {
                 anchors.rightMargin: 16
                 anchors.leftMargin: 16
 
-                color: "white"
+                color: Theme.colorStatusbarContent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 font.pixelSize: 16
@@ -161,7 +161,7 @@ Item {
 
                 visible: false
                 text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
-                color: "white"
+                color: Theme.colorStatusbarContent
 
                 onClicked: deviceManager.enableBluetooth()
             }
@@ -175,7 +175,7 @@ Item {
 
                 visible: false
                 text: qsTr("Launch detection")
-                color: "white"
+                color: Theme.colorStatusbarContent
 
                 onClicked: deviceManager.scanDevices()
             }
@@ -219,7 +219,7 @@ Item {
             anchors.leftMargin: 0
 
             height: 48
-            color: Theme.colorYellow
+            color: Theme.colorStatusbar
             visible: (screenDeviceList.selectionCount)
 
             Row {
@@ -234,8 +234,9 @@ Item {
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
+                    visible: deviceManager.bluetooth
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    iconColor: Theme.colorHeaderContent
+                    iconColor: Theme.colorStatusbarContent
                     onClicked: screenDeviceList.updateSelectedDevice()
 
                     NumberAnimation on rotation {
@@ -262,7 +263,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
-                    iconColor: Theme.colorHeaderContent
+                    iconColor: Theme.colorStatusbarContent
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }
 /*
@@ -272,7 +273,7 @@ Item {
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: "white"
+                    color: Theme.colorStatusbarContent
                     text: qsTr("Refresh")
                     onClicked: screenDeviceList.updateSelectedDevice()
                 }
@@ -282,7 +283,7 @@ Item {
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: "white"
+                    color: Theme.colorStatusbarContent
                     text: qsTr("Delete")
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }

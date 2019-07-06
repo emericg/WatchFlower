@@ -218,6 +218,8 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.left: parent.left
 
+                enabled: deviceManager.bluetooth
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -241,7 +243,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                    color: Theme.colorText
+                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
 
                     NumberAnimation on rotation {
                         id: refreshAnimation
@@ -268,7 +270,7 @@ Rectangle {
                     text: qsTr("Refresh sensors datas")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
                 }
             }
 
@@ -277,6 +279,8 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
+
+                enabled: deviceManager.bluetooth
 
                 MouseArea {
                     anchors.fill: parent
@@ -297,7 +301,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                    color: Theme.colorText
+                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
 
                     SequentialAnimation on opacity {
                         id: rescanAnimation
@@ -317,7 +321,7 @@ Rectangle {
                     text: qsTr("Search for new devices")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
                 }
             }
 
