@@ -187,7 +187,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 132
         z: 5
 
         anchors.top: parent.top
@@ -200,6 +200,7 @@ Item {
         Column {
             id: plantPanel
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: 2
             anchors.right: parent.right
             anchors.left: parent.left
 
@@ -249,7 +250,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 TextInput {
@@ -261,7 +262,7 @@ Item {
 
                     padding: 4
                     color: Theme.colorHighContrast
-                    font.pixelSize: 16
+                    font.pixelSize: 18
 
                     onEditingFinished: {
                         if (text) {
@@ -357,7 +358,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 TextInput {
@@ -369,7 +370,7 @@ Item {
 
                     padding: 4
                     color: Theme.colorHighContrast
-                    font.pixelSize: 16
+                    font.pixelSize: 18
 
                     onEditingFinished: {
                         if (text) {
@@ -466,7 +467,7 @@ Item {
                     text: qsTr("Status")
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
                 Text {
                     id: textStatus
@@ -478,7 +479,7 @@ Item {
                     text: qsTr("Loading...")
                     color: Theme.colorHighContrast
                     padding: 4
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
             }
         }

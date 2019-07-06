@@ -48,7 +48,7 @@ ApplicationWindow {
 
     Drawer {
         id: drawer
-        width: 0.80 * applicationWindow.width
+        width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.40 * applicationWindow.width
         height: applicationWindow.height
 
         MobileDrawer { id: drawerscreen }

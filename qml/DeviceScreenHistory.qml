@@ -302,8 +302,9 @@ Item {
                 anchors.leftMargin: 12
                 text: qsTr("Humidity")
                 color: Theme.colorIcons
-                font.bold: false
-                font.pixelSize: 18
+                font.bold: true
+                font.pixelSize: 14
+                font.capitalization: Font.AllUppercase
             }
         }
 
@@ -320,8 +321,9 @@ Item {
                 anchors.leftMargin: 12
                 text: qsTr("Temperature")
                 color: Theme.colorIcons
-                font.bold: false
-                font.pixelSize: 18
+                font.bold: true
+                font.pixelSize: 14
+                font.capitalization: Font.AllUppercase
             }
         }
 
@@ -338,8 +340,9 @@ Item {
                 anchors.leftMargin: 12
                 text: qsTr("Luminosity")
                 color: Theme.colorIcons
-                font.bold: false
-                font.pixelSize: 18
+                font.bold: true
+                font.pixelSize: 14
+                font.capitalization: Font.AllUppercase
             }
         }
 
@@ -356,8 +359,9 @@ Item {
                 anchors.leftMargin: 12
                 text: qsTr("Fertility")
                 color: Theme.colorIcons
-                font.bold: false
-                font.pixelSize: 18
+                font.bold: true
+                font.pixelSize: 14
+                font.capitalization: Font.AllUppercase
             }
         }
     }

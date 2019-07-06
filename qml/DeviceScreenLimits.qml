@@ -105,7 +105,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 96 : 132
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 132
         z: 5
 
         anchors.top: parent.top
@@ -118,6 +118,7 @@ Item {
         Column {
             id: devicePanel
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: 2
             anchors.right: parent.right
             anchors.left: parent.left
 
@@ -167,7 +168,7 @@ Item {
                     text: qsTr("Address")
                     horizontalAlignment: Text.AlignRight
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 Text {
@@ -177,7 +178,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceAddress
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorHighContrast
                 }
             }
@@ -199,7 +200,7 @@ Item {
 
                     color: Theme.colorText
                     text: qsTr("Firmware")
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     horizontalAlignment: Text.AlignRight
                 }
                 Text {
@@ -209,7 +210,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update available!")
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorHighContrast
                 }
                 ImageSvg {
@@ -258,7 +259,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceBattery + "%"
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorHighContrast
                 }
 
@@ -272,7 +273,7 @@ Item {
 
                     text: qsTr("Battery")
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
             }
         }
@@ -663,6 +664,12 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
+            }
+
+            Item { // spacer
+                height: 16
+                anchors.right: parent.right
+                anchors.left: parent.left
             }
         }
     }

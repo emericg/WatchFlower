@@ -107,7 +107,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
-                    color: Theme.colorText
+                    color: (content.state === "DeviceList") ? Theme.colorHighlight : Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -117,7 +117,7 @@ Rectangle {
                     text: qsTr("My plants")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: (content.state === "DeviceList") ? Theme.colorHighlight : Theme.colorText
                 }
             }
 
@@ -144,7 +144,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                    color: Theme.colorText
+                    color: (content.state === "Settings") ? Theme.colorHighlight : Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -154,7 +154,7 @@ Rectangle {
                     text: qsTr("Settings")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: (content.state === "Settings") ? Theme.colorHighlight : Theme.colorText
                 }
             }
 
@@ -181,7 +181,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorText
+                    color: (content.state === "About") ? Theme.colorHighlight : Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -191,7 +191,7 @@ Rectangle {
                     text: qsTr("About")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: (content.state === "About") ? Theme.colorHighlight : Theme.colorText
                 }
             }
 

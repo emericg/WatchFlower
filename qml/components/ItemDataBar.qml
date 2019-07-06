@@ -51,7 +51,9 @@ Item {
         anchors.verticalCenter: item_bg.verticalCenter
 
         text: legend
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 12
+        font.capitalization: Font.AllUppercase
         color: Theme.colorText
         horizontalAlignment: Text.AlignRight
     }

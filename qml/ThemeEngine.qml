@@ -159,11 +159,11 @@ Item {
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
 
-            colorGreen = "#58b870"
+            colorGreen = "#58CF77"
             colorBlue = "#4dceeb"
             colorYellow = "#fcc632"
             colorRed = "#e8635a"
-            colorLightGrey = "#a9bcb8"
+            colorLightGrey = "#95A5A2"
 
             colorHeader = "#b16bee"
             colorHeaderStatusbar = "#725595"
@@ -175,8 +175,8 @@ Item {
             colorBackground = "#313236"
             colorForeground = "#292929"
 
-            colorText = "#b9babe"
-            colorSubText = "#75767a"
+            colorText = "#EEEEEE"
+            colorSubText = "#AAAAAA"
             colorIcons = "#b9babe"
 
             colorBordersDrawer = "#292929"
