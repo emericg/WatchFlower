@@ -52,6 +52,9 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("itemAioLineCharts // updateGraph() >> " + myDevice)
 
+        if (dateIndicator.visible)
+            resetIndicator()
+
         if (myDevice.countDatas("temp", 14) > 0) {
             itemAioLineCharts.visible = true
         } else {
@@ -230,7 +233,7 @@ Item {
                     verticalIndicator.x = ppp.x
                     // set date
                     var date = new Date(mpmp.x)
-                    var date_string = date.getDate() + "/" + date.getMonth() + " " + qsTr("at") + " " + date.getHours() + ":" + date.getSeconds()
+                    var date_string = date.getDate() + " " + Qt.locale().monthName(date.getMonth(), Locale.LongFormat) + " " + qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(),2)
                     textTime.text = date_string
 
                     // search index corresponding to the timestamp
