@@ -240,11 +240,39 @@ Item {
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
             onClicked: {
-                if (boxDevice && boxDevice.hasDatas()) {
+                if (typeof boxDevice === "undefined" || !boxDevice) return
 
-                    if (mouse.button === Qt.LeftButton) {
+                // multi selection
+                if (mouse.button === Qt.MiddleButton) {
+                    if (!selected) {
+                        selected = true;
+                        screenDeviceList.selectDevice(index);
+                    } else {
+                        selected = false;
+                        screenDeviceList.deselectDevice(index);
+                    }
+                    return;
+                }
+
+                if (mouse.button === Qt.LeftButton) {
+                    // multi selection
+                    if ((mouse.modifiers & Qt.ControlModifier) ||
+                        (screenDeviceList.selectionMode)) {
+                        if (!selected) {
+                            selected = true;
+                            screenDeviceList.selectDevice(index);
+                        } else {
+                            selected = false;
+                            screenDeviceList.deselectDevice(index);
+                        }
+                        return;
+                    }
+
+                    // regular click
+                    if (boxDevice.hasDatas()) {
                         if (currentlySelectedDevice != boxDevice) {
                             currentlySelectedDevice = boxDevice
 
@@ -259,30 +287,17 @@ Item {
                         else
                             content.state = "DeviceThermo"
                     }
-
-                    if (mouse.button === Qt.MiddleButton) {
-                        if (!devicesView.selectionMode) {
-                            if (!selected) {
-                                selected = true;
-                                screenDeviceList.selectDevice(index);
-                            } else {
-                                selected = false;
-                                screenDeviceList.deselectDevice(index);
-                            }
-                        }
-                    }
                 }
             }
 
             onPressAndHold: {
-                if (!devicesView.selectionMode) {
-                    if (!selected) {
-                        selected = true;
-                        screenDeviceList.selectDevice(index);
-                    } else {
-                        selected = false;
-                        screenDeviceList.deselectDevice(index);
-                    }
+                // multi selection
+                if (!selected) {
+                    selected = true;
+                    screenDeviceList.selectDevice(index);
+                } else {
+                    selected = false;
+                    screenDeviceList.deselectDevice(index);
                 }
             }
         }
