@@ -104,7 +104,7 @@ linux:!android {
 }
 
 macx {
-    message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
+    #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
 
     # OS icon
     ICON = assets/desktop/$$lower($${TARGET}).icns
@@ -147,7 +147,7 @@ win32 {
 
 android {
     # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
-    message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
+    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml

@@ -164,7 +164,7 @@ Item {
             condu.visible = myDevice.hasConductivitySensor()
         }
 
-        //
+        updateDatasBars(myDevice.deviceTemp, myDevice.deviceLuminosity, myDevice.deviceHumidity, myDevice.deviceConductivity)
         aioLineCharts.updateGraph()
     }
 
