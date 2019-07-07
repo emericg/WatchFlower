@@ -107,7 +107,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
-                    color: (content.state === "DeviceList") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -117,7 +117,7 @@ Rectangle {
                     text: qsTr("My plants")
                     font.pixelSize: 13
                     font.bold: true
-                    color: (content.state === "DeviceList") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
             }
 
@@ -144,7 +144,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                    color: (content.state === "Settings") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -154,7 +154,7 @@ Rectangle {
                     text: qsTr("Settings")
                     font.pixelSize: 13
                     font.bold: true
-                    color: (content.state === "Settings") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
             }
 
@@ -181,7 +181,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: (content.state === "About") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
                 Label {
                     anchors.left: parent.left
@@ -191,7 +191,7 @@ Rectangle {
                     text: qsTr("About")
                     font.pixelSize: 13
                     font.bold: true
-                    color: (content.state === "About") ? Theme.colorHighlight : Theme.colorText
+                    color: Theme.colorText
                 }
             }
 
@@ -204,7 +204,7 @@ Rectangle {
                 height: 1
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: Theme.colorBordersDrawer
+                color: Theme.colorSeparator
             }
             Item {
                 height: 8
@@ -335,7 +335,7 @@ Rectangle {
                 height: 1
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: Theme.colorBordersDrawer
+                color: Theme.colorSeparator
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
             }
             Item {

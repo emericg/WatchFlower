@@ -45,7 +45,7 @@ Item {
 
     Connections {
         target: settingsManager
-        onThemeChanged: {
+        onAppThemeChanged: {
             rectangleDeviceDatas.updateHeader()
             rectangleDeviceHistory.updateHeader()
             rectangleDeviceHistory.updateColors()

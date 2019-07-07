@@ -45,7 +45,7 @@ Item {
 
     Text {
         id: item_legend
-        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 90
+        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: item_bg.verticalCenter
@@ -54,7 +54,7 @@ Item {
         font.bold: true
         font.pixelSize: 12
         font.capitalization: Font.AllUppercase
-        color: Theme.colorText
+        color: Theme.colorSubText
         horizontalAlignment: Text.AlignRight
     }
 

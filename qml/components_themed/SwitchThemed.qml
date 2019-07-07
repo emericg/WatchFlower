@@ -26,6 +26,7 @@ import com.watchflower.theme 1.0
 
 Switch {
     id: control
+    font.pixelSize: 14
     font.bold: true
 
     indicator: Rectangle {
@@ -35,14 +36,15 @@ Switch {
         y: parent.height / 2 - height / 2
 
         radius: 13
-        //border.color: Theme.colorBordersComponents
-        color: control.checked ? Theme.colorHighlight2 : Theme.colorBordersComponents
+        //border.color: Theme.colorComponentBorder
+        color: control.checked ? Theme.colorHighlight2 : Theme.colorComponentBorder
 
         Rectangle {
             x: control.checked ? parent.width - width : 0
-            anchors.verticalCenter: parent.verticalCenter
             width: 24
             height: 24
+            anchors.verticalCenter: parent.verticalCenter
+
             radius: 12
             color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
             border.color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
@@ -50,11 +52,12 @@ Switch {
     }
 
     contentItem: Text {
-        text: control.text
-        font: control.font
-        opacity: enabled ? 1.0 : 0.3
-        color: Theme.colorText
         verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
+
+        text: control.text
+        font: control.font
+        color: Theme.colorText
+        opacity: enabled ? 1.0 : 0.3
     }
 }

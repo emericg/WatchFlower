@@ -29,13 +29,14 @@ SpinBox {
     value: 50
     editable: true
     clip: true
+    font.pixelSize: 14
 
     contentItem: TextInput {
         z: 2
-        text: control.textFromValue(control.value, control.locale)
+        text: control.textFromValue(control.value, control.locale) // + qsTr("min.")
 
         font: control.font
-        color: Theme.colorText
+        color: Theme.colorSubText
         selectionColor: Theme.colorText
         selectedTextColor: "white"
         horizontalAlignment: Qt.AlignHCenter
@@ -57,13 +58,13 @@ SpinBox {
         height: parent.height
         implicitWidth: 40
         implicitHeight: 40
-        color: control.up.pressed ? Theme.colorBgDownComponents : Theme.colorBgUpComponents
+        color: control.up.pressed ? Theme.colorComponentBgDown : Theme.colorComponentBgUp
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
         radius: 4
 
         Text {
             text: "+"
-            font.pixelSize: 24
+            font.pixelSize: 20
             color: enabled ? Theme.colorText : Theme.colorSubText
             anchors.fill: parent
             fontSizeMode: Text.Fit
@@ -77,13 +78,13 @@ SpinBox {
         height: parent.height
         implicitWidth: 40
         implicitHeight: 40
-        color: control.down.pressed ? Theme.colorBgDownComponents : Theme.colorBgUpComponents
+        color: control.down.pressed ? Theme.colorComponentBgDown : Theme.colorComponentBgUp
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
         radius: 4
 
         Text {
             text: "-"
-            font.pixelSize: 32
+            font.pixelSize: 30
             color: enabled ? Theme.colorText : Theme.colorSubText
             anchors.fill: parent
             fontSizeMode: Text.Fit
@@ -96,7 +97,7 @@ SpinBox {
         implicitWidth: 128
         z: 3
         color: "transparent"
-        border.color: Theme.colorBordersComponents
+        border.color: Theme.colorComponentBorder
         radius: 4
     }
 }

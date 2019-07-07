@@ -52,12 +52,10 @@ Item {
     property string colorText
     property string colorSubText
     property string colorIcons
-
-    property string colorBordersDrawer
-    property string colorBordersWidget
-    property string colorBordersComponents
-    property string colorBgUpComponents
-    property string colorBgDownComponents
+    property string colorSeparator
+    property string colorComponentBorder
+    property string colorComponentBgUp
+    property string colorComponentBgDown
 
     // Palette colors
     property string colorLightGreen: "#09debc" // unused
@@ -84,13 +82,20 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Component.onCompleted: loadTheme(settingsManager.theme)
+    Component.onCompleted: loadTheme(settingsManager.appTheme)
 
     function loadTheme(themeIndex) {
         if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
         if (themeIndex === "night") themeIndex = ThemeEngine.THEME_NIGHT
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
+
+        if (settingsManager.autoDark) {
+            var today = new Date();
+            var hour = Qt.formatDateTime(today, "hh");
+            if (hour >= 21 && hour <= 8)  themeIndex = ThemeEngine.THEME_NIGHT;
+        }
+
         currentTheme = themeIndex
 
         if (themeIndex === ThemeEngine.THEME_GREEN) {
@@ -114,12 +119,10 @@ Item {
             colorText = "#333333"
             colorSubText = "#666666"
             colorIcons = "#606060"
-
-            colorBordersDrawer = "#d3d3d3"
-            colorBordersWidget = colorMaterialDarkGrey
-            colorBordersComponents = "#b3b3b3"
-            colorBgUpComponents = colorMaterialDarkGrey
-            colorBgDownComponents = colorMaterialLightGrey
+            colorSeparator = colorMaterialDarkGrey
+            colorComponentBorder = "#b3b3b3"
+            colorComponentBgUp = colorMaterialDarkGrey
+            colorComponentBgDown = colorMaterialLightGrey
 
             colorHighlight = colorGreen
             colorHighlight2 = "#8dd9ca"
@@ -146,12 +149,10 @@ Item {
             colorText = "#4b4747"
             colorSubText = "#666666"
             colorIcons = "#606060"
-
-            colorBordersDrawer = "#d3d3d3"
-            colorBordersWidget = colorMaterialDarkGrey
-            colorBordersComponents = "#b3b3b3"
-            colorBgUpComponents = colorMaterialDarkGrey
-            colorBgDownComponents = colorMaterialLightGrey
+            colorSeparator = colorMaterialDarkGrey
+            colorComponentBorder = "#b3b3b3"
+            colorComponentBgUp = colorMaterialDarkGrey
+            colorComponentBgDown = colorMaterialLightGrey
 
             colorHighlight = "#ffd700"
             colorHighlight2 = colorHeaderStatusbar
@@ -178,12 +179,10 @@ Item {
             colorText = "#EEEEEE"
             colorSubText = "#AAAAAA"
             colorIcons = "#b9babe"
-
-            colorBordersDrawer = "#292929"
-            colorBordersWidget = "#404040"
-            colorBordersComponents = "#75767a"
-            colorBgUpComponents = "#75767a"
-            colorBgDownComponents = "#292929"
+            colorSeparator = "#404040"
+            colorComponentBorder = "#75767a"
+            colorComponentBgUp = "#75767a"
+            colorComponentBgDown = "#292929"
 
             colorHighlight = "#bb86fc"
             colorHighlight2 = colorHeaderStatusbar

@@ -79,8 +79,8 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
 
-        if (settings.contains("settings/startMinimized"))
-            m_startMinimized = settings.value("settings/startMinimized").toBool();
+        if (settings.contains("settings/autoDark"))
+            m_autoDark = settings.value("settings/autoDark").toBool();
 
         if (settings.contains("settings/bluetoothControl"))
             m_bluetoothControl = settings.value("settings/bluetoothControl").toBool();
@@ -103,6 +103,9 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/updateInterval"))
             m_updateInterval = settings.value("settings/updateInterval").toInt();
+
+        if (settings.contains("settings/startMinimized"))
+            m_startMinimized = settings.value("settings/startMinimized").toBool();
 
         if (settings.contains("settings/tempUnit"))
             m_tempUnit = settings.value("settings/tempUnit").toString();
@@ -143,15 +146,16 @@ bool SettingsManager::writeSettings()
     if (settings.isWritable())
     {
         settings.setValue("settings/appTheme", m_appTheme);
-        settings.setValue("settings/startMinimized", m_startMinimized);
+        settings.setValue("settings/autoDark", m_autoDark);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
         settings.setValue("settings/updateInterval", m_updateInterval);
-        settings.setValue("settings/tempUnit", m_tempUnit);
+        settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/graphHistory", m_graphHistory);
         settings.setValue("settings/bigWidget", m_bigWidget);
+        settings.setValue("settings/tempUnit", m_tempUnit);
 
         settings.sync();
 
@@ -406,19 +410,25 @@ void SettingsManager::resetDatabase()
 void SettingsManager::resetSettings()
 {
     // Settings
-    m_startMinimized = false;
-    Q_EMIT minimizedChanged();
+    m_appTheme= "green";
+    Q_EMIT appthemeChanged();
+    m_autoDark = false;
+    Q_EMIT autodarkChanged();
+
     m_systrayEnabled = false;
     Q_EMIT systrayChanged();
     m_notificationsEnabled = false;
     Q_EMIT notifsChanged();
+    m_updateInterval = DEFAULT_UPDATE_INTERVAL;
+    Q_EMIT updateIntervalChanged();
+
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
     m_bluetoothCompat = false;
     Q_EMIT bluetoothCompatChanged();
 
-    m_updateInterval = DEFAULT_UPDATE_INTERVAL;
-    Q_EMIT updateIntervalChanged();
+    m_startMinimized = false;
+    Q_EMIT minimizedChanged();
     QLocale lo;
     if (lo.measurementSystem() == QLocale::MetricSystem)
         m_tempUnit = "C";
@@ -438,7 +448,7 @@ void SettingsManager::resetSettings()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void SettingsManager::setSysTray(bool value)
+void SettingsManager::setSysTray(const bool value)
 {
     bool trayEnable_saved = m_systrayEnabled;
     m_systrayEnabled = value; writeSettings();
@@ -459,42 +469,49 @@ void SettingsManager::setSysTray(bool value)
     }
 }
 
-void SettingsManager::setTheme(QString value)
+void SettingsManager::setAppTheme(const QString &value)
 {
     m_appTheme = value;
     writeSettings();
-    Q_EMIT themeChanged();
+    Q_EMIT appthemeChanged();
 }
 
-void SettingsManager::setMinimized(bool value)
+void SettingsManager::setAutoDark(const bool value)
+{
+    m_autoDark = value;
+    writeSettings();
+    Q_EMIT autodarkChanged();
+}
+
+void SettingsManager::setMinimized(const bool value)
 {
     m_startMinimized = value;
     writeSettings();
     Q_EMIT minimizedChanged();
 }
 
-void SettingsManager::setNotifs(bool value)
+void SettingsManager::setNotifs(const bool value)
 {
     m_notificationsEnabled = value;
     writeSettings();
     Q_EMIT notifsChanged();
 }
 
-void SettingsManager::setBluetoothControl(bool value)
+void SettingsManager::setBluetoothControl(const bool value)
 {
     m_bluetoothControl = value;
     writeSettings();
     Q_EMIT bluetoothControlChanged();
 }
 
-void SettingsManager::setBluetoothCompat(bool value)
+void SettingsManager::setBluetoothCompat(const bool value)
 {
     m_bluetoothCompat = value;
     writeSettings();
     Q_EMIT bluetoothCompatChanged();
 }
 
-void SettingsManager::setUpdateInterval(int value)
+void SettingsManager::setUpdateInterval(const int value)
 {
     m_updateInterval = value;
     writeSettings();
@@ -515,7 +532,7 @@ void SettingsManager::setGraphHistory(const QString &value)
     Q_EMIT graphHistoryChanged();
 }
 
-void SettingsManager::setBigWidget(bool value)
+void SettingsManager::setBigWidget(const bool value)
 {
     m_bigWidget = value;
     writeSettings();

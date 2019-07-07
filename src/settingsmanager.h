@@ -42,7 +42,8 @@ class SettingsManager: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString theme READ getTheme WRITE setTheme NOTIFY themeChanged)
+    Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
+    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
@@ -56,6 +57,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
     QString m_appTheme = "green";
+    bool m_autoDark = false;
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
@@ -81,7 +83,8 @@ class SettingsManager: public QObject
     ~SettingsManager();
 
 Q_SIGNALS:
-    void themeChanged();
+    void appthemeChanged();
+    void autodarkChanged();
     void minimizedChanged();
     void systrayChanged();
     void notifsChanged();
@@ -97,26 +100,29 @@ public:
 
     bool hasDatabase() const { return m_db; }
 
-    QString getTheme() const { return m_appTheme; }
-    void setTheme(QString value);
+    QString getAppTheme() const { return m_appTheme; }
+    void setAppTheme(const QString &value);
+
+    bool getAutoDark() const { return m_autoDark; }
+    void setAutoDark(const bool value);
 
     bool getMinimized() const { return m_startMinimized; }
-    void setMinimized(bool value);
+    void setMinimized(const bool value);
 
     bool getSysTray() const { return m_systrayEnabled; }
-    void setSysTray(bool value);
+    void setSysTray(const bool value);
 
     bool getNotifs() const { return m_notificationsEnabled; }
-    void setNotifs(bool value);
+    void setNotifs(const bool value);
 
     bool getBluetoothControl() const { return m_bluetoothControl; }
-    void setBluetoothControl(bool value);
+    void setBluetoothControl(const bool value);
 
     bool getBluetoothCompat() const { return m_bluetoothCompat; }
-    void setBluetoothCompat(bool value);
+    void setBluetoothCompat(const bool value);
 
     int getUpdateInterval() const { return m_updateInterval; }
-    void setUpdateInterval(int value);
+    void setUpdateInterval(const int value);
 
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);
@@ -125,7 +131,7 @@ public:
     void setGraphHistory(const QString &value);
 
     bool getBigWidget() const { return m_bigWidget; }
-    void setBigWidget(bool value);
+    void setBigWidget(const bool value);
 
     // Utils:
 

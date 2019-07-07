@@ -105,7 +105,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 132
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 140
         z: 5
 
         anchors.top: parent.top
@@ -160,7 +160,7 @@ Item {
 
                 Text {
                     id: labelAddress
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
                     anchors.leftMargin: 12
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -193,7 +193,7 @@ Item {
 
                 Text {
                     id: labelFirmware
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -265,7 +265,7 @@ Item {
 
                 Text {
                     id: labelBattery
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
                     anchors.leftMargin: 12

@@ -178,8 +178,8 @@ Item {
         ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: true; }
         ValueAxis { id: axisCondu; visible: false; gridVisible: true; }
-        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 13;
-            labelsColor: Theme.colorText; gridLineColor: Theme.colorBordersWidget; }
+        DateTimeAxis { id: axisTime; visible: true; labelsFont.pixelSize: 14;
+                       labelsColor: Theme.colorText; gridLineColor: Theme.colorSeparator; }
 
         LineSeries {
             id: lumiDatas
@@ -310,11 +310,11 @@ Item {
 
         Rectangle {
             id: dateIndicator
-            width: textTime.width + 12
+            width: textTime.width + 16
             height: textTime.height + 12
 
-            color: Theme.colorLightGrey
-            radius: 8
+            color: Theme.colorForeground
+            radius: 4
             anchors.verticalCenter: parent.verticalCenter
             visible: false
 
@@ -323,9 +323,9 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 16
+                font.pixelSize: 14
                 font.bold: true
-                color: Theme.colorHeaderContent
+                color: Theme.colorSubText
             }
         }
 
@@ -334,8 +334,8 @@ Item {
             width: textDatas.width + 12
             height: textDatas.height + 12
 
-            color: Theme.colorLightGrey
-            radius: 8
+            color: Theme.colorForeground
+            radius: 4
             anchors.verticalCenter: parent.verticalCenter
             visible: false
 
@@ -344,9 +344,9 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 16
+                font.pixelSize: 14
                 font.bold: true
-                color: Theme.colorHeaderContent
+                color: Theme.colorSubText
             }
         }
     }

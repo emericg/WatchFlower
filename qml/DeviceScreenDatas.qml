@@ -187,7 +187,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 132
+        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 140
         z: 5
 
         anchors.top: parent.top
@@ -242,7 +242,7 @@ Item {
 
                 Text {
                     id: labelPlant
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -350,7 +350,7 @@ Item {
 
                 Text {
                     id: labelLocation
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -459,7 +459,7 @@ Item {
 
                 Text {
                     id: labelStatus
-                    width: 72
+                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter

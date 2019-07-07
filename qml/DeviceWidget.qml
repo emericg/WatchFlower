@@ -49,7 +49,7 @@ Item {
 
     Connections {
         target: settingsManager
-        onThemeChanged: {
+        onAppThemeChanged: {
             updateSensorDatas()
             updateBoxDatas()
         }
@@ -225,6 +225,8 @@ Item {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: deviceWidgetRectangle
         anchors.rightMargin: 6
@@ -233,9 +235,9 @@ Item {
         anchors.topMargin: 6
         anchors.fill: parent
 
-        color: deviceWidget.selected ? Theme.colorBordersWidget : "transparent"
+        color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
         border.width: 2
-        border.color: (singleColumn) ? "transparent" : Theme.colorBordersWidget
+        border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
         radius: 2
 
         MouseArea {
@@ -302,7 +304,7 @@ Item {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////
+        ////////////////
 
         Row {
             id: rowLeft
@@ -324,7 +326,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorHighContrast
-                visible: wideAssMode || bigAssMode
+                visible: (wideAssMode || bigAssMode)
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -397,7 +399,7 @@ Item {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////
+        ////////////////
 
         Row {
             id: rowRight
@@ -407,7 +409,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? 0 : (bigAssMode ? 16 : 10)
+            anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 16 : 10)
 
             Row {
                 id: lilIcons
@@ -627,6 +629,8 @@ Item {
             }
         }
 
+        ////////////////
+
         ImageSvg {
             id: imageStatus
             width: 32
@@ -652,7 +656,7 @@ Item {
 
     Rectangle {
         id: bottomSeparator
-        color: Theme.colorBordersWidget
+        color: Theme.colorSeparator
         visible: singleColumn
         height: 1
 

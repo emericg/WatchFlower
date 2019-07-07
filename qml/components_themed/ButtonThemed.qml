@@ -46,14 +46,14 @@ Button {
 
         radius: 4
         color: "transparent"
-        opacity: enabled ? 0.4 : 0.6
+        opacity: enabled ? 0.3 : 0.6
 
         border.width: 2
         border.color: control.color
 
         Rectangle {
             anchors.fill: parent
-            opacity: (control.down) ? 0.5 : 0.2
+            opacity: (control.down) ? 0.5 : 0.1
             color: (control.down || control.selected) ? (control.color) : "transparent"
         }
     }

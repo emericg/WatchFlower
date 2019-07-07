@@ -105,7 +105,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-style-24px.svg"
                 }
 
@@ -142,13 +142,13 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         border.color: Theme.colorHighlight
-                        border.width: (settingsManager.theme === "green") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "green") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 Theme.loadTheme(0)
-                                settingsManager.theme = "green"
+                                settingsManager.appTheme = "green"
                             }
                         }
                     }
@@ -160,13 +160,13 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         border.color: Theme.colorHighlight
-                        border.width: (settingsManager.theme === "day") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "day") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 Theme.loadTheme(1)
-                                settingsManager.theme = "day"
+                                settingsManager.appTheme = "day"
                             }
                         }
                     }
@@ -178,13 +178,13 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         border.color: Theme.colorHighlight
-                        border.width: (settingsManager.theme === "night") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "night") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 Theme.loadTheme(2)
-                                settingsManager.theme = "night"
+                                settingsManager.appTheme = "night"
                             }
                         }
                     }
@@ -194,26 +194,25 @@ Item {
             ////////
 
             Item {
-                id: element_minimized
+                id: element_autoDarkmode
                 height: 48
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                // desktop only
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: (settingsManager.appTheme !== "night")
 
                 Text {
-                    id: text_minimized
+                    id: text_autoDarkmode
                     height: 40
-                    anchors.right: switch_minimized.left
+                    anchors.right: switch_autoDarkmode.left
                     anchors.rightMargin: 16
-                    anchors.left: image_minimized.right
+                    anchors.left: image_autoDarkmode.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Start application minimized")
+                    text: qsTr("Automatique dark mode")
                     font.pixelSize: 16
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -221,26 +220,51 @@ Item {
                 }
 
                 SwitchThemed {
-                    id: switch_minimized
+                    id: switch_autoDarkmode
                     z: 1
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-                    Component.onCompleted: checked = settingsManager.minimized
-                    onCheckedChanged: settingsManager.minimized = checked
+                    Component.onCompleted: checked = settingsManager.autoDark
+                    onCheckedChanged: settingsManager.autoDark = checked
                 }
 
                 ImageSvg {
-                    id: image_minimized
+                    id: image_autoDarkmode
                     width: 24
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
-                    source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
                 }
+            }
+            Text {
+                id: legend_autoDarkmode
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                topPadding: -12
+                bottomPadding: 8
+
+                visible: (element_autoDarkmode.visible)
+
+                text: qsTr("Dark mode enables between 21 PM and 8 AM.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
             }
 
             ////////
@@ -265,7 +289,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Allow Bluetooth control")
+                    text: qsTr("Bluetooth control")
                     wrapMode: Text.WordWrap
                     font.pixelSize: 16
                     color: Theme.colorText
@@ -290,7 +314,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-bluetooth_connected-24px.svg"
                 }
             }
@@ -330,7 +354,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Bluetooth compatibility mode")
+                    text: qsTr("Bluetooth compatibility")
                     wrapMode: Text.WordWrap
                     anchors.right: switch_bluetoothCompat.left
                     anchors.rightMargin: 16
@@ -357,7 +381,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg"
                 }
             }
@@ -368,13 +392,24 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
+                bottomPadding: 8
 
                 visible: element_bluetoothCompat.visible
 
-                text: qsTr("Improve Bluetooth compatibility when your device has trouble connecting to sensors. You can disable it to improve sync speed.")
+                text: qsTr("Improve Bluetooth reliability if your device has trouble connecting to sensors, at the expanse of sync speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
             }
 
             ////////
@@ -424,7 +459,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                 }
             }
@@ -435,10 +470,11 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
+                bottomPadding: 8
 
                 visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
 
-                text: qsTr("Wake up at a pre-defined intervals to update sensor datas. Only if Bluetooth or Bluetooth control is enabled.")
+                text: qsTr("Wake up at a predefined intervals to refresh sensor datas. Only if Bluetooth (or Bluetooth control) is enabled.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -453,7 +489,7 @@ Item {
 
                 visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
 
-                text: qsTr("WatchFlower will stay in the system tray and regularly update sensor datas.")
+                text: qsTr("WatchFlower stays active in the system tray and will wake up at a predefined intervals to refresh sensor datas.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -506,7 +542,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                 }
             }
@@ -539,7 +575,7 @@ Item {
                 SpinBoxThemed {
                     id: spinBox_update
                     width: 128
-                    height: 36
+                    height: 34
                     z: 1
                     Component.onCompleted: value = settingsManager.updateInterval
                     onValueChanged: settingsManager.updateInterval = value
@@ -575,8 +611,69 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
+                }
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
+            }
+
+            ////////
+
+            Item {
+                id: element_minimized
+                height: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+
+                // desktop only
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+                Text {
+                    id: text_minimized
+                    height: 40
+                    anchors.right: switch_minimized.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_minimized.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Start application minimized")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemed {
+                    id: switch_minimized
+                    z: 1
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    Component.onCompleted: checked = settingsManager.minimized
+                    onCheckedChanged: settingsManager.minimized = checked
+                }
+
+                ImageSvg {
+                    id: image_minimized
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
                 }
             }
 
@@ -627,7 +724,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-format_size-24px.svg"
                 }
             }
@@ -666,7 +763,7 @@ Item {
 
                     z: 1
                     text: qsTr("°C")
-                    font.pixelSize: 16
+                    font.pixelSize: 14
 
                     checked: {
                         if (settingsManager.tempUnit === 'C') {
@@ -692,7 +789,7 @@ Item {
 
                     z: 1
                     text: qsTr("°F")
-                    font.pixelSize: 16
+                    font.pixelSize: 14
 
                     checked: {
                         if (settingsManager.tempUnit === 'F') {
@@ -717,7 +814,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.left: parent.left
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 }
             }
@@ -740,7 +837,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
 
-                    color: Theme.colorHighContrast
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 }
 
@@ -768,7 +865,7 @@ Item {
 
                     z: 1
                     text: qsTr("Monthly")
-                    font.pixelSize: 16
+                    font.pixelSize: 14
 
                     checked: {
                         if (settingsManager.graphHistory === "monthly") {
@@ -793,7 +890,7 @@ Item {
 
                     z: 1
                     text: qsTr("Weekly")
-                    font.pixelSize: 16
+                    font.pixelSize: 14
 
                     checked: {
                         if (settingsManager.graphHistory === "weekly") {
@@ -809,6 +906,12 @@ Item {
                             settingsManager.graphHistory = "weekly"
                     }
                 }
+            }
+
+            Item { // spacer
+                height: 8
+                anchors.right: parent.right
+                anchors.left: parent.left
             }
 
             ////////

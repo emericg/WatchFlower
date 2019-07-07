@@ -69,7 +69,7 @@ Item {
                 backgroundDayBars.borderColor = "transparent"
                 backgroundDayBars.color = Theme.colorForeground
                 backgroundNightBars.borderColor = "transparent"
-                backgroundNightBars.color = (settingsManager.theme === "night") ? "#111111": "#dddddd"
+                backgroundNightBars.color = (settingsManager.appTheme === "night") ? "#111111": "#dddddd"
             } else {
                 backgroundDayBars.borderColor = "transparent"
                 backgroundDayBars.color = Theme.colorForeground
@@ -115,7 +115,7 @@ Item {
             backgroundDayBars.borderColor = "transparent"
             backgroundDayBars.color = Theme.colorForeground
             backgroundNightBars.borderColor = "transparent"
-            backgroundNightBars.color = (settingsManager.theme === "night") ? "#111111": "#dddddd"
+            backgroundNightBars.color = (settingsManager.theme === "appTheme") ? "#111111": "#dddddd"
         } else {
             backgroundDayBars.borderColor = "transparent"
             backgroundDayBars.color = Theme.colorForeground
