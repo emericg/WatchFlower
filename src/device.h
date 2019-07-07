@@ -149,7 +149,7 @@ protected:
     int m_limitTempMax = 25;
     int m_limitLumiMin = 1000;
     int m_limitLumiMax = 3000;
-    int m_limitConduMin = 0;
+    int m_limitConduMin = 100;
     int m_limitConduMax = 500;
 
     // BLE

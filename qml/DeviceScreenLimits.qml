@@ -373,9 +373,9 @@ Item {
                 topPadding: -16
                 visible: itemHygro.visible
 
-                text: qsTr("Usual soil moisture window is 15 to 50% for indoor plants. Succulent can go as low as 7%. Tropical plants can live with more water. " +
-                           "Also, be careful: too much water over long periods of time can be just as lethal as not enough!<br>" +
-                           "<b>Tip:</b> Water your plants more frequently during growth period.")
+                text: qsTr("Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("Be careful: too much water over long periods of time can be just as lethal as not enough!") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("Water your plants more frequently during their growth period.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -452,8 +452,9 @@ Item {
                 topPadding: -16
                 visible: itemTemp.visible
 
-                text: qsTr("Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below. Constant temperature is usually more important than the absolute values.<br>" +
-                           "<b>Tip:</b> If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).")
+                text: qsTr("Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("Having constant temperature is important for indoor plants.") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -583,7 +584,7 @@ Item {
                 topPadding: -4
                 visible: itemLumi.visible
 
-                text: qsTr("Some plants like direct sun exposition. Some can accommodate it for part of the day. Many indoor plants don't like direct sunlight: place them away from south oriented windows!")
+                text: qsTr("Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don't like direct sunlight: place them away from south oriented windows!")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -660,7 +661,8 @@ Item {
                 topPadding: -16
                 visible: itemCondu.visible
 
-                text: qsTr("Soil fertility is more of an indication than an absolute value to take into account. However, be sure to have the right soil composition for your plant.")
+                text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil.") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

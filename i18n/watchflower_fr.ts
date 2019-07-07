@@ -228,6 +228,11 @@
         <translation>Humidité</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenDatas.qml" line="539"/>
+        <source>Humidity</source>
+        <translation>Humidité</translation>
+    </message>
+    <message>
         <source>Hygrometry</source>
         <translation type="vanished">Hygrométrie</translation>
     </message>
@@ -274,6 +279,11 @@
         <translation>Humidité</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenHistory.qml" line="303"/>
+        <source>Moisture</source>
+        <translation>Humidité</translation>
+    </message>
+    <message>
         <source>Hygrometry</source>
         <translation type="vanished">Hygrométrie</translation>
     </message>
@@ -300,54 +310,120 @@
 <context>
     <name>DeviceScreenLimits</name>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="168"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="169"/>
         <source>Address</source>
         <translation>Addresse</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="202"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="203"/>
         <source>Firmware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="212"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="231"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="241"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="213"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="242"/>
         <source>Update available!</source>
         <translation>MAJ disponible!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="230"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="231"/>
         <source>Use official app to upgrade</source>
         <translation>Utilisez l&apos;appli officielle pour MAJ</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="274"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="275"/>
         <source>Battery</source>
         <translation>Batterie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="376"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="331"/>
+        <source>Moisture</source>
+        <translation>Humidité</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="331"/>
+        <source>Humidity</source>
+        <translation>Humidité</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="367"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation>L&apos;humidité idéal pour les plantes d&apos;intérieur varie entre 15 et 50%. Les plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales aiment avoir plus d&apos;eau.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
+        <source>Water your plants more frequently during their growth period.</source>
+        <translation>Arrosez vos plantes plus fréquemment pendant leur période de croissance.</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; </source>
+        <translation type="obsolete">&lt;br&gt;&lt;b&gt;Astuce:&lt;/b&gt; </translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
+        <source>Be careful: too much water over long periods of time can be just as lethal as not enough!</source>
+        <translation>Soyez prudent : trop d&apos;eau sur de longues périodes peut être aussi dangereux que pas assez !</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="447"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="448"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="656"/>
+        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
+        <translation>&lt;br&gt;&lt;b&gt;Astuce : &lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="446"/>
+        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
+        <translation>La plupart des plantes d&apos;intérieur se développent de manière optimale entre 15 et 25°C. Peu de plantes peuvent tolérer -2°C et en dessous.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="447"/>
+        <source>Having constant temperature is important for indoor plants.</source>
+        <translation>Avoir une température constante est important pour les plantes d&apos;intérieur.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="448"/>
+        <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
+        <translation>Si vous avez un hygromètre, vous pouvez surveiller l&apos;humidité de l&apos;air de manière à ce qu&apos;elle reste comprise entre 40 et 60% (et même au-dessus pour les plantes tropicales).</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="578"/>
+        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
+        <translation>Certaines plantes aiment l&apos;exposition directe au soleil, pour toute la journée ou une partie seulement. Mais beaucoup de plantes d&apos;intérieur n&apos;aiment pas la lumière directe : éloignez-les des fenêtres orientées sud!</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="655"/>
+        <source>Soil fertility value is an indication of the availability of nutrients in the soil.</source>
+        <translation>La fertilité du sol est une indication sur le contenu en éléments nutritifs dans le sol.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="656"/>
+        <source>Be sure to use the right soil composition for your plants.</source>
+        <translation>Assurez vous d&apos;utiliser le bon type de sol pour vos plantes.</translation>
+    </message>
+    <message>
         <source>Usual soil moisture window is 15 to 50% for indoor plants. Succulent can go as low as 7%. Tropical plants can live with more water. Also, be careful: too much water over long periods of time can be just as lethal as not enough!&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; Water your plants more frequently during growth period.</source>
-        <translation type="unfinished">L&apos;humidité du sol habituelle vaiie entre 15 et 50% pour les plantes d&apos;intérieur. Les plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales peuvent supporter plus d&apos;eau. Soyez prudent: trop d&apos;eau sur de longues périodes peut être aussi dangereux que pas assez!&lt;br&gt;&lt;b&gt;Astuce : &lt;/b&gt;Arrosez vos plantes plus fréquemment pendant leurs périodes de croissances.</translation>
+        <translation type="obsolete">L&apos;humidité du sol habituelle vaiie entre 15 et 50% pour les plantes d&apos;intérieur. Les plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales peuvent supporter plus d&apos;eau. Soyez prudent: trop d&apos;eau sur de longues périodes peut être aussi dangereux que pas assez!&lt;br&gt;&lt;b&gt;Astuce : &lt;/b&gt;Arrosez vos plantes plus fréquemment pendant leurs périodes de croissances.</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="455"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below. Constant temperature is usually more important than the absolute values.&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation type="unfinished">La plupart des plantes d&apos;intérieur se développent de manière optimale entre 15 et 25°C. Peu de plantes peuvent tolérer -2°C et en dessous. Une température constante est généralement plus importante que les valeurs absolues.&lt;br&gt;&lt;b&gt;Astuce : &lt;/b&gt;Si vous avez un hygromètre, vous pouvez surveiller l&apos;humidité de l&apos;air de manière à ce qu&apos;elle reste comprise entre 40 et 60% (et même au-dessus pour les plantes tropicales).</translation>
+        <translation type="obsolete">La plupart des plantes d&apos;intérieur se développent de manière optimale entre 15 et 25°C. Peu de plantes peuvent tolérer -2°C et en dessous. Une température constante est généralement plus importante que les valeurs absolues.&lt;br&gt;&lt;b&gt;Astuce : &lt;/b&gt;Si vous avez un hygromètre, vous pouvez surveiller l&apos;humidité de l&apos;air de manière à ce qu&apos;elle reste comprise entre 40 et 60% (et même au-dessus pour les plantes tropicales).</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="524"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="516"/>
         <source>low</source>
         <translation>basse</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="534"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="526"/>
         <source>indirect</source>
         <translation>indirecte</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="544"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="536"/>
         <source>direct light (indoor)</source>
         <translation>lumière directe (intérieur)</translation>
     </message>
@@ -356,19 +432,17 @@
         <translation type="vanished">lumière directe (intérieur)</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="554"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="546"/>
         <source>sunlight</source>
         <translation>lumière du soleil</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="586"/>
         <source>Some plants like direct sun exposition. Some can accommodate it for part of the day. Many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation type="unfinished">Certaines plantes aiment l&apos;exposition directe au soleil. Certaines une partie de la journée seulement. Beaucoup de plantes d&apos;intérieur n&apos;aiment pas la lumière directe : éloignez-les des fenêtres orientées au sud!</translation>
+        <translation type="obsolete">Certaines plantes aiment l&apos;exposition directe au soleil. Certaines une partie de la journée seulement. Beaucoup de plantes d&apos;intérieur n&apos;aiment pas la lumière directe : éloignez-les des fenêtres orientées au sud!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="663"/>
         <source>Soil fertility is more of an indication than an absolute value to take into account. However, be sure to have the right soil composition for your plant.</source>
-        <translation type="unfinished">La fertilité des sols est une indication plus qu&apos;une valeur absolue à prendre en compte. Cependant, assurez-vous d&apos;utiliser le bon type de terre pour votre plante.</translation>
+        <translation type="obsolete">La fertilité des sols est une indication plus qu&apos;une valeur absolue à prendre en compte. Cependant, assurez-vous d&apos;utiliser le bon type de terre pour votre plante.</translation>
     </message>
 </context>
 <context>

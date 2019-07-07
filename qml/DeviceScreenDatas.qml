@@ -536,7 +536,7 @@ Item {
 
             ItemDataBar {
                 id: humi
-                legend: qsTr("Moisture")
+                legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                 unit: "%"
                 color: Theme.colorBlue
                 value: myDevice.deviceHumidity

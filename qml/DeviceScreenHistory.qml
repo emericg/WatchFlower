@@ -300,7 +300,7 @@ Item {
                 id: hygroLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: qsTr("Humidity")
+                text: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                 color: Theme.colorIcons
                 font.bold: true
                 font.pixelSize: 14

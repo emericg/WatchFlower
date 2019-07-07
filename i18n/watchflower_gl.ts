@@ -169,6 +169,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenDatas.qml" line="539"/>
+        <source>Humidity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceScreenDatas.qml" line="550"/>
         <source>Temperature</source>
         <translation type="unfinished"></translation>
@@ -203,6 +208,11 @@
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="303"/>
+        <source>Moisture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenHistory.qml" line="303"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,70 +235,114 @@
 <context>
     <name>DeviceScreenLimits</name>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="168"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="169"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="202"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="203"/>
         <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="212"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="231"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="241"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="213"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="242"/>
         <source>Update available!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="230"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="231"/>
         <source>Use official app to upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="274"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="275"/>
         <source>Battery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="376"/>
-        <source>Usual soil moisture window is 15 to 50% for indoor plants. Succulent can go as low as 7%. Tropical plants can live with more water. Also, be careful: too much water over long periods of time can be just as lethal as not enough!&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; Water your plants more frequently during growth period.</source>
+        <location filename="../qml/DeviceScreenLimits.qml" line="331"/>
+        <source>Moisture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="455"/>
-        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below. Constant temperature is usually more important than the absolute values.&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
+        <location filename="../qml/DeviceScreenLimits.qml" line="331"/>
+        <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="524"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="367"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="447"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="448"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="656"/>
+        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
+        <source>Be careful: too much water over long periods of time can be just as lethal as not enough!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
+        <source>Water your plants more frequently during their growth period.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="446"/>
+        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="447"/>
+        <source>Having constant temperature is important for indoor plants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="448"/>
+        <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="516"/>
         <source>low</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="534"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="526"/>
         <source>indirect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="544"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="536"/>
         <source>direct light (indoor)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="554"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="546"/>
         <source>sunlight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="586"/>
-        <source>Some plants like direct sun exposition. Some can accommodate it for part of the day. Many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
+        <location filename="../qml/DeviceScreenLimits.qml" line="578"/>
+        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="663"/>
-        <source>Soil fertility is more of an indication than an absolute value to take into account. However, be sure to have the right soil composition for your plant.</source>
+        <location filename="../qml/DeviceScreenLimits.qml" line="655"/>
+        <source>Soil fertility value is an indication of the availability of nutrients in the soil.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="656"/>
+        <source>Be sure to use the right soil composition for your plants.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

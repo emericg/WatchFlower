@@ -289,15 +289,14 @@ Item {
 
     Rectangle {
         id: verticalIndicator
-        x: 0
-        width: 1
-        visible: false
-        color: Theme.colorLightGrey
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 32
+        anchors.bottomMargin: 28
 
+        width: 1
+        visible: false
+        color: Theme.colorSubText
         Behavior on x { NumberAnimation { duration: 333 } }
     }
 
