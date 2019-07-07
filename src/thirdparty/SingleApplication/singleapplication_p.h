@@ -54,6 +54,7 @@ struct ConnectionInfo {
 
 class SingleApplicationPrivate : public QObject {
 Q_OBJECT
+
 public:
     enum ConnectionType : quint8 {
         InvalidConnection = 0,

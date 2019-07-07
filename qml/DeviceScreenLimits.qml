@@ -300,7 +300,7 @@ Item {
         Column {
             id: deviceLimits
             width: parent.width
-            spacing: 8
+            spacing: 12
 
             Item { //////
                 id: itemHygro
@@ -314,63 +314,52 @@ Item {
                     id: imageHygro
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
-                    color: Theme.colorHighContrast
                 }
                 Text {
-                    id: text8
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageHygro.right
+                    anchors.leftMargin: 8
+                    anchors.verticalCenter: imageHygro.verticalCenter
+                    anchors.verticalCenterOffset: 2
 
-                    text: rangeSlider_hygro.first.value.toFixed(0) + "%"
-                    font.pixelSize: 14
+                    text: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                     color: Theme.colorText
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    font.pixelSize: 14
+                    font.capitalization: Font.AllUppercase
                 }
-                RangeSliderThemed {
-                    id: rangeSlider_hygro
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: text9.left
-                    anchors.left: text8.right
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
 
+                RangeSliderValueThemed {
+                    id: rangeSlider_hygro
+                    height: 28
+                    anchors.top: imageHygro.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    unit: "%"
                     from: 0
                     to: 66
                     stepSize: 1
                     first.onValueChanged: if (myDevice) myDevice.limitHygroMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitHygroMax = second.value.toFixed(0);
                 }
-                Text {
-                    id: text9
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4
-
-                    text: rangeSlider_hygro.second.value.toFixed(0) + "%"
-                    color: Theme.colorText
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
             Text {
                 id: legendHygro
                 anchors.left: parent.left
-                anchors.leftMargin: 52
+                anchors.leftMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
 
-                topPadding: -16
                 visible: itemHygro.visible
 
                 text: qsTr("Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.") +
@@ -393,63 +382,52 @@ Item {
                     id: imageTemp
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-                    color: Theme.colorHighContrast
                 }
                 Text {
-                    id: text3
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageTemp.right
+                    anchors.leftMargin: 8
+                    anchors.verticalCenter: imageTemp.verticalCenter
+                    anchors.verticalCenterOffset: 1
 
-                    text: ((settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.first.value).toFixed(0) : rangeSlider_temp.first.value.toFixed(0)) + "°"
-                    font.pixelSize: 14
+                    text: qsTr("Temperature")
                     color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    font.pixelSize: 14
+                    font.capitalization: Font.AllUppercase
                 }
-                RangeSliderThemed {
-                    id: rangeSlider_temp
-                    height: 40
-                    anchors.right: text5.left
-                    anchors.rightMargin: 0
-                    anchors.left: text3.right
-                    anchors.leftMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
 
+                RangeSliderValueThemed {
+                    id: rangeSlider_temp
+                    height: 28
+                    anchors.top: imageTemp.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    unit: "°"
                     from: 0
                     to: 40
                     stepSize: 1
                     first.onValueChanged: if (myDevice) myDevice.limitTempMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitTempMax = second.value.toFixed(0);
                 }
-                Text {
-                    id: text5
-                    width: 32
-                    height: 32
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: ((settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(rangeSlider_temp.second.value).toFixed(0) : rangeSlider_temp.second.value.toFixed(0)) + "°"
-                    font.pixelSize: 14
-                    color: Theme.colorText
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
             Text {
                 id: legendTemp
                 anchors.left: parent.left
-                anchors.leftMargin: 52
+                anchors.leftMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
 
-                topPadding: -16
                 visible: itemTemp.visible
 
                 text: qsTr("Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.") +
@@ -462,7 +440,7 @@ Item {
 
             Item { //////
                 id: itemLumi
-                height: 64
+                height: 88
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -472,34 +450,38 @@ Item {
                     id: imageLumi
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
-                    color: Theme.colorHighContrast
                 }
                 Text {
-                    id: text1
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: imageLumi.right
+                    anchors.leftMargin: 8
+                    anchors.verticalCenter: imageLumi.verticalCenter
+                    anchors.verticalCenterOffset: 1
 
-                    text: rangeSlider_lumi.first.value.toFixed(0) / 1000 + "k"
-                    font.pixelSize: 14
+                    text: qsTr("Luminosity")
                     color: Theme.colorText
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    font.pixelSize: 14
+                    font.capitalization: Font.AllUppercase
                 }
-                RangeSliderThemed {
-                    id: rangeSlider_lumi
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: text2.left
-                    anchors.left: text1.right
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
 
+                RangeSliderValueThemed {
+                    id: rangeSlider_lumi
+                    height: 28
+                    anchors.top: imageLumi.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    unit: "k"
                     from: 0
                     to: 10000
                     stepSize: 1000
@@ -509,18 +491,19 @@ Item {
                     Row {
                         id: sections
                         anchors.right: parent.right
-                        anchors.rightMargin: 15
+                        anchors.rightMargin: 12
                         anchors.left: parent.left
-                        anchors.leftMargin: 15
+                        anchors.leftMargin: 12
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.verticalCenterOffset: 20
+                        anchors.verticalCenterOffset: 24
 
-                        spacing: 3
+                        spacing: 2
 
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 12) / 10) * 1 // 0 to 1k
+                            width: ((sections.width - 11) / 10) * 1 // 0 to 1k
                             color: Theme.colorGrey
+                            clip: true
                             Text {
                                 text: qsTr("low")
                                 font.pixelSize: 12; color: "white";
@@ -529,8 +512,9 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 12) / 10) * 2 // 1k to 3k
+                            width: ((sections.width - 11) / 10) * 2 // 1k to 3k
                             color: "grey"
+                            clip: true
                             Text {
                                 text: qsTr("indirect")
                                 font.pixelSize: 12; color: "white";
@@ -539,8 +523,9 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 12) / 10) * 5 // 3k to 8k
+                            width: ((sections.width - 11) / 10) * 5 // 3k to 8k
                             color: Theme.colorYellow
+                            clip: true
                             Text {
                                 text: qsTr("direct light (indoor)")
                                 font.pixelSize: 12; color: "white";
@@ -549,8 +534,9 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 12) / 10) * 2 // 8k+
+                            width: ((sections.width - 11) / 10) * 2 // 8k+
                             color: "orange"
+                            clip: true
                             Text {
                                 text: qsTr("sunlight")
                                 font.pixelSize: 12; color: "white";
@@ -559,29 +545,14 @@ Item {
                         }
                     }
                 }
-                Text {
-                    id: text2
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4
-
-                    text: rangeSlider_lumi.second.value.toFixed(0) / 1000 + "k"
-                    color: Theme.colorText
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
             Text {
                 id: legendLumi
                 anchors.left: parent.left
-                anchors.leftMargin: 52
+                anchors.leftMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
 
-                topPadding: -4
                 visible: itemLumi.visible
 
                 text: qsTr("Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don't like direct sunlight: place them away from south oriented windows!")
@@ -602,63 +573,52 @@ Item {
                     id: imageCondu
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
-                    color: Theme.colorHighContrast
                 }
                 Text {
-                    id: text7
-                    width: 32
-                    height: 32
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: imageCondu.right
+                    anchors.leftMargin: 8
+                    anchors.verticalCenter: imageCondu.verticalCenter
+                    anchors.verticalCenterOffset: 0
 
-                    text: rangeSlider_condu.second.value.toFixed(0)
-                    font.pixelSize: 14
+                    text: qsTr("Conductivity")
                     color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
+                    font.bold: true
+                    font.pixelSize: 14
+                    font.capitalization: Font.AllUppercase
                 }
-                RangeSliderThemed {
-                    id: rangeSlider_condu
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: text7.left
-                    anchors.left: text6.right
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
 
+                RangeSliderValueThemed {
+                    id: rangeSlider_condu
+                    height: 28
+                    anchors.top: imageCondu.bottom
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    unit: ""
                     from: 0
                     to: 500
                     stepSize: 10
                     first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);
                 }
-                Text {
-                    id: text6
-                    width: 32
-                    height: 32
-                    anchors.left: imageCondu.right
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: rangeSlider_condu.first.value.toFixed(0)
-                    font.pixelSize: 14
-                    color: Theme.colorText
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
             Text {
                 id: legendCondu
                 anchors.left: parent.left
-                anchors.leftMargin: 52
+                anchors.leftMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
 
-                topPadding: -16
                 visible: itemCondu.visible
 
                 text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil.") +

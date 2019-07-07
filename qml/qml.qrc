@@ -20,6 +20,7 @@
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="RangeSliderThemed.qml">components_themed/RangeSliderThemed.qml</file>
+        <file alias="RangeSliderValueThemed.qml">components_themed/RangeSliderValueThemed.qml</file>
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
         <file alias="SwitchThemed.qml">components_themed/SwitchThemed.qml</file>
         <file alias="ImageSvg.qml">components_themed/ImageSvg.qml</file>
