@@ -65,7 +65,7 @@ Item {
     property string colorYellow
     property string colorRed
     property string colorGrey: "#555151" // unused
-    property string colorLightGrey
+    property string colorLightGrey: "#a9bcb8" // unused
 
     // Fixed colors
     readonly property string colorMaterialLightGrey: "#f8f8f8"
@@ -104,7 +104,6 @@ Item {
             colorBlue = "#4CA1D5"
             colorYellow = "#ffba5a"
             colorRed = "#ff7657"
-            colorLightGrey = "#a9bcb8"
 
             colorHeader = colorGreen
             colorHeaderStatusbar = "#009688"
@@ -134,7 +133,6 @@ Item {
             colorBlue = "#4cafe9"
             colorYellow = "#ffcf00"
             colorRed = "#ff7657"
-            colorLightGrey = "#a9bcb8"
 
             colorHeader = "#ffcf00"
             colorHeaderStatusbar = colorNeutralNight
@@ -164,7 +162,6 @@ Item {
             colorBlue = "#4dceeb"
             colorYellow = "#fcc632"
             colorRed = "#e8635a"
-            colorLightGrey = "#95A5A2"
 
             colorHeader = "#b16bee"
             colorHeaderStatusbar = "#725595"

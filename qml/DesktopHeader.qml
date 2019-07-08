@@ -122,7 +122,7 @@ Rectangle {
 
         text: "WatchFlower"
         font.bold: true
-        font.pixelSize: 28
+        font.pixelSize: Theme.fontSizeHeader
         color: Theme.colorHeaderContent
     }
 

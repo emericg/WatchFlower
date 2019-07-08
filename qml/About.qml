@@ -53,7 +53,7 @@ Item {
             anchors.topMargin: 12
 
             font.bold: true
-            font.pixelSize: 26
+            font.pixelSize: Theme.fontSizeTitle
             color: Theme.colorText
             text: qsTr("About")
         }
@@ -67,7 +67,7 @@ Item {
 
             text: qsTr("What do you want to know?")
             color: Theme.colorSubText
-            font.pixelSize: 16
+            font.pixelSize: 18
         }
     }
 

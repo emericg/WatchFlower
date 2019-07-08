@@ -75,7 +75,7 @@ Item {
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
         text: menuText
-        font.pixelSize: 16
+        font.pixelSize: 14
         font.bold: true
         color: parent.colorContent
         verticalAlignment: Text.AlignVCenter

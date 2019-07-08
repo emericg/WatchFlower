@@ -54,7 +54,7 @@ Item {
 
             text: qsTr("Settings")
             font.bold: true
-            font.pixelSize: 26
+            font.pixelSize: 24
             color: Theme.colorText
         }
 
@@ -66,7 +66,7 @@ Item {
             anchors.bottomMargin: 14
 
             text: qsTr("Change persistent settings here!")
-            font.pixelSize: 16
+            font.pixelSize: 18
             color: Theme.colorSubText
         }
     }
@@ -983,7 +983,7 @@ Item {
                         font.bold: false
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: 18
+                        font.pixelSize: 16
                     }
                     MouseArea {
                         anchors.fill: parent

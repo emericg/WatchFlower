@@ -64,7 +64,7 @@ SpinBox {
 
         Text {
             text: "+"
-            font.pixelSize: 20
+            font.pixelSize: 18
             color: enabled ? Theme.colorText : Theme.colorSubText
             anchors.fill: parent
             fontSizeMode: Text.Fit

@@ -25,17 +25,12 @@ import QtQuick.Window 2.2
 import com.watchflower.theme 1.0
 
 Rectangle {
-    id: rectangleHeader
     width: parent.width
-    height: screenTopPadding + barHeight
+    height: screenTopPadding + headerHeight
     color: Theme.colorHeader
     z: 10
 
-    // Border can be good for material design
-    //border.width: 1
-    //border.color: Theme.colorHeader
-
-    property int barHeight: 52
+    property int headerHeight: 52
 
     property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenTopPadding: 0
@@ -108,15 +103,14 @@ Rectangle {
             text: title
             color: Theme.colorHeaderContent
             font.bold: false
-            font.pixelSize: 26
+            font.pixelSize: Theme.fontSizeHeader
             font.capitalization: Font.Capitalize
-            antialiasing: true
         }
 
         MouseArea {
             id: leftArea
-            width: barHeight
-            height: barHeight
+            width: headerHeight
+            height: headerHeight
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.top: parent.top
@@ -124,8 +118,8 @@ Rectangle {
 
             ImageSvg {
                 id: leftMenuImg
-                width: barHeight/2
-                height: barHeight/2
+                width: headerHeight/2
+                height: headerHeight/2
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -150,16 +144,16 @@ Rectangle {
 
             MouseArea {
                 id: refreshButton
-                width: barHeight
-                height: barHeight
+                width: headerHeight
+                height: headerHeight
 
                 visible: (deviceManager.bluetooth && ((content.state === "DeviceSensor") || (content.state === "DeviceThermo")))
                 onClicked: deviceRefreshButtonClicked()
 
                 ImageSvg {
                     id: refreshButtonImg
-                    width: barHeight/2
-                    height: barHeight/2
+                    width: headerHeight/2
+                    height: headerHeight/2
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -187,16 +181,16 @@ Rectangle {
 
             MouseArea {
                 id: rightMenu
-                width: barHeight
-                height: barHeight
+                width: headerHeight
+                height: headerHeight
 
                 visible: false // (content.state === "DeviceSensor" || content.state === "DeviceThermo")
                 onClicked: rightMenuClicked()
 
                 ImageSvg {
                     id: rightMenuImg
-                    width: barHeight/2
-                    height: barHeight/2
+                    width: headerHeight/2
+                    height: headerHeight/2
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 

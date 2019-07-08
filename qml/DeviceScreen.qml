@@ -88,14 +88,13 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Item {
-        id: rectangleContent
         anchors.fill: parent
 
         SwipeView {
             id: swipeView
             anchors.fill: parent
-            //anchors.bottomMargin: 48
 
+            //anchors.bottomMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 0
             interactive: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
             currentIndex: 0
