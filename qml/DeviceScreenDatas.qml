@@ -513,12 +513,12 @@ Item {
 
         ImageSvg {
             id: imageOffline
-            width: 96
+            width: parent.width
             height: 96
             //anchors.horizontalCenter: datasColumns.horizontalCenter
             //anchors.verticalCenter: datasColumns.verticalCenter
 
-            visible: !(myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
+            visible: !(myDevice.available || myDevice.hasDatas())
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
@@ -529,7 +529,7 @@ Item {
             id: datasColumns
             width: datasGrid.width / datasGrid.columns
 
-            visible: (myDevice.available || (myDevice.lastUpdateMin >= 0 && myDevice.lastUpdateMin <= 720))
+            visible: (myDevice.available || myDevice.hasDatas())
 
             ItemDataBar {
                 id: humi
