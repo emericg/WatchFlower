@@ -25,7 +25,6 @@ import QtGraphicalEffects 1.0
 import com.watchflower.theme 1.0
 
 Rectangle {
-    id: element
     width: 480
     height: 640
     anchors.fill: parent
@@ -33,14 +32,19 @@ Rectangle {
     color: Theme.colorHeader
 
     property string goBackTo: "DeviceList"
-    onGoBackToChanged: swipeView.currentIndex = 0 // reset
+
+    function reopen(goBackScreen) {
+        tutorialPages.currentIndex = 0
+        content.state = "Tutorial"
+        goBackTo = goBackScreen
+    }
 
     SwipeView {
-        id: swipeView
+        id: tutorialPages
         anchors.fill: parent
         anchors.bottomMargin: 48
 
-        currentIndex: 0
+        currentIndex: 1
         onCurrentIndexChanged: {
             if (currentIndex < 0) currentIndex = 0
             if (currentIndex > 2) {
@@ -55,32 +59,43 @@ Rectangle {
             id: page1
 
             Column {
+                id: column
                 anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 32
 
                 Text {
-                    id: element1
                     anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("WatchFlower is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' Bluetooth devices.")
+                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' Bluetooth devices.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    font.pixelSize: 18
                     color: Theme.colorHeaderContent
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
                 }
                 Image {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 32
+                    width: tutorialPages.width * 0.8
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-devices.svg"
                     fillMode: Image.PreserveAspectFit
+                }
+
+                Text {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("It also works great with a couple of <b>thermometers</b>!")
+                    color: Theme.colorHeaderContent
+                    font.pixelSize: 18
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 }
             }
         }
@@ -95,39 +110,36 @@ Rectangle {
                 spacing: 32
 
                 Text {
-                    id: element2
                     anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible Bluetooth devices</b> near you.")
+                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible devices</b> near you.")
                     color: Theme.colorHeaderContent
+                    font.pixelSize: 18
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
                 }
                 Image {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 64
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
+                    //width: tutorialPages.width * 0.8
+                    height: tutorialPages.height / 2.5
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
                     fillMode: Image.PreserveAspectFit
                 }
                 Text {
-                    id: element55
                     anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: ""
+                    text: qsTr("Once the scanning process is done, the devices found will appear in the <b>main screen</b>. From there, you can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want anymore.")
+                    font.pixelSize: 18
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
                 }
             }
         }
@@ -142,36 +154,31 @@ Rectangle {
                 spacing: 32
 
                 Text {
-                    id: element3
                     anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> their datas.")
+                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> their datas.<br>Click on devices to access <b>detailed infos</b>, <b>graphs</b> and <b>historical datas</b>.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
                 }
                 Image {
-                    id: element4
-                    anchors.right: parent.right
-                    anchors.rightMargin: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 32
+                    width: tutorialPages.width * 0.8
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-app-connected.svg"
                     fillMode: Image.PreserveAspectFit
                 }
                 Text {
-                    id: element5
                     anchors.right: parent.right
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("You can also <b>name your plants</b>, and customize settings like <b>optimal water level</b>...")
+                    text: qsTr("You can also configure devices <b>location</b>, <b>name associated plants</b>, and set settings like <b>optimal water level</b> and other <b>limits</b> that apply to each sensors datas.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -189,7 +196,7 @@ Rectangle {
         anchors.leftMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        visible: (swipeView.currentIndex != 0)
+        visible: (tutorialPages.currentIndex != 0)
 
         text: qsTr("Previous")
         color: Theme.colorHeaderContent
@@ -205,7 +212,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.opacity = 0.8
             onExited: parent.opacity = 1
-            onClicked: swipeView.currentIndex--
+            onClicked: tutorialPages.currentIndex--
         }
     }
 
@@ -215,7 +222,7 @@ Rectangle {
         anchors.rightMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        text: (swipeView.currentIndex === 2) ? qsTr("Allright!") : qsTr("Next")
+        text: (tutorialPages.currentIndex === 2) ? qsTr("Allright!") : qsTr("Next")
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16
@@ -229,7 +236,7 @@ Rectangle {
             hoverEnabled: true
             onEntered: parent.opacity = 0.8
             onExited: parent.opacity = 1
-            onClicked: swipeView.currentIndex++
+            onClicked: tutorialPages.currentIndex++
         }
     }
 
@@ -240,7 +247,7 @@ Rectangle {
         anchors.bottomMargin: 16
 
         count: 3
-        currentIndex: swipeView.currentIndex
+        currentIndex: tutorialPages.currentIndex
 
         delegate: Rectangle {
             implicitWidth: 12

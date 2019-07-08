@@ -238,10 +238,7 @@ Item {
                     MouseArea {
                         id: mouseArea1
                         anchors.fill: parent
-                        onClicked: {
-                            screenTutorial.goBackTo = "About"
-                            content.state = "Tutorial"
-                        }
+                        onClicked: screenTutorial.reopen("About")
                     }
                 }
             }

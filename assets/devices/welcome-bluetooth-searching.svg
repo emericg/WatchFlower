@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="191.35988mm"
-   height="159.41147mm"
-   viewBox="0 0 191.35988 159.41147"
+   width="723.24994"
+   height="584.16663"
+   viewBox="0 0 191.35988 154.56076"
    version="1.1"
    id="svg6542"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
-   sodipodi:docname="Welcome-bluetooth-searching.svg">
+   sodipodi:docname="welcome-bluetooth-searching.svg">
   <defs
      id="defs6536">
     <marker
@@ -88,9 +88,9 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
      inkscape:cx="313.64109"
-     inkscape:cy="424.10715"
+     inkscape:cy="325.54623"
      inkscape:document-units="mm"
-     inkscape:current-layer="g6473"
+     inkscape:current-layer="g2854-0"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -100,7 +100,8 @@
      inkscape:window-height="1016"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata6539">
     <rdf:RDF>
@@ -109,7 +110,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Chris D</dc:title>
@@ -245,11 +246,6 @@
       <g
          id="g2854-0"
          transform="matrix(3.6666737,0,0,3.6666737,-15809.67,-9910.3833)">
-        <path
-           id="path2-53-7-4"
-           d="m 4439.9014,3090.0988 h 60 v 59.9997 h -60 z"
-           style="fill:none;stroke-width:2.5"
-           inkscape:connector-curvature="0" />
         <path
            style="fill:#ffffff;stroke-width:2.5"
            id="path4-60-4-5"

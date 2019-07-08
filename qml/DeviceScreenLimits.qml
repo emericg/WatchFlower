@@ -363,7 +363,7 @@ Item {
                 visible: itemHygro.visible
 
                 text: qsTr("Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.") +
-                      qsTr("<br><b>Tip: </b>") + qsTr("Be careful: too much water over long periods of time can be just as lethal as not enough!") +
+                      qsTr("<br><b>Tip: </b>") + qsTr("Be careful, too much water over long periods of time can be just as lethal as not enough!") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Water your plants more frequently during their growth period.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -587,7 +587,7 @@ Item {
                     anchors.verticalCenter: imageCondu.verticalCenter
                     anchors.verticalCenterOffset: 0
 
-                    text: qsTr("Conductivity")
+                    text: qsTr("Fertility")
                     color: Theme.colorText
                     font.bold: true
                     font.pixelSize: 14
