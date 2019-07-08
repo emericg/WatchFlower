@@ -26,7 +26,6 @@
         <file alias="ImageSvg.qml">components_themed/ImageSvg.qml</file>
         <file alias="ItemDataBar.qml">components/ItemDataBar.qml</file>
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
-        <file alias="ItemAioBarCharts.qml">components/ItemAioBarCharts.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>

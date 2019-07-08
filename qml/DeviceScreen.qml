@@ -30,7 +30,6 @@ Item {
     height: 700
 
     property var myDevice: currentlySelectedDevice
-    property var contentState: ""
 
     Connections {
         target: myDevice

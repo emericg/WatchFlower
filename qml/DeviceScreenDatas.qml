@@ -134,10 +134,7 @@ Item {
         if (!myDevice.hasSoilMoistureSensor()) return
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
 
-        if (settingsManager.graph === "bar")
-            pageLoader.source = "ItemAioBarCharts.qml"
-        else
-            pageLoader.source = "ItemAioLineCharts.qml"
+        pageLoader.source = "ItemAioLineCharts.qml"
 
         aioLineCharts = pageLoader.item
         aioLineCharts.loadGraph()

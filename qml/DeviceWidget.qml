@@ -53,6 +53,10 @@ Item {
             updateSensorDatas()
             updateBoxDatas()
         }
+        onBigWidgetChanged: {
+            updateSensorDatas()
+            updateBoxDatas()
+        }
     }
 
     Component.onCompleted: initBoxDatas()

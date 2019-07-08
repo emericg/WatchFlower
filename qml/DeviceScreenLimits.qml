@@ -341,7 +341,7 @@ Item {
                     anchors.top: imageHygro.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 38
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -356,7 +356,7 @@ Item {
             Text {
                 id: legendHygro
                 anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.leftMargin: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 
@@ -409,7 +409,7 @@ Item {
                     anchors.top: imageTemp.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 38
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -424,7 +424,7 @@ Item {
             Text {
                 id: legendTemp
                 anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.leftMargin: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 
@@ -477,7 +477,7 @@ Item {
                     anchors.top: imageLumi.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 38
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -549,7 +549,7 @@ Item {
             Text {
                 id: legendLumi
                 anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.leftMargin: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 
@@ -600,7 +600,7 @@ Item {
                     anchors.top: imageCondu.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 38
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -615,7 +615,7 @@ Item {
             Text {
                 id: legendCondu
                 anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.leftMargin: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 

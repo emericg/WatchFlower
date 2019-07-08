@@ -93,7 +93,7 @@ Item {
         if (settingsManager.autoDark) {
             var today = new Date();
             var hour = Qt.formatDateTime(today, "hh");
-            if (hour >= 21 && hour <= 8)  themeIndex = ThemeEngine.THEME_NIGHT;
+            if (hour >= 21 || hour <= 8) themeIndex = ThemeEngine.THEME_NIGHT;
         }
 
         currentTheme = themeIndex

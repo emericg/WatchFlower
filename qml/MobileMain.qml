@@ -38,9 +38,6 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    Material.theme: Material.Dark
-    Material.accent: Material.LightGreen
-
     StatusBar {
         theme: Material.Dark
         color: Theme.colorHeaderStatusbar
