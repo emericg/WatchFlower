@@ -51,9 +51,9 @@ ApplicationWindow {
         z: 10
 
         Component.onCompleted: {
-            if (settingsManager.getScreenSize() > 7.0)
+            if (settingsManager.getScreenSize() > 7.0) // tablet
                 headerLoader.source = "DesktopHeader.qml"
-            else
+            else // phone
                 headerLoader.source = "MobileHeader.qml"
             appHeader = headerLoader.item
         }

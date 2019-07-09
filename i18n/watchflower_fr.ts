@@ -411,7 +411,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="558"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Certaines plantes aiment l&apos;exposition directe au soleil, pour toute la journée ou une partie seulement. Mais beaucoup de plantes d&apos;intérieur n&apos;aiment pas la lumière directe : éloignez-les des fenêtres orientées sud!</translation>
+        <translation>Certaines plantes aiment l&apos;exposition directe au soleil, pour toute la journée ou une partie seulement. Mais beaucoup de plantes d&apos;intérieur n&apos;aiment pas la lumière directe : éloignez les des fenêtres orientées sud!</translation>
     </message>
     <message>
         <source>Conductivity</source>

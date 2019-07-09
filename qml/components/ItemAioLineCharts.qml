@@ -343,7 +343,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 14
+                font.pixelSize: 15
                 font.bold: true
                 color: Theme.colorSubText
             }

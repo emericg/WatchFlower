@@ -20,7 +20,7 @@ RangeSlider {
         height: implicitHeight
         radius: 2
         color: Theme.colorYellow
-        opacity: 0.8
+        opacity: 0.9
 
         Rectangle {
             x: (control.first.visualPosition * parent.width)
@@ -40,7 +40,7 @@ RangeSlider {
         radius: 6
         color: Theme.colorGreen
         border.color: Theme.colorGreen
-        opacity: first.pressed ? 0.8 : 1
+        opacity: first.pressed ? 0.9 : 1
 
         Text {
             id: t1
@@ -62,7 +62,7 @@ RangeSlider {
         radius: 6
         color: Theme.colorGreen
         border.color: Theme.colorGreen
-        opacity: second.pressed ? 0.8 : 1
+        opacity: second.pressed ? 0.9 : 1
 
         Text {
             id: t2
