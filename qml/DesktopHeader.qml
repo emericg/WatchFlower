@@ -61,7 +61,7 @@ Rectangle {
     }
 
     function setActiveMenu() {
-        if (content.state === "Tutorial") {
+        if (appContent.state === "Tutorial") {
             title.text = qsTr("Welcome")
             menu.visible = false
 
@@ -70,7 +70,7 @@ Rectangle {
             title.text = "WatchFlower"
             menu.visible = true
 
-            if (content.state === "DeviceList") {
+            if (appContent.state === "DeviceList") {
                 buttonBack.source = "qrc:/assets/menu_logo.svg"
             } else {
                 buttonBack.source = "qrc:/assets/menu_back.svg"
@@ -146,7 +146,7 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (deviceManager.bluetooth && ((content.state === "DeviceSensor") || (content.state === "DeviceThermo")))
+            visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             onClicked: deviceRefreshButtonClicked()
@@ -157,7 +157,7 @@ Rectangle {
                 from: 0
                 to: 360
                 loops: Animation.Infinite
-                running: currentlySelectedDevice.updating
+                running: currentDevice.updating
                 onStopped: refreshAnimationStop.start()
             }
             NumberAnimation on rotation {
@@ -172,14 +172,14 @@ Rectangle {
             width: 12
             height: 12
             anchors.verticalCenter: parent.verticalCenter
-            visible: (content.state === "DeviceThermo")
+            visible: (appContent.state === "DeviceThermo")
         }
 
         Row {
             id: menuDevice
             spacing: 0
 
-            visible: (content.state === "DeviceSensor")
+            visible: (appContent.state === "DeviceSensor")
 
             ItemMenuButton {
                 id: menuDeviceDatas
@@ -261,16 +261,16 @@ Rectangle {
         Row {
             id: menuMain
             spacing: 0
-            visible: (content.state === "DeviceList" ||
-                      content.state === "Settings" ||
-                      content.state === "About")
+            visible: (appContent.state === "DeviceList" ||
+                      appContent.state === "Settings" ||
+                      appContent.state === "About")
 
             ItemMenuButton {
                 id: menuPlants
                 width: 64
                 height: 64
                 visible: (rectangleHeader.width >= 560)
-                selected: (content.state === "DeviceList")
+                selected: (appContent.state === "DeviceList")
                 source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
             }
@@ -278,7 +278,7 @@ Rectangle {
                 id: menuSettings
                 width: 64
                 height: 64
-                selected: (content.state === "Settings")
+                selected: (appContent.state === "Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 onClicked: settingsButtonClicked()
             }
@@ -286,7 +286,7 @@ Rectangle {
                 id: menuAbout
                 width: 64
                 height: 64
-                selected: (content.state === "About")
+                selected: (appContent.state === "About")
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
                 onClicked: aboutButtonClicked()
             }

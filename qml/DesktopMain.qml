@@ -47,16 +47,16 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Connections {
-        target: header
+        target: appHeader
         onBackButtonClicked: {
-            if (content.state !== "DeviceList") {
-                content.state = "DeviceList"
+            if (appContent.state !== "DeviceList") {
+                appContent.state = "DeviceList"
             }
         }
 
         onDeviceRefreshButtonClicked: {
-            if (currentlySelectedDevice) {
-                deviceManager.updateDevice(currentlySelectedDevice.deviceAddress)
+            if (currentDevice) {
+                deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
         onRefreshButtonClicked: {
@@ -70,31 +70,31 @@ ApplicationWindow {
             }
         }
 
-        onPlantsButtonClicked: content.state = "DeviceList"
-        onSettingsButtonClicked: content.state = "Settings"
-        onAboutButtonClicked: content.state = "About"
+        onPlantsButtonClicked: appContent.state = "DeviceList"
+        onSettingsButtonClicked: appContent.state = "Settings"
+        onAboutButtonClicked: appContent.state = "About"
     }
 
     Connections {
         target: systrayManager
-        onSettingsClicked: content.state = "Settings"
+        onSettingsClicked: appContent.state = "Settings"
     }
 
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
-            if (content.state === "Tutorial")
+            if (appContent.state === "Tutorial")
                 return;
 
             if (mouse.button === Qt.BackButton) {
-                content.state = "DeviceList"
+                appContent.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
-                if (currentlySelectedDevice) {
-                    if (!currentlySelectedDevice.hasSoilMoistureSensor())
-                        content.state = "DeviceThermo"
+                if (currentDevice) {
+                    if (!currentDevice.hasSoilMoistureSensor())
+                        appContent.state = "DeviceThermo"
                     else
-                        content.state = "DeviceSensor"
+                        appContent.state = "DeviceSensor"
                 }
             }
         }
@@ -102,14 +102,14 @@ ApplicationWindow {
     Shortcut {
         sequence: StandardKey.Back
         onActivated: {
-            content.state = "DeviceList"
+            appContent.state = "DeviceList"
         }
     }
     Shortcut {
         sequence: StandardKey.Forward
         onActivated: {
-            if (currentlySelectedDevice)
-                content.state = "DeviceSensor"
+            if (currentDevice)
+                appContent.state = "DeviceSensor"
         }
     }
 
@@ -122,17 +122,17 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var currentlySelectedDevice: null
+    property var currentDevice: null
 
     DesktopHeader {
-        id: header
+        id: appHeader
         width: parent.width
         anchors.top: parent.top
     }
 
     Item {
-        id: content
-        anchors.top: header.bottom
+        id: appContent
+        anchors.top: appHeader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -166,7 +166,7 @@ ApplicationWindow {
         state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
 
         onStateChanged: {
-            header.setActiveMenu()
+            appHeader.setActiveMenu()
             screenDeviceList.exitSelectionMode()
         }
 

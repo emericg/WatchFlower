@@ -35,7 +35,7 @@ Rectangle {
 
     function reopen(goBackScreen) {
         tutorialPages.currentIndex = 0
-        content.state = "Tutorial"
+        appContent.state = "Tutorial"
         goBackTo = goBackScreen
     }
 
@@ -49,7 +49,7 @@ Rectangle {
             if (currentIndex < 0) currentIndex = 0
             if (currentIndex > 2) {
                 currentIndex = 0 // reset
-                content.state = goBackTo
+                appContent.state = goBackTo
             }
         }
 

@@ -29,7 +29,7 @@ Item {
     width: 450
     height: 700
 
-    property var myDevice: currentlySelectedDevice
+    property var myDevice: currentDevice
 
     Connections {
         target: myDevice
@@ -53,19 +53,19 @@ Item {
     }
 
     Connections {
-        target: header
+        target: appHeader
         // desktop only
         onDeviceDatasButtonClicked: {
-            header.setActiveDeviceDatas()
-            swipeView.currentIndex = 0
+            appHeader.setActiveDeviceDatas()
+            sensorPages.currentIndex = 0
         }
         onDeviceHistoryButtonClicked: {
-            header.setActiveDeviceHistory()
-            swipeView.currentIndex = 1
+            appHeader.setActiveDeviceHistory()
+            sensorPages.currentIndex = 1
         }
         onDeviceSettingsButtonClicked: {
-            header.setActiveDeviceSettings()
-            swipeView.currentIndex = 2
+            appHeader.setActiveDeviceSettings()
+            sensorPages.currentIndex = 2
         }
     }
 
@@ -73,7 +73,7 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
-        swipeView.currentIndex = 0
+        sensorPages.currentIndex = 0
 
         rectangleDeviceDatas.loadDatas()
         rectangleDeviceHistory.updateHeader()
@@ -82,7 +82,7 @@ Item {
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
 
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") header.setActiveDeviceDatas()
+        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") appHeader.setActiveDeviceDatas()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ Item {
         anchors.fill: parent
 
         SwipeView {
-            id: swipeView
+            id: sensorPages
             anchors.fill: parent
 
             //anchors.bottomMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 0
@@ -100,12 +100,12 @@ Item {
             currentIndex: 0
             onCurrentIndexChanged: {
                 if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
-                    if (swipeView.currentIndex === 0)
-                        header.setActiveDeviceDatas()
-                    else if (swipeView.currentIndex === 1)
-                        header.setActiveDeviceHistory()
-                    else if (swipeView.currentIndex === 2)
-                        header.setActiveDeviceSettings()
+                    if (sensorPages.currentIndex === 0)
+                        appHeader.setActiveDeviceDatas()
+                    else if (sensorPages.currentIndex === 1)
+                        appHeader.setActiveDeviceHistory()
+                    else if (sensorPages.currentIndex === 2)
+                        appHeader.setActiveDeviceSettings()
                 }
             }
 

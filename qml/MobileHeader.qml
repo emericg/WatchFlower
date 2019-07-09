@@ -147,7 +147,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (deviceManager.bluetooth && ((content.state === "DeviceSensor") || (content.state === "DeviceThermo")))
+                visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
                 onClicked: deviceRefreshButtonClicked()
 
                 ImageSvg {
@@ -166,7 +166,7 @@ Rectangle {
                         from: 0
                         to: 360
                         loops: Animation.Infinite
-                        running: currentlySelectedDevice.updating
+                        running: currentDevice.updating
                         onStopped: refreshAnimationStop.start()
                     }
                     NumberAnimation on rotation {
@@ -184,7 +184,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: false // (content.state === "DeviceSensor" || content.state === "DeviceThermo")
+                visible: false // (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo")
                 onClicked: rightMenuClicked()
 
                 ImageSvg {

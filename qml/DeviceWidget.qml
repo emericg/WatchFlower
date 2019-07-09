@@ -279,19 +279,19 @@ Item {
 
                     // regular click
                     if (boxDevice.hasDatas()) {
-                        if (currentlySelectedDevice != boxDevice) {
-                            currentlySelectedDevice = boxDevice
+                        if (currentDevice != boxDevice) {
+                            currentDevice = boxDevice
 
-                            if (currentlySelectedDevice.hasSoilMoistureSensor())
+                            if (currentDevice.hasSoilMoistureSensor())
                                 screenDeviceSensor.loadDevice()
                             else
                                 screenDeviceThermometer.loadDevice()
                         }
 
-                        if (currentlySelectedDevice.hasSoilMoistureSensor())
-                            content.state = "DeviceSensor"
+                        if (currentDevice.hasSoilMoistureSensor())
+                            appContent.state = "DeviceSensor"
                         else
-                            content.state = "DeviceThermo"
+                            appContent.state = "DeviceThermo"
                     }
                 }
             }

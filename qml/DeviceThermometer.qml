@@ -29,7 +29,7 @@ Item {
     width: 450
     height: 700
 
-    property var myDevice: currentlySelectedDevice
+    property var myDevice: currentDevice
 
     Connections {
         target: myDevice
@@ -40,13 +40,13 @@ Item {
     }
 
     Connections {
-        target: header
+        target: appHeader
         // desktop only
         onDeviceDatasButtonClicked: {
-            header.setActiveDeviceDatas()
+            appHeader.setActiveDeviceDatas()
         }
         onDeviceSettingsButtonClicked: {
-            header.setActiveDeviceSettings()
+            appHeader.setActiveDeviceSettings()
         }
         // mobile only
         onRightMenuClicked: {

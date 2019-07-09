@@ -88,13 +88,13 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: (content.state === "DeviceList") ? Theme.colorForeground : "transparent"
+                color: (appContent.state === "DeviceList") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        content.state = "DeviceList"
-                        drawer.close()
+                        appContent.state = "DeviceList"
+                        appDrawer.close()
                     }
                 }
 
@@ -126,13 +126,13 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: (content.state === "Settings") ? Theme.colorForeground : "transparent"
+                color: (appContent.state === "Settings") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        content.state = "Settings"
-                        drawer.close()
+                        appContent.state = "Settings"
+                        appDrawer.close()
                     }
                 }
 
@@ -163,13 +163,13 @@ Rectangle {
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: (content.state === "About") ? Theme.colorForeground : "transparent"
+                color: (appContent.state === "About") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        content.state = "About"
-                        drawer.close()
+                        appContent.state = "About"
+                        appDrawer.close()
                     }
                 }
 
@@ -229,7 +229,7 @@ Rectangle {
                             } else {
                                 deviceManager.refreshDevices_start()
                             }
-                            drawer.close()
+                            appDrawer.close()
                         }
                     }
                 }
@@ -287,7 +287,7 @@ Rectangle {
                     onClicked: {
                         if (!deviceManager.scanning && !deviceManager.refreshing) {
                             deviceManager.scanDevices()
-                            drawer.close()
+                            appDrawer.close()
                         }
                     }
                 }

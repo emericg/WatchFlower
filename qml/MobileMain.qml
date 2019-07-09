@@ -43,8 +43,24 @@ ApplicationWindow {
         color: Theme.colorHeaderStatusbar
     }
 
+    property var appHeader: null
+    Loader {
+        id: headerLoader
+        width: parent.width
+        anchors.top: parent.top
+        z: 10
+
+        Component.onCompleted: {
+            if (settingsManager.getScreenSize() > 7.0)
+                headerLoader.source = "DesktopHeader.qml"
+            else
+                headerLoader.source = "MobileHeader.qml"
+            appHeader = headerLoader.item
+        }
+    }
+
     Drawer {
-        id: drawer
+        id: appDrawer
         width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width
         height: applicationWindow.height
 
@@ -54,16 +70,16 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Connections {
-        target: header
+        target: appHeader
         onLeftMenuClicked: {
-            if (content.state === "DeviceList")
-                drawer.open()
+            if (appContent.state === "DeviceList")
+                appDrawer.open()
             else
-                content.state = "DeviceList"
+                appContent.state = "DeviceList"
         }
         onDeviceRefreshButtonClicked: {
-            if (currentlySelectedDevice) {
-                deviceManager.updateDevice(currentlySelectedDevice.deviceAddress)
+            if (currentDevice) {
+                deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
         onRightMenuClicked: {
@@ -100,17 +116,11 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    property var currentlySelectedDevice: null
-
-    MobileHeader {
-        id: header
-        width: parent.width
-        anchors.top: parent.top
-    }
+    property var currentDevice: null
 
     FocusScope {
-        id: content
-        anchors.top: header.bottom
+        id: appContent
+        anchors.top: headerLoader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
@@ -118,18 +128,18 @@ ApplicationWindow {
         focus: true
         Keys.onBackPressed: {
             if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (content.state === "DeviceList") {
+                if (appContent.state === "DeviceList") {
                     if (screenDeviceList.selectionList.length !== 0)
                         screenDeviceList.exitSelectionMode()
                     //else
                     //    Qt.quit()
-                } else if (content.state === "Tutorial") {
+                } else if (appContent.state === "Tutorial") {
                     // do nothing
                 } else {
-                    content.state = "DeviceList"
+                    appContent.state = "DeviceList"
                 }
             } else {
-                content.state = "DeviceList"
+                appContent.state = "DeviceList"
             }
         }
 
@@ -165,16 +175,16 @@ ApplicationWindow {
             screenDeviceList.exitSelectionMode()
 
             if (state === "DeviceList")
-                header.leftMenuMode = "drawer"
+                appHeader.leftMenuMode = "drawer"
             else if (state === "Tutorial")
-                header.leftMenuMode = "close"
+                appHeader.leftMenuMode = "close"
             else
-                header.leftMenuMode = "back"
+                appHeader.leftMenuMode = "back"
 
             if (state === "Tutorial")
-                drawer.interactive = false;
+                appDrawer.interactive = false;
             else
-                drawer.interactive = true;
+                appDrawer.interactive = true;
         }
 
         states: [
@@ -182,7 +192,7 @@ ApplicationWindow {
                 name: "Tutorial"
 
                 PropertyChanges {
-                    target: header
+                    target: appHeader
                     title: qsTr("Welcome")
                 }
                 PropertyChanges {
@@ -220,7 +230,7 @@ ApplicationWindow {
                 name: "DeviceList"
 
                 PropertyChanges {
-                    target: header
+                    target: appHeader
                     title: "WatchFlower"
                 }
                 PropertyChanges {
@@ -258,8 +268,8 @@ ApplicationWindow {
                 name: "DeviceSensor"
 
                 PropertyChanges {
-                    target: header
-                    title: currentlySelectedDevice.deviceName
+                    target: appHeader
+                    title: currentDevice.deviceName
                 }
                 PropertyChanges {
                     target: screenTutorial
@@ -296,7 +306,7 @@ ApplicationWindow {
                 name: "DeviceThermo"
 
                 PropertyChanges {
-                    target: header
+                    target: appHeader
                     title: qsTr("Thermometer")
                 }
                 PropertyChanges {
@@ -334,7 +344,7 @@ ApplicationWindow {
                 name: "Settings"
 
                 PropertyChanges {
-                    target: header
+                    target: appHeader
                     title: qsTr("Settings")
                 }
                 PropertyChanges {
@@ -372,7 +382,7 @@ ApplicationWindow {
                 name: "About"
 
                 PropertyChanges {
-                    target: header
+                    target: appHeader
                     title: qsTr("About")
                 }
                 PropertyChanges {

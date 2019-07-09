@@ -245,10 +245,10 @@ Item {
 
                         if (Math.abs(dist) < 1) {
                             // nearest neighbor
-                            if (content.state === "DeviceSensor") {
+                            if (appContent.state === "DeviceSensor") {
                                 updateDatasBars(tempDatas.at(i).y, lumiDatas.at(i).y,
                                                 hygroDatas.at(i).y, conduDatas.at(i).y)
-                            } else if (content.state === "DeviceThermo") {
+                            } else if (appContent.state === "DeviceThermo") {
                                 datasIndicator.visible = true
                                 textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDatas.at(i).y).toFixed(1) + "°F" : tempDatas.at(i).y.toFixed(1) + "°C"
                                 textDatas.text += " " + hygroDatas.at(i).y.toFixed(0) + "%"
@@ -266,12 +266,12 @@ Item {
 
                     if (x1 >= 0 && x2 > x1) {
                         // linear interpolation
-                        if (content.state === "DeviceSensor") {
+                        if (appContent.state === "DeviceSensor") {
                             updateDatasBars(qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x),
                                             qpoint_lerp(lumiDatas.at(x1), lumiDatas.at(x2), mpmp.x),
                                             qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x),
                                             qpoint_lerp(conduDatas.at(x1), conduDatas.at(x2), mpmp.x))
-                        } else if (content.state === "DeviceThermo") {
+                        } else if (appContent.state === "DeviceThermo") {
                             datasIndicator.visible = true
                             var temmp = qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x)
                             textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
@@ -363,6 +363,6 @@ Item {
         verticalIndicator.visible = false
 
         if (typeof deviceScreenDatas === "undefined" || !deviceScreenDatas) return
-        if (content.state === "DeviceSensor") deviceScreenDatas.resetDatasBars()
+        if (appContent.state === "DeviceSensor") deviceScreenDatas.resetDatasBars()
     }
 }
