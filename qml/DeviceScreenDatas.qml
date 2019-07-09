@@ -134,11 +134,14 @@ Item {
         if (!myDevice.hasSoilMoistureSensor()) return
         //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
 
-        pageLoader.source = "ItemAioLineCharts.qml"
+        if (graphLoader.status != Loader.Ready) {
+            graphLoader.source = "ItemAioLineCharts.qml"
+            aioLineCharts = graphLoader.item
+        }
 
-        aioLineCharts = pageLoader.item
         aioLineCharts.loadGraph()
         aioLineCharts.resetIndicator()
+        graphLoader.visible = (myDevice.countDatas("temp") > 1)
 
         updateHeader()
         updateDatas()
@@ -579,11 +582,9 @@ Item {
         }
 
         Loader {
-            id: pageLoader
+            id: graphLoader
             width: (datasGrid.width / datasGrid.columns)
             height: (datasGrid.columns == 1) ? (datasGrid.height - datasColumns.height - (datasGrid.rows > 1 ? datasGrid.spacing : 0)) : datasGrid.height
-
-            visible: myDevice.hasDatas()
         }
     }
 }
