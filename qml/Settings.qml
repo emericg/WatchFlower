@@ -687,8 +687,8 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                // desktop only
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                // desktop (or tablet)
+                visible: (settingsManager.getScreenSize() > 7.0)
 
                 Text {
                     id: text_bigwidget

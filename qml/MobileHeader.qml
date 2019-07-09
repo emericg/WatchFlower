@@ -20,7 +20,6 @@
  */
 
 import QtQuick 2.9
-import QtQuick.Window 2.2
 
 import com.watchflower.theme 1.0
 
@@ -32,44 +31,12 @@ Rectangle {
 
     property int headerHeight: 52
 
-    property int screenOrientation: Screen.primaryOrientation // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
-    property int screenTopPadding: 0
-
     property string title: "WatchFlower"
     property string leftMenuMode: "drawer" // drawer / back / exit
 
     signal leftMenuClicked()
     signal rightMenuClicked()
     signal deviceRefreshButtonClicked()
-
-    function handleNotches() {
-        if (typeof quickWindow === "undefined" || !quickWindow) return
-        if (Qt.platform !== "ios") return
-
-        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
-        if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)
-            screenTopPadding = 30
-        else
-            screenTopPadding = 0
-    }
-
-    onScreenOrientationChanged: {
-/*
-        console.log("screen orientation changed")
-
-        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
-        console.log("screen height : " + Screen.height)
-        console.log("screen avail  : " + Screen.desktopAvailableHeight)
-        console.log("screen padding: " + screenPadding)
-
-        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
-        console.log("top:" + safeMargins["top"])
-        console.log("right:" + safeMargins["right"])
-        console.log("bottom:" + safeMargins["bottom"])
-        console.log("left:" + safeMargins["left"])
-*/
-        handleNotches()
-    }
 
     onLeftMenuModeChanged: {
         if (leftMenuMode === "drawer")
@@ -80,17 +47,6 @@ Rectangle {
             leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
     }
 
-    Component.onCompleted: {
-        handleNotches()
-    }
-/*
-    Connections {
-        target: quickWindow
-        onChanged: {
-            //handleNotches()
-        }
-    }
-*/
     Item {
         anchors.fill: parent
         anchors.topMargin: screenTopPadding

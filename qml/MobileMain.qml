@@ -32,17 +32,52 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 640
 
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
-    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
 
     // Mobile stuff ////////////////////////////////////////////////////////////
+
+    // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
+    property int screenOrientation: Screen.primaryOrientation
+    property int screenTopPadding: 0
+
+    onScreenOrientationChanged: handleNotches()
+    Component.onCompleted: handleNotches()
+
+    function handleNotches() {
+        if (typeof quickWindow === "undefined" || !quickWindow) return
+        if (Qt.platform !== "ios") return
+/*
+        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
+        console.log("screen height : " + Screen.height)
+        console.log("screen avail  : " + Screen.desktopAvailableHeight)
+        console.log("screen padding: " + screenPadding)
+
+        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
+        console.log("top:" + safeMargins["top"])
+        console.log("right:" + safeMargins["right"])
+        console.log("bottom:" + safeMargins["bottom"])
+        console.log("left:" + safeMargins["left"])
+*/
+        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
+        if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)
+            screenTopPadding = 30
+        else
+            screenTopPadding = 0
+    }
 
     StatusBar {
         theme: Material.Dark
         color: Theme.colorHeaderStatusbar
     }
 
+    MobileHeader {
+        id: appHeader
+        width: parent.width
+        anchors.top: parent.top
+    }
+/*
     property var appHeader: null
     Loader {
         id: headerLoader
@@ -104,6 +139,7 @@ ApplicationWindow {
                 break
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
+                Theme.loadTheme(settingsManager.appTheme)
                 deviceManager.refreshDevices_check();
                 break
             }
@@ -120,7 +156,7 @@ ApplicationWindow {
 
     FocusScope {
         id: appContent
-        anchors.top: headerLoader.bottom
+        anchors.top: appHeader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left

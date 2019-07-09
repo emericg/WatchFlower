@@ -96,6 +96,7 @@ Item {
             if (hour >= 21 || hour <= 8) themeIndex = ThemeEngine.THEME_NIGHT;
         }
 
+        if (currentTheme === themeIndex) return;
         currentTheme = themeIndex
 
         if (themeIndex === ThemeEngine.THEME_GREEN) {

@@ -88,7 +88,7 @@ Rectangle {
         anchors.leftMargin: 20
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/watchflower.svg"
+        source: "qrc:/assets/menu_logo.svg"
         color: Theme.colorHeaderContent
 
         MouseArea {
