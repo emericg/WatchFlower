@@ -483,6 +483,13 @@ void SettingsManager::setAutoDark(const bool value)
     Q_EMIT autodarkChanged();
 }
 
+void SettingsManager::toggleAutoDark()
+{
+    // when auto dark is toggled, the UI must react to appthemeChanged signal,
+    // without an actual m_appTheme value change, so we emit the signal manually
+    Q_EMIT appthemeChanged();
+}
+
 void SettingsManager::setMinimized(const bool value)
 {
     m_startMinimized = value;

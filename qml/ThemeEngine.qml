@@ -93,7 +93,9 @@ Item {
         if (settingsManager.autoDark) {
             var today = new Date();
             var hour = Qt.formatDateTime(today, "hh");
-            if (hour >= 21 || hour <= 8) themeIndex = ThemeEngine.THEME_NIGHT;
+            if (hour >= 21 || hour <= 8) {
+                themeIndex = ThemeEngine.THEME_NIGHT;
+            }
         }
 
         if (currentTheme === themeIndex) return;
@@ -186,5 +188,10 @@ Item {
             colorHighlight2 = colorHeaderStatusbar
             colorHighContrast = "white"
         }
+
+        // When the current theme does not match the saved theme, it's probably
+        // because we (automatically) switch to night mode. We force an UI refresh,
+        // AFTER changing the colors, so the onAppThemeChanged slots can be triggered
+        if (currentTheme !== settingsManager.appTheme) settingsManager.toggleAutoDark()
     }
 }

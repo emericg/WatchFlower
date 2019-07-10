@@ -69,7 +69,7 @@ Item {
                 backgroundDayBars.borderColor = "transparent"
                 backgroundDayBars.color = Theme.colorForeground
                 backgroundNightBars.borderColor = "transparent"
-                backgroundNightBars.color = (settingsManager.appTheme === "night") ? "#111111": "#dddddd"
+                backgroundNightBars.color = (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? "#111111": "#dddddd"
             } else {
                 backgroundDayBars.borderColor = "transparent"
                 backgroundDayBars.color = Theme.colorForeground

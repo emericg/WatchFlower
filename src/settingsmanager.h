@@ -147,6 +147,8 @@ public:
 
     Q_INVOKABLE void resetSettings();
 
+    Q_INVOKABLE void toggleAutoDark();
+
     Q_INVOKABLE void exit() { QApplication::exit(); }
 };
 
