@@ -80,7 +80,10 @@ Item {
                 else
                     res += 1.5*radius // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
 
-               return res
+                if (res > item_bg.width)
+                    res = item_bg.width
+
+                return res
             }
             anchors.top: parent.top
             anchors.topMargin: 0
