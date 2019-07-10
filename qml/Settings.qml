@@ -147,8 +147,8 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                Theme.loadTheme(0)
                                 settingsManager.appTheme = "green"
+                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -165,8 +165,8 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                Theme.loadTheme(1)
                                 settingsManager.appTheme = "day"
+                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -183,8 +183,8 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                Theme.loadTheme(2)
                                 settingsManager.appTheme = "night"
+                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -226,7 +226,10 @@ Item {
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     Component.onCompleted: checked = settingsManager.autoDark
-                    onCheckedChanged: settingsManager.autoDark = checked
+                    onCheckedChanged: {
+                        settingsManager.autoDark = checked
+                        Theme.loadTheme(settingsManager.appTheme)
+                    }
                 }
 
                 ImageSvg {
