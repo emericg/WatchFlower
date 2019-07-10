@@ -92,8 +92,23 @@ ApplicationWindow {
                 headerLoader.source = "MobileHeader.qml"
             appHeader = headerLoader.item
         }
-    }
 
+        onLoaded: {
+            //
+            binder.target = headerLoader.item;
+        }
+    }
+    Binding {
+        id: binder
+        property: "title"
+        value: title
+    }
+    Binding {
+        id: binder2
+        property: "leftMenuMode"
+        value: leftMenuMode
+    }
+*/
     Drawer {
         id: appDrawer
         width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width

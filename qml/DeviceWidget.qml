@@ -417,6 +417,7 @@ Item {
 
             Row {
                 id: lilIcons
+                visible: boxDevice.isAvailable()
                 height: 24
                 anchors.verticalCenter: parent.verticalCenter
                 layoutDirection: Qt.RightToLeft

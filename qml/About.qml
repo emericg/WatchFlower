@@ -121,7 +121,7 @@ Item {
                 }
 
                 Text {
-                    id: element1
+                    id: textName
                     anchors.top: parent.top
                     anchors.topMargin: 12
                     anchors.left: imageLogo.right
@@ -135,9 +135,10 @@ Item {
 
             Item {
                 id: website
+                //width: websiteImg.width + websiteTxt.width + 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 8
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -153,6 +154,7 @@ Item {
                 }
 
                 Text {
+                    id: websiteTxt
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 48
@@ -162,7 +164,6 @@ Item {
                     font.pixelSize: 16
 
                     MouseArea {
-                        id: mouseArea
                         anchors.fill: parent
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower.html")
                     }
@@ -171,9 +172,10 @@ Item {
 
             Item {
                 id: github
+                //width: githubImg.width + githubTxt.width + 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 8
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -189,14 +191,13 @@ Item {
                 }
 
                 Text {
-                    id: link
+                    id: githubTxt
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 48
-                    horizontalAlignment: Text.AlignHCenter
 
                     color: Theme.colorText
-                    text: qsTr("GitHub project's page")
+                    text: qsTr("GitHub page")
                     font.pixelSize: 16
 
                     MouseArea {
@@ -210,16 +211,16 @@ Item {
                 id: tuto
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 8
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
                 ImageSvg {
                     id: tutoImg
-                    width: 30
-                    height: 30
+                    width: 28
+                    height: 28
                     anchors.left: parent.left
-                    anchors.leftMargin: 1
+                    anchors.leftMargin: 2
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
@@ -236,7 +237,6 @@ Item {
                     font.pixelSize: 16
 
                     MouseArea {
-                        id: mouseArea1
                         anchors.fill: parent
                         onClicked: screenTutorial.reopen("About")
                     }
@@ -246,10 +246,10 @@ Item {
             Item {
                 id: desc
                 height: 180
+                anchors.left: parent.left
+                anchors.leftMargin: 8
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 ImageSvg {
                     id: descImg
@@ -257,9 +257,10 @@ Item {
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    anchors.verticalCenter: description.verticalCenter
+
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorText
-                    anchors.verticalCenter: description.verticalCenter
                 }
 
                 TextArea {
@@ -282,9 +283,9 @@ Item {
                     id: imageDevices
                     height: 96
                     anchors.left: description.left
-                    anchors.leftMargin: 0
+                    anchors.leftMargin: description.leftPadding
                     anchors.right: description.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: description.rightPadding
 
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/devices/welcome-devices.svg"

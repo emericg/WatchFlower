@@ -21,7 +21,6 @@
 
 import QtQuick 2.9
 import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
 
 import com.watchflower.theme 1.0
 
@@ -127,14 +126,16 @@ Item {
         //console.log("height: " + graphGrid.height)
 
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            if (Screen.primaryOrientation === 1 /*Qt::PortraitOrientation*/) {
-                graphGrid.columns = 1
-                rectangleHeader.visible = true
-                rectangleHeader.height = 56
-            } else {
-                graphGrid.columns = 2
-                rectangleHeader.visible = false
-                rectangleHeader.height = 0
+            if (settingsManager.getScreenSize() < 7.0) {
+                if (screenOrientation === Qt.PortraitOrientation) {
+                    graphGrid.columns = 1
+                    rectangleHeader.visible = true
+                    rectangleHeader.height = 56
+                } else {
+                    graphGrid.columns = 2
+                    rectangleHeader.visible = false
+                    rectangleHeader.height = 0
+                }
             }
         } else {
             if (graphGrid.width < 1080) {

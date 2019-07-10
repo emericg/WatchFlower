@@ -100,6 +100,20 @@ Item {
         itemCondu.visible = myDevice.hasConductivitySensor()
     }
 
+    onWidthChanged: {
+        if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
+            if (settingsManager.getScreenSize() < 7.0) {
+                if (screenOrientation === Qt.PortraitOrientation) {
+                    rectangleHeader.visible = true
+                    rectangleHeader.height = 100
+                } else {
+                    rectangleHeader.visible = false
+                    rectangleHeader.height = 0
+                }
+            }
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {

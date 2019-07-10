@@ -626,7 +626,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 }
             }
 
-            // Add it to the UI
+            // Create the device
             Device *d = nullptr;
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
@@ -643,10 +643,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             if (!d)
                 return;
 
+            // Mark it as queued until the deviceManager sync new devices
+            d->refreshQueue();
             connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-            m_devices.append(d);
-
-            qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
 
             // Add it to the database?
             if (m_db)
@@ -670,7 +669,11 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 }
             }
 
+            // Add it to the UI
+            m_devices.append(d);
             Q_EMIT devicesUpdated();
+
+            qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
         }
         else
         {

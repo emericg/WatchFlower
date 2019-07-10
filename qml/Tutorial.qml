@@ -44,7 +44,7 @@ Rectangle {
         anchors.fill: parent
         anchors.bottomMargin: 48
 
-        currentIndex: 1
+        currentIndex: 0
         onCurrentIndexChanged: {
             if (currentIndex < 0) currentIndex = 0
             if (currentIndex > 2) {
