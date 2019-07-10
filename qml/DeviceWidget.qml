@@ -313,7 +313,7 @@ Item {
         Row {
             id: rowLeft
             anchors.left: parent.left
-            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 8 : 12)
+            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
             anchors.right: rowRight.left
             anchors.rightMargin: 0
             anchors.top: parent.top
@@ -322,7 +322,7 @@ Item {
             anchors.bottomMargin: bigAssMode ? 16 : 8
 
             clip: true
-            spacing: bigAssMode ? (singleColumn ? 20 : 14) : (singleColumn ? 20 : 12)
+            spacing: bigAssMode ? (singleColumn ? 20 : 14) : (singleColumn ? 24 : 12)
 
             ImageSvg {
                 id: imageDevice

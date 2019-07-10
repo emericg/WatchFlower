@@ -85,7 +85,7 @@ Rectangle {
         width: 24
         height: 24
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 18
         anchors.verticalCenter: parent.verticalCenter
 
         source: "qrc:/assets/menu_logo.svg"

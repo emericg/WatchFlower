@@ -53,7 +53,7 @@ Rectangle {
 
         Text {
             anchors.left: parent.left
-            anchors.leftMargin: 68
+            anchors.leftMargin: 64
             anchors.verticalCenter: parent.verticalCenter
 
             text: title
