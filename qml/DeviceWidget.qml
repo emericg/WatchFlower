@@ -82,7 +82,7 @@ Item {
         // Sensor battery level
         if (boxDevice.hasBatteryLevel()) {
             imageBattery.visible = true
-            imageBattery.color = Theme.colorIcons
+            //imageBattery.color = Theme.colorIcons
 
             if (boxDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -99,10 +99,10 @@ Item {
             } else if (boxDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
             } else if (boxDevice.deviceBattery > 1) {
-                if (boxDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
+                //if (boxDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
-                if (boxDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
+                //if (boxDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
