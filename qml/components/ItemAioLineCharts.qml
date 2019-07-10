@@ -55,7 +55,7 @@ Item {
         if (dateIndicator.visible)
             resetIndicator()
 
-        if (myDevice.countDatas("temp", 14) > 0) {
+        if (myDevice.countDatas("temp", 14) > 1) {
             itemAioLineCharts.visible = true
         } else {
             itemAioLineCharts.visible = false

@@ -338,6 +338,6 @@ void DeviceHygrotempClock::confirmedDescriptorWrite(const QLowEnergyDescriptor &
         //disabled notifications -> assume disconnect intent
         //m_control->disconnectFromDevice();
         //delete m_service;
-        //m_service = 0;
+        //m_service = nullptr;
     }
 }

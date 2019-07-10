@@ -312,16 +312,17 @@ Item {
 
         Row {
             id: rowLeft
-            clip: true
+            anchors.left: parent.left
+            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 8 : 12)
             anchors.right: rowRight.left
             anchors.rightMargin: 0
-            spacing: bigAssMode ? 20 : 24
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
-            anchors.left: parent.left
-            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 8 : 12)
+
+            clip: true
+            spacing: bigAssMode ? (singleColumn ? 20 : 14) : (singleColumn ? 20 : 12)
 
             ImageSvg {
                 id: imageDevice
@@ -340,6 +341,7 @@ Item {
 
                 Text {
                     id: textPlant
+                    anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.rightMargin: bigAssMode ? 0 : 8
 
@@ -347,12 +349,12 @@ Item {
                     text: boxDevice.deviceLocationName
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
-                    anchors.left: parent.left
                     font.pixelSize: bigAssMode ? 22 : 20
                 }
 
                 Text {
                     id: textLocation
+                    anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.rightMargin: bigAssMode ? 0 : 8
 
@@ -360,23 +362,22 @@ Item {
                     text: boxDevice.deviceAddress
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
-                    anchors.left: parent.left
                     font.pixelSize: bigAssMode ? 20 : 18
                 }
 
                 Row {
                     id: row
                     height: bigAssMode ? 26 : 22
-                    spacing: 8
                     anchors.left: parent.left
+                    spacing: 8
 
                     ImageSvg {
                         id: imageBattery
                         width: bigAssMode ? 30 : 28
                         height: bigAssMode ? 32 : 30
+                        anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorIcons
-                        anchors.verticalCenter: parent.verticalCenter
                         rotation: 90
                         source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
                         fillMode: Image.PreserveAspectCrop
@@ -528,13 +529,13 @@ Item {
                     Rectangle {
                         id: bg3
                         anchors.fill: parent
+
                         color: Theme.colorYellow
                         opacity: 0.33
                         radius: rectangleSensors.sensorRadius
                     }
                     Rectangle {
                         id: lumi_data
-
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0
@@ -560,13 +561,13 @@ Item {
                     Rectangle {
                         id: bg4
                         anchors.fill: parent
+
                         color: Theme.colorRed
                         opacity: 0.33
                         radius: rectangleSensors.sensorRadius
                     }
                     Rectangle {
                         id: cond_data
-
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0

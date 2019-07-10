@@ -141,7 +141,6 @@ Item {
 
         aioLineCharts.loadGraph()
         aioLineCharts.resetIndicator()
-        graphLoader.visible = (myDevice.countDatas("temp") > 1)
 
         updateHeader()
         updateDatas()

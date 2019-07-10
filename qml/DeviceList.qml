@@ -154,7 +154,7 @@ Item {
             ButtonThemed {
                 id: buttonBluetooth
                 width: 128
-                height: 30
+                height: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -165,20 +165,6 @@ Item {
 
                 onClicked: deviceManager.enableBluetooth()
             }
-            ButtonThemed {
-                id: buttonSearch
-                width: 128
-                height: 30
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: false
-                text: qsTr("Launch detection")
-                color: Theme.colorStatusbarContent
-
-                onClicked: deviceManager.scanDevices()
-            }
 
             function hide() {
                 rectangleStatus.visible = false;
@@ -187,25 +173,18 @@ Item {
                 itemStatus.source = ""
             }
             function setBluetoothWarning() {
-                rectangleStatus.visible = true;
-                rectangleStatus.opacity = 1;
+                if (deviceManager.devices) {
+                    rectangleStatus.visible = true;
+                    rectangleStatus.opacity = 1;
 
-                if (!deviceManager.devices)
+                    textStatus.text = qsTr("Bluetooth disabled...");
+                    buttonBluetooth.visible = true
+                } else {
                     itemStatus.source = "ItemNoBluetooth.qml"
-
-                textStatus.text = qsTr("Bluetooth disabled...");
-                buttonBluetooth.visible = true
-                buttonSearch.visible = false
+                }
             }
             function setDeviceWarning() {
-                rectangleStatus.visible = true;
-                rectangleStatus.opacity = 1;
-
                 itemStatus.source = "ItemNoDevice.qml"
-
-                textStatus.text = qsTr("No device...");
-                buttonBluetooth.visible = false
-                buttonSearch.visible = true
             }
         }
 
@@ -270,7 +249,7 @@ Item {
                 ButtonThemed {
                     id: buttonRefresh
                     width: 96
-                    height: 30
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorStatusbarContent
@@ -280,7 +259,7 @@ Item {
                 ButtonThemed {
                     id: buttonDelete
                     width: 96
-                    height: 30
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorStatusbarContent

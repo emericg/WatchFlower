@@ -20,21 +20,38 @@
  */
 
 import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 import com.watchflower.theme 1.0
 
 Item {
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
 
-    ImageSvg {
-        width: 256
-        height: 256
-        anchors.horizontalCenter: parent.horizontalCenter
+    Column {
+        anchors.left: parent.left
+        anchors.leftMargin: 32
+        anchors.right: parent.right
+        anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
+        spacing: 16
 
-        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-        fillMode: Image.PreserveAspectFit
-        color: Theme.colorIcons
+        ImageSvg {
+            width: 256
+            height: 256
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+            fillMode: Image.PreserveAspectFit
+            color: Theme.colorIcons
+        }
+
+        ButtonThemed {
+            height: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            color: Theme.colorHighlight
+            text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
+            onClicked: deviceManager.enableBluetooth()
+        }
     }
 }

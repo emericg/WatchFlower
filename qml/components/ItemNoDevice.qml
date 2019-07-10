@@ -28,7 +28,6 @@ Item {
     anchors.fill: parent
 
     Column {
-        id: column
         anchors.left: parent.left
         anchors.leftMargin: 32
         anchors.right: parent.right
@@ -36,7 +35,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         ImageSvg {
-            id: image
+            id: imageSearch
             width: 200
             height: 200
             anchors.horizontalCenter: parent.horizontalCenter
@@ -47,7 +46,7 @@ Item {
 
             OpacityAnimator {
                 id: rescanAnimation
-                target: image
+                target: imageSearch
                 duration: 1000
                 from: 0.33
                 to: 1
@@ -57,7 +56,7 @@ Item {
             }
             OpacityAnimator {
                 id: rescanAnimationStop
-                target: image
+                target: imageSearch
                 duration: 500
                 to: 1
                 easing.type: Easing.OutExpo
@@ -86,6 +85,8 @@ Item {
             spacing: 16
 
             ButtonThemed {
+                height: 40
+
                 visible: (Qt.platform.os === "android")
 
                 text: qsTr("Official informations")
@@ -94,8 +95,10 @@ Item {
             }
 
             ButtonThemed {
+                height: 40
+
                 text: qsTr("Launch detection")
-                color: Theme.colorGreen
+                color: Theme.colorHighlight
                 onClicked: deviceManager.scanDevices()
             }
         }

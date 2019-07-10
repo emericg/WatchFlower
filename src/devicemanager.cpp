@@ -185,6 +185,7 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
     {
         delete m_bluetoothAdapter;
+        m_bluetoothAdapter = nullptr;
     }
 
     // We only try the "first" available Bluetooth adapter
@@ -198,6 +199,9 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
             // On some platform, this can only inform us about disconnection, not reconnection
             connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
                     this, &DeviceManager::bluetoothModeChanged);
+
+            connect(this, &DeviceManager::bluetoothChanged,
+                    this, &DeviceManager::bluetoothStatusChanged);
         }
     }
 
@@ -265,6 +269,16 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
     }
 
     Q_EMIT bluetoothChanged();
+}
+
+void DeviceManager::bluetoothStatusChanged()
+{
+    qDebug() << "Bluetooth status changed, bt adapter:" << m_btA << "  /  bt enabled:" << m_btE;
+
+    if (m_btA && m_btE)
+    {
+        refreshDevices_check();
+    }
 }
 
 /* ************************************************************************** */

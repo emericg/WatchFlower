@@ -94,14 +94,8 @@ public:
     Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
 public slots:
-    /*!
-     * \brief Refresh devices with datas >xh old
-     */
-    void refreshDevices_check();
-    /*!
-     * \brief Refresh every devices
-     */
-    void refreshDevices_start();
+    void refreshDevices_check();    //!<  Refresh devices with datas >xh old
+    void refreshDevices_start();    //!<  Refresh every devices
 
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
@@ -115,6 +109,7 @@ public slots:
 private slots:
     // QBluetoothLocalDevice related
     void bluetoothModeChanged(QBluetoothLocalDevice::HostMode);
+    void bluetoothStatusChanged();
 
     // QBluetoothDeviceDiscoveryAgent related
     void addBleDevice(const QBluetoothDeviceInfo &);
