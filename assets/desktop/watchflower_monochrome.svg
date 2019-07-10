@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="192"
+   height="192"
+   viewBox="0 0 50.799999 50.800001"
+   version="1.1"
+   id="svg4545"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="logo-monochrome.svg">
+  <title
+     id="title845">WatchFlower icon base</title>
+  <defs
+     id="defs4539" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#595959"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="65.451559"
+     inkscape:cy="64.816032"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="false"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5090"
+       spacingx="0.21166667"
+       spacingy="0.21166667" />
+    <sodipodi:guide
+       position="0,43.391668"
+       orientation="1,0"
+       id="guide832"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="6.35,50.800002"
+       orientation="0,1"
+       id="guide834"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="50.8,41.275001"
+       orientation="1,0"
+       id="guide836"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="50.799999,0"
+       orientation="0,1"
+       id="guide838"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="2.1166667,34.925001"
+       orientation="1,0"
+       id="guide840"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="12.7,48.683335"
+       orientation="0,1"
+       id="guide842"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="48.683333,32.808334"
+       orientation="1,0"
+       id="guide844"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="33.866667,2.1166667"
+       orientation="0,1"
+       id="guide846"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="25.4,25.400001"
+       orientation="0,1"
+       id="guide848"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="25.4,41.275001"
+       orientation="1,0"
+       id="guide850"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="12.7,27.516668"
+       orientation="1,0"
+       id="guide856"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="38.100001,42.333334"
+       orientation="1,0"
+       id="guide858"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="30.691667,37.041668"
+       orientation="0,1"
+       id="guide860"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="22.225,13.758334"
+       orientation="0,1"
+       id="guide862"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4542">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>WatchFlower icon base</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Chris Díaz</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:description>christiandiaz.design@gmail.com</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-246.19999)">
+    <path
+       style="fill:#ffffff;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 96,31.900391 c 0,0 -14.224768,14.972558 -25.710938,32.412109 C 51.677298,54.997783 32,49.171875 32,49.171875 c 0,0 -5.76256,23.929246 -6.310547,46.664063 -10.250393,0.244188 -17.7773436,1.017578 -17.7773436,1.017578 0,0 11.8332796,51.579874 29.8476566,62.990234 17.610213,11.15436 56.190077,0.62192 57.923828,0.14063 0.02437,0.005 0.277344,0.0605 0.277344,0.0605 0,0 0.04632,-0.1448 0.04883,-0.15234 4e-5,-4e-5 0.0097,-0.01 0.0098,-0.01 0.605449,0.16996 40.255859,11.23933 58.132809,-0.084 C 172.16672,148.38847 184,96.808594 184,96.808594 c 0,0 -7.52987,-0.773543 -17.7832,-1.017578 C 165.71539,73.05189 160,49.103516 160,49.103516 c 0,0 -19.72443,5.797609 -38.36914,15.089843 C 110.1586,46.805232 96,31.900391 96,31.900391 Z"
+       transform="matrix(0.26458333,0,0,0.26458333,0,246.19999)"
+       id="path856-9"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
