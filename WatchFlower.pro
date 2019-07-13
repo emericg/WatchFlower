@@ -1,6 +1,6 @@
 TARGET  = WatchFlower
 
-VERSION = 0.7
+VERSION = 0.7.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
@@ -20,6 +20,7 @@ OBJECTS_DIR = build/
 MOC_DIR     = build/
 RCC_DIR     = build/
 UI_DIR      = build/
+QMLCACHE_DIR= build/
 DESTDIR     = bin/
 
 # Project files ################################################################
