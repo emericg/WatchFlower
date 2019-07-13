@@ -80,6 +80,19 @@ ApplicationWindow {
         onSettingsClicked: appContent.state = "Settings"
     }
 
+    Connections {
+        target: Qt.application
+        onStateChanged: {
+            switch (Qt.application.state) {
+            case Qt.ApplicationActive:
+                //console.log("Qt.ApplicationActive")
+                Theme.loadTheme(settingsManager.appTheme);
+                deviceManager.refreshDevices_check();
+                break
+            }
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
@@ -116,7 +129,7 @@ ApplicationWindow {
     onClosing: {
         if (settingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false;
-            applicationWindow.hide()
+            applicationWindow.hide();
         }
     }
 
