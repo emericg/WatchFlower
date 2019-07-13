@@ -31,6 +31,13 @@ Item {
 
     property var myDevice: currentDevice
 
+    function isHistoryMode() {
+        return deviceScreenChart.isIndicator()
+    }
+    function resetHistoryMode() {
+        deviceScreenChart.resetIndicator()
+    }
+
     Connections {
         target: myDevice
         onStatusUpdated: updateHeader()

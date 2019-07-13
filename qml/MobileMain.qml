@@ -165,6 +165,13 @@ ApplicationWindow {
         close.accepted = false;
     }
 
+    Timer {
+        id: exitTimer
+        interval: 3333
+        repeat: false
+        onRunningChanged: exitWarning.opacity = running
+    }
+
     // QML /////////////////////////////////////////////////////////////////////
 
     property var currentDevice: null
@@ -180,12 +187,28 @@ ApplicationWindow {
         Keys.onBackPressed: {
             if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
                 if (appContent.state === "DeviceList") {
-                    if (screenDeviceList.selectionList.length !== 0)
+                    if (screenDeviceList.selectionList.length !== 0) {
                         screenDeviceList.exitSelectionMode()
-                    //else
-                    //    Qt.quit()
+                    } else {
+                        if (exitTimer.running)
+                            Qt.quit()
+                        else
+                            exitTimer.start()
+                    }
                 } else if (appContent.state === "Tutorial") {
                     // do nothing
+                } else if (appContent.state === "DeviceSensor") {
+                    if (screenDeviceSensor.isHistoryMode()) {
+                        screenDeviceSensor.resetHistoryMode()
+                    } else {
+                        appContent.state = "DeviceList"
+                    }
+                } else if (appContent.state === "DeviceThermo") {
+                    if (screenDeviceThermometer.isHistoryMode()) {
+                        screenDeviceThermometer.resetHistoryMode()
+                    } else {
+                        appContent.state = "DeviceList"
+                    }
                 } else {
                     appContent.state = "DeviceList"
                 }
@@ -468,5 +491,30 @@ ApplicationWindow {
                 }
             }
         ]
+    }
+
+    Rectangle {
+        id: exitWarning
+        width: exitWarningText.width + 16
+        height: exitWarningText.height + 16
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 32
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        radius: 4
+        color: Theme.colorSubText
+
+        opacity: 0
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
+
+        Text {
+            id: exitWarningText
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: qsTr("Press one more time to exit...")
+            font.pixelSize: 16
+            color: Theme.colorForeground
+        }
     }
 }

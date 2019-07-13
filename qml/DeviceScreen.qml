@@ -85,6 +85,13 @@ Item {
         if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") appHeader.setActiveDeviceDatas()
     }
 
+    function isHistoryMode() {
+        return rectangleDeviceDatas.dataBarsHistory
+    }
+    function resetHistoryMode() {
+        rectangleDeviceDatas.resetHistoryMode()
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     Item {

@@ -250,8 +250,8 @@ Item {
                                                 hygroDatas.at(i).y, conduDatas.at(i).y)
                             } else if (appContent.state === "DeviceThermo") {
                                 datasIndicator.visible = true
-                                textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDatas.at(i).y).toFixed(1) + "°F" : tempDatas.at(i).y.toFixed(1) + "°C"
-                                textDatas.text += " " + hygroDatas.at(i).y.toFixed(0) + "%"
+                                datasIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDatas.at(i).y).toFixed(1) + "°F" : tempDatas.at(i).y.toFixed(1) + "°C"
+                                datasIndicatorText.text += " " + hygroDatas.at(i).y.toFixed(0) + "%"
                             }
                             break;
                         } else {
@@ -274,8 +274,8 @@ Item {
                         } else if (appContent.state === "DeviceThermo") {
                             datasIndicator.visible = true
                             var temmp = qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x)
-                            textDatas.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                            textDatas.text += " " + qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x).toFixed(0) + "%"
+                            datasIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                            datasIndicatorText.text += " " + qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x).toFixed(0) + "%"
                         }
                     }
                 } else {
@@ -330,8 +330,8 @@ Item {
 
         Rectangle {
             id: datasIndicator
-            width: textDatas.width + 12
-            height: textDatas.height + 12
+            width: datasIndicatorText.width + 12
+            height: datasIndicatorText.height + 12
 
             color: Theme.colorForeground
             radius: 4
@@ -339,7 +339,7 @@ Item {
             visible: false
 
             Text {
-                id: textDatas
+                id: datasIndicatorText
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -357,6 +357,9 @@ Item {
 
     onWidthChanged: resetIndicator()
 
+    function isIndicator() {
+        return verticalIndicator.visible
+    }
     function resetIndicator() {
         dateIndicator.visible = false
         datasIndicator.visible = false

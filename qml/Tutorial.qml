@@ -203,9 +203,7 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
 
-        Behavior on opacity {
-            OpacityAnimator { duration: 100 }
-        }
+        Behavior on opacity { OpacityAnimator { duration: 100 } }
 
         MouseArea {
             anchors.fill: parent
@@ -227,9 +225,7 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
 
-        Behavior on opacity {
-            OpacityAnimator { duration: 100 }
-        }
+        Behavior on opacity { OpacityAnimator { duration: 100 } }
 
         MouseArea {
             anchors.fill: parent
@@ -258,9 +254,7 @@ Rectangle {
 
             opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
 
-            Behavior on opacity {
-                OpacityAnimator { duration: 100 }
-            }
+            Behavior on opacity { OpacityAnimator { duration: 100 } }
         }
     }
 }

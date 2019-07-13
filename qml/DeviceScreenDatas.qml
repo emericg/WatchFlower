@@ -31,6 +31,9 @@ Item {
     width: 400
     height: 300
 
+    property var aioLineCharts: null
+    property bool dataBarsHistory: false
+
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
@@ -95,8 +98,6 @@ Item {
         interval: 60000; running: true; repeat: true;
         onTriggered: updateStatusText()
     }
-
-    property var aioLineCharts: null
 
     function updateStatusText() {
         if (typeof myDevice === "undefined" || !myDevice) return
@@ -163,11 +164,12 @@ Item {
             condu.visible = myDevice.hasConductivitySensor()
         }
 
-        updateDatasBars(myDevice.deviceTemp, myDevice.deviceLuminosity, myDevice.deviceHumidity, myDevice.deviceConductivity)
+        resetDatasBars()
         aioLineCharts.updateGraph()
     }
 
     function updateDatasBars(tempD, lumiD, hygroD, conduD) {
+        dataBarsHistory = true
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
         humi.value = hygroD
         lumi.value = lumiD
@@ -175,10 +177,16 @@ Item {
     }
 
     function resetDatasBars() {
+        dataBarsHistory = false
         humi.value = myDevice.deviceHumidity
         temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
         lumi.value = myDevice.deviceLuminosity
         condu.value = myDevice.deviceConductivity
+    }
+
+    function resetHistoryMode() {
+        aioLineCharts.resetIndicator()
+        resetDatasBars()
     }
 
     onWidthChanged: {
