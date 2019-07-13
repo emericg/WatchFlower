@@ -129,7 +129,7 @@ bool SettingsManager::readSettings()
     }
     else
     {
-        qDebug() << "QSettings READ error:" << settings.status();
+        qWarning() << "SettingsManager::readSettings() error:" << settings.status();
     }
 
     return status;
@@ -165,7 +165,7 @@ bool SettingsManager::writeSettings()
         }
         else
         {
-            qDebug() << "QSettings WRITE error:" << settings.status();
+            qWarning() << "SettingsManager::writeSettings() error:" << settings.status();
         }
     }
 
@@ -231,7 +231,7 @@ bool SettingsManager::loadDatabase()
                             }
                             else
                             {
-                                qDebug() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":"  << createVersion.lastError().text();
+                                qWarning() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":"  << createVersion.lastError().text();
                             }
                         }
 
@@ -264,7 +264,7 @@ bool SettingsManager::loadDatabase()
                                 updateDbVersion.prepare("UPDATE version SET dbVersion=:dbVersion");
                                 updateDbVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
                                 if (updateDbVersion.exec() == false)
-                                    qDebug() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":"  << updateDbVersion.lastError().text();
+                                    qWarning() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":"  << updateDbVersion.lastError().text();
                             }
                         }
 
@@ -287,7 +287,7 @@ bool SettingsManager::loadDatabase()
                                                   ");");
 
                             if (createDevices.exec() == false)
-                                qDebug() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
+                                qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
                         }
 
                         QSqlQuery checkDatas;
@@ -310,7 +310,7 @@ bool SettingsManager::loadDatabase()
                                                 ");");
 
                             if (createDatas.exec() == false)
-                                qDebug() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":"  << createDatas.lastError().text();
+                                qWarning() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":"  << createDatas.lastError().text();
                         }
 
                         QSqlQuery checkLimits;
@@ -334,7 +334,7 @@ bool SettingsManager::loadDatabase()
                                                  ");");
 
                             if (createLimits.exec() == false)
-                                qDebug() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":"  << createLimits.lastError().text();
+                                qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":"  << createLimits.lastError().text();
                         }
 
                         // Delete everything 30+ days old ///////////////////////
@@ -344,7 +344,7 @@ bool SettingsManager::loadDatabase()
                         sanitizeDatas.prepare("DELETE FROM datas WHERE ts <  DATE('now', '-30 days')");
 
                         if (sanitizeDatas.exec() == false)
-                            qDebug() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
+                            qWarning() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
                     }
                     else
                     {

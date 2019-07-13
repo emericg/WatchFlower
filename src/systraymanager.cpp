@@ -71,7 +71,7 @@ void SystrayManager::initSettings(QApplication *app, QQuickWindow *view)
 {
     if (!app || !view)
     {
-        qDebug() << "initSettings(ERROR) no QApplication or QQuickWindow passed";
+        qWarning() << "SystrayManager::initSettings() no QApplication or QQuickWindow passed";
         return;
     }
 
@@ -85,7 +85,7 @@ void SystrayManager::initSystray()
 {
     if (!m_saved_app || !m_saved_view)
     {
-        qDebug() << "initSystray(ERROR) no QApplication or QQuickWindow saved";
+        qWarning() << "SystrayManager::initSystray() no QApplication or QQuickWindow saved";
         return;
     }
 
@@ -153,7 +153,7 @@ bool SystrayManager::installSystray()
         }
         else
         {
-            qDebug() << "Cannot install systray...";
+            qWarning() << "SystrayManager::installSystray() Cannot install systray...";
         }
     }
     else
@@ -166,7 +166,7 @@ bool SystrayManager::installSystray()
         }
         else
         {
-           qWarning() << "Empty systray counter";
+           qWarning() << "SystrayManager::installSystray() Empty systray counter";
         }
     }
 
@@ -188,7 +188,7 @@ void SystrayManager::REinstallSystray()
         }
         else
         {
-            qDebug() << "REinstallSystray() ERROR";
+            qWarning() << "SystrayManager::REinstallSystray() ERROR";
         }
     }
 #endif // Q_OS_LINUX
@@ -272,7 +272,7 @@ void SystrayManager::visibilityChanged()
 
 void SystrayManager::aboutToBeDestroyed()
 {
-    qWarning() << "aboutToBeDestroyed()";
+    qDebug() << "aboutToBeDestroyed()";
 }
 
 /* ************************************************************************** */

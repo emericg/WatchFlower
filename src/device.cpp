@@ -396,7 +396,7 @@ bool Device::getSqlDatas(int minutes)
     cachedDatas.bindValue(":deviceAddr", getAddress());
 
     if (cachedDatas.exec() == false)
-        qDebug() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
+        qWarning() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":"  << cachedDatas.lastError().text();
     else
     {
 #ifndef QT_NO_DEBUG
@@ -638,7 +638,7 @@ bool Device::setDbLimits()
 
     status = updateLimits.exec();
     if (status == false)
-        qDebug() << "> updateLimits.exec() ERROR" << updateLimits.lastError().type() << ":"  << updateLimits.lastError().text();
+        qWarning() << "> updateLimits.exec() ERROR" << updateLimits.lastError().type() << ":"  << updateLimits.lastError().text();
 
     Q_EMIT limitsUpdated();
 
@@ -765,7 +765,7 @@ bool Device::hasDatas() const
     hasDatas.bindValue(":deviceAddr", getAddress());
 
     if (hasDatas.exec() == false)
-        qDebug() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
+        qWarning() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
 
     while (hasDatas.next())
     {
@@ -794,7 +794,7 @@ bool Device::hasDatas(const QString &dataName) const
     hasDatas.bindValue(":deviceAddr", getAddress());
 
     if (hasDatas.exec() == false)
-        qDebug() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
+        qWarning() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":"  << hasDatas.lastError().text();
 
     while (hasDatas.next())
     {
@@ -816,7 +816,7 @@ int Device::countDatas(const QString &dataName, int days) const
     datasCount.bindValue(":deviceAddr", getAddress());
 
     if (datasCount.exec() == false)
-        qDebug() << "> datasCount.exec() ERROR" << datasCount.lastError().type() << ":"  << datasCount.lastError().text();
+        qWarning() << "> datasCount.exec() ERROR" << datasCount.lastError().type() << ":"  << datasCount.lastError().text();
 
     while (datasCount.next())
     {
@@ -883,7 +883,7 @@ QVariantList Device::getMonthDatas(const QString &dataName)
     datasPerMonth.bindValue(":deviceAddr", getAddress());
 
     if (datasPerMonth.exec() == false)
-        qDebug() << "> datasPerMonth.exec() ERROR" << datasPerMonth.lastError().type() << ":"  << datasPerMonth.lastError().text();
+        qWarning() << "> datasPerMonth.exec() ERROR" << datasPerMonth.lastError().type() << ":"  << datasPerMonth.lastError().text();
 
     while (datasPerMonth.next() && (datas.size() < 30))
     {
@@ -983,7 +983,7 @@ QVariantList Device::getDatasDaily(const QString &dataName)
     datasPerDay.bindValue(":deviceAddr", getAddress());
 
     if (datasPerDay.exec() == false)
-        qDebug() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
+        qWarning() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
 
     while (datasPerDay.next() && (datas.size() < 7))
     {
@@ -1040,7 +1040,7 @@ QVariantList Device::getHours()
     datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
-        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
     while (datasPerHour.next())
     {
@@ -1091,7 +1091,7 @@ QVariantList Device::getDatasHourly(const QString &dataName)
     datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
-        qDebug() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+        qWarning() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
     while (datasPerHour.next() && (datas.size() < 24))
     {
@@ -1144,7 +1144,7 @@ QVariantList Device::getBackgroundHourly(float maxValue)
     datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
-        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
     while (datasPerHour.next())
     {
@@ -1197,7 +1197,7 @@ QVariantList Device::getBackgroundNightly(float maxValue)
     datasPerHour.bindValue(":deviceAddr", getAddress());
 
     if (datasPerHour.exec() == false)
-        qDebug() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
+        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
     while (datasPerHour.next())
     {
@@ -1263,7 +1263,7 @@ void Device::getAioDatas(QtCharts::QDateTimeAxis *axis,
 
     if (graphDatas.exec() == false)
     {
-        qDebug() << "> graphDatas.exec() ERROR" << graphDatas.lastError().type() << ":"  << graphDatas.lastError().text();
+        qWarning() << "> graphDatas.exec() ERROR" << graphDatas.lastError().type() << ":"  << graphDatas.lastError().text();
         return;
     }
 

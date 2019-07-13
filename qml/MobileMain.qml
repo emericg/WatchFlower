@@ -154,7 +154,7 @@ ApplicationWindow {
                 break
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
-                Theme.loadTheme(settingsManager.appTheme)
+                Theme.loadTheme(settingsManager.appTheme);
                 deviceManager.refreshDevices_check();
                 break
             }
