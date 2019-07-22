@@ -657,9 +657,14 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             if (!d)
                 return;
 
-            // Mark it as queued until the deviceManager sync new devices
-            d->refreshQueue();
             connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+
+            SettingsManager *sm = SettingsManager::getInstance();
+            if (d->getLastUpdateInt() < 0 || d->getLastUpdateInt() > sm->getUpdateInterval())
+            {
+                // old or no datas: mark it as queued until the deviceManager sync new devices
+                d->refreshQueue();
+            }
 
             // Add it to the database?
             if (m_db)

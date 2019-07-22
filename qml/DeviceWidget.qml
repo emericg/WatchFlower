@@ -160,8 +160,8 @@ Item {
         water.visible = false
         temp.visible = false
 
-        // Warnings are only for plants
-        if (boxDevice.hasSoilMoistureSensor()) {
+        // Warnings are only for plants (with available data)
+        if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
             // Water me notif
             if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
                 water.visible = true
