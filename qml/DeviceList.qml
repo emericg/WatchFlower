@@ -99,6 +99,21 @@ Item {
         exitSelectionMode()
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    ItemDeletePopup {
+        id: confirmDeleteDevice
+        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? (applicationWindow.width) : 480
+        height: 180
+        x: (applicationWindow.width / 2) - (confirmDeleteDevice.width / 2)
+        y: (applicationWindow.height / 2) - (confirmDeleteDevice.height / 2) - appHeader.height
+
+        onConfirmed: {
+            // actual device deletion
+            screenDeviceList.removeSelectedDevice()
+        }
+    }
+
     Column {
         id: rowbar
         anchors.top: parent.top
@@ -243,7 +258,7 @@ Item {
 
                     source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                     iconColor: Theme.colorStatusbarContent
-                    onClicked: screenDeviceList.removeSelectedDevice()
+                    onClicked: confirmDeleteDevice.open()
                 }
 /*
                 ButtonThemed {
