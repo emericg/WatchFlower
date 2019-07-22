@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/assets">
-        <file>logo.svg</file>
         <file>desktop/watchflower.svg</file>
         <file>desktop/watchflower_tray_light.svg</file>
         <file>desktop/watchflower_tray_dark.svg</file>
-        <file>menu_logo.svg</file>
-        <file>menu_back.svg</file>
-        <file>menu_close.svg</file>
-        <file>github.svg</file>
+        <file>logos/logo.svg</file>
+        <file>logos/github.svg</file>
+        <file>menus/menu_logo.svg</file>
+        <file>menus/menu_back.svg</file>
+        <file>menus/menu_close.svg</file>
         <file>icons_material/baseline-access_time-24px.svg</file>
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
@@ -56,6 +56,8 @@
         <file>icons_material/baseline-timer-24px.svg</file>
         <file>icons_material/baseline-trip_origin-24px.svg</file>
         <file>icons_material/baseline-tune-24px.svg</file>
+        <file>icons_material/baseline-water_mid-24px.svg</file>
+        <file>icons_material/baseline-water_full-24px.svg</file>
         <file>icons_material/baseline-wb_sunny-24px.svg</file>
         <file>icons_material/outline-info-24px.svg</file>
         <file>icons_material/outline-local_florist-24px.svg</file>

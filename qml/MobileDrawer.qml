@@ -50,7 +50,7 @@ Rectangle {
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/logo.svg"
+            source: "qrc:/assets/logos/logo.svg"
             sourceSize: Qt.size(width, height)
         }
 

@@ -104,7 +104,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
 
-                    source: "qrc:/assets/logo.svg"
+                    source: "qrc:/assets/logos/logo.svg"
                     sourceSize: Qt.size(width, height)
                 }
 
@@ -186,7 +186,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 2
-                    source: "qrc:/assets/github.svg"
+                    source: "qrc:/assets/logos/github.svg"
                     color: Theme.colorText
                 }
 

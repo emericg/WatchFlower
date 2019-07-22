@@ -165,9 +165,11 @@ Item {
             // Water me notif
             if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
                 water.visible = true
+                water.source = "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
                 temp.color = Theme.colorBlue
             } else if (boxDevice.deviceHumidity > boxDevice.limitHygroMax) {
                 water.visible = true
+                water.source = "qrc:/assets/icons_material/baseline-water_full-24px.svg"
                 temp.color = Theme.colorYellow
             }
 
@@ -430,7 +432,7 @@ Item {
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
                     color: Theme.colorBlue
                 }
                 ImageSvg {

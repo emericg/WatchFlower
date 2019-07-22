@@ -65,15 +65,15 @@ Rectangle {
             title.text = qsTr("Welcome")
             menu.visible = false
 
-            buttonBack.source = "qrc:/assets/menu_close.svg"
+            buttonBack.source = "qrc:/assets/menus/menu_close.svg"
         } else {
             title.text = "WatchFlower"
             menu.visible = true
 
             if (appContent.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/menu_logo.svg"
+                buttonBack.source = "qrc:/assets/menus/menu_logo.svg"
             } else {
-                buttonBack.source = "qrc:/assets/menu_back.svg"
+                buttonBack.source = "qrc:/assets/menus/menu_back.svg"
             }
         }
     }
@@ -88,7 +88,8 @@ Rectangle {
         anchors.leftMargin: 18
         anchors.verticalCenter: parent.verticalCenter
 
-        source: "qrc:/assets/menu_logo.svg"
+        //visible: ((rectangleHeader.width >= 720))
+        source: "qrc:/assets/menus/menu_logo.svg"
         color: Theme.colorHeaderContent
 
         MouseArea {
