@@ -37,7 +37,10 @@ ApplicationWindow {
     visible: true // !settingsManager.minimized
     flags: Qt.Window
 
-    // Desktop stuff
+    property var lastUpdate: new Date()
+    property var currentDevice: null
+
+    // Desktop stuff ///////////////////////////////////////////////////////////
 
     WindowGeometrySaver {
         window: applicationWindow
@@ -86,8 +89,17 @@ ApplicationWindow {
             switch (Qt.application.state) {
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
+
+                // Check if we need an 'automatic' theme change
                 Theme.loadTheme(settingsManager.appTheme);
-                deviceManager.refreshDevices_check();
+
+                // Needs to check if a refresh could be usefull
+                var rightnow = new Date()
+                if ((rightnow - lastUpdate) > 5*60*1000) {
+                    deviceManager.refreshDevices_check();
+                    lastUpdate = rightnow
+                }
+
                 break
             }
         }
@@ -134,8 +146,6 @@ ApplicationWindow {
     }
 
     // QML /////////////////////////////////////////////////////////////////////
-
-    property var currentDevice: null
 
     DesktopHeader {
         id: appHeader

@@ -36,6 +36,9 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
+    property var lastUpdate: new Date()
+    property var currentDevice: null
+
     // Mobile stuff ////////////////////////////////////////////////////////////
 
     // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
@@ -154,27 +157,29 @@ ApplicationWindow {
                 break
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
+
+                // Check if we need an 'automatic' theme change
                 Theme.loadTheme(settingsManager.appTheme);
-                deviceManager.refreshDevices_check();
+
+                // Needs to check if a refresh could be usefull
+                var rightnow = new Date()
+                if ((rightnow - lastUpdate) > 1*60*1000) {
+                    deviceManager.refreshDevices_check();
+                    lastUpdate = rightnow
+                }
                 break
             }
         }
     }
 
-    onClosing: {
-        close.accepted = false;
-    }
-
     Timer {
         id: exitTimer
-        interval: 3333
+        interval: 3000
         repeat: false
         onRunningChanged: exitWarning.opacity = running
     }
 
     // QML /////////////////////////////////////////////////////////////////////
-
-    property var currentDevice: null
 
     FocusScope {
         id: appContent

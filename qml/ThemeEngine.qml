@@ -91,8 +91,8 @@ Item {
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
 
         if (settingsManager.autoDark) {
-            var today = new Date();
-            var hour = Qt.formatDateTime(today, "hh");
+            var rightnow = new Date();
+            var hour = Qt.formatDateTime(rightnow, "hh");
             if (hour >= 21 || hour <= 8) {
                 themeIndex = ThemeEngine.THEME_NIGHT;
             }
