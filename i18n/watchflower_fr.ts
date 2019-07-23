@@ -692,7 +692,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="515"/>
         <source>Press one more time to exit...</source>
-        <translation type="unfinished">Appuyez encore une fois pour quitter....</translation>
+        <translation>Appuyez encore une fois pour quitter....</translation>
     </message>
 </context>
 <context>
@@ -746,7 +746,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="402"/>
         <source>Improve Bluetooth reliability if your device has trouble connecting to sensors, at the expanse of sync speed.</source>
-        <translation>Améliore la fiabilité du Bluetooth si votre appareil à du mal à se synchroniser avec les capteurs, aux dépens de la vitesse.</translation>
+        <translation>Améliore la fiabilité du Bluetooth si votre appareil a du mal à se synchroniser avec les capteurs, aux dépens de la vitesse.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="480"/>
@@ -926,7 +926,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="118"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan for compatible devices&lt;/b&gt; near you.</source>
-        <translation>Pour commencez à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils compatibles&lt;/b&gt; à proximité.</translation>
+        <translation>Pour commencer à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils compatibles&lt;/b&gt; à proximité.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
@@ -936,12 +936,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
         <source>Once devices are &lt;b&gt;paired&lt;/b&gt;, the application will periodically &lt;b&gt;sync&lt;/b&gt; their datas.&lt;br&gt;Click on devices to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
-        <translation>Une fois les appareils &lt;b&gt;appairés&lt;/b&gt;, l&apos;application &lt;b&gt;synchronisera&lt;/b&gt; périodiquement leurs données.&lt;br&gt;Cliquer sur un appareil pour accéder à ces &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;données historiques&lt;/b&gt;.</translation>
+        <translation>Une fois les appareils &lt;b&gt;appairés&lt;/b&gt;, l&apos;application &lt;b&gt;synchronisera&lt;/b&gt; périodiquement leurs données.&lt;br&gt;Cliquer sur un appareil pour accéder à ses &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;données historiques&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
         <source>You can also configure devices &lt;b&gt;location&lt;/b&gt;, &lt;b&gt;name associated plants&lt;/b&gt;, and set settings like &lt;b&gt;optimal water level&lt;/b&gt; and other &lt;b&gt;limits&lt;/b&gt; that apply to each sensors datas.</source>
-        <translation>Vous pouvez aussi resneigner &lt;b&gt;l&apos;emplacement&lt;/b&gt; des capteurs, donner des &lt;b&gt;noms aux plantes associées&lt;/b&gt;, et personnaliser des paramètres tels que &lt;b&gt;le niveau d&apos;eau optimal&lt;/b&gt; et d&apos;autres &lt;b&gt;limites&lt;/b&gt; qui s&apos;appliquent aux données des capteurs.</translation>
+        <translation>Vous pouvez aussi renseigner &lt;b&gt;l&apos;emplacement&lt;/b&gt; des capteurs, donner des &lt;b&gt;noms aux plantes associées&lt;/b&gt;, et personnaliser des paramètres tels que &lt;b&gt;le niveau d&apos;eau optimal&lt;/b&gt; et d&apos;autres &lt;b&gt;limites&lt;/b&gt; qui s&apos;appliquent aux données des capteurs.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="201"/>
