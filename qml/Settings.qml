@@ -255,7 +255,7 @@ Item {
 
                 visible: (element_autoDarkmode.visible)
 
-                text: qsTr("Dark mode enables between 21 PM and 8 AM.")
+                text: qsTr("Dark mode enables between 21 PM and 9 AM.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

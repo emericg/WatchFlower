@@ -66,5 +66,6 @@
         <file>devices/welcome-devices.svg</file>
         <file>devices/welcome-bluetooth-searching.svg</file>
         <file>devices/welcome-app-connected.svg</file>
+        <file>devices/welcome-limits.svg</file>
     </qresource>
 </RCC>

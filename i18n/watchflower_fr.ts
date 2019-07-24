@@ -94,12 +94,12 @@
         <translation type="vanished">Réessayer</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="163"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Enable</source>
         <translation>Activation</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="163"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Retry</source>
         <translation>Réessayer</translation>
     </message>
@@ -116,7 +116,7 @@
         <translation type="vanished">Rechercher des appareils</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="180"/>
+        <location filename="../qml/DeviceList.qml" line="195"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth désactivé...</translation>
     </message>
@@ -125,7 +125,7 @@
         <translation type="vanished">Pas d&apos;appareil configurés...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="292"/>
+        <location filename="../qml/DeviceList.qml" line="307"/>
         <source>%n device(s) selected</source>
         <translation>
             <numerusform>%n appareil sélectionné</numerusform>
@@ -365,6 +365,11 @@
         <translation>Fertilité</translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="638"/>
+        <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
+        <translation>La fertilité du sol est une indication sur le contenu en éléments nutritifs dans le sol. Utilisez des engraits (avec modération) pour maintenir un bon taux de fertilité.</translation>
+    </message>
+    <message>
         <source>&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; </source>
         <translation type="obsolete">&lt;br&gt;&lt;b&gt;Astuce:&lt;/b&gt; </translation>
     </message>
@@ -416,9 +421,8 @@
         <translation type="obsolete">Conductivité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="638"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil.</source>
-        <translation>La fertilité du sol est une indication sur le contenu en éléments nutritifs dans le sol.</translation>
+        <translation type="vanished">La fertilité du sol est une indication sur le contenu en éléments nutritifs dans le sol.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
@@ -589,6 +593,24 @@
     </message>
 </context>
 <context>
+    <name>ItemDeletePopup</name>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="32"/>
+        <source>Are you sure you want to delete selected device(s)?</source>
+        <translation>Êtes vous sur de vouloir supprimer les capteurs sélectionnés ?</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="51"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="58"/>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ItemNoBluetooth</name>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="53"/>
@@ -670,27 +692,27 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="270"/>
+        <location filename="../qml/MobileMain.qml" line="275"/>
         <source>Welcome</source>
         <translation>Bienvenue</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="384"/>
+        <location filename="../qml/MobileMain.qml" line="389"/>
         <source>Thermometer</source>
         <translation>Thermomètre</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="422"/>
+        <location filename="../qml/MobileMain.qml" line="427"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="460"/>
+        <location filename="../qml/MobileMain.qml" line="465"/>
         <source>About</source>
         <translation>A propos</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="515"/>
+        <location filename="../qml/MobileMain.qml" line="520"/>
         <source>Press one more time to exit...</source>
         <translation>Appuyez encore une fois pour quitter....</translation>
     </message>
@@ -729,9 +751,8 @@
         <translation>Mode sombre automatique</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="258"/>
         <source>Dark mode enables between 21 PM and 8 AM.</source>
-        <translation>Mode sombre activé de 21h à 8h.</translation>
+        <translation type="vanished">Mode sombre activé de 21h à 8h.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="295"/>
@@ -800,6 +821,11 @@
     <message>
         <source>WatchFlower will stay in the system tray and regularly update sensor datas.</source>
         <translation type="vanished">WatchFlower reste dans la zone de notification et met à jour régulièrement les capteurs.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="258"/>
+        <source>Dark mode enables between 21 PM and 9 AM.</source>
+        <translation>Mode sombre activé de 21h à 9h.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="533"/>
@@ -914,47 +940,85 @@
         <translation type="vanished">Vous pouvez aussi &lt;b&gt;donner des noms a vos plantes&lt;/b&gt;, et personnaliser des paramètres tels que &lt;b&gt;le niveau d&apos;arrosage optimal&lt;/b&gt;...</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="74"/>
         <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; Bluetooth devices.</source>
-        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; est une application de supervision de plantes pour les capteurs Bluetooth Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; et &apos;&lt;b&gt;Ropot&lt;/b&gt;.</translation>
+        <translation type="vanished">&lt;b&gt;WatchFlower&lt;/b&gt; est une application de supervision de plantes pour les capteurs Bluetooth Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; et &apos;&lt;b&gt;Ropot&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="94"/>
+        <location filename="../qml/Tutorial.qml" line="95"/>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
         <translation>L&apos;application prend également en charge plusieurs &lt;b&gt;thermomètres&lt;/b&gt;!</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="118"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan for compatible devices&lt;/b&gt; near you.</source>
-        <translation>Pour commencer à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils compatibles&lt;/b&gt; à proximité.</translation>
+        <translation type="vanished">Pour commencer à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils compatibles&lt;/b&gt; à proximité.</translation>
+    </message>
+    <message>
+        <source>Once the scanning process is done, the devices found will appear in the &lt;b&gt;main screen&lt;/b&gt;. From there, you can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want anymore.</source>
+        <translation type="vanished">Une fois la recherche terminée, les appareils trouvés apparaîtront dans &lt;b&gt;l&apos;écran principal&lt;/b&gt;. Depuis cet écran, vous pourrez &lt;b&gt;lancer une nouvelle recherche&lt;/b&gt; à tout moment, ou &lt;b&gt;supprimer&lt;/b&gt; les appareils qui ne vous intéressent plus.</translation>
+    </message>
+    <message>
+        <source>Once devices are &lt;b&gt;paired&lt;/b&gt;, the application will periodically &lt;b&gt;sync&lt;/b&gt; their datas.&lt;br&gt;Click on devices to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
+        <translation type="vanished">Une fois les appareils &lt;b&gt;appairés&lt;/b&gt;, l&apos;application &lt;b&gt;synchronisera&lt;/b&gt; périodiquement leurs données.&lt;br&gt;Cliquer sur un appareil pour accéder à ses &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;données historiques&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <source>You can also configure devices &lt;b&gt;location&lt;/b&gt;, &lt;b&gt;name associated plants&lt;/b&gt;, and set settings like &lt;b&gt;optimal water level&lt;/b&gt; and other &lt;b&gt;limits&lt;/b&gt; that apply to each sensors datas.</source>
+        <translation type="vanished">Vous pouvez aussi renseigner &lt;b&gt;l&apos;emplacement&lt;/b&gt; des capteurs, donner des &lt;b&gt;noms aux plantes associées&lt;/b&gt;, et personnaliser des paramètres tels que &lt;b&gt;le niveau d&apos;eau optimal&lt;/b&gt; et d&apos;autres &lt;b&gt;limites&lt;/b&gt; qui s&apos;appliquent aux données des capteurs.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="75"/>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</source>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; est une application de supervision de plantes pour les capteurs Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; et &apos;&lt;b&gt;Ropot&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan for compatible Bluetooth sensors&lt;/b&gt; near you.</source>
+        <translation type="obsolete">Pour commencer à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils Bluetooth compatibles&lt;/b&gt; à proximité.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="119"/>
+        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation>Pour commencer à utiliser WatchFlower, vous devez &lt;b&gt;rechercher les appareils Bluetooth compatibles&lt;/b&gt; à proximité.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
-        <source>Once the scanning process is done, the devices found will appear in the &lt;b&gt;main screen&lt;/b&gt;. From there, you can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want anymore.</source>
-        <translation>Une fois la recherche terminée, les appareils trouvés apparaîtront dans &lt;b&gt;l&apos;écran principal&lt;/b&gt;. Depuis cet écran, vous pourrez &lt;b&gt;lancer une nouvelle recherche&lt;/b&gt; à tout moment, ou &lt;b&gt;supprimer&lt;/b&gt; les appareils qui ne vous intéressent plus.</translation>
+        <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
+        <translation>Vous pouvez &lt;b&gt;lancer une nouvelle recherche&lt;/b&gt; à tout moment, ou &lt;b&gt;supprimer&lt;/b&gt; les capteurs qui ne vous intéressent plus.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
-        <source>Once devices are &lt;b&gt;paired&lt;/b&gt;, the application will periodically &lt;b&gt;sync&lt;/b&gt; their datas.&lt;br&gt;Click on devices to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
-        <translation>Une fois les appareils &lt;b&gt;appairés&lt;/b&gt;, l&apos;application &lt;b&gt;synchronisera&lt;/b&gt; périodiquement leurs données.&lt;br&gt;Cliquer sur un appareil pour accéder à ses &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;données historiques&lt;/b&gt;.</translation>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their datas.</source>
+        <translation>Une fois les capteurs &lt;b&gt;appairés&lt;/b&gt;, l&apos;application va périodiquement &lt;b&gt;synchroniser&lt;/b&gt; leurs données.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
-        <source>You can also configure devices &lt;b&gt;location&lt;/b&gt;, &lt;b&gt;name associated plants&lt;/b&gt;, and set settings like &lt;b&gt;optimal water level&lt;/b&gt; and other &lt;b&gt;limits&lt;/b&gt; that apply to each sensors datas.</source>
-        <translation>Vous pouvez aussi renseigner &lt;b&gt;l&apos;emplacement&lt;/b&gt; des capteurs, donner des &lt;b&gt;noms aux plantes associées&lt;/b&gt;, et personnaliser des paramètres tels que &lt;b&gt;le niveau d&apos;eau optimal&lt;/b&gt; et d&apos;autres &lt;b&gt;limites&lt;/b&gt; qui s&apos;appliquent aux données des capteurs.</translation>
+        <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
+        <translation>Cliquez sur les capteurs pour accéder aux &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphismes&lt;/b&gt; et &lt;b&gt;historiques des données&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="201"/>
+        <location filename="../qml/Tutorial.qml" line="205"/>
+        <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
+        <translation>Vous pouvez &lt;b&gt;donner des noms à vos plantes&lt;/b&gt; et indiquer &lt;b&gt;l&apos;endroit&lt;/b&gt; ou se trouvent vos capteurs.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="224"/>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation>Régler des limites telles que le &lt;b&gt;niveau d&apos;arrosage optimal&lt;/b&gt; ou la &lt;b&gt;plage de température&lt;/b&gt; et plus, suivant les mesures effectuées par vos capteurs.</translation>
+    </message>
+    <message>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; and others, depending on sensors metrics.</source>
+        <translation type="obsolete">Régler des limites telles que &lt;b&gt;le niveau d&apos;arrosage optimal&lt;/b&gt;...</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="244"/>
         <source>Previous</source>
         <translation>Précédent</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="223"/>
+        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
         <translation>C&apos;est partit !</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="223"/>
+        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Next</source>
         <translation>Suivant</translation>
     </message>

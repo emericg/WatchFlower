@@ -82,17 +82,17 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../qml/DeviceList.qml" line="163"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Enable</source>
         <translation>Habilitar</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="163"/>
+        <location filename="../qml/DeviceList.qml" line="178"/>
         <source>Retry</source>
         <translation>Reintertar</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="292"/>
+        <location filename="../qml/DeviceList.qml" line="307"/>
         <source>%n device(s) selected</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -104,7 +104,7 @@
         <translation type="vanished">Escanear dispositivos</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="180"/>
+        <location filename="../qml/DeviceList.qml" line="195"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth desactivado...</translation>
     </message>
@@ -381,7 +381,7 @@
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="638"/>
-        <source>Soil fertility value is an indication of the availability of nutrients in the soil.</source>
+        <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -513,6 +513,24 @@
     </message>
 </context>
 <context>
+    <name>ItemDeletePopup</name>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="32"/>
+        <source>Are you sure you want to delete selected device(s)?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="51"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="58"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ItemNoBluetooth</name>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="53"/>
@@ -583,27 +601,27 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="270"/>
+        <location filename="../qml/MobileMain.qml" line="275"/>
         <source>Welcome</source>
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="384"/>
+        <location filename="../qml/MobileMain.qml" line="389"/>
         <source>Thermometer</source>
         <translation>Termómetro</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="422"/>
+        <location filename="../qml/MobileMain.qml" line="427"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="460"/>
+        <location filename="../qml/MobileMain.qml" line="465"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="515"/>
+        <location filename="../qml/MobileMain.qml" line="520"/>
         <source>Press one more time to exit...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -632,7 +650,7 @@
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="258"/>
-        <source>Dark mode enables between 21 PM and 8 AM.</source>
+        <source>Dark mode enables between 21 PM and 9 AM.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -798,47 +816,57 @@
         <translation type="vanished">También puedes &lt;b&gt;nombrar tus plantas&lt;/b&gt; y personalizar los ajustes, como el &lt;b&gt;nivel óptimo de agua&lt;/b&gt;...</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="74"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; Bluetooth devices.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Tutorial.qml" line="94"/>
+        <location filename="../qml/Tutorial.qml" line="95"/>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="118"/>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan for compatible devices&lt;/b&gt; near you.</source>
+        <location filename="../qml/Tutorial.qml" line="75"/>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="119"/>
+        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
-        <source>Once the scanning process is done, the devices found will appear in the &lt;b&gt;main screen&lt;/b&gt;. From there, you can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want anymore.</source>
+        <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
-        <source>Once devices are &lt;b&gt;paired&lt;/b&gt;, the application will periodically &lt;b&gt;sync&lt;/b&gt; their datas.&lt;br&gt;Click on devices to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their datas.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
-        <source>You can also configure devices &lt;b&gt;location&lt;/b&gt;, &lt;b&gt;name associated plants&lt;/b&gt;, and set settings like &lt;b&gt;optimal water level&lt;/b&gt; and other &lt;b&gt;limits&lt;/b&gt; that apply to each sensors datas.</source>
+        <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical datas&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="201"/>
+        <location filename="../qml/Tutorial.qml" line="205"/>
+        <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="224"/>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="244"/>
         <source>Previous</source>
         <translation>Atrás</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="223"/>
+        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
         <translation>¡Listo!</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="223"/>
+        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Next</source>
         <translation>Siguiente</translation>
     </message>

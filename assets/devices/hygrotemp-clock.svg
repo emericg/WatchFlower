@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="24.346014"
-     inkscape:cy="41.319523"
+     inkscape:cx="33.660685"
+     inkscape:cy="33.76821"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -92,8 +92,8 @@
      style="display:inline">
     <path
        inkscape:connector-curvature="0"
-       style="display:inline;opacity:1;fill:#dadada;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79399997;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:15;stroke-opacity:1;paint-order:stroke fill markers"
-       d="m 1.119354,280.59582 c -0.3270063,0 -0.59018733,0.27129 -0.59018733,0.60837 v 10.42493 c 0,0.33707 0.26318103,0.60837 0.59018733,0.60837 h 18.927959 c 0.327006,0 0.590187,-0.2713 0.590187,-0.60837 v -10.42493 c 0,-0.33708 -0.263181,-0.60837 -0.590187,-0.60837 z m 0.9248239,1.27774 H 19.12249 c 0.152604,0 0.275455,0.12664 0.275455,0.28395 v 8.51829 c 0,0.1573 -0.122851,0.28394 -0.275455,0.28394 H 2.0441779 c -0.1526036,0 -0.2754566,-0.12664 -0.2754566,-0.28394 v -8.51829 c 0,-0.15731 0.122853,-0.28395 0.2754566,-0.28395 z"
+       style="display:inline;opacity:1;fill:#dadada;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79400003;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:15;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 0.62124984,280.28947 C 0.27703268,280.28947 0,280.57503 0,280.92986 v 10.97361 c 0,0.35481 0.27703268,0.64039 0.62124984,0.64039 H 20.545418 c 0.344216,0 0.621249,-0.28558 0.621249,-0.64039 v -10.97361 c 0,-0.35483 -0.277033,-0.64039 -0.621249,-0.64039 z m 0.97349886,1.34499 H 19.57192 c 0.160635,0 0.289952,0.1333 0.289952,0.29889 v 8.96662 c 0,0.16558 -0.129317,0.29889 -0.289952,0.29889 H 1.5947487 c -0.1606354,0 -0.2899543,-0.13331 -0.2899543,-0.29889 v -8.96662 c 0,-0.16559 0.1293189,-0.29889 0.2899543,-0.29889 z"
        id="rect29-3" />
     <path
        style="opacity:1;fill:#b1b1b1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00094485;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:15;stroke-opacity:1;paint-order:stroke fill markers"

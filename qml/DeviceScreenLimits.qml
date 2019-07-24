@@ -635,7 +635,7 @@ Item {
 
                 visible: itemCondu.visible
 
-                text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil.") +
+                text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

@@ -31,6 +31,7 @@ Rectangle {
 
     color: Theme.colorHeader
 
+    property int lastPage: 3
     property string goBackTo: "DeviceList"
 
     function reopen(goBackScreen) {
@@ -47,7 +48,7 @@ Rectangle {
         currentIndex: 0
         onCurrentIndexChanged: {
             if (currentIndex < 0) currentIndex = 0
-            if (currentIndex > 2) {
+            if (currentIndex > lastPage) {
                 currentIndex = 0 // reset
                 appContent.state = goBackTo
             }
@@ -71,7 +72,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' Bluetooth devices.")
+                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' sensors.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 18
                     color: Theme.colorHeaderContent
@@ -115,14 +116,13 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("To start using WatchFlower, you'll need to <b>scan for compatible devices</b> near you.")
+                    text: qsTr("To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.")
                     color: Theme.colorHeaderContent
                     font.pixelSize: 18
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Image {
-                    //width: tutorialPages.width * 0.8
                     height: tutorialPages.height / 2.5
                     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -135,7 +135,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Once the scanning process is done, the devices found will appear in the <b>main screen</b>. From there, you can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want anymore.")
+                    text: qsTr("You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.")
                     font.pixelSize: 18
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -159,7 +159,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Once devices are <b>paired</b>, the application will periodically <b>sync</b> their datas.<br>Click on devices to access <b>detailed infos</b>, <b>graphs</b> and <b>historical datas</b>.")
+                    text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their datas.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -178,7 +178,50 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("You can also configure devices <b>location</b>, <b>name associated plants</b>, and set settings like <b>optimal water level</b> and other <b>limits</b> that apply to each sensors datas.")
+                    text: qsTr("Click on sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical datas</b>.")
+                    color: Theme.colorHeaderContent
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
+                }
+            }
+        }
+
+        Item {
+            id: page4
+
+            Column {
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 32
+
+                Text {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("You can <b>name your plants</b> and set devices <b>location</b>.")
+                    color: Theme.colorHeaderContent
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: 18
+                }
+                Image {
+                    width: tutorialPages.width * 0.8
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    source: "qrc:/assets/devices/welcome-limits.svg"
+                    fillMode: Image.PreserveAspectFit
+                }
+                Text {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 32
+
+                    text: qsTr("Set <b>limits</b> like <b>optimal water level</b> or <b>temperature range</b> and more depending on available sensors metrics.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -220,7 +263,7 @@ Rectangle {
         anchors.rightMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        text: (tutorialPages.currentIndex === 2) ? qsTr("Allright!") : qsTr("Next")
+        text: (tutorialPages.currentIndex === lastPage) ? qsTr("Allright!") : qsTr("Next")
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16
@@ -242,7 +285,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
 
-        count: 3
+        count: 4
         currentIndex: tutorialPages.currentIndex
 
         delegate: Rectangle {
