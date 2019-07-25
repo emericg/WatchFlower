@@ -104,7 +104,7 @@ Item {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
 
-            visible: (limitMin > 0)
+            visible: (limitMin > 0 && limitMin > valueMin)
             x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
             color: Theme.colorHighContrast
             opacity: 0.5

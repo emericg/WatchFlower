@@ -189,6 +189,11 @@ Item {
         resetDatasBars()
     }
 
+    Connections {
+        target: settingsManager
+        onTempUnitChanged: updateDatas()
+    }
+
     onWidthChanged: {
         if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
             if (settingsManager.getScreenSize() < 7.0) {

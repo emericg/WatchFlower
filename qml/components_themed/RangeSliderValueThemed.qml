@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 import com.watchflower.theme 1.0
+import "qrc:/qml/UtilsNumber.js" as UtilsNumber
 
 RangeSlider {
     id: control
@@ -47,7 +48,12 @@ RangeSlider {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
-            text: ((first.value > 999) ? first.value.toFixed(0) / 1000 : first.value.toFixed(0)) + unit
+            text: {
+                var vvalue = first.value
+                if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
+                vvalue = vvalue.toFixed(0)
+                return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
+            }
             font.pixelSize: 14
             color: "white"
         }
@@ -69,7 +75,12 @@ RangeSlider {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
-            text: ((second.value > 999) ? second.value.toFixed(0) / 1000 : second.value.toFixed(0)) + unit
+            text: {
+                var vvalue = second.value
+                if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
+                vvalue = vvalue.toFixed(0)
+                return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
+            }
             font.pixelSize: 14
             color: "white"
         }

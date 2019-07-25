@@ -231,10 +231,11 @@ Item {
                     dateIndicator.visible = true
                     verticalIndicator.visible = true
                     verticalIndicator.x = ppp.x
-                    // set date
+                    // set date & time
                     var date = new Date(mpmp.x)
-                    var date_string = date.getDate() + " " + Qt.locale().monthName(date.getMonth(), Locale.LongFormat) + " " + qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(),2)
-                    textTime.text = date_string
+                    var date_string = date.toLocaleDateString()
+                    var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
+                    textTime.text = date_string + " " + time_string
 
                     // search index corresponding to the timestamp
                     var x1 = -1

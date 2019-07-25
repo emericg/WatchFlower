@@ -47,6 +47,11 @@ Item {
     }
 
     Connections {
+        target: settingsManager
+        onTempUnitChanged: updateDatas()
+    }
+
+    Connections {
         target: appHeader
         // desktop only
         onDeviceDatasButtonClicked: {

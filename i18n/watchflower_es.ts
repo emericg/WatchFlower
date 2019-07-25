@@ -161,12 +161,12 @@
         <translation>Sincronizado hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="560"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="565"/>
         <source>Moisture</source>
         <translation>Humedad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="560"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="565"/>
         <source>Humidity</source>
         <translation>Humedad</translation>
     </message>
@@ -175,22 +175,22 @@
         <translation type="vanished">Última sincronización hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="270"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="275"/>
         <source>Plant</source>
         <translation>Planta</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="378"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="383"/>
         <source>Location</source>
         <translation>Ubicación</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="488"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="493"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="500"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="505"/>
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
@@ -199,17 +199,17 @@
         <translation type="vanished">Higrometría</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="571"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="576"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="583"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="588"/>
         <source>Luminosity</source>
         <translation>Luminosidad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="594"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="599"/>
         <source>Fertility</source>
         <translation>Fertilidad</translation>
     </message>
@@ -393,32 +393,32 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="141"/>
+        <location filename="../qml/DeviceThermometer.qml" line="146"/>
         <source>humidity</source>
         <translation>humedad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="154"/>
+        <location filename="../qml/DeviceThermometer.qml" line="159"/>
         <source>Update queued. </source>
         <translation>Actualización en cola. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="156"/>
+        <location filename="../qml/DeviceThermometer.qml" line="161"/>
         <source>Connecting... </source>
         <translation>Conectando... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="158"/>
+        <location filename="../qml/DeviceThermometer.qml" line="163"/>
         <source>Updating... </source>
         <translation>Actualizando... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="162"/>
+        <location filename="../qml/DeviceThermometer.qml" line="167"/>
         <source>Just synced!</source>
         <translation>¡Sincronizado!</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="166"/>
+        <location filename="../qml/DeviceThermometer.qml" line="171"/>
         <source>Offline! </source>
         <translation>¡Desconectado! </translation>
     </message>
@@ -427,12 +427,12 @@
         <translation type="vanished">Sincronizado</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="164"/>
+        <location filename="../qml/DeviceThermometer.qml" line="169"/>
         <source>Synced %1 ago</source>
         <translation>Sincronizado hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="252"/>
+        <location filename="../qml/DeviceThermometer.qml" line="257"/>
         <source>Updating...</source>
         <translation>Actualizando...</translation>
     </message>
@@ -552,7 +552,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="73"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>En Android 6 y superior, el escaneo de dispositivos bluetooth de baja energía necesita permisos de ubicación. La aplicación no usa ni guarda dicha ubicación. Sentimos las molestias.</translation>
+        <translation>En Android 6 y superior, el escaneo de dispositivos Bluetooth de baja energía necesita permisos de ubicación. La aplicación no usa ni guarda dicha ubicación. Sentimos las molestias.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="92"/>
@@ -649,29 +649,33 @@
         <translation>Modo oscuro automático</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="258"/>
         <source>Dark mode enables between 21 PM and 9 AM.</source>
+        <translation type="vanished">El modo oscuro se activa entre las 21:00 y las 9:00.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="258"/>
+        <source>Dark mode enables between 9 PM and 9 AM.</source>
         <translation>El modo oscuro se activa entre las 21:00 y las 9:00.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="295"/>
         <source>Bluetooth control</source>
-        <translation>Control de bluetooth</translation>
+        <translation>Control de Bluetooth</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="360"/>
         <source>Bluetooth compatibility</source>
-        <translation>Compatibilidad del bluetooth</translation>
+        <translation>Compatibilidad del Bluetooth</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="402"/>
         <source>Improve Bluetooth reliability if your device has trouble connecting to sensors, at the expanse of sync speed.</source>
-        <translation>Mejora la fiabilidad del bluetooth si tu dispositivo tiene problemas para conectarse a los sensores, pero reduce la velocidad de sincronización.</translation>
+        <translation>Mejora la fiabilidad del Bluetooth si tu dispositivo tiene problemas para conectarse a los sensores, pero reduce la velocidad de sincronización.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="480"/>
         <source>Wake up at a predefined intervals to refresh sensor datas. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation>Se activa a intervalos de tiempo predefinidos para actualizar los datos. Sólo si el bluetooth (o el control bluetooth) está activado.</translation>
+        <translation>Se activa a intervalos de tiempo predefinidos para actualizar los datos. Sólo si el Bluetooth (o el control Bluetooth) está activado.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="495"/>
@@ -828,7 +832,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation>Para empezar a usar WatchFlower, necesitas &lt;b&gt;escanear sensores bluetooth compatibles&lt;/b&gt; cerca de ti.</translation>
+        <translation>Para empezar a usar WatchFlower, necesitas &lt;b&gt;escanear sensores Bluetooth compatibles&lt;/b&gt; cerca de ti.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>

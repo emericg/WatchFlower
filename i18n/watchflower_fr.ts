@@ -201,32 +201,32 @@
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="270"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="275"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="378"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="383"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="488"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="493"/>
         <source>Status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="500"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="505"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="560"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="565"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="560"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="565"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
@@ -235,17 +235,17 @@
         <translation type="vanished">Hygrométrie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="571"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="576"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="583"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="588"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="594"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="599"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -473,32 +473,32 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="141"/>
+        <location filename="../qml/DeviceThermometer.qml" line="146"/>
         <source>humidity</source>
         <translation>humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="154"/>
+        <location filename="../qml/DeviceThermometer.qml" line="159"/>
         <source>Update queued. </source>
         <translation>Mise à jour en attente. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="156"/>
+        <location filename="../qml/DeviceThermometer.qml" line="161"/>
         <source>Connecting... </source>
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="158"/>
+        <location filename="../qml/DeviceThermometer.qml" line="163"/>
         <source>Updating... </source>
         <translation>Mise à jour... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="166"/>
+        <location filename="../qml/DeviceThermometer.qml" line="171"/>
         <source>Offline! </source>
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="162"/>
+        <location filename="../qml/DeviceThermometer.qml" line="167"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
@@ -507,12 +507,12 @@
         <translation type="vanished">Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="164"/>
+        <location filename="../qml/DeviceThermometer.qml" line="169"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="252"/>
+        <location filename="../qml/DeviceThermometer.qml" line="257"/>
         <source>Updating...</source>
         <translation>Mise à jour...</translation>
     </message>
@@ -823,8 +823,12 @@
         <translation type="vanished">WatchFlower reste dans la zone de notification et met à jour régulièrement les capteurs.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="258"/>
         <source>Dark mode enables between 21 PM and 9 AM.</source>
+        <translation type="vanished">Mode sombre activé de 21h à 9h.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="258"/>
+        <source>Dark mode enables between 9 PM and 9 AM.</source>
         <translation>Mode sombre activé de 21h à 9h.</translation>
     </message>
     <message>
