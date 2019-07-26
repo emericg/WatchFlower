@@ -230,6 +230,8 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceHygrotempClock::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceHygrotempClock::bleWriteDone(" << m_deviceAddress << ")";

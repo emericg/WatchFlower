@@ -311,7 +311,7 @@ bool Device::getSqlInfos()
                 Q_EMIT datasUpdated();
             }
         }
-        else if ((m_deviceName == "cleargrass temp & rh") && (m_firmware.size() == 8))
+        else if ((m_deviceName == "ClearGrass Temp & RH") && (m_firmware.size() == 10))
         {
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
             {

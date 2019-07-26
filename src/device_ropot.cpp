@@ -133,6 +133,8 @@ void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newSt
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceRopot::bleWriteDone(" << m_deviceAddress << ")";

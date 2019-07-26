@@ -138,6 +138,8 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceFlowercare::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceFlowercare::bleWriteDone(" << m_deviceAddress << ")";

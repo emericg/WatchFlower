@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2019
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_HYGROTEMP_H
-#define DEVICE_HYGROTEMP_H
+#ifndef DEVICE_HYGROTEMP_EINK_H
+#define DEVICE_HYGROTEMP_EINK_H
 /* ************************************************************************** */
 
 #include "device.h"
@@ -34,38 +34,34 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceHygrotemp class
+ * \brief The DeviceHygrotempEInk class
  *
- * Xiaomi MiJia "bluetooth Temperature and Humidity sensor with LCD"
  * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
  *
  * Protocol infos:
- * - https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18
+ * - TODO
  *
  * // Connect using btgatt-client:
- * - $ btgatt-client -d 4C:65:A8:D0:6D:C8
- * - > register-notify 0x000e   // temp and humidity
- * - > read-value 0x0018        // battery
+ * - $ btgatt-client -d 3F:59:C8:83:0C:DF
+ * >
  */
-class DeviceHygrotemp: public Device
+class DeviceHygrotempEInk: public Device
 {
     Q_OBJECT
 
 public:
-    DeviceHygrotemp(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceHygrotemp(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceHygrotemp();
+    DeviceHygrotempEInk(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceHygrotempEInk();
 
 private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_datas(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceDatas = nullptr;
-    QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
@@ -76,4 +72,4 @@ private:
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_HYGROTEMP_H
+#endif // DEVICE_HYGROTEMP_EINK_H

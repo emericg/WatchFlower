@@ -22,7 +22,8 @@
 #include "devicemanager.h"
 #include "device.h"
 #include "device_flowercare.h"
-#include "device_hygrotemp.h"
+#include "device_hygrotemp_lcd.h"
+#include "device_hygrotemp_eink.h"
 #include "device_hygrotemp_clock.h"
 #include "device_ropot.h"
 
@@ -75,8 +76,10 @@ DeviceManager::DeviceManager()
                 d = new DeviceFlowercare(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
                 d = new DeviceRopot(deviceAddr, deviceName, this);
-            else if (deviceName == "MJ_HT_V1" || deviceName == "cleargrass temp & rh")
-                d = new DeviceHygrotemp(deviceAddr, deviceName, this);
+            else if (deviceName == "MJ_HT_V1")
+                d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
+            else if (deviceName == "ClearGrass Temp & RH")
+                d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
             else
@@ -388,8 +391,10 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceFlowercare(deviceAddr, deviceName, this);
                 else if (deviceName == "ropot")
                     d = new DeviceRopot(deviceAddr, deviceName, this);
-                else if (deviceName == "MJ_HT_V1" || deviceName == "cleargrass temp & rh")
-                    d = new DeviceHygrotemp(deviceAddr, deviceName, this);
+                else if (deviceName == "MJ_HT_V1")
+                    d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
+                else if (deviceName == "ClearGrass Temp & RH")
+                    d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
                 else if (deviceName == "LYWSD02")
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
                 else
@@ -623,7 +628,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
             info.name() == "ropot" ||
-            info.name() == "MJ_HT_V1" || info.name() == "cleargrass temp & rh" ||
+            info.name() == "MJ_HT_V1" || info.name() == "ClearGrass Temp & RH" ||
             info.name() == "LYWSD02")
         {
             // Check if it's not already in the UI
@@ -647,8 +652,10 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceFlowercare(info);
             else if (info.name() == "ropot")
                 d = new DeviceRopot(info);
-            else if (info.name() == "MJ_HT_V1" || info.name() == "cleargrass temp & rh")
-                d = new DeviceHygrotemp(info);
+            else if (info.name() == "MJ_HT_V1")
+                d = new DeviceHygrotempLCD(info);
+            else if (info.name() == "ClearGrass Temp & RH")
+                d = new DeviceHygrotempEInk(info);
             else if (info.name() == "LYWSD02")
                 d = new DeviceHygrotempClock(info);
             else
