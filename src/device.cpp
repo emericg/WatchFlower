@@ -292,7 +292,7 @@ bool Device::getSqlInfos()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT datasUpdated();
+                Q_EMIT sensorUpdated();
             }
         }
         else if ((m_deviceName == "ropot") && (m_firmware.size() == 5))
@@ -300,7 +300,7 @@ bool Device::getSqlInfos()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT datasUpdated();
+                Q_EMIT sensorUpdated();
             }
         }
         else if ((m_deviceName == "MJ_HT_V1") && (m_firmware.size() == 8))
@@ -308,7 +308,7 @@ bool Device::getSqlInfos()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT datasUpdated();
+                Q_EMIT sensorUpdated();
             }
         }
         else if ((m_deviceName == "ClearGrass Temp & RH") && (m_firmware.size() == 10))
@@ -316,7 +316,7 @@ bool Device::getSqlInfos()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT datasUpdated();
+                Q_EMIT sensorUpdated();
             }
         }
         else if ((m_deviceName == "LYWSD02") && (m_firmware.size() == 10))
@@ -324,7 +324,7 @@ bool Device::getSqlInfos()
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT datasUpdated();
+                Q_EMIT sensorUpdated();
             }
         }
     }
