@@ -96,6 +96,8 @@ DeviceManager::DeviceManager()
 
         Q_EMIT devicesUpdated();
     }
+
+    //listenDevices(); // WIP
 }
 
 DeviceManager::~DeviceManager()
@@ -128,7 +130,8 @@ bool DeviceManager::hasBluetoothEnabled() const
 
 bool DeviceManager::checkBluetooth()
 {
-    //qDebug() << "checkBluetooth()";
+    //qDebug() << "DeviceManager::checkBluetooth()";
+
     bool status = false;
 
     bool btA_was = m_btA;
@@ -165,7 +168,7 @@ bool DeviceManager::checkBluetooth()
 
 void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
 {
-    //qDebug() << "enableBluetooth()";
+    //qDebug() << "DeviceManager::enableBluetooth() enforce:" << enforceUserPermissionCheck;
 
     bool btA_was = m_btA;
     bool btE_was = m_btE;
@@ -254,7 +257,7 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
 
 void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 {
-    qDebug() << "Bluetooth host mode changed, now:" << state;
+    qDebug() << "DeviceManager::bluetoothModeChanged() host mode now:" << state;
 
     if (state > QBluetoothLocalDevice::HostPoweredOff)
     {
@@ -276,7 +279,7 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 
 void DeviceManager::bluetoothStatusChanged()
 {
-    qDebug() << "Bluetooth status changed, bt adapter:" << m_btA << "  /  bt enabled:" << m_btE;
+    qDebug() << "DeviceManager::bluetoothStatusChanged() bt adapter:" << m_btA << "  /  bt enabled:" << m_btE;
 
     if (m_btA && m_btE)
     {
@@ -357,6 +360,21 @@ void DeviceManager::scanDevices()
     }
 }
 
+void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
+{
+    if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError)
+        qWarning() << "The Bluetooth adaptor is powered off, power it on before doing discovery.";
+    else if (error == QBluetoothDeviceDiscoveryAgent::InputOutputError)
+        qWarning() << "Writing or reading from the device resulted in an error.";
+    else
+        qWarning() << "An unknown error has occurred.";
+
+    m_scanning = false;
+
+    Q_EMIT devicesUpdated();
+    Q_EMIT scanningChanged();
+}
+
 void DeviceManager::deviceDiscoveryFinished()
 {
     qDebug() << "deviceDiscoveryFinished()";
@@ -420,19 +438,62 @@ void DeviceManager::deviceDiscoveryFinished()
     refreshDevices_check();
 }
 
-void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
+/* ************************************************************************** */
+
+void DeviceManager::listenDevices()
 {
-    if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError)
-        qWarning() << "The Bluetooth adaptor is powered off, power it on before doing discovery.";
-    else if (error == QBluetoothDeviceDiscoveryAgent::InputOutputError)
-        qWarning() << "Writing or reading from the device resulted in an error.";
-    else
-        qWarning() << "An unknown error has occurred.";
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
+    // BLE discovery agent
+    if (!m_discoveryAgent)
+    {
+        m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
+        if (m_discoveryAgent)
+        {
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(60000);
 
-    m_scanning = false;
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                    this, &DeviceManager::deviceUpdateReceived);
 
-    Q_EMIT devicesUpdated();
-    Q_EMIT scanningChanged();
+            //connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+            //        this, &DeviceManager::addBleDevice);
+            //connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
+            //        this, &DeviceManager::deviceDiscoveryError);
+            //connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+            //        this, &DeviceManager::deviceDiscoveryFinished);
+        }
+        else
+        {
+            qWarning() << "Unable to create BLE discovery agent...";
+        }
+    }
+
+    if (m_discoveryAgent)
+    {
+        m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+        if (m_discoveryAgent->isActive())
+        {
+            //
+        }
+    }
+#endif // Qt 5.12
+}
+
+void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
+    qDebug() << "deviceUpdateReceived() device: " << info.address();// << info.deviceUuid();
+    //qDebug() << "deviceUpdateReceived() updatedFields: " << updatedFields;
+
+    if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
+    {
+        qDebug() << "RSSI > " << info.rssi();
+    }
+    if ((updatedFields & 0x0002) == 0x0002) // ManufacturerData = 0x0002
+    {
+        QHash<quint16, QByteArray> dat = info.manufacturerData();
+        qDebug() << "manufacturerData > " << dat;
+    }
+#endif // Qt 5.12
 }
 
 /* ************************************************************************** */
@@ -628,7 +689,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
             info.name() == "ropot" ||
-            info.name() == "MJ_HT_V1" || info.name() == "ClearGrass Temp & RH" ||
+            info.name() == "MJ_HT_V1" ||
+            info.name() == "ClearGrass Temp & RH" ||
             info.name() == "LYWSD02")
         {
             // Check if it's not already in the UI

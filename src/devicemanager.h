@@ -106,6 +106,9 @@ public slots:
 
     void removeDevice(const QString &address);
 
+    void listenDevices();
+    void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+
 private slots:
     // QBluetoothLocalDevice related
     void bluetoothModeChanged(QBluetoothLocalDevice::HostMode);
