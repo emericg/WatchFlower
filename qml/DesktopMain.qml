@@ -37,7 +37,7 @@ ApplicationWindow {
     visible: true // !settingsManager.minimized
     flags: Qt.Window
 
-    property var lastUpdate: new Date()
+    property var lastUpdate
     property var currentDevice: null
 
     // Desktop stuff ///////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ ApplicationWindow {
 
                 // Needs to check if a refresh could be usefull
                 var rightnow = new Date()
-                if ((rightnow - lastUpdate) > 5*60*1000) {
+                if (!lastUpdate || (rightnow - lastUpdate) > 5*60*1000) {
                     deviceManager.refreshDevices_check();
                     lastUpdate = rightnow
                 }

@@ -36,7 +36,7 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
-    property var lastUpdate: new Date()
+    property var lastUpdate
     property var currentDevice: null
 
     // Mobile stuff ////////////////////////////////////////////////////////////
@@ -161,12 +161,16 @@ ApplicationWindow {
                 // Check if we need an 'automatic' theme change
                 Theme.loadTheme(settingsManager.appTheme);
 
+                // Refresh
+                deviceManager.refreshDevices_check();
+/*
                 // Needs to check if a refresh could be usefull
                 var rightnow = new Date()
-                if ((rightnow - lastUpdate) > 1*60*1000) {
+                if (!lastUpdate || (rightnow - lastUpdate) > 1*60*1000) {
                     deviceManager.refreshDevices_check();
                     lastUpdate = rightnow
                 }
+*/
                 break
             }
         }
