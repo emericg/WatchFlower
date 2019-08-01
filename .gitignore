@@ -4,6 +4,9 @@ bin/*
 contribs/*
 appdir/*
 
+# Private signatures
+assets/ios/ios_signature.pri
+
 # QtCreator temporary project files
 WatchFlower.config
 WatchFlower.creator*

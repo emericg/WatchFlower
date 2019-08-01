@@ -102,7 +102,7 @@ DeviceManager::DeviceManager()
 
 DeviceManager::~DeviceManager()
 {
-    delete  m_bluetoothAdapter;
+    delete m_bluetoothAdapter;
     delete m_discoveryAgent;
     delete m_controller;
 
@@ -377,7 +377,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
 void DeviceManager::deviceDiscoveryFinished()
 {
-    qDebug() << "deviceDiscoveryFinished()";
+    //qDebug() << "deviceDiscoveryFinished()";
 
     if (m_db)
     {
@@ -685,6 +685,8 @@ void DeviceManager::updateDevice(const QString &address)
 
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
+    //qDebug() << "addBleDevice";
+
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
@@ -697,7 +699,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             for (auto ed: m_devices)
             {
                 Device *edd = qobject_cast<Device*>(ed);
-#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
                 if (edd && edd->getAddress() == info.deviceUuid().toString())
 #else
                 if (edd && edd->getAddress() == info.address().toString())

@@ -49,8 +49,11 @@ ApplicationWindow {
     Component.onCompleted: handleNotches()
 
     function handleNotches() {
-        if (typeof quickWindow === "undefined" || !quickWindow) return
-        if (Qt.platform !== "ios") return
+        if (Qt.platform.os !== "ios") return
+        if (typeof quickWindow === "undefined" || !quickWindow) {
+            screenTopPadding = 20
+            return
+        }
 /*
         var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
         console.log("screen height : " + Screen.height)
@@ -62,12 +65,14 @@ ApplicationWindow {
         console.log("right:" + safeMargins["right"])
         console.log("bottom:" + safeMargins["bottom"])
         console.log("left:" + safeMargins["left"])
-*/
+
         var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
         if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)
-            screenTopPadding = 30
+            screenTopPadding = 20
         else
             screenTopPadding = 0
+*/
+        screenTopPadding = (Screen.height - Screen.desktopAvailableHeight)
     }
 
     StatusBar {

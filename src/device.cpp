@@ -42,7 +42,7 @@
 
 Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObject(parent)
 {
-#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
     if (deviceAddr.size() != 38)
         qWarning() << "Device() '" << deviceAddr << "' is an invalid UUID...";
 
@@ -79,7 +79,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     m_bleDevice = d;
     m_deviceName = m_bleDevice.name();
 
-#if defined(Q_OS_OSX) || defined(Q_OS_iOS)
+#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();
 #else
     m_deviceAddress = m_bleDevice.address().toString();
@@ -241,7 +241,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
 
 void Device::setUpdateTimer(int updateInterval)
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_iOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     return; // we do not update every x hours on mobile, we update everytime the app is on the
 #endif
 

@@ -107,6 +107,7 @@ linux:!android {
 }
 
 macx {
+    #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
 
     # OS icon
@@ -157,5 +158,26 @@ android {
 }
 
 ios {
-    message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
+    #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
+    #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
+
+    QMAKE_ASSET_CATALOGS = $$PWD/assets/ios/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+
+    #QMAKE_INFO_PLIST = $$PWD/assets/ios/Info.plist
+
+    # 1: iPhone / 2: iPad / 1,2: Universal
+    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2
+
+    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
+    QMAKE_BUNDLE = watchflower
+
+    # iOS developer settings
+    exists($${PWD}/assets/ios/ios_signature.pri) {
+        # the file must contains values for:
+        # QMAKE_XCODE_CODE_SIGN_IDENTITY
+        # QMAKE_DEVELOPMENT_TEAM
+        # QMAKE_PROVISIONING_PROFILE
+        include($${PWD}/assets/ios/ios_signature.pri)
+    }
 }
