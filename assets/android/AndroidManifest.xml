@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<manifest package="com.emeric.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.8" android:versionCode="080001" android:installLocation="auto">
+<manifest package="com.emeric.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.9" android:versionCode="090001" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop">
