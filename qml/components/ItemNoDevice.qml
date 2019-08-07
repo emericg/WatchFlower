@@ -33,6 +33,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 0
 
         ImageSvg {
             id: imageSearch

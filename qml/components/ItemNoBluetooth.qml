@@ -33,11 +33,12 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 0
         spacing: 16
 
         ImageSvg {
-            width: 256
-            height: 256
+            width: 200
+            height: 200
             anchors.horizontalCenter: parent.horizontalCenter
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
