@@ -29,6 +29,8 @@ Item {
     width: 480
     height: 640
     anchors.fill: parent
+    anchors.leftMargin: screenLeftPadding
+    anchors.rightMargin: screenRightPadding
 
     Rectangle {
         id: rectangleHeader

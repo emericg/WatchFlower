@@ -40,6 +40,19 @@ ApplicationWindow {
     property var lastUpdate
     property var currentDevice: null
 
+    // Mobile stuff ////////////////////////////////////////////////////////////
+
+    property bool isDesktop: true
+    property bool isMobile: false
+    property bool isPhone: false
+    property bool isTablet: false
+
+    property int screenOrientation: Screen.primaryOrientation
+    property int screenStatusbarPadding: 0
+    property int screenNotchPadding: 0
+    property int screenLeftPadding: 0
+    property int screenRightPadding: 0
+
     // Desktop stuff ///////////////////////////////////////////////////////////
 
     WindowGeometrySaver {

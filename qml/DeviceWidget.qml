@@ -32,8 +32,7 @@ Item {
 
     property var boxDevice: null
 
-    property bool mobileMode: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-    property bool wideAssMode: (width >= 380)
+    property bool wideAssMode: (width >= 380) || (isTablet)
     property bool bigAssMode: false
     property bool singleColumn: true
 
@@ -453,7 +452,7 @@ Item {
 
                 visible: true
                 spacing: 8
-                property int sensorWidth: mobileMode ? 8 : (bigAssMode ? 12 : 10)
+                property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
                 property int sensorRadius: 2
 
                 Item {

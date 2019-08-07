@@ -101,15 +101,13 @@ Item {
     }
 
     onWidthChanged: {
-        if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
-            if (settingsManager.getScreenSize() < 7.0) {
-                if (screenOrientation === Qt.PortraitOrientation) {
-                    rectangleHeader.visible = true
-                    rectangleHeader.height = 100
-                } else {
-                    rectangleHeader.visible = false
-                    rectangleHeader.height = 0
-                }
+        if (isPhone) {
+            if (screenOrientation === Qt.PortraitOrientation) {
+                rectangleHeader.visible = true
+                rectangleHeader.height = 100
+            } else {
+                rectangleHeader.visible = false
+                rectangleHeader.height = 0
             }
         }
     }
@@ -119,7 +117,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 140
+        height: isMobile ? 100 : 140
         z: 5
 
         anchors.top: parent.top
@@ -174,7 +172,7 @@ Item {
 
                 Text {
                     id: labelAddress
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
+                    width: isPhone ? 80 : 96
                     anchors.leftMargin: 12
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -207,7 +205,7 @@ Item {
 
                 Text {
                     id: labelFirmware
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
+                    width: isPhone ? 80 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -279,7 +277,7 @@ Item {
 
                 Text {
                     id: labelBattery
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
+                    width: isPhone ? 80 : 96
                     horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
                     anchors.leftMargin: 12

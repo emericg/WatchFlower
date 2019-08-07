@@ -109,11 +109,11 @@ Item {
             anchors.fill: parent
 
             //anchors.bottomMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 0
-            interactive: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+            interactive: isMobile
 
             currentIndex: 0
             onCurrentIndexChanged: {
-                if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
+                if (isDesktop) {
                     if (sensorPages.currentIndex === 0)
                         appHeader.setActiveDeviceDatas()
                     else if (sensorPages.currentIndex === 1)

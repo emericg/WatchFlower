@@ -74,7 +74,7 @@ Item {
     readonly property string colorNeutralNight: "#ffb300"
 
     // Fonts (sizes in pixel) (WIP)
-    readonly property int fontSizeHeader: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 26 : 28
+    readonly property int fontSizeHeader: isPhone ? 26 : 28
     readonly property int fontSizeTitle: 24
     readonly property int fontSizeContentBig: 18
     readonly property int fontSizeContent: 16

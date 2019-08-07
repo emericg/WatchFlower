@@ -25,7 +25,7 @@ import com.watchflower.theme 1.0
 
 Rectangle {
     width: parent.width
-    height: screenTopPadding + headerHeight
+    height: screenStatusbarPadding + screenNotchPadding + headerHeight
     color: Theme.colorHeader
     z: 10
 
@@ -49,7 +49,7 @@ Rectangle {
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenTopPadding
+        anchors.topMargin: screenStatusbarPadding + screenNotchPadding
 
         Text {
             anchors.left: parent.left

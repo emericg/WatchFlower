@@ -51,7 +51,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorHighlight
-            text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
+            text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
             onClicked: deviceManager.enableBluetooth()
         }
     }

@@ -103,7 +103,7 @@ Item {
 
     ItemDeletePopup {
         id: confirmDeleteDevice
-        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? (applicationWindow.width) : 480
+        width: (isPhone) ? (applicationWindow.width) : 480
         height: 180
         x: (applicationWindow.width / 2) - (confirmDeleteDevice.width / 2)
         y: (applicationWindow.height / 2) - (confirmDeleteDevice.height / 2) - appHeader.height
@@ -175,7 +175,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: false
-                text: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? qsTr("Enable") : qsTr("Retry")
+                text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
                 color: Theme.colorStatusbarContent
 
                 onClicked: deviceManager.enableBluetooth()
@@ -330,7 +330,7 @@ Item {
         anchors.bottomMargin: 6
 
         property bool singleColumn: true
-        property bool bigWidget: settingsManager.bigWidget
+        property bool bigWidget: settingsManager.bigWidget || isTablet
         property int boxHeight: bigWidget ? 140 : 100
 
         property int cellSizeTarget: bigWidget ? 400 : 300

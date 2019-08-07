@@ -125,8 +125,8 @@ Item {
         //console.log("width: " + graphGrid.width)
         //console.log("height: " + graphGrid.height)
 
-        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            if (settingsManager.getScreenSize() < 7.0) {
+        if (isMobile) {
+            if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
                     graphGrid.columns = 1
                     rectangleHeader.visible = true
@@ -177,7 +177,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 56 : 96
+        height: isMobile ? 56 : 96
         z: 5
 
         anchors.top: parent.top
@@ -192,7 +192,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 16
             anchors.top: parent.top
-            anchors.topMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 12 : 52
+            anchors.topMargin: isMobile ? 12 : 52
 
             ButtonThemed {
                 id: buttonDone

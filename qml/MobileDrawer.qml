@@ -32,9 +32,9 @@ Rectangle {
     Rectangle {
         id: rectangleHeader
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.topMargin: screenNotchPadding
         anchors.left: parent.left
-        anchors.leftMargin: 0
+        anchors.leftMargin: screenNotchPadding
         anchors.right: parent.right
         anchors.rightMargin: 0
         color: Theme.colorBackground // to hide scrollview content
@@ -74,10 +74,12 @@ Rectangle {
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 0
-        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
 
         Column {
             id: row
@@ -103,7 +105,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
@@ -111,7 +113,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("My plants")
@@ -140,7 +142,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -148,7 +150,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Settings")
@@ -177,7 +179,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
@@ -185,7 +187,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("About")
@@ -239,7 +241,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
@@ -264,7 +266,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Refresh sensors datas")
@@ -297,7 +299,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -315,7 +317,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Search for new devices")
@@ -361,7 +363,7 @@ Rectangle {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
@@ -369,7 +371,7 @@ Rectangle {
                 }
                 Label {
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Exit")

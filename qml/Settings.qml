@@ -29,6 +29,8 @@ Item {
     width: 480
     height: 640
     anchors.fill: parent
+    anchors.leftMargin: screenLeftPadding
+    anchors.rightMargin: screenRightPadding
 
     Rectangle {
         id: rectangleHeader
@@ -280,8 +282,8 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                // Android only
+                visible: (Qt.platform.os === "android")
 
                 Text {
                     id: text_bluetoothControl

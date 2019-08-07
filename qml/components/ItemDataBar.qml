@@ -45,7 +45,7 @@ Item {
 
     Text {
         id: item_legend
-        width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 80 : 96
+        width: isPhone ? 80 : 96
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: item_bg.verticalCenter

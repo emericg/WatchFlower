@@ -36,6 +36,11 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
+    property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
+    property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
+    property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize < 7.0))
+    property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize >= 7.0))
+
     property var lastUpdate
     property var currentDevice: null
 
@@ -43,36 +48,64 @@ ApplicationWindow {
 
     // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
-    property int screenTopPadding: 0
 
+    property int screenStatusbarPadding: 0
+    property int screenNotchPadding: 0
+    property int screenLeftPadding: 0
+    property int screenRightPadding: 0
+
+    Component.onCompleted: firstHandleNotches.restart()
     onScreenOrientationChanged: handleNotches()
-    Component.onCompleted: handleNotches()
+
+    Timer {
+        id: firstHandleNotches
+        interval: 100
+        repeat: false
+        onTriggered: handleNotches()
+    }
 
     function handleNotches() {
         if (Qt.platform.os !== "ios") return
-        if (typeof quickWindow === "undefined" || !quickWindow) {
-            screenTopPadding = 20
-            return
+        if (typeof quickWindow === "undefined" || !quickWindow) return
+
+        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
+        //console.log("screen height : " + Screen.height)
+        //console.log("screen avail  : " + Screen.desktopAvailableHeight)
+        //console.log("screen padding: " + screenPadding)
+
+        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
+        //console.log("top:" + safeMargins["top"])
+        //console.log("right:" + safeMargins["right"])
+        //console.log("bottom:" + safeMargins["bottom"])
+        //console.log("left:" + safeMargins["left"])
+
+        if (safeMargins["total"] !== safeMargins["top"]) {
+            if (Screen.primaryOrientation === Qt.PortraitOrientation) {
+                screenStatusbarPadding = 20
+                screenNotchPadding = 12
+            } else {
+                screenStatusbarPadding = 0
+                screenNotchPadding = 0
+            }
+
+            if (Screen.primaryOrientation === Qt.LandscapeOrientation) {
+                // TODO left or right ???
+                screenLeftPadding = 32
+                screenRightPadding = 0
+            } else {
+                screenLeftPadding = 0
+                screenRightPadding = 0
+            }
+        } else {
+            screenStatusbarPadding = 20
+            screenNotchPadding = 0
         }
 /*
-        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
-        console.log("screen height : " + Screen.height)
-        console.log("screen avail  : " + Screen.desktopAvailableHeight)
-        console.log("screen padding: " + screenPadding)
-
-        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
-        console.log("top:" + safeMargins["top"])
-        console.log("right:" + safeMargins["right"])
-        console.log("bottom:" + safeMargins["bottom"])
-        console.log("left:" + safeMargins["left"])
-
-        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
-        if (Screen.primaryOrientation === 1 && safeMargins["total"] > 0)
-            screenTopPadding = 20
-        else
-            screenTopPadding = 0
+        console.log("RECAP screenStatusbarPadding:" + screenStatusbarPadding)
+        console.log("RECAP screenNotchPadding:" + screenNotchPadding)
+        console.log("RECAP screenLeftPadding:" + screenLeftPadding)
+        console.log("RECAP screenRightPadding:" + screenRightPadding)
 */
-        screenTopPadding = (Screen.height - Screen.desktopAvailableHeight)
     }
 
     StatusBar {

@@ -195,15 +195,13 @@ Item {
     }
 
     onWidthChanged: {
-        if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
-            if (settingsManager.getScreenSize() < 7.0) {
-                if (screenOrientation === Qt.PortraitOrientation) {
-                    rectangleHeader.visible = true
-                    rectangleHeader.height = 100
-                } else {
-                    rectangleHeader.visible = false
-                    rectangleHeader.height = 0
-                }
+        if (isPhone) {
+            if (screenOrientation === Qt.PortraitOrientation) {
+                rectangleHeader.visible = true
+                rectangleHeader.height = 100
+            } else {
+                rectangleHeader.visible = false
+                rectangleHeader.height = 0
             }
         }
     }
@@ -213,7 +211,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 100 : 140
+        height: isMobile ? 100 : 140
         z: 5
 
         anchors.top: parent.top
@@ -268,7 +266,7 @@ Item {
 
                 Text {
                     id: labelPlant
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
+                    width: isPhone ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -376,7 +374,7 @@ Item {
 
                 Text {
                     id: labelLocation
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
+                    width: isPhone ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
@@ -485,7 +483,7 @@ Item {
 
                 Text {
                     id: labelStatus
-                    width: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 78 : 96
+                    width: isPhone ? 78 : 96
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -520,14 +518,12 @@ Item {
         spacing: (rows > 1) ? 12 : 0
 
         onWidthChanged: {
-            if ((Qt.platform.os === "android" || Qt.platform.os === "ios")) {
-                if (screenOrientation === Qt.PortraitOrientation) {
-                    datasGrid.columns = 1
-                    datasGrid.rows = 2
-                } else {
-                    datasGrid.columns = 2
-                    datasGrid.rows = 1
-                }
+            if (isMobile && screenOrientation === Qt.PortraitOrientation) {
+                datasGrid.columns = 1
+                datasGrid.rows = 2
+            } else {
+                datasGrid.columns = 2
+                datasGrid.rows = 1
             }
         }
 
