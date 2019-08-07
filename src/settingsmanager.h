@@ -56,6 +56,9 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
+    Q_PROPERTY(int screenDpi READ getScreenDpi NOTIFY screenChanged)
+    Q_PROPERTY(double screenSize READ getScreenSize NOTIFY screenChanged)
+
     QString m_appTheme = "green";
     bool m_autoDark = false;
     bool m_startMinimized = false;
@@ -68,6 +71,9 @@ class SettingsManager: public QObject
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
     bool m_bigWidget = false;
+
+    int m_screenDpi = -1;
+    double m_screenSize = -1.0;
 
     bool readSettings();
     bool writeSettings();
@@ -94,6 +100,7 @@ Q_SIGNALS:
     void tempUnitChanged();
     void graphHistoryChanged();
     void bigWidgetChanged();
+    void screenChanged();
 
 public:
     static SettingsManager *getInstance();

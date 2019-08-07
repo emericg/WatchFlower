@@ -582,31 +582,33 @@ void SettingsManager::getScreenInfos()
 
 double SettingsManager::getScreenSize()
 {
-    double screenSize = 1.0;
-
-    QScreen *scr = qApp->screens().at(0);
-    if (scr)
+    if (m_screenSize <= 0)
     {
-        // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
-        screenSize = std::sqrt(std::pow(scr->physicalSize().width(), 2.0) + std::pow(scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+        QScreen *scr = qApp->screens().at(0);
+        if (scr)
+        {
+            // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
+            m_screenSize = std::sqrt(std::pow(scr->physicalSize().width(), 2.0) + std::pow(scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+        }
     }
 
-    return screenSize;
+    return m_screenSize;
 }
 
 /* ************************************************************************** */
 
 int SettingsManager::getScreenDpi()
 {
-    int screenDPI = 1;
-
-    QScreen *scr = qApp->screens().at(0);
-    if (scr)
+    if (m_screenDpi <= 0)
     {
-        screenDPI = static_cast<int>(std::round(scr->physicalDotsPerInch()));
+        QScreen *scr = qApp->screens().at(0);
+        if (scr)
+        {
+            m_screenDpi = static_cast<int>(std::round(scr->physicalDotsPerInch()));
+        }
     }
 
-    return screenDPI;
+    return m_screenDpi;
 }
 
 /* ************************************************************************** */
