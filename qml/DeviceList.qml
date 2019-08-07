@@ -345,6 +345,12 @@ Item {
             boxHeight = bigWidget ? 140 : 100
 
             var availableWidth = devicesView.width - cellMarginTarget
+
+            if (isTablet) {
+                // TODO vertical widget instead
+                cellSizeTarget = 350
+            }
+
             var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
             singleColumn = (cellColumnsTarget === 1)
             // 1 // Adjust only cellSize
