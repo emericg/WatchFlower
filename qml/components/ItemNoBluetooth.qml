@@ -52,7 +52,7 @@ Item {
 
             color: Theme.colorHighlight
             text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
-            onClicked: deviceManager.enableBluetooth()
+            onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
         }
     }
 }

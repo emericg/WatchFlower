@@ -72,21 +72,25 @@ class DeviceManager: public QObject
     QTimer m_refreshTimer;
     QList<QObject*> m_devices_updatelist;
 
-public:
-    DeviceManager();
-    ~DeviceManager();
-
     bool hasDatabase() const;
     void checkDatabase();
 
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;
     bool hasBluetoothEnabled() const;
+
+    void checkBluetoothIos();
+    void startBleAgent();
+    bool isScanning() const;
+
+public:
+    DeviceManager();
+    ~DeviceManager();
+
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
     Q_INVOKABLE void scanDevices();
-    bool isScanning() const;
 
     Q_INVOKABLE bool areDevicesAvailable() const { return !m_devices.empty(); }
 
@@ -94,8 +98,8 @@ public:
     Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
 public slots:
-    void refreshDevices_check();    //!<  Refresh devices with datas >xh old
-    void refreshDevices_start();    //!<  Refresh every devices
+    void refreshDevices_check();    //!< Refresh devices with datas >xh old
+    void refreshDevices_start();    //!< Refresh every devices
 
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
@@ -118,6 +122,7 @@ private slots:
     void addBleDevice(const QBluetoothDeviceInfo &);
     void deviceDiscoveryFinished();
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
+    void bleDiscoveryFinished();
 
 Q_SIGNALS:
     void devicesUpdated();

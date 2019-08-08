@@ -111,6 +111,9 @@ ApplicationWindow {
                 if (!lastUpdate || (rightnow - lastUpdate) > 5*60*1000) {
                     deviceManager.refreshDevices_check();
                     lastUpdate = rightnow
+                } else {
+                    // Check bluetooth anyway (on macOS)
+                    if (Qt.platform.os === "osx") deviceManager.checkBluetooth()
                 }
 
                 break

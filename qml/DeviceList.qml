@@ -178,7 +178,7 @@ Item {
                 text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
                 color: Theme.colorStatusbarContent
 
-                onClicked: deviceManager.enableBluetooth()
+                onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
             }
 
             function hide() {
