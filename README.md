@@ -11,6 +11,22 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).
 
+### Features
+
+* Support "plant sensors" and thermometers
+* Clickable graphs
+* Monthly datas history
+* Set your own limits for plants care
+* Configurable update intervals
+* Background updates & notifications (desktop only)
+* Scalable UI: 4.6" to 34" screens, landscape or portrait
+
+TODO:
+- Continuous measurements
+- Read offline sensors history
+- Android: background updates & notifications
+- Add more compatible sensors!
+
 ### Supported devices
 
 | Flower Care | Ropot | Hygro & Temp sensor | Digital Hygrometer Clock |
@@ -21,13 +37,15 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 Various Bluetooth devices can be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done!
 
-### Desktop screenshot
+### Desktop screenshots
 
-![GUI_DESKTOP](https://i.imgur.com/SYuxbCa.png)
+![GUI_DESKTOP](https://i.imgur.com/mjZouv7.png)
+![GUI_DESKTOP](https://i.imgur.com/kDZoYNw.png)
 
 ### Mobile screenshots
 
-![GUI_MOBILE](https://i.imgur.com/nXotThA.png)
+![GUI_MOBILE](https://i.imgur.com/VdzHdqH.png)
+![GUI_MOBILE](https://i.imgur.com/e1bXFXM.png)
 
 
 ## Documentation
