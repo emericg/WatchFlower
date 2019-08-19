@@ -21,7 +21,8 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 * Background updates & notifications (desktop only)
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
-TODO:
+### TODO
+
 - Continuous measurements
 - Read offline sensors history
 - Android: background updates & notifications

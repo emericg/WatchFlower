@@ -106,6 +106,29 @@ linux:!android {
     #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
 }
 
+android {
+    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
+    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
+
+    defineReplace(droidVersionCode) {
+        segments = $$split(1, ".")
+        for (segment, segments): vCode = "$$first(vCode)$$format_number($$segment, width=3 zeropad)"
+
+        contains(ANDROID_TARGET_ARCH, arm64-v8a): \
+            suffix = 1
+        else:contains(ANDROID_TARGET_ARCH, armeabi-v7a): \
+            suffix = 0
+
+        return($$first(vCode)$$first(suffix))
+    }
+
+    ANDROID_VERSION_NAME = $$VERSION
+    ANDROID_VERSION_CODE = $$droidVersionCode($$ANDROID_VERSION_NAME)
+
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
+}
+
 macx {
     #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
@@ -113,7 +136,11 @@ macx {
     # OS icon
     ICON = assets/desktop/$$lower($${TARGET}).icns
 
+    #QMAKE_INFO_PLIST = $$PWD/assets/desktop/Info.plist
+
     # Bundle packaging
+    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
+    QMAKE_BUNDLE = watchflower
     #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
 
     # Automatic bundle packaging
@@ -128,33 +155,6 @@ macx {
 
     # Clean bin/ directory
     QMAKE_DISTCLEAN += -r $${OUT_PWD}/${DESTDIR}/${TARGET}.app
-}
-
-win32 {
-    # OS icon
-    RC_ICONS = assets/desktop/$$lower($${TARGET}).ico
-
-    # Application packaging
-    #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
-
-    # Automatic application packaging
-    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
-    install.depends = deploy
-    QMAKE_EXTRA_TARGETS += install deploy
-
-    # Installation
-    # TODO?
-
-    # Clean bin/ directory
-    # TODO
-}
-
-android {
-    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
-    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
-
-    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
 }
 
 ios {
@@ -180,4 +180,23 @@ ios {
         # QMAKE_PROVISIONING_PROFILE
         include($${PWD}/assets/ios/ios_signature.pri)
     }
+}
+
+win32 {
+    # OS icon
+    RC_ICONS = assets/desktop/$$lower($${TARGET}).ico
+
+    # Application packaging
+    #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
+
+    # Automatic application packaging
+    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
+    install.depends = deploy
+    QMAKE_EXTRA_TARGETS += install deploy
+
+    # Installation
+    # TODO?
+
+    # Clean bin/ directory
+    # TODO
 }
