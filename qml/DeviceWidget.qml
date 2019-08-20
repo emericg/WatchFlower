@@ -156,17 +156,21 @@ Item {
             }
         }
 
+        lilIcons.visible = false
         water.visible = false
         temp.visible = false
 
         // Warnings are only for plants (with available data)
         if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
+
             // Water me notif
             if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
+                lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
                 temp.color = Theme.colorBlue
             } else if (boxDevice.deviceHumidity > boxDevice.limitHygroMax) {
+                lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/baseline-water_full-24px.svg"
                 temp.color = Theme.colorYellow
@@ -174,10 +178,12 @@ Item {
 
             // Extreme temperature notif
             if (boxDevice.deviceTempC > 40) {
+                lilIcons.visible = true
                 temp.visible = true
                 temp.color = Theme.colorYellow
                 temp.source = "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
             } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
+                lilIcons.visible = true
                 temp.visible = true
                 temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
 
@@ -419,7 +425,6 @@ Item {
 
             Row {
                 id: lilIcons
-                visible: boxDevice.isAvailable()
                 height: 24
                 anchors.verticalCenter: parent.verticalCenter
                 layoutDirection: Qt.RightToLeft
