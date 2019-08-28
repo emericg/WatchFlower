@@ -272,7 +272,7 @@ Rectangle {
                 height: 64
                 visible: (rectangleHeader.width >= 560)
                 selected: (appContent.state === "DeviceList")
-                source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+                source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
             }
             ItemMenuButton {

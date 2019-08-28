@@ -108,8 +108,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    // Application icon
-    QIcon appIcon(":/assets/desktop/watchflower.svg");
+    QIcon appIcon(":/assets/logos/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
 

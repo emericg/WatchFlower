@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/assets">
-        <file>desktop/watchflower.svg</file>
-        <file>desktop/watchflower_tray_light.svg</file>
-        <file>desktop/watchflower_tray_dark.svg</file>
         <file>logos/logo.svg</file>
         <file>logos/github.svg</file>
+        <file>logos/watchflower.svg</file>
+        <file>logos/watchflower_tray_light.svg</file>
+        <file>logos/watchflower_tray_dark.svg</file>
         <file>menus/menu_logo.svg</file>
         <file>menus/menu_back.svg</file>
         <file>menus/menu_close.svg</file>

@@ -11,7 +11,7 @@ ios { QT += gui-private }
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 10)) {
-    error("You really need AT LEAST Qt 5.10 to build WatchFlower, sorry...")
+    error("You need AT LEAST Qt 5.10 to build WatchFlower")
 }
 
 # Build artifacts ##############################################################
@@ -21,6 +21,7 @@ MOC_DIR     = build/
 RCC_DIR     = build/
 UI_DIR      = build/
 QMLCACHE_DIR= build/
+
 DESTDIR     = bin/
 
 # Project files ################################################################
@@ -94,11 +95,11 @@ linux:!android {
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path     = $${PREFIX}/bin/
-    target_icon.files  += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).svg
+    target_icon.files  += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
     target_icon.path    = $${PREFIX}/share/pixmaps/
-    target_appentry.files  += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).desktop
+    target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
-    target_appdata.files   += $${OUT_PWD}/assets/desktop/$$lower($${TARGET}).appdata.xml
+    target_appdata.files   += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).appdata.xml
     target_appdata.path     = $${PREFIX}/share/appdata
     INSTALLS += target_app target_icon target_appentry target_appdata
 
@@ -134,16 +135,24 @@ macx {
     #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
 
     # OS icon
-    ICON = assets/desktop/$$lower($${TARGET}).icns
+    ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
+    QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
-    #QMAKE_INFO_PLIST = $$PWD/assets/desktop/Info.plist
+    # OS entitlement (sandbox and stuff)
+    ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
+    ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
+    QMAKE_MAC_XCODE_SETTINGS += ENTITLEMENTS
+
+    # OS infos
+    #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
     # Bundle packaging
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
-    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
 
     # Automatic bundle packaging
+    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
     deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/ -appstore-compliant
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
@@ -161,7 +170,7 @@ ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
-    QMAKE_ASSET_CATALOGS = $$PWD/assets/ios/Images.xcassets
+    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
     QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
     #QMAKE_INFO_PLIST = $$PWD/assets/ios/Info.plist
@@ -184,7 +193,7 @@ ios {
 
 win32 {
     # OS icon
-    RC_ICONS = assets/desktop/$$lower($${TARGET}).ico
+    RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
 
     # Application packaging
     #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)

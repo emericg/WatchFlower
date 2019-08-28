@@ -108,7 +108,7 @@ Rectangle {
                     anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/desktop/watchflower_tray_dark.svg"
+                    source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                     color: Theme.colorText
                 }
                 Label {
