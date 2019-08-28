@@ -134,57 +134,121 @@ macx {
     #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
     #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
 
+    # Bundle name
+    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
+    QMAKE_BUNDLE = watchflower
+
     # OS icon
     ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
-    QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
-    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
+    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+
+    # OS infos
+    #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
     ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
     QMAKE_MAC_XCODE_SETTINGS += ENTITLEMENTS
 
-    # OS infos
-    #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
+    #======== Automatic bundle packaging
 
-    # Bundle packaging
-    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
-    QMAKE_BUNDLE = watchflower
-
-    # Automatic bundle packaging
-    #system(macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/)
+    # Deploy step (app bundle packaging)
     deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/ -appstore-compliant
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
-    # Installation (require deploy step)
+    # Installation step (note: app bundle packaging)
     target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
     target.path = $$(HOME)/Applications
     INSTALLS += target
 
-    # Clean bin/ directory
+    # Clean step
     QMAKE_DISTCLEAN += -r $${OUT_PWD}/${DESTDIR}/${TARGET}.app
+
+    #======== XCode
+
+    # macOS developer settings
+    exists($${PWD}/assets/macos/macos_signature.pri) {
+        # Must contain values for:
+        # QMAKE_DEVELOPMENT_TEAM
+        # QMAKE_PROVISIONING_PROFILE
+        # QMAKE_XCODE_CODE_SIGN_IDENTITY (optional)
+        include($${PWD}/assets/macos/macos_signature.pri)
+    }
+
+    # Paths and folders
+    QT_BIN_PATH = $$dirname(QMAKE_QMAKE)
+    QT_PLUGINS_FOLDER = $$dirname(QT_BIN_PATH)/plugins
+    QT_PATH = $$dirname(QT_BIN_PATH)
+
+    # 'xcodeproj' rule / Generate xcode project file
+    xcodeproj.commands = export CUSTOM_ENV_VAR=34
+    xcodeproj.commands += && $$QMAKE_QMAKE -spec macx-xcode $$PWD/$${TARGET}.pro \
+        -o $$OUT_PWD/ CONFIG+=$$BUILD_TYPE CONFIG+=release QMAKE_INCDIR_QT=$$QT_PATH/include \
+        QMAKE_LIBDIR=$$QT_PATH/lib QMAKE_MOC=$$QT_PATH/bin/moc QMAKE_QMAKE=$$QT_PATH/bin/qmake
+    QMAKE_EXTRA_TARGETS += xcodeproj
+
+    # 'xcodedeploy' rule / Bundle packaging from XCode archive
+    CONFIG(release, debug|release): {
+        # Get the absolute directory path for XCode archives folder
+        XCODE_ARCHIVES_DIRECTORY = $$system(echo ~/Library/Developer/Xcode/Archives)/$$system(date +%Y-%m-%d)
+        # Get the newest file that starts with the target name
+        XCODE_ARCHIVE_NAME = $$system(cd $$XCODE_ARCHIVES_DIRECTORY && ls | grep -e $${TARGET}* | sort -n -t _ -k 2 | tail -1)
+        # This will be the absolute path to the app bundle
+        DEPLOYED_APP_PATH = ""
+        # If the variable is set to something, it means that we found our archive file
+        !isEmpty(XCODE_ARCHIVE_NAME) {
+            DEPLOYED_APP_PATH = $$XCODE_ARCHIVES_DIRECTORY/$$XCODE_ARCHIVE_NAME/Products/Applications/$${TARGET}.app
+            EXISTS_RESULT = $$system([ ! -e $$quote(\"$$DEPLOYED_APP_PATH\") ] && echo "false" || echo "true")
+            # If the archive file doesn't exist, we are going to use the app bunlde in the build directory
+            equals(EXISTS_RESULT, false) {
+                xcodedeploy.depends += all
+                DEPLOYED_APP_PATH = $${OUT_PWD}/$${TARGET}.app
+            }
+            else {
+                DEPLOYED_APP_PATH = $$quote(\"$$DEPLOYED_APP_PATH\")
+            }
+        }
+        else {
+            warning("Cannot find xcode archive")
+            ## Since we cannot find the file, we need to make sure that the project is built so that the app bundle is created
+            #xcodedeploy.depends += all
+            #DEPLOYED_APP_PATH = $$OUT_PWD/$${TARGET}.app
+        }
+
+        BUNDLE_PLUGINS_FOLDER = $$DEPLOYED_APP_PATH/Contents/Plugins
+
+        # The xcodedeploy target runs macdeployqt and removes the unsed files from the bundle
+        # Signing is handled by XCode when uploading to the App Store
+        xcodedeploy.commands = $$QT_BIN_PATH/macdeployqt $$DEPLOYED_APP_PATH -qmldir=$${PWD}/qml -appstore-compliant
+
+        # dSYM files are bundled with a different bundle ID than the app id and they are rejected by the App Store
+        xcodedeploy.commands += && find $$DEPLOYED_APP_PATH/ -name $$quote(\"*.dSYM\") -exec rm -rf -d -f {} +
+
+        QMAKE_EXTRA_TARGETS += xcodedeploy
+    }
 }
 
 ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
-    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
-    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
-
-    #QMAKE_INFO_PLIST = $$PWD/assets/ios/Info.plist
-
-    # 1: iPhone / 2: iPad / 1,2: Universal
-    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2
-
+    # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
     QMAKE_BUNDLE = watchflower
 
+    # OS icon
+    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+
+    # OS infos
+    #QMAKE_INFO_PLIST = $$PWD/assets/ios/Info.plist
+    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
+
     # iOS developer settings
     exists($${PWD}/assets/ios/ios_signature.pri) {
-        # the file must contains values for:
-        # QMAKE_XCODE_CODE_SIGN_IDENTITY
+        # Must contain values for:
         # QMAKE_DEVELOPMENT_TEAM
         # QMAKE_PROVISIONING_PROFILE
         include($${PWD}/assets/ios/ios_signature.pri)
@@ -195,17 +259,14 @@ win32 {
     # OS icon
     RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
 
-    # Application packaging
-    #system(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
-
-    # Automatic application packaging
+    # Deploy step
     deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
     install.depends = deploy
     QMAKE_EXTRA_TARGETS += install deploy
 
-    # Installation
+    # Installation step
     # TODO?
 
-    # Clean bin/ directory
+    # Clean step
     # TODO
 }

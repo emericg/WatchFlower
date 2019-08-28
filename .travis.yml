@@ -9,6 +9,9 @@ before_install:
       sudo apt-add-repository ppa:beineri/opt-qt-5.12.3-xenial -y;
       sudo apt-get update -q;
     fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+#      brew update;
+#    fi
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -22,6 +25,7 @@ install:
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt512/bin/qt512-env.sh; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$PATH:/usr/local/opt/qt/bin:/usr/local/bin; fi
+  - qmake --version
   - qmake CONFIG+=release PREFIX=/usr
 
 script:
