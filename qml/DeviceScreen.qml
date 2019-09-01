@@ -75,6 +75,22 @@ Item {
             sensorPages.currentIndex = 2
         }
     }
+    Connections {
+        target: tabletMenuDevice
+        // mobile only
+        onDeviceDatasButtonClicked: {
+            tabletMenuDevice.setActiveDeviceDatas()
+            sensorPages.currentIndex = 0
+        }
+        onDeviceHistoryButtonClicked: {
+            tabletMenuDevice.setActiveDeviceHistory()
+            sensorPages.currentIndex = 1
+        }
+        onDeviceSettingsButtonClicked: {
+            tabletMenuDevice.setActiveDeviceSettings()
+            sensorPages.currentIndex = 2
+        }
+    }
 
     function loadDevice() {
         if (typeof myDevice === "undefined" || !myDevice) return
@@ -89,7 +105,7 @@ Item {
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
 
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") appHeader.setActiveDeviceDatas()
+        isMobile ? tabletMenuDevice.setActiveDeviceDatas() : appHeader.setActiveDeviceDatas()
     }
 
     function isHistoryMode() {

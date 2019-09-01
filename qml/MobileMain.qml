@@ -228,6 +228,7 @@ ApplicationWindow {
         anchors.top: appHeader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: appTabletMenu.visible ? 64 : 0
         anchors.left: parent.left
 
         focus: true
@@ -541,6 +542,151 @@ ApplicationWindow {
     }
 
     Rectangle {
+        id: appTabletMenu
+        anchors.top: appContent.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+
+        color: "#f3f3f3"
+        width: parent.width
+        height: 48
+
+        Rectangle {
+            anchors.top: parent.top
+            width: parent.width
+            height: 1
+            color: "#e0e0e0"
+        }
+
+        visible: isTablet && appContent.state != "DeviceThermo"
+        //visible: isTablet && (tabletMenuScreen.visible || tabletMenuDevice.visible)
+
+        Row {
+            id: tabletMenuScreen
+            spacing: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (appContent.state === "DeviceList" ||
+                      appContent.state === "Settings" ||
+                      appContent.state === "About")
+
+            ItemMenuButton {
+                id: menuPlants
+                //width: 192
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("My plants")
+                selected: (appContent.state === "DeviceList")
+                source: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                onClicked: appContent.state = "DeviceList"
+            }
+            ItemMenuButton {
+                id: menuSettings
+                //width: 192
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("Settings")
+                selected: (appContent.state === "Settings")
+                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                onClicked: appContent.state = "Settings"
+            }
+            ItemMenuButton {
+                id: menuAbout
+                //width: 192
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("About")
+                selected: (appContent.state === "About")
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                onClicked: appContent.state = "About"
+            }
+        }
+
+        Row {
+            id: tabletMenuDevice
+            spacing: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+
+            signal deviceDatasButtonClicked()
+            signal deviceHistoryButtonClicked()
+            signal deviceSettingsButtonClicked()
+
+            visible: (appContent.state === "DeviceSensor")
+
+            function setActiveDeviceDatas() {
+                menuDeviceDatas.selected = true
+                menuDeviceHistory.selected = false
+                menuDeviceSettings.selected = false
+            }
+            function setActiveDeviceHistory() {
+                menuDeviceDatas.selected = false
+                menuDeviceHistory.selected = true
+                menuDeviceSettings.selected = false
+            }
+            function setActiveDeviceSettings() {
+                menuDeviceDatas.selected = false
+                menuDeviceHistory.selected = false
+                menuDeviceSettings.selected = true
+            }
+
+            ItemMenuButton {
+                id: menuDeviceDatas
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("Sensor")
+                selected: (appContent.state === "DeviceSensor" && appContent.state === "DeviceList")
+                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                onClicked: tabletMenuDevice.deviceDatasButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuDeviceHistory
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("History")
+                selected: (appContent.state === "About")
+                source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
+                onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuDeviceSettings
+                height: 48
+
+                colorBackground: "#9d9d9d"
+                colorContent: "#0079fe"
+                highlightMode: "text"
+
+                menuText: qsTr("Settings")
+                selected: (appContent.state === "About")
+                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
+            }
+        }
+    }
+
+    Rectangle {
         id: exitWarning
         width: exitWarningText.width + 16
         height: exitWarningText.height + 16
@@ -550,7 +696,6 @@ ApplicationWindow {
 
         radius: 4
         color: Theme.colorSubText
-
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
 

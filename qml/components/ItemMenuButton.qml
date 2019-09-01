@@ -9,16 +9,20 @@ Item {
     implicitWidth: 64
     implicitHeight: 64
 
+    width: 16 + contentImage.width + 16 + contentText.width + 16
+    property int imgSize: 32
+
     signal clicked()
     property bool selected: false
     property bool highlighted: false
 
     property string colorContent: Theme.colorHeaderContent
     property string colorBackground: Theme.colorHeaderStatusbar
+    property string highlightMode: "background" // available: background & text
+
     property string menuText: ""
     property string tooltipText: ""
     property url source: ""
-    property int imgSize: 32
 
     MouseArea {
         anchors.fill: parent
@@ -38,20 +42,18 @@ Item {
     Rectangle {
         id: bgRect
         anchors.fill: parent
-        visible: selected
+
+        visible: (selected && highlightMode === "background")
         color: parent.colorBackground
     }
-
     Rectangle {
         id: bgFocus
         anchors.fill: parent
 
-        color: parent.colorBackground
+        visible: highlightMode === "background"
+        color: itemMenuButton.colorBackground
         opacity: 0
-
-        Behavior on opacity {
-            OpacityAnimator { duration: 250 }
-        }
+        Behavior on opacity { OpacityAnimator { duration: 250 } }
     }
 
     ImageSvg {
@@ -62,9 +64,9 @@ Item {
         anchors.leftMargin: 16
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
-        opacity: itemMenuButton.enabled ? 1.0 : 0.3
         source: itemMenuButton.source
-        color: parent.colorContent
+        color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
+        opacity: itemMenuButton.enabled ? 1.0 : 0.3
     }
 
     Text {
@@ -77,7 +79,7 @@ Item {
         text: menuText
         font.pixelSize: 14
         font.bold: true
-        color: parent.colorContent
+        color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
         verticalAlignment: Text.AlignVCenter
     }
 }
