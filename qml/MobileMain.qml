@@ -228,7 +228,7 @@ ApplicationWindow {
         anchors.top: appHeader.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: appTabletMenu.visible ? 64 : 0
+        anchors.bottomMargin: appTabletMenu.visible ? appTabletMenu.height : 0
         anchors.left: parent.left
 
         focus: true
@@ -543,14 +543,13 @@ ApplicationWindow {
 
     Rectangle {
         id: appTabletMenu
-        anchors.top: appContent.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
         color: "#f3f3f3"
         width: parent.width
-        height: 48
+        height: 50
 
         Rectangle {
             anchors.top: parent.top
@@ -564,7 +563,7 @@ ApplicationWindow {
 
         Row {
             id: tabletMenuScreen
-            spacing: 0
+            spacing: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
@@ -574,8 +573,7 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuPlants
-                //width: 192
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
@@ -588,8 +586,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuSettings
-                //width: 192
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
@@ -602,8 +599,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuAbout
-                //width: 192
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
@@ -618,7 +614,7 @@ ApplicationWindow {
 
         Row {
             id: tabletMenuDevice
-            spacing: 0
+            spacing: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
@@ -646,7 +642,7 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuDeviceDatas
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
@@ -659,7 +655,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuDeviceHistory
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
@@ -672,7 +668,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuDeviceSettings
-                height: 48
+                imgSize: 24
 
                 colorBackground: "#9d9d9d"
                 colorContent: "#0079fe"
