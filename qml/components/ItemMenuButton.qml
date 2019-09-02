@@ -50,7 +50,7 @@ Item {
         id: bgFocus
         anchors.fill: parent
 
-        visible: highlightMode === "background"
+        visible: (highlightMode === "background")
         color: itemMenuButton.colorBackground
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 250 } }

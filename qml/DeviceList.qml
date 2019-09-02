@@ -134,7 +134,7 @@ Item {
             anchors.leftMargin: 0
 
             height: 48
-            color: Theme.colorStatusbar
+            color: Theme.colorActionbar
             visible: false
             opacity: 0
 /*
@@ -160,7 +160,7 @@ Item {
                 anchors.rightMargin: 16
                 anchors.leftMargin: 16
 
-                color: Theme.colorStatusbarContent
+                color: Theme.colorActionbarContent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 font.pixelSize: 16
@@ -176,7 +176,7 @@ Item {
 
                 visible: false
                 text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
-                color: Theme.colorStatusbarContent
+                color: Theme.colorActionbarContent
 
                 onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
             }
@@ -213,7 +213,7 @@ Item {
             anchors.leftMargin: 0
 
             height: 48
-            color: Theme.colorStatusbar
+            color: Theme.colorActionbar
             visible: (screenDeviceList.selectionCount)
 
             Row {
@@ -230,7 +230,7 @@ Item {
 
                     visible: deviceManager.bluetooth
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    iconColor: Theme.colorStatusbarContent
+                    iconColor: Theme.colorActionbarContent
                     onClicked: screenDeviceList.updateSelectedDevice()
 
                     NumberAnimation on rotation {
@@ -257,7 +257,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
-                    iconColor: Theme.colorStatusbarContent
+                    iconColor: Theme.colorActionbarContent
                     onClicked: confirmDeleteDevice.open()
                 }
 /*
@@ -267,7 +267,7 @@ Item {
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorStatusbarContent
+                    color: Theme.colorActionbarContent
                     text: qsTr("Refresh")
                     onClicked: screenDeviceList.updateSelectedDevice()
                 }
@@ -277,7 +277,7 @@ Item {
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorStatusbarContent
+                    color: Theme.colorActionbarContent
                     text: qsTr("Delete")
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }

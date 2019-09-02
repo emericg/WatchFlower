@@ -510,13 +510,15 @@ ApplicationWindow {
         ]
     }
 
+    ////////////////
+
     Rectangle {
         id: appTabletMenu
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        color: "#f3f3f3"
+        color: Theme.colorTabletmenu
         width: parent.width
         height: 50
 
@@ -524,11 +526,10 @@ ApplicationWindow {
             anchors.top: parent.top
             width: parent.width
             height: 1
-            color: "#e0e0e0"
+            color: Theme.colorTabletmenuContent
         }
 
         visible: isTablet && appContent.state != "DeviceThermo"
-        //visible: isTablet && (tabletMenuScreen.visible || tabletMenuDevice.visible)
 
         Row {
             id: tabletMenuScreen
@@ -544,8 +545,8 @@ ApplicationWindow {
                 id: menuPlants
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("My plants")
@@ -557,8 +558,8 @@ ApplicationWindow {
                 id: menuSettings
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("Settings")
@@ -570,8 +571,8 @@ ApplicationWindow {
                 id: menuAbout
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("About")
@@ -613,8 +614,8 @@ ApplicationWindow {
                 id: menuDeviceDatas
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("Sensor")
@@ -626,8 +627,8 @@ ApplicationWindow {
                 id: menuDeviceHistory
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("History")
@@ -639,8 +640,8 @@ ApplicationWindow {
                 id: menuDeviceSettings
                 imgSize: 24
 
-                colorBackground: "#9d9d9d"
-                colorContent: "#0079fe"
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("Settings")
@@ -650,6 +651,8 @@ ApplicationWindow {
             }
         }
     }
+
+    ////////////////
 
     Rectangle {
         id: exitWarning

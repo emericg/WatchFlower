@@ -20,10 +20,6 @@
  */
 
 import QtQuick 2.9
-
-// Qt 5.10 needed here...
-// You can change v2.2 into 2.1 but you'll need to comment the
-// ChartView / "legend.visible" line at the bottom of this file
 import QtCharts 2.2
 
 import com.watchflower.theme 1.0
@@ -312,11 +308,12 @@ Item {
             id: dateIndicator
             width: textTime.width + 16
             height: textTime.height + 12
-
-            color: Theme.colorForeground
-            radius: 4
             anchors.verticalCenter: parent.verticalCenter
+
+            radius: 4
             visible: false
+            color: Theme.colorForeground
+            border.color: Theme.colorSubText
 
             Text {
                 id: textTime

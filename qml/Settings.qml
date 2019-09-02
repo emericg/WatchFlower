@@ -137,10 +137,10 @@ Item {
                     spacing: 8
 
                     Rectangle {
-                        id: rectangle1
+                        id: rectangleGreen
                         width: 32
                         height: 32
-                        color: "#09debc"
+                        color: "#09debc" // green theme colorHighlight2
                         anchors.verticalCenter: parent.verticalCenter
 
                         border.color: Theme.colorHighlight
@@ -155,10 +155,10 @@ Item {
                         }
                     }
                     Rectangle {
-                        id: rectangle2
+                        id: rectangleDay
                         width: 32
                         height: 32
-                        color: "#e4e4e4"
+                        color: "#FFE400" // day theme colorHighlight2
                         anchors.verticalCenter: parent.verticalCenter
 
                         border.color: Theme.colorHighlight
@@ -173,7 +173,7 @@ Item {
                         }
                     }
                     Rectangle {
-                        id: rectangle3
+                        id: rectangleNight
                         width: 32
                         height: 32
                         color: "#555151"

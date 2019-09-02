@@ -37,9 +37,14 @@ Item {
     property string colorHeaderContent
     property string colorHeaderStatusbar
 
-    // Status bar
-    property string colorStatusbar
-    property string colorStatusbarContent
+    // Action bar
+    property string colorActionbar
+    property string colorActionbarContent
+
+    // Tablet bar
+    property string colorTabletmenu
+    property string colorTabletmenuContent
+    property string colorTabletmenuHighlight
 
     // Content
     property string colorBackground
@@ -112,8 +117,12 @@ Item {
             colorHeaderStatusbar = "#009688"
             colorHeaderContent = "white"
 
-            colorStatusbar = colorYellow
-            colorStatusbarContent = "white"
+            colorActionbar = colorYellow
+            colorActionbarContent = "white"
+
+            colorTabletmenu = "#f3f3f3"
+            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
             colorForeground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : colorMaterialDarkGrey
@@ -127,7 +136,7 @@ Item {
             colorComponentBgDown = colorMaterialLightGrey
 
             colorHighlight = colorGreen
-            colorHighlight2 = "#8dd9ca"
+            colorHighlight2 = colorLightGreen
             colorHighContrast = "black"
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
@@ -141,8 +150,12 @@ Item {
             colorHeaderStatusbar = colorNeutralNight
             colorHeaderContent = "white"
 
-            colorStatusbar = colorGreen
-            colorStatusbarContent = "white"
+            colorActionbar = colorGreen
+            colorActionbarContent = "white"
+
+            colorTabletmenu = "#f3f3f3"
+            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = "white"
             colorForeground = colorMaterialLightGrey
@@ -155,8 +168,8 @@ Item {
             colorComponentBgUp = colorMaterialDarkGrey
             colorComponentBgDown = colorMaterialLightGrey
 
-            colorHighlight = "#ffd700"
-            colorHighlight2 = colorHeaderStatusbar
+            colorHighlight = colorYellow
+            colorHighlight2 = "#FFE400"
             colorHighContrast = "#303030"
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
@@ -170,8 +183,12 @@ Item {
             colorHeaderStatusbar = "#725595"
             colorHeaderContent = "white"
 
-            colorStatusbar = colorBlue
-            colorStatusbarContent = "white"
+            colorActionbar = colorBlue
+            colorActionbarContent = "white"
+
+            colorTabletmenu = "#292929"
+            colorTabletmenuContent = "#808080"
+            colorTabletmenuHighlight = "#bb86fc"
 
             colorBackground = "#313236"
             colorForeground = "#292929"

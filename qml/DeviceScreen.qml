@@ -105,7 +105,8 @@ Item {
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
 
-        isMobile ? tabletMenuDevice.setActiveDeviceDatas() : appHeader.setActiveDeviceDatas()
+        if (isMobile) tabletMenuDevice.setActiveDeviceDatas()
+        if (isDesktop) appHeader.setActiveDeviceDatas()
     }
 
     function isHistoryMode() {

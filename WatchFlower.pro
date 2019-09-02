@@ -54,7 +54,8 @@ RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc
 
-OTHER_FILES += .travis.yml \
+OTHER_FILES += .gitignore \
+               .travis.yml \
                assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
 
 TRANSLATIONS = i18n/watchflower_fr.ts \
