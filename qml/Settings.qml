@@ -693,7 +693,7 @@ Item {
                 anchors.leftMargin: 0
 
                 // desktop (or tablet)
-                visible: (settingsManager.getScreenSize() > 7.0)
+                visible: isDesktop
 
                 Text {
                     id: text_bigwidget

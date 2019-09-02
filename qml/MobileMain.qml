@@ -36,7 +36,7 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
-    property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
+    property bool isDesktop: false
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize < 7.0))
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize >= 7.0))
@@ -118,38 +118,7 @@ ApplicationWindow {
         width: parent.width
         anchors.top: parent.top
     }
-/*
-    property var appHeader: null
-    Loader {
-        id: headerLoader
-        width: parent.width
-        anchors.top: parent.top
-        z: 10
 
-        Component.onCompleted: {
-            if (settingsManager.getScreenSize() > 7.0) // tablet
-                headerLoader.source = "DesktopHeader.qml"
-            else // phone
-                headerLoader.source = "MobileHeader.qml"
-            appHeader = headerLoader.item
-        }
-
-        onLoaded: {
-            //
-            binder.target = headerLoader.item;
-        }
-    }
-    Binding {
-        id: binder
-        property: "title"
-        value: title
-    }
-    Binding {
-        id: binder2
-        property: "leftMenuMode"
-        value: leftMenuMode
-    }
-*/
     Drawer {
         id: appDrawer
         width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width

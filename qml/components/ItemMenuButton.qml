@@ -73,7 +73,7 @@ Item {
         id: contentText
         height: parent.height
         anchors.left: contentImage.right
-        anchors.leftMargin: 16
+        anchors.leftMargin: (imgSize / 2)
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
         text: menuText

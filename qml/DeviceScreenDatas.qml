@@ -518,7 +518,7 @@ Item {
         spacing: (rows > 1) ? 12 : 0
 
         onWidthChanged: {
-            if (isMobile) {
+            if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
                     datasGrid.columns = 1
                     datasGrid.rows = 2

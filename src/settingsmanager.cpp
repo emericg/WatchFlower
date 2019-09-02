@@ -89,8 +89,8 @@ bool SettingsManager::readSettings()
             m_bluetoothCompat = settings.value("settings/bluetoothCompat").toBool();
         else
         {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_iOS)
-            // bluetooth compat is default true on mobile
+#if defined(Q_OS_ANDROID)
+            // bluetooth compat is default true on Android, too many weak devices
             m_bluetoothCompat = true;
 #endif
         }
