@@ -28,7 +28,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
-//#include <QtQuickControls2/QQuickStyle>
 
 #include <statusbar.h>
 #include <singleapplication.h>
@@ -37,13 +36,13 @@
 #include "systraymanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
-#include "statusbar.h"
 
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
 {
-    // Arguments parsing
+    // Arguments parsing ///////////////////////////////////////////////////////
+
     bool start_minimized = false;
     bool refresh_only = false;
     bool background_service = false;

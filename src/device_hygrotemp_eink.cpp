@@ -89,7 +89,7 @@ void DeviceHygrotempEInk::serviceScanDone()
 
 void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    qDebug() << "DeviceHygrotempEInk::addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceHygrotempEInk::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
     {
@@ -114,7 +114,7 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_datas(QLowEnergyService::Serv
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceDatas)
         {

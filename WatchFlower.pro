@@ -206,12 +206,10 @@ macx {
             equals(EXISTS_RESULT, false) {
                 xcodedeploy.depends += all
                 DEPLOYED_APP_PATH = $${OUT_PWD}/$${TARGET}.app
-            }
-            else {
+            } else {
                 DEPLOYED_APP_PATH = $$quote(\"$$DEPLOYED_APP_PATH\")
             }
-        }
-        else {
+        } else {
             warning("Cannot find xcode archive")
             ## Since we cannot find the file, we need to make sure that the project is built so that the app bundle is created
             #xcodedeploy.depends += all
