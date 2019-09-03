@@ -140,7 +140,7 @@ Item {
                 //width: websiteImg.width + websiteTxt.width + 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -151,6 +151,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     color: Theme.colorText
                 }
@@ -177,7 +178,7 @@ Item {
                 //width: githubImg.width + githubTxt.width + 48
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -188,6 +189,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 2
+
                     source: "qrc:/assets/logos/github.svg"
                     color: Theme.colorText
                 }
@@ -213,7 +215,7 @@ Item {
                 id: tuto
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -225,6 +227,7 @@ Item {
                     anchors.leftMargin: 2
                     anchors.top: parent.top
                     anchors.topMargin: 8
+
                     source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
                     color: Theme.colorText
                 }
@@ -249,7 +252,7 @@ Item {
                 id: desc
                 height: 180
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
@@ -271,11 +274,11 @@ Item {
                     anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 40
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
 
                     color: Theme.colorText
                     text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' Bluetooth devices.")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
                     wrapMode: Text.WordWrap
                     readOnly: true
                     font.pixelSize: 16

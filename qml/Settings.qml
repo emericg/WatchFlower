@@ -130,11 +130,11 @@ Item {
                 Row {
                     id: theme_selector
                     anchors.right: parent.right
-                    anchors.rightMargin: 20
+                    anchors.rightMargin: 22
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
-                    spacing: 8
+                    spacing: 10
 
                     Rectangle {
                         id: rectangleGreen
@@ -591,7 +591,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     stepSize: 30
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 16
                     from: 30
                 }
 

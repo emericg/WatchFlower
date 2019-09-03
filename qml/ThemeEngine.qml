@@ -207,8 +207,9 @@ Item {
         }
 
         // When the current theme does not match the saved theme, it's probably
-        // because we (automatically) switch to night mode. We force an UI refresh,
-        // AFTER changing the colors, so the onAppThemeChanged slots can be triggered
+        // because we (automatically) switched to night mode.
+        // So we force an UI refresh AFTER changing the colors, so the
+        // onAppThemeChanged slots can be triggered
         if (currentTheme !== settingsManager.appTheme) settingsManager.toggleAutoDark()
     }
 }
