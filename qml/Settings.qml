@@ -140,9 +140,10 @@ Item {
                         id: rectangleGreen
                         width: 32
                         height: 32
-                        color: "#09debc" // green theme colorHighlight2
                         anchors.verticalCenter: parent.verticalCenter
 
+                        radius: 2
+                        color: "#09debc" // green theme colorHighlight2
                         border.color: Theme.colorHighlight
                         border.width: (settingsManager.appTheme === "green") ? 2 : 0
 
@@ -158,9 +159,10 @@ Item {
                         id: rectangleDay
                         width: 32
                         height: 32
-                        color: "#FFE400" // day theme colorHighlight2
                         anchors.verticalCenter: parent.verticalCenter
 
+                        radius: 2
+                        color: "#FFE400" // day theme colorHighlight2
                         border.color: Theme.colorHighlight
                         border.width: (settingsManager.appTheme === "day") ? 2 : 0
 
@@ -176,9 +178,10 @@ Item {
                         id: rectangleNight
                         width: 32
                         height: 32
-                        color: "#555151"
                         anchors.verticalCenter: parent.verticalCenter
 
+                        radius: 2
+                        color: "#555151"
                         border.color: Theme.colorHighlight
                         border.width: (settingsManager.appTheme === "night") ? 2 : 0
 

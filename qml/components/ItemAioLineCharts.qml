@@ -313,7 +313,7 @@ Item {
             radius: 4
             visible: false
             color: Theme.colorForeground
-            border.color: Theme.colorSubText
+            border.color: Theme.colorSeparator
 
             Text {
                 id: textTime
@@ -330,11 +330,12 @@ Item {
             id: datasIndicator
             width: datasIndicatorText.width + 12
             height: datasIndicatorText.height + 12
-
-            color: Theme.colorForeground
-            radius: 4
             anchors.verticalCenter: parent.verticalCenter
+
+            radius: 4
             visible: false
+            color: Theme.colorForeground
+            border.color: Theme.colorSeparator
 
             Text {
                 id: datasIndicatorText
