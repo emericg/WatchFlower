@@ -38,9 +38,10 @@ SOURCES  += src/main.cpp \
             src/device_hygrotemp_clock.cpp \
             src/device_ropot.cpp
 
-HEADERS  += src/settingsmanager.h \
-            src/systraymanager.h \
+HEADERS  += src/demomode.h \
             src/versionchecker.h \
+            src/settingsmanager.h \
+            src/systraymanager.h \
             src/notificationmanager.h \
             src/devicemanager.h \
             src/device.h \
@@ -77,6 +78,12 @@ include(src/thirdparty/StatusBar/statusbar.pri)
 # SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
+
+# Demo mode (for screenshots across devices)
+exists(assets/demo/demo_bdd.db) {
+    DEFINES += DEMO_MODE
+    RESOURCES += assets/demo/demo.qrc
+}
 
 ################################################################################
 # Application deployment and installation steps

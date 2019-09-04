@@ -105,8 +105,6 @@ Q_SIGNALS:
 public:
     static SettingsManager *getInstance();
 
-    bool hasDatabase() const { return m_db; }
-
     QString getAppTheme() const { return m_appTheme; }
     void setAppTheme(const QString &value);
 
@@ -144,6 +142,15 @@ public:
 
     Q_INVOKABLE static QString getAppVersion() { return QString::fromLatin1(APP_VERSION); }
 
+    Q_INVOKABLE bool hasDatabase() const { return m_db; }
+
+    Q_INVOKABLE void resetSettings();
+
+    Q_INVOKABLE void toggleAutoDark();
+
+    Q_INVOKABLE static bool getDemoMode();
+    Q_INVOKABLE static QString getDemoString();
+
     Q_INVOKABLE void getScreenInfos();
 
     Q_INVOKABLE double getScreenSize();
@@ -151,10 +158,6 @@ public:
     Q_INVOKABLE int getScreenDpi();
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
-
-    Q_INVOKABLE void resetSettings();
-
-    Q_INVOKABLE void toggleAutoDark();
 
     Q_INVOKABLE void exit() { QApplication::exit(); }
 };

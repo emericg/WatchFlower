@@ -36,6 +36,7 @@
 #include "systraymanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
+#include "demomode.h"
 
 /* ************************************************************************** */
 
@@ -126,6 +127,12 @@ int main(int argc, char *argv[])
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
 
+#ifdef DEMO_MODE
+    app.setApplicationName("WatchFlower_demo");
+    setup_demo_mode();
+#endif
+
+#if !DEMO_MODE
     // i18n
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -134,6 +141,7 @@ int main(int argc, char *argv[])
     QTranslator appTranslator;
     appTranslator.load(":/i18n/watchflower.qm");
     app.installTranslator(&appTranslator);
+#endif // DEMO_MODE
 
     // Init WatchFlower components
     SettingsManager *sm = SettingsManager::getInstance();

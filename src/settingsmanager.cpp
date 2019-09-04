@@ -71,9 +71,9 @@ bool SettingsManager::readSettings()
 {
     bool status = false;
 
-    QSettings settings("WatchFlower", "WatchFlower");
-    settings.sync();
+    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
 
+    settings.sync();
     if (settings.status() == QSettings::NoError)
     {
         if (settings.contains("settings/appTheme"))
@@ -141,7 +141,7 @@ bool SettingsManager::writeSettings()
 {
     bool status = false;
 
-    QSettings settings("WatchFlower", "WatchFlower");
+    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
 
     if (settings.isWritable())
     {
@@ -177,6 +177,12 @@ bool SettingsManager::writeSettings()
 
 bool SettingsManager::loadDatabase()
 {
+    if (!QSqlDatabase::isDriverAvailable("QSQLITE"))
+    {
+        qWarning() << "> SQLite is NOT available";
+        return false;
+    }
+
     if (m_db)
     {
         closeDatabase();
@@ -544,6 +550,30 @@ void SettingsManager::setBigWidget(const bool value)
     m_bigWidget = value;
     writeSettings();
     Q_EMIT bigWidgetChanged();
+}
+
+/* ************************************************************************** */
+
+bool SettingsManager::getDemoMode()
+{
+    bool demoMode = false;
+
+#ifdef DEMO_MODE
+    demoMode = true;
+#endif
+
+    return demoMode;
+}
+
+QString SettingsManager::getDemoString()
+{
+    QString demoString;
+
+#ifdef DEMO_MODE
+    demoString = " / DEMO";
+#endif
+
+    return demoString;
 }
 
 /* ************************************************************************** */
