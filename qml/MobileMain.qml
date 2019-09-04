@@ -529,7 +529,7 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
-        visible: isTablet && appContent.state != "DeviceThermo"
+        visible: isTablet && (appContent.state != "Tutorial" && appContent.state != "DeviceThermo")
 
         Row {
             id: tabletMenuScreen

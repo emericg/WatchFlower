@@ -137,6 +137,13 @@ Item {
                     rectangleHeader.height = 0
                 }
             }
+            if (isTablet) {
+                if (screenOrientation === Qt.PortraitOrientation) {
+                    graphGrid.columns = 1
+                } else {
+                    graphGrid.columns = 2
+                }
+            }
         } else {
             if (graphGrid.width < 1080) {
                 graphGrid.columns = 1
