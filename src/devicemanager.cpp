@@ -428,6 +428,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
         if (m_btE)
         {
             m_btE = false;
+            refreshDevices_stop();
             Q_EMIT bluetoothChanged();
         }
     }
@@ -442,6 +443,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
         if (m_btE)
         {
             m_btE = false;
+            refreshDevices_stop();
             Q_EMIT bluetoothChanged();
         }
     }
@@ -451,6 +453,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
         m_btA = false;
         m_btE = false;
+        refreshDevices_stop();
         Q_EMIT bluetoothChanged();
     }
     else if (error == QBluetoothDeviceDiscoveryAgent::UnsupportedDiscoveryMethod)
