@@ -88,7 +88,7 @@ Rectangle {
         anchors.leftMargin: 18
         anchors.verticalCenter: parent.verticalCenter
 
-        //visible: ((rectangleHeader.width >= 720))
+        visible: (source != "qrc:/assets/menus/menu_logo.svg" || rectangleHeader.width >= 560)
         source: "qrc:/assets/menus/menu_logo.svg"
         color: Theme.colorHeaderContent
 
@@ -121,6 +121,7 @@ Rectangle {
         anchors.leftMargin: 64
         anchors.verticalCenter: parent.verticalCenter
 
+        visible: (rectangleHeader.width >= 560)
         text: "WatchFlower"
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader
@@ -270,7 +271,6 @@ Rectangle {
                 id: menuPlants
                 width: 64
                 height: 64
-                visible: (rectangleHeader.width >= 560)
                 selected: (appContent.state === "DeviceList")
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
@@ -294,18 +294,18 @@ Rectangle {
         }
 
         ////////////////
-
+/*
         ItemImageButton {
             id: buttonExit
             width: 48
             height: 48
             anchors.verticalCenter: parent.verticalCenter
+
+            visible: (rectangleHeader.width >= 720)
             iconColor: Theme.colorHeaderContent
-
-            visible: false // (rectangleHeader.width >= 720)
-
             source: (settingsManager.systray) ? "qrc:/assets/icons_material/baseline-minimize-24px.svg" : "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
             onClicked: (settingsManager.systray) ? applicationWindow.hide(): settingsManager.exit()
         }
+*/
     }
 }

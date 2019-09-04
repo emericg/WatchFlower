@@ -249,6 +249,45 @@ Item {
             }
 
             Item {
+                id: authors
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                ImageSvg {
+                    id: authorImg
+                    width: 28
+                    height: 28
+                    anchors.left: parent.left
+                    anchors.leftMargin: 2
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+
+                    source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
+                    color: Theme.colorText
+                }
+
+                TextArea {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 40
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Application by Emeric Grange\nVisual design by Chris Díaz")
+                    color: Theme.colorText
+                    font.pixelSize: 16
+
+                    MouseArea {
+                        anchors.fill: parent
+                        //onClicked: screenTutorial.reopen("About")
+                    }
+                }
+            }
+
+            Item {
                 id: desc
                 height: 180
                 anchors.left: parent.left
@@ -287,6 +326,8 @@ Item {
                 ImageSvg {
                     id: imageDevices
                     height: 96
+                    anchors.top: description.bottom
+                    anchors.topMargin: 24
                     anchors.left: description.left
                     anchors.leftMargin: description.leftPadding
                     anchors.right: description.right
@@ -295,8 +336,6 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/devices/welcome-devices.svg"
                     color: Theme.colorHighlight
-                    anchors.top: description.bottom
-                    anchors.topMargin: 24
                 }
             }
         }
