@@ -146,7 +146,7 @@ macx {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
 
-    # OS icon
+    # OS icons
     ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
     #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
     #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
@@ -244,12 +244,12 @@ ios {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
     QMAKE_BUNDLE = watchflower
 
-    # OS icon
+    # OS icons
     QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
     QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
     # OS infos
-    #QMAKE_INFO_PLIST = $$PWD/assets/ios/Info.plist
+    QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
     QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
 
     # iOS developer settings
