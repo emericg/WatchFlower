@@ -133,10 +133,10 @@
         </dc:creator>
         <dc:description>christiandiaz.design@gmail.com</dc:description>
         <cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+           rdf:resource="http://creativecommons.org/licenses/by-nd/4.0/" />
       </cc:Work>
       <cc:License
-         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+         rdf:about="http://creativecommons.org/licenses/by-nd/4.0/">
         <cc:permits
            rdf:resource="http://creativecommons.org/ns#Reproduction" />
         <cc:permits
@@ -145,10 +145,6 @@
            rdf:resource="http://creativecommons.org/ns#Notice" />
         <cc:requires
            rdf:resource="http://creativecommons.org/ns#Attribution" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
-        <cc:requires
-           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
       </cc:License>
     </rdf:RDF>
   </metadata>

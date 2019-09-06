@@ -16,6 +16,8 @@
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
    viewBox="0 0 24 24"
    sodipodi:docname="menu_logo.svg">
+  <title
+     id="title11">WatchFlower icon base</title>
   <defs
      id="defs4218" />
   <sodipodi:namedview
@@ -75,18 +77,18 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title>WatchFlower icon base</dc:title>
         <dc:creator>
           <cc:Agent>
-            <dc:title>Chris D</dc:title>
+            <dc:title>Chris Díaz</dc:title>
           </cc:Agent>
         </dc:creator>
-        <dc:description>diazchris.deviantart.com</dc:description>
+        <dc:description>christiandiaz.design@gmail.com</dc:description>
         <cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+           rdf:resource="http://creativecommons.org/licenses/by-nd/4.0/" />
       </cc:Work>
       <cc:License
-         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+         rdf:about="http://creativecommons.org/licenses/by-nd/4.0/">
         <cc:permits
            rdf:resource="http://creativecommons.org/ns#Reproduction" />
         <cc:permits
@@ -95,10 +97,6 @@
            rdf:resource="http://creativecommons.org/ns#Notice" />
         <cc:requires
            rdf:resource="http://creativecommons.org/ns#Attribution" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
-        <cc:requires
-           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
       </cc:License>
     </rdf:RDF>
   </metadata>

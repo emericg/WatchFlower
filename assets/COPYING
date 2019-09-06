@@ -1,13 +1,20 @@
 
 # Application logo and icons:
-- assets/logo.svg                 // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
-- assets/menu_logo.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
-- assets/desktop/watchflower*.svg // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+- assets/logos/logo.svg             // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/logos/watchflower*.svg     // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/menus/menu_logo.svg        // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
 
-# Google Material Design icons:
-- assets/icons_material/*         // Google // CC BY-SA 4.0
+# Welcome screns:
+- assets/devices/welcome-*.svg      // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
 
 # Others:
-- assets/welcome-*.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
-- assets/menu_back.svg            // Emeric Grange // CC BY-SA 4.0
-- assets/github.svg               // https://github.com/logos // proprietary
+- assets/devices/flowercare.svg     // Emeric Grange // CC BY-SA 4.0
+- assets/devices/hygrotemp.svg      // Emeric Grange // CC BY-SA 4.0
+- assets/devices/hygrotemp-clock.svg// Emeric Grange // CC BY-SA 4.0
+- assets/devices/ropot.svg          // Emeric Grange // CC BY-SA 4.0
+- assets/menus/menu_back.svg        // Emeric Grange // CC BY-SA 4.0
+- assets/menus/menu_close.svg       // Emeric Grange // CC BY-SA 4.0
+- assets/logos/github.svg           // https://github.com/logos // proprietary
+
+# Google Material Design icons:
+- assets/icons_material/*           // Google // CC BY-SA 4.0
