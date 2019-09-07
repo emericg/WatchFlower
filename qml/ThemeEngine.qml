@@ -1,24 +1,3 @@
-/*!
- * This file is part of WatchFlower.
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * \date      2019
- * \author    Emeric Grange <emeric.grange@gmail.com>
- */
-
 pragma Singleton
 import QtQuick 2.9
 
@@ -32,10 +11,16 @@ Item {
     }
     property int currentTheme: -1
 
+    ////////////////
+
     // Header
     property string colorHeader
     property string colorHeaderContent
     property string colorHeaderStatusbar
+
+    // Sidebar
+    property string colorSidebar
+    property string colorSidebarContent
 
     // Action bar
     property string colorActionbar
@@ -56,11 +41,13 @@ Item {
 
     property string colorText
     property string colorSubText
-    property string colorIcons
+    property string colorIcon
     property string colorSeparator
     property string colorComponentBorder
     property string colorComponentBgUp
     property string colorComponentBgDown
+
+    ////////////////
 
     // Palette colors
     property string colorLightGreen: "#09debc" // unused
@@ -77,6 +64,8 @@ Item {
     readonly property string colorMaterialDarkGrey: "#ececec"
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"
+
+    ////////////////
 
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 26 : 28
@@ -106,6 +95,8 @@ Item {
         if (currentTheme === themeIndex) return;
         currentTheme = themeIndex
 
+        ////////////////
+
         if (themeIndex === ThemeEngine.THEME_GREEN) {
 
             colorGreen = "#07bf97"
@@ -129,7 +120,7 @@ Item {
 
             colorText = "#333333"
             colorSubText = "#666666"
-            colorIcons = "#606060"
+            colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
             colorComponentBorder = "#b3b3b3"
             colorComponentBgUp = colorMaterialDarkGrey
@@ -162,7 +153,7 @@ Item {
 
             colorText = "#4b4747"
             colorSubText = "#666666"
-            colorIcons = "#606060"
+            colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
             colorComponentBorder = "#b3b3b3"
             colorComponentBgUp = colorMaterialDarkGrey
@@ -195,7 +186,7 @@ Item {
 
             colorText = "#EEEEEE"
             colorSubText = "#AAAAAA"
-            colorIcons = "#b9babe"
+            colorIcon = "#b9babe"
             colorSeparator = "#404040"
             colorComponentBorder = "#75767a"
             colorComponentBgUp = "#75767a"

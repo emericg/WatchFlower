@@ -18,6 +18,7 @@
         <file>DeviceScreenLimits.qml</file>
         <file>ThemeEngine.qml</file>
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
+        <file alias="ButtonImageThemed.qml">components_themed/ButtonImageThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="RangeSliderThemed.qml">components_themed/RangeSliderThemed.qml</file>
         <file alias="RangeSliderValueThemed.qml">components_themed/RangeSliderValueThemed.qml</file>

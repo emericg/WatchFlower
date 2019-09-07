@@ -42,7 +42,7 @@ Item {
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
             imageBattery.visible = true
-            imageBattery.color = Theme.colorIcons
+            imageBattery.color = Theme.colorIcon
 
             if (myDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -252,7 +252,7 @@ Item {
                     anchors.leftMargin: 16
 
                     source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorIcon
                 }
             }
 
@@ -355,7 +355,7 @@ Item {
 
                             visible: false
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcons
+                            color: Theme.colorIcon
                             anchors.right: parent.right
                             anchors.rightMargin: 0
                             anchors.verticalCenter: parent.verticalCenter
@@ -464,7 +464,7 @@ Item {
 
                             visible: false
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcons
+                            color: Theme.colorIcon
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.right: parent.right
                             anchors.rightMargin: 0
@@ -549,7 +549,7 @@ Item {
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
-            color: Theme.colorIcons
+            color: Theme.colorIcon
         }
 
         Column {

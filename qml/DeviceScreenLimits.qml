@@ -35,7 +35,7 @@ Item {
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
             imageBattery.visible = true
-            imageBattery.color = Theme.colorIcons
+            imageBattery.color = Theme.colorIcon
 
             if (myDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -158,7 +158,7 @@ Item {
                     anchors.leftMargin: 16
 
                     source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorIcon
                 }
             }
 
@@ -234,7 +234,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                    color: Theme.colorIcons
+                    color: Theme.colorIcon
 
                     MouseArea {
                         anchors.fill: parent

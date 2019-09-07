@@ -1,5 +1,5 @@
 // UtilsNumber.js
-// Version 0.1
+// Version 0.2
 .pragma library
 
 /*!
@@ -46,6 +46,14 @@ function normalize(value, min, max) {
  */
 function round2(n) {
     return Math.ceil(n/2)*2;
+}
+
+/*!
+ * Euclidean modulo
+ */
+function mod(n, modulo) {
+    var m = ((n % modulo) + modulo) % modulo;
+    return m < 0 ? m + Math.abs(modulo) : m;
 }
 
 /*!

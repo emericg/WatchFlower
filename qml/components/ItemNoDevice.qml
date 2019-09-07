@@ -43,7 +43,7 @@ Item {
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             fillMode: Image.PreserveAspectFit
-            color: Theme.colorIcons
+            color: Theme.colorIcon
 
             OpacityAnimator {
                 id: rescanAnimation

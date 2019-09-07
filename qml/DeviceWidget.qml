@@ -81,7 +81,7 @@ Item {
         // Sensor battery level
         if (boxDevice.hasBatteryLevel()) {
             imageBattery.visible = true
-            //imageBattery.color = Theme.colorIcons
+            //imageBattery.color = Theme.colorIcon
 
             if (boxDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -384,7 +384,7 @@ Item {
                         height: bigAssMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
-                        color: Theme.colorIcons
+                        color: Theme.colorIcon
                         rotation: 90
                         source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
                         fillMode: Image.PreserveAspectCrop
@@ -653,7 +653,7 @@ Item {
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             visible: false
-            color: Theme.colorIcons
+            color: Theme.colorIcon
 
             SequentialAnimation on opacity {
                 id: refreshAnimation
