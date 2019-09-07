@@ -134,10 +134,41 @@ Item {
                     font.pixelSize: 36
                 }
             }
+/*
+            Item {
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
+                Row {
+                    id: websiteANDgithub
+                    height: 48
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 8
+
+                    ButtonImageThemed {
+                        id: websiteBtn
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("Website")
+                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
+                    }
+                    ButtonImageThemed {
+                        id: githubBtn
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("GitHub page")
+                        source: "qrc:/assets/logos/github.svg"
+                        onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
+                    }
+                }
+            }
+*/
             Item {
                 id: website
-                //width: websiteImg.width + websiteTxt.width + 48
                 height: 48
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -168,14 +199,13 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower.html")
+                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
                 }
             }
 
             Item {
                 id: github
-                //width: githubImg.width + githubTxt.width + 48
                 height: 48
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -184,11 +214,11 @@ Item {
 
                 ImageSvg {
                     id: githubImg
-                    width: 28
-                    height: 28
+                    width: 27
+                    height: 27
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    anchors.leftMargin: 3
 
                     source: "qrc:/assets/logos/github.svg"
                     color: Theme.colorText
@@ -221,8 +251,8 @@ Item {
 
                 ImageSvg {
                     id: tutoImg
-                    width: 28
-                    height: 28
+                    width: 29
+                    height: 29
                     anchors.left: parent.left
                     anchors.leftMargin: 2
                     anchors.top: parent.top
@@ -258,10 +288,10 @@ Item {
 
                 ImageSvg {
                     id: authorImg
-                    width: 28
-                    height: 28
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    anchors.leftMargin: 0
                     anchors.top: parent.top
                     anchors.topMargin: 8
 
@@ -269,20 +299,23 @@ Item {
                     color: Theme.colorText
                 }
 
-                TextArea {
+                Text {
                     anchors.left: parent.left
-                    anchors.leftMargin: 40
+                    anchors.leftMargin: 48
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Application by Emeric Grange\nVisual design by Chris Díaz")
                     color: Theme.colorText
+                    linkColor: Theme.colorText
                     font.pixelSize: 16
+                    text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
+                    onLinkActivated: Qt.openUrlExternally(link)
 
                     MouseArea {
                         anchors.fill: parent
-                        //onClicked: screenTutorial.reopen("About")
+                        acceptedButtons: Qt.NoButton
+                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
             }
