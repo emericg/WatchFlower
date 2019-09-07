@@ -618,7 +618,7 @@ ApplicationWindow {
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
-                menuText: qsTr("Sensor")
+                menuText: qsTr("My plants")
                 selected: (appContent.state === "DeviceSensor" && appContent.state === "DeviceList")
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: tabletMenuDevice.deviceDatasButtonClicked()

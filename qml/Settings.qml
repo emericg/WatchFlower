@@ -260,7 +260,7 @@ Item {
 
                 visible: (element_autoDarkmode.visible)
 
-                text: qsTr("Dark mode enables between 9 PM and 9 AM.")
+                text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -336,7 +336,7 @@ Item {
 
                 visible: element_bluetoothControl.visible
 
-                text: qsTr("WatchFlower can enable your device's Bluetooth in order to operate.")
+                text: qsTr("WatchFlower will toggle your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -404,7 +404,7 @@ Item {
 
                 visible: element_bluetoothCompat.visible
 
-                text: qsTr("Improve Bluetooth reliability if your device has trouble connecting to sensors, at the expanse of sync speed.")
+                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth reliability, at the expanse of synchronization speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -497,7 +497,7 @@ Item {
 
                 visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
 
-                text: qsTr("WatchFlower stays active in the system tray and will wake up at a predefined intervals to refresh sensor datas.")
+                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -564,7 +564,7 @@ Item {
 
                 visible: element_notifiations.visible
 
-                text: qsTr("If a plant needs water, we'll be sure to bring it to your attention!")
+                text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
