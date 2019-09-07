@@ -8,20 +8,23 @@
 WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi MiJia "Flower Care" and "Ropot" devices. It also works great with many Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal datas from you!
 
-It works on Linux, macOS, Windows, but also Android and iOS! Prebuilt binaries are available on the "release" page.
+It works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).
+
+Application by [Emeric Grange](https://emeric.io/).
+Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 ### Features
 
 * Support "plant sensors" and thermometers
-* Clickable graphs
-* Monthly datas history
+* Clickable two-week graphs
+* Monthly/weekly/daily datas histograms
 * Set your own limits for plants care
 * Configurable update intervals
 * Background updates & notifications (desktop only)
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
-### TODO
+TODOs:
 
 - Continuous measurements
 - Read offline sensors history
@@ -36,17 +39,17 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 | (International and Chinese versions) | | (MiJia LCD and ClearGrass EInk) | |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) / [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) |
 
-Various Bluetooth devices can be added to WatchFlower. If you have a device in mind, you can contact us and we'll see what can be done!
+Various Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!
 
-### Desktop screenshots
+### Screenshots
 
-![GUI_DESKTOP](https://i.imgur.com/mjZouv7.png)
-![GUI_DESKTOP](https://i.imgur.com/kDZoYNw.png)
+![GUI_DESKTOP1](https://i.imgur.com/1cAIta8.png)
+![GUI_DESKTOP2](https://i.imgur.com/joJB4pB.png)
 
-### Mobile screenshots
+![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
+![GUI_MOBILE2](https://i.imgur.com/e1bXFXM.png)
 
-![GUI_MOBILE](https://i.imgur.com/VdzHdqH.png)
-![GUI_MOBILE](https://i.imgur.com/e1bXFXM.png)
+![GUI_MOBILE3](https://i.imgur.com/UiirNMw.png)
 
 
 ## Documentation
@@ -80,7 +83,7 @@ You can browse the code on the GitHub page, submit patches and pull requests! Yo
 
 ### Users
 
-You can help us find and report bugs, propose new features, help with translation, documentation and more! Visit the Issues section of the GitHub page to start!
+You can help us find and report bugs, suggest new features, help with translation, documentation and more! Visit the Issues section of the GitHub page to start!
 
 
 ## License
