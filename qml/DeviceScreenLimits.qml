@@ -117,7 +117,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: isMobile ? 100 : 140
+        height: isMobile ? 100 : 134
         z: 5
 
         anchors.top: parent.top
@@ -130,7 +130,7 @@ Item {
         Column {
             id: devicePanel
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 2
+            anchors.verticalCenterOffset: 0
             anchors.right: parent.right
             anchors.left: parent.left
 

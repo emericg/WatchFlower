@@ -130,7 +130,7 @@ Item {
                 Row {
                     id: theme_selector
                     anchors.right: parent.right
-                    anchors.rightMargin: 22
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
@@ -228,7 +228,7 @@ Item {
                     id: switch_autoDarkmode
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     Component.onCompleted: checked = settingsManager.autoDark
                     onCheckedChanged: {
@@ -306,10 +306,11 @@ Item {
 
                 SwitchThemed {
                     id: switch_bluetoothControl
-                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.bluetoothControl
                     onCheckedChanged: settingsManager.bluetoothControl = checked
                 }
@@ -373,10 +374,11 @@ Item {
 
                 SwitchThemed {
                     id: switch_bluetoothCompat
-                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.bluetoothCompat
                     onCheckedChanged: settingsManager.bluetoothCompat = checked
                 }
@@ -435,12 +437,13 @@ Item {
 
                 SwitchThemed {
                     id: switch_worker
-                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.systray
                     onCheckedChanged: settingsManager.systray = checked
-                    anchors.rightMargin: 12
                 }
 
                 Text {
@@ -518,10 +521,11 @@ Item {
 
                 SwitchThemed {
                     id: switch_notifiations
-                    z: 1
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.notifications
                     onCheckedChanged: settingsManager.notifications = checked
                 }
@@ -664,10 +668,11 @@ Item {
 
                 SwitchThemed {
                     id: switch_minimized
-                    z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.minimized
                     onCheckedChanged: settingsManager.minimized = checked
                 }
@@ -716,10 +721,11 @@ Item {
 
                 SwitchThemed {
                     id: switch_bigwidget
-                    z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
                     Component.onCompleted: checked = settingsManager.bigWidget
                     onCheckedChanged: settingsManager.bigWidget = checked
                 }

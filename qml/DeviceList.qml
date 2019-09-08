@@ -321,7 +321,7 @@ Item {
         id: devicesView
 
         anchors.top: rowbar.bottom
-        anchors.topMargin: 6
+        anchors.topMargin: singleColumn ? 2 : 8
         anchors.left: screenDeviceList.left
         anchors.leftMargin: 6
         anchors.right: screenDeviceList.right

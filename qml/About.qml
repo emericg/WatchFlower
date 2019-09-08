@@ -179,9 +179,9 @@ Item {
                     id: websiteImg
                     width: 32
                     height: 32
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.leftMargin: -1
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     color: Theme.colorText
@@ -214,11 +214,11 @@ Item {
 
                 ImageSvg {
                     id: githubImg
-                    width: 27
-                    height: 27
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: 26
+                    height: 26
                     anchors.left: parent.left
-                    anchors.leftMargin: 3
+                    anchors.leftMargin: 2
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/logos/github.svg"
                     color: Theme.colorText
@@ -226,9 +226,9 @@ Item {
 
                 Text {
                     id: githubTxt
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     text: qsTr("GitHub page")
@@ -251,12 +251,11 @@ Item {
 
                 ImageSvg {
                     id: tutoImg
-                    width: 29
-                    height: 29
+                    width: 27
+                    height: 27
                     anchors.left: parent.left
                     anchors.leftMargin: 2
-                    anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
                     color: Theme.colorText
@@ -288,12 +287,11 @@ Item {
 
                 ImageSvg {
                     id: authorImg
-                    width: 32
-                    height: 32
+                    width: 31
+                    height: 31
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
                     color: Theme.colorText

@@ -322,14 +322,14 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
             anchors.right: rowRight.left
-            anchors.rightMargin: 0
+            anchors.rightMargin: 8
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
 
             clip: true
-            spacing: bigAssMode ? (singleColumn ? 20 : 14) : (singleColumn ? 24 : 12)
+            spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
 
             ImageSvg {
                 id: imageDevice
@@ -421,7 +421,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 16 : 10)
+            anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 14 : 10)
 
             Row {
                 id: lilIcons
