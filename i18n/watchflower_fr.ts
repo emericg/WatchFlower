@@ -669,7 +669,7 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="193"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="272"/>
@@ -717,7 +717,7 @@
         <location filename="../qml/MobileMain.qml" line="477"/>
         <location filename="../qml/MobileMain.qml" line="578"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="552"/>
