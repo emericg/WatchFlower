@@ -209,7 +209,9 @@ int main(int argc, char *argv[])
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(FORCE_MOBILE_UI)
 #if defined(Q_OS_LINUX)
-    QObject::connect(&app, &SingleApplication::instanceStarted, st, &SystrayManager::REinstallSystray);
+    // GNOME hack for the mysterious disappearences of the tray icon...
+    // Or just use gnome-shell-extension-appindicator instead of TopIcon Plus (sorry)...
+    //QObject::connect(&app, &SingleApplication::instanceStarted, st, &SystrayManager::REinstallSystray);
 #endif
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);

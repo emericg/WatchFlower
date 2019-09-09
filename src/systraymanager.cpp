@@ -175,12 +175,13 @@ bool SystrayManager::installSystray()
 
 void SystrayManager::REinstallSystray()
 {
+    // Trying to launch a new WatchFlower instance will manually hide then show again the tray icon...
+    // This hack helps in cases where the tray icon just disappears after some time, seen a lot on Gnome desktop with TopIcons Plus.
+    // A different solution to this problem is to use gnome-shell-extension-appindicator instead of TopIcons Plus.
+
 #ifdef Q_OS_LINUX
     if (m_sysTray)
     {
-        // This hack helps in cases where the tray icon just disappears after some
-        // time, seen a lot on Gnome desktop. Trying to launch a new instance will
-        // manually hide then show a tray icon...
         if (m_sysTrayIcon && m_sysTrayMenu)
         {
             m_sysTray->hide();
