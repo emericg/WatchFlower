@@ -319,14 +319,14 @@ Item {
 
         Row {
             id: rowLeft
-            anchors.left: parent.left
-            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
-            anchors.right: rowRight.left
-            anchors.rightMargin: 8
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
+            anchors.left: parent.left
+            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
+            anchors.right: rowRight.left
+            anchors.rightMargin: singleColumn ? 0 : 8
 
             clip: true
             spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
@@ -415,13 +415,14 @@ Item {
 
         Row {
             id: rowRight
-            spacing: 8
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.right: parent.right
             anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 14 : 10)
+
+            spacing: 8
 
             Row {
                 id: lilIcons
@@ -432,8 +433,8 @@ Item {
 
                 ImageSvg {
                     id: water
-                    width: 24
-                    height: 24
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
@@ -441,8 +442,8 @@ Item {
                 }
                 ImageSvg {
                     id: temp
-                    width: 24
-                    height: 24
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
