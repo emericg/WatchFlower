@@ -153,20 +153,6 @@ int main(int argc, char *argv[])
     if (!sm || !st || !dm)
         return EXIT_FAILURE;
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    // Desktop only
-    if (dm->areDevicesAvailable())
-    {
-        // If we have devices, update them
-        dm->refreshDevices_check();
-    }
-    else
-    {
-        // If we have no devices, run a first scan
-        dm->scanDevices();
-    }
-#endif
-
     // Then we start the UI
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
