@@ -43,7 +43,7 @@ Rectangle {
     SwipeView {
         id: tutorialPages
         anchors.fill: parent
-        anchors.bottomMargin: 48
+        anchors.bottomMargin: 56
 
         currentIndex: 0
         onCurrentIndexChanged: {

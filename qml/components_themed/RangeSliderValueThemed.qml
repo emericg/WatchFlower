@@ -79,7 +79,7 @@ RangeSlider {
                 var vvalue = second.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
+                return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
             font.pixelSize: 14
             color: "white"

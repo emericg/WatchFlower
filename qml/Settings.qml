@@ -922,12 +922,6 @@ Item {
                 }
             }
 
-            Item { // spacer
-                height: 8
-                anchors.right: parent.right
-                anchors.left: parent.left
-            }
-
             ////////
 /*
             Item {

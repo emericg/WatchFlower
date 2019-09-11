@@ -320,7 +320,7 @@ Item {
 
             Item {
                 id: desc
-                height: 180
+                height: 176
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
