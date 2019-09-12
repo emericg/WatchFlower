@@ -28,7 +28,6 @@ Item {
     id: deviceWidget
     implicitWidth: 640
     implicitHeight: bigAssMode ? 140 : 100
-    anchors.fill: parent.width
 
     property var boxDevice: null
 
@@ -36,7 +35,7 @@ Item {
     property bool bigAssMode: false
     property bool singleColumn: true
 
-    property bool selected: flase
+    property bool selected: false
 
     Connections {
         target: boxDevice

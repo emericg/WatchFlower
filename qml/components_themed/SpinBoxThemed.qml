@@ -5,7 +5,7 @@ import com.watchflower.theme 1.0
 
 SpinBox {
     id: control
-    value: 50
+    value: 0
     editable: true
     clip: true
     font.pixelSize: 14
