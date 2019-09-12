@@ -520,12 +520,13 @@ ApplicationWindow {
 
         color: Theme.colorTabletmenu
         width: parent.width
-        height: 50
+        height: 48
 
         Rectangle {
             anchors.top: parent.top
             width: parent.width
             height: 1
+            opacity: 0.5
             color: Theme.colorTabletmenuContent
         }
 

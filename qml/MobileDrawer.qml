@@ -29,42 +29,76 @@ Rectangle {
     height: parent.height
     color: Theme.colorBackground
 
-    Rectangle {
+    Column {
         id: rectangleHeader
         anchors.top: parent.top
-        anchors.topMargin: screenNotchPadding
         anchors.left: parent.left
-        anchors.leftMargin: screenNotchPadding
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        color: Theme.colorBackground // to hide scrollview content
-
         z: 5
-        height: 80
 
-        Image {
-            id: imageHeader
-            width: 40
-            height: 40
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
-
-            source: "qrc:/assets/logos/logo.svg"
-            sourceSize: Qt.size(width, height)
+        Connections {
+            target: applicationWindow
+            onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
+        }
+        Connections {
+            target: settingsManager
+            onAppthemeChanged: rectangleHeader.updateIOSHeader()
         }
 
-        Text {
-            id: element
-            anchors.verticalCenterOffset: 2
-            anchors.left: imageHeader.right
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
+        function updateIOSHeader() {
+            if (Qt.platform.os === "ios") {
+                if (screenStatusbarPadding != 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
+                    rectangleStatusbar.height = screenStatusbarPadding
+                else
+                    rectangleStatusbar.height = 0
+            }
+        }
 
-            text: "WatchFlower"
-            color: Theme.colorText
-            font.bold: true
-            font.pixelSize: 22
+        Rectangle {
+            id: rectangleStatusbar
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: Theme.colorBackground // "red" // to hide scrollview content
+            height: screenStatusbarPadding
+        }
+        Rectangle {
+            id: rectangleNotch
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: Theme.colorBackground // "yellow" // to hide scrollview content
+            height: screenNotchPadding
+        }
+        Rectangle {
+            id: rectangleLogo
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            color: Theme.colorBackground
+            height: 80
+
+            Image {
+                id: imageHeader
+                width: 40
+                height: 40
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/logos/logo.svg"
+                sourceSize: Qt.size(width, height)
+            }
+            Text {
+                id: textHeader
+                anchors.left: imageHeader.right
+                anchors.leftMargin: 10
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 2
+
+                text: "WatchFlower"
+                color: Theme.colorText
+                font.bold: true
+                font.pixelSize: 22
+            }
         }
     }
 
