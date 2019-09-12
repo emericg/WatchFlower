@@ -596,6 +596,7 @@ Item {
                     from: 1
                     to: 6
                     stepSize: 1
+                    editable: false
 
                     property bool sb_inited: false
                     Component.onCompleted: {
