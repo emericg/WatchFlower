@@ -12,7 +12,7 @@ SpinBox {
 
     contentItem: TextInput {
         z: 2
-        text: control.textFromValue(control.value, control.locale) // + qsTr("min.")
+        text: control.textFromValue(control.value, control.locale)  + " " + qsTr("h")
 
         font: control.font
         color: Theme.colorSubText

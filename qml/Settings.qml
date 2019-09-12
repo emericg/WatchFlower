@@ -588,15 +588,25 @@ Item {
                     id: spinBox_update
                     width: 128
                     height: 34
-                    z: 1
-                    Component.onCompleted: value = settingsManager.updateInterval
-                    onValueChanged: settingsManager.updateInterval = value
-                    to: 180
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    stepSize: 30
                     anchors.rightMargin: 16
-                    from: 30
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    from: 1
+                    to: 6
+                    stepSize: 1
+
+                    property bool sb_inited: false
+                    Component.onCompleted: {
+                        value = (settingsManager.updateInterval / 60)
+                        sb_inited = true
+                    }
+                    onValueChanged: {
+                        if (sb_inited) {
+                            settingsManager.updateInterval = (value * 60)
+                        }
+                    }
                 }
 
                 Text {
