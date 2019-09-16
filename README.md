@@ -5,13 +5,14 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi MiJia "Flower Care" and "Ropot" devices. It also works great with many Bluetooth thermometers!
+WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi MiJia "Flower Care" and "Ropot" sensors. WatchFlower also works great with a couple of Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal datas from you!
 
-It works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.
-Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).
+Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
+Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
+Available in English, French and Spanish.  
 
-Application by [Emeric Grange](https://emeric.io/).
+Application developped by [Emeric Grange](https://emeric.io/).
 Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 ### Features
@@ -68,7 +69,7 @@ You will need a C++11 compiler and Qt 5.10 (Qt 5.12+ is recommended however) wit
 
 ## Special thanks
 
-* Christian Díaz <christiandiaz.design@gmail.com> for his extensive work on the application design and logo!
+* Chris Díaz <christiandiaz.design@gmail.com> for his extensive work on the application design and logo!
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
