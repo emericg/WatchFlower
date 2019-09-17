@@ -321,7 +321,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 14
+                font.pixelSize: (settingsManager.bigWidget && isMobile) ? 15 : 14
                 font.bold: true
                 color: Theme.colorSubText
             }
@@ -343,7 +343,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
-                font.pixelSize: 15
+                font.pixelSize: (settingsManager.bigWidget && isMobile) ? 15 : 14
                 font.bold: true
                 color: Theme.colorSubText
             }
