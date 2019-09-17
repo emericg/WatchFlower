@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=WatchFlower
-Comment=WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi / MiJia 'Flower Care' and 'Ropot' devices!
+Comment=WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi 'Flower Care' and 'Ropot' Bluetooth sensors and thermometers!
 Exec=watchflower
 Icon=watchflower
 Categories=Utility;Qt;DataVisualization;
