@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: settingsScreen
@@ -143,15 +143,14 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         radius: 2
-                        color: "#09debc" // green theme colorHighlight2
-                        border.color: Theme.colorHighlight
+                        color: "#09debc" // green theme colorSecondary
+                        border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "green") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 settingsManager.appTheme = "green"
-                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -162,15 +161,14 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         radius: 2
-                        color: "#FFE400" // day theme colorHighlight2
-                        border.color: Theme.colorHighlight
+                        color: "#FFE400" // day theme colorSecondary
+                        border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "day") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 settingsManager.appTheme = "day"
-                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -182,14 +180,13 @@ Item {
 
                         radius: 2
                         color: "#555151"
-                        border.color: Theme.colorHighlight
+                        border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "night") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 settingsManager.appTheme = "night"
-                                Theme.loadTheme(settingsManager.appTheme)
                             }
                         }
                     }
@@ -224,7 +221,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_autoDarkmode
                     z: 1
                     anchors.right: parent.right
@@ -304,7 +301,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_bluetoothControl
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -372,7 +369,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_bluetoothCompat
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -435,7 +432,7 @@ Item {
                 // desktop only // for now...
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_worker
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -519,7 +516,7 @@ Item {
                 // desktop only // for now... // also, need the systray
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && settingsManager.systray
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_notifiations
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
@@ -593,6 +590,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
+                    legend: qsTr(" h.")
                     from: 1
                     to: 6
                     stepSize: 1
@@ -677,7 +675,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_minimized
                     anchors.right: parent.right
                     anchors.rightMargin: 8
@@ -730,7 +728,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemed {
+                SwitchThemedMobile {
                     id: switch_bigwidget
                     anchors.right: parent.right
                     anchors.rightMargin: 8

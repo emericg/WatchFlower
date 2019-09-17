@@ -22,8 +22,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
-import "UtilsNumber.js" as UtilsNumber
+import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: deviceScreenLimits
@@ -347,7 +347,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueThemed {
+                RangeSliderValue {
                     id: rangeSlider_hygro
                     height: 28
                     anchors.top: imageHygro.bottom
@@ -357,6 +357,8 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
+                    colorBg: Theme.colorYellow
+                    colorFg: Theme.colorGreen
                     unit: "%"
                     from: 0
                     to: 66
@@ -415,7 +417,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueThemed {
+                RangeSliderValue {
                     id: rangeSlider_temp
                     height: 28
                     anchors.top: imageTemp.bottom
@@ -425,6 +427,8 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
+                    colorBg: Theme.colorYellow
+                    colorFg: Theme.colorGreen
                     unit: "°"
                     from: 0
                     to: 40
@@ -483,7 +487,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueThemed {
+                RangeSliderValue {
                     id: rangeSlider_lumi
                     height: 28
                     anchors.top: imageLumi.bottom
@@ -493,6 +497,8 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
+                    colorBg: Theme.colorYellow
+                    colorFg: Theme.colorGreen
                     unit: "k"
                     from: 0
                     to: 10000
@@ -606,7 +612,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueThemed {
+                RangeSliderValue {
                     id: rangeSlider_condu
                     height: 28
                     anchors.top: imageCondu.bottom
@@ -616,7 +622,8 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    unit: ""
+                    colorBg: Theme.colorYellow
+                    colorFg: Theme.colorGreen
                     from: 0
                     to: 500
                     stepSize: 10

@@ -21,7 +21,7 @@
 
 import QtQuick 2.9
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Rectangle {
     width: parent.width

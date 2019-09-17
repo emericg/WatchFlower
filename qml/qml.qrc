@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/qml">
-        <file>UtilsNumber.js</file>
         <file>MobileMain.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
@@ -16,23 +15,43 @@
         <file>DeviceScreenDatas.qml</file>
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
+
+        <file>WindowGeometrySaver.qml</file>
         <file>ThemeEngine.qml</file>
+
+        <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
+        <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
+        <file alias="ItemCodec.qml">components_generic/ItemCodec.qml</file>
+        <file alias="ItemDataBar.qml">components_generic/ItemDataBar.qml</file>
+        <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
+        <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
+        <file alias="ItemSidebarButton.qml">components_generic/ItemSidebarButton.qml</file>
+        <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
+        <file alias="ButtonImageThemed.qml">components_generic/ButtonImageThemed.qml</file>
+        <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
+        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
+        <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
+
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
-        <file alias="ButtonImageThemed.qml">components_themed/ButtonImageThemed.qml</file>
+        <file alias="MiddleSliderThemed.qml">components_themed/MiddleSliderThemed.qml</file>
+        <file alias="ProgressBarThemed.qml">components_themed/ProgressBarThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="RangeSliderThemed.qml">components_themed/RangeSliderThemed.qml</file>
-        <file alias="RangeSliderValueThemed.qml">components_themed/RangeSliderValueThemed.qml</file>
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
-        <file alias="SwitchThemed.qml">components_themed/SwitchThemed.qml</file>
-        <file alias="ImageSvg.qml">components_themed/ImageSvg.qml</file>
-        <file alias="ItemDataBar.qml">components/ItemDataBar.qml</file>
+        <file alias="SliderThemed.qml">components_themed/SliderThemed.qml</file>
+        <file alias="SwitchThemedDesktop.qml">components_themed/SwitchThemed_desktop.qml</file>
+        <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
+        <file alias="TextFieldThemed.qml">components_themed/TextFieldThemed.qml</file>
+        <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
+        <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
+
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
-        <file alias="ItemMenuButton.qml">components/ItemMenuButton.qml</file>
-        <file alias="ItemImageButton.qml">components/ItemImageButton.qml</file>
-        <file alias="WindowGeometrySaver.qml">components/WindowGeometrySaver.qml</file>
+    </qresource>
+    <qresource prefix="/js">
+        <file>UtilsNumber.js</file>
     </qresource>
 </RCC>

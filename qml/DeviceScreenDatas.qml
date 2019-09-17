@@ -23,8 +23,8 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 
-import com.watchflower.theme 1.0
-import "UtilsNumber.js" as UtilsNumber
+import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: deviceScreenDatas

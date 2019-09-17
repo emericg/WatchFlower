@@ -3,29 +3,28 @@ import QtQuick.Controls 2.2
 
 import ThemeEngine 1.0
 
-RadioButton {
+CheckBox {
     id: control
+    implicitHeight: Theme.componentHeight
 
-    text: "Radio Button"
+    text: "Check Box"
     checked: false
 
     indicator: Rectangle {
         x: control.leftPadding
         y: (parent.height / 2) - (height / 2)
-        width: 24
-        height: 24
-        radius: 12
+        width: 26
+        height: 26
 
         color: Theme.colorComponentBackground
         border.width: 1
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {
-            x: 5
-            y: 5
+            x: 6
+            y: 6
             width: 14
             height: 14
-            radius: 7
 
             visible: control.checked
             color: Theme.colorSecondary

@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: deviceScreenHistory
@@ -201,13 +201,13 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: isMobile ? 12 : 52
 
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonDone
                 width: 100
                 height: 32
                 text: qsTr("Month")
                 font.pixelSize: 14
-                selected: (graphMode === "monthly")
+                fullColor: (graphMode === "monthly")
 
                 onClicked: {
                     graphMode = "monthly"
@@ -215,13 +215,13 @@ Item {
                 }
             }
 
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonDone1
                 width: 100
                 height: 32
                 text: qsTr("Week")
                 font.pixelSize: 14
-                selected: (graphMode === "weekly")
+                fullColor: (graphMode === "weekly")
 
                 onClicked: {
                     graphMode = "weekly"
@@ -229,13 +229,13 @@ Item {
                 }
             }
 
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonDone2
                 width: 100
                 height: 32
                 text: qsTr("Day")
                 font.pixelSize: 14
-                selected: (graphMode === "daily")
+                fullColor: (graphMode === "daily")
 
                 onClicked: {
                     graphMode = "daily"

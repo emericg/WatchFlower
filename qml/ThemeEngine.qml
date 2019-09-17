@@ -35,17 +35,26 @@ Item {
     property string colorBackground
     property string colorForeground
 
-    property string colorHighlight
-    property string colorHighlight2
-    property string colorHighContrast
+    property string colorPrimary
+    property string colorSecondary
+    property string colorWarning // todo
+    property string colorError // todo
 
     property string colorText
     property string colorSubText
     property string colorIcon
     property string colorSeparator
+    property string colorHighContrast
+
+    // Qt Quick controls & theming
+    property string colorComponent
+    property string colorComponentText
+    property string colorComponentContent
     property string colorComponentBorder
-    property string colorComponentBgUp
-    property string colorComponentBgDown
+    property string colorComponentDown
+    property string colorComponentBackground
+    property int componentRadius: 3
+    property int componentHeight: 40
 
     ////////////////
 
@@ -77,8 +86,13 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Component.onCompleted: loadTheme(settingsManager.appTheme)
+    Connections {
+        target: settingsManager
+        onAppthemeChanged: loadTheme(settingsManager.appTheme)
+    }
 
     function loadTheme(themeIndex) {
+
         if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
         if (themeIndex === "night") themeIndex = ThemeEngine.THEME_NIGHT
@@ -93,9 +107,6 @@ Item {
         }
 
         if (currentTheme === themeIndex) return;
-        currentTheme = themeIndex
-
-        ////////////////
 
         if (themeIndex === ThemeEngine.THEME_GREEN) {
 
@@ -118,17 +129,22 @@ Item {
             colorBackground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
             colorForeground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : colorMaterialDarkGrey
 
+            colorPrimary = colorGreen
+            colorSecondary = colorLightGreen
+
             colorText = "#333333"
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
-            colorComponentBorder = "#b3b3b3"
-            colorComponentBgUp = colorMaterialDarkGrey
-            colorComponentBgDown = colorMaterialLightGrey
-
-            colorHighlight = colorGreen
-            colorHighlight2 = colorLightGreen
             colorHighContrast = "black"
+
+            colorComponent = "#eaeaea"
+            colorComponentText = "black"
+            colorComponentContent = "black"
+            colorComponentBorder = "#b3b3b3"
+            colorComponentDown = "#cacaca"
+            colorComponentBackground = "#eaeaea"
+            componentRadius = 4
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
 
@@ -151,17 +167,22 @@ Item {
             colorBackground = "white"
             colorForeground = colorMaterialLightGrey
 
+            colorPrimary = colorYellow
+            colorSecondary = "#ffe800"
+
             colorText = "#4b4747"
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
-            colorComponentBorder = "#b3b3b3"
-            colorComponentBgUp = colorMaterialDarkGrey
-            colorComponentBgDown = colorMaterialLightGrey
-
-            colorHighlight = colorYellow
-            colorHighlight2 = "#FFE400"
             colorHighContrast = "#303030"
+
+            colorComponent = "#efefef"
+            colorComponentText = "black"
+            colorComponentContent = "black"
+            colorComponentBorder = "#b3b3b3"
+            colorComponentDown = "#cacaca"
+            colorComponentBackground = "#FAFAFA"
+            componentRadius = 4
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
 
@@ -184,23 +205,25 @@ Item {
             colorBackground = "#313236"
             colorForeground = "#292929"
 
+            colorPrimary = "#bb86fc"
+            colorSecondary = "#b16bee"
+
             colorText = "#EEEEEE"
             colorSubText = "#AAAAAA"
             colorIcon = "#b9babe"
             colorSeparator = "#404040"
-            colorComponentBorder = "#75767a"
-            colorComponentBgUp = "#75767a"
-            colorComponentBgDown = "#292929"
-
-            colorHighlight = "#bb86fc"
-            colorHighlight2 = colorHeaderStatusbar
             colorHighContrast = "white"
+
+            colorComponent = "#757575"
+            colorComponentText = "#222222"
+            colorComponentContent = "white"
+            colorComponentBorder = "#757575"
+            colorComponentDown = "#555555"
+            colorComponentBackground = "#dddddd"
+            componentRadius = 4
         }
 
-        // When the current theme does not match the saved theme, it's probably
-        // because we (automatically) switched to night mode.
-        // So we force an UI refresh AFTER changing the colors, so the
-        // onAppThemeChanged slots can be triggered
-        if (currentTheme !== settingsManager.appTheme) settingsManager.toggleAutoDark()
+        // This will emit the signal 'onCurrentThemeChanged'
+        currentTheme = themeIndex
     }
 }

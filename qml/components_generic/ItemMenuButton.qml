@@ -2,14 +2,14 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: itemMenuButton
     implicitWidth: 64
     implicitHeight: 64
 
-    width: 16 + contentImage.width + 16 + contentText.width + 16
+    width: 16 + contentImage.width + 16 + contentText.width + 24
     property int imgSize: 32
 
     signal clicked()
@@ -17,7 +17,7 @@ Item {
     property bool highlighted: false
 
     property string colorContent: Theme.colorHeaderContent
-    property string colorBackground: Theme.colorHeaderStatusbar
+    property string colorBackground: Theme.colorForeground
     property string highlightMode: "background" // available: background & text
 
     property string menuText: ""

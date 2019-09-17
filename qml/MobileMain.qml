@@ -25,7 +25,7 @@ import QtQuick.Controls.Material 2.0
 import QtQuick.Window 2.2
 
 import StatusBar 0.1
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 ApplicationWindow {
     id: applicationWindow

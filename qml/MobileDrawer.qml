@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Rectangle {
     width: parent.width
@@ -41,8 +41,8 @@ Rectangle {
             onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
         }
         Connections {
-            target: settingsManager
-            onAppthemeChanged: rectangleHeader.updateIOSHeader()
+            target: Theme
+            onCurrentThemeChanged: rectangleHeader.updateIOSHeader()
         }
 
         function updateIOSHeader() {

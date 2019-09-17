@@ -1,31 +1,30 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Switch {
     id: control
 
     indicator: Rectangle {
         x: control.leftPadding
-        y: parent.height / 2 - height / 2
-        implicitWidth: 40
-        implicitHeight: 16
-        radius: 13
+        y: (parent.height / 2) - (height / 2)
+        width: 40
+        height: 16
+        radius: 16
 
-        //border.color: Theme.colorComponentBorder
-        color: control.checked ? Theme.colorHighlight2 : Theme.colorComponentBorder
+        color: control.checked ? Theme.colorSecondary : Theme.colorComponentDown
+        //border.color: control.checked ? Theme.colorSecondary : Theme.colorComponentBackground
 
         Rectangle {
-            x: control.checked ? parent.width - width : 0
+            x: control.checked ? (parent.width - width) : 0
             anchors.verticalCenter: parent.verticalCenter
-
             width: 24
             height: width
             radius: width/2
 
-            color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
-            border.color: control.checked ? Theme.colorHighlight : Theme.colorNeutralDay
+            color: control.checked ? Theme.colorPrimary : Theme.colorComponent
+            border.color: control.checked ? Theme.colorPrimary : Theme.colorComponent
         }
     }
 

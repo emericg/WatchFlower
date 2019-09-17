@@ -1,7 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Popup {
     id: itemPopupDelete
@@ -44,19 +44,20 @@ Popup {
             anchors.bottom: parent.bottom
             spacing: 24
 
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonCancel
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Cancel")
                 onClicked: itemPopupDelete.close()
             }
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonConfirm
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Delete")
-                color: Theme.colorRed
+                primaryColor: Theme.colorRed
+                fullColor: true
                 onClicked: {
                     itemPopupDelete.confirmed();
                     itemPopupDelete.close();

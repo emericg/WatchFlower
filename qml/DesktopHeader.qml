@@ -21,7 +21,7 @@
 
 import QtQuick 2.9
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Rectangle {
     id: rectangleHeader
@@ -151,6 +151,7 @@ Rectangle {
             visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderStatusbar
             onClicked: deviceRefreshButtonClicked()
 
             NumberAnimation on rotation {
@@ -187,6 +188,7 @@ Rectangle {
                 id: menuDeviceDatas
                 width: 64
                 height: 64
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: deviceDatasButtonClicked()
             }
@@ -194,6 +196,7 @@ Rectangle {
                 id: menuDeviceHistory
                 width: 64
                 height: 64
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
                 onClicked: deviceHistoryButtonClicked()
             }
@@ -201,6 +204,7 @@ Rectangle {
                 id: menuDeviceSettings
                 width: 64
                 height: 64
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                 onClicked: deviceSettingsButtonClicked()
             }
@@ -218,6 +222,7 @@ Rectangle {
 
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderStatusbar
             onClicked: refreshButtonClicked()
 
             NumberAnimation on rotation {
@@ -247,6 +252,7 @@ Rectangle {
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderStatusbar
             onClicked: rescanButtonClicked()
 
             SequentialAnimation on opacity {
@@ -272,6 +278,7 @@ Rectangle {
                 width: 64
                 height: 64
                 selected: (appContent.state === "DeviceList")
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                 onClicked: plantsButtonClicked()
             }
@@ -280,6 +287,7 @@ Rectangle {
                 width: 64
                 height: 64
                 selected: (appContent.state === "Settings")
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 onClicked: settingsButtonClicked()
             }
@@ -288,6 +296,7 @@ Rectangle {
                 width: 64
                 height: 64
                 selected: (appContent.state === "About")
+                colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
                 onClicked: aboutButtonClicked()
             }

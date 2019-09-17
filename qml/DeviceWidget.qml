@@ -21,8 +21,8 @@
 
 import QtQuick 2.9
 
-import com.watchflower.theme 1.0
-import "UtilsNumber.js" as UtilsNumber
+import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: deviceWidget
@@ -44,13 +44,15 @@ Item {
         onDatasUpdated: updateBoxDatas()
         onLimitsUpdated: updateBoxDatas()
     }
-
+    Connections {
+        target: Theme
+         onCurrentThemeChanged: {
+             updateSensorDatas()
+             updateBoxDatas()
+         }
+    }
     Connections {
         target: settingsManager
-        onAppThemeChanged: {
-            updateSensorDatas()
-            updateBoxDatas()
-        }
         onBigWidgetChanged: {
             updateSensorDatas()
             updateBoxDatas()

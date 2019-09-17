@@ -456,102 +456,129 @@ void SettingsManager::resetSettings()
 
 void SettingsManager::setSysTray(const bool value)
 {
-    bool trayEnable_saved = m_systrayEnabled;
-    m_systrayEnabled = value; writeSettings();
-
-    SystrayManager *st = SystrayManager::getInstance();
-    if (st)
+    if (m_systrayEnabled != value)
     {
-        if (trayEnable_saved == true && m_systrayEnabled == false)
+        bool trayEnable_saved = m_systrayEnabled;
+        m_systrayEnabled = value;
+        writeSettings();
+
+        SystrayManager *st = SystrayManager::getInstance();
+        if (st)
         {
-            st->removeSystray();
-            Q_EMIT systrayChanged();
-        }
-        else if (trayEnable_saved == false && m_systrayEnabled == true)
-        {
-            st->installSystray();
-            Q_EMIT systrayChanged();
+            if (trayEnable_saved == true && m_systrayEnabled == false)
+            {
+                st->removeSystray();
+                Q_EMIT systrayChanged();
+            }
+            else if (trayEnable_saved == false && m_systrayEnabled == true)
+            {
+                st->installSystray();
+                Q_EMIT systrayChanged();
+            }
         }
     }
 }
 
 void SettingsManager::setAppTheme(const QString &value)
 {
-    m_appTheme = value;
-    writeSettings();
-    Q_EMIT appthemeChanged();
+    if (m_appTheme != value)
+    {
+        m_appTheme = value;
+        writeSettings();
+        Q_EMIT appthemeChanged();
+    }
 }
-
 void SettingsManager::setAutoDark(const bool value)
 {
-    m_autoDark = value;
-    writeSettings();
-    Q_EMIT autodarkChanged();
-}
-
-void SettingsManager::toggleAutoDark()
-{
-    // when auto dark is toggled, the UI must react to appthemeChanged signal,
-    // without an actual m_appTheme value change, so we emit the signal manually
-    Q_EMIT appthemeChanged();
+    if (m_autoDark != value)
+    {
+        m_autoDark = value;
+        writeSettings();
+        Q_EMIT autodarkChanged();
+    }
 }
 
 void SettingsManager::setMinimized(const bool value)
 {
-    m_startMinimized = value;
-    writeSettings();
-    Q_EMIT minimizedChanged();
+    if (m_startMinimized != value)
+    {
+        m_startMinimized = value;
+        writeSettings();
+        Q_EMIT minimizedChanged();
+    }
 }
 
 void SettingsManager::setNotifs(const bool value)
 {
-    m_notificationsEnabled = value;
-    writeSettings();
-    Q_EMIT notifsChanged();
+    if (m_notificationsEnabled != value)
+    {
+        m_notificationsEnabled = value;
+        writeSettings();
+        Q_EMIT notifsChanged();
+    }
 }
 
 void SettingsManager::setBluetoothControl(const bool value)
 {
-    m_bluetoothControl = value;
-    writeSettings();
-    Q_EMIT bluetoothControlChanged();
+    if (m_bluetoothControl != value)
+    {
+        m_bluetoothControl = value;
+        writeSettings();
+        Q_EMIT bluetoothControlChanged();
+    }
 }
 
 void SettingsManager::setBluetoothCompat(const bool value)
 {
-    m_bluetoothCompat = value;
-    writeSettings();
-    Q_EMIT bluetoothCompatChanged();
+    if (m_bluetoothCompat != value)
+    {
+        m_bluetoothCompat = value;
+        writeSettings();
+        Q_EMIT bluetoothCompatChanged();
+    }
 }
 
 void SettingsManager::setUpdateInterval(const int value)
 {
-    m_updateInterval = value;
-    writeSettings();
-    Q_EMIT updateIntervalChanged();
+    if (m_updateInterval != value)
+    {
+        m_updateInterval = value;
+        writeSettings();
+        Q_EMIT updateIntervalChanged();
+    }
 }
 
 void SettingsManager::setTempUnit(const QString &value)
 {
-    m_tempUnit = value;
-    writeSettings();
-    Q_EMIT tempUnitChanged();
+    if (m_tempUnit != value)
+    {
+        m_tempUnit = value;
+        writeSettings();
+        Q_EMIT tempUnitChanged();
+    }
 }
 
 void SettingsManager::setGraphHistory(const QString &value)
 {
-    m_graphHistory = value;
-    writeSettings();
-    Q_EMIT graphHistoryChanged();
+    if (m_graphHistory != value)
+    {
+        m_graphHistory = value;
+        writeSettings();
+        Q_EMIT graphHistoryChanged();
+    }
 }
 
 void SettingsManager::setBigWidget(const bool value)
 {
-    m_bigWidget = value;
-    writeSettings();
-    Q_EMIT bigWidgetChanged();
+    if (m_bigWidget != value)
+    {
+        m_bigWidget = value;
+        writeSettings();
+        Q_EMIT bigWidgetChanged();
+    }
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 bool SettingsManager::getDemoMode()
@@ -565,6 +592,8 @@ bool SettingsManager::getDemoMode()
     return demoMode;
 }
 
+/* ************************************************************************** */
+
 QString SettingsManager::getDemoString()
 {
     QString demoString;
@@ -576,6 +605,7 @@ QString SettingsManager::getDemoString()
     return demoString;
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void SettingsManager::getScreenInfos()

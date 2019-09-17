@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     anchors.fill: parent
@@ -85,21 +85,21 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 16
 
-            ButtonThemed {
+            ButtonWireframe {
                 height: 40
 
                 visible: (Qt.platform.os === "android")
 
                 text: qsTr("Official informations")
-                color: Theme.colorSubText
+                primaryColor: Theme.colorSubText
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
             }
 
-            ButtonThemed {
+            ButtonWireframe {
                 height: 40
 
                 text: qsTr("Launch detection")
-                color: Theme.colorHighlight
+                primaryColor: Theme.colorPrimary
                 onClicked: deviceManager.scanDevices()
             }
         }

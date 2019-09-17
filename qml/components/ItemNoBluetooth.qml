@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     anchors.fill: parent
@@ -46,11 +46,11 @@ Item {
             color: Theme.colorIcon
         }
 
-        ButtonThemed {
+        ButtonWireframe {
             height: 40
             anchors.horizontalCenter: parent.horizontalCenter
 
-            color: Theme.colorHighlight
+            primaryColor: Theme.colorPrimary
             text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
             onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
         }

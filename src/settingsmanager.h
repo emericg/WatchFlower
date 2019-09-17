@@ -146,8 +146,6 @@ public:
 
     Q_INVOKABLE void resetSettings();
 
-    Q_INVOKABLE void toggleAutoDark();
-
     Q_INVOKABLE static bool getDemoMode();
     Q_INVOKABLE static QString getDemoString();
 

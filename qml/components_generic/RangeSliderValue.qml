@@ -1,8 +1,8 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
-import "qrc:/qml/UtilsNumber.js" as UtilsNumber
+import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 RangeSlider {
     id: control
@@ -11,6 +11,9 @@ RangeSlider {
     snapMode: RangeSlider.SnapAlways
 
     property string unit: ""
+    property string colorBg: Theme.colorComponent
+    property string colorFg: Theme.colorPrimary
+    property string colorTxt: "white"
 
     background: Rectangle {
         x: control.leftPadding
@@ -18,16 +21,17 @@ RangeSlider {
         implicitWidth: 200
         implicitHeight: 4
         width: control.availableWidth
+
         height: implicitHeight
         radius: 2
-        color: Theme.colorYellow
+        color: colorBg
         opacity: 0.9
 
         Rectangle {
             x: (control.first.visualPosition * parent.width)
             width: (control.second.visualPosition * parent.width) - x
             height: parent.height
-            color: Theme.colorGreen
+            color: colorFg
             radius: 2
         }
     }
@@ -38,9 +42,10 @@ RangeSlider {
         implicitWidth: 22
         implicitHeight: 22
         width: t1.width * 1.4
+
         radius: 6
-        color: Theme.colorGreen
-        border.color: Theme.colorGreen
+        color: colorFg
+        border.color: colorFg
         opacity: first.pressed ? 0.9 : 1
 
         Text {
@@ -48,6 +53,7 @@ RangeSlider {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
+
             text: {
                 var vvalue = first.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
@@ -55,7 +61,7 @@ RangeSlider {
                 return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
             font.pixelSize: 14
-            color: "white"
+            color: colorTxt
         }
     }
 
@@ -65,9 +71,10 @@ RangeSlider {
         implicitWidth: 22
         implicitHeight: 22
         width: t2.width * 1.4
+
         radius: 6
-        color: Theme.colorGreen
-        border.color: Theme.colorGreen
+        color: colorFg
+        border.color: colorFg
         opacity: second.pressed ? 0.9 : 1
 
         Text {
@@ -75,6 +82,7 @@ RangeSlider {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
+
             text: {
                 var vvalue = second.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
@@ -82,7 +90,7 @@ RangeSlider {
                 return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
             font.pixelSize: 14
-            color: "white"
+            color: colorTxt
         }
     }
 }

@@ -2,22 +2,26 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: itemImageButton
     implicitWidth: 40
     implicitHeight: 40
 
+    // states
     signal clicked()
     property bool highlighted: false
     property bool selected: false
 
     // settings
     property string highlightMode: "circle" // circle / color / off
-    property string highlightColor: Theme.colorHighlight2
-    property string iconColor: Theme.colorIcon
     property bool background: false
+
+    property string iconColor: Theme.colorIcon
+    property string highlightColor: Theme.colorPrimary
+    property string backgroundColor: Theme.colorForeground
+
     property string tooltipText: ""
 
     // image
@@ -27,13 +31,13 @@ Item {
         anchors.fill: parent
         onClicked: itemImageButton.clicked()
 
-        hoverEnabled: highlightMode !== "off"
+        hoverEnabled: (highlightMode !== "off")
         onEntered: {
-            bgRect.opacity = 1
+            bgRect.opacity = (highlightMode === "circle") ? 1 : 0.50
             itemImageButton.highlighted = true
         }
         onExited: {
-            bgRect.opacity = background ? 0.66 : 0
+            bgRect.opacity = background ? 0.50 : 0
             itemImageButton.highlighted = false
         }
     }
@@ -42,8 +46,9 @@ Item {
         id: bgRect
         anchors.fill: parent
         radius: 50
-        color: parent.highlightColor
-        opacity: background ? 0.66 : 0
+        color: parent.backgroundColor
+        opacity: background ? 0.50 : 0
+        visible: (highlightMode === "circle" || background)
 
         Behavior on opacity { OpacityAnimator { duration: 333 } }
     }

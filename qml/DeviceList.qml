@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: screenDeviceList
@@ -166,7 +166,7 @@ Item {
                 font.pixelSize: 16
             }
 
-            ButtonThemed {
+            ButtonWireframe {
                 id: buttonBluetooth
                 width: 128
                 height: 32
@@ -176,7 +176,7 @@ Item {
 
                 visible: false
                 text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
-                color: Theme.colorActionbarContent
+                primaryColor: Theme.colorActionbarContent
 
                 onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
             }
@@ -261,23 +261,23 @@ Item {
                     onClicked: confirmDeleteDevice.open()
                 }
 /*
-                ButtonThemed {
+                ButtonWireframe {
                     id: buttonRefresh
                     width: 96
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorActionbarContent
+                    primaryColor: Theme.colorActionbarContent
                     text: qsTr("Refresh")
                     onClicked: screenDeviceList.updateSelectedDevice()
                 }
-                ButtonThemed {
+                ButtonWireframe {
                     id: buttonDelete
                     width: 96
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorActionbarContent
+                    primaryColor: Theme.colorActionbarContent
                     text: qsTr("Delete")
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }

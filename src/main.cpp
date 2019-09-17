@@ -157,7 +157,11 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 #endif
-    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "com.watchflower.theme", 1, 0, "Theme");
+
+    qmlRegisterSingletonType(
+        QUrl("qrc:/qml/ThemeEngine.qml"),
+        "ThemeEngine", 1, 0,
+        "Theme");
 
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();

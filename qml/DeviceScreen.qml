@@ -22,7 +22,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import com.watchflower.theme 1.0
+import ThemeEngine 1.0
 
 Item {
     id: deviceScreenSensor
@@ -50,8 +50,8 @@ Item {
     }
 
     Connections {
-        target: settingsManager
-        onAppThemeChanged: {
+        target: Theme
+        onCurrentThemeChanged: {
             rectangleDeviceDatas.updateHeader()
             rectangleDeviceHistory.updateHeader()
             rectangleDeviceHistory.updateColors()
