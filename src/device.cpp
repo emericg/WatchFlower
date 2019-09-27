@@ -120,21 +120,12 @@ void Device::refreshQueue()
 
 void Device::refreshStart()
 {
-    //qDebug() << "Device::refreshStart()" << getAddress() << getName();
+    //qDebug() << "Device::refreshStart()" << getAddress() << getName() << "/ last update: " << getLastUpdateInt();
 
-    if (getLastUpdateInt() < 0 || getLastUpdateInt() > 1)
+    if (!isUpdating())
     {
         refreshDatasStarted();
         getBleDatas();
-    }
-    else
-    {
-        if (m_status != DEVICE_OFFLINE)
-        {
-            m_status = DEVICE_OFFLINE;
-            Q_EMIT statusUpdated();
-        }
-        Q_EMIT deviceUpdated(this);
     }
 }
 
