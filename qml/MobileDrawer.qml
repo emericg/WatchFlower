@@ -400,7 +400,7 @@ Rectangle {
                     anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
                     color: Theme.colorText
                 }
                 Label {

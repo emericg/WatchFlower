@@ -312,7 +312,7 @@ Rectangle {
 
             visible: (rectangleHeader.width >= 720)
             iconColor: Theme.colorHeaderContent
-            source: (settingsManager.systray) ? "qrc:/assets/icons_material/baseline-minimize-24px.svg" : "qrc:/assets/icons_material/baseline-exit_to_app-24px.svg"
+            source: (settingsManager.systray) ? "qrc:/assets/icons_material/duotone-minimize-24px.svg" : "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
             onClicked: (settingsManager.systray) ? applicationWindow.hide(): settingsManager.exit()
         }
 */

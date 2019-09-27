@@ -168,12 +168,12 @@ Item {
             if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
                 lilIcons.visible = true
                 water.visible = true
-                water.source = "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
+                water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                 temp.color = Theme.colorBlue
             } else if (boxDevice.deviceHumidity > boxDevice.limitHygroMax) {
                 lilIcons.visible = true
                 water.visible = true
-                water.source = "qrc:/assets/icons_material/baseline-water_full-24px.svg"
+                water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                 temp.color = Theme.colorYellow
             }
 
@@ -182,7 +182,7 @@ Item {
                 lilIcons.visible = true
                 temp.visible = true
                 temp.color = Theme.colorYellow
-                temp.source = "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
+                temp.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
             } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
                 lilIcons.visible = true
                 temp.visible = true
@@ -444,7 +444,7 @@ Item {
                     height: bigAssMode ? 28 : 24
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-water_mid-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                     color: Theme.colorBlue
                 }
                 ImageSvg {

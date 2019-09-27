@@ -242,7 +242,7 @@ Item {
                 width: 24
                 height: 24
 
-                source: "qrc:/assets/icons_material/baseline-access_time-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
                 color: Theme.colorHeaderContent
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -289,7 +289,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-pin_drop-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
                 color: Theme.colorHeaderContent
             }
 

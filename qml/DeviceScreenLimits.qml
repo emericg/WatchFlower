@@ -332,7 +332,7 @@ Item {
                     anchors.leftMargin: 8
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-opacity-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                 }
                 Text {
                     anchors.left: imageHygro.right
@@ -472,7 +472,7 @@ Item {
                     anchors.leftMargin: 8
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-wb_sunny-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
                 }
                 Text {
                     anchors.left: imageLumi.right

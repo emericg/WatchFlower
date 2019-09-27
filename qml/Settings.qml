@@ -108,7 +108,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-style-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-style-24px.svg"
                 }
 
                 Text {
@@ -321,7 +321,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_connected-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 }
             }
             Text {
@@ -695,7 +695,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-minimize-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-minimize-24px.svg"
                 }
             }
 
@@ -748,7 +748,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-format_size-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
                 }
             }
 
@@ -861,7 +861,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
                 }
 
                 Text {
