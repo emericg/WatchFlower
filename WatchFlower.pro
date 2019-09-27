@@ -62,7 +62,7 @@ OTHER_FILES += .gitignore \
 TRANSLATIONS = i18n/watchflower_fr.ts \
                i18n/watchflower_es.ts i18n/watchflower_gl.ts
 
-lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml qml/components_themed/*.qml }
+lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
 
 # App features #################################################################
 

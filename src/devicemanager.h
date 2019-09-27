@@ -34,7 +34,6 @@ class Device;
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
-
 QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceInfo)
 QT_FORWARD_DECLARE_CLASS(QLowEnergyController)
 

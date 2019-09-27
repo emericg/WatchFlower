@@ -34,7 +34,7 @@ import android.app.NotificationManager;
 // java
 import java.lang.String;
 
-public class NotificationDispatcher extends org.qtproject.qt5.android.bindings.QtActivity
+public class NotificationDispatcher extends QtActivity
 {
     private static NotificationManager m_notificationManager;
     private static Notification.Builder m_builder;

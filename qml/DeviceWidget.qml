@@ -201,6 +201,7 @@ Item {
         if (boxDevice.isUpdating()) {
             if (boxDevice.isAvailable()) {
                 // if we have data cached, no indicator
+                imageStatus.visible = false;
             } else {
                 imageStatus.visible = true;
                 imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg";
@@ -210,10 +211,15 @@ Item {
             refreshAnimation.running = false;
 
             if (boxDevice.isAvailable()) {
+                // if we have data cached, no indicator
                 imageStatus.visible = false;
             } else {
                 imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
+
+                if (boxDevice.status === 1)
+                    imageStatus.source = "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg";
+                else
+                    imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
             }
         }
 
