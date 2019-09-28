@@ -29,8 +29,11 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
 #include <statusbar.h>
+#else
 #include <singleapplication.h>
+#endif
 
 #include "settingsmanager.h"
 #include "systraymanager.h"

@@ -60,7 +60,7 @@ OTHER_FILES += .gitignore \
                assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
 
 TRANSLATIONS = i18n/watchflower_fr.ts \
-               i18n/watchflower_es.ts i18n/watchflower_gl.ts
+               i18n/watchflower_es.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
 
@@ -76,8 +76,10 @@ ios | android { CONFIG += qtquickcompiler }
 include(src/thirdparty/StatusBar/statusbar.pri)
 
 # SingleApplication for desktop OS
-include(src/thirdparty/SingleApplication/singleapplication.pri)
-DEFINES += QAPPLICATION_CLASS=QApplication
+!ios | !android {
+    include(src/thirdparty/SingleApplication/singleapplication.pri)
+    DEFINES += QAPPLICATION_CLASS=QApplication
+}
 
 # Demo mode (for screenshots across devices)
 exists(assets/demo/demo_bdd.db) {

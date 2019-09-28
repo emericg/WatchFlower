@@ -389,7 +389,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 }
             }
             Text {

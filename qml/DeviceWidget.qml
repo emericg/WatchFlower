@@ -204,7 +204,7 @@ Item {
                 imageStatus.visible = false;
             } else {
                 imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_searching-24px.svg";
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
                 refreshAnimation.running = true;
             }
         } else {
@@ -217,7 +217,9 @@ Item {
                 imageStatus.visible = true;
 
                 if (boxDevice.status === 1)
-                    imageStatus.source = "qrc:/assets/icons_material/baseline-settings_bluetooth-24px.svg";
+                    imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
+                else if (boxDevice.status === 2)
+                    imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
                 else
                     imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
             }
