@@ -16,22 +16,9 @@ Button {
     property string primaryColor: "#5483EF"
     property string secondaryColor: "#D0D0D0"
 
-    font.pixelSize: 16 // fullColor ? 16 : 15
+    font.pixelSize: 15
 
     contentItem: Item {
-        Text {
-            id: contenttext
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: (imgSize/2 + imgSize/6)
-            text: control.text
-            font: control.font
-            opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3
-            color: fullColor ? "white" : control.primaryColor
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
-        }
         ImageSvg {
             id: contentimage
             width: imgSize
@@ -44,6 +31,20 @@ Button {
             opacity: enabled ? 1.0 : 0.3
             source: control.source
             color: fullColor ? "white" : control.primaryColor
+        }
+        Text {
+            id: contenttext
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: (imgSize/2)
+
+            text: control.text
+            font: control.font
+            opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3
+            color: fullColor ? "white" : control.primaryColor
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
         }
     }
 

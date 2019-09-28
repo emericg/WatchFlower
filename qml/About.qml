@@ -134,39 +134,50 @@ Item {
                     font.pixelSize: 36
                 }
             }
-/*
-            Item {
-                height: 48
+
+            Row {
+                id: websiteANDgithub
+                height: 56
+
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                Row {
-                    id: websiteANDgithub
-                    height: 48
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 8
+                visible: isPhone
+                spacing: 16
 
-                    ButtonImageThemed {
-                        id: websiteBtn
-                        anchors.verticalCenter: parent.verticalCenter
+                Component.onCompleted: {
+                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
+                    if (ww > 0) { websiteBtn.width = ww ; githubBtn.width = ww }
+                }
 
-                        text: qsTr("Website")
-                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
-                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
-                    }
-                    ButtonImageThemed {
-                        id: githubBtn
-                        anchors.verticalCenter: parent.verticalCenter
+                ButtonWireframeImage {
+                    id: websiteBtn
+                    width: 180
+                    anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("GitHub page")
-                        source: "qrc:/assets/logos/github.svg"
-                        onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
-                    }
+                    imgSize: 26
+                    text: qsTr("WEBSITE")
+                    fullColor: true
+                    //primaryColor: Theme.colorHeader
+                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                    onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
+                }
+                ButtonWireframeImage {
+                    id: githubBtn
+                    width: 180
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    imgSize: 20
+                    text: qsTr("SUPPORT")
+                    fullColor: true
+                    //primaryColor: Theme.colorHeader
+                    source: "qrc:/assets/icons_material/outline-email-24px.svg"
+                    onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }
             }
-*/
+
             Item {
                 id: website
                 height: 48
@@ -174,6 +185,8 @@ Item {
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
+
+                visible: !isPhone
 
                 ImageSvg {
                     id: websiteImg
@@ -211,6 +224,8 @@ Item {
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
+
+                visible: !isPhone
 
                 ImageSvg {
                     id: githubImg
@@ -273,6 +288,49 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: screenTutorial.reopen("About")
+                    }
+                }
+            }
+
+            Item {
+                id: rate
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                ImageSvg {
+                    id: rateImg
+                    width: 31
+                    height: 31
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-stars-24px.svg"
+                    color: Theme.colorText
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Rate the application")
+                    color: Theme.colorText
+                    font.pixelSize: 16
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (Qt.platform.os === "android")
+                                Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
+                            else if (Qt.platform.os === "ios")
+                                Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
+                        }
                     }
                 }
             }
@@ -348,7 +406,7 @@ Item {
                     anchors.rightMargin: 0
 
                     color: Theme.colorText
-                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' Bluetooth devices.")
+                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' Bluetooth sensors and thermometers.")
                     wrapMode: Text.WordWrap
                     readOnly: true
                     font.pixelSize: 16

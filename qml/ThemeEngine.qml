@@ -144,7 +144,6 @@ Item {
             colorComponentBorder = "#b3b3b3"
             colorComponentDown = "#cacaca"
             colorComponentBackground = "#eaeaea"
-            componentRadius = 4
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
 
@@ -182,7 +181,6 @@ Item {
             colorComponentBorder = "#b3b3b3"
             colorComponentDown = "#cacaca"
             colorComponentBackground = "#FAFAFA"
-            componentRadius = 4
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
 
@@ -220,7 +218,6 @@ Item {
             colorComponentBorder = "#757575"
             colorComponentDown = "#555555"
             colorComponentBackground = "#dddddd"
-            componentRadius = 4
         }
 
         // This will emit the signal 'onCurrentThemeChanged'
