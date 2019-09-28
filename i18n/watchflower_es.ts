@@ -44,7 +44,7 @@
     <message>
         <location filename="../qml/About.qml" line="312"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicación por &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Diseño visual por &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="353"/>
@@ -749,27 +749,27 @@
     <message>
         <location filename="../qml/Settings.qml" line="263"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
-        <translation type="unfinished">El modo oscuro se activa entre las 21:00 y las 9:00.</translation>
+        <translation>El modo oscuro se activará entre las 21:00 y las 9:00.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="339"/>
         <source>WatchFlower will toggle your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished">WatchFlower puede activar el Bluetooth de tu dispositivo para funcionar.</translation>
+        <translation>WatchFlower activará el Bluetooth de tu dispositivo para funcionar.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="407"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth reliability, at the expanse of synchronization speed.</source>
-        <translation type="unfinished">Mejora la fiabilidad del Bluetooth si tu dispositivo tiene problemas para conectarse a los sensores, pero reduce la velocidad de sincronización.</translation>
+        <translation>Los sensores se actualizarán de manera secuencial en vez de simultáneamente. Mejora la fiabilidad del bluetooth sacrificando velocidad de sincronización.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="500"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation type="unfinished">WatchFlower se mantiene activo en la bandeja del sistema y se activará en intervalos predefinidos para actualizar los datos.</translation>
+        <translation>WatchFlower se mantendrá activo en la bandeja del sistema y se activará en intervalos predefinidos para actualizar los datos.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="567"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="unfinished">¡Si una planta necesita agua serás informado!</translation>
+        <translation>¡Si una planta necesita agua, WatchFlower the avisará!</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="607"/>
