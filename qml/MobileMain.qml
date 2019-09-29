@@ -124,6 +124,15 @@ ApplicationWindow {
         width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width
         height: applicationWindow.height
 
+        background: Rectangle {
+            Rectangle {
+                x: parent.width - 1
+                width: 1
+                height: parent.height
+                color: Theme.colorSeparator
+            }
+        }
+
         MobileDrawer { id: drawerscreen }
     }
 
