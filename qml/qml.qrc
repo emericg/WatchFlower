@@ -52,6 +52,6 @@
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
     </qresource>
     <qresource prefix="/js">
-        <file>UtilsNumber.js</file>
+        <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
     </qresource>
 </RCC>

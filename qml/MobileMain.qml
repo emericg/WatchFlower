@@ -24,19 +24,20 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.0
 import QtQuick.Window 2.2
 
-import StatusBar 0.1
 import ThemeEngine 1.0
+import StatusBar 0.1
 
 ApplicationWindow {
     id: applicationWindow
-    minimumWidth: 400
-    minimumHeight: 640
+    minimumWidth: 480
+    minimumHeight: 720
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
 
-    property bool isDesktop: false
+    property bool isHdpi: (settingsManager.screenDpi > 128)
+    property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize < 7.0))
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize >= 7.0))
