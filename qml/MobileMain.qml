@@ -597,7 +597,7 @@ ApplicationWindow {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width >= 480) ? 24 : 8
+            spacing: (applicationWindow.width >= 480) ? 24 : 0
 
             signal deviceDatasButtonClicked()
             signal deviceHistoryButtonClicked()

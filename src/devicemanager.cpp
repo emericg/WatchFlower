@@ -84,8 +84,6 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-            else
-                d = new Device(deviceAddr, deviceName, this);
 
             if (d)
             {
@@ -526,8 +524,6 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
                 else if (deviceName == "LYWSD02")
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-                else
-                    d = new Device(deviceAddr, deviceName, this);
 
                 if (d)
                 {
@@ -822,8 +818,6 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempEInk(info);
             else if (info.name() == "LYWSD02")
                 d = new DeviceHygrotempClock(info);
-            else
-                d = new Device(info);
 
             if (!d)
                 return;

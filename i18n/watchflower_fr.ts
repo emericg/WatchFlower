@@ -740,9 +740,13 @@
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="563"/>
-        <location filename="../qml/MobileMain.qml" line="632"/>
         <source>My plants</source>
         <translation>Mes plantes</translation>
+    </message>
+    <message>
+        <location filename="../qml/MobileMain.qml" line="632"/>
+        <source>Datas</source>
+        <translation>Données</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="645"/>

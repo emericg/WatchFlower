@@ -233,7 +233,7 @@ void Device::refreshDatasFinished(bool status, bool cached)
 void Device::setUpdateTimer(int updateInterval)
 {
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    return; // we do not update every x hours on mobile, we update everytime the app is on the
+    return; // we do not update every x hours on mobile, we update everytime the app is on the foreground
 #endif
 
     // If no interval is provided, load the one from settings

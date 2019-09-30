@@ -653,9 +653,13 @@
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="563"/>
-        <location filename="../qml/MobileMain.qml" line="632"/>
         <source>My plants</source>
         <translation>Mis plantas</translation>
+    </message>
+    <message>
+        <location filename="../qml/MobileMain.qml" line="632"/>
+        <source>Datas</source>
+        <translation type="unfinished">Datos</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="645"/>
