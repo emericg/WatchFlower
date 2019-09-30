@@ -138,7 +138,7 @@ Item {
                 }
             }
             if (isTablet) {
-                if (screenOrientation === Qt.PortraitOrientation) {
+                if (screenOrientation === Qt.PortraitOrientation || width < 480) {
                     graphGrid.columns = 1
                 } else {
                     graphGrid.columns = 2

@@ -103,7 +103,7 @@ Item {
 
     ItemDeletePopup {
         id: confirmDeleteDevice
-        width: (isPhone) ? (applicationWindow.width) : 480
+        width: (applicationWindow.width < 480) ? applicationWindow.width : 480
         height: 180
         x: (applicationWindow.width / 2) - (confirmDeleteDevice.width / 2)
         y: (applicationWindow.height / 2) - (confirmDeleteDevice.height / 2) - appHeader.height
@@ -330,7 +330,7 @@ Item {
         anchors.bottomMargin: 6
 
         property bool singleColumn: true
-        property bool bigWidget: settingsManager.bigWidget || isTablet
+        property bool bigWidget: settingsManager.bigWidget || (isTablet && width >= 480)
         property int boxHeight: bigWidget ? 140 : 100
 
         property int cellSizeTarget: bigWidget ? 400 : 300
@@ -346,9 +346,11 @@ Item {
 
             var availableWidth = devicesView.width - cellMarginTarget
 
-            if (isTablet) {
-                // TODO vertical widget instead
-                cellSizeTarget = 350
+            if (isTablet) { // FIXME hacky...
+                if (devicesView.width > 350)
+                    cellSizeTarget = 350
+                else
+                    cellSizeTarget = 300
             }
 
             var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)

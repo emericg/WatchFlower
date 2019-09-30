@@ -141,15 +141,15 @@ Item {
             }
 
             DeviceScreenDatas {
-                //anchors.fill: parent
+                clip: true
                 id: rectangleDeviceDatas
             }
             DeviceScreenHistory {
-                //anchors.fill: parent
+                clip: true
                 id: rectangleDeviceHistory
             }
             DeviceScreenLimits {
-                //anchors.fill: parent
+                clip: true
                 id: rectangleDeviceLimits
             }
         }

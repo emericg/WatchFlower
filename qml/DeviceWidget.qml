@@ -31,7 +31,7 @@ Item {
 
     property var boxDevice: null
 
-    property bool wideAssMode: (width >= 380) || (isTablet)
+    property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
     property bool bigAssMode: false
     property bool singleColumn: true
 
@@ -52,7 +52,7 @@ Item {
          }
     }
     Connections {
-        target: settingsManager
+        target: devicesView
         onBigWidgetChanged: {
             updateSensorDatas()
             updateBoxDatas()
@@ -466,6 +466,7 @@ Item {
                 anchors.top: parent.top
 
                 visible: true
+                clip: true
                 spacing: 8
                 property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
                 property int sensorRadius: 2

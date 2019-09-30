@@ -122,7 +122,7 @@ ApplicationWindow {
 
     Drawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width
+        width: (Screen.primaryOrientation === 1 || applicationWindow.width < 480) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width
         height: applicationWindow.height
 
         background: Rectangle {
@@ -540,13 +540,13 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
-        visible: isTablet && (appContent.state != "Tutorial" && appContent.state != "DeviceThermo")
+        visible: (isTablet) && (appContent.state != "Tutorial" && appContent.state != "DeviceThermo")
 
         Row {
             id: tabletMenuScreen
-            spacing: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            spacing: (applicationWindow.width >= 480) ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||
@@ -595,9 +595,9 @@ ApplicationWindow {
 
         Row {
             id: tabletMenuDevice
-            spacing: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            spacing: (applicationWindow.width >= 480) ? 24 : 8
 
             signal deviceDatasButtonClicked()
             signal deviceHistoryButtonClicked()
@@ -629,7 +629,7 @@ ApplicationWindow {
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
-                menuText: qsTr("My plants")
+                menuText: qsTr("Datas")
                 selected: (appContent.state === "DeviceSensor" && appContent.state === "DeviceList")
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: tabletMenuDevice.deviceDatasButtonClicked()
