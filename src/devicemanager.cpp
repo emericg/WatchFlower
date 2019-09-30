@@ -609,29 +609,33 @@ void DeviceManager::refreshDevices_start()
         return; // or bail
     }
 
-    // Start refresh
+    // Start refresh (if > 1 min)
     if (checkBluetooth() && !m_devices.empty())
     {
-        m_devices_updatelist = m_devices;
-        Q_EMIT refreshingChanged();
+        m_devices_updatelist.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
-        if (sm->getBluetoothCompat())
+        for (auto d: m_devices)
         {
-            for (auto d: m_devices)
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd && (dd->getLastUpdateInt() != 0))
             {
-                Device *dd = qobject_cast<Device*>(d);
-                if (dd) dd->refreshQueue(); // sync
+                // as long as we didn't just update it: go for refresh
+                m_devices_updatelist.push_back(dd);
+
+                if (sm->getBluetoothCompat())
+                    dd->refreshQueue(); // sync
+                else
+                    dd->refreshStart(); // async
             }
-            refreshDevices_continue(); // sync
         }
-        else
+
+        if (!m_devices_updatelist.empty())
         {
-            for (auto d: m_devices)
-            {
-                Device *dd = qobject_cast<Device*>(d);
-                if (dd) dd->refreshStart(); // async
-            }
+            if (sm->getBluetoothCompat())
+                refreshDevices_continue(); // sync
+
+            Q_EMIT refreshingChanged();
         }
     }
 }
