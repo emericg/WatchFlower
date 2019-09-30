@@ -198,31 +198,20 @@ Item {
         }
 
         // Update notif
-        if (boxDevice.isUpdating()) {
-            if (boxDevice.isAvailable()) {
-                // if we have data cached, no indicator
-                imageStatus.visible = false;
-            } else {
-                imageStatus.visible = true;
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
-                refreshAnimation.running = true;
-            }
+        if (boxDevice.isAvailable()) {
+            // if we have data cached, no indicator
+            imageStatus.visible = false;
         } else {
-            refreshAnimation.running = false;
+            imageStatus.visible = true;
 
-            if (boxDevice.isAvailable()) {
-                // if we have data cached, no indicator
-                imageStatus.visible = false;
-            } else {
-                imageStatus.visible = true;
-
-                if (boxDevice.status === 1)
-                    imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
-                else if (boxDevice.status === 2)
-                    imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
-                else
-                    imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
-            }
+            if (boxDevice.status === 1)
+                imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
+            else if (boxDevice.status === 2)
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
+            else if (boxDevice.status === 3)
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
+            else
+                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
         }
 
         // Has datas? always display them
