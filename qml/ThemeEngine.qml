@@ -70,6 +70,7 @@ Item {
 
     // Fixed colors
     readonly property string colorMaterialLightGrey: "#f8f8f8"
+    readonly property string colorMaterialGrey: "#eeeeee"
     readonly property string colorMaterialDarkGrey: "#ececec"
     readonly property string colorNeutralDay: "#e4e4e4"
     readonly property string colorNeutralNight: "#ffb300"

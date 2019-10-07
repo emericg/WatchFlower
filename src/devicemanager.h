@@ -66,10 +66,10 @@ class DeviceManager: public QObject
 
     bool m_scanning = false;
 
-    QList<QObject*> m_devices;
+    QList <QObject *> m_devices;
 
     QTimer m_refreshTimer;
-    QList<QObject*> m_devices_updatelist;
+    QList <QObject *> m_devices_updatelist;
 
     bool hasDatabase() const;
     void checkDatabase();
