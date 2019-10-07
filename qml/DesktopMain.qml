@@ -123,19 +123,21 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
+        z: 10
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
-            if (appContent.state === "Tutorial")
-                return;
+            if (appContent.state === "Tutorial") return;
 
             if (mouse.button === Qt.BackButton) {
                 appContent.state = "DeviceList"
             } else if (mouse.button === Qt.ForwardButton) {
-                if (currentDevice) {
-                    if (!currentDevice.hasSoilMoistureSensor())
-                        appContent.state = "DeviceThermo"
-                    else
-                        appContent.state = "DeviceSensor"
+                if (appContent.state === "DeviceList") {
+                    if (currentDevice) {
+                        if (!currentDevice.hasSoilMoistureSensor())
+                            appContent.state = "DeviceThermo"
+                        else
+                            appContent.state = "DeviceSensor"
+                    }
                 }
             }
         }
@@ -143,14 +145,20 @@ ApplicationWindow {
     Shortcut {
         sequence: StandardKey.Back
         onActivated: {
+            if (appContent.state === "Tutorial" || appContent.state === "DeviceList") return;
             appContent.state = "DeviceList"
         }
     }
     Shortcut {
         sequence: StandardKey.Forward
         onActivated: {
-            if (currentDevice)
-                appContent.state = "DeviceSensor"
+            if (appContent.state !== "DeviceList") return;
+            if (currentDevice) {
+                if (!currentDevice.hasSoilMoistureSensor())
+                    appContent.state = "DeviceThermo"
+                else
+                    appContent.state = "DeviceSensor"
+            }
         }
     }
 
