@@ -36,8 +36,7 @@ Button {
             id: contenttext
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: (imgSize/2)
-
+            anchors.horizontalCenterOffset: imgSize/2
             text: control.text
             font: control.font
             opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3

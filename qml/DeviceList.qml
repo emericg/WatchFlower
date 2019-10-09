@@ -163,6 +163,7 @@ Item {
                 color: Theme.colorActionbarContent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
+                font.bold: true
                 font.pixelSize: 16
             }
 
@@ -176,7 +177,8 @@ Item {
 
                 visible: false
                 text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
-                primaryColor: Theme.colorActionbarContent
+                fullColor: true
+                primaryColor: Theme.colorActionbarHighlight
 
                 onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
             }
@@ -231,6 +233,7 @@ Item {
                     visible: deviceManager.bluetooth
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                     iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenDeviceList.updateSelectedDevice()
 
                     NumberAnimation on rotation {
@@ -258,6 +261,7 @@ Item {
 
                     source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                     iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
                     onClicked: confirmDeleteDevice.open()
                 }
 /*

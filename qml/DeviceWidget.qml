@@ -242,18 +242,25 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
+    Item {
         id: deviceWidgetRectangle
-        anchors.rightMargin: 6
-        anchors.leftMargin: 6
-        anchors.bottomMargin: 6
-        anchors.topMargin: 6
         anchors.fill: parent
+        anchors.topMargin: 6
+        anchors.leftMargin: 6
+        anchors.rightMargin: 6
+        anchors.bottomMargin: 6
 
-        color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
-        border.width: 2
-        border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
-        radius: 2
+        Rectangle {
+            id: deviceWidgetRectangleBg
+            anchors.fill: parent
+            anchors.leftMargin: (singleColumn) ? -12 : 0
+            anchors.rightMargin: (singleColumn) ? -12 : 0
+
+            radius: 2
+            border.width: 2
+            border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
+            color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
+        }
 
         MouseArea {
             anchors.fill: parent

@@ -46,6 +46,7 @@ Popup {
 
             ButtonWireframe {
                 id: buttonCancel
+                width: 128
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Cancel")
@@ -53,6 +54,7 @@ Popup {
             }
             ButtonWireframe {
                 id: buttonConfirm
+                width: 128
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Delete")

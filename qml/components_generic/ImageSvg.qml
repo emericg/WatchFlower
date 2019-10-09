@@ -8,7 +8,7 @@ Item {
 
     property string source
     property string color
-    property int fillMode: Image.PreserveAspectCrop
+    property int fillMode: Image.PreserveAspectFit
 
     Image {
         id: sourceImg
