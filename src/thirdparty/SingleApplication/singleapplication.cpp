@@ -29,12 +29,12 @@
 #include "singleapplication.h"
 #include "singleapplication_p.h"
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 #include <objc/objc.h>
 #include <objc/message.h>
 void setupDockClickHandler();
 bool dockClickHandler(id self, SEL _cmd, ...);
-#endif // Q_OS_MAC
+#endif // Q_OS_MACOS
 
 /**
  * @brief Constructor. Checks and fires up LocalServer or closes the program
@@ -107,7 +107,7 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
         d->startPrimary();
         d->memory->unlock();
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     setupDockClickHandler();
 #endif
         return;
@@ -124,7 +124,7 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
         }
         d->memory->unlock();
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     setupDockClickHandler();
 #endif
         return;
@@ -188,7 +188,7 @@ bool SingleApplication::sendMessage( QByteArray message, int timeout )
     return dataWritten;
 }
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 void setupDockClickHandler()
 {
     Class cls = objc_getClass("NSApplication");
@@ -223,4 +223,4 @@ bool dockClickHandler(id self, SEL _cmd, ...)
 
     return false; // Return NO (false) to suppress the default OS X actions
 }
-#endif // Q_OS_MAC
+#endif // Q_OS_MACOS
