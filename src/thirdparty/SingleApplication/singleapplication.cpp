@@ -48,6 +48,13 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
 {
     Q_D(SingleApplication);
 
+#ifdef Q_OS_ANDROID
+    // On Android since the library is not supported fallback to standard
+    // QApplication behaviour by simply returning.
+    qWarning() << "SingleApplication is not supported on Android systems.";
+    return;
+#endif
+
     // Store the current mode of the program
     d->options = options;
 
@@ -98,7 +105,7 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
 
         d->memory->unlock();
 
-        // Random sleep here limits the probability of a colision between two racing apps
+        // Random sleep here limits the probability of a collision between two racing apps
         qsrand( QDateTime::currentMSecsSinceEpoch() % std::numeric_limits<uint>::max() );
         QThread::sleep( 8 + static_cast <unsigned long>( static_cast <float>( qrand() ) / RAND_MAX * 10 ) );
     }
@@ -183,8 +190,8 @@ bool SingleApplication::sendMessage( QByteArray message, int timeout )
     d->connectToPrimary( timeout,  SingleApplicationPrivate::Reconnect );
 
     d->socket->write( message );
-    bool dataWritten = d->socket->flush();
-    d->socket->waitForBytesWritten( timeout );
+    bool dataWritten = d->socket->waitForBytesWritten( timeout );
+    d->socket->flush();
     return dataWritten;
 }
 

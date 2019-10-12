@@ -33,17 +33,20 @@
 #include <cstddef>
 
 #include <QtCore/QDir>
-#include <QtCore/QProcess>
 #include <QtCore/QByteArray>
-#include <QtCore/QSemaphore>
 #include <QtCore/QDataStream>
-#include <QtCore/QStandardPaths>
 #include <QtCore/QCryptographicHash>
 #include <QtNetwork/QLocalServer>
 #include <QtNetwork/QLocalSocket>
 
 #include "singleapplication.h"
 #include "singleapplication_p.h"
+
+#ifdef Q_OS_UNIX
+    #include <unistd.h>
+    #include <sys/types.h>
+    #include <pwd.h>
+#endif
 
 #ifdef Q_OS_WIN
     #include <windows.h>
@@ -55,6 +58,8 @@ SingleApplicationPrivate::SingleApplicationPrivate( SingleApplication *q_ptr )
 {
     server = nullptr;
     socket = nullptr;
+    memory = nullptr;
+    instanceNumber = -1;
 }
 
 SingleApplicationPrivate::~SingleApplicationPrivate()
@@ -107,22 +112,20 @@ void SingleApplicationPrivate::genBlockServerName()
         if( GetUserNameW( username, &usernameLength ) ) {
             appData.addData( QString::fromWCharArray(username).toUtf8() );
         } else {
-            appData.addData( QStandardPaths::standardLocations( QStandardPaths::HomeLocation ).join("").toUtf8() );
+            appData.addData( qgetenv("USERNAME") );
         }
 #endif
-#if defined(Q_OS_UNIX) && !defined(Q_OS_IOS)
-        QProcess process;
-        process.start( "whoami" );
-        if( process.waitForFinished( 100 ) &&
-            process.exitCode() == QProcess::NormalExit) {
-            appData.addData( process.readLine() );
-        } else {
-            appData.addData(
-                QDir(
-                    QStandardPaths::standardLocations( QStandardPaths::HomeLocation ).first()
-                ).absolutePath().toUtf8()
-            );
+#ifdef Q_OS_UNIX
+        QByteArray username;
+        uid_t uid = geteuid();
+        struct passwd *pw = getpwuid(uid);
+        if( pw ) {
+            username = pw->pw_name;
         }
+        if( username.isEmpty() ) {
+            username = qgetenv("USER");
+        }
+        appData.addData(username);
 #endif
     }
 
@@ -207,7 +210,11 @@ void SingleApplicationPrivate::connectToPrimary( int msecs, ConnectionType conne
         // Notify the parent that a new instance had been started;
         QByteArray initMsg;
         QDataStream writeStream(&initMsg, QIODevice::WriteOnly);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
         writeStream.setVersion(QDataStream::Qt_5_6);
+#endif
+
         writeStream << blockServerName.toLatin1();
         writeStream << static_cast<quint8>(connectionType);
         writeStream << instanceNumber;
@@ -217,7 +224,10 @@ void SingleApplicationPrivate::connectToPrimary( int msecs, ConnectionType conne
         // The header indicates the message length that follows
         QByteArray header;
         QDataStream headerStream(&header, QIODevice::WriteOnly);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
         headerStream.setVersion(QDataStream::Qt_5_6);
+#endif
         headerStream << static_cast <quint64>( initMsg.length() );
 
         socket->write( header );
@@ -300,7 +310,10 @@ void SingleApplicationPrivate::readInitMessageHeader( QLocalSocket *sock )
     }
 
     QDataStream headerStream( sock );
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     headerStream.setVersion( QDataStream::Qt_5_6 );
+#endif
 
     // Read the header to know the message length
     quint64 msgLen = 0;
@@ -330,7 +343,10 @@ void SingleApplicationPrivate::readInitMessageBody( QLocalSocket *sock )
     // Read the message body
     QByteArray msgBytes = sock->read(info.msgLen);
     QDataStream readStream(msgBytes);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     readStream.setVersion( QDataStream::Qt_5_6 );
+#endif
 
     // server name
     QByteArray latin1Name;
