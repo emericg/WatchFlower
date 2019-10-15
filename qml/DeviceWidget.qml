@@ -336,7 +336,7 @@ Item {
             anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.left: parent.left
             anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
-            anchors.right: rowRight.left
+            anchors.right: (rowRight.width > 0) ? rowRight.left : imageStatus.left
             anchors.rightMargin: singleColumn ? 0 : 8
 
             clip: true
