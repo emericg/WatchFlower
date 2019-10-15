@@ -145,6 +145,7 @@ Item {
         if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% humidity
         }
+        if (max_of_legend <= 0) max_of_legend = 1 // if we have no datas
         axisY0.max = max_of_legend;
 
         // Decorations

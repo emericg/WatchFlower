@@ -876,12 +876,12 @@ QVariantList Device::getMonthDatas(const QString &dataName)
     if (datasPerMonth.exec() == false)
         qWarning() << "> datasPerMonth.exec() ERROR" << datasPerMonth.lastError().type() << ":"  << datasPerMonth.lastError().text();
 
-    while (datasPerMonth.next() && (datas.size() < 30))
+    while (datasPerMonth.next() && (datas.size() <= 30))
     {
         int currentDay = datasPerMonth.value(0).toInt();
 
         // fill holes
-        while (currentDay != nextDayToHandle.day() && (datas.size() < 30))
+        while (currentDay != nextDayToHandle.day() && (datas.size() <= 30))
         {
             datas.prepend(0);
             //qDebug() << "> filling hole for day" << nextDayToHandle.day();
@@ -976,12 +976,12 @@ QVariantList Device::getDatasDaily(const QString &dataName)
     if (datasPerDay.exec() == false)
         qWarning() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":"  << datasPerDay.lastError().text();
 
-    while (datasPerDay.next() && (datas.size() < 7))
+    while (datasPerDay.next() && (datas.size() <= 7))
     {
         int currentDay = datasPerDay.value(1).toInt();
 
         // fill holes
-        while (currentDay != nextDayToHandle.day() && (datas.size() < 7))
+        while (currentDay != nextDayToHandle.day() && (datas.size() <= 7))
         {
             datas.prepend(0);
             //qDebug() << "> filling hole for day" << nextDayToHandle.day();
@@ -1084,7 +1084,7 @@ QVariantList Device::getDatasHourly(const QString &dataName)
     if (datasPerHour.exec() == false)
         qWarning() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":"  << datasPerHour.lastError().text();
 
-    while (datasPerHour.next() && (datas.size() < 24))
+    while (datasPerHour.next() && (datas.size() <= 24))
     {
         int currentHour = datasPerHour.value(0).toInt();
 
@@ -1095,7 +1095,7 @@ QVariantList Device::getDatasHourly(const QString &dataName)
         }
 
         // fill holes
-        while (currentHour != nexHourToHandle.hour() && (datas.size() < 24))
+        while (currentHour != nexHourToHandle.hour() && (datas.size() <= 24))
         {
             datas.append(0);
             //qDebug() << "> filling hole for hour" << nexHourToHandle.hour();
