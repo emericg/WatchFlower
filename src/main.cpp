@@ -19,21 +19,19 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include <QApplication>
-#include <QSystemTrayIcon>
-
+#include <QtGlobal>
 #include <QTranslator>
 #include <QLibraryInfo>
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
+#include <QSurfaceFormat>
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
 #include <statusbar.h>
-#else
-#include <singleapplication.h>
 #endif
+#include <singleapplication.h>
 
 #include "settingsmanager.h"
 #include "systraymanager.h"
@@ -104,16 +102,26 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    QApplication app(argc, argv);
-#else
-    SingleApplication app(argc, argv);
+#if defined(Q_OS_LINUX)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    // NVIDIA suspend&resume hack
+    QSurfaceFormat::setOption(QSurfaceFormat::ResetNotification)
+#endif
 #endif
 
+    SingleApplication app(argc, argv);
+
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    // Application icon
     QIcon appIcon(":/assets/logos/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
+
+    // Application name
+    app.setApplicationName("WatchFlower");
+    app.setApplicationDisplayName("WatchFlower");
+    app.setOrganizationName("WatchFlower");
+    app.setOrganizationDomain("WatchFlower");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // Keep the StatusBar the same color as the splashscreen until UI starts
@@ -124,18 +132,13 @@ int main(int argc, char *argv[])
     //QQuickStyle::setStyle("material");
 #endif
 
-    // Application name
-    app.setApplicationName("WatchFlower");
-    app.setApplicationDisplayName("WatchFlower");
-    app.setOrganizationName("WatchFlower");
-    app.setOrganizationDomain("WatchFlower");
-
 #ifdef DEMO_MODE
+    // DEMO mode, with fake datas and fixed config
     app.setApplicationName("WatchFlower_demo");
     setup_demo_mode();
 #endif
 
-#if !DEMO_MODE
+#ifndef DEMO_MODE
     // i18n
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
