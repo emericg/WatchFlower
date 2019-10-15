@@ -52,9 +52,11 @@ Item {
             resetIndicator()
 
         if (myDevice.countDatas("temp", 14) > 1) {
-            itemAioLineCharts.visible = true
+            aioGraph.visible = true
+            noDatasIndicator.visible = false
         } else {
-            itemAioLineCharts.visible = false
+            aioGraph.visible = false
+            noDatasIndicator.visible = true
         }
 
         //// DATAS
@@ -284,6 +286,13 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
+
+    ItemNoDatas {
+        id: noDatasIndicator
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
     Rectangle {
         id: verticalIndicator

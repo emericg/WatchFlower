@@ -49,6 +49,7 @@
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
+        <file alias="ItemNoDatas.qml">components/ItemNoDatas.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
     </qresource>
     <qresource prefix="/js">
