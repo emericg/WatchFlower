@@ -40,7 +40,6 @@ Item {
             width: 200
             height: 200
             anchors.horizontalCenter: parent.horizontalCenter
-
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
@@ -49,8 +48,6 @@ Item {
         ButtonWireframe {
             height: 40
             anchors.horizontalCenter: parent.horizontalCenter
-
-            primaryColor: Theme.colorPrimary
             text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
             onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
         }

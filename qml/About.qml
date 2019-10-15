@@ -157,10 +157,10 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 26
                     text: qsTr("WEBSITE")
+                    imgSize: 26
                     fullColor: true
-                    //primaryColor: Theme.colorHeader
+                    primaryColor: "#5483EF"
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
@@ -169,10 +169,10 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 20
                     text: qsTr("SUPPORT")
+                    imgSize: 20
                     fullColor: true
-                    //primaryColor: Theme.colorHeader
+                    primaryColor: "#5483EF"
                     source: "qrc:/assets/icons_material/outline-email-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }

@@ -271,7 +271,7 @@ Item {
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    primaryColor: Theme.colorActionbarContent
+                    primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Refresh")
                     onClicked: screenDeviceList.updateSelectedDevice()
                 }
@@ -281,7 +281,7 @@ Item {
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    primaryColor: Theme.colorActionbarContent
+                    primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Delete")
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }

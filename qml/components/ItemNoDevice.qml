@@ -87,7 +87,6 @@ Item {
 
             ButtonWireframe {
                 height: 40
-
                 visible: (Qt.platform.os === "android")
 
                 text: qsTr("Official informations")
