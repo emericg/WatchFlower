@@ -124,10 +124,7 @@ Item {
 
         // Location
         textInputLocation.text = myDevice.deviceLocationName
-        if (textInputLocation.text && !textInputLocation.focus)
-            imageEditLocation.visible = false
-        else
-            imageEditLocation.visible = true
+        imageEditLocation.visible = !textInputLocation.text || textInputLocation.focus
 
         // Status
         updateStatusText()

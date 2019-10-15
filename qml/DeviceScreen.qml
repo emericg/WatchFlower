@@ -137,6 +137,13 @@ Item {
                         appHeader.setActiveDeviceHistory()
                     else if (sensorPages.currentIndex === 2)
                         appHeader.setActiveDeviceSettings()
+                } else {
+                    if (sensorPages.currentIndex === 0)
+                        tabletMenuDevice.setActiveDeviceDatas()
+                    else if (sensorPages.currentIndex === 1)
+                        tabletMenuDevice.setActiveDeviceHistory()
+                    else if (sensorPages.currentIndex === 2)
+                        tabletMenuDevice.setActiveDeviceSettings()
                 }
             }
 

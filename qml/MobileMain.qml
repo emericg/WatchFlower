@@ -528,19 +528,21 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        color: Theme.colorTabletmenu
         width: parent.width
         height: 48
+        color: isTablet ? Theme.colorTabletmenu : "transparent"
 
         Rectangle {
             anchors.top: parent.top
             width: parent.width
             height: 1
             opacity: 0.5
+            visible: isTablet
             color: Theme.colorTabletmenuContent
         }
 
-        visible: (isTablet) && (appContent.state != "Tutorial" && appContent.state != "DeviceThermo")
+        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermo") ||
+                 (isPhone && appContent.state === "DeviceSensor" && screenOrientation === Qt.PortraitOrientation)
 
         Row {
             id: tabletMenuScreen

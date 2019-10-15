@@ -75,20 +75,14 @@ Item {
             itemPlant.visible = true
 
             textInputPlant.text = myDevice.devicePlantName
-            if (textInputPlant.text && !textInputPlant.focus)
-                imageEditPlant.visible = false
-            else
-                imageEditPlant.visible = true
+            imageEditPlant.visible = !textInputPlant.text || textInputPlant.focus
         } else {
             itemPlant.visible = false
         }
 
         // Location
         textInputLocation.text = myDevice.deviceLocationName
-        if (textInputLocation.text && !textInputLocation.focus)
-            imageEditLocation.visible = false
-        else
-            imageEditLocation.visible = true
+        imageEditLocation.visible = !textInputLocation.text || textInputLocation.focus
 
         // Status
         updateStatusText()
