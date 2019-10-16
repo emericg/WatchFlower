@@ -9,7 +9,7 @@ Item {
     implicitWidth: 64
     implicitHeight: 64
 
-    width: 16 + contentImage.width + 16 + contentText.width + 24
+    width: 16 + contentImage.width + (imgSize / 3) + contentText.width + 16
     property int imgSize: 32
 
     signal clicked()
@@ -53,7 +53,7 @@ Item {
         visible: (highlightMode === "background")
         color: itemMenuButton.colorBackground
         opacity: 0
-        Behavior on opacity { OpacityAnimator { duration: 250 } }
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
     }
 
     ImageSvg {
@@ -73,7 +73,7 @@ Item {
         id: contentText
         height: parent.height
         anchors.left: contentImage.right
-        anchors.leftMargin: (imgSize / 2)
+        anchors.leftMargin: (imgSize / 3)
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
         text: menuText

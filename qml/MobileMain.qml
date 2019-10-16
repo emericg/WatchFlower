@@ -529,7 +529,7 @@ ApplicationWindow {
         anchors.left: parent.left
 
         width: parent.width
-        height: 48
+        height: (isPhone & settingsManager.screenSize < 5) ? 40 : 56
         color: isTablet ? Theme.colorTabletmenu : "transparent"
 
         Rectangle {
@@ -598,8 +598,9 @@ ApplicationWindow {
         Row {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
+            //anchors.horizontalCenterOffset: (isPhone & settingsManager.screenSize < 5) ? 12 : 0
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width >= 480) ? 24 : 0
+            spacing: (applicationWindow.width < 480 || isPhone) ? 0 : 24
 
             signal deviceDatasButtonClicked()
             signal deviceHistoryButtonClicked()

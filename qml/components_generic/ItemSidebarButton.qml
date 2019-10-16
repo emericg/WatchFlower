@@ -123,7 +123,7 @@ Item {
             color: Theme.colorSidebarContent
             opacity: 0
 
-            Behavior on opacity { OpacityAnimator { duration: 250 } }
+            Behavior on opacity { OpacityAnimator { duration: 333 } }
         }
     }
 
