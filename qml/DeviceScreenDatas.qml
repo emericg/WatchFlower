@@ -187,314 +187,9 @@ Item {
     onWidthChanged: {
         if (isPhone) {
             if (screenOrientation === Qt.PortraitOrientation) {
-                rectangleHeader.visible = true
-                rectangleHeader.height = 96
+                rectangleHeader.color = Theme.colorForeground
             } else {
-                rectangleHeader.visible = false
-                rectangleHeader.height = 0
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorForeground
-        height: isMobile ? 96 : 134
-        z: 5
-
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        Column {
-            id: plantPanel
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 0
-            anchors.right: parent.right
-            anchors.left: parent.left
-
-            Text {
-                id: textDeviceName
-                height: 36
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
-                font.pixelSize: 24
-                text: myDevice.deviceName
-                verticalAlignment: Text.AlignVCenter
-                font.capitalization: Font.AllUppercase
-                color: Theme.colorText
-
-                ImageSvg {
-                    id: imageBattery
-                    width: 32
-                    height: 32
-                    rotation: 90
-                    anchors.verticalCenter: textDeviceName.verticalCenter
-                    anchors.left: textDeviceName.right
-                    anchors.leftMargin: 16
-
-                    source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                    color: Theme.colorIcon
-                }
-            }
-
-            Item {
-                id: itemPlant
-                height: 28
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Text {
-                    id: labelPlant
-                    width: isPhone ? 78 : 96
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    text: qsTr("Plant")
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignRight
-                    color: Theme.colorText
-                    font.pixelSize: 18
-                }
-
-                TextInput {
-                    id: textInputPlant
-                    height: 28
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: labelPlant.right
-                    anchors.leftMargin: 8
-
-                    padding: 4
-                    color: Theme.colorHighContrast
-                    font.pixelSize: 18
-
-                    onEditingFinished: {
-                        if (text) {
-                            imageEditPlant.visible = false
-                        } else {
-                            imageEditPlant.visible = true
-                        }
-                        myDevice.setPlantName(text)
-                        focus = false
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        //propagateComposedEvents: true
-
-                        onEntered: { imageEditPlant.visible = true; }
-                        onExited: {
-                            if (textInputPlant.text && !textInputPlant.focus) {
-                                imageEditPlant.visible = false
-                            } else {
-                                imageEditPlant.visible = true
-                            }
-                        }
-                        onClicked: {
-                            imageEditPlant.visible = true;
-                            mouse.accepted = false;
-                        }
-                        onPressed: {
-                            imageEditPlant.visible = true;
-                            mouse.accepted = false;
-                        }
-                        onReleased: mouse.accepted = false;
-                        onDoubleClicked: mouse.accepted = false;
-                        onPositionChanged: mouse.accepted = false;
-                        onPressAndHold: mouse.accepted = false;
-                    }
-
-                    MouseArea {
-                        id: mouseArea
-                        width: 26
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-                        anchors.left: parent.right
-                        anchors.leftMargin: 0
-
-                        hoverEnabled: true
-
-                        onEntered: { imageEditPlant.visible = true; }
-                        onExited: {
-                            if (textInputPlant.text && !textInputPlant.focus) {
-                                imageEditPlant.visible = false
-                            } else {
-                                imageEditPlant.visible = true
-                            }
-                        }
-                        onClicked: textInputPlant.forceActiveFocus()
-                        onPressed: textInputPlant.forceActiveFocus()
-
-                        ImageSvg {
-                            id: imageEditPlant
-                            width: 20
-                            height: 20
-
-                            visible: false
-                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcon
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
-            }
-
-            Item {
-                id: itemLocation
-                height: 28
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Text {
-                    id: labelLocation
-                    width: isPhone ? 78 : 96
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    text: qsTr("Location")
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignRight
-                    color: Theme.colorText
-                    font.pixelSize: 18
-                }
-
-                TextInput {
-                    id: textInputLocation
-                    height: 28
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: labelLocation.right
-                    anchors.leftMargin: 8
-
-                    padding: 4
-                    color: Theme.colorHighContrast
-                    font.pixelSize: 18
-
-                    onEditingFinished: {
-                        if (text) {
-                            imageEditLocation.visible = false
-                        } else {
-                            imageEditLocation.visible = true
-                        }
-
-                        myDevice.setLocationName(text)
-                        focus = false
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        propagateComposedEvents: true
-
-                        onEntered: { imageEditLocation.visible = true; }
-                        onExited: {
-                            if (textInputLocation.text && !textInputLocation.focus) {
-                                imageEditLocation.visible = false
-                            } else {
-                                imageEditLocation.visible = true
-                            }
-                        }
-                        onClicked: {
-                            imageEditLocation.visible = true;
-                            mouse.accepted = false;
-                        }
-                        onPressed: {
-                            imageEditLocation.visible = true;
-                            mouse.accepted = false;
-                        }
-                        onReleased: mouse.accepted = false;
-                        onDoubleClicked: mouse.accepted = false;
-                        onPositionChanged: mouse.accepted = false;
-                        onPressAndHold: mouse.accepted = false;
-                    }
-
-                    MouseArea {
-                        id: mouseArea1
-                        width: 26
-                        anchors.left: parent.right
-                        anchors.leftMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-                        anchors.top: parent.top
-                        anchors.topMargin: 0
-
-                        hoverEnabled: true
-
-                        onEntered: { imageEditLocation.visible = true; }
-                        onExited: {
-                            if (textInputLocation.text && !textInputLocation.focus) {
-                                imageEditLocation.visible = false
-                            } else {
-                                imageEditLocation.visible = true
-                            }
-                        }
-                        onClicked: textInputLocation.forceActiveFocus()
-                        onPressed: textInputLocation.forceActiveFocus()
-
-                        ImageSvg {
-                            id: imageEditLocation
-                            width: 20
-                            height: 20
-
-                            visible: false
-                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcon
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: parent.right
-                            anchors.rightMargin: 0
-                        }
-                    }
-                }
-            }
-
-            Item {
-                id: status
-                height: 28
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: labelStatus
-                    width: isPhone ? 78 : 96
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Status")
-                    horizontalAlignment: Text.AlignRight
-                    color: Theme.colorText
-                    font.pixelSize: 18
-                }
-                Text {
-                    id: textStatus
-                    height: 28
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: labelStatus.right
-                    anchors.leftMargin: 8
-
-                    text: qsTr("Loading...")
-                    color: Theme.colorHighContrast
-                    padding: 4
-                    font.pixelSize: 18
-                }
+                rectangleHeader.color = "transparent"
             }
         }
     }
@@ -519,8 +214,8 @@ Item {
             }
         }
 
-        anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 4
+        anchors.top: parent.top
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
@@ -528,77 +223,367 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        ImageSvg {
-            id: imageOffline
-            width: parent.width
-            height: 96
-            //anchors.horizontalCenter: datasColumns.horizontalCenter
-            //anchors.verticalCenter: datasColumns.verticalCenter
-
-            visible: !(myDevice.available || myDevice.hasDatas())
-
-            source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-            fillMode: Image.PreserveAspectFit
-            color: Theme.colorIcon
-        }
-
         Column {
-            id: datasColumns
             width: datasGrid.width / datasGrid.columns
+            spacing: 4
 
-            visible: (myDevice.available || myDevice.hasDatas())
+            Rectangle {
+                id: rectangleHeader
+                color: Theme.colorForeground
+                width: parent.width
+                height: isMobile ? 96 : 134
+                z: 5
 
-            ItemDataBar {
-                id: humi
-                legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
-                unit: "%"
-                color: Theme.colorBlue
-                value: myDevice.deviceHumidity
-                valueMin: 0
-                valueMax: 50
-                limitMin: myDevice.limitHygroMin
-                limitMax: myDevice.limitHygroMax
+                Column {
+                    id: plantPanel
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: 1
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+
+                    Text {
+                        id: textDeviceName
+                        height: 36
+                        anchors.left: parent.left
+                        anchors.leftMargin: 12
+
+                        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+                        font.pixelSize: 24
+                        text: myDevice.deviceName
+                        verticalAlignment: Text.AlignVCenter
+                        font.capitalization: Font.AllUppercase
+                        color: Theme.colorText
+
+                        ImageSvg {
+                            id: imageBattery
+                            width: 32
+                            height: 32
+                            rotation: 90
+                            anchors.verticalCenter: textDeviceName.verticalCenter
+                            anchors.left: textDeviceName.right
+                            anchors.leftMargin: 16
+
+                            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                            color: Theme.colorIcon
+                        }
+                    }
+
+                    Item {
+                        id: itemPlant
+                        height: 28
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        Text {
+                            id: labelPlant
+                            width: isPhone ? 78 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+
+                            text: qsTr("Plant")
+                            anchors.verticalCenter: parent.verticalCenter
+                            horizontalAlignment: Text.AlignRight
+                            color: Theme.colorText
+                            font.pixelSize: 18
+                        }
+
+                        TextInput {
+                            id: textInputPlant
+                            height: 28
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: labelPlant.right
+                            anchors.leftMargin: 8
+
+                            padding: 4
+                            color: Theme.colorHighContrast
+                            font.pixelSize: 18
+
+                            onEditingFinished: {
+                                if (text) {
+                                    imageEditPlant.visible = false
+                                } else {
+                                    imageEditPlant.visible = true
+                                }
+                                myDevice.setPlantName(text)
+                                focus = false
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                //propagateComposedEvents: true
+
+                                onEntered: { imageEditPlant.visible = true; }
+                                onExited: {
+                                    if (textInputPlant.text && !textInputPlant.focus) {
+                                        imageEditPlant.visible = false
+                                    } else {
+                                        imageEditPlant.visible = true
+                                    }
+                                }
+                                onClicked: {
+                                    imageEditPlant.visible = true;
+                                    mouse.accepted = false;
+                                }
+                                onPressed: {
+                                    imageEditPlant.visible = true;
+                                    mouse.accepted = false;
+                                }
+                                onReleased: mouse.accepted = false;
+                                onDoubleClicked: mouse.accepted = false;
+                                onPositionChanged: mouse.accepted = false;
+                                onPressAndHold: mouse.accepted = false;
+                            }
+
+                            MouseArea {
+                                id: mouseArea
+                                width: 26
+                                anchors.top: parent.top
+                                anchors.topMargin: 0
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 0
+                                anchors.left: parent.right
+                                anchors.leftMargin: 0
+
+                                hoverEnabled: true
+
+                                onEntered: { imageEditPlant.visible = true; }
+                                onExited: {
+                                    if (textInputPlant.text && !textInputPlant.focus) {
+                                        imageEditPlant.visible = false
+                                    } else {
+                                        imageEditPlant.visible = true
+                                    }
+                                }
+                                onClicked: textInputPlant.forceActiveFocus()
+                                onPressed: textInputPlant.forceActiveFocus()
+
+                                ImageSvg {
+                                    id: imageEditPlant
+                                    width: 20
+                                    height: 20
+
+                                    visible: false
+                                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                                    color: Theme.colorIcon
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 0
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        id: itemLocation
+                        height: 28
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        Text {
+                            id: labelLocation
+                            width: isPhone ? 78 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+
+                            text: qsTr("Location")
+                            anchors.verticalCenter: parent.verticalCenter
+                            horizontalAlignment: Text.AlignRight
+                            color: Theme.colorText
+                            font.pixelSize: 18
+                        }
+
+                        TextInput {
+                            id: textInputLocation
+                            height: 28
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: labelLocation.right
+                            anchors.leftMargin: 8
+
+                            padding: 4
+                            color: Theme.colorHighContrast
+                            font.pixelSize: 18
+
+                            onEditingFinished: {
+                                if (text) {
+                                    imageEditLocation.visible = false
+                                } else {
+                                    imageEditLocation.visible = true
+                                }
+
+                                myDevice.setLocationName(text)
+                                focus = false
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                propagateComposedEvents: true
+
+                                onEntered: { imageEditLocation.visible = true; }
+                                onExited: {
+                                    if (textInputLocation.text && !textInputLocation.focus) {
+                                        imageEditLocation.visible = false
+                                    } else {
+                                        imageEditLocation.visible = true
+                                    }
+                                }
+                                onClicked: {
+                                    imageEditLocation.visible = true;
+                                    mouse.accepted = false;
+                                }
+                                onPressed: {
+                                    imageEditLocation.visible = true;
+                                    mouse.accepted = false;
+                                }
+                                onReleased: mouse.accepted = false;
+                                onDoubleClicked: mouse.accepted = false;
+                                onPositionChanged: mouse.accepted = false;
+                                onPressAndHold: mouse.accepted = false;
+                            }
+
+                            MouseArea {
+                                id: mouseArea1
+                                width: 26
+                                anchors.left: parent.right
+                                anchors.leftMargin: 0
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 0
+                                anchors.top: parent.top
+                                anchors.topMargin: 0
+
+                                hoverEnabled: true
+
+                                onEntered: { imageEditLocation.visible = true; }
+                                onExited: {
+                                    if (textInputLocation.text && !textInputLocation.focus) {
+                                        imageEditLocation.visible = false
+                                    } else {
+                                        imageEditLocation.visible = true
+                                    }
+                                }
+                                onClicked: textInputLocation.forceActiveFocus()
+                                onPressed: textInputLocation.forceActiveFocus()
+
+                                ImageSvg {
+                                    id: imageEditLocation
+                                    width: 20
+                                    height: 20
+
+                                    visible: false
+                                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                                    color: Theme.colorIcon
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 0
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        id: status
+                        height: 28
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+
+                        Text {
+                            id: labelStatus
+                            width: isPhone ? 78 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Status")
+                            horizontalAlignment: Text.AlignRight
+                            color: Theme.colorText
+                            font.pixelSize: 18
+                        }
+                        Text {
+                            id: textStatus
+                            height: 28
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: labelStatus.right
+                            anchors.leftMargin: 8
+
+                            text: qsTr("Loading...")
+                            color: Theme.colorHighContrast
+                            padding: 4
+                            font.pixelSize: 18
+                        }
+                    }
+                }
             }
-            ItemDataBar {
-                id: temp
-                legend: qsTr("Temperature")
-                floatprecision: 1
-                unit: "°" + settingsManager.tempUnit
-                color: Theme.colorGreen
-                value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
-                valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
-                valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
-                limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
-                limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
-            }
-            ItemDataBar {
-                id: lumi
-                legend: qsTr("Luminosity")
-                unit: " lumens"
-                color: Theme.colorYellow
-                value: myDevice.deviceLuminosity
-                valueMin: 0
-                valueMax: 10000
-                limitMin: myDevice.limitLumiMin
-                limitMax: myDevice.limitLumiMax
-            }
-            ItemDataBar {
-                id: condu
-                legend: qsTr("Fertility")
-                unit: " µS/cm"
-                color: Theme.colorRed
-                value: myDevice.deviceConductivity
-                valueMin: 0
-                valueMax: 500
-                limitMin: myDevice.limitConduMin
-                limitMax: myDevice.limitConduMax
+
+            ////////////////
+
+            Column {
+                id: datasColumns
+                width: parent.width
+
+                visible: (myDevice.available || myDevice.hasDatas())
+
+                ItemDataBar {
+                    id: humi
+                    legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                    unit: "%"
+                    color: Theme.colorBlue
+                    value: myDevice.deviceHumidity
+                    valueMin: 0
+                    valueMax: 50
+                    limitMin: myDevice.limitHygroMin
+                    limitMax: myDevice.limitHygroMax
+                }
+                ItemDataBar {
+                    id: temp
+                    legend: qsTr("Temperature")
+                    floatprecision: 1
+                    unit: "°" + settingsManager.tempUnit
+                    color: Theme.colorGreen
+                    value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
+                    valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
+                    valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
+                    limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
+                    limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
+                }
+                ItemDataBar {
+                    id: lumi
+                    legend: qsTr("Luminosity")
+                    unit: " lumens"
+                    color: Theme.colorYellow
+                    value: myDevice.deviceLuminosity
+                    valueMin: 0
+                    valueMax: 10000
+                    limitMin: myDevice.limitLumiMin
+                    limitMax: myDevice.limitLumiMax
+                }
+                ItemDataBar {
+                    id: condu
+                    legend: qsTr("Fertility")
+                    unit: " µS/cm"
+                    color: Theme.colorRed
+                    value: myDevice.deviceConductivity
+                    valueMin: 0
+                    valueMax: 500
+                    limitMin: myDevice.limitConduMin
+                    limitMax: myDevice.limitConduMax
+                }
             }
         }
+
+        ////////////////
 
         Loader {
             id: graphLoader
             width: (datasGrid.width / datasGrid.columns)
-            height: (datasGrid.columns == 1) ? (datasGrid.height - datasColumns.height - (datasGrid.rows > 1 ? datasGrid.spacing : 0)) : datasGrid.height
+            height: (datasGrid.columns === 1) ? (datasGrid.height - rectangleHeader.height - datasColumns.height - (datasGrid.rows > 1 ? datasGrid.spacing : 0)) : datasGrid.height
         }
     }
 }
