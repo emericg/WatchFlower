@@ -104,7 +104,7 @@ Item {
         if (isPhone) {
             if (screenOrientation === Qt.PortraitOrientation) {
                 rectangleHeader.visible = true
-                rectangleHeader.height = 100
+                rectangleHeader.height = 96
             } else {
                 rectangleHeader.visible = false
                 rectangleHeader.height = 0
@@ -117,7 +117,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: isMobile ? 100 : 134
+        height: isMobile ? 96 : 134
         z: 5
 
         anchors.top: parent.top
@@ -130,7 +130,7 @@ Item {
         Column {
             id: devicePanel
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 0
+            anchors.verticalCenterOffset: 1
             anchors.right: parent.right
             anchors.left: parent.left
 

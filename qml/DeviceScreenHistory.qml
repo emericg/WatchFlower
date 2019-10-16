@@ -130,7 +130,7 @@ Item {
                 if (screenOrientation === Qt.PortraitOrientation) {
                     graphGrid.columns = 1
                     rectangleHeader.visible = true
-                    rectangleHeader.height = 56
+                    rectangleHeader.height = 48
                 } else {
                     graphGrid.columns = 2
                     rectangleHeader.visible = false
@@ -184,7 +184,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: isMobile ? 56 : 96
+        height: isMobile ? 48 : 96
         z: 5
 
         anchors.top: parent.top
@@ -199,7 +199,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 16
             anchors.top: parent.top
-            anchors.topMargin: isMobile ? 12 : 52
+            anchors.topMargin: isMobile ? 8 : 52
 
             ButtonWireframe {
                 id: buttonDone
