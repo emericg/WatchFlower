@@ -28,12 +28,12 @@
         <translation>version %1%2</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="161"/>
+        <location filename="../qml/About.qml" line="160"/>
         <source>WEBSITE</source>
         <translation>SITE WEB</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="173"/>
+        <location filename="../qml/About.qml" line="172"/>
         <source>SUPPORT</source>
         <translation>SUPPORT</translation>
     </message>
@@ -49,8 +49,12 @@
     </message>
     <message>
         <location filename="../qml/About.qml" line="322"/>
+        <source>Rate the application!</source>
+        <translation>Noter l&apos;application!</translation>
+    </message>
+    <message>
         <source>Rate the application</source>
-        <translation>Noter l&apos;application</translation>
+        <translation type="vanished">Noter l&apos;application</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -60,7 +64,7 @@
     <message>
         <location filename="../qml/About.qml" line="409"/>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="unfinished">Une application de supervision de plantes pour les capteurs Bluetooth Xiaomi / MiJia &apos;Flower Care&apos; et &apos;Ropot&apos;.</translation>
+        <translation type="unfinished">Une application de supervision de plantes pour les thermomètres et capteurs Bluetooth Xiaomi / MiJia &apos;Flower Care&apos; et &apos;Ropot&apos;.</translation>
     </message>
     <message>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth devices.</source>
@@ -118,12 +122,12 @@
         <translation type="vanished">Réessayer</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="178"/>
+        <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Enable</source>
         <translation>Activation</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="178"/>
+        <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Retry</source>
         <translation>Réessayer</translation>
     </message>
@@ -140,7 +144,7 @@
         <translation type="vanished">Rechercher des appareils</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="195"/>
+        <location filename="../qml/DeviceList.qml" line="197"/>
         <source>Bluetooth disabled...</source>
         <translation>Bluetooth désactivé...</translation>
     </message>
@@ -149,7 +153,7 @@
         <translation type="vanished">Pas d&apos;appareil configurés...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="307"/>
+        <location filename="../qml/DeviceList.qml" line="311"/>
         <source>%n device(s) selected</source>
         <translation>
             <numerusform>%n appareil sélectionné</numerusform>
@@ -187,17 +191,17 @@
 <context>
     <name>DeviceScreenDatas</name>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="115"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="109"/>
         <source>Updating... </source>
         <translation>Mise à jour... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="118"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="117"/>
         <source>Offline! </source>
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="127"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="113"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
@@ -206,7 +210,7 @@
         <translation type="vanished">Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="129"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="115"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
@@ -215,42 +219,42 @@
         <translation type="vanished">Dernière synchronisation il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="111"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="105"/>
         <source>Update queued. </source>
         <translation>Mise à jour en attente. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="113"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="107"/>
         <source>Connecting... </source>
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="273"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="263"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="381"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="371"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="491"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="481"/>
         <source>Status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="503"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="493"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="563"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="563"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
@@ -259,17 +263,17 @@
         <translation type="vanished">Hygrométrie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="574"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="564"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="586"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="576"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="597"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="587"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -497,32 +501,32 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="146"/>
+        <location filename="../qml/DeviceThermometer.qml" line="143"/>
         <source>humidity</source>
         <translation>humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="159"/>
+        <location filename="../qml/DeviceThermometer.qml" line="156"/>
         <source>Update queued. </source>
         <translation>Mise à jour en attente. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="161"/>
+        <location filename="../qml/DeviceThermometer.qml" line="158"/>
         <source>Connecting... </source>
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="163"/>
+        <location filename="../qml/DeviceThermometer.qml" line="160"/>
         <source>Updating... </source>
         <translation>Mise à jour... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="171"/>
+        <location filename="../qml/DeviceThermometer.qml" line="168"/>
         <source>Offline! </source>
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="167"/>
+        <location filename="../qml/DeviceThermometer.qml" line="164"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
@@ -531,12 +535,12 @@
         <translation type="vanished">Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="169"/>
+        <location filename="../qml/DeviceThermometer.qml" line="166"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="257"/>
+        <location filename="../qml/DeviceThermometer.qml" line="254"/>
         <source>Updating...</source>
         <translation>Mise à jour...</translation>
     </message>
@@ -578,32 +582,32 @@
 <context>
     <name>ItemAioBarCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="183"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="184"/>
         <source>Hygro</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="209"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="210"/>
         <source>Temp</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="234"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="235"/>
         <source>Lumi</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="259"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="260"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="294"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="295"/>
         <source>Days</source>
         <translation>Jours</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemAioBarCharts.qml" line="322"/>
+        <location filename="../qml/components/ItemAioBarCharts.qml" line="323"/>
         <source>Hours</source>
         <translation>Heures</translation>
     </message>
@@ -611,7 +615,7 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="234"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="236"/>
         <source>at</source>
         <translation>à</translation>
     </message>
@@ -624,12 +628,12 @@
         <translation>Êtes vous sur de vouloir supprimer les capteurs sélectionnés ?</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemDeletePopup.qml" line="51"/>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemDeletePopup.qml" line="58"/>
+        <location filename="../qml/components/ItemDeletePopup.qml" line="60"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
@@ -637,14 +641,22 @@
 <context>
     <name>ItemNoBluetooth</name>
     <message>
-        <location filename="../qml/components/ItemNoBluetooth.qml" line="54"/>
+        <location filename="../qml/components/ItemNoBluetooth.qml" line="51"/>
         <source>Enable Bluetooth</source>
         <translation>Activer le Bluetooth</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoBluetooth.qml" line="54"/>
+        <location filename="../qml/components/ItemNoBluetooth.qml" line="51"/>
         <source>Retry detection</source>
         <translation>Réessayer</translation>
+    </message>
+</context>
+<context>
+    <name>ItemNoDatas</name>
+    <message>
+        <location filename="../qml/components/ItemNoDatas.qml" line="50"/>
+        <source>Not enough datas</source>
+        <translation>Pas assez de données</translation>
     </message>
 </context>
 <context>
@@ -663,12 +675,12 @@
         <translation>Avec Android 6+, la recherche de périphériques Bluetooth &quot;basses consommations&quot; nécessite la permission de localisation. L&apos;application n&apos;utilise ni ne conserve votre position. Désolé pour le dérangement.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="92"/>
         <source>Official informations</source>
         <translation>Informations officielles</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="101"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="100"/>
         <source>Launch detection</source>
         <translation>Lancer la détection</translation>
     </message>
@@ -727,34 +739,34 @@
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="449"/>
-        <location filename="../qml/MobileMain.qml" line="576"/>
-        <location filename="../qml/MobileMain.qml" line="658"/>
+        <location filename="../qml/MobileMain.qml" line="578"/>
+        <location filename="../qml/MobileMain.qml" line="661"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="487"/>
-        <location filename="../qml/MobileMain.qml" line="589"/>
+        <location filename="../qml/MobileMain.qml" line="591"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="563"/>
+        <location filename="../qml/MobileMain.qml" line="565"/>
         <source>My plants</source>
         <translation>Mes plantes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="632"/>
+        <location filename="../qml/MobileMain.qml" line="635"/>
         <source>Datas</source>
         <translation>Données</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="645"/>
+        <location filename="../qml/MobileMain.qml" line="648"/>
         <source>History</source>
         <translation>Historique</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="686"/>
+        <location filename="../qml/MobileMain.qml" line="689"/>
         <source>Press one more time to exit...</source>
         <translation>Appuyez encore une fois pour quitter....</translation>
     </message>
@@ -800,6 +812,11 @@
         <location filename="../qml/Settings.qml" line="297"/>
         <source>Bluetooth control</source>
         <translation>Contrôle du Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="337"/>
+        <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
+        <translation>WatchFlower peut activer le Bluetooth de votre appareil pour fonctionner.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="363"/>
@@ -884,14 +901,21 @@
         <translation>Le mode sombre s&apos;activera automatiquement de 21h à 9h.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="337"/>
         <source>WatchFlower will toggle your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower activera le Bluetooth de votre appareil pour fonctionner.</translation>
+        <translation type="vanished">WatchFlower activera le Bluetooth de votre appareil pour fonctionner.</translation>
+    </message>
+    <message>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth reliability, at the expanse of synchronization speed.</source>
+        <translation type="vanished">Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la compatibilité Bluetooth, au détriment de la vitesse de synchronisation.</translation>
+    </message>
+    <message>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve communication reliability, at the expanse of synchronization speed.</source>
+        <translation type="vanished">Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="406"/>
-        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth reliability, at the expanse of synchronization speed.</source>
-        <translation>Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la compatibilité Bluetooth, au détriment de la vitesse de synchronisation.</translation>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
+        <translation>Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="500"/>

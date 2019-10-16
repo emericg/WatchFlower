@@ -319,7 +319,7 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Rate the application")
+                    text: qsTr("Rate the application!")
                     color: Theme.colorText
                     font.pixelSize: 16
 

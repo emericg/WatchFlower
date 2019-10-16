@@ -334,7 +334,7 @@ Item {
 
                 visible: element_bluetoothControl.visible
 
-                text: qsTr("WatchFlower will toggle your device's Bluetooth in order to operate.")
+                text: qsTr("WatchFlower can power on your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -403,7 +403,7 @@ Item {
 
                 visible: element_bluetoothCompat.visible
 
-                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth reliability, at the expanse of synchronization speed.")
+                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
