@@ -48,13 +48,13 @@
         <translation>Ouvrir le tutorial</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application!</source>
-        <translation>Noter l&apos;application!</translation>
+        <translation type="vanished">Noter l&apos;application!</translation>
     </message>
     <message>
+        <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation type="vanished">Noter l&apos;application</translation>
+        <translation>Noter l&apos;application</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -229,32 +229,32 @@
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="263"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="286"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="371"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="394"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="481"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="504"/>
         <source>Status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="493"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="516"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="535"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="535"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
@@ -263,17 +263,17 @@
         <translation type="vanished">Hygrométrie</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="564"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="546"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="576"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="558"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="587"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="569"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>

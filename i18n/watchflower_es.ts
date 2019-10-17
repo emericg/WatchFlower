@@ -29,9 +29,8 @@
         <translation type="unfinished">ASISTENCIA</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application!</source>
-        <translation type="unfinished">¡Califica la aplicación!</translation>
+        <translation type="obsolete">¡Califica la aplicación!</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="409"/>
@@ -62,8 +61,9 @@
         <translation>Abrir el tutorial</translation>
     </message>
     <message>
+        <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation type="obsolete">Califica la aplicación</translation>
+        <translation type="unfinished">Califica la aplicación</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -193,12 +193,12 @@
         <translation>Sincronizado hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="535"/>
         <source>Moisture</source>
         <translation>Humedad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="553"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="535"/>
         <source>Humidity</source>
         <translation>Humedad</translation>
     </message>
@@ -207,22 +207,22 @@
         <translation type="vanished">Última sincronización hace %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="263"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="286"/>
         <source>Plant</source>
         <translation>Planta</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="371"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="394"/>
         <source>Location</source>
         <translation>Ubicación</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="481"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="504"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="493"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="516"/>
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
@@ -231,17 +231,17 @@
         <translation type="vanished">Higrometría</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="564"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="546"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="576"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="558"/>
         <source>Luminosity</source>
         <translation>Luminosidad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenDatas.qml" line="587"/>
+        <location filename="../qml/DeviceScreenDatas.qml" line="569"/>
         <source>Fertility</source>
         <translation>Fertilidad</translation>
     </message>
