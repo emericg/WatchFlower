@@ -4,6 +4,9 @@ os:
   - linux
   - osx
 
+dist: xenial
+osx_image: xcode11.2
+
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       sudo apt-add-repository ppa:beineri/opt-qt-5.12.3-xenial -y;
