@@ -35,6 +35,7 @@
 
 #include "settingsmanager.h"
 #include "systraymanager.h"
+#include "macosdockmanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
 #include "demomode.h"
@@ -212,9 +213,11 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
-#if defined(Q_OS_MACOS) && !defined(FORCE_MOBILE_UI)
-    QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::show);
-    QObject::connect(&app, &SingleApplication::dockClicked, window, &QQuickWindow::raise);
+
+#if defined(Q_OS_MACOS)
+    MacOSDockManager *dockIconHandler = MacOSDockManager::getInstance();
+    QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::show);
+    QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::raise);
 #endif
 
     return app.exec();

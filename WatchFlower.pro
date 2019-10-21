@@ -30,6 +30,7 @@ SOURCES  += src/main.cpp \
             src/settingsmanager.cpp \
             src/systraymanager.cpp \
             src/notificationmanager.cpp \
+            src/macosdockmanager.mm \
             src/devicemanager.cpp \
             src/device.cpp \
             src/device_flowercare.cpp \
@@ -43,6 +44,7 @@ HEADERS  += src/demomode.h \
             src/settingsmanager.h \
             src/systraymanager.h \
             src/notificationmanager.h \
+            src/macosdockmanager.h \
             src/devicemanager.h \
             src/device.h \
             src/device_flowercare.h \
@@ -155,6 +157,9 @@ macx {
 
     # OS infos
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
+
+    # Needed by MacOSDockManager
+    LIBS += -framework AppKit
 
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS

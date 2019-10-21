@@ -47,7 +47,6 @@ SettingsManager *SettingsManager::getInstance()
     if (instance == nullptr)
     {
         instance = new SettingsManager();
-        return instance;
     }
 
     return instance;

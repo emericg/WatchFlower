@@ -38,7 +38,6 @@ NotificationManager *NotificationManager::getInstance()
     if (instance == nullptr)
     {
         instance = new NotificationManager();
-        return instance;
     }
 
     return instance;

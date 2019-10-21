@@ -36,7 +36,6 @@ SystrayManager *SystrayManager::getInstance()
     if (instance == nullptr)
     {
         instance = new SystrayManager();
-        return instance;
     }
 
     return instance;
