@@ -21,6 +21,7 @@
 
 #ifndef MACOS_DOCK_MANAGER_H
 #define MACOS_DOCK_MANAGER_H
+#if defined(Q_OS_MACOS)
 /* ************************************************************************** */
 
 #include <QObject>
@@ -45,4 +46,5 @@ public:
 };
 
 /* ************************************************************************** */
+#endif // defined(Q_OS_MACOS)
 #endif // MACOS_DOCK_MANAGER_H

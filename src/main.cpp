@@ -154,22 +154,21 @@ int main(int argc, char *argv[])
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
-    Q_UNUSED(nm)
     DeviceManager *dm = new DeviceManager;
 
-    if (!sm || !st || !dm)
+    if (!sm || !st || !nm || !dm)
+    {
+        qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;
+    }
 
-    // Then we start the UI
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 #endif
 
-    qmlRegisterSingletonType(
-        QUrl("qrc:/qml/ThemeEngine.qml"),
-        "ThemeEngine", 1, 0,
-        "Theme");
+    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
+    // Then we start the UI
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("deviceManager", dm);
@@ -182,7 +181,10 @@ int main(int argc, char *argv[])
 #endif
 
     if (engine.rootObjects().isEmpty())
+    {
+        qWarning() << "Cannot init QmlApplicationEngine!";
         return EXIT_FAILURE;
+    }
 
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));

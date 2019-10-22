@@ -22,15 +22,13 @@
 #include "macosdockmanager.h"
 
 #if defined(Q_OS_MACOS)
+
 #include <AppKit/AppKit.h>
 #include <objc/runtime.h>
-#endif
 
 static MacOSDockManager *instance = nullptr;
 
 /* ************************************************************************** */
-
-#if defined(Q_OS_MACOS)
 
 bool dockClickHandler(id self, SEL _cmd, ...)
 {
@@ -53,8 +51,6 @@ void setupDockClickHandler()
     class_replaceMethod(delClass, shouldHandle, reinterpret_cast<IMP>(dockClickHandler), "B@:");
 }
 
-#endif // defined(Q_OS_MACOS)
-
 /* ************************************************************************** */
 
 MacOSDockManager *MacOSDockManager::getInstance()
@@ -69,9 +65,7 @@ MacOSDockManager *MacOSDockManager::getInstance()
 
 MacOSDockManager::MacOSDockManager() : QObject()
 {
-#if defined(Q_OS_MACOS)
     setupDockClickHandler();
-#endif
 }
 
 MacOSDockManager::~MacOSDockManager()
@@ -80,3 +74,4 @@ MacOSDockManager::~MacOSDockManager()
 }
 
 /* ************************************************************************** */
+#endif // defined(Q_OS_MACOS)
