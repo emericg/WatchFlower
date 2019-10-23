@@ -21,12 +21,13 @@
 
 #ifndef MACOS_DOCK_MANAGER_H
 #define MACOS_DOCK_MANAGER_H
-#if defined(Q_OS_MACOS)
 /* ************************************************************************** */
 
 #include <QObject>
 
 /* ************************************************************************** */
+
+#if defined(Q_OS_MACOS)
 
 /*!
  * \brief macOS dock manager, to hande dock icon clicks
@@ -45,6 +46,7 @@ public:
     static MacOSDockManager *getInstance();
 };
 
-/* ************************************************************************** */
 #endif // defined(Q_OS_MACOS)
+
+/* ************************************************************************** */
 #endif // MACOS_DOCK_MANAGER_H
