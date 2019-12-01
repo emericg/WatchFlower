@@ -73,7 +73,6 @@ You will need a C++11 compiler and Qt 5.10 (Qt 5.12+ is recommended however) wit
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
-* Graphical resources details in [assets/COPYING](assets/COPYING)
 
 
 ## Get involved!
@@ -93,3 +92,10 @@ WatchFlower is free software; you can redistribute it and/or modify it under the
 Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
 Emeric Grange <emeric.grange@gmail.com>
+
+### Third party projects used by WatchFlower
+
+* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* SingleApplication [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
+* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
+* Graphical resources: please read [assets/COPYING](assets/COPYING)

@@ -1,6 +1,8 @@
 // UtilsNumber.js
-// Version 0.2
+// Version 0.5
 .pragma library
+
+/* ************************************************************************** */
 
 /*!
  * Pad a number
@@ -42,6 +44,13 @@ function normalize(value, min, max) {
 }
 
 /*!
+ * Align value to the closest r
+ */
+function alignTo(value, r) {
+    return (value + (r - 1)) & ~(r - 1);
+}
+
+/*!
  * Round n to a multiple of two
  */
 function round2(n) {
@@ -55,6 +64,8 @@ function mod(n, modulo) {
     var m = ((n % modulo) + modulo) % modulo;
     return m < 0 ? m + Math.abs(modulo) : m;
 }
+
+/* ************************************************************************** */
 
 /*!
  * Return true if n is an int
@@ -70,12 +81,34 @@ function isFloat(n) {
     return Number(n) === n && n % 1 !== 0;
 }
 
-// Fahrenheit to Celsius
-function tempFahrenheitToCelsius(temp) {
-    return (temp - 32) / 1.8;
+/*!
+ * Return true if n is an even number
+ */
+function isEven(n) {
+    return n % 2 === 0;
 }
 
-// Celsius to Fahrenheit
-function tempCelsiusToFahrenheit(temp) {
-    return (temp * 1.8 + 32);
+/*!
+ * Return true if n is an odd number
+ */
+function isOdd(n) {
+    return n % 2 !== 0;
 }
+
+/* ************************************************************************** */
+
+/*!
+ * Fahrenheit to Celsius conversion
+ */
+function tempFahrenheitToCelsius(temp_f) {
+    return (temp_f - 32) / 1.8;
+}
+
+/*!
+ * Celsius to Fahrenheit conversion
+ */
+function tempCelsiusToFahrenheit(temp_c) {
+    return (temp_c * 1.8 + 32);
+}
+
+/* ************************************************************************** */

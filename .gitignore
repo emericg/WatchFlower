@@ -13,7 +13,7 @@ WatchFlower.config
 WatchFlower.creator*
 WatchFlower.files
 WatchFlower.includes
-WatchFlower.pro*
+WatchFlower.pro.*
 
 # Qt Quick Compiler
 qrc_resources.cpp
