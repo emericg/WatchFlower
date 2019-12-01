@@ -56,9 +56,6 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
-    Q_PROPERTY(int screenDpi READ getScreenDpi NOTIFY screenChanged)
-    Q_PROPERTY(double screenSize READ getScreenSize NOTIFY screenChanged)
-
     QString m_appTheme = "green";
     bool m_autoDark = false;
     bool m_startMinimized = false;
@@ -71,9 +68,6 @@ class SettingsManager: public QObject
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
     bool m_bigWidget = false;
-
-    int m_screenDpi = -1;
-    double m_screenSize = -1.0;
 
     bool readSettings();
     bool writeSettings();
@@ -140,24 +134,12 @@ public:
 
     // Utils:
 
-    Q_INVOKABLE static QString getAppVersion() { return QString::fromLatin1(APP_VERSION); }
-
     Q_INVOKABLE bool hasDatabase() const { return m_db; }
 
     Q_INVOKABLE void resetSettings();
 
     Q_INVOKABLE static bool getDemoMode();
     Q_INVOKABLE static QString getDemoString();
-
-    Q_INVOKABLE void getScreenInfos();
-
-    Q_INVOKABLE double getScreenSize();
-
-    Q_INVOKABLE int getScreenDpi();
-
-    Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
-
-    Q_INVOKABLE void exit() { QApplication::exit(); }
 };
 
 /* ************************************************************************** */

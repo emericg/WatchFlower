@@ -36,7 +36,7 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
-    property bool isHdpi: (settingsManager.screenDpi > 128)
+    property bool isHdpi: (screen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize < 7.0))

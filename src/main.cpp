@@ -28,11 +28,11 @@
 #include <QQuickWindow>
 #include <QSurfaceFormat>
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
 #include <statusbar.h>
-#endif
 #include <singleapplication.h>
 
+#include "utils_app.h"
+#include "utils_screen.h"
 #include "settingsmanager.h"
 #include "systraymanager.h"
 #include "macosdockmanager.h"
@@ -151,6 +151,9 @@ int main(int argc, char *argv[])
 #endif // DEMO_MODE
 
     // Init WatchFlower components
+    UtilsApp *utilsApp = new UtilsApp();
+    UtilsScreen *utilsScreen = new UtilsScreen();
+
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
@@ -174,6 +177,8 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
+    engine_context->setContextProperty("app", utilsApp);
+    engine_context->setContextProperty("screen", utilsScreen);
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else

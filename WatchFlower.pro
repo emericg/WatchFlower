@@ -36,7 +36,9 @@ SOURCES  += src/main.cpp \
             src/device_hygrotemp_lcd.cpp \
             src/device_hygrotemp_eink.cpp \
             src/device_hygrotemp_clock.cpp \
-            src/device_ropot.cpp
+            src/device_ropot.cpp \
+            src/utils_app.cpp \
+            src/utils_screen.cpp
 
 HEADERS  += src/demomode.h \
             src/versionchecker.h \
@@ -49,7 +51,9 @@ HEADERS  += src/demomode.h \
             src/device_hygrotemp_lcd.h \
             src/device_hygrotemp_eink.h \
             src/device_hygrotemp_clock.h \
-            src/device_ropot.h
+            src/device_ropot.h \
+            src/utils_app.h \
+            src/utils_screen.h
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

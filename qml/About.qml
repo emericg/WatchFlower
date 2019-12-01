@@ -118,7 +118,7 @@ Item {
                     anchors.bottomMargin: 10
 
                     color: Theme.colorSubText
-                    text: qsTr("version %1%2").arg(settingsManager.getAppVersion()).arg(settingsManager.getDemoString())
+                    text: qsTr("version %1%2").arg(app.appVersion()).arg(settingsManager.getDemoString())
                     font.pixelSize: 16
                 }
 
