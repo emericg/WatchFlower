@@ -59,7 +59,7 @@ SingleApplicationPrivate::SingleApplicationPrivate( SingleApplication *q_ptr )
     server = nullptr;
     socket = nullptr;
     memory = nullptr;
-    instanceNumber = -1;
+    instanceNumber = 0;
 }
 
 SingleApplicationPrivate::~SingleApplicationPrivate()
@@ -294,7 +294,7 @@ void SingleApplicationPrivate::slotConnectionEstablished()
                 break;
             default:
                 break;
-            };
+            }
         }
     );
 }
@@ -305,7 +305,7 @@ void SingleApplicationPrivate::readInitMessageHeader( QLocalSocket *sock )
         return;
     }
 
-    if( sock->bytesAvailable() < ( qint64 )sizeof( quint64 ) ) {
+    if( sock->bytesAvailable() < static_cast<qint64>( sizeof( quint64 ) ) ) {
         return;
     }
 
@@ -316,13 +316,13 @@ void SingleApplicationPrivate::readInitMessageHeader( QLocalSocket *sock )
 #endif
 
     // Read the header to know the message length
-    quint64 msgLen = 0;
+    qint64 msgLen = 0;
     headerStream >> msgLen;
     ConnectionInfo &info = connectionMap[sock];
     info.stage = StageBody;
     info.msgLen = msgLen;
 
-    if ( sock->bytesAvailable() >= (qint64) msgLen ) {
+    if ( sock->bytesAvailable() >= msgLen ) {
         readInitMessageBody( sock );
     }
 }
@@ -336,7 +336,7 @@ void SingleApplicationPrivate::readInitMessageBody( QLocalSocket *sock )
     }
 
     ConnectionInfo &info = connectionMap[sock];
-    if( sock->bytesAvailable() < ( qint64 )info.msgLen ) {
+    if( sock->bytesAvailable() < info.msgLen ) {
         return;
     }
 
@@ -366,7 +366,7 @@ void SingleApplicationPrivate::readInitMessageBody( QLocalSocket *sock )
     quint16 msgChecksum = 0;
     readStream >> msgChecksum;
 
-    const quint16 actualChecksum = qChecksum( msgBytes.constData(), static_cast<quint32>( msgBytes.length() - sizeof( quint16 ) ) );
+    const quint16 actualChecksum = qChecksum( msgBytes.constData(), static_cast<quint32>( msgBytes.length() ) - sizeof( quint16 ) );
 
     bool isValid = readStream.status() == QDataStream::Ok &&
                    QLatin1String(latin1Name) == blockServerName &&
