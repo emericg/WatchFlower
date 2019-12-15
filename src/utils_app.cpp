@@ -27,13 +27,28 @@
 
 #include <cmath>
 
+#include <QDir>
+#include <QSize>
+
 #include <QApplication>
 #include <QStandardPaths>
 #include <QDesktopServices>
 
 /* ************************************************************************** */
 
-UtilsApp::UtilsApp(QObject* parent) : QObject(parent)
+UtilsApp *UtilsApp::instance = nullptr;
+
+UtilsApp *UtilsApp::getInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new UtilsApp();
+    }
+
+    return instance;
+}
+
+UtilsApp::UtilsApp()
 {
     //
 }
@@ -43,6 +58,7 @@ UtilsApp::~UtilsApp()
     //
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 QString UtilsApp::appVersion()
@@ -54,6 +70,32 @@ QString UtilsApp::appBuildDate()
 {
     return QString::fromLatin1(__DATE__);
 }
+
+QString UtilsApp::appBuildMode()
+{
+#ifdef DEBUG
+    return "DEBUG";
+#endif
+
+    return "";
+}
+
+/* ************************************************************************** */
+
+void UtilsApp::setAppPath(const QString &value)
+{
+    if (m_appPath != value)
+    {
+        QDir newpath(value);
+        newpath.cdUp();
+        m_appPath = newpath.absolutePath();
+
+        // Make sure the path is terminated with a separator.
+        if (!m_appPath.endsWith('/')) m_appPath += '/';
+    }
+}
+
+/* ************************************************************************** */
 
 void UtilsApp::appExit()
 {

@@ -24,7 +24,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QApplication>
+#include <QVariantMap>
 #include <QQuickWindow>
 
 /* ************************************************************************** */

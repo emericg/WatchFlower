@@ -27,11 +27,23 @@ import ThemeEngine 1.0
 
 ApplicationWindow {
     id: applicationWindow
-
-    width: (Qt.platform.os === "osx") ? 800 : 1280
-    height: (Qt.platform.os === "osx") ? 480 : 720
     minimumWidth: 480
     minimumHeight: 480
+
+    width: {
+        if (settingsManager.initialSize.width > 0)
+            return settingsManager.initialSize.width
+        else
+            return (Qt.platform.os === "osx") ? 800 : 1280
+    }
+    height: {
+        if (settingsManager.initialSize.height > 0)
+            return settingsManager.initialSize.height
+        else
+            return (Qt.platform.os === "osx") ? 480 : 720
+    }
+    x: settingsManager.initialPosition.width
+    y: settingsManager.initialPosition.height
 
     color: Theme.colorBackground
     visible: true // !settingsManager.minimized

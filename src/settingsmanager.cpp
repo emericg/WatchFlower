@@ -22,6 +22,7 @@
 #include "settingsmanager.h"
 #include "systraymanager.h"
 
+#include <QApplication>
 #include <QStandardPaths>
 #include <QLocale>
 #include <QDir>
@@ -35,7 +36,6 @@
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
 
-#include <QScreen>
 #include <cmath>
 
 /* ************************************************************************** */
@@ -72,9 +72,17 @@ bool SettingsManager::readSettings()
 
     QSettings settings(QApplication::organizationName(), QApplication::applicationName());
 
-    settings.sync();
     if (settings.status() == QSettings::NoError)
     {
+        if (settings.contains("ApplicationWindow/x"))
+            m_appPosition.setWidth(settings.value("ApplicationWindow/x").toInt());
+        if (settings.contains("ApplicationWindow/y"))
+            m_appPosition.setHeight(settings.value("ApplicationWindow/y").toInt());
+        if (settings.contains("ApplicationWindow/width"))
+            m_appSize.setWidth(settings.value("ApplicationWindow/width").toInt());
+        if (settings.contains("ApplicationWindow/height"))
+            m_appSize.setHeight(settings.value("ApplicationWindow/height").toInt());
+
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
 

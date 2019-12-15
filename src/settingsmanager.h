@@ -30,8 +30,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QApplication>
-#include <QQuickWindow>
+#include <QSize>
 
 /* ************************************************************************** */
 
@@ -41,6 +40,9 @@
 class SettingsManager: public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(QSize initialSize READ getInitialSize NOTIFY initialSizeChanged)
+    Q_PROPERTY(QSize initialPosition READ getInitialPosition NOTIFY initialSizeChanged)
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
     Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
@@ -56,6 +58,9 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
 
+    QSize m_appSize;
+    QSize m_appPosition;
+
     QString m_appTheme = "green";
     bool m_autoDark = false;
     bool m_startMinimized = false;
@@ -69,6 +74,11 @@ class SettingsManager: public QObject
     QString m_graphHistory = "monthly";
     bool m_bigWidget = false;
 
+    // Singleton
+    static SettingsManager *instance;
+    SettingsManager();
+    ~SettingsManager();
+
     bool readSettings();
     bool writeSettings();
 
@@ -77,12 +87,8 @@ class SettingsManager: public QObject
     void closeDatabase();
     void resetDatabase();
 
-    static SettingsManager *instance;
-
-    SettingsManager();
-    ~SettingsManager();
-
 Q_SIGNALS:
+    void initialSizeChanged();
     void appthemeChanged();
     void autodarkChanged();
     void minimizedChanged();
@@ -98,6 +104,9 @@ Q_SIGNALS:
 
 public:
     static SettingsManager *getInstance();
+
+    QSize getInitialSize() { return m_appSize; }
+    QSize getInitialPosition() { return m_appPosition; }
 
     QString getAppTheme() const { return m_appTheme; }
     void setAppTheme(const QString &value);
@@ -132,12 +141,9 @@ public:
     bool getBigWidget() const { return m_bigWidget; }
     void setBigWidget(const bool value);
 
-    // Utils:
-
-    Q_INVOKABLE bool hasDatabase() const { return m_db; }
-
+    // Utils
     Q_INVOKABLE void resetSettings();
-
+    Q_INVOKABLE bool hasDatabase() const { return m_db; }
     Q_INVOKABLE static bool getDemoMode();
     Q_INVOKABLE static QString getDemoString();
 };

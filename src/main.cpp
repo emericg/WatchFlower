@@ -153,9 +153,6 @@ int main(int argc, char *argv[])
 #endif // DEMO_MODE
 
     // Init WatchFlower components
-    UtilsApp *utilsApp = new UtilsApp();
-    UtilsScreen *utilsScreen = new UtilsScreen();
-
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
@@ -166,6 +163,9 @@ int main(int argc, char *argv[])
         qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;
     }
+
+    UtilsScreen *utilsScreen = new UtilsScreen();
+    UtilsApp *utilsApp = UtilsApp::getInstance();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");

@@ -22,11 +22,10 @@
 #define UTILS_APP_H
 /* ************************************************************************** */
 
-#include <QUrl>
-#include <QSize>
-#include <QString>
 #include <QObject>
-#include <QVariantMap>
+#include <QUrl>
+#include <QString>
+#include <QStringList>
 
 /* ************************************************************************** */
 
@@ -34,12 +33,23 @@ class UtilsApp : public QObject
 {
     Q_OBJECT
 
+    QString m_appPath;
+
+    // Singleton
+    static UtilsApp *instance;
+    UtilsApp();
+    ~UtilsApp();
+
 public:
-    explicit UtilsApp(QObject* parent = nullptr);
-   ~UtilsApp();
+    static UtilsApp *getInstance();
+
+    QString getAppPath() const { return m_appPath; }
+    void setAppPath(const QString &value);
 
     static Q_INVOKABLE QString appVersion();
     static Q_INVOKABLE QString appBuildDate();
+    static Q_INVOKABLE QString appBuildMode();
+
     static Q_INVOKABLE void appExit();
 
     static Q_INVOKABLE void openWith(const QString &path);
