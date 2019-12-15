@@ -22,6 +22,7 @@
 #include <QtGlobal>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QVersionNumber>
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -71,10 +72,9 @@ int main(int argc, char *argv[])
         SettingsManager *sm = SettingsManager::getInstance();
         SystrayManager *st = SystrayManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
-        Q_UNUSED(nm)
         DeviceManager *dm = new DeviceManager;
 
-        if (!sm || !st || !dm)
+        if (!sm || !st || !nm || !dm)
             return EXIT_FAILURE;
 
         // Refresh datas in the background, without starting the UI, then exit
@@ -101,13 +101,15 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
 #if defined(Q_OS_LINUX)
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
     // NVIDIA suspend&resume hack
-    QSurfaceFormat::setOption(QSurfaceFormat::ResetNotification)
-#endif
+    if (QLibraryInfo::version() >= QVersionNumber(5, 13, 0))
+    {
+        auto format = QSurfaceFormat::defaultFormat();
+        format.setOption(QSurfaceFormat::ResetNotification);
+        QSurfaceFormat::setDefaultFormat(format);
+    }
 #endif
 
     SingleApplication app(argc, argv);
