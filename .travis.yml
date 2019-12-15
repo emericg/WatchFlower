@@ -1,11 +1,10 @@
 language: cpp
+dist: xenial
+osx_image: xcode11.2
 
 os:
   - linux
   - osx
-
-dist: xenial
-osx_image: xcode11.2
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then

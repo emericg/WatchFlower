@@ -11,18 +11,31 @@ ios { QT += gui-private }
 
 # Validate Qt version
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 10)) {
-    error("You need AT LEAST Qt 5.10 to build WatchFlower")
+    error("You need AT LEAST Qt 5.10 to build $${TARGET}")
 }
 
-# Build artifacts ##############################################################
+# Project features #############################################################
 
-OBJECTS_DIR = build/
-MOC_DIR     = build/
-RCC_DIR     = build/
-UI_DIR      = build/
-QMLCACHE_DIR= build/
+# Use Qt Quick compiler
+ios | android { CONFIG += qtquickcompiler }
 
-DESTDIR     = bin/
+# StatusBar for mobile OS
+include(src/thirdparty/StatusBar/statusbar.pri)
+
+# SingleApplication for desktop OS
+!ios | !android {
+    include(src/thirdparty/SingleApplication/singleapplication.pri)
+    DEFINES += QAPPLICATION_CLASS=QApplication
+}
+
+# Demo mode (for screenshots across devices)
+exists(assets/demo/demo_bdd.db) {
+    DEFINES += DEMO_MODE
+    RESOURCES += assets/demo/demo.qrc
+}
+
+# Force mobile UI
+#DEFINES += FORCE_MOBILE_UI
 
 # Project files ################################################################
 
@@ -60,36 +73,34 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .gitignore \
-               .travis.yml \
-               assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
+               .travis.yml
 
 TRANSLATIONS = i18n/watchflower_fr.ts \
                i18n/watchflower_es.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
 
-# App features #################################################################
+# Build settings ###############################################################
 
-# Use Qt Quick compiler
-ios | android { CONFIG += qtquickcompiler }
+unix {
+    # Enables AddressSanitizer
+    #QMAKE_CXXFLAGS += -fsanitize=address,undefined
+    #QMAKE_LFLAGS += -fsanitize=address,undefined
 
-# Force mobile UI
-#DEFINES += FORCE_MOBILE_UI
-
-# StatusBar for mobile OS
-include(src/thirdparty/StatusBar/statusbar.pri)
-
-# SingleApplication for desktop OS
-!ios | !android {
-    include(src/thirdparty/SingleApplication/singleapplication.pri)
-    DEFINES += QAPPLICATION_CLASS=QApplication
+    #QMAKE_CXXFLAGS += -Wno-nullability-completeness
 }
 
-# Demo mode (for screenshots across devices)
-exists(assets/demo/demo_bdd.db) {
-    DEFINES += DEMO_MODE
-    RESOURCES += assets/demo/demo.qrc
-}
+DEFINES += QT_DEPRECATED_WARNINGS
+
+# Build artifacts ##############################################################
+
+OBJECTS_DIR = build/
+MOC_DIR     = build/
+RCC_DIR     = build/
+UI_DIR      = build/
+QMLCACHE_DIR= build/
+
+DESTDIR     = bin/
 
 ################################################################################
 # Application deployment and installation steps
@@ -97,7 +108,7 @@ exists(assets/demo/demo_bdd.db) {
 linux:!android {
     TARGET = $$lower($${TARGET})
 
-    # Application packaging # Needs linuxdeployqt installed
+    # Automatic application packaging # Needs linuxdeployqt installed
     #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/)
 
     # Application packaging # Needs linuxdeployqt installed
@@ -107,41 +118,34 @@ linux:!android {
 
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
-    target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
-    target_app.path     = $${PREFIX}/bin/
-    target_icon.files  += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
-    target_icon.path    = $${PREFIX}/share/pixmaps/
+    target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    target_app.path         = $${PREFIX}/bin/
+    target_icon.files      += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
+    target_icon.path        = $${PREFIX}/share/pixmaps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
     target_appdata.files   += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).appdata.xml
     target_appdata.path     = $${PREFIX}/share/appdata
     INSTALLS += target_app target_icon target_appentry target_appdata
 
-    # Clean bin/ directory
+    # Clean appdir/ and bin/ directories
     #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    #QMAKE_CLEAN += $${OUT_PWD}/appdir/
 }
 
 android {
     # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
     #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
-    defineReplace(droidVersionCode) {
-        segments = $$split(1, ".")
-        for (segment, segments): vCode = "$$first(vCode)$$format_number($$segment, width=3 zeropad)"
+    # Bundle name
+    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
+    QMAKE_BUNDLE = watchflower
 
-        contains(ANDROID_TARGET_ARCH, arm64-v8a): \
-            suffix = 1
-        else:contains(ANDROID_TARGET_ARCH, armeabi-v7a): \
-            suffix = 0
+    # 
+    OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
 
-        return($$first(vCode)$$first(suffix))
-    }
-
-    ANDROID_VERSION_NAME = $$VERSION
-    ANDROID_VERSION_CODE = $$droidVersionCode($$ANDROID_VERSION_NAME)
-
-    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
 }
 
 macx {
@@ -178,6 +182,7 @@ macx {
     QMAKE_EXTRA_TARGETS += install deploy
 
     # Installation step (note: app bundle packaging)
+    isEmpty(PREFIX) { PREFIX = /usr/local }
     target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
     target.path = $$(HOME)/Applications
     INSTALLS += target
