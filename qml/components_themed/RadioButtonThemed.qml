@@ -14,18 +14,18 @@ RadioButton {
         y: (parent.height / 2) - (height / 2)
         width: 24
         height: 24
-        radius: 12
+        radius: (width / 2)
 
         color: Theme.colorComponentBackground
         border.width: 1
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {
-            x: 5
-            y: 5
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             width: 14
             height: 14
-            radius: 7
+            radius: (width / 2)
 
             visible: control.checked
             color: Theme.colorSecondary

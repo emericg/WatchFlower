@@ -10,15 +10,15 @@ Item {
     clip: true
 
     property string text: "CODEC"
-    property string color: Theme.colorBackground
+    property string color: Theme.colorForeground
     property string colorText: Theme.colorText
 
     Rectangle {
         id: codecBackground
         width: parent.width
         height: parent.height
-        opacity: 0.8
-        radius: 3
+        opacity: 1
+        radius: Theme.componentRadius
         color: codec.color
 
         Text {
@@ -28,7 +28,7 @@ Item {
             text: codec.text
             color: codec.colorText
             font.capitalization: Font.AllUppercase
-            font.pixelSize: 16
+            font.pixelSize: Theme.fontSizeComponentText
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

@@ -219,6 +219,37 @@ Item {
             visible: (screenDeviceList.selectionCount)
 
             Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
+
+                ItemImageButton {
+                    id: buttonClear
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
+                    onClicked: screenDeviceList.exitSelectionMode()
+                }
+
+                Text {
+                    id: textActions
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
+                    color: Theme.colorActionbarContent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.bold: true
+                    font.pixelSize: 16
+                }
+            }
+
+            Row {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
@@ -286,35 +317,6 @@ Item {
                     onClicked: screenDeviceList.removeSelectedDevice()
                 }
 */
-            }
-
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
-
-                ItemImageButton {
-                    id: buttonClear
-                    width: 36
-                    height: 36
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: Theme.colorHeaderContent
-                    onClicked: screenDeviceList.exitSelectionMode()
-                }
-
-                Text {
-                    id: textActions
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
-                    color: "white"
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignLeft
-                    font.bold: true
-                    font.pixelSize: 16
-                }
             }
         }
     }

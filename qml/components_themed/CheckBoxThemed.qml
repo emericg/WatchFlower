@@ -15,14 +15,15 @@ CheckBox {
         y: (parent.height / 2) - (height / 2)
         width: 26
         height: 26
+        radius: Theme.componentRadius
 
         color: Theme.colorComponentBackground
         border.width: 1
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {
-            x: 6
-            y: 6
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             width: 14
             height: 14
 

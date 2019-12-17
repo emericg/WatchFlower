@@ -6,7 +6,7 @@ import ThemeEngine 1.0
 
 Button {
     id: control
-    width: contenttext.width + imgSize*3
+    width: contentText.width + imgSize*3
     implicitHeight: Theme.componentHeight
 
     property url source: ""
@@ -20,11 +20,11 @@ Button {
 
     contentItem: Item {
         ImageSvg {
-            id: contentimage
+            id: contentImage
             width: imgSize
             height: imgSize
 
-            anchors.right: contenttext.left
+            anchors.right: contentText.left
             anchors.rightMargin: imgSize/3
             anchors.verticalCenter: parent.verticalCenter
 
@@ -33,10 +33,10 @@ Button {
             color: fullColor ? "white" : control.primaryColor
         }
         Text {
-            id: contenttext
+            id: contentText
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: imgSize/2
+            anchors.horizontalCenterOffset: (imgSize/2 + imgSize/6)
             text: control.text
             font: control.font
             opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3

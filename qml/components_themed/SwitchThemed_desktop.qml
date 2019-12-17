@@ -17,7 +17,7 @@ Switch {
         border.color: Theme.colorComponentBorder
 
         Rectangle {
-            x: control.checked ? parent.width - width : 0
+            x: control.checked ? (parent.width - width) : 0
             anchors.verticalCenter: parent.verticalCenter
             width: 24
             height: width
@@ -26,19 +26,16 @@ Switch {
             color: control.checked ? Theme.colorPrimary : Theme.colorComponentDown
             border.color: control.checked ? Theme.colorPrimary : Theme.colorComponentDown
 
-            Behavior on x { NumberAnimation { duration: 100 } }
+            Behavior on x { NumberAnimation { duration: 133 } }
         }
     }
 
     contentItem: Text {
         leftPadding: control.indicator.width + control.spacing
-
-        text: control.text
         verticalAlignment: Text.AlignVCenter
 
-        opacity: enabled ? 1.0 : 0.3
+        text: control.text
         color: Theme.colorText
-        //font: control.font
-        //font.bold: false
+        opacity: enabled ? 1.0 : 0.3
     }
 }

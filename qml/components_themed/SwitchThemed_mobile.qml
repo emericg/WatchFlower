@@ -25,6 +25,8 @@ Switch {
 
             color: control.checked ? Theme.colorPrimary : Theme.colorComponent
             border.color: control.checked ? Theme.colorPrimary : Theme.colorComponent
+
+            Behavior on x { NumberAnimation { duration: 133 } }
         }
     }
 
@@ -34,8 +36,6 @@ Switch {
 
         text: control.text
         font: control.font
-        //font.pixelSize: 14
-        //font.bold: true
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.3
     }

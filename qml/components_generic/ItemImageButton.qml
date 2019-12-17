@@ -15,12 +15,12 @@ Item {
     property bool selected: false
 
     // settings
-    property string highlightMode: "circle" // circle / color / off
+    property string highlightMode: "circle" // circle / color / both / off
     property bool background: false
 
     property string iconColor: Theme.colorIcon
     property string highlightColor: Theme.colorPrimary
-    property string backgroundColor: Theme.colorForeground
+    property string backgroundColor: Theme.colorComponent
 
     property string tooltipText: ""
 
@@ -31,14 +31,14 @@ Item {
         anchors.fill: parent
         onClicked: itemImageButton.clicked()
 
-        hoverEnabled: (highlightMode !== "off")
+        hoverEnabled: true
         onEntered: {
-            bgRect.opacity = (highlightMode === "circle") ? 1 : 0.50
+            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both") ? 0.9 : 0.50
             itemImageButton.highlighted = true
         }
         onExited: {
-            bgRect.opacity = background ? 0.50 : 0
             itemImageButton.highlighted = false
+            bgRect.opacity = background ? 0.50 : 0
         }
     }
 
@@ -48,7 +48,7 @@ Item {
         radius: 50
         color: parent.backgroundColor
         opacity: background ? 0.50 : 0
-        visible: (highlightMode === "circle" || background)
+        visible: (highlightMode === "circle" || highlightMode === "both" ||background)
 
         Behavior on opacity { OpacityAnimator { duration: 333 } }
     }
@@ -60,13 +60,11 @@ Item {
 
         width: Math.round(itemImageButton.width * 0.666)
         height: Math.round(itemImageButton.height * 0.666)
-        opacity: itemImageButton.enabled ? 1.0 : 0.3
         visible: false
 
         source: itemImageButton.source
         sourceSize: Qt.size(width, height)
     }
-
     ColorOverlay {
         anchors.centerIn: parent
         source: contentImage
@@ -75,12 +73,10 @@ Item {
         cached: true
         opacity: itemImageButton.enabled ? 1.0 : 0.3
 
-        //color: selected || (highlightMode === "color" && itemImageButton.highlighted) ? itemImageButton.iconColor : itemImageButton.iconColor
-
         color: {
             if (selected === true) {
                 itemImageButton.highlightColor
-            } else if (highlightMode === "color") {
+            } else if (highlightMode === "color" || highlightMode === "both") {
                 itemImageButton.highlighted ? itemImageButton.highlightColor : itemImageButton.iconColor
             } else {
                 itemImageButton.iconColor
