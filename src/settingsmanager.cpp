@@ -164,8 +164,6 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/bigWidget", m_bigWidget);
         settings.setValue("settings/tempUnit", m_tempUnit);
 
-        settings.sync();
-
         if (settings.status() == QSettings::NoError)
         {
             status = true;
@@ -174,6 +172,10 @@ bool SettingsManager::writeSettings()
         {
             qWarning() << "SettingsManager::writeSettings() error:" << settings.status();
         }
+    }
+    else
+    {
+        qWarning() << "SettingsManager::writeSettings() error: read only file?";
     }
 
     return status;
