@@ -25,7 +25,6 @@
         <file>icons_material/baseline-bluetooth_connected-24px.svg</file>
         <file>icons_material/baseline-bluetooth_disabled-24px.svg</file>
         <file>icons_material/baseline-bluetooth_searching-24px.svg</file>
-        <file>icons_material/baseline-brightness_4-24px.svg</file>
         <file>icons_material/baseline-chevron_right-24px.svg</file>
         <file>icons_material/baseline-crop_16_9-24px.svg</file>
         <file>icons_material/baseline-close-24px.svg</file>
@@ -60,6 +59,7 @@
         <file>icons_material/duotone-access_time-24px.svg</file>
         <file>icons_material/duotone-bluetooth_connected-24px.svg</file>
         <file>icons_material/duotone-bluetooth_searching-24px.svg</file>
+        <file>icons_material/duotone-brightness_4-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
         <file>icons_material/duotone-format_size-24px.svg</file>

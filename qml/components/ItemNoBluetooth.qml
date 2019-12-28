@@ -33,13 +33,14 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -26
+        anchors.verticalCenterOffset: -20
         spacing: 16
 
         ImageSvg {
-            width: 200
-            height: 200
+            width: isDesktop ? 256 : (parent.width*0.66)
+            height: width
             anchors.horizontalCenter: parent.horizontalCenter
+
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon

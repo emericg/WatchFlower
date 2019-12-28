@@ -34,12 +34,12 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -16
+        anchors.verticalCenterOffset: -20
         spacing: -8
 
         ImageSvg {
-            width: 128
-            height: 128
+            width: isDesktop ? 128 : (parent.width*0.33)
+            height: width
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
             color: Theme.colorSubText

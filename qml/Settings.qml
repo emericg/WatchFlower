@@ -243,7 +243,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-brightness_4-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
                 }
             }
             Text {

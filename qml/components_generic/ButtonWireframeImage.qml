@@ -1,12 +1,11 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
 
 import ThemeEngine 1.0
 
 Button {
     id: control
-    width: contentText.width + imgSize*3
+    width: contentText.width + contentImage.width*3
     implicitHeight: Theme.componentHeight
 
     property url source: ""
@@ -16,7 +15,8 @@ Button {
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorBackground
 
-    font.pixelSize: isMobile ? 15 : 16
+    font.pixelSize: isDesktop ? 14 : 15
+    font.bold: isDesktop ? true : false
 
     contentItem: Item {
         ImageSvg {
@@ -34,9 +34,12 @@ Button {
         }
         Text {
             id: contentText
+            height: parent.height
+
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: (imgSize/2 + imgSize/6)
+            anchors.horizontalCenterOffset: (imgSize/2)
+
             text: control.text
             font: control.font
             opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3
@@ -49,9 +52,9 @@ Button {
 
     background: Rectangle {
         radius: Theme.componentRadius
-        border.width: 1
-        border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
         opacity: enabled ? (control.down ? 0.5 : 1.0) : 0.3
         color: fullColor ? control.primaryColor : control.secondaryColor
+        border.width: 1
+        border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
     }
 }

@@ -6,10 +6,9 @@ import ThemeEngine 1.0
 
 Item {
     id: itemMenuButton
-    implicitWidth: 64
-    implicitHeight: 64
 
-    width: 16 + contentImage.width + (imgSize / 2) + contentText.width + 16
+    implicitWidth: 80
+    implicitHeight: 48
     property int imgSize: 32
 
     signal clicked()
@@ -21,7 +20,6 @@ Item {
     property string highlightMode: "background" // available: background & text
 
     property string menuText: ""
-    property string tooltipText: ""
     property url source: ""
 
     MouseArea {
@@ -53,16 +51,16 @@ Item {
         visible: (highlightMode === "background")
         color: itemMenuButton.colorBackground
         opacity: 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 250 } }
     }
 
     ImageSvg {
         id: contentImage
         width: imgSize
         height: imgSize
-        anchors.left: parent.left
-        anchors.leftMargin: 16
+        anchors.horizontalCenter: itemMenuButton.horizontalCenter
         anchors.verticalCenter: itemMenuButton.verticalCenter
+        anchors.verticalCenterOffset: -8
 
         source: itemMenuButton.source
         color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
@@ -72,8 +70,8 @@ Item {
     Text {
         id: contentText
         height: parent.height
-        anchors.left: contentImage.right
-        anchors.leftMargin: (imgSize / 3)
+        anchors.top: contentImage.bottom
+        anchors.topMargin: -4
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
         text: menuText

@@ -3,17 +3,18 @@ import QtQuick.Controls 2.2
 
 Button {
     id: control
-    width: contenttext.width + imgSize*3
+    width: contentText.width + imgSize*3
 
     property url source: ""
     property int imgSize: 28
 
     contentItem: Item {
         Text {
-            id: contenttext
+            id: contentText
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: (imgSize/2 + imgSize/6)
+
             text: control.text
             font: control.font
             opacity: enabled ? 1.0 : 0.3
@@ -22,17 +23,18 @@ Button {
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
         }
-        Image {
-            id: contentimage
+        ImageSvg {
+            id: contentImage
             width: imgSize
             height: imgSize
-            sourceSize: Qt.size(imgSize, imgSize)
 
-            anchors.right: contenttext.left
+            anchors.right: contentText.left
             anchors.rightMargin: imgSize/3
             anchors.verticalCenter: parent.verticalCenter
+
             opacity: enabled ? 1.0 : 0.3
             source: control.source
+            color: Theme.colorIcon
         }
     }
 

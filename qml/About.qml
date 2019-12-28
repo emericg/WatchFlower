@@ -115,23 +115,23 @@ Item {
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 18
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 10
+                    anchors.bottomMargin: 8
 
                     color: Theme.colorSubText
                     text: qsTr("version %1%2").arg(utilsApp.appVersion()).arg(settingsManager.getDemoString())
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                 }
 
                 Text {
                     id: textName
                     anchors.top: parent.top
-                    anchors.topMargin: 12
+                    anchors.topMargin: 14
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 
                     text: "WatchFlower"
                     color: Theme.colorText
-                    font.pixelSize: 36
+                    font.pixelSize: 28
                 }
             }
 
