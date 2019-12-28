@@ -244,7 +244,7 @@ Item {
                     color: Theme.colorActionbarContent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
-                    font.bold: true
+                    font.bold: isDesktop ? true : false
                     font.pixelSize: 16
                 }
             }

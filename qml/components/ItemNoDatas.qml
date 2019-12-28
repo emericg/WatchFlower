@@ -34,7 +34,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -20
+        anchors.verticalCenterOffset: -12
         spacing: -8
 
         ImageSvg {

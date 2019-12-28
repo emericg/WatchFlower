@@ -598,9 +598,8 @@ ApplicationWindow {
         Row {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
-            //anchors.horizontalCenterOffset: (isPhone && utilsScreen.screenSize < 5) ? 12 : 0
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5)) ? 0 : 24
+            spacing: (applicationWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDatasButtonClicked()
             signal deviceHistoryButtonClicked()
