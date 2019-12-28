@@ -1,8 +1,18 @@
 <?xml version="1.0"?>
 <manifest package="com.emeric.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.11" android:versionCode="00110002" android:installLocation="auto">
-    <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="29"/>
 
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop">
+    <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
+    <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
+        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation"
+                    android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -33,6 +43,7 @@
             <meta-data android:value="@string/ministro_not_found_msg" android:name="android.app.ministro_not_found_msg"/>
             <meta-data android:value="@string/ministro_needed_msg" android:name="android.app.ministro_needed_msg"/>
             <meta-data android:value="@string/fatal_error_msg" android:name="android.app.fatal_error_msg"/>
+            <meta-data android:value="@string/unsupported_android_version" android:name="android.app.unsupported_android_version"/>
 
             <!-- Splash screen -->
             <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash"/>
@@ -49,18 +60,5 @@
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
     </application>
-
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28"/>
-    <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
-
-    <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
-         Remove the comment if you do not require these default permissions. -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-    <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
-         Remove the comment if you do not require these default features. -->
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
 </manifest>
