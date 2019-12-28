@@ -36,11 +36,11 @@ ApplicationWindow {
     color: Theme.colorBackground
     visible: true
 
-    property bool isHdpi: (screen.screenDpi > 128)
+    property bool isHdpi: (utilsScreen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
-    property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize < 7.0))
-    property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (settingsManager.screenSize >= 7.0))
+    property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
+    property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
 
     property var lastUpdate
     property var currentDevice: null
@@ -598,9 +598,9 @@ ApplicationWindow {
         Row {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
-            //anchors.horizontalCenterOffset: (isPhone && settingsManager.screenSize < 5) ? 12 : 0
+            //anchors.horizontalCenterOffset: (isPhone && utilsScreen.screenSize < 5) ? 12 : 0
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width < 480 || (isPhone && settingsManager.screenSize < 5)) ? 0 : 24
+            spacing: (applicationWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5)) ? 0 : 24
 
             signal deviceDatasButtonClicked()
             signal deviceHistoryButtonClicked()
