@@ -1,6 +1,6 @@
 language: cpp
 dist: xenial
-osx_image: xcode11.2
+osx_image: xcode11.3
 
 os:
   - linux
@@ -11,9 +11,9 @@ before_install:
       sudo apt-add-repository ppa:beineri/opt-qt-5.12.6-xenial -y;
       sudo apt-get update -q;
     fi
-#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-#      brew update;
-#    fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update;
+    fi
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -31,7 +31,6 @@ before_script:
   - qmake CONFIG+=release PREFIX=/usr
 
 script:
-  - |-
   - make -j$(nproc)
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       make INSTALL_ROOT=appdir -j$(nproc) install; find appdir/;
