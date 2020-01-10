@@ -115,7 +115,7 @@ Item {
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 18
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 8
+                    anchors.bottomMargin: 10
 
                     color: Theme.colorSubText
                     text: qsTr("version %1%2").arg(utilsApp.appVersion()).arg(settingsManager.getDemoString())
@@ -125,7 +125,7 @@ Item {
                 Text {
                     id: textName
                     anchors.top: parent.top
-                    anchors.topMargin: 14
+                    anchors.topMargin: 16
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 

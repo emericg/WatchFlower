@@ -22,6 +22,7 @@
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
         <file alias="ItemDataBar.qml">components_generic/ItemDataBar.qml</file>
+        <file alias="ItemDataBarFilled.qml">components_generic/ItemDataBarFilled.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
         <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
@@ -29,6 +30,7 @@
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
+        <file alias="RangeSliderValueFilled.qml">components_generic/RangeSliderValueFilled.qml</file>
 
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
         <file alias="MiddleSliderThemed.qml">components_themed/MiddleSliderThemed.qml</file>

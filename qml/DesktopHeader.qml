@@ -71,7 +71,7 @@ Rectangle {
             menu.visible = true
 
             if (appContent.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/menus/menu_logo.svg"
+                buttonBack.source = "qrc:/assets/menus/menu_logo_large.svg"
             } else {
                 buttonBack.source = "qrc:/assets/menus/menu_back.svg"
             }
@@ -85,11 +85,11 @@ Rectangle {
         width: 24
         height: 24
         anchors.left: parent.left
-        anchors.leftMargin: 18
+        anchors.leftMargin: 16
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (source != "qrc:/assets/menus/menu_logo.svg" || rectangleHeader.width >= 560)
-        source: "qrc:/assets/menus/menu_logo.svg"
+        visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeader.width >= 560)
+        source: "qrc:/assets/menus/menu_logo_large.svg"
         color: Theme.colorHeaderContent
 
         MouseArea {
@@ -118,7 +118,7 @@ Rectangle {
     Text {
         id: title
         anchors.left: parent.left
-        anchors.leftMargin: 64
+        anchors.leftMargin: 56
         anchors.verticalCenter: parent.verticalCenter
 
         visible: (rectangleHeader.width >= 560)
@@ -297,7 +297,7 @@ Rectangle {
                 height: 64
                 selected: (appContent.state === "About")
                 colorBackground: Theme.colorHeaderStatusbar
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                source: "qrc:/assets/menus/menu_infos.svg"
                 onClicked: aboutButtonClicked()
             }
         }

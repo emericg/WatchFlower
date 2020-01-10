@@ -14,16 +14,17 @@ RangeSlider {
     property string colorBg: Theme.colorComponent
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
+    property int hhh: 14
 
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: 200
-        implicitHeight: 4
+        implicitHeight: hhh
         width: control.availableWidth
 
-        height: implicitHeight
-        radius: 2
+        height: hhh
+        radius: hhh
         color: colorBg
         opacity: 0.9
 
@@ -32,18 +33,18 @@ RangeSlider {
             width: (control.second.visualPosition * parent.width) - x
             height: parent.height
             color: colorFg
-            radius: 2
+            radius: hhh
         }
     }
 
     first.handle: Rectangle {
         x: control.leftPadding + first.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
-        implicitWidth: 22
-        implicitHeight: 22
+        implicitWidth: hhh
+        implicitHeight: hhh
         width: t1.width + 16
 
-        radius: 6
+        radius: hhh
         color: colorFg
         border.color: colorFg
         opacity: first.pressed ? 0.9 : 1
@@ -60,7 +61,8 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
-            font.pixelSize: 14
+            font.pixelSize: 10
+            font.bold: true
             color: colorTxt
         }
     }
@@ -68,11 +70,11 @@ RangeSlider {
     second.handle: Rectangle {
         x: control.leftPadding + second.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
-        implicitWidth: 22
-        implicitHeight: 22
+        implicitWidth: hhh
+        implicitHeight: hhh
         width: t2.width + 16
 
-        radius: 6
+        radius: hhh
         color: colorFg
         border.color: colorFg
         opacity: second.pressed ? 0.9 : 1
@@ -89,7 +91,8 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
-            font.pixelSize: 14
+            font.pixelSize: 10
+            font.bold: true
             color: colorTxt
         }
     }

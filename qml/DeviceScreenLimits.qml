@@ -227,8 +227,8 @@ Item {
                 }
                 ImageSvg {
                     id: imageFwUpdate
-                    width: 20
-                    height: 20
+                    width: 24
+                    height: 24
                     anchors.left: textFirmware.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -316,7 +316,7 @@ Item {
 
             Item { //////
                 id: itemHygro
-                height: 64
+                height: 56
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -324,8 +324,8 @@ Item {
 
                 ImageSvg {
                     id: imageHygro
-                    width: 32
-                    height: 32
+                    width: 24
+                    height: 24
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -353,7 +353,7 @@ Item {
                     anchors.top: imageHygro.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 38
+                    anchors.leftMargin: 32
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -386,7 +386,7 @@ Item {
 
             Item { //////
                 id: itemTemp
-                height: 64
+                height: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
@@ -394,8 +394,8 @@ Item {
 
                 ImageSvg {
                     id: imageTemp
-                    width: 32
-                    height: 32
+                    width: 24
+                    height: 24
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -423,7 +423,7 @@ Item {
                     anchors.top: imageTemp.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 38
+                    anchors.leftMargin: 32
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -456,7 +456,7 @@ Item {
 
             Item { //////
                 id: itemLumi
-                height: 88
+                height: 84
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -464,8 +464,8 @@ Item {
 
                 ImageSvg {
                     id: imageLumi
-                    width: 32
-                    height: 32
+                    width: 24
+                    height: 24
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -493,7 +493,7 @@ Item {
                     anchors.top: imageLumi.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 38
+                    anchors.leftMargin: 32
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -581,7 +581,7 @@ Item {
 
             Item { //////
                 id: itemCondu
-                height: 64
+                height: 56
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -589,8 +589,8 @@ Item {
 
                 ImageSvg {
                     id: imageCondu
-                    width: 32
-                    height: 32
+                    width: 24
+                    height: 24
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
@@ -618,7 +618,7 @@ Item {
                     anchors.top: imageCondu.bottom
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 38
+                    anchors.leftMargin: 32
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 

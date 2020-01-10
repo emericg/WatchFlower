@@ -6,8 +6,9 @@
         <file>logos/watchflower_tray_light.svg</file>
         <file>logos/watchflower_tray_dark.svg</file>
         <file>menus/menu_logo.svg</file>
+        <file>menus/menu_logo_large.svg</file>
         <file>menus/menu_back.svg</file>
-        <file>menus/menu_close.svg</file>
+        <file>menus/menu_infos.svg</file>
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
