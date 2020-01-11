@@ -84,7 +84,7 @@ Item {
             font.pixelSize: 12
             visible: (limitMin > 0 && limitMin > valueMin)
             color: "white"
-            opacity: 0.5
+            opacity: (limitMin < value) ? 0.75 : 0.25
         }
         Rectangle {
             id: item_limit_low
@@ -95,7 +95,7 @@ Item {
             visible: (limitMin > 0 && limitMin > valueMin)
             x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
             color: (limitMin < value) ? "white" : "black"
-            opacity: (limitMin < value) ? 0.66 : 0.33
+            opacity: (limitMin < value) ? 0.75 : 0.25
 
             Behavior on x { NumberAnimation { duration: 333 } }
         }
@@ -108,7 +108,7 @@ Item {
             visible: (limitMax > 0 && limitMax < valueMax)
             x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
             color: (limitMax < value) ? "white" : "black"
-            opacity: (limitMax < value) ? 0.66 : 0.33
+            opacity: (limitMax < value) ? 0.75 : 0.25
 
             Behavior on x { NumberAnimation { duration: 333 } }
         }
@@ -122,7 +122,7 @@ Item {
             font.pixelSize: 12
             visible: (limitMax > 0 && limitMax < valueMax)
             color: (limitMax < value) ? "white" : "black"
-            opacity: (limitMax < value) ? 0.66 : 0.33
+            opacity: (limitMax < value) ? 0.75 : 0.25
         }
 
         Text {
