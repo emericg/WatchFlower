@@ -83,7 +83,7 @@ Item {
             text: qsTr("min")
             font.pixelSize: 12
             visible: (limitMin > 0 && limitMin > valueMin)
-            color: "white"
+            color: (limitMin < value) ? "white" : "black"
             opacity: (limitMin < value) ? 0.75 : 0.25
         }
         Rectangle {

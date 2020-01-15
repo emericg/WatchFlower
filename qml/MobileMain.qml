@@ -74,7 +74,7 @@ ApplicationWindow {
         //console.log("screen avail  : " + Screen.desktopAvailableHeight)
         //console.log("screen padding: " + screenPadding)
 
-        var safeMargins = settingsManager.getSafeAreaMargins(quickWindow)
+        var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
         //console.log("top:" + safeMargins["top"])
         //console.log("right:" + safeMargins["right"])
         //console.log("bottom:" + safeMargins["bottom"])
