@@ -15,7 +15,7 @@ Item {
     property string unit: ""
     property int floatprecision: 0
     property string color: "blue"
-    property int hhh: 14
+    property int hhh: 16
 
     property real value: 0
     property int valueMin: 0
@@ -54,14 +54,7 @@ Item {
             id: item_data
             width: {
                 var res = UtilsNumber.normalize(value, valueMin, valueMax) * item_bg.width
-
-                if (value <= valueMin || value >= valueMax)
-                    res += 0
-                else
-                    res += 1.5*radius // +radius, so the indicator arrow point to the real value, not the rounded end of the data bar
-
                 if (res > item_bg.width) res = item_bg.width
-
                 return res
             }
             anchors.top: parent.top
@@ -73,6 +66,8 @@ Item {
 
             Behavior on width { NumberAnimation { duration: 333 } }
         }
+
+        ////////
 
         Text {
             anchors.right: item_limit_low.left
@@ -125,48 +120,49 @@ Item {
             opacity: (limitMax < value) ? 0.75 : 0.25
         }
 
-        Text {
-            id: condu_indicator
+        ////////
+
+        Rectangle {
+            id: indicator
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 0
+
             height: hhh
+            width: ti.width + 12
+            radius: hhh
+            color: (item_data.width > indicator.width) ? itemDataBar.color : "transparent"
+
             x: {
-                if (item_data.width < (width/2 + 8)) { // left
-                    return 4
-                } else if ((item_bg.width - item_data.width) < (width/2)) { // right
-                    return item_bg.width - width - 4
-                } else { // whatever
-                    return item_data.width - width/2 - 4
-                }
+                if (value === 0)
+                    return 0
+                else if (item_data.width > indicator.width)
+                    return item_data.width - indicator.width
+                else
+                    return item_data.width
             }
 
-            color: "white"
-            text: {
-                if (value < 0)
-                    return " ? ";
-                else {
-                    if (value % 1 === 0)
-                        return value + unit
-                    else
-                        return value.toFixed(floatprecision) + unit
-                }
-            }
-
-            font.bold: true
-            font.pixelSize: 12
-            horizontalAlignment: Text.AlignHCenter
-
-            Rectangle {
-                height: hhh
-                anchors.left: parent.left
-                anchors.leftMargin: -4
-                anchors.right: parent.right
-                anchors.rightMargin: -4
+            Text {
+                id: ti
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 1
+                anchors.horizontalCenter: parent.horizontalCenter
 
-                z: -1
-                radius: hhh
-                color: itemDataBar.color
+                text: {
+                    if (value < 0)
+                        return " ? ";
+                    else {
+                        if (value % 1 === 0)
+                            return value + unit
+                        else
+                            return value.toFixed(floatprecision) + unit
+                    }
+                }
+
+                color: (item_data.width > indicator.width) ? "white" : Theme.colorText
+                font.bold: true
+                font.pixelSize: 12
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
             }
         }
     }

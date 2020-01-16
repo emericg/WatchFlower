@@ -105,7 +105,7 @@ Item {
         }
 
         Text {
-            id: condu_indicator
+            id: indicator
             height: 15
             y: -22
             x: {

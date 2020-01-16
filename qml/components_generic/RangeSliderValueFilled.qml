@@ -26,11 +26,11 @@ RangeSlider {
         height: hhh
         radius: hhh
         color: colorBg
-        opacity: 0.9
+        opacity: 1
 
         Rectangle {
-            x: (control.first.visualPosition * parent.width)
-            width: (control.second.visualPosition * parent.width) - x
+            x: (h1.x + (h1.width/3))
+            width: ((h2.x + (h2.width/3)) - (h1.x + (h1.width/3)))
             height: parent.height
             color: colorFg
             radius: hhh
@@ -38,6 +38,7 @@ RangeSlider {
     }
 
     first.handle: Rectangle {
+        id: h1
         x: control.leftPadding + first.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
@@ -47,7 +48,7 @@ RangeSlider {
         radius: hhh
         color: colorFg
         border.color: colorFg
-        opacity: first.pressed ? 0.9 : 1
+        opacity: first.pressed ? 1 : 1
 
         Text {
             id: t1
@@ -61,13 +62,16 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
+            color: colorTxt
             font.pixelSize: 10
             font.bold: true
-            color: colorTxt
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
 
     second.handle: Rectangle {
+        id: h2
         x: control.leftPadding + second.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
@@ -77,7 +81,7 @@ RangeSlider {
         radius: hhh
         color: colorFg
         border.color: colorFg
-        opacity: second.pressed ? 0.9 : 1
+        opacity: second.pressed ? 1 : 1
 
         Text {
             id: t2
