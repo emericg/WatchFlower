@@ -172,25 +172,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item {
-        id: graphBox
-        anchors.top: tempBox.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        ItemAioLineCharts {
-            id: deviceScreenChart
-            anchors.fill: parent
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     Rectangle {
         id: tempBox
         height: 256
@@ -373,6 +354,25 @@ Item {
                     }
                 }
             }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Item {
+        id: graphBox
+        anchors.top: tempBox.bottom
+        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+
+        ItemAioLineCharts {
+            id: deviceScreenChart
+            anchors.fill: parent
         }
     }
 }

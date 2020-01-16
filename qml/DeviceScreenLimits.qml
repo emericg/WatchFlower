@@ -519,7 +519,7 @@ Item {
 
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 11) / 10) * 1 // 0 to 1k
+                            width: ((sections.width - 4) / 10) * 1 // 0 to 1k
                             color: Theme.colorGrey
                             clip: true
                             Text {
@@ -530,7 +530,7 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 11) / 10) * 2 // 1k to 3k
+                            width: ((sections.width - 8) / 10) * 2 // 1k to 3k
                             color: "grey"
                             clip: true
                             Text {
@@ -541,7 +541,7 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 11) / 10) * 5 // 3k to 8k
+                            width: ((sections.width - 16) / 10) * 5 // 3k to 8k
                             color: Theme.colorYellow
                             clip: true
                             Text {
@@ -552,7 +552,7 @@ Item {
                         }
                         Rectangle {
                             height: 16
-                            width: ((sections.width - 11) / 10) * 2 // 8k+
+                            width: ((sections.width - 0) / 10) * 2 // 8k+
                             color: "orange"
                             clip: true
                             Text {

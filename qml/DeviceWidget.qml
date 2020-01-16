@@ -675,7 +675,7 @@ Item {
                 running: false
                 onStopped: imageStatus.opacity = 1
                 OpacityAnimator { from: 0; to: 1; duration: 750 }
-                OpacityAnimator { from: 1; to: 0;  duration: 750 }
+                OpacityAnimator { from: 1; to: 0; duration: 750 }
             }
         }
     }

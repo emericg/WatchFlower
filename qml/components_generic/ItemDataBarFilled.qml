@@ -48,7 +48,7 @@ Item {
         anchors.left: item_legend.right
         anchors.leftMargin: 8
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: 16
 
         Rectangle {
             id: item_data
