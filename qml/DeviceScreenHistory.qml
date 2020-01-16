@@ -69,8 +69,20 @@ Item {
 
     function loadDatas() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenHistory // loadDatas() >> " + myDevice)
+/*
+        console.log("DeviceScreenHistory // loadDatas() >> " + myDevice)
 
+        console.log("hasHumiditySensor(): " + myDevice.hasHumiditySensor())
+        console.log("hasSoilMoistureSensor(): " + myDevice.hasSoilMoistureSensor())
+        console.log("hasTemperatureSensor(): " + myDevice.hasTemperatureSensor())
+        console.log("hasLuminositySensor(): " + myDevice.hasLuminositySensor())
+        console.log("hasConductivitySensor(): " + myDevice.hasConductivitySensor())
+
+        console.log("hasDatas(hygro): " + myDevice.hasDatas("hygro"))
+        console.log("hasDatas(temp): " + myDevice.hasDatas("temp"))
+        console.log("hasDatas(luminosity): " + myDevice.hasDatas("luminosity"))
+        console.log("hasDatas(conductivity): " + myDevice.hasDatas("conductivity"))
+*/
         graphCount = 0
 
         if (myDevice.hasTemperatureSensor()) {
@@ -167,6 +179,19 @@ Item {
 
         graphWidth = (graphGrid.width) / graphGrid.columns
         graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
+
+        if (graphCount === 3 && graphGrid.columns === 2) {
+            if (myDevice.hasSoilMoistureSensor() && myDevice.hasDatas("hygro")) {
+                hygroGraph.width = (graphWidth*2)
+                lumiGraph.width = graphWidth
+            } else if (myDevice.hasLuminositySensor() && myDevice.hasDatas("luminosity")) {
+                hygroGraph.width = graphWidth
+                lumiGraph.width = (graphWidth*2)
+            }
+        } else {
+            hygroGraph.width = graphWidth
+            lumiGraph.width = graphWidth
+        }
     }
 
     function updateDatas() {
@@ -254,11 +279,11 @@ Item {
 
             visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-            font.pixelSize: 24
             text: myDevice.deviceName
-            verticalAlignment: Text.AlignVCenter
-            font.capitalization: Font.AllUppercase
             color: Theme.colorText
+            font.pixelSize: 24
+            font.capitalization: Font.AllUppercase
+            verticalAlignment: Text.AlignVCenter
 
             ImageSvg {
                 id: imageBattery
@@ -281,9 +306,9 @@ Item {
     property int graphWidth: 256
     property int graphCount: 4
 
-    Grid {
+    Flow {
         id: graphGrid
-        columns: 1
+        property var columns: 1
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 12
