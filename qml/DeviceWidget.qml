@@ -472,7 +472,7 @@ Item {
                 clip: true
                 spacing: 8
                 property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
-                property int sensorRadius: 2
+                property int sensorRadius: bigAssMode ? 3 : 2
 
                 Item {
                     id: hygro_bg

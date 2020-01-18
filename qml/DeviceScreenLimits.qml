@@ -316,7 +316,7 @@ Item {
 
             Item { //////
                 id: itemHygro
-                height: 56
+                height: 52
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -347,11 +347,11 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValue {
+                RangeSliderValueFilled {
                     id: rangeSlider_hygro
-                    height: 28
+                    height: 20
                     anchors.top: imageHygro.bottom
-                    anchors.topMargin: 0
+                    anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -386,7 +386,7 @@ Item {
 
             Item { //////
                 id: itemTemp
-                height: 56
+                height: 52
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
@@ -417,11 +417,11 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValue {
+                RangeSliderValueFilled {
                     id: rangeSlider_temp
-                    height: 28
+                    height: 20
                     anchors.top: imageTemp.bottom
-                    anchors.topMargin: 0
+                    anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -456,7 +456,7 @@ Item {
 
             Item { //////
                 id: itemLumi
-                height: 84
+                height: 72
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -487,11 +487,11 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValue {
+                RangeSliderValueFilled {
                     id: rangeSlider_lumi
-                    height: 28
+                    height: 20
                     anchors.top: imageLumi.bottom
-                    anchors.topMargin: 0
+                    anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -581,7 +581,7 @@ Item {
 
             Item { //////
                 id: itemCondu
-                height: 56
+                height: 52
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -612,11 +612,11 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValue {
+                RangeSliderValueFilled {
                     id: rangeSlider_condu
-                    height: 28
+                    height: 20
                     anchors.top: imageCondu.bottom
-                    anchors.topMargin: 0
+                    anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right

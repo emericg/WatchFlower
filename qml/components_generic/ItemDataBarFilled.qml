@@ -13,6 +13,7 @@ Item {
 
     property string legend: "legend"
     property string unit: ""
+    property bool warning: false
     property int floatprecision: 0
     property string color: "blue"
     property int hhh: 16
@@ -129,8 +130,15 @@ Item {
 
             height: hhh
             width: ti.width + 12
-            radius: hhh
-            color: (item_data.width > indicator.width) ? itemDataBar.color : "transparent"
+            radius: (value <= 0 || item_data.width > indicator.width) ? hhh : 0
+            color: {
+                if (value <= 0)
+                    return "transparent"
+                 else if (item_data.width > indicator.width)
+                    return itemDataBar.color
+                else
+                    return Theme.colorForeground
+            }
 
             x: {
                 if (value === 0)
@@ -163,6 +171,32 @@ Item {
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+            }
+            ImageSvg {
+                id: wi
+                width: hhh - 2
+                height: hhh - 2
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 4
+                anchors.left: {
+                    if (item_data.width > indicator.width)
+                        return parent.right
+                    else
+                        return ti.right
+                }
+
+                visible: (warning && value > 0 && value < limitMin)
+                color: Theme.colorRed
+                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+
+                Rectangle {
+                    width: hhh
+                    height: hhh
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    z: -1
+                    color: Theme.colorForeground
+                }
             }
         }
     }
