@@ -156,7 +156,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 text: {
-                    if (value < 0)
+                    if (value < -20)
                         return " ? ";
                     else {
                         if (value % 1 === 0)
@@ -185,7 +185,7 @@ Item {
                         return ti.right
                 }
 
-                visible: (warning && value > 0 && value < limitMin)
+                visible: (warning && value > -20 && value < limitMin)
                 color: Theme.colorRed
                 source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
 

@@ -129,7 +129,7 @@ Item {
 
             color: "white"
             text: {
-                if (value < 0)
+                if (value < -20)
                     return " ? ";
                 else {
                     if (value % 1 === 0)
