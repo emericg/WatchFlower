@@ -203,8 +203,6 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                visible: (settingsManager.appTheme !== "night")
-
                 Text {
                     id: text_autoDarkmode
                     height: 40
