@@ -88,6 +88,16 @@ Item {
         updateStatusText()
     }
 
+    function updateHeaderColor() {
+        if (isPhone) {
+            if (screenOrientation === Qt.PortraitOrientation) {
+                rectangleHeader.color = Theme.colorForeground
+            } else {
+                rectangleHeader.color = "transparent"
+            }
+        }
+    }
+
     Timer {
         interval: 60000; running: true; repeat: true;
         onTriggered: updateStatusText()
@@ -183,16 +193,11 @@ Item {
         target: settingsManager
         onTempUnitChanged: updateDatas()
     }
-
-    onWidthChanged: {
-        if (isPhone) {
-            if (screenOrientation === Qt.PortraitOrientation) {
-                rectangleHeader.color = Theme.colorForeground
-            } else {
-                rectangleHeader.color = "transparent"
-            }
-        }
+    Connections {
+        target: Theme
+        onCurrentThemeChanged: updateHeaderColor()
     }
+    onWidthChanged: updateHeaderColor()
 
     ////////////////////////////////////////////////////////////////////////////
 
