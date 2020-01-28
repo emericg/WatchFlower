@@ -85,7 +85,7 @@ Item {
 
             visible: (limitMin > 0 && limitMin > valueMin)
             x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
-            color: (limitMin < value) ? "white" : "black"
+            color: (limitMin < value) ? "white" : Theme.colorHighContrast
             opacity: (limitMin < value) ? 0.66 : 0.33
 
             Behavior on x { NumberAnimation { duration: 333 } }
@@ -98,7 +98,7 @@ Item {
 
             visible: (limitMax > 0 && limitMax < valueMax)
             x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
-            color: (limitMin < value) ? "white" : "black"
+            color: (limitMax < value) ? "white" : Theme.colorHighContrast
             opacity: (limitMax < value) ? 0.66 : 0.33
 
             Behavior on x { NumberAnimation { duration: 333 } }
