@@ -32,10 +32,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#if defined(Q_OS_IOS)
-#include <QtGui/qpa/qplatformwindow.h>
-#endif
-
 #include <cmath>
 
 /* ************************************************************************** */
@@ -246,7 +242,7 @@ bool SettingsManager::loadDatabase()
                             }
                             else
                             {
-                                qWarning() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":"  << createVersion.lastError().text();
+                                qWarning() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":" << createVersion.lastError().text();
                             }
                         }
 
@@ -270,7 +266,7 @@ bool SettingsManager::loadDatabase()
                             renameHygro.prepare("ALTER TABLE limits RENAME COLUMN hyroMin TO hygroMin");
                             migration_status = renameHygro.exec();
                             if (migration_status == false)
-                                qDebug() << "> renameHygro.exec() ERROR" << renameHygro.lastError().type() << ":"  << renameHygro.lastError().text();
+                                qDebug() << "> renameHygro.exec() ERROR" << renameHygro.lastError().type() << ":" << renameHygro.lastError().text();
 */
                             // Then update version
                             if (migration_status)
@@ -279,7 +275,7 @@ bool SettingsManager::loadDatabase()
                                 updateDbVersion.prepare("UPDATE version SET dbVersion=:dbVersion");
                                 updateDbVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
                                 if (updateDbVersion.exec() == false)
-                                    qWarning() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":"  << updateDbVersion.lastError().text();
+                                    qWarning() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":" << updateDbVersion.lastError().text();
                             }
                         }
 
@@ -294,15 +290,15 @@ bool SettingsManager::loadDatabase()
                             QSqlQuery createDevices;
                             createDevices.prepare("CREATE TABLE devices (" \
                                                   "deviceAddr CHAR(17) PRIMARY KEY," \
-                                                  "deviceName VARCHAR(255),"  \
-                                                  "deviceFirmware VARCHAR(255),"  \
+                                                  "deviceName VARCHAR(255)," \
+                                                  "deviceFirmware VARCHAR(255)," \
                                                   "deviceBattery INT," \
                                                   "locationName VARCHAR(255)," \
                                                   "plantName VARCHAR(255)" \
                                                   ");");
 
                             if (createDevices.exec() == false)
-                                qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":"  << createDevices.lastError().text();
+                                qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":" << createDevices.lastError().text();
                         }
 
                         QSqlQuery checkDatas;
@@ -325,7 +321,7 @@ bool SettingsManager::loadDatabase()
                                                 ");");
 
                             if (createDatas.exec() == false)
-                                qWarning() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":"  << createDatas.lastError().text();
+                                qWarning() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":" << createDatas.lastError().text();
                         }
 
                         QSqlQuery checkLimits;
@@ -349,17 +345,17 @@ bool SettingsManager::loadDatabase()
                                                  ");");
 
                             if (createLimits.exec() == false)
-                                qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":"  << createLimits.lastError().text();
+                                qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
                         }
 
                         // Delete everything 30+ days old ///////////////////////
                         // DATETIME: YYY-MM-JJ HH:MM:SS
 
                         QSqlQuery sanitizeDatas;
-                        sanitizeDatas.prepare("DELETE FROM datas WHERE ts <  DATE('now', '-30 days')");
+                        sanitizeDatas.prepare("DELETE FROM datas WHERE ts < DATE('now', '-30 days')");
 
                         if (sanitizeDatas.exec() == false)
-                            qWarning() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":"  << sanitizeDatas.lastError().text();
+                            qWarning() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":" << sanitizeDatas.lastError().text();
                     }
                     else
                     {
