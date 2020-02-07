@@ -221,7 +221,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
                 addDatas.bindValue(":temp", m_temp);
                 addDatas.bindValue(":hygro", m_hygro);
                 if (addDatas.exec() == false)
-                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":"  << addDatas.lastError().text();
+                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":" << addDatas.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -229,7 +229,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
                 updateDevice.bindValue(":battery", m_battery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":"  << updateDevice.lastError().text();
+                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
             refreshDatasFinished(true);

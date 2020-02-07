@@ -314,7 +314,7 @@ Item {
 
                     primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Delete")
-                    onClicked: screenDeviceList.removeSelectedDevice()
+                    onClicked: confirmDeleteDevice.open()
                 }
 */
             }

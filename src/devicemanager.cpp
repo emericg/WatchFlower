@@ -884,7 +884,7 @@ void DeviceManager::removeDevice(const QString &address)
             refreshDevices_finished(dd);
 
             // Remove from database // don't remove the actual datas, nor limits
-            qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "to local database";
+            qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "from local database";
 
             QSqlQuery removeDevice;
             removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
@@ -893,7 +893,7 @@ void DeviceManager::removeDevice(const QString &address)
 
             // Remove device
             m_devices.removeAll(dd);
-            qDebug() << "Device removed: " << dd->getName() << "/" << dd->getAddress();
+            qDebug() << "- Device removed: " << dd->getName() << "/" << dd->getAddress();
             delete dd;
             Q_EMIT devicesUpdated();
 
