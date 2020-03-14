@@ -38,7 +38,7 @@ Item {
         spacing: -8
 
         ImageSvg {
-            width: isDesktop ? 128 : (parent.width*0.33)
+            width: (isDesktop || isTablet) ? 128 : (parent.width*0.33)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"

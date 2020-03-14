@@ -37,7 +37,7 @@ Item {
 
         ImageSvg {
             id: imageSearch
-            width: isDesktop ? 256 : (parent.width*0.66)
+            width: (isDesktop || isTablet) ? 256 : (parent.width*0.66)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 

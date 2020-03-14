@@ -144,10 +144,10 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: isPhone
+                visible: isMobile
                 spacing: 16
 
-                Component.onCompleted: {
+                onWidthChanged: {
                     var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
                     if (ww > 0) { websiteBtn.width = ww ; githubBtn.width = ww }
                 }
@@ -186,7 +186,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: !isPhone
+                visible: !isMobile
 
                 ImageSvg {
                     id: websiteImg
