@@ -55,7 +55,6 @@ SOURCES  += src/main.cpp \
             src/utils_screen.cpp
 
 HEADERS  += src/demomode.h \
-            src/versionchecker.h \
             src/settingsmanager.h \
             src/systraymanager.h \
             src/notificationmanager.h \
@@ -68,7 +67,8 @@ HEADERS  += src/demomode.h \
             src/device_ropot.h \
             src/utils_app.h \
             src/utils_android.h \
-            src/utils_screen.h
+            src/utils_screen.h \
+            src/utils_versionchecker.h
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

@@ -22,7 +22,7 @@
 #include "device.h"
 #include "settingsmanager.h"
 #include "notificationmanager.h"
-#include "versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cmath>
 

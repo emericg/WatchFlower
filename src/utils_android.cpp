@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,25 @@
 #include <QDebug>
 
 /* ************************************************************************** */
+
+bool android_check_storage_permissions()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
+    if (r == QtAndroid::PermissionResult::Denied || w == QtAndroid::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
 
 bool android_ask_storage_permissions()
 {
@@ -65,12 +84,50 @@ bool android_ask_storage_permissions()
     return status;
 }
 
+bool android_check_phonestate_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult ps = QtAndroid::checkPermission("android.permission.READ_PHONE_STATE");
+    if (ps == QtAndroid::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_phonestate_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult ps = QtAndroid::checkPermission("android.permission.READ_PHONE_STATE");
+    if (ps == QtAndroid::PermissionResult::Denied)
+    {
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.READ_PHONE_STATE");
+        ps = QtAndroid::checkPermission("android.permission.READ_PHONE_STATE");
+        if (ps == QtAndroid::PermissionResult::Denied)
+        {
+            qDebug() << "READ_PHONE_STATE PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
 /* ************************************************************************** */
 
 void android_set_statusbar_color(int color)
 {
-    Q_UNUSED(color)
-
 #ifdef Q_OS_ANDROID
 
     QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
@@ -86,6 +143,8 @@ void android_set_statusbar_color(int color)
     setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
     getWindow().setStatusBarColor(Color.TRANSPARENT);
 */
+#else
+    Q_UNUSED(color)
 #endif // Q_OS_ANDROID
 }
 
@@ -191,24 +250,31 @@ QString android_get_device_model()
     return device_model;
 }
 
-/* ************************************************************************** */
-
-void android_vibrate()
+QString android_get_device_serial()
 {
+    QString device_serial;
+
 #ifdef Q_OS_ANDROID
 /*
-    QAndroidJniObject vibvib = QAndroidJniObject::getStaticObjectField("android/os/Vibrator",
-                                                                         "vibrate",
-                                                                         "(I)V;",
-                                                                         1000);
+    // Deprecated method
+    QAndroidJniObject serialField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "SERIAL");
+    device_serial = serialField.toString();
 */
+    QAndroidJniObject serialField = QAndroidJniObject::callStaticObjectMethod("android/os/Build",
+                                                                              "getSerial",
+                                                                              "()Ljava/lang/String;");
+    device_serial = serialField.toString();
+
+    //qDebug() << "> android_get_device_serial()" << device_serial;
 
 #endif // Q_OS_ANDROID
+
+    return device_serial;
 }
 
 /* ************************************************************************** */
 
-void android_keep_screen_on(bool on)
+bool android_screen_keep_on(bool on)
 {
 #ifdef Q_OS_ANDROID
 /*
@@ -227,6 +293,8 @@ void android_keep_screen_on(bool on)
                     window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
                 else
                     window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+
+                return true;
             }
         }
         QAndroidJniEnvironment env;
@@ -238,7 +306,40 @@ void android_keep_screen_on(bool on)
 */
 #else
     Q_UNUSED(on)
-#endif
+#endif // Q_OS_ANDROID
+
+    return false;
+}
+
+bool android_screen_lock_orientation(int orientation)
+{
+#ifdef Q_OS_ANDROID
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+
+    if(activity.isValid())
+    {
+        activity.callMethod<void>("setRequestedOrientation", "(I)V", orientation);
+        return true;
+    }
+#else
+    Q_UNUSED(orientation)
+#endif // Q_OS_ANDROID
+
+    return false;
+}
+
+/* ************************************************************************** */
+
+void android_vibrate()
+{
+#ifdef Q_OS_ANDROID
+/*
+    QAndroidJniObject vibvib = QAndroidJniObject::getStaticObjectField("android/os/Vibrator",
+                                                                         "vibrate",
+                                                                         "(I)V;",
+                                                                         1000);
+*/
+#endif // Q_OS_ANDROID
 }
 
 /* ************************************************************************** */

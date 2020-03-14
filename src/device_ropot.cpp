@@ -20,7 +20,7 @@
  */
 
 #include "device_ropot.h"
-#include "versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cmath>
 

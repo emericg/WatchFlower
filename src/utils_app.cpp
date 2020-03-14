@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,11 @@ QString UtilsApp::appBuildDate()
     return QString::fromLatin1(__DATE__);
 }
 
+QString UtilsApp::appBuildDateTime()
+{
+    return QString::fromLatin1(__DATE__) + " " + QString::fromLatin1(__TIME__);
+}
+
 QString UtilsApp::appBuildMode()
 {
 #ifdef DEBUG
@@ -78,6 +83,13 @@ QString UtilsApp::appBuildMode()
 #endif
 
     return "";
+}
+
+/* ************************************************************************** */
+
+void UtilsApp::appExit()
+{
+    QApplication::exit();
 }
 
 /* ************************************************************************** */
@@ -93,13 +105,6 @@ void UtilsApp::setAppPath(const QString &value)
         // Make sure the path is terminated with a separator.
         if (!m_appPath.endsWith('/')) m_appPath += '/';
     }
-}
-
-/* ************************************************************************** */
-
-void UtilsApp::appExit()
-{
-    QApplication::exit();
 }
 
 /* ************************************************************************** */
@@ -141,6 +146,7 @@ void UtilsApp::openWith(const QString &path)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 QUrl UtilsApp::getStandardPath(const QString &type)
 {
@@ -173,13 +179,79 @@ QUrl UtilsApp::getStandardPath(const QString &type)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+bool UtilsApp::checkMobileStoragePermissions()
+{
+#if defined (Q_OS_ANDROID)
+    return android_check_storage_permissions();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileStoragePermissions()
+{
+#if defined (Q_OS_ANDROID)
+    return android_ask_storage_permissions();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::checkMobilePhoneStatePermission()
+{
+#if defined (Q_OS_ANDROID)
+    return android_check_phonestate_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobilePhoneStatePermission()
+{
+#if defined (Q_OS_ANDROID)
+    return android_ask_phonestate_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+/* ************************************************************************** */
+
+QString UtilsApp::getMobileDeviceModel()
+{
+#if defined (Q_OS_ANDROID)
+    return android_get_device_model();
+#elif defined(Q_OS_IOS)
+    return QString();
+#else
+    return QString();
+#endif
+}
+
+QString UtilsApp::getMobileDeviceSerial()
+{
+#if defined (Q_OS_ANDROID)
+    return android_get_device_serial();
+#elif defined(Q_OS_IOS)
+    return QString();
+#else
+    return QString();
+#endif
+}
+
+/* ************************************************************************** */
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-
-bool UtilsApp::getMobileStoragePermission()
-{
-    return android_ask_storage_permissions();
-}
 
 int UtilsApp::getMobileStorageCount()
 {

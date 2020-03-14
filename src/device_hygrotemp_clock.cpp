@@ -21,7 +21,7 @@
 
 #include "device_hygrotemp_clock.h"
 #include "settingsmanager.h"
-#include "versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cmath>
 

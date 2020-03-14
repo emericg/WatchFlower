@@ -20,7 +20,7 @@
  */
 
 #include "device_flowercare.h"
-#include "versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cmath>
 

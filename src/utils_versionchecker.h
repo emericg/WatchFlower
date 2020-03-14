@@ -1,6 +1,5 @@
 /*!
- * This file is part of WatchFlower.
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +18,12 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef VERSION_CHECKER_H
-#define VERSION_CHECKER_H
+#ifndef UTILS_VERSIONCHECKER_H
+#define UTILS_VERSIONCHECKER_H
 /* ************************************************************************** */
 
 #include <QString>
+#include <QDebug>
 
 struct Version
 {
@@ -109,7 +109,7 @@ static void testVersionStringComparison()
     assert( (Version("3.7.8.0") <   Version("3.7.8") )  == false);
     assert( (Version("3.7.9")   <   Version("3.7.8") )  == false);
     assert( (Version("3.7.8")   <   Version("3.7.9") )  == true);
-    assert( (Version("3.7")     <  Version("3.7.0"))    == false);
+    assert( (Version("3.7")     <   Version("3.7.0"))    == false);
     assert( (Version("3.7.8.0") <   Version("3.7.8"))   == false);
     assert( (Version("2.7.9")   <   Version("3.8.8"))   == true);
     assert( (Version("3.7.9")   <   Version("3.8.8"))   == true);
@@ -126,4 +126,4 @@ static void testVersionStringComparison()
 }
 */
 /* ************************************************************************** */
-#endif // VERSION_CHECKER_H
+#endif // UTILS_VERSIONCHECKER_H

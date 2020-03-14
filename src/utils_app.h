@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,19 +48,30 @@ public:
 
     static Q_INVOKABLE QString appVersion();
     static Q_INVOKABLE QString appBuildDate();
+    static Q_INVOKABLE QString appBuildDateTime();
     static Q_INVOKABLE QString appBuildMode();
 
     static Q_INVOKABLE void appExit();
-
     static Q_INVOKABLE void openWith(const QString &path);
     static Q_INVOKABLE QUrl getStandardPath(const QString &type);
 
+    static Q_INVOKABLE bool checkMobileStoragePermissions();
+    static Q_INVOKABLE bool getMobileStoragePermissions();
+    static Q_INVOKABLE bool checkMobilePhoneStatePermission();
+    static Q_INVOKABLE bool getMobilePhoneStatePermission();
+    static Q_INVOKABLE QString getMobileDeviceModel();
+    static Q_INVOKABLE QString getMobileDeviceSerial();
+
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    static Q_INVOKABLE bool getMobileStoragePermission();
     static Q_INVOKABLE int getMobileStorageCount();
     static Q_INVOKABLE QString getMobileStorageInternal();
     static Q_INVOKABLE QString getMobileStorageExternal(int index = 0);
     static Q_INVOKABLE QStringList getMobileStorageExternals();
+#else
+    static Q_INVOKABLE int getMobileStorageCount() { return 0; }
+    static Q_INVOKABLE QString getMobileStorageInternal() { return QString(); }
+    static Q_INVOKABLE QString getMobileStorageExternal(int index = 0) { Q_UNUSED(index) return QString(); }
+    static Q_INVOKABLE QStringList getMobileStorageExternals() { return QStringList(); }
 #endif
 };
 

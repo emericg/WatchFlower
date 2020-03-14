@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,14 @@
 /* ************************************************************************** */
 
 /*!
+ * \brief android_check_storage_permissions
+ * \return True if R/W permissions on main storage have been previously obtained.
+ */
+bool android_check_storage_permissions();
+
+/*!
  * \brief android_ask_storage_permissions
- * \return True if R/W permissions on main storage have been obtained.
+ * \return True if R/W permissions on main storage have been explicitly obtained.
  */
 bool android_ask_storage_permissions();
 
@@ -84,12 +90,46 @@ QString android_get_external_storage();
  */
 QString android_get_device_model();
 
+/*!
+ * \brief android_get_device_serial
+ * \return The device serial number.
+ *
+ * Need READ_PHONE_STATE permission.
+ * Only work before Android 10.
+ *
+ * - https://developer.android.com/reference/android/os/Build#getSerial()
+ */
+QString android_get_device_serial();
+
+/*!
+ * \brief android_ask_phonestate_permission
+* \return True if READ_PHONE_STATE permission has been previously obtained.
+ */
+bool android_check_phonestate_permission();
+
+/*!
+ * \brief android_ask_phonestate_permission
+ * \return True if READ_PHONE_STATE permission has been explicitly obtained.
+ */
+bool android_ask_phonestate_permission();
+
 /* ************************************************************************** */
 
 /*!
- * \brief android_keep_screen_on
+ * \brief android_screen_keep_on
  */
-void android_keep_screen_on(bool on);
+bool android_screen_keep_on(bool on);
+
+/* ************************************************************************** */
+
+/*!
+ * \brief android_screen_lock_orientation
+ * \param orientation: 0 is for landscapte, 1 for portrait
+ *
+ * Lock screen orientation, using:
+ * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
+ */
+bool android_screen_lock_orientation(int orientation);
 
 /* ************************************************************************** */
 
