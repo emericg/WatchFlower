@@ -100,7 +100,6 @@ Q_SIGNALS:
     void tempUnitChanged();
     void graphHistoryChanged();
     void bigWidgetChanged();
-    void screenChanged();
 
 public:
     static SettingsManager *getInstance();

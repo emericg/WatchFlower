@@ -94,6 +94,8 @@ unix {
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
+
 # Build artifacts ##############################################################
 
 OBJECTS_DIR = build/
