@@ -65,13 +65,13 @@
  * // Connect using btgatt-client:
  * - $ btgatt-client -d C4:7C:8D:xx:xx:xx
  * - > write-value 0x0033 0xA0 0x1F // required if firmware version >= 2.6.6
- * - > read-value 0x0035            // the 16b of datas
+ * - > read-value 0x0035            // the 16b of data
  *
  * // Connect using gattool (DEPRECATED):
  * - $ gatttool -b C4:7C:8D:xx:xx:xx -I
  * - > connect
  * - > char-write-req 0x0033 A01F   // required if firmware version >= 2.6.6
- * - > char-read-hnd 35             // the 16b of datas
+ * - > char-read-hnd 35             // the 16b of data
  */
 class DeviceFlowercare: public Device
 {
@@ -88,7 +88,7 @@ private:
     void addLowEnergyService(const QBluetoothUuid &uuid);
     void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
 
-    QLowEnergyService *serviceDatas = nullptr;
+    QLowEnergyService *serviceData = nullptr;
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };

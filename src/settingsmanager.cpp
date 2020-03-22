@@ -301,27 +301,27 @@ bool SettingsManager::loadDatabase()
                                 qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":" << createDevices.lastError().text();
                         }
 
-                        QSqlQuery checkDatas;
-                        checkDatas.exec("PRAGMA table_info(datas);");
-                        if (!checkDatas.next())
+                        QSqlQuery checkData;
+                        checkData.exec("PRAGMA table_info(datas);");
+                        if (!checkData.next())
                         {
                             qDebug() << "+ Adding 'datas' table to local database";
 
-                            QSqlQuery createDatas;
-                            createDatas.prepare("CREATE TABLE datas (" \
-                                                "deviceAddr CHAR(17)," \
-                                                "ts DATETIME," \
-                                                "ts_full DATETIME," \
-                                                  "temp FLOAT," \
-                                                  "hygro INT," \
-                                                  "luminosity INT," \
-                                                  "conductivity INT," \
-                                                " PRIMARY KEY(deviceAddr, ts) " \
-                                                " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
-                                                ");");
+                            QSqlQuery createData;
+                            createData.prepare("CREATE TABLE datas (" \
+                                               "deviceAddr CHAR(17)," \
+                                               "ts DATETIME," \
+                                               "ts_full DATETIME," \
+                                                 "temp FLOAT," \
+                                                 "hygro INT," \
+                                                 "luminosity INT," \
+                                                 "conductivity INT," \
+                                               " PRIMARY KEY(deviceAddr, ts) " \
+                                               " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                               ");");
 
-                            if (createDatas.exec() == false)
-                                qWarning() << "> createDatas.exec() ERROR" << createDatas.lastError().type() << ":" << createDatas.lastError().text();
+                            if (createData.exec() == false)
+                                qWarning() << "> createData.exec() ERROR" << createData.lastError().type() << ":" << createData.lastError().text();
                         }
 
                         QSqlQuery checkLimits;
@@ -351,11 +351,11 @@ bool SettingsManager::loadDatabase()
                         // Delete everything 30+ days old ///////////////////////
                         // DATETIME: YYY-MM-JJ HH:MM:SS
 
-                        QSqlQuery sanitizeDatas;
-                        sanitizeDatas.prepare("DELETE FROM datas WHERE ts < DATE('now', '-30 days')");
+                        QSqlQuery sanitizeData;
+                        sanitizeData.prepare("DELETE FROM datas WHERE ts < DATE('now', '-30 days')");
 
-                        if (sanitizeDatas.exec() == false)
-                            qWarning() << "> sanitizeDatas.exec() ERROR" << sanitizeDatas.lastError().type() << ":" << sanitizeDatas.lastError().text();
+                        if (sanitizeData.exec() == false)
+                            qWarning() << "> sanitizeData.exec() ERROR" << sanitizeData.lastError().type() << ":" << sanitizeData.lastError().text();
                     }
                     else
                     {

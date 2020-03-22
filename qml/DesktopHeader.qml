@@ -33,7 +33,7 @@ Rectangle {
     signal backButtonClicked()
 
     signal deviceRefreshButtonClicked()
-    signal deviceDatasButtonClicked()
+    signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
     signal deviceSettingsButtonClicked()
 
@@ -44,18 +44,18 @@ Rectangle {
     signal aboutButtonClicked()
     signal exitButtonClicked()
 
-    function setActiveDeviceDatas() {
-        menuDeviceDatas.selected = true
+    function setActiveDeviceData() {
+        menuDeviceData.selected = true
         menuDeviceHistory.selected = false
         menuDeviceSettings.selected = false
     }
     function setActiveDeviceHistory() {
-        menuDeviceDatas.selected = false
+        menuDeviceData.selected = false
         menuDeviceHistory.selected = true
         menuDeviceSettings.selected = false
     }
     function setActiveDeviceSettings() {
-        menuDeviceDatas.selected = false
+        menuDeviceData.selected = false
         menuDeviceHistory.selected = false
         menuDeviceSettings.selected = true
     }
@@ -185,12 +185,12 @@ Rectangle {
             visible: (appContent.state === "DeviceSensor")
 
             ItemMenuButton {
-                id: menuDeviceDatas
+                id: menuDeviceData
                 width: 64
                 height: 64
                 colorBackground: Theme.colorHeaderStatusbar
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                onClicked: deviceDatasButtonClicked()
+                onClicked: deviceDataButtonClicked()
             }
             ItemMenuButton {
                 id: menuDeviceHistory

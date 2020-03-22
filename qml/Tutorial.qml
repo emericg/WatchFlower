@@ -159,7 +159,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their datas.")
+                    text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their data.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -178,7 +178,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Click on sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical datas</b>.")
+                    text: qsTr("Click on sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter

@@ -58,7 +58,7 @@ DeviceHygrotempClock::DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObjec
 
 DeviceHygrotempClock::~DeviceHygrotempClock()
 {
-    delete serviceDatas;
+    delete serviceData;
     delete serviceInfos;
 }
 
@@ -69,16 +69,16 @@ void DeviceHygrotempClock::serviceScanDone()
 {
     //qDebug() << "DeviceHygrotempClock::serviceScanDone(" << m_deviceAddress << ")";
 
-    if (serviceDatas)
+    if (serviceData)
     {
-        if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_datas);
-            //connect(serviceDatas, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempClock::confirmedDescriptorWrite);
-            //connect(serviceDatas, &QLowEnergyService::characteristicRead, this, &DeviceHygrotempClock::bleReadDone);
-            connect(serviceDatas, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempClock::bleReadNotify);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_data);
+            //connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempClock::confirmedDescriptorWrite);
+            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceHygrotempClock::bleReadDone);
+            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempClock::bleReadNotify);
 
-            serviceDatas->discoverDetails();
+            serviceData->discoverDetails();
         }
     }
 
@@ -106,40 +106,40 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
     }
 
-    if (uuid.toString() == "{ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6}") // (unknown service) // datas
+    if (uuid.toString() == "{ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6}") // (unknown service) // data
     {
-        delete serviceDatas;
+        delete serviceData;
 
-        serviceDatas = controller->createServiceObject(uuid);
-        if (!serviceDatas)
-            qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
+        serviceData = controller->createServiceObject(uuid);
+        if (!serviceData)
+            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
 
-void DeviceHygrotempClock::serviceDetailsDiscovered_datas(QLowEnergyService::ServiceState newState)
+void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceDatas)
+        if (serviceData)
         {
             SettingsManager *sm = SettingsManager::getInstance();
 
             // Characteristic "Units" // 1 byte READ WRITE // 0x00 - F, 0x01 - C    READ WRITE
             {
                 QBluetoothUuid u(QString("EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handler 0x??
-                QLowEnergyCharacteristic chu = serviceDatas->characteristic(u);
+                QLowEnergyCharacteristic chu = serviceData->characteristic(u);
 
                 const quint8 *unit = reinterpret_cast<const quint8 *>(chu.value().constData());
                 //qDebug() << "Units (0xFF: CELSIUS / 0x01: FAHRENHEIT) > " << chu.value();
                 if (unit[0] == 0xFF && sm->getTempUnit() == "F")
                 {
-                    serviceDatas->writeCharacteristic(chu, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
+                    serviceData->writeCharacteristic(chu, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
                 }
                 else if (unit[0] == 0x01&& sm->getTempUnit() == "C")
                 {
-                    serviceDatas->writeCharacteristic(chu, QByteArray::fromHex("FF"), QLowEnergyService::WriteWithResponse);
+                    serviceData->writeCharacteristic(chu, QByteArray::fromHex("FF"), QLowEnergyService::WriteWithResponse);
                 }
             }
 
@@ -149,8 +149,8 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_datas(QLowEnergyService::Ser
             // Characteristic "Time" // 5 bytes READ WRITE
             {
                 QBluetoothUuid a(QString("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handler 0x??
-                QLowEnergyCharacteristic cha = serviceDatas->characteristic(a);
-                //serviceDatas->readCharacteristic(cha); // trigger a new time read, not necessary
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
 
                 const qint8 *timedata = reinterpret_cast<const qint8 *>(cha.value().constData());
                 int8_t timezone_read = timedata[4]; Q_UNUSED(timezone_read)
@@ -178,25 +178,25 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_datas(QLowEnergyService::Ser
                 {
                     //qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
 
-                    QByteArray timedatas_write;
-                    timedatas_write.resize(5);
-                    timedatas_write[0] = static_cast<char>((epoch_now      ) & 0xFF);
-                    timedatas_write[1] = static_cast<char>((epoch_now >>  8) & 0xFF);
-                    timedatas_write[2] = static_cast<char>((epoch_now >> 16) & 0xFF);
-                    timedatas_write[3] = static_cast<char>((epoch_now >> 24) & 0xFF);
-                    timedatas_write[4] = offset_now;
+                    QByteArray timedata_write;
+                    timedata_write.resize(5);
+                    timedata_write[0] = static_cast<char>((epoch_now      ) & 0xFF);
+                    timedata_write[1] = static_cast<char>((epoch_now >>  8) & 0xFF);
+                    timedata_write[2] = static_cast<char>((epoch_now >> 16) & 0xFF);
+                    timedata_write[3] = static_cast<char>((epoch_now >> 24) & 0xFF);
+                    timedata_write[4] = offset_now;
 
-                    //qDebug() << "QDateTime WRITE:" << timedatas_write << " size:" << timedatas_write.size();
-                    serviceDatas->writeCharacteristic(cha, timedatas_write, QLowEnergyService::WriteWithResponse);
+                    //qDebug() << "QDateTime WRITE:" << timedata_write << " size:" << timedata_write.size();
+                    serviceData->writeCharacteristic(cha, timedata_write, QLowEnergyService::WriteWithResponse);
                 }
             }
 
             // Characteristic "Temp&Humi" // 3 bytes, READ NOTIFY
             {
                 QBluetoothUuid b(QString("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handler 0x??
-                QLowEnergyCharacteristic chb = serviceDatas->characteristic(b);
+                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
                 m_notificationDesc = chb.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-                serviceDatas->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
             }
         }
     }
@@ -245,8 +245,8 @@ void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
     qDebug() << "DeviceHygrotempClock::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
 */
     if (c.uuid().toString().toUpper() == "{EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
@@ -274,12 +274,12 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
     qDebug() << "DeviceHygrotempClock::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
 */
     if (c.uuid().toString().toUpper() == "{EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
-        // sensor datas // handler 0x??
+        // sensor data // handler 0x??
 
         if (value.size() == 3)
         {
@@ -304,16 +304,16 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro)"
-                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
-                addDatas.bindValue(":deviceAddr", getAddress());
-                addDatas.bindValue(":ts", tsStr);
-                addDatas.bindValue(":ts_full", tsFullStr);
-                addDatas.bindValue(":temp", m_temp);
-                addDatas.bindValue(":hygro", m_hygro);
-                if (addDatas.exec() == false)
-                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":" << addDatas.lastError().text();
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":ts_full", tsFullStr);
+                addData.bindValue(":temp", m_temp);
+                addData.bindValue(":hygro", m_hygro);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -324,7 +324,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDatasFinished(true);
+            refreshDataFinished(true);
         }
     }
 }

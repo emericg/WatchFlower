@@ -39,46 +39,46 @@ Item {
 
     Connections {
         target: boxDevice
-        onStatusUpdated: updateBoxDatas()
-        onSensorUpdated: updateSensorDatas()
-        onDatasUpdated: updateBoxDatas()
-        onLimitsUpdated: updateBoxDatas()
+        onStatusUpdated: updateBoxData()
+        onSensorUpdated: updateSensorData()
+        onDataUpdated: updateBoxData()
+        onLimitsUpdated: updateBoxData()
     }
     Connections {
         target: Theme
          onCurrentThemeChanged: {
-             updateSensorDatas()
-             updateBoxDatas()
+             updateSensorData()
+             updateBoxData()
          }
     }
     Connections {
         target: devicesView
         onBigWidgetChanged: {
-            updateSensorDatas()
-            updateBoxDatas()
+            updateSensorData()
+            updateBoxData()
         }
     }
 
-    Component.onCompleted: initBoxDatas()
+    Component.onCompleted: initBoxData()
 
-    function initBoxDatas() {
+    function initBoxData() {
         // Device picture
         if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "ClearGrass Temp & RH") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD02") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
         } else {
-            if (boxDevice.hasDatas("hygro"))
+            if (boxDevice.hasData("hygro"))
                 imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
             else
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
-        updateBoxDatas()
-        updateSensorDatas()
+        updateBoxData()
+        updateSensorData()
     }
 
-    function updateSensorDatas() {
+    function updateSensorData() {
         // Sensor battery level
         if (boxDevice.hasBatteryLevel()) {
             imageBattery.visible = true
@@ -111,7 +111,7 @@ Item {
         }
     }
 
-    function updateBoxDatas() {
+    function updateBoxData() {
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
 
@@ -220,7 +220,7 @@ Item {
             }
         }
 
-        // Has datas? always display them
+        // Has data? always display them
         if (boxDevice.isAvailable()) {
             if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
@@ -296,7 +296,7 @@ Item {
                     }
 
                     // regular click
-                    if (boxDevice.hasDatas()) {
+                    if (boxDevice.hasData()) {
                         if (currentDevice != boxDevice) {
                             currentDevice = boxDevice
 

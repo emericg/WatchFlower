@@ -58,7 +58,7 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *paren
 
 DeviceFlowercare::~DeviceFlowercare()
 {
-    delete serviceDatas;
+    delete serviceData;
 }
 
 /* ************************************************************************** */
@@ -68,13 +68,13 @@ void DeviceFlowercare::serviceScanDone()
 {
     //qDebug() << "DeviceFlowercare::serviceScanDone(" << m_deviceAddress << ")";
 
-    if (serviceDatas)
+    if (serviceData)
     {
-        if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
-            connect(serviceDatas, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
-            serviceDatas->discoverDetails();
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
+            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
+            serviceData->discoverDetails();
         }
     }
 }
@@ -85,11 +85,11 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
-        delete serviceDatas;
+        delete serviceData;
 
-        serviceDatas = controller->createServiceObject(uuid);
-        if (!serviceDatas)
-            qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
+        serviceData = controller->createServiceObject(uuid);
+        if (!serviceData)
+            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
 
@@ -99,10 +99,10 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
     {
         //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceDatas)
+        if (serviceData)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
-            QLowEnergyCharacteristic chc = serviceDatas->characteristic(c);
+            QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
                 m_battery = chc.value().at(0);
@@ -127,13 +127,13 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
             if (need_firstsend) // if firmware > 2.6.6
             {
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
-                QLowEnergyCharacteristic cha = serviceDatas->characteristic(a);
-                serviceDatas->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
             QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handler 0x35
-            QLowEnergyCharacteristic chb = serviceDatas->characteristic(b);
-            serviceDatas->readCharacteristic(chb);
+            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+            serviceData->readCharacteristic(chb);
         }
     }
 }
@@ -150,19 +150,19 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
     qDebug() << "DeviceFlowercare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
+             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {
-        // MiFlora datas // handler 0x35
+        // MiFlora data // handler 0x35
 
         if (value.size() > 0)
         {
-            // first read might send bad datas (0x aa bb cc dd ee ff 99 88 77 66...)
+            // first read might send bad data (0x aa bb cc dd ee ff 99 88 77 66...)
             // until the first write is done
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
@@ -192,18 +192,18 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
-                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
-                addDatas.bindValue(":deviceAddr", getAddress());
-                addDatas.bindValue(":ts", tsStr);
-                addDatas.bindValue(":ts_full", tsFullStr);
-                addDatas.bindValue(":temp", m_temp);
-                addDatas.bindValue(":hygro", m_hygro);
-                addDatas.bindValue(":luminosity", m_luminosity);
-                addDatas.bindValue(":conductivity", m_conductivity);
-                if (addDatas.exec() == false)
-                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":" << addDatas.lastError().text();
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":ts_full", tsFullStr);
+                addData.bindValue(":temp", m_temp);
+                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":luminosity", m_luminosity);
+                addData.bindValue(":conductivity", m_conductivity);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -214,7 +214,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDatasFinished(true);
+            refreshDataFinished(true);
         }
     }
 }

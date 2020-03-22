@@ -541,7 +541,7 @@ void DeviceManager::deviceDiscoveryFinished()
     Q_EMIT devicesUpdated();
     Q_EMIT scanningChanged();
 
-    // Now refresh devices datas
+    // Now refresh devices data
     refreshDevices_check();
 }
 
@@ -664,7 +664,7 @@ void DeviceManager::refreshDevices_check()
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateInterval()))
             {
-                // old or no datas: go for refresh
+                // old or no data: go for refresh
                 m_devices_updatelist.push_back(dd);
 
                 if (sm->getBluetoothCompat())
@@ -831,7 +831,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             SettingsManager *sm = SettingsManager::getInstance();
             if (d->getLastUpdateInt() < 0 || d->getLastUpdateInt() > sm->getUpdateInterval())
             {
-                // old or no datas: mark it as queued until the deviceManager sync new devices
+                // old or no data: mark it as queued until the deviceManager sync new devices
                 d->refreshQueue();
             }
 
@@ -883,7 +883,7 @@ void DeviceManager::removeDevice(const QString &address)
             dd->refreshStop();
             refreshDevices_finished(dd);
 
-            // Remove from database // don't remove the actual datas, nor limits
+            // Remove from database // don't remove the actual data, nor limits
             qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "from local database";
 
             QSqlQuery removeDevice;

@@ -67,10 +67,10 @@ Item {
         }
     }
 
-    function loadDatas() {
+    function loadData() {
         if (typeof myDevice === "undefined" || !myDevice) return
 /*
-        console.log("DeviceScreenHistory // loadDatas() >> " + myDevice)
+        console.log("DeviceScreenHistory // loadData() >> " + myDevice)
 
         console.log("hasHumiditySensor(): " + myDevice.hasHumiditySensor())
         console.log("hasSoilMoistureSensor(): " + myDevice.hasSoilMoistureSensor())
@@ -78,10 +78,10 @@ Item {
         console.log("hasLuminositySensor(): " + myDevice.hasLuminositySensor())
         console.log("hasConductivitySensor(): " + myDevice.hasConductivitySensor())
 
-        console.log("hasDatas(hygro): " + myDevice.hasDatas("hygro"))
-        console.log("hasDatas(temp): " + myDevice.hasDatas("temp"))
-        console.log("hasDatas(luminosity): " + myDevice.hasDatas("luminosity"))
-        console.log("hasDatas(conductivity): " + myDevice.hasDatas("conductivity"))
+        console.log("hasData(hygro): " + myDevice.hasData("hygro"))
+        console.log("hasData(temp): " + myDevice.hasData("temp"))
+        console.log("hasData(luminosity): " + myDevice.hasData("luminosity"))
+        console.log("hasData(conductivity): " + myDevice.hasData("conductivity"))
 */
         graphCount = 0
 
@@ -93,7 +93,7 @@ Item {
             tempGraph.visible = false
         }
         if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) {
-            if (myDevice.deviceHumidity > 0 || myDevice.countDatas("hygro") > 0) {
+            if (myDevice.deviceHumidity > 0 || myDevice.countData("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
@@ -111,7 +111,7 @@ Item {
             lumiGraph.visible = false
         }
         if (myDevice.hasConductivitySensor()) {
-            if (myDevice.deviceConductivity > 0 || myDevice.countDatas("conductivity") > 0) {
+            if (myDevice.deviceConductivity > 0 || myDevice.countData("conductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
                 graphCount += 1
@@ -123,7 +123,7 @@ Item {
         }
 
         updateSize()
-        updateDatas()
+        updateData()
     }
 
     function updateColors() {
@@ -181,10 +181,10 @@ Item {
         graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
 
         if (graphCount === 3 && graphGrid.columns === 2) {
-            if (myDevice.hasSoilMoistureSensor() && myDevice.hasDatas("hygro")) {
+            if (myDevice.hasSoilMoistureSensor() && myDevice.hasData("hygro")) {
                 hygroGraph.width = (graphWidth*2)
                 lumiGraph.width = graphWidth
-            } else if (myDevice.hasLuminositySensor() && myDevice.hasDatas("luminosity")) {
+            } else if (myDevice.hasLuminositySensor() && myDevice.hasData("luminosity")) {
                 hygroGraph.width = graphWidth
                 lumiGraph.width = (graphWidth*2)
             }
@@ -194,9 +194,9 @@ Item {
         }
     }
 
-    function updateDatas() {
+    function updateData() {
         if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("ItemDeviceHistory // updateDatas() >> " + myDevice)
+        //console.log("ItemDeviceHistory // updateData() >> " + myDevice)
 
         if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
         if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
@@ -236,7 +236,7 @@ Item {
 
                 onClicked: {
                     graphMode = "monthly"
-                    updateDatas()
+                    updateData()
                 }
             }
 
@@ -250,7 +250,7 @@ Item {
 
                 onClicked: {
                     graphMode = "weekly"
-                    updateDatas()
+                    updateData()
                 }
             }
 
@@ -264,7 +264,7 @@ Item {
 
                 onClicked: {
                     graphMode = "daily"
-                    updateDatas()
+                    updateData()
                 }
             }
         }

@@ -126,13 +126,13 @@ Item {
 
         loadAxis()
 
-        // Get datas
+        // Get data
         if (graphViewSelected === "daily") {
-            myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
+            myBarSet.values = myDevice.getDataHourly(graphDataSelected)
         } else if (graphViewSelected === "weekly") {
-            myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
+            myBarSet.values = myDevice.getDataDaily(graphDataSelected)
         } else {
-            myBarSet.values = myDevice.getMonthDatas(graphDataSelected)
+            myBarSet.values = myDevice.getDataMonthly(graphDataSelected)
         }
 
         // Min axis
@@ -145,7 +145,7 @@ Item {
         if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% humidity
         }
-        if (max_of_legend <= 0) max_of_legend = 1 // if we have no datas
+        if (max_of_legend <= 0) max_of_legend = 1 // if we have no data
         axisY0.max = max_of_legend;
 
         // Decorations

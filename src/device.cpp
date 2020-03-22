@@ -63,12 +63,12 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
 
     // Load device infos and limits
     getSqlInfos();
-    // Load initial datas into the GUI (if they are no more than 12h old)
-    getSqlDatas(12*60);
+    // Load initial data into the GUI (if they are no more than 12h old)
+    getSqlData(12*60);
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
 
     // Configure update timer (only on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
@@ -90,12 +90,12 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 
     // Load device infos and limits
     getSqlInfos();
-    // Load initial datas into the GUI (if they are no more than 12h old)
-    getSqlDatas(12*60);
+    // Load initial data into the GUI (if they are no more than 12h old)
+    getSqlData(12*60);
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDatasCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
 
     // Configure update timer (only on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
@@ -124,8 +124,8 @@ void Device::refreshStart()
 
     if (!isUpdating())
     {
-        refreshDatasStarted();
-        getBleDatas();
+        refreshDataStarted();
+        getBleData();
     }
 }
 
@@ -146,9 +146,9 @@ void Device::refreshStop()
     }
 }
 
-void Device::refreshDatasCanceled()
+void Device::refreshDataCanceled()
 {
-    //qDebug() << "Device::refreshDatasCanceled()" << getAddress() << getName();
+    //qDebug() << "Device::refreshDataCanceled()" << getAddress() << getName();
 
     if (controller)
     {
@@ -157,23 +157,23 @@ void Device::refreshDatasCanceled()
         m_lastError = QDateTime::currentDateTime();
     }
 
-    refreshDatasFinished(false);
+    refreshDataFinished(false);
 }
 
 /* ************************************************************************** */
 
-void Device::refreshDatasStarted()
+void Device::refreshDataStarted()
 {
-    //qDebug() << "Device::refreshDatasStarted()" << getAddress() << getName();
+    //qDebug() << "Device::refreshDataStarted()" << getAddress() << getName();
 
     m_updating = true;
     m_status = DEVICE_CONNECTING;
     Q_EMIT statusUpdated();
 }
 
-void Device::refreshDatasFinished(bool status, bool cached)
+void Device::refreshDataFinished(bool status, bool cached)
 {
-    //qDebug() << "Device::refreshDatasFinished()" << getAddress() << getName();
+    //qDebug() << "Device::refreshDataFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
 
@@ -183,8 +183,8 @@ void Device::refreshDatasFinished(bool status, bool cached)
 
     if (status == true)
     {
-        // Only update datas on success
-        Q_EMIT datasUpdated();
+        // Only update data on success
+        Q_EMIT dataUpdated();
 
         // Reset update timer
         setUpdateTimer();
@@ -375,52 +375,52 @@ bool Device::getSqlInfos()
     return status;
 }
 
-bool Device::getSqlDatas(int minutes)
+bool Device::getSqlData(int minutes)
 {
-    //qDebug() << "Device::getSqlDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlData(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery cachedDatas;
-    cachedDatas.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
+    QSqlQuery cachedData;
+    cachedData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
                         "FROM datas " \
                         "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
-    cachedDatas.bindValue(":deviceAddr", getAddress());
+    cachedData.bindValue(":deviceAddr", getAddress());
 
-    if (cachedDatas.exec() == false)
-        qWarning() << "> cachedDatas.exec() ERROR" << cachedDatas.lastError().type() << ":" << cachedDatas.lastError().text();
+    if (cachedData.exec() == false)
+        qWarning() << "> cachedData.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     else
     {
 #ifndef QT_NO_DEBUG
         qDebug() << "* Device update:" << getAddress();
-        qDebug() << "> SQL datas available...";
+        qDebug() << "> SQL data available...";
 #endif
     }
 
-    while (cachedDatas.next())
+    while (cachedData.next())
     {
-        m_temp = cachedDatas.value(0).toFloat();
-        m_hygro =  cachedDatas.value(1).toInt();
-        m_luminosity = cachedDatas.value(2).toInt();
-        m_conductivity = cachedDatas.value(3).toInt();
+        m_temp = cachedData.value(0).toFloat();
+        m_hygro =  cachedData.value(1).toInt();
+        m_luminosity = cachedData.value(2).toInt();
+        m_conductivity = cachedData.value(3).toInt();
 
-        QString datetime = cachedDatas.value(4).toString();
+        QString datetime = cachedData.value(4).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 
         status = true;
     }
 
-    refreshDatasFinished(status, true);
+    refreshDataFinished(status, true);
 
     return status;
 }
 
 /*!
- * \brief Device::getBleDatas
+ * \brief Device::getBleData
  * \return false means immediate error, true means update process started
  */
-bool Device::getBleDatas()
+bool Device::getBleData()
 {
-    //qDebug() << "Device::getBleDatas(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getBleData(" << m_deviceAddress << ")";
 
     if (!controller)
     {
@@ -430,7 +430,7 @@ bool Device::getBleDatas()
             if (controller->role() != QLowEnergyController::CentralRole)
             {
                 qWarning() << "BLE controller doesn't have the QLowEnergyController::CentralRole";
-                refreshDatasFinished(false, false);
+                refreshDataFinished(false, false);
                 return false;
             }
 
@@ -446,7 +446,7 @@ bool Device::getBleDatas()
         else
         {
             qWarning() << "Unable to create BLE controller";
-            refreshDatasFinished(false, false);
+            refreshDataFinished(false, false);
             return false;
         }
     }
@@ -586,7 +586,7 @@ void Device::setLocationName(const QString &name)
         updateLocation.bindValue(":deviceAddr", getAddress());
         updateLocation.exec();
 
-        Q_EMIT datasUpdated();
+        Q_EMIT dataUpdated();
     }
 }
 
@@ -603,7 +603,7 @@ void Device::setPlantName(const QString &name)
         updatePlant.bindValue(":deviceAddr", getAddress());
         updatePlant.exec();
 
-        Q_EMIT datasUpdated();
+        Q_EMIT dataUpdated();
     }
 }
 
@@ -658,7 +658,7 @@ void Device::deviceDisconnected()
     {
         // This means we got forcibly disconnected by the device before completing the update
         m_lastError = QDateTime::currentDateTime();
-        refreshDatasFinished(false);
+        refreshDataFinished(false);
     }
     else
     {
@@ -674,7 +674,7 @@ void Device::errorReceived(QLowEnergyController::Error error)
     Q_UNUSED(error)
 
     m_lastError = QDateTime::currentDateTime();
-    refreshDatasFinished(false);
+    refreshDataFinished(false);
 }
 
 void Device::serviceScanDone()
@@ -717,11 +717,11 @@ void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &va
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
     qDebug() << "Device::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
+             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
 }
 
@@ -733,43 +733,43 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
     qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-               << hex << data[12]  << hex << data[13];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
+             << hex << data[12]  << hex << data[13];
 */
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool Device::hasDatas() const
+bool Device::hasData() const
 {
-    // If we have immediate datas (<12h old)
+    // If we have immediate data (<12h old)
     if (m_hygro > 0 || m_temp > -20.f || m_luminosity > 0 || m_conductivity > 0)
         return true;
 
-    // Otherwise, check if we have stored datas
-    QSqlQuery hasDatas;
-    hasDatas.prepare("SELECT COUNT(*) FROM datas WHERE deviceAddr = :deviceAddr;");
-    hasDatas.bindValue(":deviceAddr", getAddress());
+    // Otherwise, check if we have stored data
+    QSqlQuery hasData;
+    hasData.prepare("SELECT COUNT(*) FROM datas WHERE deviceAddr = :deviceAddr;");
+    hasData.bindValue(":deviceAddr", getAddress());
 
-    if (hasDatas.exec() == false)
-        qWarning() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":" << hasDatas.lastError().text();
+    if (hasData.exec() == false)
+        qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
 
-    while (hasDatas.next())
+    while (hasData.next())
     {
-        if (hasDatas.value(0).toInt() > 0) // datas count
+        if (hasData.value(0).toInt() > 0) // data count
             return true;
     }
 
     return false;
 }
 
-bool Device::hasDatas(const QString &dataName) const
+bool Device::hasData(const QString &dataName) const
 {
-    // If we have immediate datas (<12h old)
+    // If we have immediate data (<12h old)
     if (dataName == "hygro" && m_hygro > 0)
         return true;
     if (dataName == "temp" && m_temp > -20.f)
@@ -779,39 +779,39 @@ bool Device::hasDatas(const QString &dataName) const
     if (dataName == "conductivity" && m_conductivity > 0)
         return true;
 
-    // Otherwise, check if we have stored datas
-    QSqlQuery hasDatas;
-    hasDatas.prepare("SELECT COUNT(" + dataName + ") FROM datas WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
-    hasDatas.bindValue(":deviceAddr", getAddress());
+    // Otherwise, check if we have stored data
+    QSqlQuery hasData;
+    hasData.prepare("SELECT COUNT(" + dataName + ") FROM datas WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
+    hasData.bindValue(":deviceAddr", getAddress());
 
-    if (hasDatas.exec() == false)
-        qWarning() << "> hasDatas.exec() ERROR" << hasDatas.lastError().type() << ":" << hasDatas.lastError().text();
+    if (hasData.exec() == false)
+        qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
 
-    while (hasDatas.next())
+    while (hasData.next())
     {
-        if (hasDatas.value(0).toInt() > 0) // datas count
+        if (hasData.value(0).toInt() > 0) // data count
             return true;
     }
 
     return false;
 }
 
-int Device::countDatas(const QString &dataName, int days) const
+int Device::countData(const QString &dataName, int days) const
 {
-    // Count stored datas
-    QSqlQuery datasCount;
-    datasCount.prepare("SELECT COUNT(" + dataName + ")" \
-                       "FROM datas " \
-                       "WHERE deviceAddr = :deviceAddr " \
-                            "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');");
-    datasCount.bindValue(":deviceAddr", getAddress());
+    // Count stored data
+    QSqlQuery dataCount;
+    dataCount.prepare("SELECT COUNT(" + dataName + ")" \
+                      "FROM datas " \
+                      "WHERE deviceAddr = :deviceAddr " \
+                        "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');");
+    dataCount.bindValue(":deviceAddr", getAddress());
 
-    if (datasCount.exec() == false)
-        qWarning() << "> datasCount.exec() ERROR" << datasCount.lastError().type() << ":" << datasCount.lastError().text();
+    if (dataCount.exec() == false)
+        qWarning() << "> dataCount.exec() ERROR" << dataCount.lastError().type() << ":" << dataCount.lastError().text();
 
-    while (datasCount.next())
+    while (dataCount.next())
     {
-        return datasCount.value(0).toInt();
+        return dataCount.value(0).toInt();
     }
 
     return 0;
@@ -861,51 +861,50 @@ QVariantList Device::getMonth()
     //return lastSevenDaysFormated;
 }
 
-QVariantList Device::getMonthDatas(const QString &dataName)
+QVariantList Device::getDataMonthly(const QString &dataName)
 {
-    QVariantList datas;
+    QVariantList data;
     QDate nextDayToHandle = QDate::currentDate();
 
-    QSqlQuery datasPerMonth;
-    datasPerMonth.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
-                          "FROM datas WHERE deviceAddr = :deviceAddr " \
-                          "GROUP BY cast(strftime('%d', ts) as datetime) " \
-                          "ORDER BY ts DESC;");
-    datasPerMonth.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerMonth;
+    dataPerMonth.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
+                         "FROM datas WHERE deviceAddr = :deviceAddr " \
+                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
+                         "ORDER BY ts DESC;");
+    dataPerMonth.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerMonth.exec() == false)
-        qWarning() << "> datasPerMonth.exec() ERROR" << datasPerMonth.lastError().type() << ":" << datasPerMonth.lastError().text();
+    if (dataPerMonth.exec() == false)
+        qWarning() << "> dataPerMonth.exec() ERROR" << dataPerMonth.lastError().type() << ":" << dataPerMonth.lastError().text();
 
-    while (datasPerMonth.next() && (datas.size() <= 30))
+    while (dataPerMonth.next() && (data.size() <= 30))
     {
-        int currentDay = datasPerMonth.value(0).toInt();
+        int currentDay = dataPerMonth.value(0).toInt();
 
         // fill holes
-        while (currentDay != nextDayToHandle.day() && (datas.size() <= 30))
+        while (currentDay != nextDayToHandle.day() && (data.size() <= 30))
         {
-            datas.prepend(0);
+            data.prepend(0);
             //qDebug() << "> filling hole for day" << nextDayToHandle.day();
 
             nextDayToHandle = nextDayToHandle.addDays(-1);
         }
         nextDayToHandle = nextDayToHandle.addDays(-1);
 
-        datas.prepend(datasPerMonth.value(1));
+        data.prepend(dataPerMonth.value(1));
         //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
     }
 
     // add front padding if we don't have 7 days
-    while (datas.size() < 30)
+    while (data.size() < 30)
     {
-        datas.prepend(0);
+        data.prepend(0);
     }
 /*
     // debug
-    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
-    for (auto d: datas)
-        qDebug() << d;
+    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
+    for (auto d: data) qDebug() << d;
 */
-    return datas;
+    return data;
 }
 
 QVariantList Device::getMonthBackground(float maxValue)
@@ -955,57 +954,55 @@ QVariantList Device::getDays()
     }
 /*
     qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
-    for (auto d: lastSevenDaysFormated)
-        qDebug() << d;
+    for (auto d: lastSevenDaysFormated) qDebug() << d;
 */
     return lastSevenDaysFormated;
 }
 
-QVariantList Device::getDatasDaily(const QString &dataName)
+QVariantList Device::getDataDaily(const QString &dataName)
 {
-    QVariantList datas;
+    QVariantList data;
     QDate nextDayToHandle = QDate::currentDate();
 
-    QSqlQuery datasPerDay;
-    datasPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
-                        "FROM datas WHERE deviceAddr = :deviceAddr " \
-                        "GROUP BY cast(strftime('%d', ts) as datetime) " \
-                        "ORDER BY ts DESC;");
-    datasPerDay.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerDay;
+    dataPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
+                       "FROM datas WHERE deviceAddr = :deviceAddr " \
+                       "GROUP BY cast(strftime('%d', ts) as datetime) " \
+                       "ORDER BY ts DESC;");
+    dataPerDay.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerDay.exec() == false)
-        qWarning() << "> dataPerDay.exec() ERROR" << datasPerDay.lastError().type() << ":" << datasPerDay.lastError().text();
+    if (dataPerDay.exec() == false)
+        qWarning() << "> dataPerDay.exec() ERROR" << dataPerDay.lastError().type() << ":" << dataPerDay.lastError().text();
 
-    while (datasPerDay.next() && (datas.size() <= 7))
+    while (dataPerDay.next() && (data.size() <= 7))
     {
-        int currentDay = datasPerDay.value(1).toInt();
+        int currentDay = dataPerDay.value(1).toInt();
 
         // fill holes
-        while (currentDay != nextDayToHandle.day() && (datas.size() <= 7))
+        while (currentDay != nextDayToHandle.day() && (data.size() <= 7))
         {
-            datas.prepend(0);
+            data.prepend(0);
             //qDebug() << "> filling hole for day" << nextDayToHandle.day();
 
             nextDayToHandle = nextDayToHandle.addDays(-1);
         }
         nextDayToHandle = nextDayToHandle.addDays(-1);
 
-        datas.prepend(datasPerDay.value(2));
+        data.prepend(dataPerDay.value(2));
         //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
     }
 
     // add front padding if we don't have 7 days
-    while (datas.size() < 7)
+    while (data.size() < 7)
     {
-        datas.prepend(0);
+        data.prepend(0);
     }
 /*
     // debug
-    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
-    for (auto d: datas)
-        qDebug() << d;
+    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
+    for (auto d: data) qDebug() << d;
 */
-    return datas;
+    return data;
 }
 
 /* ************************************************************************** */
@@ -1015,33 +1012,33 @@ QVariantList Device::getDatasDaily(const QString &dataName)
  * \return List of hours
  *
  * Two possibilities:
- * - We have datas, so we go from last data available +24
- * - We don't have datas, so we go from current hour to +24
+ * - We have data, so we go from last data available +24
+ * - We don't have data, so we go from current hour to +24
  */
 QVariantList Device::getHours()
 {
     QVariantList lastTwentyfourHours;
     int firstHour = -1;
 
-    QSqlQuery datasPerHour;
-    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                         "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
-                         "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerHour;
+    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
+                        "FROM datas " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "ORDER BY ts ASC;");
+    dataPerHour.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":" << datasPerHour.lastError().text();
+    if (dataPerHour.exec() == false)
+        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
 
-    while (datasPerHour.next())
+    while (dataPerHour.next())
     {
         if (firstHour == -1)
         {
-            firstHour = datasPerHour.value(0).toInt();
+            firstHour = dataPerHour.value(0).toInt();
         }
     }
 
-    if (firstHour == -1) // We don't have datas
+    if (firstHour == -1) // We don't have data
     {
         QTime now = QTime::currentTime();
         while (lastTwentyfourHours.size() < 24)
@@ -1050,7 +1047,7 @@ QVariantList Device::getHours()
             now = now.addSecs(3600);
         }
     }
-    else // We have datas
+    else // We have data
     {
         QTime now(firstHour, 0);
         while (lastTwentyfourHours.size() < 24)
@@ -1062,64 +1059,62 @@ QVariantList Device::getHours()
 /*
     // debug
     qDebug() << "Hours (" << lastTwentyfourHours.size() << ") : ";
-    for (auto h: lastTwentyfourHours)
-        qDebug() << h;
+    for (auto h: lastTwentyfourHours) qDebug() << h;
 */
     return lastTwentyfourHours;
 }
 
-QVariantList Device::getDatasHourly(const QString &dataName)
+QVariantList Device::getDataHourly(const QString &dataName)
 {
-    QVariantList datas;
+    QVariantList data;
     QTime nexHourToHandle = QTime::currentTime();
     int firstHour = -1;
 
-    QSqlQuery datasPerHour;
-    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
-                         "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day', '+2 hour') " \
-                         "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerHour;
+    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
+                        "FROM datas " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day', '+2 hour') " \
+                        "ORDER BY ts ASC;");
+    dataPerHour.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerHour.exec() == false)
-        qWarning() << "> datasPerHour.exec() ERROR" << datasPerHour.lastError().type() << ":" << datasPerHour.lastError().text();
+    if (dataPerHour.exec() == false)
+        qWarning() << "> dataPerHour.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
 
-    while (datasPerHour.next() && (datas.size() <= 24))
+    while (dataPerHour.next() && (data.size() <= 24))
     {
-        int currentHour = datasPerHour.value(0).toInt();
+        int currentHour = dataPerHour.value(0).toInt();
 
         if (firstHour == -1)
         {
-            firstHour = datasPerHour.value(0).toInt();
+            firstHour = dataPerHour.value(0).toInt();
             nexHourToHandle = QTime(firstHour, 0);
         }
 
         // fill holes
-        while (currentHour != nexHourToHandle.hour() && (datas.size() <= 24))
+        while (currentHour != nexHourToHandle.hour() && (data.size() <= 24))
         {
-            datas.append(0);
+            data.append(0);
             //qDebug() << "> filling hole for hour" << nexHourToHandle.hour();
 
             nexHourToHandle = nexHourToHandle.addSecs(3600);
         }
         nexHourToHandle = nexHourToHandle.addSecs(3600);
 
-        datas.append(datasPerHour.value(1));
+        data.append(dataPerHour.value(1));
         //qDebug() << "> we have data for hour" << currentHour << ", next hour to handle is" << nexHourToHandle.hour();
     }
 
     // add front padding (if we don't have 24H)
-    while (datas.size() < 24)
+    while (data.size() < 24)
     {
-        datas.append(0);
+        data.append(0);
     }
 /*
     // debug
-    qDebug() << "Datas (" << dataName << "/" << datas.size() << ") : ";
-    for (auto d: datas)
-        qDebug() << d;
+    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
+    for (auto d: data) qDebug() << d;
 */
-    return datas;
+    return data;
 }
 
 QVariantList Device::getBackgroundHourly(float maxValue)
@@ -1127,25 +1122,25 @@ QVariantList Device::getBackgroundHourly(float maxValue)
     QVariantList lastTwentyfourHours;
     int firstHour = -1;
 
-    QSqlQuery datasPerHour;
-    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                         "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
-                         "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerHour;
+    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
+                        "FROM datas " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "ORDER BY ts ASC;");
+    dataPerHour.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":" << datasPerHour.lastError().text();
+    if (dataPerHour.exec() == false)
+        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
 
-    while (datasPerHour.next())
+    while (dataPerHour.next())
     {
         if (firstHour == -1)
         {
-            firstHour = datasPerHour.value(0).toInt();
+            firstHour = dataPerHour.value(0).toInt();
         }
     }
 
-    if (firstHour == -1) // We don't have datas
+    if (firstHour == -1) // We don't have data
     {
         QTime now = QTime::currentTime();
         while (lastTwentyfourHours.size() < 24)
@@ -1158,7 +1153,7 @@ QVariantList Device::getBackgroundHourly(float maxValue)
             now = now.addSecs(3600);
         }
     }
-    else // We have datas
+    else // We have data
     {
         QTime now(firstHour, 0);
         while (lastTwentyfourHours.size() < 24)
@@ -1180,23 +1175,23 @@ QVariantList Device::getBackgroundNightly(float maxValue)
     QVariantList lastTwentyfourHours;
     int firstHour = -1;
 
-    QSqlQuery datasPerHour;
-    datasPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                         "FROM datas " \
-                         "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
-                         "ORDER BY ts ASC;");
-    datasPerHour.bindValue(":deviceAddr", getAddress());
+    QSqlQuery dataPerHour;
+    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
+                        "FROM datas " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "ORDER BY ts ASC;");
+    dataPerHour.bindValue(":deviceAddr", getAddress());
 
-    if (datasPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << datasPerHour.lastError().type() << ":" << datasPerHour.lastError().text();
+    if (dataPerHour.exec() == false)
+        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
 
-    while (datasPerHour.next())
+    while (dataPerHour.next())
     {
         if (firstHour == -1)
-            firstHour = datasPerHour.value(0).toInt();
+            firstHour = dataPerHour.value(0).toInt();
     }
 
-    if (firstHour == -1) // We don't have datas
+    if (firstHour == -1) // We don't have data
     {
         QTime now = QTime::currentTime();
         while (lastTwentyfourHours.size() < 24)
@@ -1208,7 +1203,7 @@ QVariantList Device::getBackgroundNightly(float maxValue)
             now = now.addSecs(3600);
         }
     }
-    else // We have datas
+    else // We have data
     {
         QTime now(firstHour, 0);
         while (lastTwentyfourHours.size() < 24)
@@ -1239,22 +1234,22 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::getAioDatas(QtCharts::QDateTimeAxis *axis,
+void Device::getAioData(QtCharts::QDateTimeAxis *axis,
                          QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
                          QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
 {
     if (!axis || !hygro || !temp || !lumi || !cond)
         return;
 
-    QSqlQuery graphDatas;
-    graphDatas.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
+    QSqlQuery graphData;
+    graphData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
                        "FROM datas " \
                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
-    graphDatas.bindValue(":deviceAddr", getAddress());
+    graphData.bindValue(":deviceAddr", getAddress());
 
-    if (graphDatas.exec() == false)
+    if (graphData.exec() == false)
     {
-        qWarning() << "> graphDatas.exec() ERROR" << graphDatas.lastError().type() << ":" << graphDatas.lastError().text();
+        qWarning() << "> graphData.exec() ERROR" << graphData.lastError().type() << ":" << graphData.lastError().text();
         return;
     }
 
@@ -1262,18 +1257,18 @@ void Device::getAioDatas(QtCharts::QDateTimeAxis *axis,
     bool minSet = false;
     axis->setMax(QDateTime::currentDateTime());
 
-    while (graphDatas.next())
+    while (graphData.next())
     {
-        QDateTime date = QDateTime::fromString(graphDatas.value(4).toString(), "yyyy-MM-dd hh:mm:ss");
+        QDateTime date = QDateTime::fromString(graphData.value(4).toString(), "yyyy-MM-dd hh:mm:ss");
         if (!minSet) {
             axis->setMin(date);
             minSet = true;
         }
         int64_t timecode = date.toMSecsSinceEpoch();
 
-        temp->append(timecode, graphDatas.value(0).toReal());
-        hygro->append(timecode, graphDatas.value(1).toReal());
-        lumi->append(timecode, graphDatas.value(2).toReal());
-        cond->append(timecode, graphDatas.value(3).toReal());
+        temp->append(timecode, graphData.value(0).toReal());
+        hygro->append(timecode, graphData.value(1).toReal());
+        lumi->append(timecode, graphData.value(2).toReal());
+        cond->append(timecode, graphData.value(3).toReal());
     }
 }

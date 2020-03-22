@@ -52,7 +52,7 @@ DeviceHygrotempLCD::DeviceHygrotempLCD(const QBluetoothDeviceInfo &d, QObject *p
 
 DeviceHygrotempLCD::~DeviceHygrotempLCD()
 {
-    delete serviceDatas;
+    delete serviceData;
     delete serviceBattery;
     delete serviceInfos;
 }
@@ -82,14 +82,14 @@ void DeviceHygrotempLCD::serviceScanDone()
         }
     }
 
-    if (serviceDatas)
+    if (serviceData)
     {
-        if (serviceDatas->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceDatas, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_datas);
-            connect(serviceDatas, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempLCD::confirmedDescriptorWrite);
-            connect(serviceDatas, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempLCD::bleReadNotify);
-            serviceDatas->discoverDetails();
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_data);
+            connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempLCD::confirmedDescriptorWrite);
+            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempLCD::bleReadNotify);
+            serviceData->discoverDetails();
         }
     }
 }
@@ -119,13 +119,13 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
 */
-    if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // datas
+    if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // data
     {
-        delete serviceDatas;
+        delete serviceData;
 
-        serviceDatas = controller->createServiceObject(uuid);
-        if (!serviceDatas)
-            qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
+        serviceData = controller->createServiceObject(uuid);
+        if (!serviceData)
+            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
 
@@ -174,19 +174,19 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::Ser
     }
 }
 
-void DeviceHygrotempLCD::serviceDetailsDiscovered_datas(QLowEnergyService::ServiceState newState)
+void DeviceHygrotempLCD::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_datas(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceDatas)
+        if (serviceData)
         {
             // Characteristic "Temp&Humi"
             QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handler 0x??
-            QLowEnergyCharacteristic cha = serviceDatas->characteristic(a);
+            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
             m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            serviceDatas->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
 
             // Characteristic "Message"
             //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handler 0x??
@@ -209,11 +209,11 @@ void DeviceHygrotempLCD::bleReadDone(const QLowEnergyCharacteristic &c, const QB
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
     qDebug() << "DeviceHygrotempLCD::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-               << hex << data[12] << hex << data[13] << hex << data[14] << hex << data[15];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
+             << hex << data[12] << hex << data[13] << hex << data[14] << hex << data[15];
 */
 }
 
@@ -222,15 +222,15 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
     qDebug() << "DeviceHygrotempLCD::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-               << hex << data[12] << hex << data[13];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
+             << hex << data[12] << hex << data[13];
 */
     if (c.uuid().toString() == "{226caa55-6476-4566-7562-66734470666d}")
     {
-        // BLE temperature & humidity sensor datas // handler 0x??
+        // BLE temperature & humidity sensor data // handler 0x??
 
         if (value.size() > 0)
         {
@@ -259,16 +259,16 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro)"
-                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
-                addDatas.bindValue(":deviceAddr", getAddress());
-                addDatas.bindValue(":ts", tsStr);
-                addDatas.bindValue(":ts_full", tsFullStr);
-                addDatas.bindValue(":temp", m_temp);
-                addDatas.bindValue(":hygro", m_hygro);
-                if (addDatas.exec() == false)
-                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":" << addDatas.lastError().text();
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":ts_full", tsFullStr);
+                addData.bindValue(":temp", m_temp);
+                addData.bindValue(":hygro", m_hygro);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -279,7 +279,7 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDatasFinished(true);
+            refreshDataFinished(true);
         }
     }
 }

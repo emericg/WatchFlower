@@ -34,13 +34,13 @@ Item {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
 
-        tempDatas.visible = myDevice.hasTemperatureSensor()
-        hygroDatas.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
-        lumiDatas.visible = false
-        conduDatas.visible = myDevice.hasConductivitySensor()
+        tempData.visible = myDevice.hasTemperatureSensor()
+        hygroData.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
+        lumiData.visible = false
+        conduData.visible = myDevice.hasConductivitySensor()
 
         dateIndicator.visible = false
-        datasIndicator.visible = false
+        dataIndicator.visible = false
         verticalIndicator.visible = false
     }
 
@@ -51,21 +51,21 @@ Item {
         if (dateIndicator.visible)
             resetIndicator()
 
-        if (myDevice.countDatas("temp", 14) > 1) {
+        if (myDevice.countData("temp", 14) > 1) {
             aioGraph.visible = true
-            noDatasIndicator.visible = false
+            noDataIndicator.visible = false
         } else {
             aioGraph.visible = false
-            noDatasIndicator.visible = true
+            noDataIndicator.visible = true
         }
 
-        //// DATAS
-        hygroDatas.clear()
-        tempDatas.clear()
-        lumiDatas.clear()
-        conduDatas.clear()
+        //// DATA
+        hygroData.clear()
+        tempData.clear()
+        lumiData.clear()
+        conduData.clear()
 
-        myDevice.getAioDatas(axisTime, hygroDatas, tempDatas, lumiDatas, conduDatas);
+        myDevice.getAioData(axisTime, hygroData, tempData, lumiData, conduData);
 
         //// AXIS
         axisHygro.min = 0
@@ -83,9 +83,9 @@ Item {
         // Max axis
         i = 0
         minmax_of_array = 0
-        for (;i < hygroDatas.count; i++)
-            if (hygroDatas.at(i).y > minmax_of_array)
-                minmax_of_array = hygroDatas.at(i).y
+        for (;i < hygroData.count; i++)
+            if (hygroData.at(i).y > minmax_of_array)
+                minmax_of_array = hygroData.at(i).y
         var minmax_of_legend = minmax_of_array*1.20;
         if (minmax_of_legend > 100.0)
             minmax_of_legend = 100.0; // no need to go higher than 100% soil moisture
@@ -95,9 +95,9 @@ Item {
         // Max axis
         i = 0
         minmax_of_array = 0
-        for (;i < tempDatas.count; i++)
-            if (tempDatas.at(i).y > minmax_of_array)
-                minmax_of_array = tempDatas.at(i).y
+        for (;i < tempData.count; i++)
+            if (tempData.at(i).y > minmax_of_array)
+                minmax_of_array = tempData.at(i).y
         minmax_of_legend = minmax_of_array*1.20;
         axisTemp.max = minmax_of_legend;
 
@@ -105,54 +105,54 @@ Item {
         if (!myDevice.hasSoilMoistureSensor()) {
             i = 0
             minmax_of_array = 100
-            for (;i < hygroDatas.count; i++)
-                if (hygroDatas.at(i).y < minmax_of_array)
-                    minmax_of_array = hygroDatas.at(i).y
+            for (;i < hygroData.count; i++)
+                if (hygroData.at(i).y < minmax_of_array)
+                    minmax_of_array = hygroData.at(i).y
             minmax_of_legend = minmax_of_array*0.80;
             axisHygro.min = minmax_of_legend;
             // Min axis
             i = 0
             minmax_of_array = 100
-            for (;i < tempDatas.count; i++)
-                if (tempDatas.at(i).y < minmax_of_array)
-                    minmax_of_array = tempDatas.at(i).y
+            for (;i < tempData.count; i++)
+                if (tempData.at(i).y < minmax_of_array)
+                    minmax_of_array = tempData.at(i).y
             minmax_of_legend = minmax_of_array*0.80;
             axisTemp.min = minmax_of_legend;
         }
 
         //// ADJUSTMENTS
-        hygroDatas.width = 2
-        tempDatas.width = 2
+        hygroData.width = 2
+        tempData.width = 2
 
         if (myDevice.deviceName === "ropot") {
-            hygroDatas.width = 3 // Humidity is primary
+            hygroData.width = 3 // Humidity is primary
         }
 
         if (!myDevice.hasSoilMoistureSensor()) {
-            tempDatas.width = 3 // Temperature is primary
+            tempData.width = 3 // Temperature is primary
         }
 
         if (myDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroDatas.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
-            conduDatas.visible = myDevice.hasConductivitySensor() && (myDevice.hasDatas("hygro") || myDevice.hasDatas("conductivity"))
+            hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasData("hygro") || myDevice.hasData("conductivity"))
+            conduData.visible = myDevice.hasConductivitySensor() && (myDevice.hasData("hygro") || myDevice.hasData("conductivity"))
 
-            // Flower Care without hygro & conductivity datas
-            if (!hygroDatas.visible && !conduDatas.visible) {
+            // Flower Care without hygro & conductivity data
+            if (!hygroData.visible && !conduData.visible) {
                 // Show luminosity and make temperature primary
-                lumiDatas.visible = true
-                tempDatas.width = 3
+                lumiData.visible = true
+                tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
                 i = 0
                 minmax_of_array = 0
-                for (;i < lumiDatas.count; i++)
-                    if (lumiDatas.at(i).y > minmax_of_array)
-                        minmax_of_array = lumiDatas.at(i).y
+                for (;i < lumiData.count; i++)
+                    if (lumiData.at(i).y > minmax_of_array)
+                        minmax_of_array = lumiData.at(i).y
                 minmax_of_legend = minmax_of_array*1.20;
                 axisLumi.max = minmax_of_legend;
             } else {
-                hygroDatas.width = 3 // Soil moisture is primary
+                hygroData.width = 3 // Soil moisture is primary
             }
         }
     }
@@ -181,23 +181,23 @@ Item {
                        gridLineColor: Theme.colorSeparator; }
 
         LineSeries {
-            id: lumiDatas
+            id: lumiData
             color: Theme.colorYellow; width: 2;
             visible: false
             axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
-            id: conduDatas
+            id: conduData
             color: Theme.colorRed; width: 2;
             axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
-            id: tempDatas
+            id: tempData
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
-            id: hygroDatas
+            id: hygroData
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
         }
@@ -218,14 +218,14 @@ Item {
                 ppp.y = ppp.y - aioGraph.anchors.topMargin
 
                 // map mouse position to graph value // mpmp.x is the timestamp
-                var mpmp = aioGraph.mapToValue(mmm, tempDatas)
+                var mpmp = aioGraph.mapToValue(mmm, tempData)
 
                 //console.log("clicked " + mouse.x + " " + mouse.y)
                 //console.log("clicked adjusted " + ppp.x + " " + ppp.y)
                 //console.log("clicked mapped " + mpmp.x + " " + mpmp.y)
 
                 // did we actually clicked inside the axis?
-                if (mpmp.x >= tempDatas.at(0).x && mpmp.x <= tempDatas.at(tempDatas.count-1).x) {
+                if (mpmp.x >= tempData.at(0).x && mpmp.x <= tempData.at(tempData.count-1).x) {
                     // indicators visible
                     dateIndicator.visible = true
                     verticalIndicator.visible = true
@@ -239,19 +239,19 @@ Item {
                     // search index corresponding to the timestamp
                     var x1 = -1
                     var x2 = -1
-                    for (var i = 0; i < tempDatas.count; i++) {
-                        var graph_at_x = tempDatas.at(i).x
+                    for (var i = 0; i < tempData.count; i++) {
+                        var graph_at_x = tempData.at(i).x
                         var dist = (graph_at_x - mpmp.x) / 1000000
 
                         if (Math.abs(dist) < 1) {
                             // nearest neighbor
                             if (appContent.state === "DeviceSensor") {
-                                updateDatasBars(tempDatas.at(i).y, lumiDatas.at(i).y,
-                                                hygroDatas.at(i).y, conduDatas.at(i).y)
+                                updateDataBars(tempData.at(i).y, lumiData.at(i).y,
+                                               hygroData.at(i).y, conduData.at(i).y)
                             } else if (appContent.state === "DeviceThermo") {
-                                datasIndicator.visible = true
-                                datasIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDatas.at(i).y).toFixed(1) + "°F" : tempDatas.at(i).y.toFixed(1) + "°C"
-                                datasIndicatorText.text += " " + hygroDatas.at(i).y.toFixed(0) + "%"
+                                dataIndicator.visible = true
+                                dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
+                                dataIndicatorText.text += " " + hygroData.at(i).y.toFixed(0) + "%"
                             }
                             break;
                         } else {
@@ -267,15 +267,15 @@ Item {
                     if (x1 >= 0 && x2 > x1) {
                         // linear interpolation
                         if (appContent.state === "DeviceSensor") {
-                            updateDatasBars(qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x),
-                                            qpoint_lerp(lumiDatas.at(x1), lumiDatas.at(x2), mpmp.x),
-                                            qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x),
-                                            qpoint_lerp(conduDatas.at(x1), conduDatas.at(x2), mpmp.x))
+                            updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
+                                           qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
+                                           qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
+                                           qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
                         } else if (appContent.state === "DeviceThermo") {
-                            datasIndicator.visible = true
-                            var temmp = qpoint_lerp(tempDatas.at(x1), tempDatas.at(x2), mpmp.x)
-                            datasIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                            datasIndicatorText.text += " " + qpoint_lerp(hygroDatas.at(x1), hygroDatas.at(x2), mpmp.x).toFixed(0) + "%"
+                            dataIndicator.visible = true
+                            var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
+                            dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                            dataIndicatorText.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
                         }
                     }
                 } else {
@@ -287,8 +287,8 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ItemNoDatas {
-        id: noDatasIndicator
+    ItemNoData {
+        id: noDataIndicator
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -337,9 +337,9 @@ Item {
         }
 
         Rectangle {
-            id: datasIndicator
-            width: datasIndicatorText.width + 12
-            height: datasIndicatorText.height + 12
+            id: dataIndicator
+            width: dataIndicatorText.width + 12
+            height: dataIndicatorText.height + 12
             anchors.verticalCenter: parent.verticalCenter
 
             radius: 4
@@ -348,7 +348,7 @@ Item {
             border.color: Theme.colorSeparator
 
             Text {
-                id: datasIndicatorText
+                id: dataIndicatorText
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -371,10 +371,10 @@ Item {
     }
     function resetIndicator() {
         dateIndicator.visible = false
-        datasIndicator.visible = false
+        dataIndicator.visible = false
         verticalIndicator.visible = false
 
-        if (typeof deviceScreenDatas === "undefined" || !deviceScreenDatas) return
-        if (appContent.state === "DeviceSensor") deviceScreenDatas.resetDatasBars()
+        if (typeof deviceScreenData === "undefined" || !deviceScreenData) return
+        if (appContent.state === "DeviceSensor") deviceScreenData.resetDataBars()
     }
 }

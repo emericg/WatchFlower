@@ -88,7 +88,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)
-            qWarning() << "Cannot create service (datas) for uuid:" << uuid.toString();
+            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
 
@@ -145,19 +145,19 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
     qDebug() << "DeviceRopot::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATAS: 0x" \
-               << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-               << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-               << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-               << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+    qDebug() << "WE HAVE DATA: 0x" \
+             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
+             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
+             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
+             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {
-        // MiFlora datas // handler 0x35
+        // MiFlora data // handler 0x35
 
         if (value.size() > 0)
         {
-            // first read might send bad datas (0x aa bb cc dd ee ff 99 88 77 66...)
+            // first read might send bad data (0x aa bb cc dd ee ff 99 88 77 66...)
             // until the first write is done
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
@@ -185,17 +185,17 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addDatas;
-                addDatas.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, conductivity)"
-                                 " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :conductivity)");
-                addDatas.bindValue(":deviceAddr", getAddress());
-                addDatas.bindValue(":ts", tsStr);
-                addDatas.bindValue(":ts_full", tsFullStr);
-                addDatas.bindValue(":temp", m_temp);
-                addDatas.bindValue(":hygro", m_hygro);
-                addDatas.bindValue(":conductivity", m_conductivity);
-                if (addDatas.exec() == false)
-                    qWarning() << "> addDatas.exec() ERROR" << addDatas.lastError().type() << ":" << addDatas.lastError().text();
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, conductivity)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :conductivity)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":ts_full", tsFullStr);
+                addData.bindValue(":temp", m_temp);
+                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":conductivity", m_conductivity);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -206,7 +206,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDatasFinished(true);
+            refreshDataFinished(true);
         }
     }
 }

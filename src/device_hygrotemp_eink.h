@@ -58,10 +58,10 @@ private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_datas(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
 
-    QLowEnergyService *serviceDatas = nullptr;
+    QLowEnergyService *serviceData = nullptr;
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);

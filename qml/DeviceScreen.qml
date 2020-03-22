@@ -34,25 +34,25 @@ Item {
     Connections {
         target: myDevice
         onStatusUpdated: {
-            rectangleDeviceDatas.updateHeader()
+            rectangleDeviceData.updateHeader()
         }
         onSensorUpdated: {
-            rectangleDeviceDatas.updateHeader()
+            rectangleDeviceData.updateHeader()
             rectangleDeviceLimits.updateHeader()
         }
-        onDatasUpdated: {
-            rectangleDeviceDatas.updateDatas()
-            rectangleDeviceHistory.updateDatas()
+        onDataUpdated: {
+            rectangleDeviceData.updateData()
+            rectangleDeviceHistory.updateData()
         }
         onLimitsUpdated: {
-            rectangleDeviceDatas.updateDatas()
+            rectangleDeviceData.updateData()
         }
     }
 
     Connections {
         target: Theme
         onCurrentThemeChanged: {
-            rectangleDeviceDatas.updateHeader()
+            rectangleDeviceData.updateHeader()
             rectangleDeviceHistory.updateHeader()
             rectangleDeviceHistory.updateColors()
             rectangleDeviceLimits.updateHeader()
@@ -62,8 +62,8 @@ Item {
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDatasButtonClicked: {
-            appHeader.setActiveDeviceDatas()
+        onDeviceDataButtonClicked: {
+            appHeader.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
         onDeviceHistoryButtonClicked: {
@@ -78,8 +78,8 @@ Item {
     Connections {
         target: tabletMenuDevice
         // mobile only
-        onDeviceDatasButtonClicked: {
-            tabletMenuDevice.setActiveDeviceDatas()
+        onDeviceDataButtonClicked: {
+            tabletMenuDevice.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
         onDeviceHistoryButtonClicked: {
@@ -98,22 +98,22 @@ Item {
 
         sensorPages.currentIndex = 0
 
-        rectangleDeviceDatas.loadDatas()
+        rectangleDeviceData.loadData()
         rectangleDeviceHistory.updateHeader()
-        rectangleDeviceHistory.loadDatas()
+        rectangleDeviceHistory.loadData()
         rectangleDeviceLimits.updateHeader()
         rectangleDeviceLimits.updateLimits()
         rectangleDeviceLimits.updateLimitsVisibility()
 
-        if (isMobile) tabletMenuDevice.setActiveDeviceDatas()
-        if (isDesktop) appHeader.setActiveDeviceDatas()
+        if (isMobile) tabletMenuDevice.setActiveDeviceData()
+        if (isDesktop) appHeader.setActiveDeviceData()
     }
 
     function isHistoryMode() {
-        return rectangleDeviceDatas.dataBarsHistory
+        return rectangleDeviceData.dataBarsHistory
     }
     function resetHistoryMode() {
-        rectangleDeviceDatas.resetHistoryMode()
+        rectangleDeviceData.resetHistoryMode()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -132,14 +132,14 @@ Item {
             onCurrentIndexChanged: {
                 if (isDesktop) {
                     if (sensorPages.currentIndex === 0)
-                        appHeader.setActiveDeviceDatas()
+                        appHeader.setActiveDeviceData()
                     else if (sensorPages.currentIndex === 1)
                         appHeader.setActiveDeviceHistory()
                     else if (sensorPages.currentIndex === 2)
                         appHeader.setActiveDeviceSettings()
                 } else {
                     if (sensorPages.currentIndex === 0)
-                        tabletMenuDevice.setActiveDeviceDatas()
+                        tabletMenuDevice.setActiveDeviceData()
                     else if (sensorPages.currentIndex === 1)
                         tabletMenuDevice.setActiveDeviceHistory()
                     else if (sensorPages.currentIndex === 2)
@@ -147,9 +147,9 @@ Item {
                 }
             }
 
-            DeviceScreenDatas {
+            DeviceScreenData {
                 clip: true
-                id: rectangleDeviceDatas
+                id: rectangleDeviceData
             }
             DeviceScreenHistory {
                 clip: true

@@ -97,7 +97,7 @@ public:
     Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
 public slots:
-    void refreshDevices_check();    //!< Refresh devices with datas >xh old
+    void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
 
     void refreshDevices_continue();

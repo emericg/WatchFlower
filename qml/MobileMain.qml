@@ -601,40 +601,40 @@ ApplicationWindow {
             anchors.verticalCenter: parent.verticalCenter
             spacing: (applicationWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
-            signal deviceDatasButtonClicked()
+            signal deviceDataButtonClicked()
             signal deviceHistoryButtonClicked()
             signal deviceSettingsButtonClicked()
 
             visible: (appContent.state === "DeviceSensor")
 
-            function setActiveDeviceDatas() {
-                menuDeviceDatas.selected = true
+            function setActiveDeviceData() {
+                menuDeviceData.selected = true
                 menuDeviceHistory.selected = false
                 menuDeviceSettings.selected = false
             }
             function setActiveDeviceHistory() {
-                menuDeviceDatas.selected = false
+                menuDeviceData.selected = false
                 menuDeviceHistory.selected = true
                 menuDeviceSettings.selected = false
             }
             function setActiveDeviceSettings() {
-                menuDeviceDatas.selected = false
+                menuDeviceData.selected = false
                 menuDeviceHistory.selected = false
                 menuDeviceSettings.selected = true
             }
 
             ItemMenuButton {
-                id: menuDeviceDatas
+                id: menuDeviceData
                 imgSize: 24
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
-                menuText: qsTr("Datas")
+                menuText: qsTr("Data")
                 selected: (appContent.state === "DeviceSensor" && appContent.state === "DeviceList")
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
-                onClicked: tabletMenuDevice.deviceDatasButtonClicked()
+                onClicked: tabletMenuDevice.deviceDataButtonClicked()
             }
             ItemMenuButton {
                 id: menuDeviceHistory

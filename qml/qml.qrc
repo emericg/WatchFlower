@@ -12,7 +12,7 @@
         <file>DeviceWidget.qml</file>
         <file>DeviceScreen.qml</file>
         <file>DeviceThermometer.qml</file>
-        <file>DeviceScreenDatas.qml</file>
+        <file>DeviceScreenData.qml</file>
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
 
@@ -50,7 +50,7 @@
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
-        <file alias="ItemNoDatas.qml">components/ItemNoDatas.qml</file>
+        <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
     </qresource>
     <qresource prefix="/js">

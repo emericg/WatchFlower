@@ -111,18 +111,18 @@ Item {
             highLimitSeries.append(1, myDevice.limitConduMax);
         }
 
-        // Get datas
+        // Get data
         if (graphViewSelected === "hourly") {
             myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getHours()
-            myBarSet.values = myDevice.getDatasHourly(graphDataSelected)
+            myBarSet.values = myDevice.getDataHourly(graphDataSelected)
         } else {
             if (graphViewSelected === "daily")
                 myBarSeries.barWidth = 0.80
             else
                 myBarSeries.barWidth = 0.90
             axisX0.categories = myDevice.getDays()
-            myBarSet.values = myDevice.getDatasDaily(graphDataSelected)
+            myBarSet.values = myDevice.getDataDaily(graphDataSelected)
         }
 
         // Min axis
@@ -135,7 +135,7 @@ Item {
         if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% soil moisture
         }
-        if (max_of_legend <= 0) max_of_legend = 1 // if we have no datas
+        if (max_of_legend <= 0) max_of_legend = 1 // if we have no data
         axisY0.max = max_of_legend;
 
         // Decorations
@@ -165,7 +165,7 @@ Item {
         z: 1 // so the graph, overlapping with buttons, doesn't prevent clicks
 
         Rectangle {
-            id: rectangleSettingsDatas
+            id: rectangleSettingsData
             width: parent.width * 0.70
             height: parent.height
             color: buttonLightColor
@@ -277,7 +277,7 @@ Item {
             id: rectangleSettingsMode
             width: parent.width * 0.30
             height: parent.height
-            anchors.left: rectangleSettingsDatas.right
+            anchors.left: rectangleSettingsData.right
             color: buttonDarkColor
 
             Rectangle {

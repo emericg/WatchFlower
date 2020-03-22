@@ -480,7 +480,7 @@ Item {
 
                 visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
 
-                text: qsTr("Wake up at a predefined intervals to refresh sensor datas. Only if Bluetooth (or Bluetooth control) is enabled.")
+                text: qsTr("Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

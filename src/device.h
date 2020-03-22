@@ -87,12 +87,12 @@ class Device: public QObject
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
 
-    Q_PROPERTY(float deviceTemp READ getTemp NOTIFY datasUpdated)
-    Q_PROPERTY(float deviceTempC READ getTempC NOTIFY datasUpdated)
-    Q_PROPERTY(float deviceTempF READ getTempF NOTIFY datasUpdated)
-    Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY datasUpdated)
-    Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY datasUpdated)
-    Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY datasUpdated)
+    Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY dataUpdated)
 
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
@@ -106,7 +106,7 @@ class Device: public QObject
 Q_SIGNALS:
     void statusUpdated();
     void sensorUpdated();
-    void datasUpdated();
+    void dataUpdated();
     void limitsUpdated();
 
     void deviceUpdated(Device *d);
@@ -132,13 +132,13 @@ protected:
     bool m_firmware_uptodate = false;
     int m_battery = -1;
 
-    // BLE device datas
+    // BLE device data
     float m_temp = -111.f;
     int m_hygro = -1;
     int m_luminosity = -1;
     int m_conductivity = -1;
 
-    // BLE associated datas
+    // BLE associated data
     QString m_locationName;
     QString m_plantName;
 
@@ -171,16 +171,16 @@ protected:
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    void refreshDatasStarted();
-    void refreshDatasCanceled();
-    void refreshDatasFinished(bool status, bool cached = false);
+    void refreshDataStarted();
+    void refreshDataCanceled();
+    void refreshDataFinished(bool status, bool cached = false);
 
     void setUpdateTimer(int updateIntervalMin = 0);
     void setTimeoutTimer();
 
     bool getSqlInfos();
-    virtual bool getSqlDatas(int minutes);
-    bool getBleDatas();
+    virtual bool getSqlData(int minutes);
+    bool getBleData();
 
 public:
     Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
@@ -207,15 +207,15 @@ public slots:
     int getStatus() const { return m_status; }
     bool isUpdating() const { return m_updating; } //!< Is currently being updated
     bool isErrored() const;     //!< Has emitted a BLE error
-    bool isFresh() const;       //!< Has at least >Xh (user set) old datas
-    bool isAvailable() const;   //!< Has at least >12h old datas
+    bool isFresh() const;       //!< Has at least >Xh (user set) old data
+    bool isAvailable() const;   //!< Has at least >12h old data
 
     // BLE device infos
     QString getFirmware() const { return m_firmware; }
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     int getBattery() const { return m_battery; }
 
-    // BLE device datas
+    // BLE device data
     int getHumidity() const { return m_hygro; }
     int getLuminosity() const { return m_luminosity; }
     int getConductivity() const { return m_conductivity; }
@@ -228,11 +228,11 @@ public slots:
     int getLastUpdateInt() const;
     int getLastErrorInt() const;
 
-    bool hasDatas() const;
-    bool hasDatas(const QString &dataName) const;
-    int countDatas(const QString &dataName, int days = 31) const;
+    bool hasData() const;
+    bool hasData(const QString &dataName) const;
+    int countData(const QString &dataName, int days = 31) const;
 
-    // BLE device associated datas
+    // BLE device associated data
     QString getLocationName() { return m_locationName; }
     void setLocationName(const QString &name);
 
@@ -259,23 +259,23 @@ public slots:
     bool setDbLimits();
 
     // AIO graph
-    Q_INVOKABLE void getAioDatas(QtCharts::QDateTimeAxis *axis,
+    Q_INVOKABLE void getAioData(QtCharts::QDateTimeAxis *axis,
                                  QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
                                  QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 
     // Monthly graph
     QVariantList getMonth();
-    QVariantList getMonthDatas(const QString &dataName);
+    QVariantList getDataMonthly(const QString &dataName);
     QVariantList getMonthBackground(float maxValue);
 
     // Daily graph
     QVariantList getDays();
-    QVariantList getDatasDaily(const QString &dataName);
+    QVariantList getDataDaily(const QString &dataName);
     QVariantList getBackgroundDaily(float maxValue);
 
     // Hourly graph
     QVariantList getHours();
-    QVariantList getDatasHourly(const QString &dataName);
+    QVariantList getDataHourly(const QString &dataName);
     QVariantList getBackgroundHourly(float maxValue);
     QVariantList getBackgroundNightly(float maxValue);
 };

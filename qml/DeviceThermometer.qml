@@ -42,20 +42,20 @@ Item {
         target: myDevice
         onStatusUpdated: updateHeader()
         onSensorUpdated: updateHeader()
-        onDatasUpdated: updateDatas()
-        onLimitsUpdated: updateDatas()
+        onDataUpdated: updateData()
+        onLimitsUpdated: updateData()
     }
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: updateDatas()
+        onTempUnitChanged: updateData()
     }
 
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDatasButtonClicked: {
-            appHeader.setActiveDeviceDatas()
+        onDeviceDataButtonClicked: {
+            appHeader.setActiveDeviceData()
         }
         onDeviceSettingsButtonClicked: {
             appHeader.setActiveDeviceSettings()
@@ -82,7 +82,7 @@ Item {
         //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
 
         updateHeader()
-        updateDatas()
+        updateData()
         deviceScreenChart.loadGraph()
     }
 
@@ -130,10 +130,10 @@ Item {
         updateStatusText()
     }
 
-    function updateDatas() {
+    function updateData() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceThermometer // updateDatas() >> " + myDevice)
+        //console.log("DeviceThermometer // updateData() >> " + myDevice)
 
         if (myDevice.deviceTempC > -40)
             sensorTemp.text = myDevice.getTempString()

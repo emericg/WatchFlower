@@ -27,7 +27,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: deviceScreenDatas
+    id: deviceScreenData
     width: 400
     height: 300
 
@@ -37,7 +37,7 @@ Item {
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenDatas // updateHeader() >> " + myDevice)
+        //console.log("DeviceScreenData // updateHeader() >> " + myDevice)
 
         // Sensor battery level
         if (myDevice.hasBatteryLevel()) {
@@ -106,7 +106,7 @@ Item {
     function updateStatusText() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenDatas // updateStatusText() >> " + myDevice)
+        //console.log("DeviceScreenData // updateStatusText() >> " + myDevice)
 
         textStatus.color = Theme.colorHighContrast
         textStatus.font.bold = false
@@ -130,10 +130,10 @@ Item {
         }
     }
 
-    function loadDatas() {
+    function loadData() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenDatas // loadDatas() >> " + myDevice)
+        //console.log("DeviceScreenData // loadData() >> " + myDevice)
 
         if (graphLoader.status != Loader.Ready) {
             graphLoader.source = "ItemAioLineCharts.qml"
@@ -144,15 +144,15 @@ Item {
         aioLineCharts.resetIndicator()
 
         updateHeader()
-        updateDatas()
+        updateData()
     }
 
-    function updateDatas() {
+    function updateData() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenDatas // updateDatas() >> " + myDevice)
+        //console.log("DeviceScreenData // updateData() >> " + myDevice)
 
-        // Has datas? always display them
+        // Has data? always display them
         if (myDevice.isAvailable()) {
             humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
             lumi.visible = myDevice.hasLuminositySensor()
@@ -164,11 +164,11 @@ Item {
             condu.visible = myDevice.hasConductivitySensor()
         }
 
-        resetDatasBars()
+        resetDataBars()
         aioLineCharts.updateGraph()
     }
 
-    function updateDatasBars(tempD, lumiD, hygroD, conduD) {
+    function updateDataBars(tempD, lumiD, hygroD, conduD) {
         dataBarsHistory = true
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
         humi.value = hygroD
@@ -176,7 +176,7 @@ Item {
         condu.value = conduD
     }
 
-    function resetDatasBars() {
+    function resetDataBars() {
         dataBarsHistory = false
         humi.value = myDevice.deviceHumidity
         temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
@@ -186,12 +186,12 @@ Item {
 
     function resetHistoryMode() {
         aioLineCharts.resetIndicator()
-        resetDatasBars()
+        resetDataBars()
     }
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: updateDatas()
+        onTempUnitChanged: updateData()
     }
     Connections {
         target: Theme
@@ -202,7 +202,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Grid {
-        id: datasGrid
+        id: dataGrid
         columns: 1
         rows: 2
         spacing: (rows > 1) ? 12 : 0
@@ -210,11 +210,11 @@ Item {
         onWidthChanged: {
             if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
-                    datasGrid.columns = 1
-                    datasGrid.rows = 2
+                    dataGrid.columns = 1
+                    dataGrid.rows = 2
                 } else {
-                    datasGrid.columns = 2
-                    datasGrid.rows = 1
+                    dataGrid.columns = 2
+                    dataGrid.rows = 1
                 }
             }
         }
@@ -229,7 +229,7 @@ Item {
         anchors.bottomMargin: 0
 
         Column {
-            width: datasGrid.width / datasGrid.columns
+            width: dataGrid.width / dataGrid.columns
             spacing: 4
 
             Rectangle {
@@ -530,15 +530,16 @@ Item {
             ////////////////
 
             Column {
-                id: datasColumns
+                id: dataColumns
                 width: parent.width
 
-                visible: (myDevice.available || myDevice.hasDatas())
+                visible: (myDevice.available || myDevice.hasData())
 
                 ItemDataBar {
                     id: humi
                     legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                     unit: "%"
+                    //warning: true
                     color: Theme.colorBlue
                     value: myDevice.deviceHumidity
                     valueMin: 0
@@ -550,6 +551,7 @@ Item {
                     id: temp
                     legend: qsTr("Temperature")
                     floatprecision: 1
+                    //warning: true
                     unit: "°" + settingsManager.tempUnit
                     color: Theme.colorGreen
                     value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
@@ -587,8 +589,8 @@ Item {
 
         Loader {
             id: graphLoader
-            width: (datasGrid.width / datasGrid.columns)
-            height: (datasGrid.columns === 1) ? (datasGrid.height - rectangleHeader.height - datasColumns.height - (datasGrid.rows > 1 ? datasGrid.spacing : 0)) : datasGrid.height
+            width: (dataGrid.width / dataGrid.columns)
+            height: (dataGrid.columns === 1) ? (dataGrid.height - rectangleHeader.height - dataColumns.height - (dataGrid.rows > 1 ? dataGrid.spacing : 0)) : dataGrid.height
         }
     }
 }

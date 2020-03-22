@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         if (!sm || !st || !nm || !dm)
             return EXIT_FAILURE;
 
-        // Refresh datas in the background, without starting the UI, then exit
+        // Refresh data in the background, without starting the UI, then exit
         if (refresh_only)
         {
             //QCoreApplication
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef DEMO_MODE
-    // DEMO mode, with fake datas and fixed config
+    // DEMO mode, with fake data and fixed config
     app.setApplicationName("WatchFlower_demo");
     setup_demo_mode();
 #endif

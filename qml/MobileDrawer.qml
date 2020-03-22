@@ -303,7 +303,7 @@ Rectangle {
                     anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Refresh sensors datas")
+                    text: qsTr("Refresh sensors data")
                     font.pixelSize: 13
                     font.bold: true
                     color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
