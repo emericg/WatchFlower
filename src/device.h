@@ -133,10 +133,10 @@ protected:
     int m_battery = -1;
 
     // BLE device data
-    float m_temp = -111.f;
-    int m_hygro = -1;
-    int m_luminosity = -1;
-    int m_conductivity = -1;
+    float m_temp = -99.f;
+    int m_hygro = -99;
+    int m_luminosity = -99;
+    int m_conductivity = -99;
 
     // BLE associated data
     QString m_locationName;
