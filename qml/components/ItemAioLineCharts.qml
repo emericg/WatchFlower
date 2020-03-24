@@ -35,9 +35,9 @@ Item {
         //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
 
         tempData.visible = myDevice.hasTemperatureSensor()
-        hygroData.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
+        hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && myDevice.hasData("hygro")
         lumiData.visible = false
-        conduData.visible = myDevice.hasConductivitySensor()
+        conduData.visible = myDevice.hasConductivitySensor() && myDevice.hasData("conductivity")
 
         dateIndicator.visible = false
         dataIndicator.visible = false
@@ -134,8 +134,8 @@ Item {
 
         if (myDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && (myDevice.hasData("hygro") || myDevice.hasData("conductivity"))
-            conduData.visible = myDevice.hasConductivitySensor() && (myDevice.hasData("hygro") || myDevice.hasData("conductivity"))
+            hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && myDevice.hasData("hygro")
+            conduData.visible = myDevice.hasConductivitySensor() && myDevice.hasData("conductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {
@@ -182,22 +182,25 @@ Item {
 
         LineSeries {
             id: lumiData
+            pointsVisible: isMobile;
             color: Theme.colorYellow; width: 2;
-            visible: false
             axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
             id: conduData
+            pointsVisible: isMobile;
             color: Theme.colorRed; width: 2;
             axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
             id: tempData
+            pointsVisible: isMobile;
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
             id: hygroData
+            pointsVisible: isMobile;
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
         }
