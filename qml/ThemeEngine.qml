@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick 2.9
+import QtQuick.Controls.Material 2.0
 
 Item {
     enum ThemeNames {
@@ -13,10 +14,13 @@ Item {
 
     ////////////////
 
+    property int themeStatusbar
+    property string colorStatusbar
+
     // Header
     property string colorHeader
+    property string colorHeaderHighlight
     property string colorHeaderContent
-    property string colorHeaderStatusbar
 
     // Sidebar
     property string colorSidebar
@@ -45,6 +49,8 @@ Item {
     property string colorSubText
     property string colorIcon
     property string colorSeparator
+
+    property string colorLowContrast
     property string colorHighContrast
 
     // Qt Quick controls & theming
@@ -83,6 +89,7 @@ Item {
     readonly property int fontSizeTitle: 24
     readonly property int fontSizeContentBig: 18
     readonly property int fontSizeContent: 16
+    readonly property int fontSizeComponent: 14
     readonly property int fontSizeContentSmall: 14
 
     ////////////////////////////////////////////////////////////////////////////
@@ -94,6 +101,7 @@ Item {
     }
 
     function loadTheme(themeIndex) {
+        //console.log("loadTheme(" + themeIndex + ")")
 
         if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
@@ -117,8 +125,11 @@ Item {
             colorYellow = "#ffba5a"
             colorRed = "#ff7657"
 
+            themeStatusbar = Material.Dark
+            colorStatusbar = "#009688"
+
             colorHeader = colorGreen
-            colorHeaderStatusbar = "#009688"
+            colorHeaderHighlight = "#009688"
             colorHeaderContent = "white"
 
             colorActionbar = colorYellow
@@ -130,7 +141,7 @@ Item {
             colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
-            colorForeground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : colorMaterialDarkGrey
+            colorForeground = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : colorMaterialGrey
 
             colorPrimary = colorGreen
             colorSecondary = colorLightGreen
@@ -139,6 +150,7 @@ Item {
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
+            colorLowContrast = "white"
             colorHighContrast = "black"
 
             colorComponent = "#eaeaea"
@@ -155,8 +167,11 @@ Item {
             colorYellow = "#ffcf00"
             colorRed = "#ff7657"
 
+            themeStatusbar = Material.Dark
+            colorStatusbar = colorNeutralNight
+
             colorHeader = "#ffcf00"
-            colorHeaderStatusbar = colorNeutralNight
+            colorHeaderHighlight = colorNeutralNight
             colorHeaderContent = "white"
 
             colorActionbar = colorGreen
@@ -177,6 +192,7 @@ Item {
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
+            colorLowContrast = "white"
             colorHighContrast = "#303030"
 
             colorComponent = "#efefef"
@@ -193,8 +209,11 @@ Item {
             colorYellow = "#fcc632"
             colorRed = "#e8635a"
 
+            themeStatusbar = Material.Dark
+            colorStatusbar = "#725595"
+
             colorHeader = "#b16bee"
-            colorHeaderStatusbar = "#725595"
+            colorHeaderHighlight = "#725595"
             colorHeaderContent = "white"
 
             colorActionbar = colorBlue
@@ -215,6 +234,7 @@ Item {
             colorSubText = "#AAAAAA"
             colorIcon = "#b9babe"
             colorSeparator = "#404040"
+            colorLowContrast = "black"
             colorHighContrast = "white"
 
             colorComponent = "#757575"

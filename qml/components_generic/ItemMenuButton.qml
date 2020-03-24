@@ -16,8 +16,10 @@ Item {
     property bool selected: false
     property bool highlighted: false
 
-    property string colorContent: Theme.colorHeaderContent
     property string colorBackground: Theme.colorForeground
+    property string colorHighlight: Theme.colorBackground
+    property string colorContent: Theme.colorHeaderContent
+
     property string highlightMode: "background" // available: background & text
 
     property string menuText: ""
@@ -44,14 +46,14 @@ Item {
         anchors.fill: parent
 
         visible: (selected && highlightMode === "background")
-        color: parent.colorBackground
+        color: itemMenuButton.colorBackground
     }
     Rectangle {
         id: bgFocus
         anchors.fill: parent
 
         visible: (highlightMode === "background")
-        color: itemMenuButton.colorBackground
+        color: itemMenuButton.colorHighlight
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
     }

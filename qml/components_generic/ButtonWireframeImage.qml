@@ -12,6 +12,7 @@ Button {
     property int imgSize: height / 1.5
 
     property bool fullColor: false
+    property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorBackground
 
@@ -25,12 +26,12 @@ Button {
             height: imgSize
 
             anchors.right: contentText.left
-            anchors.rightMargin: imgSize/3
+            anchors.rightMargin: (imgSize/3)
             anchors.verticalCenter: parent.verticalCenter
 
             opacity: enabled ? 1.0 : 0.3
             source: control.source
-            color: fullColor ? "white" : control.primaryColor
+            color: fullColor ? fulltextColor : control.primaryColor
         }
         Text {
             id: contentText
@@ -43,7 +44,7 @@ Button {
             text: control.text
             font: control.font
             opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3
-            color: fullColor ? "white" : control.primaryColor
+            color: fullColor ? fulltextColor : control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

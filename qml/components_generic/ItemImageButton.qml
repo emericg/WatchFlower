@@ -71,7 +71,7 @@ Item {
         width: contentImage.sourceSize.width
         height: contentImage.sourceSize.height
         cached: true
-        opacity: itemImageButton.enabled ? 1.0 : 0.3
+        opacity: itemImageButton.enabled ? 1.0 : 0.5
 
         color: {
             if (selected === true) {

@@ -8,12 +8,16 @@ TextField {
     implicitWidth: 128
     implicitHeight: Theme.componentHeight
 
+    property string colorText: Theme.colorComponentText
+    property string colorBorder: Theme.colorComponentBorder
+    property string colorBackground: Theme.colorComponentBackground
+
     text: "Text Field"
-    color: Theme.colorComponentText
+    color: colorText
 
     background: Rectangle {
         border.width: 2
-        border.color: textFieldThemed.activeFocus ? Theme.colorPrimary : Theme.colorComponentBorder
-        color: textFieldThemed.activeFocus ? Theme.colorComponentBackground : Theme.colorComponentBackground
+        border.color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
+        color: colorBackground
     }
 }

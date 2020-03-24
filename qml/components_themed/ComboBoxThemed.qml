@@ -46,5 +46,4 @@ ComboBox {
             //border.color: Theme.colorComponent
         }
     }
-
 }

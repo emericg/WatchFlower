@@ -9,6 +9,7 @@ Button {
     implicitHeight: Theme.componentHeight
 
     property bool fullColor: false
+    property string fullfextColor: "white"
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorBackground
 
@@ -26,7 +27,7 @@ Button {
             text: control.text
             font: control.font
             opacity: enabled ? (control.down ? 0.9 : 1.0) : 0.3
-            color: fullColor ? "white" : control.primaryColor
+            color: fullColor ? fullfextColor : control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

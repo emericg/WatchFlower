@@ -110,8 +110,8 @@ ApplicationWindow {
     }
 
     StatusBar {
-        theme: Material.Dark
-        color: Theme.colorHeaderStatusbar
+        theme: Theme.themeStatusbar
+        color: Theme.colorStatusbar
     }
 
     MobileHeader {
