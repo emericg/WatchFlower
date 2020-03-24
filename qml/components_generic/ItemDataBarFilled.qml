@@ -85,9 +85,9 @@ Item {
 
                 text: qsTr("min")
                 font.pixelSize: 12
-                visible: (limitMin > 0 && limitMin > valueMin)
-                color: (limitMin < value) ? Theme.colorLowContrast : Theme.colorHighContrast
-                opacity: (limitMin < value) ? 0.75 : 0.25
+                visible: (limitMin > 0 && limitMin > valueMin) && (x + width + 4 <= item_data.width)
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
             }
             Rectangle {
                 id: item_limit_low
@@ -97,8 +97,8 @@ Item {
 
                 visible: (limitMin > 0 && limitMin > valueMin)
                 x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
-                color: (limitMin < value) ? Theme.colorLowContrast : Theme.colorHighContrast
-                opacity: (limitMin < value) ? 0.75 : 0.25
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
 
                 Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
             }

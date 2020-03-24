@@ -230,35 +230,36 @@ Item {
 
         Column {
             width: dataGrid.width / dataGrid.columns
-            spacing: 4
+            spacing: 8
 
             Rectangle {
                 id: rectangleHeader
                 color: Theme.colorForeground
                 width: parent.width
-                height: isMobile ? 96 : 134
+                height: columnHeader.height + 16
                 z: 5
 
                 Column {
-                    id: plantPanel
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: 1
-                    anchors.right: parent.right
+                    id: columnHeader
                     anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
 
                     Text {
                         id: textDeviceName
                         height: 36
                         anchors.left: parent.left
-                        anchors.leftMargin: 12
 
                         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                        font.pixelSize: 24
                         text: myDevice.deviceName
-                        verticalAlignment: Text.AlignVCenter
-                        font.capitalization: Font.AllUppercase
                         color: Theme.colorText
+                        font.pixelSize: 24
+                        font.capitalization: Font.AllUppercase
+                        verticalAlignment: Text.AlignVCenter
 
                         ImageSvg {
                             id: imageBattery
@@ -277,22 +278,20 @@ Item {
                     Item {
                         id: itemPlant
                         height: 28
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
+                        width: parent.width
 
                         Text {
                             id: labelPlant
                             width: isPhone ? 78 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Plant")
-                            anchors.verticalCenter: parent.verticalCenter
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
-                            color: Theme.colorText
-                            font.pixelSize: 18
                         }
 
                         TextInput {
@@ -385,22 +384,20 @@ Item {
                     Item {
                         id: itemLocation
                         height: 28
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
+                        width: parent.width
 
                         Text {
                             id: labelLocation
                             width: isPhone ? 78 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Location")
-                            anchors.verticalCenter: parent.verticalCenter
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
-                            color: Theme.colorText
-                            font.pixelSize: 18
                         }
 
                         TextInput {
@@ -494,22 +491,20 @@ Item {
                     Item {
                         id: status
                         height: 28
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        width: parent.width
 
                         Text {
                             id: labelStatus
                             width: isPhone ? 78 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Status")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
-                            color: Theme.colorText
-                            font.pixelSize: 18
                         }
                         Text {
                             id: textStatus
@@ -529,58 +524,87 @@ Item {
 
             ////////////////
 
-            Column {
-                id: dataColumns
+            Rectangle {
+                id: rectangeData
+                color: "transparent" // Theme.colorForeground
                 width: parent.width
+                height: columnData.height + 16
+                z: 5
 
-                visible: (myDevice.available || myDevice.hasData())
+                Column {
+                    id: columnData
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
-                ItemDataBar {
-                    id: humi
-                    legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
-                    unit: "%"
-                    //warning: true
-                    color: Theme.colorBlue
-                    value: myDevice.deviceHumidity
-                    valueMin: 0
-                    valueMax: 50
-                    limitMin: myDevice.limitHygroMin
-                    limitMax: myDevice.limitHygroMax
-                }
-                ItemDataBar {
-                    id: temp
-                    legend: qsTr("Temperature")
-                    floatprecision: 1
-                    //warning: true
-                    unit: "°" + settingsManager.tempUnit
-                    color: Theme.colorGreen
-                    value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
-                    valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
-                    valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
-                    limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
-                    limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
-                }
-                ItemDataBar {
-                    id: lumi
-                    legend: qsTr("Luminosity")
-                    unit: " lumens"
-                    color: Theme.colorYellow
-                    value: myDevice.deviceLuminosity
-                    valueMin: 0
-                    valueMax: 10000
-                    limitMin: myDevice.limitLumiMin
-                    limitMax: myDevice.limitLumiMax
-                }
-                ItemDataBar {
-                    id: condu
-                    legend: qsTr("Fertility")
-                    unit: " µS/cm"
-                    color: Theme.colorRed
-                    value: myDevice.deviceConductivity
-                    valueMin: 0
-                    valueMax: 500
-                    limitMin: myDevice.limitConduMin
-                    limitMax: myDevice.limitConduMax
+                    spacing: 14
+                    visible: (myDevice.available || myDevice.hasData())
+
+                    ItemDataBarFilled {
+                        id: humi
+                        width: parent.width
+
+                        legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                        suffix: "%"
+                        warning: true
+                        colorForeground: Theme.colorBlue
+                        //colorBackground: Theme.colorBackground
+
+                        value: myDevice.deviceHumidity
+                        valueMin: 0
+                        valueMax: 50
+                        limitMin: myDevice.limitHygroMin
+                        limitMax: myDevice.limitHygroMax
+                    }
+                    ItemDataBarFilled {
+                        id: temp
+                        width: parent.width
+
+                        legend: qsTr("Temperature")
+                        floatprecision: 1
+                        warning: true
+                        suffix: "°" + settingsManager.tempUnit
+                        colorForeground: Theme.colorGreen
+                        //colorBackground: Theme.colorBackground
+
+                        value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
+                        valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
+                        valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
+                        limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
+                        limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
+                    }
+                    ItemDataBarFilled {
+                        id: lumi
+                        width: parent.width
+
+                        legend: qsTr("Luminosity")
+                        suffix: " lumens"
+                        colorForeground: Theme.colorYellow
+                        //colorBackground: Theme.colorBackground
+
+                        value: myDevice.deviceLuminosity
+                        valueMin: 0
+                        valueMax: 10000
+                        limitMin: myDevice.limitLumiMin
+                        limitMax: myDevice.limitLumiMax
+                    }
+                    ItemDataBarFilled {
+                        id: condu
+                        width: parent.width
+
+                        legend: qsTr("Fertility")
+                        suffix: " µS/cm"
+                        colorForeground: Theme.colorRed
+                        //colorBackground: Theme.colorBackground
+
+                        value: myDevice.deviceConductivity
+                        valueMin: 0
+                        valueMax: 500
+                        limitMin: myDevice.limitConduMin
+                        limitMax: myDevice.limitConduMax
+                    }
                 }
             }
         }
@@ -590,7 +614,7 @@ Item {
         Loader {
             id: graphLoader
             width: (dataGrid.width / dataGrid.columns)
-            height: (dataGrid.columns === 1) ? (dataGrid.height - rectangleHeader.height - dataColumns.height - (dataGrid.rows > 1 ? dataGrid.spacing : 0)) : dataGrid.height
+            height: (dataGrid.columns === 1) ? (dataGrid.height - rectangleHeader.height - rectangeData.height - (dataGrid.rows > 1 ? dataGrid.spacing : 0)) : dataGrid.height
         }
     }
 }
