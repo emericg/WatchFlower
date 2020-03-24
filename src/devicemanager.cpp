@@ -311,10 +311,9 @@ void DeviceManager::checkDatabase()
 {
     if (QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
-        qDebug() << "> SQLite available";
+        //qDebug() << "> SQLite available";
 
         QSqlDatabase db = QSqlDatabase::database();
-
         m_db = db.isValid();
     }
     else

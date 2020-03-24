@@ -288,14 +288,8 @@ Rectangle {
                         to: 360
                         loops: Animation.Infinite
                         running: deviceManager.refreshing
-                        onStopped: refreshAnimationStop.start()
-                    }
-                    NumberAnimation on rotation {
-                        id: refreshAnimationStop
-                        duration: 1000;
-                        to: 360;
+                        alwaysRunToEnd: true
                         easing.type: Easing.Linear
-                        running: false
                     }
                 }
                 Label {

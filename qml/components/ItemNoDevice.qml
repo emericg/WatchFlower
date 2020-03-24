@@ -53,15 +53,8 @@ Item {
                 to: 1
                 loops: Animation.Infinite
                 running: deviceManager.scanning
-                onStopped: rescanAnimationStop.start()
-            }
-            OpacityAnimator {
-                id: rescanAnimationStop
-                target: imageSearch
-                duration: 500
-                to: 1
+                alwaysRunToEnd: true
                 easing.type: Easing.OutExpo
-                running: false
             }
         }
 
