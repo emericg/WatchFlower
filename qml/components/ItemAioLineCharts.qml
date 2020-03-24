@@ -73,17 +73,17 @@ Item {
         axisTemp.min = 0
         axisTemp.max = 60
         axisCondu.min = 0
-        axisCondu.max = 500
+        axisCondu.max = 750
         axisLumi.min = 0
         axisLumi.max = 3000
 
         var i = 0
         var minmax_of_array = 0
 
-        // Max axis
+        // Max axis for hygrometry
         i = 0
         minmax_of_array = 0
-        for (;i < hygroData.count; i++)
+        for (; i < hygroData.count; i++)
             if (hygroData.at(i).y > minmax_of_array)
                 minmax_of_array = hygroData.at(i).y
         var minmax_of_legend = minmax_of_array*1.20;
@@ -92,7 +92,7 @@ Item {
         else
             axisHygro.max = minmax_of_legend;
 
-        // Max axis
+        // Max axis for temperature
         i = 0
         minmax_of_array = 0
         for (;i < tempData.count; i++)
@@ -101,11 +101,20 @@ Item {
         minmax_of_legend = minmax_of_array*1.20;
         axisTemp.max = minmax_of_legend;
 
+        // Max axis for conductivity
+        i = 0
+        minmax_of_array = 0
+        for (; i < conduData.count; i++)
+            if (conduData.at(i).y > minmax_of_array)
+                minmax_of_array = conduData.at(i).y
+        minmax_of_legend = minmax_of_array*2.0;
+        axisCondu.max = minmax_of_legend;
+
         // Min axis computation, only for thermometers
         if (!myDevice.hasSoilMoistureSensor()) {
             i = 0
             minmax_of_array = 100
-            for (;i < hygroData.count; i++)
+            for (; i < hygroData.count; i++)
                 if (hygroData.at(i).y < minmax_of_array)
                     minmax_of_array = hygroData.at(i).y
             minmax_of_legend = minmax_of_array*0.80;
@@ -113,7 +122,7 @@ Item {
             // Min axis
             i = 0
             minmax_of_array = 100
-            for (;i < tempData.count; i++)
+            for (; i < tempData.count; i++)
                 if (tempData.at(i).y < minmax_of_array)
                     minmax_of_array = tempData.at(i).y
             minmax_of_legend = minmax_of_array*0.80;
