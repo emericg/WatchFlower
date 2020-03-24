@@ -101,7 +101,7 @@ Item {
     }
 
     function loadTheme(themeIndex) {
-        //console.log("loadTheme(" + themeIndex + ")")
+        //console.log("ThemeEngine.loadTheme(" + themeIndex + ")")
 
         if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
@@ -116,7 +116,7 @@ Item {
             }
         }
 
-        if (currentTheme === themeIndex) return;
+        if (themeIndex === currentTheme) return;
 
         if (themeIndex === ThemeEngine.THEME_GREEN) {
 
