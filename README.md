@@ -5,8 +5,8 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is a plant monitoring application that reads and plots datas from your Xiaomi MiJia "Flower Care" and "Ropot" sensors. WatchFlower also works great with a couple of Bluetooth thermometers!
-It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal datas from you!
+WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi MiJia "Flower Care" and "Ropot" sensors. WatchFlower also works great with a couple of Bluetooth thermometers!
+It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
@@ -19,7 +19,7 @@ Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 * Support "plant sensors" and thermometers
 * Clickable two-week graphs
-* Monthly/weekly/daily datas histograms
+* Monthly/weekly/daily data histograms
 * Set your own limits for plants care
 * Configurable update intervals
 * Background updates & notifications (desktop only)
