@@ -562,7 +562,7 @@ void DeviceManager::listenDevices()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::bleDiscoveryFinished);
 
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(60000);
+        m_discoveryAgent->setLowEnergyDiscoveryTimeout(600000); // 10m
 
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
         if (m_discoveryAgent->isActive())
@@ -570,25 +570,24 @@ void DeviceManager::listenDevices()
             qDebug() << "Listening for ble advertisement devices...";
         }
     }
-#endif // Qt 5.12
+#endif // Qt 5.12+
 }
 
 void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-    qDebug() << "deviceUpdateReceived() device: " << info.address();// << info.deviceUuid();
-    //qDebug() << "deviceUpdateReceived() updatedFields: " << updatedFields;
+    //qDebug() << "deviceUpdateReceived() device: " << info.address();// << info.deviceUuid();//<< " updatedFields: " << updatedFields;
 
     if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
     {
-        qDebug() << "RSSI > " << info.rssi();
+        //qDebug() << "RSSI > " << info.rssi();
     }
-    if ((updatedFields & 0x0002) == 0x0002) // ManufacturerData = 0x0002
+    if ((updatedFields & 0x0002) == 0x0002) // ManufacturerData = 0x0002 // DOESN'T WORK
     {
         QHash<quint16, QByteArray> dat = info.manufacturerData();
         qDebug() << "manufacturerData > " << dat;
     }
-#endif // Qt 5.12
+#endif // Qt 5.12+
 }
 
 /* ************************************************************************** */
