@@ -163,8 +163,8 @@ macx {
 
     # OS icons
     ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
-    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
-    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
     # OS infos
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist

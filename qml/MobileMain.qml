@@ -529,7 +529,7 @@ ApplicationWindow {
         anchors.left: parent.left
 
         width: parent.width
-        height: isPhone ? 44 : 56
+        height: isPhone ? 44 : 48
         color: isTablet ? Theme.colorTabletmenu : "transparent"
 
         Rectangle {

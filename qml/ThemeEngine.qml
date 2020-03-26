@@ -234,7 +234,7 @@ Item {
             colorSubText = "#AAAAAA"
             colorIcon = "#b9babe"
             colorSeparator = "#404040"
-            colorLowContrast = "black"
+            colorLowContrast = "#111111"
             colorHighContrast = "white"
 
             colorComponent = "#757575"
