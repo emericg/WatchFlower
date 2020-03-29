@@ -104,7 +104,7 @@ Item {
         if (isPhone) {
             if (screenOrientation === Qt.PortraitOrientation) {
                 rectangleHeader.visible = true
-                rectangleHeader.height = 96
+                rectangleHeader.height = 80
             } else {
                 rectangleHeader.visible = false
                 rectangleHeader.height = 0
@@ -117,7 +117,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: isMobile ? 96 : 134
+        height: devicePanel.height + 12
         z: 5
 
         anchors.top: parent.top
@@ -130,9 +130,9 @@ Item {
         Column {
             id: devicePanel
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 1
             anchors.right: parent.right
             anchors.left: parent.left
+            spacing: 2
 
             Text {
                 id: textDeviceName
@@ -163,12 +163,9 @@ Item {
             }
 
             Item {
-                id: address
+                id: itemAddress
                 height: 28
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+                width: parent.width
 
                 Text {
                     id: labelAddress
@@ -178,9 +175,11 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Address")
+                    font.bold: true
+                    font.pixelSize: 12
+                    font.capitalization: Font.AllUppercase
+                    color: Theme.colorSubText
                     horizontalAlignment: Text.AlignRight
-                    color: Theme.colorText
-                    font.pixelSize: 18
                 }
 
                 Text {
@@ -196,12 +195,9 @@ Item {
             }
 
             Item {
-                id: firmware
+                id: itemFirmware
                 height: 28
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+                width: parent.width
 
                 Text {
                     id: labelFirmware
@@ -210,9 +206,11 @@ Item {
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
                     text: qsTr("Firmware")
-                    font.pixelSize: 18
+                    font.bold: true
+                    font.pixelSize: 12
+                    font.capitalization: Font.AllUppercase
+                    color: Theme.colorSubText
                     horizontalAlignment: Text.AlignRight
                 }
                 Text {
@@ -278,14 +276,16 @@ Item {
                 Text {
                     id: labelBattery
                     width: isPhone ? 80 : 96
-                    horizontalAlignment: Text.AlignRight
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Battery")
-                    color: Theme.colorText
-                    font.pixelSize: 18
+                    font.bold: true
+                    font.pixelSize: 12
+                    font.capitalization: Font.AllUppercase
+                    color: Theme.colorSubText
+                    horizontalAlignment: Text.AlignRight
                 }
             }
         }

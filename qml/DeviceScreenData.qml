@@ -197,27 +197,28 @@ Item {
         target: Theme
         onCurrentThemeChanged: updateHeaderColor()
     }
-    onWidthChanged: updateHeaderColor()
+
+    onWidthChanged: {
+        if (isPhone) {
+            if (screenOrientation === Qt.PortraitOrientation) {
+                contentGrid.columns = 1
+                contentGrid.rows = 2
+                rectangleHeader.color = Theme.colorForeground
+            } else {
+                contentGrid.columns = 2
+                contentGrid.rows = 1
+                rectangleHeader.color = "transparent"
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Grid {
-        id: dataGrid
+        id: contentGrid
         columns: 1
         rows: 2
         spacing: (rows > 1) ? 12 : 0
-
-        onWidthChanged: {
-            if (isPhone) {
-                if (screenOrientation === Qt.PortraitOrientation) {
-                    dataGrid.columns = 1
-                    dataGrid.rows = 2
-                } else {
-                    dataGrid.columns = 2
-                    dataGrid.rows = 1
-                }
-            }
-        }
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -229,14 +230,14 @@ Item {
         anchors.bottomMargin: 0
 
         Column {
-            width: dataGrid.width / dataGrid.columns
+            width: contentGrid.width / contentGrid.columns
             spacing: 8
 
             Rectangle {
                 id: rectangleHeader
                 color: Theme.colorForeground
                 width: parent.width
-                height: columnHeader.height + 16
+                height: columnHeader.height + 12
                 z: 5
 
                 Column {
@@ -282,7 +283,7 @@ Item {
 
                         Text {
                             id: labelPlant
-                            width: isPhone ? 78 : 96
+                            width: isPhone ? 80 : 96
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -388,7 +389,7 @@ Item {
 
                         Text {
                             id: labelLocation
-                            width: isPhone ? 78 : 96
+                            width: isPhone ? 80 : 96
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -495,7 +496,7 @@ Item {
 
                         Text {
                             id: labelStatus
-                            width: isPhone ? 78 : 96
+                            width: isPhone ? 80 : 96
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -509,9 +510,9 @@ Item {
                         Text {
                             id: textStatus
                             height: 28
-                            anchors.verticalCenter: parent.verticalCenter
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
@@ -613,8 +614,8 @@ Item {
 
         Loader {
             id: graphLoader
-            width: (dataGrid.width / dataGrid.columns)
-            height: (dataGrid.columns === 1) ? (dataGrid.height - rectangleHeader.height - rectangeData.height - (dataGrid.rows > 1 ? dataGrid.spacing : 0)) : dataGrid.height
+            width: (contentGrid.width / contentGrid.columns)
+            height: (contentGrid.columns === 1) ? (contentGrid.height - rectangleHeader.height - rectangeData.height - (contentGrid.rows > 1 ? contentGrid.spacing : 0)) : contentGrid.height
         }
     }
 }

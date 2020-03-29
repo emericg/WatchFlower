@@ -289,7 +289,7 @@ void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
 
 void DeviceManager::bluetoothStatusChanged()
 {
-    qDebug() << "DeviceManager::bluetoothStatusChanged() bt adapter:" << m_btA << "  /  bt enabled:" << m_btE;
+    qDebug() << "DeviceManager::bluetoothStatusChanged() bt adapter:" << m_btA << " /  bt enabled:" << m_btE;
 
     if (m_btA && m_btE)
     {
