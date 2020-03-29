@@ -89,6 +89,8 @@ Item {
             anchors.fill: parent
             spacing: 8
 
+            property int leftPad: 24
+
             ////////
 
             Item {
@@ -117,7 +119,7 @@ Item {
                     anchors.right: theme_selector.left
                     anchors.rightMargin: 16
                     anchors.left: image_theme.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
@@ -209,7 +211,7 @@ Item {
                     anchors.right: switch_autoDarkmode.left
                     anchors.rightMargin: 16
                     anchors.left: image_autoDarkmode.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatique dark mode")
@@ -247,7 +249,7 @@ Item {
             Text {
                 id: legend_autoDarkmode
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -287,7 +289,7 @@ Item {
                     id: text_bluetoothControl
                     height: 40
                     anchors.left: image_bluetoothControl.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.right: switch_bluetoothControl.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -325,7 +327,7 @@ Item {
             Text {
                 id: legend_bluetoothControl
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -355,7 +357,7 @@ Item {
                     id: text_bluetoothCompat
                     height: 40
                     anchors.left: image_bluetoothCompat.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth compatibility")
@@ -393,7 +395,7 @@ Item {
             Text {
                 id: legend_bluetoothCompat
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -444,7 +446,7 @@ Item {
                 Text {
                     id: text_worker
                     height: 40
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.left: image_worker.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: switch_worker.left
@@ -472,7 +474,7 @@ Item {
             Text {
                 id: legend_worker_mobile
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -488,7 +490,7 @@ Item {
             Text {
                 id: legend_worker_desktop
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -530,7 +532,7 @@ Item {
                     height: 40
                     anchors.left: image_notifications.right
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.right: switch_notifiations.left
                     anchors.rightMargin: 16
 
@@ -556,7 +558,7 @@ Item {
             Text {
                 id: legend_notifications
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
@@ -609,7 +611,7 @@ Item {
                 Text {
                     id: text_update
                     height: 40
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.left: image_update.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: spinBox_update.left
@@ -663,7 +665,7 @@ Item {
                     anchors.right: switch_minimized.left
                     anchors.rightMargin: 16
                     anchors.left: image_minimized.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Start application minimized")
@@ -716,7 +718,7 @@ Item {
                     anchors.right: switch_bigwidget.left
                     anchors.rightMargin: 16
                     anchors.left: image_bigwidget.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Use bigger widgets")
@@ -765,7 +767,7 @@ Item {
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_unit.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: column.leftPad
                     anchors.right: radioDelegateCelsius.left
                     anchors.rightMargin: 16
 
@@ -867,7 +869,7 @@ Item {
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_graph.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: radioDelegateGraphMonthly.left
                     anchors.rightMargin: 16
 

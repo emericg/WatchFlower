@@ -100,18 +100,6 @@ Item {
         itemCondu.visible = myDevice.hasConductivitySensor()
     }
 
-    onWidthChanged: {
-        if (isPhone) {
-            if (screenOrientation === Qt.PortraitOrientation) {
-                rectangleHeader.visible = true
-                rectangleHeader.height = 80
-            } else {
-                rectangleHeader.visible = false
-                rectangleHeader.height = 0
-            }
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
@@ -119,6 +107,8 @@ Item {
         color: Theme.colorForeground
         height: devicePanel.height + 12
         z: 5
+
+        visible: !(isPhone && screenOrientation === Qt.LandscapeOrientation)
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -185,11 +175,11 @@ Item {
                 Text {
                     id: textAddr
                     anchors.left: labelAddress.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceAddress
-                    font.pixelSize: 18
+                    font.pixelSize: 17
                     color: Theme.colorHighContrast
                 }
             }
@@ -216,13 +206,14 @@ Item {
                 Text {
                     id: textFirmware
                     anchors.left: labelFirmware.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Update available!")
-                    font.pixelSize: 18
+                    text: "1"
+                    font.pixelSize: 17
                     color: Theme.colorHighContrast
                 }
+
                 ImageSvg {
                     id: imageFwUpdate
                     width: 24
@@ -241,7 +232,6 @@ Item {
                         onExited: textFwUpdate.text = qsTr("Update available!")
                     }
                 }
-
                 Text {
                     id: textFwUpdate
                     anchors.left: imageFwUpdate.right
@@ -265,11 +255,11 @@ Item {
                 Text {
                     id: textBattery
                     anchors.left: labelBattery.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: myDevice.deviceBattery + "%"
-                    font.pixelSize: 18
+                    font.pixelSize: 17
                     color: Theme.colorHighContrast
                 }
 
@@ -294,7 +284,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        anchors.top: rectangleHeader.bottom
+        anchors.top: rectangleHeader.visible ? rectangleHeader.bottom : parent.top
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 0

@@ -149,7 +149,7 @@ Item {
 
                 onWidthChanged: {
                     var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
-                    if (ww > 0) { websiteBtn.width = ww ; githubBtn.width = ww }
+                    if (ww > 0) { websiteBtn.width = ww ; githubBtn.width = ww; }
                 }
 
                 ButtonWireframeImage {
@@ -160,7 +160,7 @@ Item {
                     text: qsTr("WEBSITE")
                     imgSize: 26
                     fullColor: true
-                    primaryColor: "#5483EF"
+                    primaryColor:  (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
@@ -172,7 +172,7 @@ Item {
                     text: qsTr("SUPPORT")
                     imgSize: 20
                     fullColor: true
-                    primaryColor: "#5483EF"
+                    primaryColor:  (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
                     source: "qrc:/assets/icons_material/outline-email-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }
