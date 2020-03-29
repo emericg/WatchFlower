@@ -266,8 +266,8 @@ ios {
     QMAKE_BUNDLE = watchflower
 
     # OS icons
-    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
-    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
 
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
