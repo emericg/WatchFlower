@@ -163,8 +163,8 @@ macx {
 
     # OS icons
     ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
-    QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
-    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
 
     # OS infos
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
@@ -266,8 +266,8 @@ ios {
     QMAKE_BUNDLE = watchflower
 
     # OS icons
-    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
-    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
+    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
 
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
