@@ -240,12 +240,14 @@ void Device::setUpdateTimer(int updateInterval)
     if (updateInterval <= 0)
     {
         SettingsManager *sm = SettingsManager::getInstance();
-        updateInterval = sm->getUpdateInterval();
+        updateInterval = sm->getUpdateIntervalPlant();
     }
 
     // Validate the interval
     if (updateInterval < 5 || updateInterval > 120)
-        updateInterval = DEFAULT_UPDATE_INTERVAL;
+    {
+        updateInterval = PLANT_UPDATE_INTERVAL;
+    }
 
     // Is our timer already set to this particular interval?
     if (m_updateTimer.interval() != updateInterval*60*1000)
@@ -473,7 +475,7 @@ bool Device::isErrored() const
 bool Device::isFresh() const
 {
     SettingsManager *sm = SettingsManager::getInstance();
-    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= sm->getUpdateInterval());
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= sm->getUpdateIntervalPlant());
 }
 
 bool Device::isAvailable() const

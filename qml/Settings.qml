@@ -97,9 +97,7 @@ Item {
                 id: element_theme
                 height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 ImageSvg {
                     id: image_theme
@@ -201,9 +199,19 @@ Item {
                 id: element_autoDarkmode
                 height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+
+                ImageSvg {
+                    id: image_autoDarkmode
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
+                }
 
                 Text {
                     id: text_autoDarkmode
@@ -233,27 +241,14 @@ Item {
                         Theme.loadTheme(settingsManager.appTheme)
                     }
                 }
-
-                ImageSvg {
-                    id: image_autoDarkmode
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
-                }
             }
             Text {
                 id: legend_autoDarkmode
+                topPadding: -12
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
-                topPadding: -12
-                bottomPadding: 8
 
                 visible: (element_autoDarkmode.visible)
 
@@ -261,6 +256,57 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
+            }
+
+            ////////
+
+            Item {
+                id: element_bigwidget
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                // desktop (or tablet)
+                visible: isDesktop
+
+                ImageSvg {
+                    id: image_bigwidget
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
+                }
+
+                Text {
+                    id: text_bigwidget
+                    height: 40
+                    anchors.right: switch_bigwidget.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_bigwidget.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Use bigger widgets")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_bigwidget
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.bigWidget
+                    onCheckedChanged: settingsManager.bigWidget = checked
+                }
             }
 
             ////////
@@ -278,12 +324,22 @@ Item {
                 id: element_bluetoothControl
                 height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 // Android only
                 visible: (Qt.platform.os === "android")
+
+                ImageSvg {
+                    id: image_bluetoothControl
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                }
 
                 Text {
                     id: text_bluetoothControl
@@ -311,18 +367,6 @@ Item {
                     Component.onCompleted: checked = settingsManager.bluetoothControl
                     onCheckedChanged: settingsManager.bluetoothControl = checked
                 }
-
-                ImageSvg {
-                    id: image_bluetoothControl
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                }
             }
             Text {
                 id: legend_bluetoothControl
@@ -346,12 +390,22 @@ Item {
                 id: element_bluetoothCompat
                 height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 // mobile only
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                ImageSvg {
+                    id: image_bluetoothCompat
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                }
 
                 Text {
                     id: text_bluetoothCompat
@@ -379,18 +433,6 @@ Item {
                     Component.onCompleted: checked = settingsManager.bluetoothCompat
                     onCheckedChanged: settingsManager.bluetoothCompat = checked
                 }
-
-                ImageSvg {
-                    id: image_bluetoothCompat
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
-                }
             }
             Text {
                 id: legend_bluetoothCompat
@@ -399,7 +441,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
-                bottomPadding: 8
+                bottomPadding: 12
 
                 visible: element_bluetoothCompat.visible
 
@@ -422,239 +464,10 @@ Item {
             ////////
 
             Item {
-                id: element_worker
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-
-                // desktop only // for now...
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-
-                SwitchThemedMobile {
-                    id: switch_worker
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    z: 1
-
-                    Component.onCompleted: checked = settingsManager.systray
-                    onCheckedChanged: settingsManager.systray = checked
-                }
-
-                Text {
-                    id: text_worker
-                    height: 40
-                    anchors.leftMargin: column.leftPad
-                    anchors.left: image_worker.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: switch_worker.left
-                    anchors.rightMargin: 16
-
-                    text: qsTr("Enable background updates")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 16
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                ImageSvg {
-                    id: image_worker
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
-                    anchors.left: parent.left
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                }
-            }
-            Text {
-                id: legend_worker_mobile
-                anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                topPadding: -12
-                bottomPadding: 8
-
-                visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
-
-                text: qsTr("Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: 14
-            }
-            Text {
-                id: legend_worker_desktop
-                anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                topPadding: -12
-
-                visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
-
-                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.")
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: 14
-            }
-
-            ////////
-
-            Item {
-                id: element_notifiations
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-
-                // desktop only // for now... // also, need the systray
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && settingsManager.systray
-
-                SwitchThemedMobile {
-                    id: switch_notifiations
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    z: 1
-
-                    Component.onCompleted: checked = settingsManager.notifications
-                    onCheckedChanged: settingsManager.notifications = checked
-                }
-
-                Text {
-                    id: text_notifications
-                    height: 40
-                    anchors.left: image_notifications.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: column.leftPad
-                    anchors.right: switch_notifiations.left
-                    anchors.rightMargin: 16
-
-                    text: qsTr("Enable notifications")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 16
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                ImageSvg {
-                    id: image_notifications
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
-                }
-            }
-            Text {
-                id: legend_notifications
-                anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                topPadding: -12
-
-                visible: element_notifiations.visible
-
-                text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: 14
-            }
-
-            ////////
-
-            Item {
-                id: element_update
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-
-                SpinBoxThemed {
-                    id: spinBox_update
-                    width: 128
-                    height: 34
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    legend: qsTr(" h.")
-                    from: 1
-                    to: 6
-                    stepSize: 1
-                    editable: false
-
-                    property bool sb_inited: false
-                    Component.onCompleted: {
-                        value = (settingsManager.updateInterval / 60)
-                        sb_inited = true
-                    }
-                    onValueChanged: {
-                        if (sb_inited) {
-                            settingsManager.updateInterval = (value * 60)
-                        }
-                    }
-                }
-
-                Text {
-                    id: text_update
-                    height: 40
-                    anchors.leftMargin: column.leftPad
-                    anchors.left: image_update.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: spinBox_update.left
-                    anchors.rightMargin: 16
-
-                    text: qsTr("Update interval")
-                    font.pixelSize: 16
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                ImageSvg {
-                    id: image_update
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
-                    anchors.left: parent.left
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
-                }
-            }
-
-            ////////
-
-            Rectangle {
-                height: 1
-                anchors.right: parent.right
-                anchors.left: parent.left
-                color: Theme.colorSeparator
-            }
-
-            ////////
-
-            Item {
                 id: element_minimized
                 height: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
 
                 // desktop only
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
@@ -702,45 +515,271 @@ Item {
             ////////
 
             Item {
-                id: element_bigwidget
+                id: element_worker
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.right: parent.right
 
-                // desktop (or tablet)
-                visible: isDesktop
+                // desktop only // for now...
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+
+                ImageSvg {
+                    id: image_worker
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                }
 
                 Text {
-                    id: text_bigwidget
+                    id: text_worker
                     height: 40
-                    anchors.right: switch_bigwidget.left
-                    anchors.rightMargin: 16
-                    anchors.left: image_bigwidget.right
                     anchors.leftMargin: column.leftPad
+                    anchors.left: image_worker.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: switch_worker.left
+                    anchors.rightMargin: 16
+
+                    text: qsTr("Enable background updates")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_worker
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.systray
+                    onCheckedChanged: settingsManager.systray = checked
+                }
+            }
+            Text {
+                id: legend_worker_mobile
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                topPadding: -12
+
+                visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
+
+                text: qsTr("Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+            Text {
+                id: legend_worker_desktop
+                topPadding: -12
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                bottomPadding: element_notifiations.visible ? 0 : 12
+
+                visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
+
+                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
+
+            Item {
+                id: element_notifiations
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                // desktop only // for now... // also, need the systray
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") && settingsManager.systray
+
+                ImageSvg {
+                    id: image_notifications
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
+                }
+
+                Text {
+                    id: text_notifications
+                    height: 40
+                    anchors.left: image_notifications.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: column.leftPad
+                    anchors.right: switch_notifiations.left
+                    anchors.rightMargin: 16
+
+                    text: qsTr("Enable notifications")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_notifiations
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.notifications
+                    onCheckedChanged: settingsManager.notifications = checked
+                }
+            }
+            Text {
+                id: legend_notifications
+                topPadding: -12
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                bottomPadding: 12
+
+                visible: element_notifiations.visible
+
+                text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.topMargin: 12
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
+            }
+
+            ////////
+
+            Item {
+                id: element_plantsensor
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_plantsensor
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                }
+
+                Text {
+                    id: text_plantsensor
+                    anchors.leftMargin: column.leftPad
+                    anchors.left: image_plantsensor.right
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Use bigger widgets")
+                    text: qsTr("Plant sensors:")
+                    font.bold: false
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_update
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_update
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
+                }
+
+                Text {
+                    id: text_update
+                    height: 40
+                    anchors.leftMargin: column.leftPad
+                    anchors.left: image_update.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: spinBox_update.left
+                    anchors.rightMargin: 16
+
+                    text: qsTr("Update interval")
                     font.pixelSize: 16
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
-                    id: switch_bigwidget
+                SpinBoxThemed {
+                    id: spinBox_update
+                    width: 128
+                    height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.bigWidget
-                    onCheckedChanged: settingsManager.bigWidget = checked
+                    legend: qsTr(" h.")
+                    from: 1
+                    to: 6
+                    stepSize: 1
+                    editable: false
+
+                    property bool sb_inited: false
+                    Component.onCompleted: {
+                        value = (settingsManager.updateIntervalPlant / 60)
+                        sb_inited = true
+                    }
+                    onValueChanged: {
+                        if (sb_inited) {
+                            settingsManager.updateIntervalPlant = (value * 60)
+                        }
+                    }
                 }
+            }
+
+            ////////
+
+            Item {
+                id: element_bigindicators
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
 
                 ImageSvg {
-                    id: image_bigwidget
+                    id: image_bigindicators
                     width: 24
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
@@ -750,23 +789,255 @@ Item {
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
                 }
+
+                Text {
+                    id: text_bigindicators
+                    height: 40
+                    anchors.right: switch_bigindicators.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_bigindicators.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Use bigger indicators")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_bigindicators
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.bigIndicator
+                    onCheckedChanged: settingsManager.bigIndicator = checked
+                }
             }
 
             ////////
 
             Item {
-                id: element_unit
+                id: element_plant_graph
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
+
+                ImageSvg {
+                    id: image_plant_graph
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
+                }
 
                 Text {
-                    id: text_unit
+                    id: text_graph
                     height: 40
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: image_unit.right
+                    anchors.left: image_plant_graph.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.right: radioDelegateGraphMonthly.left
+                    anchors.rightMargin: 16
+
+                    text: qsTr("Histograms")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                RadioButtonThemed {
+                    id: radioDelegateGraphMonthly
+                    height: 40
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: radioDelegateGraphWeekly.left
+
+                    z: 1
+                    text: qsTr("Monthly")
+                    font.pixelSize: 14
+
+                    checked: {
+                        if (settingsManager.graphHistory === "monthly") {
+                            radioDelegateGraphMonthly.checked = true
+                            radioDelegateGraphWeekly.checked = false
+                        } else {
+                            radioDelegateGraphMonthly.checked = false
+                            radioDelegateGraphWeekly.checked = true
+                        }
+                    }
+                    onCheckedChanged: {
+                        if (checked === true)
+                            settingsManager.graphHistory = "monthly"
+                    }
+                }
+                RadioButtonThemed {
+                    id: radioDelegateGraphWeekly
+                    height: 40
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    z: 1
+                    text: qsTr("Weekly")
+                    font.pixelSize: 14
+
+                    checked: {
+                        if (settingsManager.graphHistory === "weekly") {
+                            radioDelegateGraphMonthly.checked = false
+                            radioDelegateGraphWeekly.checked = true
+                        } else {
+                            radioDelegateGraphWeekly.checked = false
+                            radioDelegateGraphMonthly.checked = true
+                        }
+                    }
+                    onCheckedChanged: {
+                        if (checked === true)
+                            settingsManager.graphHistory = "weekly"
+                    }
+                }
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
+            }
+
+            ////////
+
+            Item {
+                id: element_thermometer
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_thermometer
+                    width: 24
+                    height: 24
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
+                }
+
+                Text {
+                    id: text_thermometer
+                    anchors.leftMargin: column.leftPad
+                    anchors.left: image_thermometer.right
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Thermometers:")
+                    font.pixelSize: 16
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_thermometer_update
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_thermometer_update
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
+                }
+
+                Text {
+                    id: text_thermometer_update
+                    height: 40
+                    anchors.leftMargin: column.leftPad
+                    anchors.left: image_thermometer_update.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: spinBox_thermometer_update.left
+                    anchors.rightMargin: 16
+
+                    text: qsTr("Update interval")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SpinBoxThemed {
+                    id: spinBox_thermometer_update
+                    width: 128
+                    height: 34
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    legend: qsTr(" h.")
+                    from: 1
+                    to: 6
+                    stepSize: 1
+                    editable: false
+
+                    property bool sb_inited: false
+                    Component.onCompleted: {
+                        value = (settingsManager.updateIntervalThermo / 60)
+                        sb_inited = true
+                    }
+                    onValueChanged: {
+                        if (sb_inited) {
+                            settingsManager.updateIntervalThermo = (value * 60)
+                        }
+                    }
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_thermometer_unit
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_thermometer_unit
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                }
+
+                Text {
+                    id: text_thermometer_unit
+                    height: 40
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: image_thermometer_unit.right
                     anchors.leftMargin: column.leftPad
                     anchors.right: radioDelegateCelsius.left
                     anchors.rightMargin: 16
@@ -781,7 +1052,7 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateCelsius
                     height: 40
-                    anchors.verticalCenter: text_unit.verticalCenter
+                    anchors.verticalCenter: text_thermometer_unit.verticalCenter
                     anchors.right: radioDelegateFahrenheit.left
 
                     z: 1
@@ -826,107 +1097,6 @@ Item {
                     onCheckedChanged: {
                         if (checked === true)
                             settingsManager.tempUnit = 'F'
-                    }
-                }
-
-                ImageSvg {
-                    id: image_unit
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
-                    anchors.left: parent.left
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-                }
-            }
-
-            ////////
-
-            Item {
-                id: element_graph
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-
-                ImageSvg {
-                    id: image_graph
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
-                }
-
-                Text {
-                    id: text_graph
-                    height: 40
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: image_graph.right
-                    anchors.leftMargin: 24
-                    anchors.right: radioDelegateGraphMonthly.left
-                    anchors.rightMargin: 16
-
-                    text: qsTr("Histograms")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 16
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                RadioButtonThemed {
-                    id: radioDelegateGraphMonthly
-                    height: 40
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: radioDelegateGraphWeekly.left
-
-                    z: 1
-                    text: qsTr("Monthly")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.graphHistory === "monthly") {
-                            radioDelegateGraphMonthly.checked = true
-                            radioDelegateGraphWeekly.checked = false
-                        } else {
-                            radioDelegateGraphMonthly.checked = false
-                            radioDelegateGraphWeekly.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.graphHistory = "monthly"
-                    }
-                }
-                RadioButtonThemed {
-                    id: radioDelegateGraphWeekly
-                    height: 40
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-
-                    z: 1
-                    text: qsTr("Weekly")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.graphHistory === "weekly") {
-                            radioDelegateGraphMonthly.checked = false
-                            radioDelegateGraphWeekly.checked = true
-                        } else {
-                            radioDelegateGraphWeekly.checked = false
-                            radioDelegateGraphMonthly.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.graphHistory = "weekly"
                     }
                 }
             }

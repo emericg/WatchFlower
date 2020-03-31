@@ -104,8 +104,11 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/notifsEnabled"))
             m_notificationsEnabled = settings.value("settings/notifsEnabled").toBool();
 
-        if (settings.contains("settings/updateInterval"))
-            m_updateInterval = settings.value("settings/updateInterval").toInt();
+        if (settings.contains("settings/updateIntervalPlant"))
+            m_updateIntervalPlant = settings.value("settings/updateIntervalPlant").toInt();
+
+        if (settings.contains("settings/updateIntervalThermo"))
+            m_updateIntervalThermo = settings.value("settings/updateIntervalThermo").toInt();
 
         if (settings.contains("settings/startMinimized"))
             m_startMinimized = settings.value("settings/startMinimized").toBool();
@@ -127,6 +130,9 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/bigWidget"))
             m_bigWidget = settings.value("settings/bigWidget").toBool();
+
+        if (settings.contains("settings/bigIndicator"))
+            m_bigIndicator = settings.value("settings/bigIndicator").toBool();
 
         status = true;
     }
@@ -154,10 +160,12 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
-        settings.setValue("settings/updateInterval", m_updateInterval);
+        settings.setValue("settings/updateIntervalPlant", m_updateIntervalPlant);
+        settings.setValue("settings/updateIntervalThermo", m_updateIntervalThermo);
         settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/graphHistory", m_graphHistory);
         settings.setValue("settings/bigWidget", m_bigWidget);
+        settings.setValue("settings/bigIndicator", m_bigIndicator);
         settings.setValue("settings/tempUnit", m_tempUnit);
 
         if (settings.status() == QSettings::NoError)
@@ -430,8 +438,10 @@ void SettingsManager::resetSettings()
     Q_EMIT systrayChanged();
     m_notificationsEnabled = false;
     Q_EMIT notifsChanged();
-    m_updateInterval = DEFAULT_UPDATE_INTERVAL;
-    Q_EMIT updateIntervalChanged();
+    m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
+    Q_EMIT updateIntervalPlantChanged();
+    m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
+    Q_EMIT updateIntervalThermoChanged();
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
@@ -450,6 +460,8 @@ void SettingsManager::resetSettings()
     Q_EMIT graphHistoryChanged();
     m_bigWidget = false;
     Q_EMIT bigWidgetChanged();
+    m_bigIndicator = false;
+    Q_EMIT bigIndicatorChanged();
 
     // Database
     resetDatabase();
@@ -543,13 +555,23 @@ void SettingsManager::setBluetoothCompat(const bool value)
     }
 }
 
-void SettingsManager::setUpdateInterval(const int value)
+void SettingsManager::setUpdateIntervalPlant(const int value)
 {
-    if (m_updateInterval != value)
+    if (m_updateIntervalPlant != value)
     {
-        m_updateInterval = value;
+        m_updateIntervalPlant = value;
         writeSettings();
-        Q_EMIT updateIntervalChanged();
+        Q_EMIT updateIntervalPlantChanged();
+    }
+}
+
+void SettingsManager::setUpdateIntervalThermo(const int value)
+{
+    if (m_updateIntervalThermo!= value)
+    {
+        m_updateIntervalThermo = value;
+        writeSettings();
+        Q_EMIT updateIntervalThermoChanged();
     }
 }
 
@@ -580,6 +602,16 @@ void SettingsManager::setBigWidget(const bool value)
         m_bigWidget = value;
         writeSettings();
         Q_EMIT bigWidgetChanged();
+    }
+}
+
+void SettingsManager::setBigIndicator(const bool value)
+{
+    if (m_bigIndicator != value)
+    {
+        m_bigIndicator = value;
+        writeSettings();
+        Q_EMIT bigIndicatorChanged();
     }
 }
 

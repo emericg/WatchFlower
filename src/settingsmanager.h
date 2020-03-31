@@ -23,10 +23,11 @@
 #define SETTINGS_MANAGER_H
 /* ************************************************************************** */
 
-#define DEFAULT_UPDATE_INTERVAL    180 // minutes
-#define ERROR_UPDATE_INTERVAL       60 // minutes
+#define PLANT_UPDATE_INTERVAL   180 // minutes
+#define THERMO_UPDATE_INTERVAL   60 // minutes
+#define ERROR_UPDATE_INTERVAL    60 // minutes
 
-#define CURRENT_DB_VERSION           1
+#define CURRENT_DB_VERSION        1
 
 #include <QObject>
 #include <QString>
@@ -53,10 +54,12 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
     Q_PROPERTY(bool bluetoothCompat READ getBluetoothCompat WRITE setBluetoothCompat NOTIFY bluetoothCompatChanged)
 
-    Q_PROPERTY(uint updateInterval READ getUpdateInterval WRITE setUpdateInterval NOTIFY updateIntervalChanged)
+    Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
+    Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
+    Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
 
     QSize m_appSize;
     QSize m_appPosition;
@@ -69,10 +72,12 @@ class SettingsManager: public QObject
     bool m_bluetoothControl = false;
     bool m_bluetoothCompat = false;
 
-    int m_updateInterval = DEFAULT_UPDATE_INTERVAL;
+    int m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
+    int m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
     bool m_bigWidget = false;
+    bool m_bigIndicator = false;
 
     // Singleton
     static SettingsManager *instance;
@@ -96,10 +101,12 @@ Q_SIGNALS:
     void notifsChanged();
     void bluetoothControlChanged();
     void bluetoothCompatChanged();
-    void updateIntervalChanged();
+    void updateIntervalPlantChanged();
+    void updateIntervalThermoChanged();
     void tempUnitChanged();
     void graphHistoryChanged();
     void bigWidgetChanged();
+    void bigIndicatorChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -128,8 +135,11 @@ public:
     bool getBluetoothCompat() const { return m_bluetoothCompat; }
     void setBluetoothCompat(const bool value);
 
-    int getUpdateInterval() const { return m_updateInterval; }
-    void setUpdateInterval(const int value);
+    int getUpdateIntervalPlant() const { return m_updateIntervalPlant; }
+    void setUpdateIntervalPlant(const int value);
+
+    int getUpdateIntervalThermo() const { return m_updateIntervalThermo; }
+    void setUpdateIntervalThermo(const int value);
 
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);
@@ -139,6 +149,9 @@ public:
 
     bool getBigWidget() const { return m_bigWidget; }
     void setBigWidget(const bool value);
+
+    bool getBigIndicator() const { return m_bigIndicator; }
+    void setBigIndicator(const bool value);
 
     // Utils
     Q_INVOKABLE void resetSettings();
