@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <manifest package="com.emeric.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.11" android:versionCode="00110002" android:installLocation="auto">
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="29"/>
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28"/>
 
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 
