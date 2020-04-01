@@ -238,6 +238,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: 2
                     spacing: 2
 
                     Text {
@@ -500,7 +501,6 @@ Item {
                         }
                         Text {
                             id: textStatus
-                            height: 28
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
@@ -508,7 +508,7 @@ Item {
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
                             padding: 4
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                         }
                     }
                 }

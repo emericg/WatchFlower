@@ -119,9 +119,10 @@ Item {
 
         Column {
             id: devicePanel
-            anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: 2
             spacing: 2
 
             Text {
