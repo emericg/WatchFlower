@@ -240,13 +240,20 @@ void Device::setUpdateTimer(int updateInterval)
     if (updateInterval <= 0)
     {
         SettingsManager *sm = SettingsManager::getInstance();
-        updateInterval = sm->getUpdateIntervalPlant();
+
+        if (hasSoilMoistureSensor())
+            updateInterval = sm->getUpdateIntervalPlant();
+        else
+            updateInterval = sm->getUpdateIntervalThermo();
     }
 
     // Validate the interval
     if (updateInterval < 5 || updateInterval > 120)
     {
-        updateInterval = PLANT_UPDATE_INTERVAL;
+        if (hasSoilMoistureSensor())
+            updateInterval = PLANT_UPDATE_INTERVAL;
+        else
+            updateInterval = THERMO_UPDATE_INTERVAL;
     }
 
     // Is our timer already set to this particular interval?
@@ -475,7 +482,8 @@ bool Device::isErrored() const
 bool Device::isFresh() const
 {
     SettingsManager *sm = SettingsManager::getInstance();
-    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= sm->getUpdateIntervalPlant());
+    return (getLastUpdateInt() >= 0 &&
+            getLastUpdateInt() <= (hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()));
 }
 
 bool Device::isAvailable() const
