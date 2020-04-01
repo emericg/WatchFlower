@@ -258,8 +258,8 @@ Item {
                         if (Math.abs(dist) < 1) {
                             // nearest neighbor
                             if (appContent.state === "DeviceSensor") {
-                                updateDataBars(tempData.at(i).y, lumiData.at(i).y,
-                                               hygroData.at(i).y, conduData.at(i).y)
+                                dataIndicators.updateDataBars(tempData.at(i).y, lumiData.at(i).y,
+                                                              hygroData.at(i).y, conduData.at(i).y)
                             } else if (appContent.state === "DeviceThermo") {
                                 dataIndicator.visible = true
                                 dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
@@ -279,10 +279,10 @@ Item {
                     if (x1 >= 0 && x2 > x1) {
                         // linear interpolation
                         if (appContent.state === "DeviceSensor") {
-                            updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
-                                           qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
-                                           qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
-                                           qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
+                            dataIndicators.updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
+                                                          qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
+                                                          qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
+                                                          qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
                         } else if (appContent.state === "DeviceThermo") {
                             dataIndicator.visible = true
                             var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
@@ -315,6 +315,7 @@ Item {
 
         width: 1
         visible: false
+        opacity: 0.9
         color: Theme.colorSubText
         Behavior on x { NumberAnimation { duration: 333 } }
     }
@@ -387,6 +388,6 @@ Item {
         verticalIndicator.visible = false
 
         if (typeof deviceScreenData === "undefined" || !deviceScreenData) return
-        if (appContent.state === "DeviceSensor") deviceScreenData.resetDataBars()
+        if (appContent.state === "DeviceSensor") dataIndicators.resetDataBars()
     }
 }

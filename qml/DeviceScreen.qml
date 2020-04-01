@@ -110,7 +110,7 @@ Item {
     }
 
     function isHistoryMode() {
-        return rectangleDeviceData.dataBarsHistory
+        return rectangleDeviceData.isHistoryMode()
     }
     function resetHistoryMode() {
         rectangleDeviceData.resetHistoryMode()

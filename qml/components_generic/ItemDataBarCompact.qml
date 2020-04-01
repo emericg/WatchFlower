@@ -5,7 +5,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemDataBar
-    height: 36
+    height: 24
     implicitWidth: 128
 
     property string legend: "legend"
@@ -48,15 +48,12 @@ Item {
 
         Rectangle {
             id: item_bg
-            color: itemDataBar.colorBackground
             height: 8
-            radius: 3
+            width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.left: item_legend.right
-            anchors.leftMargin: 12
-            anchors.right: parent.right
-            anchors.rightMargin: 20
+
+            radius: 4
+            color: itemDataBar.colorBackground
 
             Rectangle {
                 id: item_data
