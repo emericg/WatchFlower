@@ -660,7 +660,8 @@ void DeviceManager::refreshDevices_check()
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > sm->getUpdateIntervalPlant()))
+            if (dd->getLastUpdateInt() < 0 ||
+                dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
             {
                 // old or no data: go for refresh
                 m_devices_updatelist.push_back(dd);
@@ -827,7 +828,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
 
             SettingsManager *sm = SettingsManager::getInstance();
-            if (d->getLastUpdateInt() < 0 || d->getLastUpdateInt() > sm->getUpdateIntervalPlant())
+            if (d->getLastUpdateInt() < 0 ||
+                d->getLastUpdateInt() > (d->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
             {
                 // old or no data: mark it as queued until the deviceManager sync new devices
                 d->refreshQueue();
