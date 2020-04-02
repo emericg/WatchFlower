@@ -245,7 +245,7 @@ Item {
             Text {
                 id: legend_autoDarkmode
                 topPadding: -12
-                bottomPadding: isMobile ? 8 : 0
+                bottomPadding: isMobile ? 12 : 0
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
@@ -443,7 +443,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
-                bottomPadding: 8
+                bottomPadding: 12
 
                 visible: element_bluetoothCompat.visible
 
@@ -571,6 +571,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 topPadding: -12
+                bottomPadding: 12
 
                 visible: (element_worker.visible && (Qt.platform.os === "android" || Qt.platform.os === "ios"))
 
@@ -581,12 +582,12 @@ Item {
             }
             Text {
                 id: legend_worker_desktop
-                topPadding: -12
-                bottomPadding: isMobile ? 8 : 0
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
+                topPadding: -12
+                bottomPadding: 12
 
                 visible: (element_worker.visible && (Qt.platform.os !== "android" && Qt.platform.os !== "ios"))
 
@@ -649,7 +650,7 @@ Item {
             Text {
                 id: legend_notifications
                 topPadding: -12
-                bottomPadding: 8
+                bottomPadding: 12
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right

@@ -289,10 +289,9 @@ Item {
 
                         TextInput {
                             id: textInputPlant
-                            height: 28
-                            anchors.verticalCenter: parent.verticalCenter
                             anchors.left: labelPlant.right
                             anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
                             color: Theme.colorHighContrast
@@ -395,10 +394,9 @@ Item {
 
                         TextInput {
                             id: textInputLocation
-                            height: 28
-                            anchors.verticalCenter: parent.verticalCenter
                             anchors.left: labelLocation.right
                             anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
                             color: Theme.colorHighContrast
