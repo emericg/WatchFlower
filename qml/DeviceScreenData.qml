@@ -506,7 +506,7 @@ Item {
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
                             padding: 4
-                            font.pixelSize: 17
+                            font.pixelSize: 18
                         }
                     }
                 }

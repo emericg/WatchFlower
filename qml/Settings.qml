@@ -678,7 +678,7 @@ Item {
 
             Item {
                 id: element_plantsensor
-                height: 48
+                height: 32
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -686,9 +686,10 @@ Item {
                     id: image_plantsensor
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
@@ -696,13 +697,13 @@ Item {
 
                 Text {
                     id: text_plantsensor
-                    anchors.leftMargin: column.leftPad
                     anchors.left: image_plantsensor.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: image_plantsensor.verticalCenter
 
-                    text: qsTr("Plant sensors:")
-                    font.bold: false
+                    text: qsTr("Plant sensors")
                     font.pixelSize: 16
+                    font.bold: true
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -921,7 +922,7 @@ Item {
 
             Item {
                 id: element_thermometer
-                height: 48
+                height: 32
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -931,7 +932,8 @@ Item {
                     height: 24
                     anchors.leftMargin: 16
                     anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
@@ -941,11 +943,11 @@ Item {
                     id: text_thermometer
                     anchors.leftMargin: column.leftPad
                     anchors.left: image_thermometer.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: image_thermometer.verticalCenter
 
-                    text: qsTr("Thermometers:")
+                    text: qsTr("Thermometers")
                     font.pixelSize: 16
-                    font.bold: false
+                    font.bold: true
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
