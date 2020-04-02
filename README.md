@@ -34,9 +34,9 @@ TODOs:
 
 ### Supported devices
 
-| Flower Care | Ropot | Hygro & Temp sensor | Digital Hygrometer Clock |
+| Flower Care | RoPot | Hygro & Temp sensor | Digital Hygrometer Clock |
 | ----------- | ----- | ------------------- | ------------------------ |
-| ![FlowerCare](assets/devices/flowercare.svg) | ![Ropot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) |
+| ![FlowerCare](assets/devices/flowercare.svg) | ![RoPot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) |
 | (International and Chinese versions) | | (MiJia LCD and ClearGrass EInk) | |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) / [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) |
 
