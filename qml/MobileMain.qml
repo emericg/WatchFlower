@@ -212,30 +212,26 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (appContent.state === "DeviceList") {
-                    if (screenDeviceList.selectionList.length !== 0) {
-                        screenDeviceList.exitSelectionMode()
-                    } else {
-                        if (exitTimer.running)
-                            Qt.quit()
-                        else
-                            exitTimer.start()
-                    }
-                } else if (appContent.state === "Tutorial") {
-                    // do nothing
-                } else if (appContent.state === "DeviceSensor") {
-                    if (screenDeviceSensor.isHistoryMode()) {
-                        screenDeviceSensor.resetHistoryMode()
-                    } else {
-                        appContent.state = "DeviceList"
-                    }
-                } else if (appContent.state === "DeviceThermo") {
-                    if (screenDeviceThermometer.isHistoryMode()) {
-                        screenDeviceThermometer.resetHistoryMode()
-                    } else {
-                        appContent.state = "DeviceList"
-                    }
+            if (appContent.state === "Tutorial") return; // do nothing
+
+            if (appContent.state === "DeviceList") {
+                if (screenDeviceList.selectionList.length !== 0) {
+                    screenDeviceList.exitSelectionMode()
+                } else {
+                    if (exitTimer.running)
+                        Qt.quit()
+                    else
+                        exitTimer.start()
+                }
+            } else if (appContent.state === "DeviceSensor") {
+                if (screenDeviceSensor.isHistoryMode()) {
+                    screenDeviceSensor.resetHistoryMode()
+                } else {
+                    appContent.state = "DeviceList"
+                }
+            } else if (appContent.state === "DeviceThermo") {
+                if (screenDeviceThermometer.isHistoryMode()) {
+                    screenDeviceThermometer.resetHistoryMode()
                 } else {
                     appContent.state = "DeviceList"
                 }

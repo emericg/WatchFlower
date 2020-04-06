@@ -32,7 +32,6 @@ Item {
 
     property var dataIndicators: null
     property var dataCharts: null
-    property bool dataHistoryMode: false
 
     function updateHeader() {
         if (typeof myDevice === "undefined" || !myDevice) return
@@ -165,11 +164,10 @@ Item {
     }
 
     function isHistoryMode() {
-        return dataHistoryMode
+        return dataCharts.isIndicator()
     }
     function resetHistoryMode() {
-        //dataCharts.resetIndicator()
-        dataIndicators.resetDataBars()
+        dataCharts.resetIndicator()
     }
 
     Connections {

@@ -32,7 +32,6 @@ Rectangle {
     }
 
     function updateDataBars(tempD, lumiD, hygroD, conduD) {
-        dataHistoryMode = true
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
         humi.value = hygroD
         lumi.value = lumiD
@@ -40,7 +39,6 @@ Rectangle {
     }
 
     function resetDataBars() {
-        dataHistoryMode = false
         humi.value = myDevice.deviceHumidity
         temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
         lumi.value = myDevice.deviceLuminosity

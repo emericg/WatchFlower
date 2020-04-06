@@ -138,10 +138,26 @@ ApplicationWindow {
         z: 10
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
-            if (appContent.state === "Tutorial") return;
+            if (appContent.state === "Tutorial") return; // do nothing
 
             if (mouse.button === Qt.BackButton) {
-                appContent.state = "DeviceList"
+                if (appContent.state === "DeviceList") {
+                    // do nothing
+                } else if (appContent.state === "DeviceSensor") {
+                    if (screenDeviceSensor.isHistoryMode()) {
+                        screenDeviceSensor.resetHistoryMode()
+                    } else {
+                        appContent.state = "DeviceList"
+                    }
+                } else if (appContent.state === "DeviceThermo") {
+                    if (screenDeviceThermometer.isHistoryMode()) {
+                        screenDeviceThermometer.resetHistoryMode()
+                    } else {
+                        appContent.state = "DeviceList"
+                    }
+                } else {
+                    appContent.state = "DeviceList"
+                }
             } else if (mouse.button === Qt.ForwardButton) {
                 if (appContent.state === "DeviceList") {
                     if (currentDevice) {
