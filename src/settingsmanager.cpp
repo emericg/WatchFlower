@@ -128,6 +128,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/graphHistory"))
             m_graphHistory = settings.value("settings/graphHistory").toString();
 
+        if (settings.contains("settings/graphShowDots"))
+            m_graphShowDots = settings.value("settings/graphShowDots").toBool();
+
         if (settings.contains("settings/bigWidget"))
             m_bigWidget = settings.value("settings/bigWidget").toBool();
 
@@ -164,6 +167,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/updateIntervalThermo", m_updateIntervalThermo);
         settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/graphHistory", m_graphHistory);
+        settings.setValue("settings/graphShowDots", m_graphShowDots);
         settings.setValue("settings/bigWidget", m_bigWidget);
         settings.setValue("settings/bigIndicator", m_bigIndicator);
         settings.setValue("settings/tempUnit", m_tempUnit);
@@ -458,6 +462,8 @@ void SettingsManager::resetSettings()
     Q_EMIT tempUnitChanged();
     m_graphHistory = "monthly";
     Q_EMIT graphHistoryChanged();
+    m_graphShowDots = false;
+    Q_EMIT graphShowDotsChanged();
     m_bigWidget = false;
     Q_EMIT bigWidgetChanged();
     m_bigIndicator = false;
@@ -592,6 +598,16 @@ void SettingsManager::setGraphHistory(const QString &value)
         m_graphHistory = value;
         writeSettings();
         Q_EMIT graphHistoryChanged();
+    }
+}
+
+void SettingsManager::setGraphShowDots(const bool value)
+{
+    if (m_graphShowDots != value)
+    {
+        m_graphShowDots = value;
+        writeSettings();
+        Q_EMIT graphShowDotsChanged();
     }
 }
 

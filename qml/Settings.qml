@@ -825,6 +825,54 @@ Item {
             ////////
 
             Item {
+                id: element_showdots
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                ImageSvg {
+                    id: image_showdots
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
+                }
+
+                Text {
+                    id: text_showdots
+                    height: 40
+                    anchors.right: switch_showdots.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_showdots.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Show graph dots")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_showdots
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.graphShowDots
+                    onCheckedChanged: settingsManager.graphShowDots = checked
+                }
+            }
+
+            ////////
+
+            Item {
                 id: element_plant_graph
                 height: 48
                 anchors.left: parent.left

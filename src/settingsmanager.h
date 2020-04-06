@@ -58,6 +58,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
     Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
+    Q_PROPERTY(bool graphShowDots READ getGraphShowDots WRITE setGraphShowDots NOTIFY graphShowDotsChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
 
@@ -76,6 +77,7 @@ class SettingsManager: public QObject
     int m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
+    bool m_graphShowDots = false;
     bool m_bigWidget = false;
     bool m_bigIndicator = false;
 
@@ -105,6 +107,7 @@ Q_SIGNALS:
     void updateIntervalThermoChanged();
     void tempUnitChanged();
     void graphHistoryChanged();
+    void graphShowDotsChanged();
     void bigWidgetChanged();
     void bigIndicatorChanged();
 
@@ -146,6 +149,9 @@ public:
 
     QString getGraphHistory() const { return m_graphHistory; }
     void setGraphHistory(const QString &value);
+
+    bool getGraphShowDots() const { return m_graphShowDots; }
+    void setGraphShowDots(const bool value);
 
     bool getBigWidget() const { return m_bigWidget; }
     void setBigWidget(const bool value);

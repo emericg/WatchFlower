@@ -191,25 +191,25 @@ Item {
 
         LineSeries {
             id: lumiData
-            pointsVisible: isMobile;
+            pointsVisible: settingsManager.graphShowDots;
             color: Theme.colorYellow; width: 2;
             axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
             id: conduData
-            pointsVisible: isMobile;
+            pointsVisible: settingsManager.graphShowDots;
             color: Theme.colorRed; width: 2;
             axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
             id: tempData
-            pointsVisible: isMobile;
+            pointsVisible: settingsManager.graphShowDots;
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
             id: hygroData
-            pointsVisible: isMobile;
+            pointsVisible: settingsManager.graphShowDots;
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
         }
