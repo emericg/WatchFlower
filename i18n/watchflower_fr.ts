@@ -191,52 +191,52 @@
 <context>
     <name>DeviceScreenData</name>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="115"/>
+        <location filename="../qml/DeviceScreenData.qml" line="114"/>
         <source>Update queued. </source>
         <translation>Mise à jour en attente. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="117"/>
+        <location filename="../qml/DeviceScreenData.qml" line="116"/>
         <source>Connecting... </source>
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="119"/>
+        <location filename="../qml/DeviceScreenData.qml" line="118"/>
         <source>Updating... </source>
         <translation>Mise à jour... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="123"/>
+        <location filename="../qml/DeviceScreenData.qml" line="122"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="125"/>
+        <location filename="../qml/DeviceScreenData.qml" line="124"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="127"/>
+        <location filename="../qml/DeviceScreenData.qml" line="126"/>
         <source>Offline! </source>
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="282"/>
+        <location filename="../qml/DeviceScreenData.qml" line="280"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="387"/>
+        <location filename="../qml/DeviceScreenData.qml" line="385"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="493"/>
+        <location filename="../qml/DeviceScreenData.qml" line="491"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="506"/>
+        <location filename="../qml/DeviceScreenData.qml" line="504"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
@@ -707,27 +707,27 @@
 <context>
     <name>ItemIndicatorsCompact</name>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="67"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="67"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="84"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="82"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="102"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="100"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="118"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="116"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -735,27 +735,27 @@
 <context>
     <name>ItemIndicatorsFilled</name>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="67"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="67"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="84"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="82"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="102"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="100"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="118"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="116"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -861,35 +861,35 @@
 <context>
     <name>MobileMain</name>
     <message>
-        <location filename="../qml/MobileMain.qml" line="297"/>
+        <location filename="../qml/MobileMain.qml" line="293"/>
         <source>Welcome</source>
         <translation>Bienvenue</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="411"/>
+        <location filename="../qml/MobileMain.qml" line="407"/>
         <source>Thermometer</source>
         <translation>Thermomètre</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="449"/>
-        <location filename="../qml/MobileMain.qml" line="578"/>
-        <location filename="../qml/MobileMain.qml" line="660"/>
+        <location filename="../qml/MobileMain.qml" line="445"/>
+        <location filename="../qml/MobileMain.qml" line="574"/>
+        <location filename="../qml/MobileMain.qml" line="656"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="487"/>
-        <location filename="../qml/MobileMain.qml" line="591"/>
+        <location filename="../qml/MobileMain.qml" line="483"/>
+        <location filename="../qml/MobileMain.qml" line="587"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="565"/>
+        <location filename="../qml/MobileMain.qml" line="561"/>
         <source>My plants</source>
         <translation>Mes plantes</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="634"/>
+        <location filename="../qml/MobileMain.qml" line="630"/>
         <source>Data</source>
         <translation>Données</translation>
     </message>
@@ -898,12 +898,12 @@
         <translation type="vanished">Données</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="647"/>
+        <location filename="../qml/MobileMain.qml" line="643"/>
         <source>History</source>
         <translation>Historique</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMain.qml" line="688"/>
+        <location filename="../qml/MobileMain.qml" line="684"/>
         <source>Press one more time to exit...</source>
         <translation>Appuyez encore une fois pour quitter....</translation>
     </message>
@@ -1075,13 +1075,13 @@
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="758"/>
-        <location filename="../qml/Settings.qml" line="1002"/>
+        <location filename="../qml/Settings.qml" line="1050"/>
         <source> h.</source>
         <translation> h.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="742"/>
-        <location filename="../qml/Settings.qml" line="986"/>
+        <location filename="../qml/Settings.qml" line="1034"/>
         <source>Update interval</source>
         <translation>Intervalle de rafraichissement</translation>
     </message>
@@ -1096,27 +1096,32 @@
         <translation>Agrandir les indicateurs</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="948"/>
+        <location filename="../qml/Settings.qml" line="854"/>
+        <source>Show graph dots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="996"/>
         <source>Thermometers</source>
         <translation>Thermomètres</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1050"/>
+        <location filename="../qml/Settings.qml" line="1098"/>
         <source>Temperature unit</source>
         <translation>Unité de température</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1064"/>
+        <location filename="../qml/Settings.qml" line="1112"/>
         <source>°C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1090"/>
+        <location filename="../qml/Settings.qml" line="1138"/>
         <source>°F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="854"/>
+        <location filename="../qml/Settings.qml" line="902"/>
         <source>Histograms</source>
         <translation>Histogrammes</translation>
     </message>
@@ -1126,12 +1131,12 @@
         <translation type="vanished">Historique</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="868"/>
+        <location filename="../qml/Settings.qml" line="916"/>
         <source>Monthly</source>
         <translation>Mensuel</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="893"/>
+        <location filename="../qml/Settings.qml" line="941"/>
         <source>Weekly</source>
         <translation>Hebdomadaire</translation>
     </message>

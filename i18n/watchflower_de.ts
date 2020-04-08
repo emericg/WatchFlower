@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="de_DE">
 <context>
     <name>About</name>
     <message>
         <location filename="../qml/About.qml" line="60"/>
         <source>About</source>
-        <translation type="unfinished">Около</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="70"/>
@@ -16,37 +16,37 @@
     <message>
         <location filename="../qml/About.qml" line="121"/>
         <source>version %1%2</source>
-        <translation type="unfinished">версия %1%2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="160"/>
         <source>WEBSITE</source>
-        <translation type="unfinished">веб-сайт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="172"/>
         <source>SUPPORT</source>
-        <translation type="unfinished">поддержка</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="210"/>
         <source>Website</source>
-        <translation type="unfinished">веб-сайт</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="249"/>
         <source>GitHub page</source>
-        <translation type="unfinished">страница GitHub</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="284"/>
         <source>Open the tutorial</source>
-        <translation type="unfinished">Откройте учебник</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation type="unfinished">Оцените заявку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="65"/>
         <source>Welcome</source>
-        <translation type="unfinished">желанный</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -87,12 +87,12 @@
     <message>
         <location filename="../src/device.cpp" line="575"/>
         <source> min.</source>
-        <translation type="unfinished"> минут.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="578"/>
         <source> hours</source>
-        <translation type="unfinished"> часов</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -100,12 +100,12 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Enable</source>
-        <translation type="unfinished">включить</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Retry</source>
-        <translation type="unfinished">снова пробовать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="197"/>
@@ -116,7 +116,6 @@
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
@@ -152,47 +151,27 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="126"/>
         <source>Offline! </source>
-        <translation type="unfinished">Удалять! </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="280"/>
         <source>Plant</source>
-        <translation type="unfinished">Растение</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="385"/>
         <source>Location</source>
-        <translation type="unfinished">положение</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="491"/>
         <source>Status</source>
-        <translation type="unfinished">статус</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="504"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="obsolete">влага</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="obsolete">влага</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="obsolete">температура</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="obsolete">светимость</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="obsolete">плодородие</translation>
     </message>
 </context>
 <context>
@@ -200,42 +179,42 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="233"/>
         <source>Month</source>
-        <translation type="unfinished">Месяц</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="247"/>
         <source>Week</source>
-        <translation type="unfinished">Неделя</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="261"/>
         <source>Day</source>
-        <translation type="unfinished">День</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
         <source>Moisture</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
         <source>Humidity</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="355"/>
         <source>Temperature</source>
-        <translation type="unfinished">температура</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="374"/>
         <source>Luminosity</source>
-        <translation type="unfinished">светимость</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="393"/>
         <source>Fertility</source>
-        <translation type="unfinished">плодородие</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -251,30 +230,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
+        <source>Use official app to upgrade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="233"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="242"/>
         <source>Update available!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
-        <source>Use official app to upgrade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="274"/>
         <source>Battery</source>
-        <translation type="unfinished">аккумулятор</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
         <source>Moisture</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
         <source>Humidity</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
@@ -288,7 +267,7 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation type="unfinished">&lt;br&gt;&lt;b&gt;Чаевые: &lt;/b&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -303,7 +282,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="404"/>
         <source>Temperature</source>
-        <translation type="unfinished">температура</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
@@ -323,7 +302,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
         <source>Luminosity</source>
-        <translation type="unfinished">светимость</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="517"/>
@@ -353,7 +332,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
         <source>Fertility</source>
-        <translation type="unfinished">плодородие</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="634"/>
@@ -371,7 +350,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="143"/>
         <source>humidity</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="156"/>
@@ -401,7 +380,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="168"/>
         <source>Offline! </source>
-        <translation type="unfinished">Удалять! </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="235"/>
@@ -414,7 +393,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="120"/>
         <source>Thermometer</source>
-        <translation type="unfinished">Термометр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="136"/>
@@ -440,7 +419,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="156"/>
         <source>Offline</source>
-        <translation type="unfinished">Не в сети</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -448,7 +427,7 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="184"/>
         <source>Hygro</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="210"/>
@@ -463,17 +442,17 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="260"/>
         <source>Fertility</source>
-        <translation type="unfinished">плодородие</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="295"/>
         <source>Days</source>
-        <translation type="unfinished">дней</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="323"/>
         <source>Hours</source>
-        <translation type="unfinished">часов</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -489,12 +468,12 @@
     <message>
         <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
         <source>min</source>
-        <translation type="unfinished">мин</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
         <source>max</source>
-        <translation type="unfinished">макси</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -507,12 +486,12 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="60"/>
         <source>Delete</source>
-        <translation type="unfinished">удалять</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -520,27 +499,27 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Moisture</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Humidity</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="82"/>
         <source>Temperature</source>
-        <translation type="unfinished">температура</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="100"/>
         <source>Luminosity</source>
-        <translation type="unfinished">светимость</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="116"/>
         <source>Fertility</source>
-        <translation type="unfinished">плодородие</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -548,27 +527,27 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Moisture</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Humidity</source>
-        <translation type="unfinished">влага</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="82"/>
         <source>Temperature</source>
-        <translation type="unfinished">температура</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="100"/>
         <source>Luminosity</source>
-        <translation type="unfinished">светимость</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="116"/>
         <source>Fertility</source>
-        <translation type="unfinished">плодородие</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -589,7 +568,7 @@
     <message>
         <location filename="../qml/components/ItemNoData.qml" line="50"/>
         <source>Not enough data</source>
-        <translation type="unfinished">Недостаточно данных</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -615,17 +594,17 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="153"/>
         <source>My plants</source>
-        <translation type="unfinished">Мои растения</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="190"/>
         <source>Settings</source>
-        <translation type="unfinished">настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="227"/>
         <source>About</source>
-        <translation type="unfinished">Около</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="300"/>
@@ -640,7 +619,7 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="405"/>
         <source>Exit</source>
-        <translation type="unfinished">Выход</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -648,40 +627,40 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="293"/>
         <source>Welcome</source>
-        <translation type="unfinished">желанный</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="407"/>
         <source>Thermometer</source>
-        <translation type="unfinished">Термометр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="445"/>
         <location filename="../qml/MobileMain.qml" line="574"/>
         <location filename="../qml/MobileMain.qml" line="656"/>
         <source>Settings</source>
-        <translation type="unfinished">настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="483"/>
         <location filename="../qml/MobileMain.qml" line="587"/>
         <source>About</source>
-        <translation type="unfinished">Около</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="561"/>
         <source>My plants</source>
-        <translation type="unfinished">Мои растения</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="630"/>
         <source>Data</source>
-        <translation type="unfinished">данные</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="643"/>
         <source>History</source>
-        <translation type="unfinished">история</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="684"/>
@@ -694,7 +673,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="57"/>
         <source>Settings</source>
-        <translation type="unfinished">настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="70"/>
@@ -717,6 +696,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/Settings.qml" line="294"/>
+        <source>Use bigger widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/Settings.qml" line="354"/>
         <source>Bluetooth control</source>
         <translation type="unfinished"></translation>
@@ -734,6 +718,11 @@
     <message>
         <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="486"/>
+        <source>Start application minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -767,25 +756,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="758"/>
-        <location filename="../qml/Settings.qml" line="1050"/>
-        <source> h.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="742"/>
         <location filename="../qml/Settings.qml" line="1034"/>
         <source>Update interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="486"/>
-        <source>Start application minimized</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Settings.qml" line="294"/>
-        <source>Use bigger widgets</source>
+        <location filename="../qml/Settings.qml" line="758"/>
+        <location filename="../qml/Settings.qml" line="1050"/>
+        <source> h.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -796,6 +775,21 @@
     <message>
         <location filename="../qml/Settings.qml" line="854"/>
         <source>Show graph dots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="902"/>
+        <source>Histograms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="916"/>
+        <source>Monthly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="941"/>
+        <source>Weekly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -818,21 +812,6 @@
         <source>°F</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../qml/Settings.qml" line="902"/>
-        <source>Histograms</source>
-        <translation type="unfinished">Гистограммы</translation>
-    </message>
-    <message>
-        <location filename="../qml/Settings.qml" line="916"/>
-        <source>Monthly</source>
-        <translation type="unfinished">ежемесячно</translation>
-    </message>
-    <message>
-        <location filename="../qml/Settings.qml" line="941"/>
-        <source>Weekly</source>
-        <translation type="unfinished">еженедельно</translation>
-    </message>
 </context>
 <context>
     <name>SystrayManager</name>
@@ -840,23 +819,23 @@
         <location filename="../src/systraymanager.cpp" line="96"/>
         <location filename="../src/systraymanager.cpp" line="265"/>
         <source>Hide</source>
-        <translation type="unfinished">скрывать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="102"/>
         <location filename="../src/systraymanager.cpp" line="269"/>
         <source>Show</source>
-        <translation type="unfinished">Показать</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="105"/>
         <source>Settings</source>
-        <translation type="unfinished">настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="106"/>
         <source>Exit</source>
-        <translation type="unfinished">Выход</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -904,17 +883,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="244"/>
         <source>Previous</source>
-        <translation type="unfinished">предыдущий</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation type="unfinished">Хорошо!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Next</source>
-        <translation type="unfinished">следующий</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
