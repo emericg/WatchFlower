@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/About.qml" line="60"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="70"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/About.qml" line="121"/>
         <source>version %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Version %1%2</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="160"/>
