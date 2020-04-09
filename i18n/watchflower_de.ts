@@ -21,7 +21,7 @@
     <message>
         <location filename="../qml/About.qml" line="160"/>
         <source>WEBSITE</source>
-        <translation type="unfinished"></translation>
+        <translation>WEBSEITE</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="172"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/About.qml" line="210"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Webseite</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="249"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerte die App</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/device.cpp" line="208"/>
         <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gieße dein(e) &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="210"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/device.cpp" line="212"/>
         <source>You need to water one of your (unnamed) plant!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine deiner Pflanzen benötigt Wasser.</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="575"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/device.cpp" line="578"/>
         <source> hours</source>
-        <translation type="unfinished"></translation>
+        <translation> Stunden</translation>
     </message>
 </context>
 <context>
@@ -110,13 +110,13 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="197"/>
         <source>Bluetooth disabled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth ist deaktiviert ...</translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%n Gerät(e) ausgewählt</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
