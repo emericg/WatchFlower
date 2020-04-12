@@ -6,37 +6,37 @@
     <message>
         <location filename="../qml/About.qml" line="60"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="70"/>
         <source>What do you want to know?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wat wil je weten?</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="121"/>
         <source>version %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>versie %1%2</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="160"/>
         <source>WEBSITE</source>
-        <translation type="unfinished"></translation>
+        <translation>WEBSITE</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="172"/>
         <source>SUPPORT</source>
-        <translation type="unfinished"></translation>
+        <translation>ONDERSTEUNING</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="210"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Website</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="249"/>
         <source>GitHub page</source>
-        <translation type="unfinished"></translation>
+        <translation>GitHub pagina</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="284"/>
