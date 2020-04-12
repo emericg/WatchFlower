@@ -8,6 +8,12 @@
   <qresource prefix="/i18n" lang="fr">
     <file alias="watchflower.qm">watchflower_fr.qm</file>
   </qresource>
+  <qresource prefix="/i18n" lang="fy">
+    <file alias="watchflower.qm">watchflower_fy.qm</file>
+  </qresource>
+  <qresource prefix="/i18n" lang="nl">
+    <file alias="watchflower.qm">watchflower_nl.qm</file>
+  </qresource>
   <qresource prefix="/i18n" lang="ru">
     <file alias="watchflower.qm">watchflower_ru.qm</file>
   </qresource>

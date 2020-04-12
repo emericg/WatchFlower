@@ -80,6 +80,7 @@ OTHER_FILES += .gitignore \
 TRANSLATIONS = i18n/watchflower_de.ts \
                i18n/watchflower_es.ts \
                i18n/watchflower_fr.ts \
+               i18n/watchflower_nl.ts i18n/watchflower_fy.ts \
                i18n/watchflower_ru.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
