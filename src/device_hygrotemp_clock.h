@@ -34,9 +34,8 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceHygrotempClock class
- *
  * Xiaomi MiJia "Digital Hygrometer Clock"
+ * LYWSD02 device / Rectangular body, E-Ink
  *
  * Protocol infos:
  * - TODO

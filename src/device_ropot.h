@@ -34,9 +34,8 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceRopot class
- *
- * Xiaomi MiJia "Ropot" / "Flowerpot" / "Smart flower pot"
+ * Xiaomi MiJia "Ropot" or "FlowerPot" (HHCCPOT002)
+ * VegTrug "Grow Care Home"
  */
 class DeviceRopot: public Device
 {

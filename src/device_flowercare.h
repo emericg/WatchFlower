@@ -36,7 +36,8 @@
 /*!
  * \brief The DeviceFlowercare class
  *
- * Xiaomi "Flower Care" / "Mi Flora" / ...
+ * Xiaomi "Flower Care" or "MiFlora" (HHCCJCY01)
+ * VegTrug "Grow Care Home" and "Grow Care Garden" (GCLS002)
  *
  * Protocol infos:
  * - https://github.com/barnybug/miflora

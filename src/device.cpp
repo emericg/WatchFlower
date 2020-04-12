@@ -1245,8 +1245,8 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 /* ************************************************************************** */
 
 void Device::getAioData(QtCharts::QDateTimeAxis *axis,
-                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                         QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
+                        QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                        QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
 {
     if (!axis || !hygro || !temp || !lumi || !cond)
         return;

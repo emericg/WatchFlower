@@ -34,9 +34,8 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceHygrotempEInk class
- *
  * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
+ * CGG1 device / Round body, E-Ink
  *
  * Protocol infos:
  * - TODO

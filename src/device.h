@@ -260,8 +260,8 @@ public slots:
 
     // AIO graph
     Q_INVOKABLE void getAioData(QtCharts::QDateTimeAxis *axis,
-                                 QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                                 QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
+                                QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                                QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 
     // Monthly graph
     QVariantList getMonth();
