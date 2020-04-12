@@ -41,17 +41,17 @@
     <message>
         <location filename="../qml/About.qml" line="284"/>
         <source>Open the tutorial</source>
-        <translation type="unfinished"></translation>
+        <translation>Open de handleiding</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Beoordeel de app</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>App door &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafisch design door &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="409"/>
