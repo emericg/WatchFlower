@@ -56,7 +56,7 @@
     <message>
         <location filename="../qml/About.qml" line="409"/>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Een plantobservatieapp voor Xiaomi / MiJia &apos;Flower Care&apos; en &apos;Ropot&apos; Bluetooth sensors en thermometers.</translation>
     </message>
 </context>
 <context>
