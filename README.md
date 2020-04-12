@@ -10,7 +10,7 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
-Available in English, French and Spanish.  
+Available in English, French, German, Spanish and Russian!  
 
 Application developped by [Emeric Grange](https://emeric.io/).
 Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
@@ -71,6 +71,7 @@ You will need a C++11 compiler and Qt 5.10 (Qt 5.12+ is recommended however) wit
 
 * Chris Díaz <christiandiaz.design@gmail.com> for his extensive work on the application design and logo!
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
+* Everyone who gave time to [help translate](i18n/README.md) this application!
 * [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
 * [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
 
