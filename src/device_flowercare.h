@@ -56,7 +56,7 @@
  *    * the sensor should return 16 bytes (values are encoded in little endian):
  *    - bytes 0-1: temperature in 0.1°C
  *    - byte 2: unknown
- *    - bytes 3-4: brightness in lumens
+ *    - bytes 3-4: brightness in lux
  *    - bytes 5-6: unknown
  *    - byte 7: humidity
  *    - byte 8-9: conductivity in µS/cm

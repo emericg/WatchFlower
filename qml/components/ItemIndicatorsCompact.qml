@@ -98,7 +98,7 @@ Rectangle {
             width: parent.width
 
             legend: qsTr("Luminosity")
-            suffix: " lumens"
+            suffix: " lux"
             colorForeground: Theme.colorYellow
             //colorBackground: Theme.colorBackground
 
