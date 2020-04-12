@@ -64,7 +64,7 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="65"/>
         <source>Welcome</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom</translation>
     </message>
 </context>
 <context>
@@ -72,27 +72,27 @@
     <message>
         <location filename="../src/device.cpp" line="208"/>
         <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="unfinished"></translation>
+        <translation>Je &apos;%1&apos; direct water geven!</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="210"/>
         <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Je plant nabij &apos;%1&apos; water geven</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
         <source>You need to water one of your (unnamed) plant!</source>
-        <translation type="unfinished"></translation>
+        <translation>Een van je planten heeft water nodig!</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="575"/>
         <source> min.</source>
-        <translation type="unfinished"></translation>
+        <translation> min.</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="578"/>
         <source> hours</source>
-        <translation type="unfinished"></translation>
+        <translation> uren</translation>
     </message>
 </context>
 <context>
@@ -100,17 +100,17 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Opnieuw</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="197"/>
         <source>Bluetooth disabled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bluetooth uitgeschakeld...</translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
