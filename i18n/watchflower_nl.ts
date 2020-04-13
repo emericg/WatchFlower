@@ -509,17 +509,17 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="82"/>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatuur</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="100"/>
         <source>Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>Lichtsterkte</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="116"/>
         <source>Fertility</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvruchtbaarheid</translation>
     </message>
 </context>
 <context>
@@ -527,27 +527,27 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Moisture</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Luchtvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="82"/>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatuur</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="100"/>
         <source>Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>Lichtsterkte</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="116"/>
         <source>Fertility</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvruchtbaarheid</translation>
     </message>
 </context>
 <context>
