@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/device.cpp" line="212"/>
         <source>You need to water one of your (unnamed) plant!</source>
-        <translation>Een van je planten heeft water nodig!</translation>
+        <translation>Eén van je planten heeft water nodig!</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="575"/>
@@ -258,7 +258,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het ideale vochtigheidsgehalte van de grond van kamerplanten is meestal 15 tot 50%. Bij vetplanten kan het dalen tot 7%. Tropische planten hebben graag meer water.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
