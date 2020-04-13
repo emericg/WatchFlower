@@ -327,7 +327,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon. Maar de meeste kamerplanten hebben liever geen direct zonlicht. Plaats ze daarom niet voor het venster op het zuiden!</translation>
+        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon. Maar de meeste kamerplanten hebben liever geen direct zonlicht. Plaats ze daarom niet voor een venster op het zuiden!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../qml/components/ItemAioLineCharts.qml" line="248"/>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation>om</translation>
     </message>
 </context>
 <context>
