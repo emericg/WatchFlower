@@ -555,12 +555,12 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Enable Bluetooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Bleutooth inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Retry detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Opnieuw zoeken</translation>
     </message>
 </context>
 <context>
@@ -568,7 +568,7 @@
     <message>
         <location filename="../qml/components/ItemNoData.qml" line="50"/>
         <source>Not enough data</source>
-        <translation type="unfinished"></translation>
+        <translation>Onvoldoende data</translation>
     </message>
 </context>
 <context>
@@ -576,7 +576,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation type="unfinished"></translation>
+        <translation>In Android 6+ is voor scannen naar Bluetooth Low Energy apparaten locatie-machtiging vereist. De app gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
@@ -586,7 +586,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
         <source>Launch detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Start zoeken</translation>
     </message>
 </context>
 <context>
@@ -594,17 +594,17 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="153"/>
         <source>My plants</source>
-        <translation type="unfinished"></translation>
+        <translation>Mijn planten</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="190"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="227"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="300"/>
@@ -614,12 +614,12 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="351"/>
         <source>Search for new devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoek naar nieuwe apparaten</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="405"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Afsluiten</translation>
     </message>
 </context>
 <context>
@@ -627,45 +627,45 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="293"/>
         <source>Welcome</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="407"/>
         <source>Thermometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Thermometer</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="445"/>
         <location filename="../qml/MobileMain.qml" line="574"/>
         <location filename="../qml/MobileMain.qml" line="656"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="483"/>
         <location filename="../qml/MobileMain.qml" line="587"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="561"/>
         <source>My plants</source>
-        <translation type="unfinished"></translation>
+        <translation>Mijn planten</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="630"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="643"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historie</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="684"/>
         <source>Press one more time to exit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Druk nogmaals om af te sluiten...</translation>
     </message>
 </context>
 <context>
@@ -673,7 +673,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="57"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="70"/>
@@ -683,22 +683,22 @@
     <message>
         <location filename="../qml/Settings.qml" line="123"/>
         <source>Application theme</source>
-        <translation type="unfinished"></translation>
+        <translation>App-thema</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="225"/>
         <source>Automatique dark mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische donkere modus</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="256"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
-        <translation type="unfinished"></translation>
+        <translation>Donkere modus wordt automatisch ingeschakeld tussen 21.00 en 9.00 uur.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="294"/>
         <source>Use bigger widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik grotere widgets</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="354"/>
@@ -728,7 +728,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="549"/>
         <source>Enable background updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrondsynchronisatie inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="578"/>
