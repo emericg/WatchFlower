@@ -126,7 +126,7 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="114"/>
         <source>Update queued. </source>
-        <translation>Wacht op update. </translation>
+        <translation>Wachtend op update. </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="116"/>
@@ -194,7 +194,7 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
         <source>Moisture</source>
-        <translation>Vochtigheid</translation>
+        <translation>Bodemvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
@@ -248,7 +248,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
         <source>Moisture</source>
-        <translation>Vochtigheid</translation>
+        <translation>Bodemvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
@@ -258,7 +258,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Het ideale vochtigheidsgehalte van de grond van kamerplanten is meestal 15 tot 50%. Bij vetplanten kan het dalen tot 7%. Tropische planten hebben graag meer water.</translation>
+        <translation>Het ideale vochtigheidsgehalte van de grond van kamerplanten is meestal 15 tot 50%. Bij vetplanten kan dat dalen tot 7%. Tropische planten hebben graag meer water.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -267,82 +267,82 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas op, lange tijd teveel water kan even slecht zijn als te weinig!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="372"/>
         <source>Water your plants more frequently during their growth period.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef je planten tijdens de groeiperiode vaker water.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="404"/>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatuur</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kamerplanten gedijen doorgaans goed tussen de 15 en 25°C (59 tot 77°F). Slechts enkele planten verdragen -2°C (28°F) en lager.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <source>Having constant temperature is important for indoor plants.</source>
-        <translation type="unfinished"></translation>
+        <translation>Een gelijkmatige temperatuur is belangrijk voor kamerplanten.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation type="unfinished"></translation>
+        <translation>Als je een hygrometer hebt kun je de luchtvochtigheid bewaken, zodat deze tussen de 40 en 60% blijft (en zelfs hoger voor tropische planten).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
         <source>Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>Lichtsterkte</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="517"/>
         <source>low</source>
-        <translation type="unfinished"></translation>
+        <translation>laag</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="528"/>
         <source>indirect</source>
-        <translation type="unfinished"></translation>
+        <translation>indirect</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="539"/>
         <source>direct light (indoor)</source>
-        <translation type="unfinished"></translation>
+        <translation>direct licht (binnenshuis)</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="550"/>
         <source>sunlight</source>
-        <translation type="unfinished"></translation>
+        <translation>zonlicht</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon. Maar de meeste kamerplanten hebben liever geen direct zonlicht. Plaats ze daarom niet voor het venster op het zuiden!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
         <source>Fertility</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvruchtbaarheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="634"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschkbaarheid van voedingsstoffen in de grond. Gebruik meststoffen (met mate) om de voedingswaarde op peil te houden</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>Be sure to use the right soil composition for your plants.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik de juiste grondsamenstelling voor je planten.</translation>
     </message>
 </context>
 <context>
@@ -350,42 +350,42 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="143"/>
         <source>humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>luchtvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="156"/>
         <source>Update queued. </source>
-        <translation type="unfinished"></translation>
+        <translation>Wachtende op update. </translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="158"/>
         <source>Connecting... </source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden... </translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="160"/>
         <source>Updating... </source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten... </translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="164"/>
         <source>Just synced!</source>
-        <translation type="unfinished"></translation>
+        <translation>Net gesynchroniseerd!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="166"/>
         <source>Synced %1 ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 geleden gesynchroniseerd</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="168"/>
         <source>Offline! </source>
-        <translation type="unfinished"></translation>
+        <translation>Offline! </translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="235"/>
         <source>Updating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten...</translation>
     </message>
 </context>
 <context>
@@ -393,33 +393,33 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="120"/>
         <source>Thermometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Thermometer</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="136"/>
         <source>Queued</source>
-        <translation type="unfinished"></translation>
+        <translation>Wachten</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="140"/>
         <source>Connecting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="144"/>
         <source>Updating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="150"/>
         <location filename="../qml/DeviceWidget.qml" line="153"/>
         <source>Synced</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesynchroniseerd</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="156"/>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
@@ -427,7 +427,7 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="184"/>
         <source>Hygro</source>
-        <translation type="unfinished"></translation>
+        <translation>Hygro</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="210"/>
