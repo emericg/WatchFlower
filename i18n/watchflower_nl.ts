@@ -151,27 +151,27 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="126"/>
         <source>Offline! </source>
-        <translation type="unfinished"></translation>
+        <translation>Offline! </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="280"/>
         <source>Plant</source>
-        <translation type="unfinished"></translation>
+        <translation>Plant</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="385"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Locatie</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="491"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="504"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden...</translation>
     </message>
 </context>
 <context>
@@ -179,42 +179,42 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="233"/>
         <source>Month</source>
-        <translation type="unfinished"></translation>
+        <translation>Maand</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="247"/>
         <source>Week</source>
-        <translation type="unfinished"></translation>
+        <translation>Week</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="261"/>
         <source>Day</source>
-        <translation type="unfinished"></translation>
+        <translation>Dag</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
         <source>Moisture</source>
-        <translation type="unfinished"></translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="336"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Luchtvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="355"/>
         <source>Temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatuur</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="374"/>
         <source>Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>Lichtsterkte</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="393"/>
         <source>Fertility</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvruchtbaarheid</translation>
     </message>
 </context>
 <context>
@@ -222,38 +222,38 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="168"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Adres</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="200"/>
         <source>Firmware</source>
-        <translation type="unfinished"></translation>
+        <translation>Firmware</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="232"/>
         <source>Use official app to upgrade</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik de officiële app om te upgraden</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="233"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="242"/>
         <source>Update available!</source>
-        <translation type="unfinished"></translation>
+        <translation>Update beschikbaar!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="274"/>
         <source>Battery</source>
-        <translation type="unfinished"></translation>
+        <translation>Batterij</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
         <source>Moisture</source>
-        <translation type="unfinished"></translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="334"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Luchtvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
