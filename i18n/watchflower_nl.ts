@@ -743,23 +743,23 @@
     <message>
         <location filename="../qml/Settings.qml" line="632"/>
         <source>Enable notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notificaties inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="661"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="unfinished"></translation>
+        <translation>Als een plant water nodig heeft zal WatchFlower je er op attenderen!</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="704"/>
         <source>Plant sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Plantsensors</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="742"/>
         <location filename="../qml/Settings.qml" line="1034"/>
         <source>Update interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Update interval</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="758"/>
@@ -775,12 +775,12 @@
     <message>
         <location filename="../qml/Settings.qml" line="854"/>
         <source>Show graph dots</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon grafiekpunten</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="902"/>
         <source>Histograms</source>
-        <translation type="unfinished"></translation>
+        <translation>Staafdiagram</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="916"/>
@@ -795,22 +795,22 @@
     <message>
         <location filename="../qml/Settings.qml" line="996"/>
         <source>Thermometers</source>
-        <translation type="unfinished"></translation>
+        <translation>Thermometers</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1098"/>
         <source>Temperature unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatuureenheid</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1112"/>
         <source>°C</source>
-        <translation type="unfinished"></translation>
+        <translation>°C</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1138"/>
         <source>°F</source>
-        <translation type="unfinished"></translation>
+        <translation>°F</translation>
     </message>
 </context>
 <context>
@@ -819,23 +819,23 @@
         <location filename="../src/systraymanager.cpp" line="96"/>
         <location filename="../src/systraymanager.cpp" line="265"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg</translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="102"/>
         <location filename="../src/systraymanager.cpp" line="269"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon</translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="105"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen</translation>
     </message>
     <message>
         <location filename="../src/systraymanager.cpp" line="106"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Afsluiten</translation>
     </message>
 </context>
 <context>
