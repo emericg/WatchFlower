@@ -481,7 +481,7 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="32"/>
         <source>Are you sure you want to delete selected device(s)?</source>
-        <translation>Weet je zeker dat je gekozen apara(a)t(en) wilt verwijderen?</translation>
+        <translation>Weet je zeker dat je de gekozen apara(a)t(en) wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
@@ -576,7 +576,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>In Android 6+ is voor scannen naar Bluetooth Low Energy apparaten locatie-machtiging vereist. De app gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
+        <translation>In Android 6+ is locatie-machtiging vereist voor scannen naar Bluetooth Low Energy apparaten. De app gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
@@ -693,7 +693,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="256"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
-        <translation>Donkere modus wordt automatisch ingeschakeld tussen 21.00 en 9.00 uur.</translation>
+        <translation>Donkere modus wordt automatisch ingeschakeld van 21.00 tot 9.00 uur.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="294"/>
