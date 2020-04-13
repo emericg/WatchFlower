@@ -843,17 +843,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="75"/>
         <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</source>
-        <translation type="unfinished"></translation>
+        <translation type>&lt;b&gt;WatchFlower&lt;/b&gt; is een plantobservatieapp voor Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; en &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="95"/>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Het werkt ook goed met een aantal &lt;b&gt;thermometers&lt;/b&gt;!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; in je omgeving.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
