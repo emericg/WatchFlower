@@ -432,27 +432,27 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="210"/>
         <source>Temp</source>
-        <translation type="unfinished"></translation>
+        <translation>Temp</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="235"/>
         <source>Lumi</source>
-        <translation type="unfinished"></translation>
+        <translation>Licht</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="260"/>
         <source>Fertility</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvruchtbaarheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="295"/>
         <source>Days</source>
-        <translation type="unfinished"></translation>
+        <translation>Dagen</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="323"/>
         <source>Hours</source>
-        <translation type="unfinished"></translation>
+        <translation>Uren</translation>
     </message>
 </context>
 <context>
@@ -468,12 +468,12 @@
     <message>
         <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>max</translation>
     </message>
 </context>
 <context>
@@ -481,17 +481,17 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="32"/>
         <source>Are you sure you want to delete selected device(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Weet je zeker dat je gekozen apara(a)t(en) wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="60"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -499,12 +499,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Moisture</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodemvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
         <source>Humidity</source>
-        <translation type="unfinished"></translation>
+        <translation>Luchtvochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="82"/>
