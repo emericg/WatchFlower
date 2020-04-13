@@ -858,12 +858,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation type="unfinished"></translation>
+        <translation>Je kunt altijd opnieuw &lt;b&gt;scannen&lt;/b&gt; naar nieuwe apparaten, of deze &lt;b&gt;verwijderen&lt;/b&gt; mocht je dat willen.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
         <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eenmaal &lt;b&gt;gekoppeld&lt;/b&gt; zullen de sensors met tussenpozen hun data synchroniseren.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
@@ -873,12 +873,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="205"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Je kunt je &lt;b&gt;plant benoemen&lt;/b&gt; en de &lt;b&gt;locatie&lt;/b&gt; van het apparaat specificeren.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation type="unfinished"></translation>
+        <translation type>Specificeer &lt;b&gt;grenswaarden&lt;/b&gt; zoals &lt;b&gt;optimale vochtigheidsgraad&lt;/b&gt; of &lt;b&gt;temperatuurbereik&lt;/b&gt; en meer afhankelijk van de sensorspecificaties.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="244"/>
@@ -893,7 +893,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Volgende</translation>
     </message>
 </context>
 </TS>
