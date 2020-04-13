@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/device.cpp" line="578"/>
         <source> hours</source>
-        <translation> uren</translation>
+        <translation> uur</translation>
     </message>
 </context>
 <context>
@@ -115,9 +115,9 @@
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Apparaat geselecteerd</numerusform>
+            <numerusform>%n apparaten geselecteerd</numerusform>
         </translation>
     </message>
 </context>
@@ -126,27 +126,27 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="114"/>
         <source>Update queued. </source>
-        <translation type="unfinished"></translation>
+        <translation>Wacht op update. </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="116"/>
         <source>Connecting... </source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinden... </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="118"/>
         <source>Updating... </source>
-        <translation type="unfinished"></translation>
+        <translation>Updaten... </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="122"/>
         <source>Just synced!</source>
-        <translation type="unfinished"></translation>
+        <translation>Net gesynchroniseerd!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="124"/>
         <source>Synced %1 ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 geleden gesynchroniseerd</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="126"/>
