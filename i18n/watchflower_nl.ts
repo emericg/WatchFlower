@@ -718,7 +718,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Een stabiele bluetoothverbinding geniet de voorkeur boven synchronisatiesnelheid.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="486"/>
