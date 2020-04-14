@@ -4,12 +4,13 @@ import QtQuick.Controls 2.2
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Rectangle {
-    id: rectangeData
-    color: "transparent" // Theme.colorForeground
+Item {
+    id: indicatorsCompact
     width: parent.width
     height: columnData.height + 16
     z: 5
+
+    property bool indicatorsDynascale: false
 
     function updateData() {
         if (typeof myDevice === "undefined" || !myDevice) return
@@ -18,11 +19,11 @@ Rectangle {
 
         // Has data? always display them
         if (myDevice.isAvailable()) {
-            humi.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
+            hygro.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
         } else {
-            humi.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
+            hygro.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
             temp.visible = myDevice.hasTemperatureSensor()
             lumi.visible = myDevice.hasLuminositySensor()
             condu.visible = myDevice.hasConductivitySensor()
@@ -33,13 +34,13 @@ Rectangle {
 
     function updateDataBars(tempD, lumiD, hygroD, conduD) {
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
-        humi.value = hygroD
+        hygro.value = hygroD
         lumi.value = lumiD
         condu.value = conduD
     }
 
     function resetDataBars() {
-        humi.value = myDevice.deviceHumidity
+        hygro.value = myDevice.deviceHumidity
         temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
         lumi.value = myDevice.deviceLuminosity
         condu.value = myDevice.deviceConductivity
@@ -55,11 +56,11 @@ Rectangle {
         anchors.rightMargin: 16
         anchors.verticalCenter: parent.verticalCenter
 
-        spacing: 14
+        spacing: 12
         visible: (myDevice.available || myDevice.hasData())
 
         ItemDataBarCompact {
-            id: humi
+            id: hygro
             width: parent.width
 
             legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
@@ -70,7 +71,7 @@ Rectangle {
 
             value: myDevice.deviceHumidity
             valueMin: 0
-            valueMax: 50
+            valueMax: indicatorsDynascale ? myDevice.hygroMax*1.10 : 50
             limitMin: myDevice.limitHygroMin
             limitMax: myDevice.limitHygroMax
         }
@@ -86,11 +87,15 @@ Rectangle {
             colorForeground: Theme.colorGreen
             //colorBackground: Theme.colorBackground
 
-            value: (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
-            valueMin: (settingsManager.tempUnit === "F") ? 32 : 0
-            valueMax: (settingsManager.tempUnit === "F") ? 104 : 40
-            limitMin: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMin) : myDevice.limitTempMin
-            limitMax: (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(myDevice.limitTempMax) : myDevice.limitTempMax
+            function tempHelper(tempDeg) {
+                return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
+            }
+
+            value: tempHelper(myDevice.deviceTemp)
+            valueMin: tempHelper(indicatorsDynascale ? myDevice.tempMin*0.80 : tempHelper(0))
+            valueMax: tempHelper(indicatorsDynascale ? myDevice.tempMax*1.20 : tempHelper(40))
+            limitMin: tempHelper(myDevice.limitTempMin)
+            limitMax: tempHelper(myDevice.limitTempMax)
         }
 
         ItemDataBarCompact {
@@ -104,7 +109,7 @@ Rectangle {
 
             value: myDevice.deviceLuminosity
             valueMin: 0
-            valueMax: 10000
+            valueMax: indicatorsDynascale ? myDevice.lumiMax*1.10 : 10000
             limitMin: myDevice.limitLumiMin
             limitMax: myDevice.limitLumiMax
         }
@@ -120,7 +125,7 @@ Rectangle {
 
             value: myDevice.deviceConductivity
             valueMin: 0
-            valueMax: 500
+            valueMax: indicatorsDynascale ? myDevice.conduMax*1.10 : 1000
             limitMin: myDevice.limitConduMin
             limitMax: myDevice.limitConduMax
         }

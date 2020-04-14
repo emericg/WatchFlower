@@ -1264,8 +1264,9 @@ void Device::getAioData(QtCharts::QDateTimeAxis *axis,
     }
 
     axis->setFormat("dd MMM");
-    bool minSet = false;
     axis->setMax(QDateTime::currentDateTime());
+    bool minSet = false;
+    bool minmaxChanged = false;
 
     while (graphData.next())
     {
@@ -1280,5 +1281,17 @@ void Device::getAioData(QtCharts::QDateTimeAxis *axis,
         hygro->append(timecode, graphData.value(1).toReal());
         lumi->append(timecode, graphData.value(2).toReal());
         cond->append(timecode, graphData.value(3).toReal());
+
+        if (graphData.value(0).toFloat() < m_tempMin) { m_tempMin = graphData.value(0).toFloat(); minmaxChanged = true; }
+        if (graphData.value(1).toInt() < m_hygroMin) { m_hygroMin = graphData.value(1).toInt(); minmaxChanged = true; }
+        if (graphData.value(2).toInt() < m_luminosityMin) { m_luminosityMin = graphData.value(2).toInt(); minmaxChanged = true; }
+        if (graphData.value(3).toInt() < m_conductivityMin) { m_conductivityMin = graphData.value(3).toInt(); minmaxChanged = true; }
+
+        if (graphData.value(0).toFloat() > m_tempMax) { m_tempMax = graphData.value(0).toFloat(); minmaxChanged = true; }
+        if (graphData.value(1).toInt() > m_hygroMax) { m_hygroMax = graphData.value(1).toInt(); minmaxChanged = true; }
+        if (graphData.value(2).toInt() > m_luminosityMax) { m_luminosityMax = graphData.value(2).toInt(); minmaxChanged = true; }
+        if (graphData.value(3).toInt() > m_conductivityMax) { m_conductivityMax = graphData.value(3).toInt(); minmaxChanged = true; }
     }
+
+    if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
 }

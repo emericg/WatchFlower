@@ -99,7 +99,7 @@ Item {
             highLimitSeries.append(0, myDevice.limitLumiMax);
             highLimitSeries.append(1, myDevice.limitLumiMax);
         } else if (graphDataSelected === "conductivity") {
-            axisY0.max = 750
+            axisY0.max = 1000
             myBarSet.color = Theme.colorRed
             textHygro.font.bold = false
             textTemp.font.bold = false

@@ -73,60 +73,26 @@ Item {
         axisTemp.min = 0
         axisTemp.max = 60
         axisCondu.min = 0
-        axisCondu.max = 750
+        axisCondu.max = 1000
         axisLumi.min = 0
         axisLumi.max = 3000
 
-        var i = 0
-        var minmax_of_array = 0
-
         // Max axis for hygrometry
-        i = 0
-        minmax_of_array = 0
-        for (; i < hygroData.count; i++)
-            if (hygroData.at(i).y > minmax_of_array)
-                minmax_of_array = hygroData.at(i).y
-        var minmax_of_legend = minmax_of_array*1.20;
-        if (minmax_of_legend > 100.0)
-            minmax_of_legend = 100.0; // no need to go higher than 100% soil moisture
+        if (myDevice.hygroMax*1.20 > 100.0)
+            axisHygro.max = 100.0; // no need to go higher than 100% soil moisture
         else
-            axisHygro.max = minmax_of_legend;
+            axisHygro.max = myDevice.hygroMax*1.20;
 
         // Max axis for temperature
-        i = 0
-        minmax_of_array = 0
-        for (;i < tempData.count; i++)
-            if (tempData.at(i).y > minmax_of_array)
-                minmax_of_array = tempData.at(i).y
-        minmax_of_legend = minmax_of_array*1.20;
-        axisTemp.max = minmax_of_legend;
+        axisTemp.max = myDevice.tempMax*1.20;
 
         // Max axis for conductivity
-        i = 0
-        minmax_of_array = 0
-        for (; i < conduData.count; i++)
-            if (conduData.at(i).y > minmax_of_array)
-                minmax_of_array = conduData.at(i).y
-        minmax_of_legend = minmax_of_array*2.0;
-        axisCondu.max = minmax_of_legend;
+        axisCondu.max = myDevice.conduMax*2.0;
 
         // Min axis computation, only for thermometers
         if (!myDevice.hasSoilMoistureSensor()) {
-            i = 0
-            minmax_of_array = 100
-            for (; i < hygroData.count; i++)
-                if (hygroData.at(i).y < minmax_of_array)
-                    minmax_of_array = hygroData.at(i).y
-            minmax_of_legend = minmax_of_array*0.80;
-            axisHygro.min = minmax_of_legend;
-            // Min axis
-            i = 0
-            minmax_of_array = 100
-            for (; i < tempData.count; i++)
-                if (tempData.at(i).y < minmax_of_array)
-                    minmax_of_array = tempData.at(i).y
-            minmax_of_legend = minmax_of_array*0.80;
-            axisTemp.min = minmax_of_legend;
+            axisHygro.min = myDevice.hygroMin*0.80;
+            axisTemp.min = myDevice.tempMin*0.80;
         }
 
         //// ADJUSTMENTS
@@ -153,13 +119,7 @@ Item {
                 tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
-                i = 0
-                minmax_of_array = 0
-                for (;i < lumiData.count; i++)
-                    if (lumiData.at(i).y > minmax_of_array)
-                        minmax_of_array = lumiData.at(i).y
-                minmax_of_legend = minmax_of_array*1.20;
-                axisLumi.max = minmax_of_legend;
+                axisLumi.max = myDevice.lumiMax*1.20;
             } else {
                 hygroData.width = 3 // Soil moisture is primary
             }

@@ -94,6 +94,15 @@ class Device: public QObject
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY dataUpdated)
 
+    Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int tempMin READ getTempMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int tempMax READ getTempMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int lumiMin READ getLumiMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int lumiMax READ getLumiMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
+
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
@@ -107,6 +116,7 @@ Q_SIGNALS:
     void statusUpdated();
     void sensorUpdated();
     void dataUpdated();
+    void minmaxUpdated();
     void limitsUpdated();
 
     void deviceUpdated(Device *d);
@@ -138,9 +148,19 @@ protected:
     int m_luminosity = -99;
     int m_conductivity = -99;
 
-    // BLE associated data
+    // SQL associated data
     QString m_locationName;
     QString m_plantName;
+
+    // SQL min/max data
+    float m_tempMin = 999.f;
+    float m_tempMax = -99.f;
+    int m_hygroMin = 99999;
+    int m_hygroMax = -99;
+    int m_luminosityMin = 99999;
+    int m_luminosityMax = -99;
+    int m_conductivityMin = 99999;
+    int m_conductivityMax = -99;
 
     // BLE device limits
     int m_limitHygroMin = 15;
@@ -238,6 +258,15 @@ public slots:
 
     QString getPlantName() { return m_plantName; }
     void setPlantName(const QString &name);
+
+    int getHygroMin() const { return m_hygroMin; }
+    int getHygroMax() const { return m_hygroMax; }
+    int getTempMin() const { return m_tempMin; }
+    int getTempMax() const { return m_tempMax; }
+    int getLumiMin() const { return m_luminosityMin; }
+    int getLumiMax() const { return m_luminosityMax; }
+    int getConduMin() const { return m_conductivityMin; }
+    int getConduMax() const { return m_conductivityMax; }
 
     // BLE device limits
     int getLimitHygroMin() const { return m_limitHygroMin; }

@@ -47,7 +47,7 @@ Item {
             axisY0.max = 2000
             myBarSet.color = Theme.colorYellow
         } else if (graphDataSelected === "conductivity") {
-            axisY0.max = 750
+            axisY0.max = 1000
             myBarSet.color = Theme.colorRed
         }
         myBarSet.borderColor = "transparent"
