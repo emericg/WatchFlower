@@ -738,7 +738,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="594"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait mee op de achtergrond en activeert op gezette tijden om sensordata te verversen.</translation>
+        <translation>WatchFlower draait op de achtergrond in systeemvak en wordt op gezette tijden actief om sensordata te verversen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="632"/>
