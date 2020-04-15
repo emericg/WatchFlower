@@ -753,13 +753,13 @@
     <message>
         <location filename="../qml/Settings.qml" line="704"/>
         <source>Plant sensors</source>
-        <translation>Plantsensors</translation>
+        <translation>Plantsensoren</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="742"/>
         <location filename="../qml/Settings.qml" line="1034"/>
         <source>Update interval</source>
-        <translation>Update interval</translation>
+        <translation>Update-interval</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="758"/>
@@ -888,7 +888,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation>Zo dus!</translation>
+        <translation>Zie zo!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
