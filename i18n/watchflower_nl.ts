@@ -56,7 +56,7 @@
     <message>
         <location filename="../qml/About.qml" line="409"/>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation>Een plantobservatieapp voor Xiaomi / MiJia &apos;Flower Care&apos; en &apos;Ropot&apos; bluetooth sensoren en thermometers.</translation>
+        <translation>Een plantobservatieapp voor Xiaomi / MiJia &apos;Flower Care&apos; en &apos;Ropot&apos; bluetoothsensoren en thermometers.</translation>
     </message>
 </context>
 <context>
@@ -853,7 +853,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation>Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetooth sensoren&lt;/b&gt; in je omgeving.</translation>
+        <translation>Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in je omgeving.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
