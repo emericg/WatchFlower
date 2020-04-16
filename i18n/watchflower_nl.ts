@@ -733,7 +733,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="578"/>
         <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Op gezette tijden activeren om sensordata te verversen. Alleen als bluetooth (of bluetooth-bediening) is ingeschakeld.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="594"/>
@@ -743,7 +743,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="632"/>
         <source>Enable notifications</source>
-        <translation>Notificaties inschakelen</translation>
+        <translation>Meldingen inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="661"/>
@@ -858,12 +858,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation>Je kunt altijd &lt;b&gt;opnieuw scannen&lt;/b&gt; naar nieuwe apparaten, of deze &lt;b&gt;verwijderen&lt;/b&gt; mocht je dat willen.</translation>
+        <translation>Je kunt altijd &lt;b&gt;opnieuw scannen&lt;/b&gt; naar nieuwe apparaten, of deze weer &lt;b&gt;verwijderen&lt;/b&gt; mocht je dat willen.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
         <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
-        <translation>Eenmaal &lt;b&gt;gekoppeld&lt;/b&gt; zullen de sensors met tussenpozen hun data synchroniseren.</translation>
+        <translation>Eenmaal &lt;b&gt;gekoppeld&lt;/b&gt; zullen de sensoren hun data met tussenpozen synchroniseren.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
