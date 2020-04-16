@@ -785,12 +785,12 @@
     <message>
         <location filename="../qml/Settings.qml" line="916"/>
         <source>Monthly</source>
-        <translation type="unfinished"></translation>
+        <translation>Moanne</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="941"/>
         <source>Weekly</source>
-        <translation type="unfinished"></translation>
+        <translation>Wike</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="996"/>
