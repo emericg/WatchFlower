@@ -190,21 +190,34 @@ Item {
     onWidthChanged: {
         if (isPhone) {
             if (screenOrientation === Qt.PortraitOrientation) {
-                contentGrid.columns = 1
-                contentGrid.rows = 2
+                contentGrid_lvl1.columns = 1
+                contentGrid_lvl1.rows = 2
                 rectangleHeader.color = Theme.colorForeground
             } else {
-                contentGrid.columns = 2
-                contentGrid.rows = 1
+                contentGrid_lvl1.columns = 2
+                contentGrid_lvl1.rows = 1
                 rectangleHeader.color = "transparent"
             }
+        }
+        if (isDesktop) {
+/*
+            if (deviceScreenData.width < deviceScreenData.height) {
+                contentGrid_lvl2.columns = 1
+                contentGrid_lvl2.rows = 2
+                rectangleHeader.color = Theme.colorForeground
+            } else {
+                contentGrid_lvl2.columns = 2
+                contentGrid_lvl2.rows = 1
+                rectangleHeader.color = "transparent"
+            }
+*/
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Grid {
-        id: contentGrid
+        id: contentGrid_lvl1
         columns: 1
         rows: 2
         spacing: (rows > 1) ? 12 : 0
@@ -218,14 +231,19 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        Column {
-            width: contentGrid.width / contentGrid.columns
+        Grid {
+            id: contentGrid_lvl2
+            width: contentGrid_lvl1.width / contentGrid_lvl1.columns
+            columns: 1
+            rows: 2
             spacing: 8
+
+            ////////
 
             Rectangle {
                 id: rectangleHeader
                 color: Theme.colorForeground
-                width: parent.width
+                width: parent.width / parent.columns
                 height: columnHeader.height + 12
                 z: 5
 
@@ -510,21 +528,21 @@ Item {
                 }
             }
 
-            ////////////////
+            ////////
 
             Loader {
                 id: indicatorsLoader
-                width: parent.width
+                width: parent.width / parent.columns
                 //height: columnData.height + 16
             }
         }
 
-        ////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         Loader {
             id: graphLoader
-            width: (contentGrid.width / contentGrid.columns)
-            height: (contentGrid.columns === 1) ? (contentGrid.height - rectangleHeader.height - indicatorsLoader.height - (contentGrid.rows > 1 ? contentGrid.spacing : 0)) : contentGrid.height
+            width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
+            height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - rectangleHeader.height - indicatorsLoader.height - (contentGrid_lvl1.rows > 1 ? contentGrid_lvl1.spacing : 0)) : contentGrid_lvl1.height
         }
     }
 }
