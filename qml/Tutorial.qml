@@ -178,7 +178,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Click on sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.")
+                    text: qsTr("Click on one of the sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -221,7 +221,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("Set <b>limits</b> like <b>optimal water level</b> or <b>temperature range</b> and more depending on available sensors metrics.")
+                    text: qsTr("Set <b>limits</b> like <b>optimal moisture level</b> or <b>temperature range</b> and more depending on available sensors metrics.")
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter

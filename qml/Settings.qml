@@ -222,7 +222,7 @@ Item {
                     anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Automatique dark mode")
+                    text: qsTr("Automatic dark mode")
                     font.pixelSize: 16
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -380,7 +380,7 @@ Item {
 
                 visible: element_bluetoothControl.visible
 
-                text: qsTr("WatchFlower can power on your device's Bluetooth in order to operate.")
+                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
