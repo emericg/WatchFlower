@@ -197,7 +197,8 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) // desktop section
+
     // Set systray?
     st->initSettings(&app, window);
     if (sm->getSysTray())
@@ -211,16 +212,11 @@ int main(int argc, char *argv[])
     {
         window->setVisibility(QWindow::Minimized);
     }
-#endif
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) && !defined(FORCE_MOBILE_UI)
 #if defined(Q_OS_LINUX)
     // GNOME hack for the mysterious disappearences of the tray icon...
     // Or just use gnome-shell-extension-appindicator instead of TopIcon Plus (sorry)...
     //QObject::connect(&app, &SingleApplication::instanceStarted, st, &SystrayManager::REinstallSystray);
-#endif
-    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
-    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 #endif
 
 #if defined(Q_OS_MACOS)
@@ -228,6 +224,8 @@ int main(int argc, char *argv[])
     QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::show);
     QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::raise);
 #endif
+
+#endif // desktop section
 
     return app.exec();
 }

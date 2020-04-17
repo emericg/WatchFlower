@@ -34,9 +34,6 @@ exists(assets/demo/demo_bdd.db) {
     RESOURCES += assets/demo/demo.qrc
 }
 
-# Force mobile UI
-#DEFINES += FORCE_MOBILE_UI
-
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \
