@@ -10,8 +10,6 @@ Item {
     height: columnData.height + 16
     z: 5
 
-    property bool indicatorsDynascale: false
-
     function updateData() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (!myDevice.hasSoilMoistureSensor()) return
@@ -71,7 +69,7 @@ Item {
 
             value: myDevice.deviceHumidity
             valueMin: 0
-            valueMax: indicatorsDynascale ? myDevice.hygroMax*1.10 : 50
+            valueMax: settingsManager.dynaScale ? myDevice.hygroMax*1.10 : 50
             limitMin: myDevice.limitHygroMin
             limitMax: myDevice.limitHygroMax
         }
@@ -92,8 +90,8 @@ Item {
             }
 
             value: tempHelper(myDevice.deviceTemp)
-            valueMin: tempHelper(indicatorsDynascale ? myDevice.tempMin*0.80 : tempHelper(0))
-            valueMax: tempHelper(indicatorsDynascale ? myDevice.tempMax*1.20 : tempHelper(40))
+            valueMin: tempHelper(settingsManager.dynaScale ? myDevice.tempMin*0.80 : tempHelper(0))
+            valueMax: tempHelper(settingsManager.dynaScale ? myDevice.tempMax*1.20 : tempHelper(40))
             limitMin: tempHelper(myDevice.limitTempMin)
             limitMax: tempHelper(myDevice.limitTempMax)
         }
@@ -109,7 +107,7 @@ Item {
 
             value: myDevice.deviceLuminosity
             valueMin: 0
-            valueMax: indicatorsDynascale ? myDevice.lumiMax*1.10 : 10000
+            valueMax: settingsManager.dynaScale ? myDevice.lumiMax*1.10 : 10000
             limitMin: myDevice.limitLumiMin
             limitMax: myDevice.limitLumiMax
         }
@@ -125,7 +123,7 @@ Item {
 
             value: myDevice.deviceConductivity
             valueMin: 0
-            valueMax: indicatorsDynascale ? myDevice.conduMax*1.10 : 1000
+            valueMax: settingsManager.dynaScale ? myDevice.conduMax*1.10 : 1000
             limitMin: myDevice.limitConduMin
             limitMax: myDevice.limitConduMax
         }

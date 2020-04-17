@@ -137,6 +137,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/bigIndicator"))
             m_bigIndicator = settings.value("settings/bigIndicator").toBool();
 
+        if (settings.contains("settings/dynaScale"))
+            m_dynaScale = settings.value("settings/dynaScale").toBool();
+
         status = true;
     }
     else
@@ -171,6 +174,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/bigWidget", m_bigWidget);
         settings.setValue("settings/bigIndicator", m_bigIndicator);
         settings.setValue("settings/tempUnit", m_tempUnit);
+        settings.setValue("settings/dynaScale", m_dynaScale);
 
         if (settings.status() == QSettings::NoError)
         {
@@ -468,6 +472,8 @@ void SettingsManager::resetSettings()
     Q_EMIT bigWidgetChanged();
     m_bigIndicator = false;
     Q_EMIT bigIndicatorChanged();
+    m_dynaScale = false;
+    Q_EMIT dynaScaleChanged();
 
     // Database
     resetDatabase();
@@ -628,6 +634,16 @@ void SettingsManager::setBigIndicator(const bool value)
         m_bigIndicator = value;
         writeSettings();
         Q_EMIT bigIndicatorChanged();
+    }
+}
+
+void SettingsManager::setDynaScale(const bool value)
+{
+    if (m_dynaScale != value)
+    {
+        m_dynaScale = value;
+        writeSettings();
+        Q_EMIT dynaScaleChanged();
     }
 }
 

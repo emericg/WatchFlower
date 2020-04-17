@@ -822,6 +822,52 @@ Item {
                 }
             }
 
+            Item {
+                id: element_dynascale
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                ImageSvg {
+                    id: image_dynascale
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
+                }
+
+                Text {
+                    id: text_dynascale
+                    height: 40
+                    anchors.right: switch_dynascale.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_dynascale.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Dynamic scale for indicators")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_dynascale
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    Component.onCompleted: checked = settingsManager.dynaScale
+                    onCheckedChanged: settingsManager.dynaScale = checked
+                }
+            }
+
             ////////
 
             Item {
@@ -839,7 +885,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
                 }
 
                 Text {

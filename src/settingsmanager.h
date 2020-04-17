@@ -61,6 +61,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool graphShowDots READ getGraphShowDots WRITE setGraphShowDots NOTIFY graphShowDotsChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
+    Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
 
     QSize m_appSize;
     QSize m_appPosition;
@@ -80,6 +81,7 @@ class SettingsManager: public QObject
     bool m_graphShowDots = false;
     bool m_bigWidget = false;
     bool m_bigIndicator = false;
+    bool m_dynaScale = false;
 
     // Singleton
     static SettingsManager *instance;
@@ -110,6 +112,7 @@ Q_SIGNALS:
     void graphShowDotsChanged();
     void bigWidgetChanged();
     void bigIndicatorChanged();
+    void dynaScaleChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -158,6 +161,9 @@ public:
 
     bool getBigIndicator() const { return m_bigIndicator; }
     void setBigIndicator(const bool value);
+
+    bool getDynaScale() const { return m_dynaScale; }
+    void setDynaScale(const bool value);
 
     // Utils
     Q_INVOKABLE void resetSettings();
