@@ -42,6 +42,7 @@ struct InstancesInfo {
     quint32 secondary;
     qint64 primaryPid;
     quint16 checksum;
+    char primaryUser[128];
 };
 
 struct ConnectionInfo {
@@ -69,8 +70,9 @@ public:
     Q_DECLARE_PUBLIC(SingleApplication)
 
     SingleApplicationPrivate( SingleApplication *q_ptr );
-     ~SingleApplicationPrivate();
+    ~SingleApplicationPrivate();
 
+    QString getUsername();
     void genBlockServerName();
     void initializeMemoryBlock();
     void startPrimary();
@@ -78,6 +80,7 @@ public:
     void connectToPrimary(int msecs, ConnectionType connectionType );
     quint16 blockChecksum();
     qint64 primaryPid();
+    QString primaryUser();
     void readInitMessageHeader(QLocalSocket *socket);
     void readInitMessageBody(QLocalSocket *socket);
 
