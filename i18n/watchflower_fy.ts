@@ -258,7 +258,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Foar keamerplanten leit it ideale fochtpersintaazje fan de potgrûn tusken 15 en 50%. By fetplanten mei dat sakje oant 7%. Tropyske planten hawwe graach mear wetter.</translation>
+        <translation>Keamerplanten steane leafst yn potgrûn mei in fochtpersintaazje fan 15 oant 50%. Tropyske planten steane graach wieter, fetplanten graach droeger. Dêr mei it sakje oant 7%.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation>Foar keamerplanten is 15 oant 25°C (59 oant 77°F) in noflike temperatuer. Mar in inkelde plant kin -2°C (28°F) ferneare.</translation>
+        <translation>Foar keamerplanten is 15 oant 25°C (59 oant 77°F) in noflike temperatuer. Mar in inkelde plant kin -2°C (28°F) en leger ferneare.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Atsto in hygrometer hast dan kinst de luchtfochtigens yn 'e gaten hâlde, sa't dizze tusken de 40 en 60% bliuwt (foar tropyske planten mei dat heger).</translation>
+        <translation>Atsto in hygrometer hast, dan kinst de luchtfochtigens yn 'e gaten hâlde sa't dizze tusken de 40 en 60% bliuwt (foar tropyske planten mei dat heger).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
@@ -312,7 +312,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="528"/>
         <source>indirect</source>
-        <translation>Yndirekt</translation>
+        <translation>yndirekt</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="539"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Guon planten stean graach de hiele of in part fan de dei yn de folle sinne. Mar de measte keamerplanten hawwe leaver gjin direkt sinneljocht. Set se dêrom net foar in rút op it súden!</translation>
+        <translation>Guon planten stean graach de hiele of in part fan de dei yn 'e folle sinne. De measte keamerplanten hawwe lykwols leaver gjin direkt sinneljocht. Set se dêrom net foar in rút op it súden!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
@@ -355,7 +355,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="156"/>
         <source>Update queued. </source>
-        <translation>Update yn 'e rige setten.</translation>
+        <translation>Wurdt aanst bywurke. </translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="158"/>
@@ -481,7 +481,7 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="32"/>
         <source>Are you sure you want to delete selected device(s)?</source>
-        <translation>Bisto der wis fan datsto de keazen sensor/sensoaren fuorthelje wolst?</translation>
+        <translation>Bisto wis datsto de keazen sensor/sensoaren fuorthelje wolst?</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
@@ -555,7 +555,7 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Enable Bluetooth</source>
-        <translation>Bleutooth ynskeakelje</translation>
+        <translation>Bluetooth ynskeakelje</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
@@ -581,7 +581,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
         <source>Official informations</source>
-        <translation type="unfinished"></translation>
+        <translation>Offisjele ynformaasje</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="594"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait op 'e eftergrûn yn systeemfak en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
+        <translation>WatchFlower draait op 'e eftergrûn yn systeemfek en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="632"/>
