@@ -76,14 +76,21 @@ Item {
         tempBox.height = ((height * 0.33) > 256) ? (height * 0.33) : 256
     }
 
+    property var deviceScreenChart: null
+
     function loadDevice() {
         if (typeof myDevice === "undefined" || !myDevice) return
         if (myDevice.hasSoilMoistureSensor()) return
         //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
 
         updateHeader()
-        updateData()
+        if (graphLoader.status != Loader.Ready) {
+            graphLoader.source = "ItemAioLineCharts.qml"
+            deviceScreenChart = graphLoader.item
+        }
         deviceScreenChart.loadGraph()
+
+        updateData()
     }
 
     function updateHeader() {
@@ -296,9 +303,9 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true
                     propagateComposedEvents: true
 
+                    hoverEnabled: true
                     onEntered: { imageEditLocation.visible = true; }
                     onExited: {
                         if (textInputLocation.text && !textInputLocation.focus) {
@@ -330,7 +337,6 @@ Item {
                     anchors.rightMargin: 0
 
                     hoverEnabled: true
-
                     onEntered: { imageEditLocation.visible = true; }
                     onExited: {
                         if (textInputLocation.text && !textInputLocation.focus) {
@@ -339,6 +345,7 @@ Item {
                             imageEditLocation.visible = true
                         }
                     }
+
                     onClicked: textInputLocation.forceActiveFocus()
                     onPressed: textInputLocation.forceActiveFocus()
 
@@ -359,20 +366,11 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item {
-        id: graphBox
+    Loader {
+        id: graphLoader
         anchors.top: tempBox.bottom
-        anchors.topMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        ItemAioLineCharts {
-            id: deviceScreenChart
-            anchors.fill: parent
-        }
     }
 }
