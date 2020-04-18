@@ -708,7 +708,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kan bluetooth op je apparaat inschakelen.</translation> 
+        <translation>WatchFlower kan bluetooth op je apparaat inschakelen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="419"/>
@@ -765,12 +765,12 @@
         <location filename="../qml/Settings.qml" line="758"/>
         <location filename="../qml/Settings.qml" line="1050"/>
         <source> h.</source>
-        <translation>u.</translation>
+        <translation> u.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="806"/>
         <source>Use bigger indicators</source>
-        <translation type>Gebruik grotere benamingen</translation>
+        <translation>Gebruik grotere benamingen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="854"/>

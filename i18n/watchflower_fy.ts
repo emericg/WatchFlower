@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.1" language="fy_NL">
 <context>
     <name>About</name>
     <message>
@@ -105,7 +105,7 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="179"/>
         <source>Retry</source>
-        <translation>Op 'e nij</translation>
+        <translation>Op &apos;e nij</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="197"/>
@@ -126,7 +126,7 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="114"/>
         <source>Update queued. </source>
-        <translation>Update yn 'e rige setten.</translation>
+        <translation type="unfinished">Update yn &apos;e rige setten. </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="116"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Atsto in hygrometer hast, dan kinst de luchtfochtigens yn 'e gaten hâlde sa't dizze tusken de 40 en 60% bliuwt (foar tropyske planten mei dat heger).</translation>
+        <translation>Atsto in hygrometer hast, dan kinst de luchtfochtigens yn &apos;e gaten hâlde sa&apos;t dizze tusken de 40 en 60% bliuwt (foar tropyske planten mei dat heger).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Guon planten stean graach de hiele of in part fan de dei yn 'e folle sinne. De measte keamerplanten hawwe lykwols leaver gjin direkt sinneljocht. Set se dêrom net foar in rút op it súden!</translation>
+        <translation>Guon planten stean graach de hiele of in part fan de dei yn &apos;e folle sinne. De measte keamerplanten hawwe lykwols leaver gjin direkt sinneljocht. Set se dêrom net foar in rút op it súden!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="634"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>It fruchtberensgehalte fan de grûn is graadmjitter foar de beskikberens fan fiedingsstoffen yn 'e grûn. Brûk dongstoffen (ôfmjitten) om de fiedingswearde op peil te hâlden.</translation>
+        <translation>It fruchtberensgehalte fan de grûn is graadmjitter foar de beskikberens fan fiedingsstoffen yn &apos;e grûn. Brûk dongstoffen (ôfmjitten) om de fiedingswearde op peil te hâlden.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
@@ -385,7 +385,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="235"/>
         <source>Updating...</source>
-        <translation>Bywurkje... </translation>
+        <translation>Bywurkje...</translation>
     </message>
 </context>
 <context>
@@ -398,7 +398,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="136"/>
         <source>Queued</source>
-        <translation>Yn 'e rige</translation>
+        <translation>Yn &apos;e rige</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="140"/>
@@ -560,7 +560,7 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Retry detection</source>
-        <translation>Op 'e nij sykje</translation>
+        <translation>Op &apos;e nij sykje</translation>
     </message>
 </context>
 <context>
@@ -708,7 +708,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kin bluetooth op dyn apparaat ynskeakelje.</translation> 
+        <translation>WatchFlower kin bluetooth op dyn apparaat ynskeakelje.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="419"/>
@@ -728,7 +728,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="549"/>
         <source>Enable background updates</source>
-        <translation>Bywurkjen op 'e eftergrûn ynskeakelje</translation>
+        <translation>Bywurkjen op &apos;e eftergrûn ynskeakelje</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="578"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="594"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait op 'e eftergrûn yn systeemfek en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
+        <translation>WatchFlower draait op &apos;e eftergrûn yn systeemfek en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="632"/>
@@ -765,12 +765,12 @@
         <location filename="../qml/Settings.qml" line="758"/>
         <location filename="../qml/Settings.qml" line="1050"/>
         <source> h.</source>
-        <translation>o.</translation>
+        <translation> o.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="806"/>
         <source>Use bigger indicators</source>
-        <translation type>Brûk gruttere oantsjuttings</translation>
+        <translation>Brûk gruttere oantsjuttings</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="854"/>
@@ -858,7 +858,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation>Do kinst altyd &lt;b&gt;op 'e nij skenne&lt;/b&gt; nei nije apparaten, of dizze wer &lt;b&gt;fuorthelje&lt;/b&gt; atso dat wolst.</translation>
+        <translation>Do kinst altyd &lt;b&gt;op &apos;e nij skenne&lt;/b&gt; nei nije apparaten, of dizze wer &lt;b&gt;fuorthelje&lt;/b&gt; atso dat wolst.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
@@ -874,7 +874,7 @@
         <location filename="../qml/Tutorial.qml" line="205"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
         <translation>Do kinst dyn &lt;b&gt;plant beneame&lt;/b&gt; en de &lt;b&gt;lokaasje&lt;/b&gt; fan it apparaat oanjaan.</translation>
-
+    </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
