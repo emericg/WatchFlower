@@ -56,7 +56,7 @@
     <message>
         <location filename="../qml/About.qml" line="409"/>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation>Een plantobservatieapp voor Xiaomi / MiJia &apos;Flower Care&apos; en &apos;Ropot&apos; bluetoothsensoren en -thermometers.</translation>
+        <translation>Een plantobservatieapp voor Xiaomi / MiJia &apos;Flower Care&apos; en &apos;Ropot&apos; bluetoothsensoren en thermometers.</translation>
     </message>
 </context>
 <context>
@@ -258,7 +258,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Voor kamerplanten ligt het ideale vochtgehalte van de potgrond tussen 15 en 50%. Bij vetplanten mag het dalen tot 7%. Tropische planten hebben graag meer water.</translation>
+        <translation>Kamerplanten groeien het best in potgrond met een vochtgehalte van 15 tot 50%. Tropische planten staan graag natter, vetplanten juist droger. Daar mag het dalen tot 7%.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Als je een hygrometer hebt kun je de luchtvochtigheid bewaken, zodat deze tussen de 40 en 60% blijft (voor tropische planten mag dat hoger).</translation>
+        <translation>Als je een hygrometer hebt kun je de luchtvochtigheid bewaken zodat deze tussen de 40 en 60% blijft (voor tropische planten mag dat hoger).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="474"/>
@@ -555,7 +555,7 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Enable Bluetooth</source>
-        <translation>Bleutooth inschakelen</translation>
+        <translation>Bluetooth inschakelen</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
@@ -581,12 +581,12 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
         <source>Official informations</source>
-        <translation type="unfinished"></translation>
+        <translation>Officiële informatie</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
         <source>Launch detection</source>
-        <translation>Start zoeken</translation>
+        <translation>Start het zoeken</translation>
     </message>
 </context>
 <context>
