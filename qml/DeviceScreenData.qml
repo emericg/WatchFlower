@@ -236,7 +236,7 @@ Item {
             width: contentGrid_lvl1.width / contentGrid_lvl1.columns
             columns: 1
             rows: 2
-            spacing: 8
+            spacing: 6
 
             ////////
 
