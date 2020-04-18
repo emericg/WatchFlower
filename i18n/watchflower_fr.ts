@@ -221,22 +221,22 @@
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="280"/>
+        <location filename="../qml/DeviceScreenData.qml" line="298"/>
         <source>Plant</source>
         <translation>Plante</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="385"/>
+        <location filename="../qml/DeviceScreenData.qml" line="403"/>
         <source>Location</source>
         <translation>Lieu</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="491"/>
+        <location filename="../qml/DeviceScreenData.qml" line="509"/>
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="504"/>
+        <location filename="../qml/DeviceScreenData.qml" line="522"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
@@ -554,32 +554,32 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="143"/>
+        <location filename="../qml/DeviceThermometer.qml" line="150"/>
         <source>humidity</source>
         <translation>humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="156"/>
+        <location filename="../qml/DeviceThermometer.qml" line="163"/>
         <source>Update queued. </source>
         <translation>Mise à jour en attente. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="158"/>
+        <location filename="../qml/DeviceThermometer.qml" line="165"/>
         <source>Connecting... </source>
         <translation>Connexion... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="160"/>
+        <location filename="../qml/DeviceThermometer.qml" line="167"/>
         <source>Updating... </source>
         <translation>Mise à jour... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="168"/>
+        <location filename="../qml/DeviceThermometer.qml" line="175"/>
         <source>Offline! </source>
         <translation>Hors ligne ! </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="164"/>
+        <location filename="../qml/DeviceThermometer.qml" line="171"/>
         <source>Just synced!</source>
         <translation>Synchronisé à l&apos;instant !</translation>
     </message>
@@ -588,12 +588,12 @@
         <translation type="vanished">Synchronisé</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="166"/>
+        <location filename="../qml/DeviceThermometer.qml" line="173"/>
         <source>Synced %1 ago</source>
         <translation>Synchronisé il y a %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="235"/>
+        <location filename="../qml/DeviceThermometer.qml" line="242"/>
         <source>Updating...</source>
         <translation>Mise à jour...</translation>
     </message>
@@ -668,7 +668,7 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="248"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
         <source>at</source>
         <translation>à</translation>
     </message>
@@ -707,27 +707,27 @@
 <context>
     <name>ItemIndicatorsCompact</name>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="65"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="82"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="81"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="100"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="103"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="116"/>
+        <location filename="../qml/components/ItemIndicatorsCompact.qml" line="119"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -735,27 +735,27 @@
 <context>
     <name>ItemIndicatorsFilled</name>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Moisture</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="65"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Humidity</source>
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="82"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="81"/>
         <source>Temperature</source>
         <translation>Température</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="100"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="103"/>
         <source>Luminosity</source>
         <translation>Luminosité</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="116"/>
+        <location filename="../qml/components/ItemIndicatorsFilled.qml" line="119"/>
         <source>Fertility</source>
         <translation>Fertilité</translation>
     </message>
@@ -937,9 +937,8 @@
         <translation>Thème de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="225"/>
         <source>Automatique dark mode</source>
-        <translation>Mode sombre automatique</translation>
+        <translation type="vanished">Mode sombre automatique</translation>
     </message>
     <message>
         <source>Dark mode enables between 21 PM and 8 AM.</source>
@@ -951,9 +950,8 @@
         <translation>Contrôle du Bluetooth</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower peut activer le Bluetooth de votre appareil pour fonctionner.</translation>
+        <translation type="vanished">WatchFlower peut activer le Bluetooth de votre appareil pour fonctionner.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="419"/>
@@ -1075,15 +1073,20 @@
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="758"/>
-        <location filename="../qml/Settings.qml" line="1050"/>
+        <location filename="../qml/Settings.qml" line="1096"/>
         <source> h.</source>
         <translation> h.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="742"/>
-        <location filename="../qml/Settings.qml" line="1034"/>
+        <location filename="../qml/Settings.qml" line="1080"/>
         <source>Update interval</source>
         <translation>Intervalle de rafraichissement</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="225"/>
+        <source>Automatic dark mode</source>
+        <translation>Mode sombre automatique</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="294"/>
@@ -1091,37 +1094,47 @@
         <translation>Agrandir les widgets</translation>
     </message>
     <message>
+        <location filename="../qml/Settings.qml" line="383"/>
+        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
+        <translation>WatchFlower peut activer le Bluetooth de votre appareil pour fonctionner.</translation>
+    </message>
+    <message>
         <location filename="../qml/Settings.qml" line="806"/>
         <source>Use bigger indicators</source>
         <translation>Agrandir les indicateurs</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="854"/>
-        <source>Show graph dots</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/Settings.qml" line="852"/>
+        <source>Dynamic scale for indicators</source>
+        <translation>Échelle dynamique dans les indicateurs</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="996"/>
+        <location filename="../qml/Settings.qml" line="900"/>
+        <source>Show graph dots</source>
+        <translation>Afficher les points dans les graphs</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="1042"/>
         <source>Thermometers</source>
         <translation>Thermomètres</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1098"/>
+        <location filename="../qml/Settings.qml" line="1144"/>
         <source>Temperature unit</source>
         <translation>Unité de température</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1112"/>
+        <location filename="../qml/Settings.qml" line="1158"/>
         <source>°C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1138"/>
+        <location filename="../qml/Settings.qml" line="1184"/>
         <source>°F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="902"/>
+        <location filename="../qml/Settings.qml" line="948"/>
         <source>Histograms</source>
         <translation>Histogrammes</translation>
     </message>
@@ -1131,12 +1144,12 @@
         <translation type="vanished">Historique</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="916"/>
+        <location filename="../qml/Settings.qml" line="962"/>
         <source>Monthly</source>
         <translation>Mensuel</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="941"/>
+        <location filename="../qml/Settings.qml" line="987"/>
         <source>Weekly</source>
         <translation>Hebdomadaire</translation>
     </message>
@@ -1255,9 +1268,8 @@
         <translation>Vous pouvez &lt;b&gt;donner des noms à vos plantes&lt;/b&gt; et indiquer &lt;b&gt;l&apos;endroit&lt;/b&gt; ou se trouvent vos capteurs.</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation>Régler des limites telles que le &lt;b&gt;niveau d&apos;arrosage optimal&lt;/b&gt; ou la &lt;b&gt;plage de température&lt;/b&gt; et plus, suivant les mesures effectuées par vos capteurs.</translation>
+        <translation type="vanished">Régler des limites telles que le &lt;b&gt;niveau d&apos;arrosage optimal&lt;/b&gt; ou la &lt;b&gt;plage de température&lt;/b&gt; et plus, suivant les mesures effectuées par vos capteurs.</translation>
     </message>
     <message>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; and others, depending on sensors metrics.</source>
@@ -1269,9 +1281,18 @@
         <translation>Une fois les capteurs &lt;b&gt;appairés&lt;/b&gt;, l&apos;application va périodiquement &lt;b&gt;synchroniser&lt;/b&gt; leurs données.</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="181"/>
         <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
+        <translation type="vanished">Cliquez sur les capteurs pour accéder aux &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;historiques des données&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="181"/>
+        <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
         <translation>Cliquez sur les capteurs pour accéder aux &lt;b&gt;informations détaillées&lt;/b&gt;, &lt;b&gt;graphiques&lt;/b&gt; et &lt;b&gt;historiques des données&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="224"/>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation>Régler des limites telles que le &lt;b&gt;niveau d&apos;arrosage optimal&lt;/b&gt; ou la &lt;b&gt;plage de température&lt;/b&gt; et plus, suivant les mesures effectuées par vos capteurs.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="244"/>
