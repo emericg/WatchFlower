@@ -10,17 +10,17 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
-Available in English, French, German, Spanish and Russian!  
+Available in English, Dutch, French, German, Spanish and Russian!  
 
 Application developped by [Emeric Grange](https://emeric.io/).
 Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 ### Features
 
-* Support "plant sensors" and thermometers
+* Support plant sensors and thermometers
+* Name your plants and set your own limits for optimal plants care
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
-* Set your own limits for plants care
 * Configurable update intervals
 * Background updates & notifications (desktop only)
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
