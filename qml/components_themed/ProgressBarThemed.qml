@@ -8,11 +8,14 @@ ProgressBar {
     value: 0.5
     height: 6
 
+    property var colorBackground: Theme.colorForeground
+    property var colorForeground: Theme.colorPrimary
+
     // theming
     background: Rectangle {
         implicitWidth: 200
         implicitHeight: 6
-        color: Theme.colorForeground
+        color: control.colorBackground
     }
 
     contentItem: Item {
@@ -22,7 +25,7 @@ ProgressBar {
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
-            color: Theme.colorPrimary
+            color: control.colorForeground
         }
     }
 }

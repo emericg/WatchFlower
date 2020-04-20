@@ -84,7 +84,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
-                text: qsTr("min") //: Short for minimum
+                //: Short for minimum
+                text: qsTr("min")
                 font.pixelSize: 12
                 visible: (limitMin > 0 && limitMin > valueMin) && (x + width + 4 <= item_data.width)
                 color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
@@ -122,7 +123,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
-                text: qsTr("max") //: Short for maximum
+                //: Short for maximum
+                text: qsTr("max")
                 font.pixelSize: 12
                 visible: (limitMax > 0 && limitMax < valueMax)
                 color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast

@@ -11,9 +11,11 @@ RangeSlider {
     snapMode: RangeSlider.SnapAlways
 
     property string unit: ""
+    property bool kshort: false
     property string colorBg: Theme.colorComponent
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
+
     property int hhh: 16
 
     background: Rectangle {
@@ -60,7 +62,7 @@ RangeSlider {
                 var vvalue = first.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
+                return ((kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
             color: colorTxt
             font.pixelSize: 10
@@ -93,7 +95,7 @@ RangeSlider {
                 var vvalue = second.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
+                return ((kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
             font.pixelSize: 10
             font.bold: true

@@ -491,6 +491,7 @@ Item {
                     colorBg: Theme.colorYellow
                     colorFg: Theme.colorGreen
                     unit: "k"
+                    kshort: true
                     from: 0
                     to: 10000
                     stepSize: 1000
