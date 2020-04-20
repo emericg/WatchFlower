@@ -72,16 +72,9 @@ Item {
         // Plant
         if (myDevice.hasSoilMoistureSensor()) {
             itemPlant.visible = true
-
-            textInputPlant.text = myDevice.devicePlantName
-            imageEditPlant.visible = !textInputPlant.text || textInputPlant.focus
         } else {
             itemPlant.visible = false
         }
-
-        // Location
-        textInputLocation.text = myDevice.deviceLocationName
-        imageEditLocation.visible = !textInputLocation.text || textInputLocation.focus
 
         // Status
         updateStatusText()
@@ -310,82 +303,52 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
-                            color: Theme.colorHighContrast
                             font.pixelSize: 18
+                            font.bold: false
+                            color: Theme.colorHighContrast
 
+                            text: myDevice ? myDevice.devicePlantName : ""
                             onEditingFinished: {
-                                if (text) {
-                                    imageEditPlant.visible = false
-                                } else {
-                                    imageEditPlant.visible = true
-                                }
                                 myDevice.setPlantName(text)
                                 focus = false
                             }
 
                             MouseArea {
+                                id: textInputPlantArea
                                 anchors.fill: parent
-                                hoverEnabled: true
-                                //propagateComposedEvents: true
+                                anchors.topMargin: -4
+                                anchors.leftMargin: -4
+                                anchors.rightMargin: -24
+                                anchors.bottomMargin: -4
 
-                                onEntered: { imageEditPlant.visible = true; }
-                                onExited: {
-                                    if (textInputPlant.text && !textInputPlant.focus) {
-                                        imageEditPlant.visible = false
-                                    } else {
-                                        imageEditPlant.visible = true
-                                    }
-                                }
+                                hoverEnabled: true
+                                propagateComposedEvents: true
+
                                 onClicked: {
-                                    imageEditPlant.visible = true;
-                                    mouse.accepted = false;
+                                    textInputPlant.forceActiveFocus()
+                                    mouse.accepted = false
                                 }
                                 onPressed: {
-                                    imageEditPlant.visible = true;
-                                    mouse.accepted = false;
-                                }
-                                onReleased: mouse.accepted = false;
-                                onDoubleClicked: mouse.accepted = false;
-                                onPositionChanged: mouse.accepted = false;
-                                onPressAndHold: mouse.accepted = false;
-                            }
-
-                            MouseArea {
-                                id: mouseArea
-                                width: 26
-                                anchors.top: parent.top
-                                anchors.topMargin: 0
-                                anchors.bottom: parent.bottom
-                                anchors.bottomMargin: 0
-                                anchors.left: parent.right
-                                anchors.leftMargin: 0
-
-                                hoverEnabled: true
-
-                                onEntered: { imageEditPlant.visible = true; }
-                                onExited: {
-                                    if (textInputPlant.text && !textInputPlant.focus) {
-                                        imageEditPlant.visible = false
-                                    } else {
-                                        imageEditPlant.visible = true
-                                    }
-                                }
-                                onClicked: textInputPlant.forceActiveFocus()
-                                onPressed: textInputPlant.forceActiveFocus()
-
-                                ImageSvg {
-                                    id: imageEditPlant
-                                    width: 20
-                                    height: 20
-
-                                    visible: false
-                                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                                    color: Theme.colorIcon
-                                    anchors.right: parent.right
-                                    anchors.rightMargin: 0
-                                    anchors.verticalCenter: parent.verticalCenter
+                                    textInputPlant.forceActiveFocus()
+                                    mouse.accepted = false
                                 }
                             }
+                        }
+
+                        ImageSvg {
+                            id: imageEditPlant
+                            width: 20
+                            height: 20
+                            anchors.left: textInputPlant.right
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            color: Theme.colorIcon
+
+                            //visible: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse)
+                            opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 1 : 0
+                            Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }
 
@@ -415,83 +378,52 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
-                            color: Theme.colorHighContrast
                             font.pixelSize: 18
+                            font.bold: false
+                            color: Theme.colorHighContrast
 
+                            text: myDevice ? myDevice.deviceLocationName : ""
                             onEditingFinished: {
-                                if (text) {
-                                    imageEditLocation.visible = false
-                                } else {
-                                    imageEditLocation.visible = true
-                                }
-
                                 myDevice.setLocationName(text)
                                 focus = false
                             }
 
                             MouseArea {
+                                id: textInputLocationArea
                                 anchors.fill: parent
+                                anchors.topMargin: -4
+                                anchors.leftMargin: -4
+                                anchors.rightMargin: -24
+                                anchors.bottomMargin: -4
+
                                 hoverEnabled: true
                                 propagateComposedEvents: true
 
-                                onEntered: { imageEditLocation.visible = true; }
-                                onExited: {
-                                    if (textInputLocation.text && !textInputLocation.focus) {
-                                        imageEditLocation.visible = false
-                                    } else {
-                                        imageEditLocation.visible = true
-                                    }
-                                }
                                 onClicked: {
-                                    imageEditLocation.visible = true;
-                                    mouse.accepted = false;
+                                    textInputLocation.forceActiveFocus()
+                                    mouse.accepted = false
                                 }
                                 onPressed: {
-                                    imageEditLocation.visible = true;
-                                    mouse.accepted = false;
-                                }
-                                onReleased: mouse.accepted = false;
-                                onDoubleClicked: mouse.accepted = false;
-                                onPositionChanged: mouse.accepted = false;
-                                onPressAndHold: mouse.accepted = false;
-                            }
-
-                            MouseArea {
-                                id: mouseArea1
-                                width: 26
-                                anchors.left: parent.right
-                                anchors.leftMargin: 0
-                                anchors.bottom: parent.bottom
-                                anchors.bottomMargin: 0
-                                anchors.top: parent.top
-                                anchors.topMargin: 0
-
-                                hoverEnabled: true
-
-                                onEntered: { imageEditLocation.visible = true; }
-                                onExited: {
-                                    if (textInputLocation.text && !textInputLocation.focus) {
-                                        imageEditLocation.visible = false
-                                    } else {
-                                        imageEditLocation.visible = true
-                                    }
-                                }
-                                onClicked: textInputLocation.forceActiveFocus()
-                                onPressed: textInputLocation.forceActiveFocus()
-
-                                ImageSvg {
-                                    id: imageEditLocation
-                                    width: 20
-                                    height: 20
-
-                                    visible: false
-                                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                                    color: Theme.colorIcon
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.right: parent.right
-                                    anchors.rightMargin: 0
+                                    textInputLocation.forceActiveFocus()
+                                    mouse.accepted = false
                                 }
                             }
+                        }
+
+                        ImageSvg {
+                            id: imageEditLocation
+                            width: 20
+                            height: 20
+                            anchors.left: textInputLocation.right
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            color: Theme.colorIcon
+
+                            //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputArea.containsMouse)
+                            opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
+                            Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }
 

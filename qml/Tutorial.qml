@@ -246,7 +246,7 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
 
-        Behavior on opacity { OpacityAnimator { duration: 100 } }
+        Behavior on opacity { OpacityAnimator { duration: 133 } }
 
         MouseArea {
             anchors.fill: parent
