@@ -55,8 +55,8 @@
     </message>
     <message>
         <location filename="../qml/About.qml" line="409"/>
-        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation>Eine Pflanzenüberwachungsapp für Xiaomi / MiJia &apos;Flower Care&apos; und &apos;Ropot&apos; Bluetooth-Sensoren und -Thermometer.</translation>
+        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
+        <translation>Eine Pflanzenüberwachungsapp für Xiaomi / MiJia &apos;Flower Care&apos; und &apos;RoPot&apos; Bluetooth-Sensoren und -Thermometer.</translation>
     </message>
 </context>
 <context>
@@ -862,8 +862,8 @@
     <name>Tutorial</name>
     <message>
         <location filename="../qml/Tutorial.qml" line="75"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</source>
-        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; ist eine App zur Pflanzenüberwachung, welche u. a. Xiaomi / MiJia-Sensoren &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; und &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; unterstützt.</translation>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; ist eine App zur Pflanzenüberwachung, welche u. a. Xiaomi / MiJia-Sensoren &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; und &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; unterstützt.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="95"/>

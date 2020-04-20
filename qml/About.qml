@@ -406,7 +406,7 @@ Item {
                     anchors.rightMargin: 0
 
                     color: Theme.colorText
-                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'Ropot' Bluetooth sensors and thermometers.")
+                    text: qsTr("A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.")
                     wrapMode: Text.WordWrap
                     readOnly: true
                     font.pixelSize: 16

@@ -72,7 +72,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>Ropot</b>' sensors.")
+                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>RoPot</b>' sensors.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 18
                     color: Theme.colorHeaderContent

@@ -29,13 +29,9 @@
         <translation type="unfinished">ASISTENCIA</translation>
     </message>
     <message>
-        <source>Rate the application!</source>
-        <translation type="obsolete">¡Califica la aplicación!</translation>
-    </message>
-    <message>
         <location filename="../qml/About.qml" line="409"/>
-        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="unfinished">Una aplicación de monitarización de plantas para dispositivos Bluetooth Xiaomi / Mijia &quot;Flower Care&quot; y &quot;Ropot&quot;.</translation>
+        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
+        <translation type="unfinished">Una aplicación de monitarización de plantas para dispositivos Bluetooth Xiaomi / Mijia &quot;Flower Care&quot; y &quot;RoPot&quot;.</translation>
     </message>
     <message>
         <source>version %1</source>
@@ -71,8 +67,8 @@
         <translation>Aplicación por &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Diseño visual por &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;Ropot&apos; Bluetooth devices.</source>
-        <translation type="vanished">Una aplicación de monitarización de plantas para dispositivos bluetooth Xiaomi / Mijia &quot;Flower Care&quot; y &quot;Ropot&quot;.</translation>
+        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth devices.</source>
+        <translation type="vanished">Una aplicación de monitarización de plantas para dispositivos bluetooth Xiaomi / Mijia &quot;Flower Care&quot; y &quot;RoPot&quot;.</translation>
     </message>
 </context>
 <context>
@@ -1082,8 +1078,8 @@
 <context>
     <name>Tutorial</name>
     <message>
-        <source>WatchFlower is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; Bluetooth devices.</source>
-        <translation type="vanished">WatchFlower es una aplicación de monitorización de plantas para dispositivos bluetooth Xiaomi/Mijia &lt;b&gt;Flower Care&lt;/b&gt; y &lt;b&gt;Ropot&lt;/b&gt;.</translation>
+        <source>WatchFlower is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; Bluetooth devices.</source>
+        <translation type="vanished">WatchFlower es una aplicación de monitorización de plantas para dispositivos bluetooth Xiaomi/Mijia &lt;b&gt;Flower Care&lt;/b&gt; y &lt;b&gt;RoPot&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan for compatible Bluetooth devices&lt;/b&gt; near you.</source>
@@ -1104,8 +1100,8 @@
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="75"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;Ropot&lt;/b&gt;&apos; sensors.</source>
-        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; es una aplicación de monitorización de plantas para sensores Xiaomi / Mijia &lt;b&gt;Flower Care&lt;/b&gt; y &lt;b&gt;Ropot&lt;/b&gt;.</translation>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; es una aplicación de monitorización de plantas para sensores Xiaomi / Mijia &lt;b&gt;Flower Care&lt;/b&gt; y &lt;b&gt;RoPot&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
