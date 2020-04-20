@@ -69,7 +69,7 @@ Item {
 
         // Firmware
         textFirmware.text = myDevice.deviceFirmware
-        if (!myDevice.deviceFirmwareUpToDate) {
+        if (isDesktop && !myDevice.deviceFirmwareUpToDate) {
             imageFwUpdate.visible = true
             textFwUpdate.visible = true
         } else {
