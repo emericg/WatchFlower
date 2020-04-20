@@ -344,7 +344,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcon
+                            color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse)
                             opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 1 : 0
@@ -419,7 +419,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                            color: Theme.colorIcon
+                            color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputArea.containsMouse)
                             opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
