@@ -205,7 +205,8 @@ Item {
                     // set date & time
                     var date = new Date(mpmp.x)
                     var date_string = date.toLocaleDateString()
-                    var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2) //: "at" is used for DATE at HOUR
+                    //: "at" is used for DATE at HOUR
+                    var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
                     textTime.text = date_string + " " + time_string
 
                     // search index corresponding to the timestamp

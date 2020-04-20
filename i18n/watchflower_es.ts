@@ -596,22 +596,25 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>a</translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
-        <translation type="unfinished">min</translation>
+        <extracomment>Short for minimum</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
-        <translation type="unfinished">max</translation>
+        <extracomment>Short for maximum</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -938,9 +941,8 @@
         <translation type="vanished">Los sensores se actualizarán de manera secuencial en vez de simultáneamente. Mejora la fiabilidad del bluetooth sacrificando velocidad de sincronización.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation type="unfinished">Los sensores se actualizarán de manera secuencial en vez de simultáneamente. Mejora la fiabilidad del Bluetooth sacrificando velocidad de sincronización.</translation>
+        <translation type="obsolete">Los sensores se actualizarán de manera secuencial en vez de simultáneamente. Mejora la fiabilidad del Bluetooth sacrificando velocidad de sincronización.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="578"/>
@@ -988,6 +990,11 @@
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished">WatchFlower puede activar el Bluetooth de tu dispositivo para funcionar.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="806"/>
@@ -1121,6 +1128,11 @@
         <translation type="unfinished">Establece &lt;b&gt;límites&lt;/b&gt; como el &lt;b&gt;nivel óptimo de agua&lt;/b&gt;, el&lt;b&gt;rango de temperatura&lt;/b&gt; y más dependiendo de las métricas disponibles en los sensores.</translation>
     </message>
     <message>
+        <location filename="../qml/Tutorial.qml" line="266"/>
+        <source>All right!</source>
+        <translation type="unfinished">¡Listo!</translation>
+    </message>
+    <message>
         <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their datas.</source>
         <translation type="vanished">Una vez &lt;b&gt;emparejados&lt;/b&gt;, los sensores &lt;b&gt;sincronizarán&lt;/b&gt; periodicamente sus datos.</translation>
     </message>
@@ -1152,9 +1164,8 @@
         <translation>Atrás</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation>¡Listo!</translation>
+        <translation type="vanished">¡Listo!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>

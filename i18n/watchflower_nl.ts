@@ -46,7 +46,7 @@
     <message>
         <location filename="../qml/About.qml" line="322"/>
         <source>Rate the application</source>
-        <translation>Beoordeel de app</translation>
+        <translation>Beoordeel deze app</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="368"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon. Maar de meeste kamerplanten hebben liever geen direct zonlicht. Plaats ze daarom niet voor een venster op het zuiden!</translation>
+        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon, maar de meeste kamerplanten hebben liever géén direct zonlicht. Let daar op voor je planten voor een venster op het zuiden zet!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="634"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschkbaarheid van voedingsstoffen in de grond. Gebruik meststoffen (met mate) om de voedingswaarde op peil te houden.</translation>
+        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen in de grond. Gebruik meststoffen (met mate) om de voedingswaarde op peil te houden.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
@@ -458,21 +458,24 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>om</translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
+        <extracomment>Short for minimum</extracomment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
+        <extracomment>Short for maximum</extracomment>
         <translation>max</translation>
     </message>
 </context>
@@ -499,12 +502,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Moisture</source>
-        <translation>Bodemvochtigheid</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Humidity</source>
-        <translation>Luchtvochtigheid</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="81"/>
@@ -519,7 +522,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Bodemvruchtbaarheid</translation>
+        <translation>Vruchtbaarheid</translation>
     </message>
 </context>
 <context>
@@ -527,12 +530,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Moisture</source>
-        <translation>Bodemvochtigheid</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Humidity</source>
-        <translation>Luchtvochtigheid</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="81"/>
@@ -547,7 +550,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Bodemvruchtbaarheid</translation>
+        <translation>Vruchtbaarheid</translation>
     </message>
 </context>
 <context>
@@ -711,12 +714,12 @@
     <message>
         <location filename="../qml/Settings.qml" line="225"/>
         <source>Automatic dark mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische donkere modus</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished"></translation>
+        <translation>WatchFlower kan bluetooth op je apparaat inschakelen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="419"/>
@@ -724,9 +727,13 @@
         <translation>Bluetooth-compatibiliteit</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation>De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Een stabiele bluetoothverbinding geniet de voorkeur boven synchronisatiesnelheid.</translation>
+        <translation type="vanished">De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Een stabiele bluetoothverbinding geniet de voorkeur boven synchronisatiesnelheid.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
+        <translation type="unfinished">De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Een stabiele bluetoothverbinding geniet de voorkeur boven synchronisatiesnelheid.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="486"/>
@@ -778,7 +785,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="806"/>
         <source>Use bigger indicators</source>
-        <translation>Gebruik grotere benamingen</translation>
+        <translation type="unfinished">Gebruik grotere data labels</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="852"/>
@@ -881,12 +888,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
         <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klik op een sensor voor &lt;b&gt;gedetailleerde info&lt;/b&gt;, &lt;b&gt;grafieken&lt;/b&gt; en &lt;b&gt;historische data&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stel &lt;b&gt;grenswaarden&lt;/b&gt; in zoals &lt;b&gt;optimale vochtigheidsgraad&lt;/b&gt;, &lt;b&gt;temperatuurbereik&lt;/b&gt; en meer afhankelijk van de sensorspecificaties.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="266"/>
+        <source>All right!</source>
+        <translation type="unfinished">Zie zo!</translation>
     </message>
     <message>
         <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
@@ -895,7 +907,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="205"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
-        <translation>Je kunt je &lt;b&gt;plant benamen&lt;/b&gt; en de &lt;b&gt;locatie&lt;/b&gt; van het apparaat aangeven.</translation>
+        <translation>Je kunt je &lt;b&gt;plant labelen &lt;/b&gt; en de &lt;b&gt;locatie&lt;/b&gt; van de sensor aangeven.</translation>
     </message>
     <message>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
@@ -907,9 +919,8 @@
         <translation>Vorige</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation>Zie zo!</translation>
+        <translation type="vanished">Zie zo!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>

@@ -458,21 +458,24 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>om</translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
+        <extracomment>Short for minimum</extracomment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
+        <extracomment>Short for maximum</extracomment>
         <translation>maks</translation>
     </message>
 </context>
@@ -711,12 +714,12 @@
     <message>
         <location filename="../qml/Settings.qml" line="225"/>
         <source>Automatic dark mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatyske tsjustere modus</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">WatchFlower kin bluetooth op dyn apparaat ynskeakelje.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="419"/>
@@ -724,9 +727,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation>De sensoaren wurde neiïnoar bywurke ynstee fan tagelyk. In stabyle bluetoothferbining hat de foarkar boppe faasje.</translation>
+        <translation type="vanished">De sensoaren wurde neiïnoar bywurke ynstee fan tagelyk. In stabyle bluetoothferbining hat de foarkar boppe faasje.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
+        <translation type="unfinished">De sensoaren wurde neiïnoar bywurke ynstee fan tagelyk. In stabyle bluetoothferbining hat de foarkar boppe faasje.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="486"/>
@@ -881,12 +888,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
         <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klik op in sensor foar &lt;b&gt;detaillearre ynfo&lt;/b&gt;, &lt;b&gt;grafyken&lt;/b&gt; en &lt;b&gt;histoaryske data&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jou de &lt;b&gt;grinswearden&lt;/b&gt; op, lykas &lt;b&gt;optimale fochtigensgraad&lt;/b&gt;, &lt;b&gt;temperatuerberik&lt;/b&gt; en mear ôfhinklik fan de metten data.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="266"/>
+        <source>All right!</source>
+        <translation type="unfinished">Sjoch sa!</translation>
     </message>
     <message>
         <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
@@ -907,9 +919,8 @@
         <translation>Foarrige</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation>Sjoch sa!</translation>
+        <translation type="vanished">Sjoch sa!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>

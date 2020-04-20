@@ -263,7 +263,7 @@ Rectangle {
         anchors.rightMargin: 32
         anchors.verticalCenter: pageIndicator.verticalCenter
 
-        text: (tutorialPages.currentIndex === lastPage) ? qsTr("Allright!") : qsTr("Next")
+        text: (tutorialPages.currentIndex === lastPage) ? qsTr("All right!") : qsTr("Next")
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16

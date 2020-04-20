@@ -447,7 +447,7 @@ Item {
 
                 visible: element_bluetoothCompat.visible
 
-                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.")
+                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

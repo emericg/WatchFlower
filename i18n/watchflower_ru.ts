@@ -479,21 +479,24 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
+        <extracomment>Short for minimum</extracomment>
         <translation type="unfinished">мин</translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
+        <extracomment>Short for maximum</extracomment>
         <translation type="unfinished">макси</translation>
     </message>
 </context>
@@ -722,11 +725,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
-        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="549"/>
         <source>Enable background updates</source>
         <translation type="unfinished"></translation>
@@ -786,6 +784,11 @@
     <message>
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -902,6 +905,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/Tutorial.qml" line="266"/>
+        <source>All right!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/Tutorial.qml" line="205"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
@@ -912,9 +920,8 @@
         <translation type="unfinished">предыдущий</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation type="unfinished">Хорошо!</translation>
+        <translation type="obsolete">Хорошо!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>

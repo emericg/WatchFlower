@@ -458,21 +458,24 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
+        <extracomment>Short for minimum</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
+        <extracomment>Short for maximum</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -724,9 +727,13 @@
         <translation>Bluetooth-Kompatibilität</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation>Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
+        <translation type="vanished">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
+        <translation type="unfinished">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="486"/>
@@ -881,12 +888,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
         <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klicken Sie auf Sensoren, um auf &lt;b&gt;detaillierte Informationen&lt;/b&gt;, &lt;b&gt;Diagramme&lt;/b&gt; und &lt;b&gt;historische Daten&lt;/b&gt; zuzugreifen.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Je nach Sensor können Sie &lt;b&gt;Grenzwerte&lt;/b&gt; wie &lt;b&gt;den optimalen Wasserstand&lt;/b&gt; oder &lt;b&gt;den Temperaturbereich&lt;/b&gt; festlegen.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Tutorial.qml" line="266"/>
+        <source>All right!</source>
+        <translation type="unfinished">Habs verstanden.</translation>
     </message>
     <message>
         <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
@@ -907,9 +919,8 @@
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../qml/Tutorial.qml" line="266"/>
         <source>Allright!</source>
-        <translation>Habs verstanden.</translation>
+        <translation type="vanished">Habs verstanden.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>

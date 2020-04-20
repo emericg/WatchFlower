@@ -668,21 +668,24 @@
 <context>
     <name>ItemAioLineCharts</name>
     <message>
-        <location filename="../qml/components/ItemAioLineCharts.qml" line="208"/>
+        <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>à</translation>
     </message>
 </context>
 <context>
     <name>ItemDataBarFilled</name>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="86"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="88"/>
         <source>min</source>
+        <extracomment>Short for minimum</extracomment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="124"/>
+        <location filename="../qml/components_generic/ItemDataBarFilled.qml" line="127"/>
         <source>max</source>
+        <extracomment>Short for maximum</extracomment>
         <translation>max</translation>
     </message>
 </context>
@@ -1047,9 +1050,8 @@
         <translation type="vanished">Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation>Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
+        <translation type="vanished">Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="578"/>
@@ -1097,6 +1099,11 @@
         <location filename="../qml/Settings.qml" line="383"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation>WatchFlower peut activer le Bluetooth de votre appareil pour fonctionner.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="450"/>
+        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
+        <translation>Les capteurs seront mis à jour séquentiellement au lieu de simultanément. Améliore la fiabilité de la connexion Bluetooth, au détriment de la vitesse de synchronisation.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="806"/>
@@ -1301,8 +1308,12 @@
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
-        <source>Allright!</source>
+        <source>All right!</source>
         <translation>C&apos;est partit !</translation>
+    </message>
+    <message>
+        <source>Allright!</source>
+        <translation type="vanished">C&apos;est partit !</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
