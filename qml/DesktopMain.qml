@@ -133,54 +133,40 @@ ApplicationWindow {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        z: 10
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
-            if (appContent.state === "Tutorial") return; // do nothing
-
-            if (mouse.button === Qt.BackButton) {
-                if (appContent.state === "DeviceList") {
-                    // do nothing
-                } else if (appContent.state === "DeviceSensor") {
-                    if (screenDeviceSensor.isHistoryMode()) {
-                        screenDeviceSensor.resetHistoryMode()
-                    } else {
-                        appContent.state = "DeviceList"
-                    }
-                } else if (appContent.state === "DeviceThermo") {
-                    if (screenDeviceThermometer.isHistoryMode()) {
-                        screenDeviceThermometer.resetHistoryMode()
-                    } else {
-                        appContent.state = "DeviceList"
-                    }
-                } else {
-                    appContent.state = "DeviceList"
-                }
-            } else if (mouse.button === Qt.ForwardButton) {
-                if (appContent.state === "DeviceList") {
-                    if (currentDevice) {
-                        if (!currentDevice.hasSoilMoistureSensor())
-                            appContent.state = "DeviceThermo"
-                        else
-                            appContent.state = "DeviceSensor"
-                    }
-                }
-            }
+    onClosing: {
+        if (settingsManager.systray || Qt.platform.os === "osx") {
+            close.accepted = false;
+            applicationWindow.hide();
         }
     }
-    Shortcut {
-        sequence: StandardKey.Back
-        onActivated: {
-            if (appContent.state === "Tutorial" || appContent.state === "DeviceList") return;
+
+    // User generated events handling //////////////////////////////////////////
+
+    function backAction() {
+        if (appContent.state === "Tutorial") return; // do nothing
+
+        if (appContent.state === "DeviceList") {
+            // do nothing
+        } else if (appContent.state === "DeviceSensor") {
+            if (screenDeviceSensor.isHistoryMode()) {
+                screenDeviceSensor.resetHistoryMode()
+            } else {
+                appContent.state = "DeviceList"
+            }
+        } else if (appContent.state === "DeviceThermo") {
+            if (screenDeviceThermometer.isHistoryMode()) {
+                screenDeviceThermometer.resetHistoryMode()
+            } else {
+                appContent.state = "DeviceList"
+            }
+        } else {
             appContent.state = "DeviceList"
         }
     }
-    Shortcut {
-        sequence: StandardKey.Forward
-        onActivated: {
-            if (appContent.state !== "DeviceList") return;
+    function forwardAction() {
+        if (appContent.state === "Tutorial") return; // do nothing
+
+        if (appContent.state === "DeviceList") {
             if (currentDevice) {
                 if (!currentDevice.hasSoilMoistureSensor())
                     appContent.state = "DeviceThermo"
@@ -189,12 +175,58 @@ ApplicationWindow {
             }
         }
     }
-
-    onClosing: {
-        if (settingsManager.systray || Qt.platform.os === "osx") {
-            close.accepted = false;
-            applicationWindow.hide();
+    function deselectAction() {
+        if (appContent.state === "DeviceList") {
+            screenDeviceList.exitSelectionMode()
+        } else if (appContent.state === "DeviceSensor" &&
+                   screenDeviceSensor.isHistoryMode()) {
+            screenDeviceSensor.resetHistoryMode()
+        } else if (appContent.state === "DeviceThermo" &&
+                   screenDeviceThermometer.isHistoryMode()) {
+                screenDeviceThermometer.resetHistoryMode()
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        z: 10
+        acceptedButtons: Qt.BackButton | Qt.ForwardButton
+        onClicked: {
+            if (mouse.button === Qt.BackButton) {
+                backAction()
+            } else if (mouse.button === Qt.ForwardButton) {
+                forwardAction()
+            }
+        }
+    }
+
+    Shortcut {
+        sequences: [StandardKey.Back, StandardKey.Backspace]
+        onActivated: backAction()
+    }
+    Shortcut {
+        sequence: StandardKey.Forward
+        onActivated: forwardAction()
+    }
+    Shortcut {
+        sequence: StandardKey.Preferences
+        onActivated: appContent.state = "Settings"
+    }
+    Shortcut {
+        sequence: StandardKey.Refresh
+        onActivated: backAction()
+    }
+    Shortcut {
+        sequences: [StandardKey.Deselect, StandardKey.Cancel]
+        onActivated: deselectAction()
+    }
+    Shortcut {
+        sequence: StandardKey.Close
+        onActivated: applicationWindow.close()
+    }
+    Shortcut {
+        sequence: StandardKey.Quit
+        onActivated: utilsApp.appExit()
     }
 
     // QML /////////////////////////////////////////////////////////////////////
