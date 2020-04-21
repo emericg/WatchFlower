@@ -73,16 +73,18 @@ Item {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         contentWidth: -1
 
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
         anchors.topMargin: 8
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
 
         Column {
             id: column

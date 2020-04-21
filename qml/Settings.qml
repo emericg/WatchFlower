@@ -73,6 +73,8 @@ Item {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         contentWidth: -1
@@ -80,16 +82,54 @@ Item {
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
         anchors.topMargin: 12
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: 12
         anchors.left: parent.left
         anchors.right: parent.right
 
         Column {
             id: column
-            anchors.fill: parent
             spacing: 8
+            anchors.fill: parent
+            anchors.rightMargin: 0
+            anchors.leftMargin: 0
 
             property int leftPad: 24
+
+            ////////
+
+            Rectangle {
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: Theme.colorForeground
+                //visible: isMobile
+
+                ImageSvg {
+                    id: image_appsettings
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                }
+
+                Text {
+                    id: text_appsettings
+                    anchors.left: image_appsettings.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Application")
+                    font.pixelSize: 16
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
 
             ////////
 
@@ -317,6 +357,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 color: Theme.colorSeparator
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
             }
 
             ////////
@@ -460,7 +501,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 color: Theme.colorSeparator
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
             }
 
             ////////
@@ -667,20 +708,10 @@ Item {
             ////////
 
             Rectangle {
-                height: 1
-                anchors.right: parent.right
-                anchors.left: parent.left
-                color: Theme.colorSeparator
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-            }
-
-            ////////
-
-            Item {
-                id: element_plantsensor
-                height: 32
+                height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
+                color: Theme.colorForeground
 
                 ImageSvg {
                     id: image_plantsensor
@@ -688,8 +719,7 @@ Item {
                     height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
@@ -699,11 +729,11 @@ Item {
                     id: text_plantsensor
                     anchors.left: image_plantsensor.right
                     anchors.leftMargin: column.leftPad
-                    anchors.verticalCenter: image_plantsensor.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Plant sensors")
                     font.pixelSize: 16
-                    font.bold: true
+                    font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -1006,19 +1036,10 @@ Item {
             ////////
 
             Rectangle {
-                height: 1
+                height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                color: Theme.colorSeparator
-            }
-
-            ////////
-
-            Item {
-                id: element_thermometer
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
+                color: Theme.colorForeground
 
                 ImageSvg {
                     id: image_thermometer
@@ -1026,8 +1047,7 @@ Item {
                     height: 24
                     anchors.leftMargin: 16
                     anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
@@ -1037,11 +1057,11 @@ Item {
                     id: text_thermometer
                     anchors.leftMargin: column.leftPad
                     anchors.left: image_thermometer.right
-                    anchors.verticalCenter: image_thermometer.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Thermometers")
                     font.pixelSize: 16
-                    font.bold: true
+                    font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
