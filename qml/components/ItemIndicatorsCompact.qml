@@ -69,7 +69,7 @@ Item {
 
             value: myDevice.deviceHumidity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? myDevice.hygroMax*1.10 : 50
+            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.hygroMax*1.10) : 50
             limitMin: myDevice.limitHygroMin
             limitMax: myDevice.limitHygroMax
         }
@@ -90,8 +90,8 @@ Item {
             }
 
             value: tempHelper(myDevice.deviceTemp)
-            valueMin: tempHelper(settingsManager.dynaScale ? myDevice.tempMin*0.80 : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? myDevice.tempMax*1.20 : tempHelper(40))
+            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(myDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(myDevice.tempMax*1.20) : tempHelper(40))
             limitMin: tempHelper(myDevice.limitTempMin)
             limitMax: tempHelper(myDevice.limitTempMax)
         }
@@ -107,7 +107,7 @@ Item {
 
             value: myDevice.deviceLuminosity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? myDevice.lumiMax*1.10 : 10000
+            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.lumiMax*1.10) : 10000
             limitMin: myDevice.limitLumiMin
             limitMax: myDevice.limitLumiMax
         }
@@ -123,7 +123,7 @@ Item {
 
             value: myDevice.deviceConductivity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? myDevice.conduMax*1.10 : 1000
+            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.conduMax*1.10) : 1000
             limitMin: myDevice.limitConduMin
             limitMax: myDevice.limitConduMax
         }
