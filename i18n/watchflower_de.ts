@@ -14,47 +14,47 @@
         <translation>Was möchtest du wissen?</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="121"/>
+        <location filename="../qml/About.qml" line="123"/>
         <source>version %1%2</source>
         <translation>Version %1%2</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="160"/>
+        <location filename="../qml/About.qml" line="162"/>
         <source>WEBSITE</source>
         <translation>WEBSEITE</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="172"/>
+        <location filename="../qml/About.qml" line="174"/>
         <source>SUPPORT</source>
         <translation>UNTERSTÜTZUNG</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="210"/>
+        <location filename="../qml/About.qml" line="212"/>
         <source>Website</source>
         <translation>Webseite</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="249"/>
+        <location filename="../qml/About.qml" line="251"/>
         <source>GitHub page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="284"/>
+        <location filename="../qml/About.qml" line="286"/>
         <source>Open the tutorial</source>
         <translation>Öffne die Anleitung</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="322"/>
+        <location filename="../qml/About.qml" line="324"/>
         <source>Rate the application</source>
         <translation>Bewerte die App</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="368"/>
+        <location filename="../qml/About.qml" line="370"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="409"/>
+        <location filename="../qml/About.qml" line="411"/>
         <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
         <translation>Eine Pflanzenüberwachungsapp für Xiaomi / MiJia &apos;Flower Care&apos; und &apos;RoPot&apos; Bluetooth-Sensoren und -Thermometer.</translation>
     </message>
@@ -124,52 +124,52 @@
 <context>
     <name>DeviceScreenData</name>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="114"/>
+        <location filename="../qml/DeviceScreenData.qml" line="107"/>
         <source>Update queued. </source>
         <translation>Update in der Warteschlange. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="116"/>
+        <location filename="../qml/DeviceScreenData.qml" line="109"/>
         <source>Connecting... </source>
         <translation>Verbinde... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="118"/>
+        <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Updating... </source>
         <translation>Aktualisiere... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="122"/>
+        <location filename="../qml/DeviceScreenData.qml" line="115"/>
         <source>Just synced!</source>
         <translation>Daten sind aktuell.</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="124"/>
+        <location filename="../qml/DeviceScreenData.qml" line="117"/>
         <source>Synced %1 ago</source>
         <translation>vor %1 aktualisiert</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="126"/>
+        <location filename="../qml/DeviceScreenData.qml" line="119"/>
         <source>Offline! </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="298"/>
+        <location filename="../qml/DeviceScreenData.qml" line="291"/>
         <source>Plant</source>
         <translation>Pflanze</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="403"/>
+        <location filename="../qml/DeviceScreenData.qml" line="366"/>
         <source>Location</source>
         <translation>Standort</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="509"/>
+        <location filename="../qml/DeviceScreenData.qml" line="441"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenData.qml" line="522"/>
+        <location filename="../qml/DeviceScreenData.qml" line="454"/>
         <source>Loading...</source>
         <translation>Lade...</translation>
     </message>
@@ -265,7 +265,7 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="372"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
-        <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="636"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
         <translation>&lt;br&gt;&lt;b&gt;Spenden: &lt;/b&gt;</translation>
     </message>
@@ -305,42 +305,42 @@
         <translation>Lichteinstrahlung</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="517"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="518"/>
         <source>low</source>
         <translation>niedrig</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="528"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="529"/>
         <source>indirect</source>
         <translation>indirekt</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="539"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="540"/>
         <source>direct light (indoor)</source>
         <translation>direktes Licht (innen)</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="550"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="551"/>
         <source>sunlight</source>
         <translation>Sonnenlicht</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="567"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="568"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation>Einige Pflanzen mögen direktes Sonnenlicht, teilweise sogar den ganzen Tag. Aber viele Zimmerpflanzen mögen kein direktes Sonnenlicht: Wählen Sie in diesem Fall kein Südfenster.</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="599"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="600"/>
         <source>Fertility</source>
         <translation>Fruchtbarkeit</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="634"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
         <translation>Die Bodenfruchtbarkeit ist ein Hinweis auf die Verfügbarkeit von Nährstoffen im Boden. Düngen Sie regelmäßig, um den Wert im grünen Bereich zu halten.</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
+        <location filename="../qml/DeviceScreenLimits.qml" line="636"/>
         <source>Be sure to use the right soil composition for your plants.</source>
         <translation>Stellen Sie sicher, dass Sie die richtige Bodenzusammensetzung für Ihre Pflanzen verwenden.</translation>
     </message>
@@ -348,42 +348,42 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="150"/>
+        <location filename="../qml/DeviceThermometer.qml" line="146"/>
         <source>humidity</source>
         <translation>Luftfeuchtigkeit</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="163"/>
+        <location filename="../qml/DeviceThermometer.qml" line="159"/>
         <source>Update queued. </source>
         <translation>Update in der Warteschlange. </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="165"/>
+        <location filename="../qml/DeviceThermometer.qml" line="161"/>
         <source>Connecting... </source>
         <translation>Verbinde... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="167"/>
+        <location filename="../qml/DeviceThermometer.qml" line="163"/>
         <source>Updating... </source>
         <translation>Aktualisiere... </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="171"/>
+        <location filename="../qml/DeviceThermometer.qml" line="167"/>
         <source>Just synced!</source>
         <translation>Daten sind aktuell.</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="173"/>
+        <location filename="../qml/DeviceThermometer.qml" line="169"/>
         <source>Synced %1 ago</source>
         <translation>vor %1 aktualisiert</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="175"/>
+        <location filename="../qml/DeviceThermometer.qml" line="171"/>
         <source>Offline! </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="242"/>
+        <location filename="../qml/DeviceThermometer.qml" line="251"/>
         <source>Updating...</source>
         <translation>Aktualisiere...</translation>
     </message>
@@ -684,7 +684,12 @@
         <translation>Ändere die Einstellungen hier.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="123"/>
+        <location filename="../qml/Settings.qml" line="125"/>
+        <source>Application</source>
+        <translation type="unfinished">Anwendung</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="163"/>
         <source>Application theme</source>
         <translation>Benutzeroberfläche</translation>
     </message>
@@ -693,17 +698,17 @@
         <translation type="vanished">Automatischer Dunkelmodus</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="256"/>
+        <location filename="../qml/Settings.qml" line="296"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
         <translation>Der Dunkelmodus wird zwischen 21 Uhr und 9 Uhr automatisch eingeschaltet.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="294"/>
+        <location filename="../qml/Settings.qml" line="334"/>
         <source>Use bigger widgets</source>
         <translation>größere Widgets verwenden</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="354"/>
+        <location filename="../qml/Settings.qml" line="395"/>
         <source>Bluetooth control</source>
         <translation>Bluetooth-Steuerung</translation>
     </message>
@@ -712,17 +717,17 @@
         <translation type="vanished">WatchFlower kann Bluetooth automatisch aktivieren, was für eine korrekte Funktion benötigt wird.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="225"/>
+        <location filename="../qml/Settings.qml" line="265"/>
         <source>Automatic dark mode</source>
         <translation>Automatischer Dunkelmodus</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="383"/>
+        <location filename="../qml/Settings.qml" line="424"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished">WatchFlower kann Bluetooth automatisch aktivieren, was für eine korrekte Funktion benötigt wird.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="419"/>
+        <location filename="../qml/Settings.qml" line="460"/>
         <source>Bluetooth compatibility</source>
         <translation>Bluetooth-Kompatibilität</translation>
     </message>
@@ -731,104 +736,104 @@
         <translation type="vanished">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="450"/>
+        <location filename="../qml/Settings.qml" line="491"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
         <translation type="unfinished">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="486"/>
+        <location filename="../qml/Settings.qml" line="527"/>
         <source>Start application minimized</source>
         <translation>Anwendung minimiert starten</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="549"/>
+        <location filename="../qml/Settings.qml" line="590"/>
         <source>Enable background updates</source>
         <translation>Aktiviert die Hintergrundaktualisierung</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="578"/>
+        <location filename="../qml/Settings.qml" line="619"/>
         <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
         <translation>Wacht in vordefinierten Intervallen auf, um die Sensordaten zu aktualisieren. Nur wenn Bluetooth (oder Bluetooth-Steuerung) aktiviert ist.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="594"/>
+        <location filename="../qml/Settings.qml" line="635"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
         <translation>WatchFlower bleibt in der Taskleiste aktiv und wird in regelmäßigen Abständen aktiviert, um die Sensordaten zu aktualisieren.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="632"/>
+        <location filename="../qml/Settings.qml" line="673"/>
         <source>Enable notifications</source>
         <translation>Benachrichtigungen aktivieren</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="661"/>
+        <location filename="../qml/Settings.qml" line="702"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
         <translation>Wenn eine Pflanze Wasser benötigt, wird WatchFlower Sie darauf aufmerksam machen!</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="704"/>
+        <location filename="../qml/Settings.qml" line="734"/>
         <source>Plant sensors</source>
         <translation>Pflanzensensoren</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="742"/>
-        <location filename="../qml/Settings.qml" line="1080"/>
+        <location filename="../qml/Settings.qml" line="772"/>
+        <location filename="../qml/Settings.qml" line="1100"/>
         <source>Update interval</source>
         <translation>Aktualisierungsintervall</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="758"/>
-        <location filename="../qml/Settings.qml" line="1096"/>
+        <location filename="../qml/Settings.qml" line="788"/>
+        <location filename="../qml/Settings.qml" line="1116"/>
         <source> h.</source>
         <translation> Std.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="806"/>
+        <location filename="../qml/Settings.qml" line="836"/>
         <source>Use bigger indicators</source>
         <translation>Verwende größere Indikatoren</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="852"/>
+        <location filename="../qml/Settings.qml" line="882"/>
         <source>Dynamic scale for indicators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="900"/>
+        <location filename="../qml/Settings.qml" line="930"/>
         <source>Show graph dots</source>
         <translation>Diagrammpunkte anzeigen</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="948"/>
+        <location filename="../qml/Settings.qml" line="978"/>
         <source>Histograms</source>
         <translation>Histogramme</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="962"/>
+        <location filename="../qml/Settings.qml" line="992"/>
         <source>Monthly</source>
         <translation>Monatlich</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="987"/>
+        <location filename="../qml/Settings.qml" line="1017"/>
         <source>Weekly</source>
         <translation>Wöchentlich</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1042"/>
+        <location filename="../qml/Settings.qml" line="1062"/>
         <source>Thermometers</source>
         <translation>Thermometer</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1144"/>
+        <location filename="../qml/Settings.qml" line="1164"/>
         <source>Temperature unit</source>
         <translation>Temperatureinheit</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1158"/>
+        <location filename="../qml/Settings.qml" line="1178"/>
         <source>°C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1184"/>
+        <location filename="../qml/Settings.qml" line="1204"/>
         <source>°F</source>
         <translation></translation>
     </message>
