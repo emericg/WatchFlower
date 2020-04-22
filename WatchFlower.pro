@@ -74,7 +74,8 @@ RESOURCES   += qml/qml.qrc \
 OTHER_FILES += .gitignore \
                .travis.yml
 
-TRANSLATIONS = i18n/watchflower_de.ts \
+TRANSLATIONS = i18n/watchflower_da.ts \
+               i18n/watchflower_de.ts \
                i18n/watchflower_es.ts \
                i18n/watchflower_fr.ts \
                i18n/watchflower_nl.ts i18n/watchflower_fy.ts \

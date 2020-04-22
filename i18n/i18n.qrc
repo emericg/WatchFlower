@@ -1,4 +1,7 @@
 <RCC>
+  <qresource prefix="/i18n" lang="da">
+    <file alias="watchflower.qm">watchflower_da.qm</file>
+  </qresource>
   <qresource prefix="/i18n" lang="de">
     <file alias="watchflower.qm">watchflower_de.qm</file>
   </qresource>

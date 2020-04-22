@@ -26,7 +26,7 @@ Translate by opening the .ts file using Qt Linguist.
 
 - Remember to match punctuation and trailing spaces
 - You don't have to translate everything, missing word or sentence will fall back to english
-- If your not sure about a word or sentence, leave the "unginished" tag so other people can have a second look at it
+- If your not sure about a word or sentence, leave the "unfinished" tag so other people can have a second look at it
 
 Qt Linguist manual: https://doc.qt.io/qt-5/linguist-translators.html
 
