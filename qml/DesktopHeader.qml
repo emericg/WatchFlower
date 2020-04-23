@@ -31,6 +31,7 @@ Rectangle {
     z: 10
 
     signal backButtonClicked()
+    signal rightMenuClicked() // compatibility
 
     signal deviceRefreshButtonClicked()
     signal deviceDataButtonClicked()
