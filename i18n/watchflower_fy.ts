@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fy_NL">
+<TS version="2.1" language="fy_NL" sourcelanguage="en">
 <context>
     <name>About</name>
     <message>
@@ -62,7 +62,7 @@
 <context>
     <name>DesktopHeader</name>
     <message>
-        <location filename="../qml/DesktopHeader.qml" line="65"/>
+        <location filename="../qml/DesktopHeader.qml" line="66"/>
         <source>Welcome</source>
         <translation>Wolkom</translation>
     </message>
@@ -502,12 +502,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Moisture</source>
-        <translation>Grûnfochtigens</translation>
+        <translation type="unfinished">Grûnfocht</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Humidity</source>
-        <translation>Fochtigens</translation>
+        <translation type="unfinished">Luchtfocht</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="81"/>
@@ -530,12 +530,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Moisture</source>
-        <translation>Grûnfochtigens</translation>
+        <translation type="unfinished">Grûnfocht</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="64"/>
         <source>Humidity</source>
-        <translation>Fochtigens</translation>
+        <translation type="unfinished">Luchtfocht</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="81"/>
@@ -708,7 +708,18 @@
         <translation>Brûk gruttere widgets</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="395"/>
+        <location filename="../qml/Settings.qml" line="391"/>
+        <source>Language</source>
+        <translation type="unfinished">Taal</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="410"/>
+        <source>auto</source>
+        <extracomment>Short for automatic</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="482"/>
         <source>Bluetooth control</source>
         <translation>Bluetooth-betsjinning</translation>
     </message>
@@ -722,12 +733,12 @@
         <translation>Automatyske tsjustere modus</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="424"/>
+        <location filename="../qml/Settings.qml" line="511"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished">WatchFlower kin bluetooth op dyn apparaat ynskeakelje.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="460"/>
+        <location filename="../qml/Settings.qml" line="547"/>
         <source>Bluetooth compatibility</source>
         <translation type="unfinished"></translation>
     </message>
@@ -736,104 +747,104 @@
         <translation type="vanished">De sensoaren wurde neiïnoar bywurke ynstee fan tagelyk. In stabyle bluetoothferbining hat de foarkar boppe faasje.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="491"/>
+        <location filename="../qml/Settings.qml" line="578"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
         <translation type="unfinished">De sensoaren wurde neiïnoar bywurke ynstee fan tagelyk.Hoewol&apos;t dit  te&apos;n goede komt oan de betrouberens fan de bluetoothferbining, sil it bywurkjen al langer duorje.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="527"/>
+        <location filename="../qml/Settings.qml" line="614"/>
         <source>Start application minimized</source>
         <translation>Start de applikaasje minimalisearre</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="590"/>
+        <location filename="../qml/Settings.qml" line="677"/>
         <source>Enable background updates</source>
         <translation>Bywurkjen op &apos;e eftergrûn ynskeakelje</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="619"/>
+        <location filename="../qml/Settings.qml" line="706"/>
         <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
         <translation>Op fêste tiden aktivearje om sensordata te ferfarskjen. Allinnich at bluetooth (of bluetooth-betsjinning) ynskeakele is.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="635"/>
+        <location filename="../qml/Settings.qml" line="722"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
         <translation>WatchFlower draait op &apos;e eftergrûn yn systeemfek en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="673"/>
+        <location filename="../qml/Settings.qml" line="760"/>
         <source>Enable notifications</source>
         <translation>Meldings ynskeakelje</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="702"/>
+        <location filename="../qml/Settings.qml" line="789"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
         <translation>At in plant wetter nedich hat sil WatchFlower it dy witte litte!</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="734"/>
+        <location filename="../qml/Settings.qml" line="821"/>
         <source>Plant sensors</source>
         <translation>Plantsensoaren</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="772"/>
-        <location filename="../qml/Settings.qml" line="1100"/>
+        <location filename="../qml/Settings.qml" line="859"/>
+        <location filename="../qml/Settings.qml" line="1187"/>
         <source>Update interval</source>
         <translation>Bywurktiden</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="788"/>
-        <location filename="../qml/Settings.qml" line="1116"/>
+        <location filename="../qml/Settings.qml" line="875"/>
+        <location filename="../qml/Settings.qml" line="1203"/>
         <source> h.</source>
         <translation> o.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="836"/>
+        <location filename="../qml/Settings.qml" line="923"/>
         <source>Use bigger indicators</source>
         <translation type="unfinished">Brûk gruttere datalabels</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="882"/>
+        <location filename="../qml/Settings.qml" line="969"/>
         <source>Dynamic scale for indicators</source>
         <translation>Dynamyske skaalferdeling</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="930"/>
+        <location filename="../qml/Settings.qml" line="1017"/>
         <source>Show graph dots</source>
         <translation>Lit grafykpunten sjen</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="978"/>
+        <location filename="../qml/Settings.qml" line="1065"/>
         <source>Histograms</source>
         <translation>Staafdiagram</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="992"/>
+        <location filename="../qml/Settings.qml" line="1079"/>
         <source>Monthly</source>
         <translation>Moanne</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1017"/>
+        <location filename="../qml/Settings.qml" line="1104"/>
         <source>Weekly</source>
         <translation>Wike</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1062"/>
+        <location filename="../qml/Settings.qml" line="1149"/>
         <source>Thermometers</source>
         <translation>Termometers</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1164"/>
+        <location filename="../qml/Settings.qml" line="1251"/>
         <source>Temperature unit</source>
         <translation>Temperatuerienheid</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1178"/>
+        <location filename="../qml/Settings.qml" line="1265"/>
         <source>°C</source>
         <translation>°C</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1204"/>
+        <location filename="../qml/Settings.qml" line="1291"/>
         <source>°F</source>
         <translation>°F</translation>
     </message>
