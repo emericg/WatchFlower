@@ -85,6 +85,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/autoDark"))
             m_autoDark = settings.value("settings/autoDark").toBool();
 
+        if (settings.contains("settings/appLanguage"))
+            m_appLanguage = settings.value("settings/appLanguage").toString();
+
         if (settings.contains("settings/bluetoothControl"))
             m_bluetoothControl = settings.value("settings/bluetoothControl").toBool();
 
@@ -162,6 +165,7 @@ bool SettingsManager::writeSettings()
     {
         settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/autoDark", m_autoDark);
+        settings.setValue("settings/appLanguage", m_appLanguage);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
@@ -437,10 +441,12 @@ void SettingsManager::resetDatabase()
 void SettingsManager::resetSettings()
 {
     // Settings
-    m_appTheme= "green";
+    m_appTheme = "green";
     Q_EMIT appthemeChanged();
     m_autoDark = false;
     Q_EMIT autodarkChanged();
+    m_appLanguage = "auto";
+    Q_EMIT applanguageChanged();
 
     m_systrayEnabled = false;
     Q_EMIT systrayChanged();
@@ -517,6 +523,7 @@ void SettingsManager::setAppTheme(const QString &value)
         Q_EMIT appthemeChanged();
     }
 }
+
 void SettingsManager::setAutoDark(const bool value)
 {
     if (m_autoDark != value)
@@ -524,6 +531,16 @@ void SettingsManager::setAutoDark(const bool value)
         m_autoDark = value;
         writeSettings();
         Q_EMIT autodarkChanged();
+    }
+}
+
+void SettingsManager::setAppLanguage(const QString &value)
+{
+    if (m_appLanguage != value)
+    {
+        m_appLanguage = value;
+        writeSettings();
+        Q_EMIT applanguageChanged();
     }
 }
 

@@ -47,6 +47,7 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
     Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
+    Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY applanguageChanged)
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
@@ -68,6 +69,7 @@ class SettingsManager: public QObject
 
     QString m_appTheme = "green";
     bool m_autoDark = false;
+    QString m_appLanguage = "auto";
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
@@ -100,6 +102,7 @@ Q_SIGNALS:
     void initialSizeChanged();
     void appthemeChanged();
     void autodarkChanged();
+    void applanguageChanged();
     void minimizedChanged();
     void systrayChanged();
     void notifsChanged();
@@ -125,6 +128,9 @@ public:
 
     bool getAutoDark() const { return m_autoDark; }
     void setAutoDark(const bool value);
+
+    QString getAppLanguage() const { return m_appLanguage; }
+    void setAppLanguage(const QString &value);
 
     bool getMinimized() const { return m_startMinimized; }
     void setMinimized(const bool value);

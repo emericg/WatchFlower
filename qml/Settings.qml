@@ -102,7 +102,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorForeground
-                //visible: isMobile
+                visible: isMobile
 
                 ImageSvg {
                     id: image_appsettings
@@ -347,6 +347,93 @@ Item {
 
                     Component.onCompleted: checked = settingsManager.bigWidget
                     onCheckedChanged: settingsManager.bigWidget = checked
+                }
+            }
+
+            ////////
+
+            Rectangle {
+                height: 1
+                anchors.right: parent.right
+                anchors.left: parent.left
+                color: Theme.colorSeparator
+            }
+
+            ////////
+
+            Item {
+                id: element_language
+                height: 48
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                ImageSvg {
+                    id: image_language
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-translate-24px.svg"
+                }
+
+                Text {
+                    id: text_language
+                    height: 40
+                    anchors.right: combobox_language.left
+                    anchors.rightMargin: 16
+                    anchors.left: image_language.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Language")
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ComboBoxThemed {
+                    id: combobox_language
+                    width: 160
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    model: ListModel {
+                        id: cbAppLanguage
+                        ListElement {
+                            //: Short for automatic
+                            text: qsTr("auto");
+                        }
+                        ListElement { text: "Dansk"; }
+                        ListElement { text: "Deutsch"; }
+                        ListElement { text: "English"; }
+                        ListElement { text: "Espanol"; }
+                        ListElement { text: "Français"; }
+                        ListElement { text: "Frisk"; }
+                        ListElement { text: "Nederlands"; }
+                        ListElement { text: "русский"; }
+                    }
+
+                    Component.onCompleted: {
+                        for (var i = 0; i < cbAppLanguage.count; i++) {
+                            if (cbAppLanguage.get(i).text === settingsManager.appLanguage)
+                                currentIndex = i
+                        }
+                    }
+                    property bool cbinit: false
+                    onCurrentValueChanged: {
+                        if (cbinit) {
+                            settingsManager.appLanguage = currentValue
+                            utilsLanguage.loadLanguage(currentValue)
+                        } else {
+                            cbinit = true
+                        }
+                    }
                 }
             }
 

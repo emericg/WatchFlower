@@ -20,7 +20,6 @@
  */
 
 #include <QtGlobal>
-#include <QTranslator>
 #include <QLibraryInfo>
 #include <QVersionNumber>
 
@@ -33,6 +32,7 @@
 #include <singleapplication.h>
 
 #include "utils_app.h"
+#include "utils_language.h"
 #include "utils_screen.h"
 #include "settingsmanager.h"
 #include "systraymanager.h"
@@ -141,17 +141,6 @@ int main(int argc, char *argv[])
     setup_demo_mode();
 #endif
 
-#ifndef DEMO_MODE
-    // i18n
-    QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&qtTranslator);
-
-    QTranslator appTranslator;
-    appTranslator.load(":/i18n/watchflower.qm");
-    app.installTranslator(&appTranslator);
-#endif // DEMO_MODE
-
     // Init WatchFlower components
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
@@ -166,6 +155,11 @@ int main(int argc, char *argv[])
 
     UtilsScreen *utilsScreen = new UtilsScreen();
     UtilsApp *utilsApp = UtilsApp::getInstance();
+    UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
+#ifndef DEMO_MODE
+    utilsLanguage->setAppInstance(&app);
+    utilsLanguage->loadLanguage(sm->getAppLanguage());
+#endif
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
@@ -180,6 +174,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("utilsApp", utilsApp);
+    engine_context->setContextProperty("utilsLanguage", utilsLanguage);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
@@ -193,7 +188,10 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    // QQuickWindow must be valid at this point
+    // For i18n retranslate
+    utilsLanguage->setQmlEngine(&engine);
+
+    // Notch handling // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 

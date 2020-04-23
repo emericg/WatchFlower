@@ -49,6 +49,7 @@ SOURCES  += src/main.cpp \
             src/device_ropot.cpp \
             src/utils_app.cpp \
             src/utils_android.cpp \
+            src/utils_language.cpp \
             src/utils_screen.cpp
 
 HEADERS  += src/demomode.h \
@@ -64,6 +65,7 @@ HEADERS  += src/demomode.h \
             src/device_ropot.h \
             src/utils_app.h \
             src/utils_android.h \
+            src/utils_language.h \
             src/utils_screen.h \
             src/utils_versionchecker.h
 
