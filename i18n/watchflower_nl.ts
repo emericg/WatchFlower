@@ -81,7 +81,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>Eén van je planten heeft water nodig!</translation>
     </message>
     <message>
@@ -256,9 +256,13 @@
         <translation>Luchtvochtigheid</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Kamerplanten groeien het best in potgrond met een vochtgehalte van 15 tot 50%. Tropische planten staan graag natter, vetplanten juist droger. Daar mag het dalen tot 7%.</translation>
+        <translation type="vanished">Kamerplanten groeien het best in potgrond met een vochtgehalte van 15 tot 50%. Tropische planten staan graag natter, vetplanten juist droger. Daar mag het dalen tot 7%.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished">Kamerplanten groeien het best in potgrond met een vochtgehalte van 15 tot 50%. Tropische planten staan graag natter, vetplanten juist droger. Daar mag het dalen tot 7%.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -337,7 +341,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen in de grond. Gebruik meststoffen (met mate) om de voedingswaarde op peil te houden.</translation>
+        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen in de grond. Met meststoffen houd je de voedingswaarde op peil; gebruik de juiste hoeveelheden passend bij het jaargetijde.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="636"/>
@@ -577,14 +581,22 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>In Android 6+ is locatie-machtiging vereist voor scannen naar Bluetooth Low Energy apparaten. De applicatie gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
+        <translation type="vanished">In Android 6+ is locatie-machtiging vereist voor scannen naar Bluetooth Low Energy apparaten. De applicatie gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Officiële informatie</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
+        <translation type="unfinished">In Android 6+ is locatie-machtiging vereist voor scannen naar Bluetooth Low Energy apparaten. De applicatie gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
-        <translation>Officiële informatie</translation>
+        <source>Official information</source>
+        <translation type="unfinished">Officiële informatie</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
@@ -725,7 +737,7 @@
     </message>
     <message>
         <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">WatchFlower kan bluetooth op je apparaat inschakelen.</translation>
+        <translation type="vanished">WatchFlower kan bluetooth op je apparaat inschakelen, zodat het sensordata kan synchroniseren.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="265"/>
@@ -769,7 +781,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="722"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait op de achtergrond in systeemvak en wordt op gezette tijden actief om sensordata te verversen.</translation>
+        <translation>WatchFlower draait op de achtergrond (in systeemvak) en wordt op gezette tijden actief voor het bijwerken van sensordata.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="760"/>
@@ -816,7 +828,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1065"/>
         <source>Histograms</source>
-        <translation>Staafdiagram</translation>
+        <translation>Staafdiagrammen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1079"/>

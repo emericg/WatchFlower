@@ -115,7 +115,7 @@
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n device selected</numerusform>
             <numerusform>%n devices selected</numerusform>
         </translation>

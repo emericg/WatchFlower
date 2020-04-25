@@ -209,7 +209,7 @@ void Device::refreshDataFinished(bool status, bool cached)
                     else if (!m_locationName.isEmpty())
                         message = tr("You need to water the plant near '%1'").arg(m_locationName);
                     else
-                        message = tr("You need to water one of your (unnamed) plant!");
+                        message = tr("You need to water one of your (unnamed) plants!");
 
                     nm->setNotification(message);
                 }

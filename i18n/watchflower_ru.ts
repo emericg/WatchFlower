@@ -81,7 +81,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="454"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">загрузка...</translation>
     </message>
     <message>
         <source>Moisture</source>
@@ -278,7 +278,7 @@
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
-        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -599,12 +599,12 @@
     <name>ItemNoDevice</name>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
+        <source>Official information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -722,7 +722,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="391"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">язык</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="410"/>
@@ -923,7 +923,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
         <source>All right!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Хорошо!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="205"/>

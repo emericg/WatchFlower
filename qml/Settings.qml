@@ -416,7 +416,7 @@ Item {
                         ListElement { text: "Français"; }
                         ListElement { text: "Frisk"; }
                         ListElement { text: "Nederlands"; }
-                        ListElement { text: "русский"; }
+                        ListElement { text: "Pусский"; }
                     }
 
                     Component.onCompleted: {

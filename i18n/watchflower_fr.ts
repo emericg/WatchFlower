@@ -93,7 +93,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>Vous avez besoin d&apos;arroser une de vos plante (sans nom) !</translation>
     </message>
     <message>
@@ -418,9 +418,8 @@
         <translation>Humidité</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>L&apos;humidité idéal pour les plantes d&apos;intérieur varie entre 15 et 50%. Les plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales aiment avoir plus d&apos;eau.</translation>
+        <translation type="vanished">L&apos;humidité idéal pour les plantes d&apos;intérieur varie entre 15 et 50%. Les plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales aiment avoir plus d&apos;eau.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -449,6 +448,11 @@
     <message>
         <source>Be careful: too much water over long periods of time can be just as lethal as not enough!</source>
         <translation type="vanished">Soyez prudent : trop d&apos;eau sur de longues périodes peut être aussi dangereux que pas assez !</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation>L&apos;humidité idéal pour les plantes d&apos;intérieur varie entre 15 et 50%. Les cactus et plantes grasses peuvent descendre jusqu&apos;à 7%. Les plantes tropicales aiment avoir plus d&apos;eau.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -794,13 +798,21 @@
         <translation type="vanished">Avec Android 6+, la recherche de périphériques Bluetooth basses consommations nécessite des permissions de localisation. L&apos;application n&apos;utilise pas ni ne conserve votre position GPS.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
+        <translation type="vanished">Avec Android 6+, la recherche de périphériques Bluetooth &quot;basses consommations&quot; nécessite la permission de localisation. L&apos;application n&apos;utilise ni ne conserve votre position. Désolé pour le dérangement.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Informations officielles</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
         <translation>Avec Android 6+, la recherche de périphériques Bluetooth &quot;basses consommations&quot; nécessite la permission de localisation. L&apos;application n&apos;utilise ni ne conserve votre position. Désolé pour le dérangement.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
+        <source>Official information</source>
         <translation>Informations officielles</translation>
     </message>
     <message>

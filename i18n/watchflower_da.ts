@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="da_DK">
+<TS version="2.1" language="da_DK" sourcelanguage="en">
 <context>
     <name>About</name>
     <message>
@@ -11,7 +11,7 @@
     <message>
         <location filename="../qml/About.qml" line="70"/>
         <source>What do you want to know?</source>
-        <translation>Hvad vil du hvide?</translation>
+        <translation>Hvad vil du vide?</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="123"/>
@@ -50,19 +50,23 @@
     </message>
     <message>
         <location filename="../qml/About.qml" line="370"/>
-        <source>Application by <a href="https://emeric.io">Emeric Grange</a><br>Visual design by <a href="https://dribbble.com/chrisdiaz">Chris Díaz</a></source>
-        <translation>Applikation af <a href="https://emeric.io">Emeric Grange</a><br>Grafisk formgivning af <a href="https://dribbble.com/chrisdiaz">Chris Díaz</a></translation>
+        <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
+        <translation type="unfinished">Applikation af &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafisk formgivning af &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Application &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
+        <translation type="vanished">Applikation af &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafisk formgivning af &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="411"/>
-        <source>A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.</source>
-        <translation>En planteovervågningsapplikation til Xiaomi / MiJia 'Flower Care' og 'RoPot' bluetooth-sensorer og termometre.</translation>
+        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
+        <translation>En planteovervågningsapplikation til Xiaomi / MiJia &apos;Flower Care&apos; og &apos;RoPot&apos; bluetooth-sensorer og -termometre.</translation>
     </message>
 </context>
 <context>
     <name>DesktopHeader</name>
     <message>
-        <location filename="../qml/DesktopHeader.qml" line="65"/>
+        <location filename="../qml/DesktopHeader.qml" line="66"/>
         <source>Welcome</source>
         <translation>Velkommen</translation>
     </message>
@@ -71,17 +75,17 @@
     <name>Device</name>
     <message>
         <location filename="../src/device.cpp" line="208"/>
-        <source>You need to water your '%1' now!</source>
-        <translation>Vand din '%1' straks!</translation>
+        <source>You need to water your &apos;%1&apos; now!</source>
+        <translation>Vand din &apos;%1&apos; straks!</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="210"/>
-        <source>You need to water the plant near '%1'</source>
-        <translation>Vand din plante i nærheden af '%1'</translation>
+        <source>You need to water the plant near &apos;%1&apos;</source>
+        <translation>Vand din plante i nærheden af &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>En af dine planter har brug for vand!</translation>
     </message>
     <message>
@@ -256,9 +260,22 @@
         <translation>Luftfugtighed</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Stueplanter vokser bedst i pottejord med et fugtighedsindhold på 15 til 50%. Tropiske planter kan lide vådere jord, mens kaktusser og sukkulenter har det bedst, hvis jorden tørrer ud (ned til 7%) mellem hver vanding.</translation>
+        <translation type="vanished">Stueplanter vokser bedst i pottejord med et fugtighedsindhold på 15 til 50%. Tropiske planter kan lide vådere jord, mens kaktusser og sukkulenter har det bedst, hvis jorden tørrer ud (ned til 7%) mellem hver vanding.</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; </source>
+        <translation type="vanished">&lt;br&gt;&lt;b&gt;Tip:&lt;/b&gt; </translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished">Stueplanter vokser bedst i pottejord med et fugtighedsindhold på 15 til 50%. Tropiske planter kan lide vådere jord, mens kaktusser og sukkulenter har det bedst, hvis jorden tørrer ud (ned til 7%) mellem hver vanding.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
+        <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
+        <translation>Pas på, for meget vand i lang tid kan være lige så slemt som for lidt!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -266,13 +283,8 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="442"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="636"/>
-        <source><br><b>Tip: </b></source>
-        <translation>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
-        <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation>Pas på, for meget vand i lang tid kan være lige så slemt som for lidt!</translation>
+        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
+        <translation type="unfinished">&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="372"/>
@@ -326,7 +338,7 @@
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="568"/>
-        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don't like direct sunlight: place them away from south oriented windows!</source>
+        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation>Langt de fleste stueplanter skal omgives med naturligt lys uden direkte sol. De færreste planter vil trives i et sydvendt vindue, hvor de står i skarp sol hele dagen. Placér dem derfor i et lyst rum ud af direkt sollys.</translation>
     </message>
     <message>
@@ -460,7 +472,7 @@
     <message>
         <location filename="../qml/components/ItemAioLineCharts.qml" line="209"/>
         <source>at</source>
-        <extracomment>"at" is used for DATE at HOUR</extracomment>
+        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>kl.</translation>
     </message>
 </context>
@@ -577,19 +589,27 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>På Android 6 og nyere enheder kræves der tilladelse til din placering for at kunne scanne efter Bluetooth Low Energy-enheder. Appen hverken bruger eller gemmer din placering. Beklager ulejligheden.</translation>
+        <translation type="vanished">På Android 6 og nyere enheder kræves der tilladelse til din placering for at kunne scanne efter Bluetooth Low Energy-enheder. Appen hverken bruger eller gemmer din placering. Beklager ulejligheden.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Officielle oplysninger</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
+        <translation type="unfinished">På Android 6 og nyere enheder kræves der tilladelse til din placering for at kunne scanne efter Bluetooth Low Energy-enheder. Appen hverken bruger eller gemmer din placering. Beklager ulejligheden.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
-        <translation>Officielle oplysninger</translation>
+        <source>Official information</source>
+        <translation type="unfinished">Officielle oplysninger</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
         <source>Launch detection</source>
-        <translation>Start søgning</translation>
+        <translation>Start med at scanne</translation>
     </message>
 </context>
 <context>
@@ -668,7 +688,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="684"/>
         <source>Press one more time to exit...</source>
-        <translation>Tryk endnu en gang for at afslutte ...</translation>
+        <translation>Tryk endnu en gang for at afslutte...</translation>
     </message>
 </context>
 <context>
@@ -709,119 +729,130 @@
         <translation>Brug større widgets</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="395"/>
+        <location filename="../qml/Settings.qml" line="391"/>
+        <source>Language</source>
+        <translation type="unfinished">Sprog</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="410"/>
+        <source>auto</source>
+        <extracomment>Short for automatic</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="482"/>
         <source>Bluetooth control</source>
         <translation>Bluetooth-betjening</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="424"/>
-        <source>WatchFlower can activate your device's Bluetooth in order to operate.</source>
+        <location filename="../qml/Settings.qml" line="511"/>
+        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation>WatchFlower kan aktivere enhedens bluetooth til opdatering af sensordataene.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="460"/>
+        <location filename="../qml/Settings.qml" line="547"/>
         <source>Bluetooth compatibility</source>
         <translation>Bluetooth-kompatibilitet</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="491"/>
+        <location filename="../qml/Settings.qml" line="578"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
         <translation>Sensorerne opdateres i rækkefølge i stedet for samtidig. Dette forbedrer pålideligheden af bluetooth-forbindelsen, men opdateringer tager længere tid.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="527"/>
+        <location filename="../qml/Settings.qml" line="614"/>
         <source>Start application minimized</source>
         <translation>Start applikationen minimeret</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="590"/>
+        <location filename="../qml/Settings.qml" line="677"/>
         <source>Enable background updates</source>
         <translation>Aktiver baggrundsopdateringer</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="619"/>
+        <location filename="../qml/Settings.qml" line="706"/>
         <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation>Aktiver med jævne mellemrum for at opdatere sensordataene. Kun hvis bluetooh (eller bluetooth-betjening) er slået til.</translation>
+        <translation>Aktiver med jævne mellemrum for at opdatere sensordataene. Kun hvis bluetooth (eller bluetooth-betjening) er slået til.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="635"/>
+        <location filename="../qml/Settings.qml" line="722"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
         <translation>WatchFlower kører i baggrunden (i meddelelsesområde) og aktiveres med jævne mellemrum til opdatering af sensordataene.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="673"/>
+        <location filename="../qml/Settings.qml" line="760"/>
         <source>Enable notifications</source>
         <translation>Aktiver meddelelser</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="702"/>
+        <location filename="../qml/Settings.qml" line="789"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
         <translation>WatchFlower advarer dig hvis en plante har brug for vand!</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="734"/>
+        <location filename="../qml/Settings.qml" line="821"/>
         <source>Plant sensors</source>
         <translation>Plantesensorer</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="772"/>
-        <location filename="../qml/Settings.qml" line="1100"/>
+        <location filename="../qml/Settings.qml" line="859"/>
+        <location filename="../qml/Settings.qml" line="1187"/>
         <source>Update interval</source>
         <translation>Opdateringsinterval</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="788"/>
-        <location filename="../qml/Settings.qml" line="1116"/>
+        <location filename="../qml/Settings.qml" line="875"/>
+        <location filename="../qml/Settings.qml" line="1203"/>
         <source> h.</source>
         <translation> t.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="836"/>
+        <location filename="../qml/Settings.qml" line="923"/>
         <source>Use bigger indicators</source>
         <translation>Brug større dataetiketter</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="882"/>
+        <location filename="../qml/Settings.qml" line="969"/>
         <source>Dynamic scale for indicators</source>
         <translation>Dynamisk skalering af grafer</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="930"/>
+        <location filename="../qml/Settings.qml" line="1017"/>
         <source>Show graph dots</source>
         <translation>Vis datapunter</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="978"/>
+        <location filename="../qml/Settings.qml" line="1065"/>
         <source>Histograms</source>
         <translation>Søjlediagrammer</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="992"/>
+        <location filename="../qml/Settings.qml" line="1079"/>
         <source>Monthly</source>
         <translation>Måned</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1017"/>
+        <location filename="../qml/Settings.qml" line="1104"/>
         <source>Weekly</source>
         <translation>Uge</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1062"/>
+        <location filename="../qml/Settings.qml" line="1149"/>
         <source>Thermometers</source>
         <translation>Termometre</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1164"/>
+        <location filename="../qml/Settings.qml" line="1251"/>
         <source>Temperature unit</source>
         <translation>Temperaturenhed</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1178"/>
+        <location filename="../qml/Settings.qml" line="1265"/>
         <source>°C</source>
         <translation>°C</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1204"/>
+        <location filename="../qml/Settings.qml" line="1291"/>
         <source>°F</source>
         <translation>°F</translation>
     </message>
@@ -855,43 +886,43 @@
     <name>Tutorial</name>
     <message>
         <location filename="../qml/Tutorial.qml" line="75"/>
-        <source><b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>RoPot</b>' sensors.</source>
-        <translation><b>WatchFlower</b> er en planteovervågningsapplikation til Xiaomi / MiJia '<b>Flower Care</b>' og '<b>RoPot</b>' sensorer.</translation>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; er en planteovervågningsapplikation til Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; og &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensorer.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="95"/>
-        <source>It also works great with a couple of <b>thermometers</b>!</source>
-        <translation>Det fungerer også godt med nogle <b>termometre</b>!</translation>
+        <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
+        <translation>Det fungerer også godt med nogle &lt;b&gt;termometre&lt;/b&gt;!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
-        <source>To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.</source>
-        <translation>For at bruge WatchFlower skal du starte med <b>scanning</b> til <b>kompatible bluetooth-sensorer</b> i dit område.</translation>
+        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation>For at bruge WatchFlower skal du starte med &lt;b&gt;scanning&lt;/b&gt; til &lt;b&gt;kompatible bluetooth-sensorer&lt;/b&gt; i dit område.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
-        <source>You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.</source>
-        <translation>Du kan altid <b>scanne igen</b> for nye enheder, eller <b>slet</b> dem, du ikke ønsker.</translation>
+        <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
+        <translation>Du kan altid &lt;b&gt;scanne igen&lt;/b&gt; for nye enheder, eller &lt;b&gt;slet&lt;/b&gt; dem, du ikke ønsker.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
-        <source>Once <b>paired</b>, sensors will periodically <b>sync</b> their data.</source>
-        <translation>Når <b>koblet</b>, <b>opdaterer</b> sensorerne deres data med jævne mellemrum.</translation>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
+        <translation>Når &lt;b&gt;koblet&lt;/b&gt;, &lt;b&gt;opdaterer&lt;/b&gt; sensorerne deres data med jævne mellemrum.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
-        <source>Click on one of the sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.</source>
-        <translation>Klik på en sensor for <b>detaljeret info</b>, <b>grafer</b> og <b>historiske data</b>.</translation>
+        <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
+        <translation>Klik på en sensor for &lt;b&gt;detaljeret info&lt;/b&gt;, &lt;b&gt;grafer&lt;/b&gt; og &lt;b&gt;historiske data&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="205"/>
-        <source>You can <b>name your plants</b> and set devices <b>location</b>.</source>
-        <translation>Du kan <b>mærke dine planter</b> og angive sensorens <b>placering</b>.</translation>
+        <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
+        <translation>Du kan &lt;b&gt;mærke dine planter&lt;/b&gt; og angive sensorens &lt;b&gt;placering&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
-        <source>Set <b>limits</b> like <b>optimal moisture level</b> or <b>temperature range</b> and more depending on available sensors metrics.</source>
-        <translation>Indstil <grænseværdier> som <optimal fugtighed>, <temperaturområde> og mere afhængigt af sensorspecifikationerne.</translation>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation>Indstil &lt;b&gt;grænseværdier&lt;/b&gt; som &lt;b&gt;optimal fugtighed&lt;/b&gt;, &lt;b&gt;temperaturområde&lt;/b&gt; og mere afhængigt af sensorspecifikationerne.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="244"/>

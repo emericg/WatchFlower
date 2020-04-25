@@ -64,7 +64,7 @@ Item {
 
             visible: (Qt.platform.os === "android")
 
-            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.")
+            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.")
             font.pixelSize: 14
             color: Theme.colorSubText
             wrapMode: Text.WordWrap
@@ -82,7 +82,7 @@ Item {
                 height: 40
                 visible: (Qt.platform.os === "android")
 
-                text: qsTr("Official informations")
+                text: qsTr("Official information")
                 primaryColor: Theme.colorSubText
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
             }

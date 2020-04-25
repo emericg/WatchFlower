@@ -81,7 +81,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>Ien fan dyn planten hat ferlet fan wetter!</translation>
     </message>
     <message>
@@ -256,9 +256,13 @@
         <translation>Luchtfochtigens</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Keamerplanten steane leafst yn potgrûn mei in fochtpersintaazje fan 15 oant 50%. Tropyske planten steane graach wieter. Fetplanten steane graach drûger; dêr mei it sakje oant 7%.</translation>
+        <translation type="vanished">Keamerplanten steane leafst yn potgrûn mei in fochtpersintaazje fan 15 oant 50%. Tropyske planten steane graach wieter. Fetplanten steane graach drûger; dêr mei it sakje oant 7%.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished">Keamerplanten steane leafst yn potgrûn mei in fochtpersintaazje fan 15 oant 50%. Tropyske planten steane graach wieter. Fetplanten steane graach drûger; dêr mei it sakje oant 7%.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -337,7 +341,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="635"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>It fruchtberensgehalte fan de grûn is graadmjitter foar de beskikberens fan fiedingsstoffen yn &apos;e grûn. Brûk dongstoffen (ôfmjitten) om de fiedingswearde op peil te hâlden.</translation>
+        <translation>It fruchtberensgehalte fan de grûn is graadmjitter foar de beskikberens fan fiedingsstoffen yn &apos;e grûn. Brûk dongstoffen (ôfmjitten) om de fiedingswearde op peil te hâlden en hâld rekken mei de tiid fan it jier.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="636"/>
@@ -577,14 +581,22 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>Yn Android 6+ is lokaasje-machtiging ferplichte foar it skennen nei Bluetooth Low Energy apparaten. De applikaasje brûkt dyn lokaasje net en slacht dizze allikemin op. Ekskús foar it ûngemak.</translation>
+        <translation type="vanished">Yn Android 6+ is lokaasje-machtiging ferplichte foar it skennen nei Bluetooth Low Energy apparaten. De applikaasje brûkt dyn lokaasje net en slacht dizze allikemin op. Ekskús foar it ûngemak.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Offisjele ynformaasje</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
+        <translation type="unfinished">Yn Android 6+ is lokaasje-machtiging ferplichte foar it skennen nei Bluetooth Low Energy apparaten. De applikaasje brûkt dyn lokaasje net en slacht dizze allikemin op. Ekskús foar it ûngemak.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
-        <translation>Offisjele ynformaasje</translation>
+        <source>Official information</source>
+        <translation type="unfinished">Offisjele ynformaasje</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
@@ -725,7 +737,7 @@
     </message>
     <message>
         <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">WatchFlower kin bluetooth op dyn apparaat ynskeakelje.</translation>
+        <translation type="vanished">WatchFlower kin bluetooth op dyn apparaat ynskeakelje, sa&apos;t it sensordata bywurkje kin.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="265"/>
@@ -769,7 +781,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="722"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait op &apos;e eftergrûn yn systeemfek en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
+        <translation>WatchFlower draait op &apos;e eftergrûn (yn it notifikaasjegebiet) en wurdt op fêste tiden aktyf om sensordata te ferfarskjen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="760"/>
@@ -816,7 +828,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1065"/>
         <source>Histograms</source>
-        <translation>Staafdiagram</translation>
+        <translation>Staafdiagrammen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1079"/>

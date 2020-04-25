@@ -93,7 +93,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>¡Necesitas regar tu planta (unnamed)!</translation>
     </message>
     <message>
@@ -386,9 +386,13 @@
         <translation>Humedad</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>La humedad ideal del suelo para plantas de interior es normalmente de un 15 a 50%. Las suculentas pueden llegar hasta un 7%. A las plantas tropicales les gusta tener más agua.</translation>
+        <translation type="vanished">La humedad ideal del suelo para plantas de interior es normalmente de un 15 a 50%. Las suculentas pueden llegar hasta un 7%. A las plantas tropicales les gusta tener más agua.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished">La humedad ideal del suelo para plantas de interior es normalmente de un 15 a 50%. Las suculentas pueden llegar hasta un 7%. A las plantas tropicales les gusta tener más agua.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -722,13 +726,21 @@
         <translation type="vanished">En Android 6+, el escaneado para dispositivos bluetooth con baja energía necesita permisos de localización. La aplicación no usa ni guarda la localización GPS. Disculpa las molestias.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>En Android 6 y superior, el escaneo de dispositivos Bluetooth de baja energía necesita permisos de ubicación. La aplicación no usa ni guarda dicha ubicación. Sentimos las molestias.</translation>
+        <translation type="vanished">En Android 6 y superior, el escaneo de dispositivos Bluetooth de baja energía necesita permisos de ubicación. La aplicación no usa ni guarda dicha ubicación. Sentimos las molestias.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Información oficial</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
+        <translation>En Android 6+, el escaneado para dispositivos bluetooth con baja energía necesita permisos de localización. La aplicación no usa ni guarda la localización GPS. Disculpa las molestias.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
+        <source>Official information</source>
         <translation>Información oficial</translation>
     </message>
     <message>

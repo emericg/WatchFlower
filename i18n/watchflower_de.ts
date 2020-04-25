@@ -81,7 +81,7 @@
     </message>
     <message>
         <location filename="../src/device.cpp" line="212"/>
-        <source>You need to water one of your (unnamed) plant!</source>
+        <source>You need to water one of your (unnamed) plants!</source>
         <translation>Eine deiner Pflanzen benötigt Wasser.</translation>
     </message>
     <message>
@@ -256,9 +256,13 @@
         <translation>Luftfeuchtigkeit</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Die ideale Bodenfeuchtigkeit für Zimmerpflanzen beträgt normalerweise 15 bis 50%. Sukkulente können bis zu 7% betragen. Tropische Pflanzen haben gerne mehr Wasser.</translation>
+        <translation type="vanished">Die ideale Bodenfeuchtigkeit für Zimmerpflanzen beträgt normalerweise 15 bis 50%. Sukkulente können bis zu 7% betragen. Tropische Pflanzen haben gerne mehr Wasser.</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceScreenLimits.qml" line="370"/>
+        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
+        <translation type="unfinished">Die ideale Bodenfeuchtigkeit für Zimmerpflanzen beträgt normalerweise 15 bis 50%. Sukkulente können bis zu 7% betragen. Tropische Pflanzen haben gerne mehr Wasser.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="371"/>
@@ -577,13 +581,21 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation>Unter Android 6 und höher ist für den Zugriff auf Bluetooth Low Energy-Geräten eine Standortberechtigung erforderlich. Die Anwendung verwendet weder Ihren Standort, noch speichert sie diesen.</translation>
+        <translation type="vanished">Unter Android 6 und höher ist für den Zugriff auf Bluetooth Low Energy-Geräten eine Standortberechtigung erforderlich. Die Anwendung verwendet weder Ihren Standort, noch speichert sie diesen.</translation>
+    </message>
+    <message>
+        <source>Official informations</source>
+        <translation type="vanished">Offizielle Informationen</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
+        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
-        <source>Official informations</source>
+        <source>Official information</source>
         <translation>Offizielle Informationen</translation>
     </message>
     <message>
