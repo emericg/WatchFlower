@@ -426,10 +426,10 @@ Item {
                         }
                     }
                     property bool cbinit: false
-                    onCurrentValueChanged: {
+                    onCurrentIndexChanged: {
                         if (cbinit) {
-                            settingsManager.appLanguage = currentValue
-                            utilsLanguage.loadLanguage(currentValue)
+                            settingsManager.appLanguage = cbAppLanguage.get(currentIndex).text
+                            utilsLanguage.loadLanguage(cbAppLanguage.get(currentIndex).text)
                         } else {
                             cbinit = true
                         }

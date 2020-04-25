@@ -95,7 +95,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
             else if (m_currentLanguage == "Français") localefull = "fr_FR";
             else if (m_currentLanguage == "Frisk") localefull = "fy_NL";
             else if (m_currentLanguage == "Nederlands") localefull = "nl_NL";
-            else if (m_currentLanguage == "русский") localefull = "ru_RU";
+            else if (m_currentLanguage == "Pусский") localefull = "ru_RU";
             else
             {
                 localefull = QLocale::system().name();
