@@ -44,10 +44,10 @@ ApplicationWindow {
     }
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height
+    //visibility: settingsManager.initialVisibility
 
-    color: Theme.colorBackground
-    visible: true // !settingsManager.minimized
     flags: Qt.Window
+    color: Theme.colorBackground
 
     property var lastUpdate
     property var currentDevice: null

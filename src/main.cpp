@@ -127,6 +127,9 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("WatchFlower");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    // Mobile statusbar helper
+    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+
     // Keep the StatusBar the same color as the splashscreen until UI starts
     StatusBar sb;
     sb.setColor("#fff");
@@ -146,42 +149,49 @@ int main(int argc, char *argv[])
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
-
     if (!sm || !st || !nm || !dm)
     {
         qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;
     }
 
+    // Init WatchFlower utils
     UtilsScreen *utilsScreen = new UtilsScreen();
     UtilsApp *utilsApp = UtilsApp::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
+    if (!utilsScreen || !utilsApp || !utilsLanguage)
+    {
+        qWarning() << "Cannot init WatchFlower utils!";
+        return EXIT_FAILURE;
+    }
+
 #ifndef DEMO_MODE
+    // Translate the application (demo mode always use english)
     utilsLanguage->setAppInstance(&app);
     utilsLanguage->loadLanguage(sm->getAppLanguage());
 #endif
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
-#endif
-
+    // ThemeEngine
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
     // Then we start the UI
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
+
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
+    engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
+
+    // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
 #endif
-
     if (engine.rootObjects().isEmpty())
     {
         qWarning() << "Cannot init QmlApplicationEngine!";
@@ -203,12 +213,6 @@ int main(int argc, char *argv[])
     {
         st->initSystray();
         st->installSystray();
-    }
-
-    // Start minimized?
-    if (start_minimized || sm->getMinimized())
-    {
-        window->setVisibility(QWindow::Minimized);
     }
 
 #if defined(Q_OS_LINUX)

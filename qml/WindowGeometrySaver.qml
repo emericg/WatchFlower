@@ -4,13 +4,14 @@ import QtQuick.Window 2.2
 import Qt.labs.settings 1.0
 
 Item {
-    // MUST be set by the calling application.
-    property Window window
+    // This code should only run for desktop windowed applications.
+    enabled: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-    // Can be changed by the calling application.
+    // The ApplicationWindow instance that will be manipulated. MUST be set by the calling application.
+    property ApplicationWindow windowInstance: null
+
+    // Name of the setting section. Can be changed by the calling application.
     property string windowName: "ApplicationWindow"
-
-    ////////////////////////////////////////////////////////////////////////////
 
     // QSettings file. Will use organisation and project name.
     Settings {
@@ -24,15 +25,33 @@ Item {
         property int visibility
     }
 
+    // Restore settings ////////////////////////////////////////////////////////
+
+    Component.onCompleted: restoreSettings()
+
+    function restoreSettings() {
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") return;
+
+        if (s.width && s.height) {
+            windowInstance.x = s.x;
+            windowInstance.y = s.y;
+            windowInstance.width = s.width;
+            windowInstance.height = s.height;
+            if (!startMinimized) windowInstance.visibility = s.visibility;
+        }
+    }
+
+    // Save settings ///////////////////////////////////////////////////////////
+
     Timer {
         id: saveSettingsTimer
-        interval: 3333 // 3s is probably good enough...
+        interval: 2000 // 2s is probably good enough...
         repeat: false // started by application geometry changes
         onTriggered: saveSettings()
     }
 
     Connections {
-        target: window
+        target: windowInstance
         onXChanged: saveSettingsTimer.restart()
         onYChanged: saveSettingsTimer.restart()
         onWidthChanged: saveSettingsTimer.restart()
@@ -40,42 +59,23 @@ Item {
         onVisibilityChanged: saveSettingsTimer.restart()
     }
 
-    Component.onCompleted: restoreSettings()
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    // Restore settings
-    function restoreSettings() {
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
-            // Restore settings from saved settings
-            if (s.width && s.height) {
-                window.x = s.x;
-                window.y = s.y;
-                window.width = s.width;
-                window.height = s.height;
-                window.visibility = s.visibility;
-            }
-        }
-    }
-
-    // Save settings
     function saveSettings() {
-        if (Qt.platform.os !== "android" && Qt.platform.os !== "ios") {
-            switch(window.visibility) {
-            case ApplicationWindow.Windowed:
-                s.x = window.x;
-                s.y = window.y;
-                s.width = window.width;
-                s.height = window.height;
-                s.visibility = window.visibility;
-                break;
-            case ApplicationWindow.FullScreen:
-                s.visibility = window.visibility;
-                break;
-            case ApplicationWindow.Maximized:
-                s.visibility = window.visibility;
-                break;
-            }
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") return;
+
+        switch(windowInstance.visibility) {
+        case ApplicationWindow.Windowed:
+            s.x = windowInstance.x;
+            s.y = windowInstance.y;
+            s.width = windowInstance.width;
+            s.height = windowInstance.height;
+            s.visibility = windowInstance.visibility;
+            break;
+        case ApplicationWindow.Maximized:
+            s.visibility = windowInstance.visibility;
+            break;
+        case ApplicationWindow.FullScreen:
+            s.visibility = windowInstance.visibility;
+            break;
         }
     }
 }

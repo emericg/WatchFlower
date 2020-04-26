@@ -44,6 +44,7 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(QSize initialSize READ getInitialSize NOTIFY initialSizeChanged)
     Q_PROPERTY(QSize initialPosition READ getInitialPosition NOTIFY initialSizeChanged)
+    Q_PROPERTY(uint initialVisibility READ getInitialVisibility NOTIFY initialSizeChanged)
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
     Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
@@ -66,6 +67,7 @@ class SettingsManager: public QObject
 
     QSize m_appSize;
     QSize m_appPosition;
+    unsigned m_appVisibility;
 
     QString m_appTheme = "green";
     bool m_autoDark = false;
@@ -122,6 +124,7 @@ public:
 
     QSize getInitialSize() { return m_appSize; }
     QSize getInitialPosition() { return m_appPosition; }
+    unsigned getInitialVisibility() { return m_appVisibility; }
 
     QString getAppTheme() const { return m_appTheme; }
     void setAppTheme(const QString &value);

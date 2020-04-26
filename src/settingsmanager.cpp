@@ -78,6 +78,8 @@ bool SettingsManager::readSettings()
             m_appSize.setWidth(settings.value("ApplicationWindow/width").toInt());
         if (settings.contains("ApplicationWindow/height"))
             m_appSize.setHeight(settings.value("ApplicationWindow/height").toInt());
+        if (settings.contains("ApplicationWindow/visibility"))
+            m_appVisibility = settings.value("ApplicationWindow/visibility").toUInt();
 
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
