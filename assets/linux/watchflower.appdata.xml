@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2019 Emeric Grange <emeric.grange@gmail.com> -->
+<!-- Copyright 2020 Emeric Grange <emeric.grange@gmail.com> -->
 <component type="desktop">
  <id>watchflower.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
  <name>WatchFlower</name>
- <summary>WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi / MiJia 'Flower Care' and 'Ropot' devices!</summary>
+ <summary>WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers!</summary>
  <description>
   <p>
-   WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi MiJia "Flower Care" and "Ropot" Bluetooth sensors.
-   WatchFlower also works great with a couple of Bluetooth thermometers!
+   WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi "Flower Care" and "RoPot" Bluetooth sensors!
+   WatchFlower also works great with a couple of Xiaomi Bluetooth thermometers!
   </p>
  </description>
  <screenshots>
@@ -28,15 +28,18 @@
    <keyword>xiaomi</keyword>
    <keyword>mijia</keyword>
    <keyword>miflora</keyword>
+   <keyword>flowercare</keyword>
    <keyword>flower care</keyword>
    <keyword>ropot</keyword>
    <keyword>thermometer</keyword>
    <keyword>thermometers</keyword>
+   <keyword>hygrometer</keyword>
+   <keyword>hygrometers</keyword>
    <keyword>sensor</keyword>
    <keyword>sensors</keyword>
-   <keyword>bluetooth</keyword>
-   <keyword>ble</keyword>
    <keyword>plant</keyword>
    <keyword>plants</keyword>
+   <keyword>ble</keyword>
+   <keyword>bluetooth</keyword>
  </keywords>
 </component>
