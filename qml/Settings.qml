@@ -412,9 +412,9 @@ Item {
                         ListElement { text: "Dansk"; }
                         ListElement { text: "Deutsch"; }
                         ListElement { text: "English"; }
-                        ListElement { text: "Espanol"; }
+                        ListElement { text: "Español"; }
                         ListElement { text: "Français"; }
-                        ListElement { text: "Frisk"; }
+                        ListElement { text: "Frysk"; }
                         ListElement { text: "Nederlands"; }
                         ListElement { text: "Pусский"; }
                     }

@@ -12,7 +12,7 @@ Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are a
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
 Available in Danish, Dutch, English, French, German, Spanish and Russian!  
 
-Application developped by [Emeric Grange](https://emeric.io/).
+Application developed by [Emeric Grange](https://emeric.io/).
 Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 ### Features
