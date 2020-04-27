@@ -645,10 +645,9 @@ void DeviceManager::refreshDevices_check()
     // Already refreshing?
     if (isRefreshing())
     {
-        // Here we can do:
-                                    // - nothing, and queue another refresh
-        //refreshDevices_stop();    // - or cancel current refresh
-        return;                     // - or bail
+        // Here we can do:          // > nothing, and queue another refresh
+        //refreshDevices_stop();    // > or cancel current refresh
+        return;                     // > or bail
     }
 
     // Start refresh (if needed)

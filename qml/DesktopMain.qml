@@ -214,7 +214,7 @@ ApplicationWindow {
     }
     Shortcut {
         sequence: StandardKey.Refresh
-        onActivated: backAction()
+        onActivated: deviceManager.refreshDevices_check()
     }
     Shortcut {
         sequences: [StandardKey.Deselect, StandardKey.Cancel]
