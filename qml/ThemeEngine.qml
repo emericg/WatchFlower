@@ -1,4 +1,5 @@
 pragma Singleton
+
 import QtQuick 2.9
 import QtQuick.Controls.Material 2.0
 
@@ -97,7 +98,7 @@ Item {
     Component.onCompleted: loadTheme(settingsManager.appTheme)
     Connections {
         target: settingsManager
-        onAppthemeChanged: loadTheme(settingsManager.appTheme)
+        function onAppthemeChanged() { loadTheme(settingsManager.appTheme) }
     }
 
     function loadTheme(themeIndex) {

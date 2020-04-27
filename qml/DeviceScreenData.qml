@@ -165,8 +165,8 @@ Item {
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: updateData()
-        onBigIndicatorChanged: {
+        function onTempUnitChanged() { updateData() }
+        function onBigIndicatorChanged() {
             if (settingsManager.bigIndicator)
                 indicatorsLoader.source = "ItemIndicatorsFilled.qml"
             else
@@ -177,7 +177,7 @@ Item {
     }
     Connections {
         target: Theme
-        onCurrentThemeChanged: updateHeaderColor()
+        function onCurrentThemeChanged() { updateHeaderColor() }
     }
 
     onWidthChanged: {

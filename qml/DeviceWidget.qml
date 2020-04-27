@@ -39,21 +39,21 @@ Item {
 
     Connections {
         target: boxDevice
-        onStatusUpdated: updateBoxData()
-        onSensorUpdated: updateSensorData()
-        onDataUpdated: updateBoxData()
-        onLimitsUpdated: updateBoxData()
+        function onStatusUpdated() { updateBoxData() }
+        function onSensorUpdated() { updateSensorData() }
+        function onDataUpdated() { updateBoxData() }
+        function onLimitsUpdated() { updateBoxData() }
     }
     Connections {
         target: Theme
-         onCurrentThemeChanged: {
+         function onCurrentThemeChanged() {
              updateSensorData()
              updateBoxData()
          }
     }
     Connections {
         target: devicesView
-        onBigWidgetChanged: {
+        function onBigWidgetChanged() {
             updateSensorData()
             updateBoxData()
         }
@@ -623,7 +623,7 @@ Item {
 
                     Connections {
                         target: settingsManager
-                        onTempUnitChanged: textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+                        function onTempUnitChanged() { textTemp.text = boxDevice.getTemp().toFixed(1) + "°"; }
                     }
                 }
 

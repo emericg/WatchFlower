@@ -76,42 +76,42 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        onBackButtonClicked: {
+        function onBackButtonClicked() {
             if (appContent.state !== "DeviceList") {
                 appContent.state = "DeviceList"
             }
         }
 
-        onDeviceRefreshButtonClicked: {
+        function onDeviceRefreshButtonClicked() {
             if (currentDevice) {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
-        onRefreshButtonClicked: {
+        function onRefreshButtonClicked() {
             if (!deviceManager.scanning && !deviceManager.refreshing) {
                 deviceManager.refreshDevices_start()
             }
         }
-        onRescanButtonClicked: {
+        function onRescanButtonClicked() {
             if (!deviceManager.scanning && !deviceManager.refreshing) {
                 deviceManager.scanDevices()
             }
         }
 
-        onPlantsButtonClicked: appContent.state = "DeviceList"
-        onSettingsButtonClicked: appContent.state = "Settings"
-        onAboutButtonClicked: appContent.state = "About"
+        function onPlantsButtonClicked() { appContent.state = "DeviceList" }
+        function onSettingsButtonClicked() { appContent.state = "Settings" }
+        function onAboutButtonClicked() { appContent.state = "About" }
     }
 
     Connections {
         target: systrayManager
-        onSettingsClicked: appContent.state = "Settings"
+        function onSettingsClicked() { appContent.state = "Settings" }
     }
 
     Connections {
         target: Qt.application
-        onStateChanged: {
-            switch (Qt.application.state) {
+        function onStateChanged(newstate) {
+            switch (newstate) {
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
 
@@ -122,13 +122,12 @@ ApplicationWindow {
                 var rightnow = new Date()
                 if (!lastUpdate || (rightnow - lastUpdate) > 5*60*1000) {
                     deviceManager.refreshDevices_check();
-                    lastUpdate = rightnow
+                    lastUpdate = rightnow;
                 } else {
                     // Check bluetooth anyway (on macOS)
-                    if (Qt.platform.os === "osx") deviceManager.checkBluetooth()
+                    if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
                 }
-
-                break
+                break;
             }
         }
     }

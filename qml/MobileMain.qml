@@ -141,37 +141,37 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        onLeftMenuClicked: {
+        function onLeftMenuClicked() {
             if (appContent.state === "DeviceList")
                 appDrawer.open()
             else
                 appContent.state = "DeviceList"
         }
-        onDeviceRefreshButtonClicked: {
+        function onDeviceRefreshButtonClicked() {
             if (currentDevice) {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
     }
 
     Connections {
         target: Qt.application
-        onStateChanged: {
-            switch (Qt.application.state) {
+        function onStateChanged(newstate) {
+            switch (newstate) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")
                 deviceManager.refreshDevices_stop();
-                break
+                break;
             case Qt.ApplicationHidden:
                 //console.log("Qt.ApplicationHidden")
                 deviceManager.refreshDevices_stop();
-                break
+                break;
             case Qt.ApplicationInactive:
                 //console.log("Qt.ApplicationInactive")
-                break
+                break;
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
 
@@ -188,7 +188,7 @@ ApplicationWindow {
                     lastUpdate = rightnow
                 }
 */
-                break
+                break;
             }
         }
     }

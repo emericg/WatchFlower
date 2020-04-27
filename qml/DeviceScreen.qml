@@ -33,25 +33,25 @@ Item {
 
     Connections {
         target: myDevice
-        onStatusUpdated: {
+        function onStatusUpdated() {
             rectangleDeviceData.updateHeader()
         }
-        onSensorUpdated: {
+        function onSensorUpdated() {
             rectangleDeviceData.updateHeader()
             rectangleDeviceLimits.updateHeader()
         }
-        onDataUpdated: {
+        function onDataUpdated() {
             rectangleDeviceData.updateData()
             rectangleDeviceHistory.updateData()
         }
-        onLimitsUpdated: {
+        function onLimitsUpdated() {
             rectangleDeviceData.updateData()
         }
     }
 
     Connections {
         target: Theme
-        onCurrentThemeChanged: {
+        function onCurrentThemeChanged() {
             rectangleDeviceData.updateHeader()
             rectangleDeviceHistory.updateHeader()
             rectangleDeviceHistory.updateColors()
@@ -62,15 +62,15 @@ Item {
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             appHeader.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
-        onDeviceHistoryButtonClicked: {
+        function onDeviceHistoryButtonClicked() {
             appHeader.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
             sensorPages.currentIndex = 2
         }
@@ -78,15 +78,15 @@ Item {
     Connections {
         target: tabletMenuDevice
         // mobile only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             tabletMenuDevice.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
-        onDeviceHistoryButtonClicked: {
+        function onDeviceHistoryButtonClicked() {
             tabletMenuDevice.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             tabletMenuDevice.setActiveDeviceSettings()
             sensorPages.currentIndex = 2
         }

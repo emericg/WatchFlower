@@ -40,28 +40,28 @@ Item {
 
     Connections {
         target: myDevice
-        onStatusUpdated: updateHeader()
-        onSensorUpdated: updateHeader()
-        onDataUpdated: updateData()
-        onLimitsUpdated: updateData()
+        function onStatusUpdated() { updateHeader() }
+        function onSensorUpdated() { updateHeader() }
+        function onDataUpdated() { updateData() }
+        function onLimitsUpdated() { updateData() }
     }
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: updateData()
+        function onTempUnitChanged() { updateData() }
     }
 
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             appHeader.setActiveDeviceData()
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
         }
         // mobile only
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
     }
