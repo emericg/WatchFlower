@@ -68,8 +68,9 @@ ApplicationWindow {
     // Desktop stuff ///////////////////////////////////////////////////////////
 
     WindowGeometrySaver {
-        window: applicationWindow
+        windowInstance: applicationWindow
         windowName: "applicationWindow"
+        windowStartMinimized: startMinimized
     }
 
     // Events handling /////////////////////////////////////////////////////////

@@ -16,7 +16,6 @@
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
 
-        <file>WindowGeometrySaver.qml</file>
         <file>ThemeEngine.qml</file>
 
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
@@ -31,6 +30,7 @@
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
         <file alias="RangeSliderValueFilled.qml">components_generic/RangeSliderValueFilled.qml</file>
+        <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
 
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
         <file alias="MiddleSliderThemed.qml">components_themed/MiddleSliderThemed.qml</file>

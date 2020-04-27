@@ -13,6 +13,9 @@ Item {
     // Name of the setting section. Can be changed by the calling application.
     property string windowName: "ApplicationWindow"
 
+    // Bypass initial visibility state if needed. Can be changed by the calling application.
+    property bool windowStartMinimized: false
+
     // QSettings file. Will use organisation and project name.
     Settings {
         id: s
@@ -37,7 +40,7 @@ Item {
             windowInstance.y = s.y;
             windowInstance.width = s.width;
             windowInstance.height = s.height;
-            if (!startMinimized) windowInstance.visibility = s.visibility;
+            if (!windowStartMinimized) windowInstance.visibility = s.visibility;
         }
     }
 
