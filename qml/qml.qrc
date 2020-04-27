@@ -18,6 +18,15 @@
 
         <file>ThemeEngine.qml</file>
 
+        <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
+        <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
+        <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
+        <file alias="ItemIndicatorsCompact.qml">components/ItemIndicatorsCompact.qml</file>
+        <file alias="ItemIndicatorsFilled.qml">components/ItemIndicatorsFilled.qml</file>
+        <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
+        <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
+        <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
         <file alias="ItemDataBarCompact.qml">components_generic/ItemDataBarCompact.qml</file>
@@ -45,15 +54,6 @@
         <file alias="TextFieldThemed.qml">components_themed/TextFieldThemed.qml</file>
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
-
-        <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
-        <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
-        <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
-        <file alias="ItemIndicatorsCompact.qml">components/ItemIndicatorsCompact.qml</file>
-        <file alias="ItemIndicatorsFilled.qml">components/ItemIndicatorsFilled.qml</file>
-        <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
-        <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
-        <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
     </qresource>
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
