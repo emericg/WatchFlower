@@ -34,9 +34,9 @@
 #include "utils_app.h"
 #include "utils_language.h"
 #include "utils_screen.h"
+#include "utils_macosdock.h"
 #include "settingsmanager.h"
 #include "systraymanager.h"
-#include "macosdockmanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
 #include "demomode.h"
@@ -222,9 +222,9 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_MACOS)
-    MacOSDockManager *dockIconHandler = MacOSDockManager::getInstance();
-    QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::show);
-    QObject::connect(dockIconHandler, &MacOSDockManager::dockIconClicked, window, &QQuickWindow::raise);
+    MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
+    QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::show);
+    QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::raise);
 #endif
 
 #endif // desktop section

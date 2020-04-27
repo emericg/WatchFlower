@@ -19,34 +19,32 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef MACOS_DOCK_MANAGER_H
-#define MACOS_DOCK_MANAGER_H
+#ifndef UTILS_MACOS_DOCK_H
+#define UTILS_MACOS_DOCK_H
 /* ************************************************************************** */
 
 #include <QObject>
 
 /* ************************************************************************** */
-
-#if defined(Q_OS_MACOS)
+#ifdef Q_OS_MACOS
 
 /*!
- * \brief macOS dock manager, to hande dock icon clicks
+ * \brief macOS dock click handler
  */
-class MacOSDockManager : public QObject
+class MacOSDockHandler : public QObject
 {
     Q_OBJECT
 
-    MacOSDockManager();
-    ~MacOSDockManager();
+    MacOSDockHandler();
+    ~MacOSDockHandler();
 
 signals:
     void dockIconClicked();
 
 public:
-    static MacOSDockManager *getInstance();
+    static MacOSDockHandler *getInstance();
 };
 
-#endif // defined(Q_OS_MACOS)
-
+#endif // Q_OS_MACOS
 /* ************************************************************************** */
-#endif // MACOS_DOCK_MANAGER_H
+#endif // UTILS_MACOS_DOCK_H
