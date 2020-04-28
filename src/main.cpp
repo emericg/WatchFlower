@@ -19,6 +19,19 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
+#include "utils_app.h"
+#include "utils_screen.h"
+#include "utils_language.h"
+#include "utils_macosdock.h"
+#include "settingsmanager.h"
+#include "systraymanager.h"
+#include "notificationmanager.h"
+#include "devicemanager.h"
+#include "demomode.h"
+
+#include <statusbar.h>
+#include <singleapplication.h>
+
 #include <QtGlobal>
 #include <QLibraryInfo>
 #include <QVersionNumber>
@@ -27,19 +40,6 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QSurfaceFormat>
-
-#include <statusbar.h>
-#include <singleapplication.h>
-
-#include "utils_app.h"
-#include "utils_language.h"
-#include "utils_screen.h"
-#include "utils_macosdock.h"
-#include "settingsmanager.h"
-#include "systraymanager.h"
-#include "notificationmanager.h"
-#include "devicemanager.h"
-#include "demomode.h"
 
 /* ************************************************************************** */
 
@@ -114,17 +114,17 @@ int main(int argc, char *argv[])
 
     SingleApplication app(argc, argv);
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    // Application icon
-    QIcon appIcon(":/assets/logos/watchflower.svg");
-    app.setWindowIcon(appIcon);
-#endif
-
     // Application name
     app.setApplicationName("WatchFlower");
     app.setApplicationDisplayName("WatchFlower");
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
+
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    // Application icon
+    QIcon appIcon(":/assets/logos/watchflower.svg");
+    app.setWindowIcon(appIcon);
+#endif
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // Mobile statusbar helper
@@ -167,7 +167,6 @@ int main(int argc, char *argv[])
 
 #ifndef DEMO_MODE
     // Translate the application (demo mode always use english)
-    utilsLanguage->setAppInstance(&app);
     utilsLanguage->loadLanguage(sm->getAppLanguage());
 #endif
 

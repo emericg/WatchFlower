@@ -41,7 +41,9 @@ UtilsLanguage *UtilsLanguage::getInstance()
 
 UtilsLanguage::UtilsLanguage()
 {
-    //
+    // Set a default application name and instance
+    m_appName = QApplication::applicationName().toLower();
+    m_qt_app = QApplication::instance();
 }
 
 UtilsLanguage::~UtilsLanguage()
@@ -51,6 +53,11 @@ UtilsLanguage::~UtilsLanguage()
 
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+void UtilsLanguage::setAppName(const QString &name)
+{
+    m_appName = name;
+}
 
 void UtilsLanguage::setAppInstance(QCoreApplication *app)
 {
@@ -66,56 +73,53 @@ void UtilsLanguage::setQmlEngine(QQmlApplicationEngine *engine)
 
 void UtilsLanguage::loadLanguage(const QString &lng)
 {
-    //qDebug() << "UtilsI18N::loadLanguage <<" << lng;
+    //qDebug() << "UtilsLanguage::loadLanguage <<" << lng;
 
-    if (m_currentLanguage != lng)
+    if (!m_qt_app) return;
+    if (m_appLanguage == lng) return;
+
+    // Remove old language
+    if (m_qtTranslator)
     {
-        if (m_qt_app)
-        {
-            // Remove old language
-            if (m_qtTranslator)
-            {
-                m_qt_app->removeTranslator(m_qtTranslator);
-                delete m_qtTranslator;
-            }
-            if (m_appTranslator)
-            {
-                m_qt_app->installTranslator(m_appTranslator);
-                delete m_appTranslator;
-            }
-
-            //
-            QString localefull;
-            m_currentLanguage = lng;
-
-            if (m_currentLanguage == "Dansk") localefull = "da_DK";
-            else if (m_currentLanguage == "Deutsch") localefull = "de_DE";
-            else if (m_currentLanguage == "English") localefull = "en_EN";
-            else if (m_currentLanguage == "Español") localefull = "es_ES";
-            else if (m_currentLanguage == "Français") localefull = "fr_FR";
-            else if (m_currentLanguage == "Frysk") localefull = "fy_NL";
-            else if (m_currentLanguage == "Nederlands") localefull = "nl_NL";
-            else if (m_currentLanguage == "Pусский") localefull = "ru_RU";
-            else
-            {
-                localefull = QLocale::system().name();
-                m_currentLanguage = "auto";
-            }
-
-            QString localeshort = localefull;
-            localeshort.truncate(localefull.lastIndexOf('_'));
-
-            m_qtTranslator = new QTranslator;
-            m_qtTranslator->load("qt_" + localeshort, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-            m_appTranslator = new QTranslator;
-            m_appTranslator->load(":/i18n/watchflower_" + localeshort + ".qm");
-
-            // Install new language
-            if (m_qtTranslator) m_qt_app->installTranslator(m_qtTranslator);
-            if (m_appTranslator) m_qt_app->installTranslator(m_appTranslator);
-            if (m_qml_engine) m_qml_engine->retranslate();
-        }
+        m_qt_app->removeTranslator(m_qtTranslator);
+        delete m_qtTranslator;
     }
+    if (m_appTranslator)
+    {
+        m_qt_app->installTranslator(m_appTranslator);
+        delete m_appTranslator;
+    }
+
+    //
+    QString localefull;
+    m_appLanguage = lng;
+
+    if (m_appLanguage == "Dansk") localefull = "da_DK";
+    else if (m_appLanguage == "Deutsch") localefull = "de_DE";
+    else if (m_appLanguage == "English") localefull = "en_EN";
+    else if (m_appLanguage == "Español") localefull = "es_ES";
+    else if (m_appLanguage == "Français") localefull = "fr_FR";
+    else if (m_appLanguage == "Frysk") localefull = "fy_NL";
+    else if (m_appLanguage == "Nederlands") localefull = "nl_NL";
+    else if (m_appLanguage == "Pусский") localefull = "ru_RU";
+    else
+    {
+        localefull = QLocale::system().name();
+        m_appLanguage = "auto";
+    }
+
+    QString localeshort = localefull;
+    localeshort.truncate(localefull.lastIndexOf('_'));
+
+    m_qtTranslator = new QTranslator;
+    m_qtTranslator->load("qt_" + localeshort, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    m_appTranslator = new QTranslator;
+    m_appTranslator->load(":/i18n/" + m_appName + "_" + localeshort + ".qm");
+
+    // Install new language
+    if (m_qtTranslator) m_qt_app->installTranslator(m_qtTranslator);
+    if (m_appTranslator) m_qt_app->installTranslator(m_appTranslator);
+    if (m_qml_engine) m_qml_engine->retranslate();
 }
 
 /* ************************************************************************** */

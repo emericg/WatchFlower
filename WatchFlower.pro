@@ -19,14 +19,14 @@ if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 10)) {
 # Use Qt Quick compiler
 ios | android { CONFIG += qtquickcompiler }
 
+win32 { DEFINES += _USE_MATH_DEFINES }
+
 # StatusBar for mobile OS
 include(src/thirdparty/StatusBar/statusbar.pri)
 
 # SingleApplication for desktop OS
-!ios | !android {
-    include(src/thirdparty/SingleApplication/singleapplication.pri)
-    DEFINES += QAPPLICATION_CLASS=QApplication
-}
+include(src/thirdparty/SingleApplication/singleapplication.pri)
+DEFINES += QAPPLICATION_CLASS=QApplication
 
 # Demo mode (for screenshots across devices)
 exists(assets/demo/demo_bdd.db) {
@@ -78,6 +78,7 @@ OTHER_FILES += .gitignore \
 
 TRANSLATIONS = i18n/watchflower_da.ts \
                i18n/watchflower_de.ts \
+               i18n/watchflower_en.ts \
                i18n/watchflower_es.ts \
                i18n/watchflower_fr.ts \
                i18n/watchflower_nl.ts i18n/watchflower_fy.ts \

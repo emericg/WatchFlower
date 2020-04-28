@@ -20,8 +20,8 @@ Item {
 
     // Header
     property string colorHeader
-    property string colorHeaderHighlight
     property string colorHeaderContent
+    property string colorHeaderHighlight
 
     // Sidebar
     property string colorSidebar
@@ -29,8 +29,8 @@ Item {
 
     // Action bar
     property string colorActionbar
-    property string colorActionbarHighlight
     property string colorActionbarContent
+    property string colorActionbarHighlight
 
     // Tablet bar
     property string colorTabletmenu

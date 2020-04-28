@@ -34,7 +34,8 @@ class UtilsLanguage : public QObject
 {
     Q_OBJECT
 
-    QString m_currentLanguage;
+    QString m_appName;
+    QString m_appLanguage;
 
     QCoreApplication *m_qt_app = nullptr;
     QQmlApplicationEngine *m_qml_engine = nullptr;
@@ -50,10 +51,11 @@ class UtilsLanguage : public QObject
 public:
     static UtilsLanguage *getInstance();
 
+    void setAppName(const QString &name);
     void setAppInstance(QCoreApplication *app);
     void setQmlEngine(QQmlApplicationEngine *engine);
 
-    QString getCurrentLanguage() const { return m_currentLanguage; }
+    QString getCurrentLanguage() const { return m_appLanguage; }
     Q_INVOKABLE void loadLanguage(const QString &lng);
 };
 
