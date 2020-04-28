@@ -88,10 +88,10 @@ Item {
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 26 : 28
     readonly property int fontSizeTitle: 24
-    readonly property int fontSizeContentBig: 18
-    readonly property int fontSizeContent: 16
-    readonly property int fontSizeComponent: 14
     readonly property int fontSizeContentSmall: 14
+    readonly property int fontSizeContent: 16
+    readonly property int fontSizeContentBig: 18
+    readonly property int fontSizeComponent: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 14 : 15
 
     ////////////////////////////////////////////////////////////////////////////
 

@@ -275,7 +275,7 @@ Item {
 
         Rectangle {
             id: rectangleSettingsMode
-            width: parent.width * 0.30
+            width: parent.width * 0.3
             height: parent.height
             anchors.left: rectangleSettingsData.right
             color: buttonDarkColor

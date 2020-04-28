@@ -56,7 +56,7 @@ Item {
 
             text: qsTr("Settings")
             font.bold: true
-            font.pixelSize: 24
+            font.pixelSize: Theme.fontSizeTitle
             color: Theme.colorText
         }
 

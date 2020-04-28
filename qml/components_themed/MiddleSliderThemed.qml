@@ -31,7 +31,7 @@ Slider {
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         width: 18
         height: width
-        radius: width/2
+        radius: (width / 2)
         color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
         border.color: Theme.colorPrimary
     }

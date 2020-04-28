@@ -14,6 +14,7 @@ TextField {
 
     text: "Text Field"
     color: colorText
+    font.pixelSize: Theme.fontSizeComponent
 
     background: Rectangle {
         border.width: 2

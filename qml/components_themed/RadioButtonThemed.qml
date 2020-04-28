@@ -6,8 +6,9 @@ import ThemeEngine 1.0
 RadioButton {
     id: control
 
-    text: "Radio Button"
     checked: false
+    text: "Radio Button"
+    font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
         x: control.leftPadding
@@ -39,6 +40,6 @@ RadioButton {
         verticalAlignment: Text.AlignVCenter
 
         color: control.down ? Theme.colorSubText : Theme.colorText
-        opacity: enabled ? 1.0 : 0.3
+        opacity: enabled ? 1.0 : 0.33
     }
 }

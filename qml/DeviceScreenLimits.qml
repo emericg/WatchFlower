@@ -133,9 +133,9 @@ Item {
 
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-                font.pixelSize: 24
                 text: myDevice.deviceName
                 verticalAlignment: Text.AlignVCenter
+                font.pixelSize: Theme.fontSizeTitle
                 font.capitalization: Font.AllUppercase
                 color: Theme.colorText
 

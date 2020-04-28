@@ -11,7 +11,7 @@ SpinBox {
     clip: true
     value: 50
     editable: true
-    font.pixelSize: 14
+    font.pixelSize: Theme.fontSizeComponent
 
     property string legend: ""
 
@@ -45,7 +45,7 @@ SpinBox {
         implicitHeight: 40
         color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: 4
+        radius: Theme.componentRadius
 
         Text {
             anchors.fill: parent
@@ -66,7 +66,7 @@ SpinBox {
         implicitHeight: 40
         color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
         //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: 4
+        radius: Theme.componentRadius
 
         Text {
             anchors.fill: parent
@@ -81,7 +81,7 @@ SpinBox {
     }
 
     background: Rectangle {
-        radius: 4
+        radius: Theme.componentRadius
         z: 3
 
         color: "transparent"

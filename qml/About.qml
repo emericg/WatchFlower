@@ -54,10 +54,10 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 12
 
+            text: qsTr("About")
             font.bold: true
             font.pixelSize: Theme.fontSizeTitle
             color: Theme.colorText
-            text: qsTr("About")
         }
 
         Text {
@@ -159,10 +159,11 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("WEBSITE")
                     imgSize: 26
                     fullColor: true
-                    primaryColor:  (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                    text: qsTr("WEBSITE")
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
@@ -171,10 +172,11 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("SUPPORT")
                     imgSize: 20
                     fullColor: true
-                    primaryColor:  (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                    text: qsTr("SUPPORT")
                     source: "qrc:/assets/icons_material/outline-email-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }

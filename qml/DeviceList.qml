@@ -176,10 +176,10 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: false
-                text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
                 fullColor: true
                 primaryColor: Theme.colorActionbarHighlight
 
+                text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
                 onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
             }
 

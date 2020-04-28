@@ -115,21 +115,21 @@ Item {
                 height: 15
                 y: -22
                 x: {
-                    if (item_data.width < (width/2 + 8)) { // left
+                    if (item_data.width < ((width / 2) + 8)) { // left
                         if (item_data.width > 12)
-                            item_indicator_triangle.anchors.horizontalCenterOffset = (item_data.width - (width/2 + 8))
+                            item_indicator_triangle.anchors.horizontalCenterOffset = (item_data.width - ((width / 2) + 8))
                         else
-                            item_indicator_triangle.anchors.horizontalCenterOffset = -(width/2 - 4)
+                            item_indicator_triangle.anchors.horizontalCenterOffset = -((width / 2) - 4)
 
                         return 4
-                    } else if ((item_bg.width - item_data.width) < (width/2)) { // right
-                        item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width/2)) - 4
+                    } else if ((item_bg.width - item_data.width) < (width / 2)) { // right
+                        item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width / 2)) - 4
 
                         return item_bg.width - width - 4
                     } else { // whatever
                         item_indicator_triangle.anchors.horizontalCenterOffset = 0
 
-                        return item_data.width - width/2 - 4
+                        return item_data.width - (width / 2) - 4
                     }
                 }
 

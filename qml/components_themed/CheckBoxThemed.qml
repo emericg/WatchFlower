@@ -6,9 +6,10 @@ import ThemeEngine 1.0
 CheckBox {
     id: control
     implicitHeight: Theme.componentHeight
+    font.pixelSize: Theme.fontSizeComponent
 
-    text: "Check Box"
     checked: false
+    text: "Check Box"
 
     indicator: Rectangle {
         x: control.leftPadding
@@ -39,6 +40,6 @@ CheckBox {
         verticalAlignment: Text.AlignVCenter
 
         color: control.down ? Theme.colorSubText : Theme.colorText
-        opacity: enabled ? 1.0 : 0.3
+        opacity: enabled ? 1.0 : 0.33
     }
 }

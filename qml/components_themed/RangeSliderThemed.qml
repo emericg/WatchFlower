@@ -34,7 +34,7 @@ RangeSlider {
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         width: 18
         height: width
-        radius: width/2
+        radius: (width / 2)
         color: first.pressed ? Theme.colorPrimary : Theme.colorPrimary
         border.color: Theme.colorPrimary
     }
@@ -44,7 +44,7 @@ RangeSlider {
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         width: 18
         height: width
-        radius: width/2
+        radius: (width / 2)
         color: second.pressed ? Theme.colorPrimary : Theme.colorPrimary
         border.color: Theme.colorPrimary
     }

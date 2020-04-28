@@ -5,8 +5,9 @@ import ThemeEngine 1.0
 
 Button {
     id: control
-    width: contentText.width + contentText.width/3
+    width: contentText.width + (contentText.width / 3)
     implicitHeight: Theme.componentHeight
+    font.pixelSize: Theme.fontSizeComponent
 
     property bool embedded: false
 
@@ -20,7 +21,7 @@ Button {
 
             text: control.text
             font: control.font
-            opacity: enabled ? 1.0 : 0.3
+            opacity: enabled ? 1.0 : 0.33
             color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -30,7 +31,7 @@ Button {
 
     background: Rectangle {
         radius: embedded ? 0 : Theme.componentRadius
-        opacity: enabled ? 1 : 0.3
+        opacity: enabled ? 1 : 0.33
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
     }
 }

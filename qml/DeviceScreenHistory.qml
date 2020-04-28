@@ -230,10 +230,11 @@ Item {
                 id: buttonDone
                 width: 100
                 height: 32
-                text: qsTr("Month")
-                font.pixelSize: 14
-                fullColor: (graphMode === "monthly")
 
+                fullColor: (graphMode === "monthly")
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Month")
                 onClicked: {
                     graphMode = "monthly"
                     updateData()
@@ -244,10 +245,11 @@ Item {
                 id: buttonDone1
                 width: 100
                 height: 32
-                text: qsTr("Week")
-                font.pixelSize: 14
-                fullColor: (graphMode === "weekly")
 
+                fullColor: (graphMode === "weekly")
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Week")
                 onClicked: {
                     graphMode = "weekly"
                     updateData()
@@ -258,10 +260,11 @@ Item {
                 id: buttonDone2
                 width: 100
                 height: 32
-                text: qsTr("Day")
-                font.pixelSize: 14
-                fullColor: (graphMode === "daily")
 
+                fullColor: (graphMode === "daily")
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Day")
                 onClicked: {
                     graphMode = "daily"
                     updateData()
@@ -281,7 +284,7 @@ Item {
 
             text: myDevice.deviceName
             color: Theme.colorText
-            font.pixelSize: 24
+            font.pixelSize: Theme.fontSizeTitle
             font.capitalization: Font.AllUppercase
             verticalAlignment: Text.AlignVCenter
 

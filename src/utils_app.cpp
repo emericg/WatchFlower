@@ -50,7 +50,8 @@ UtilsApp *UtilsApp::getInstance()
 
 UtilsApp::UtilsApp()
 {
-    //
+    // Set default application path
+    m_appPath = QApplication::applicationDirPath();
 }
 
 UtilsApp::~UtilsApp()
@@ -104,8 +105,6 @@ void UtilsApp::setAppPath(const QString &value)
 
         // Make sure the path is terminated with a separator.
         if (!m_appPath.endsWith('/')) m_appPath += '/';
-
-        // TODO: use QApplication::applicationDirPath() instead?
     }
 }
 

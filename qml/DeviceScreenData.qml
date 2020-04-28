@@ -259,7 +259,7 @@ Item {
 
                         text: myDevice.deviceName
                         color: Theme.colorText
-                        font.pixelSize: 24
+                        font.pixelSize: Theme.fontSizeTitle
                         font.capitalization: Font.AllUppercase
                         verticalAlignment: Text.AlignVCenter
 

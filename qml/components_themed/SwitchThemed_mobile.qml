@@ -6,6 +6,8 @@ import ThemeEngine 1.0
 Switch {
     id: control
 
+    font.pixelSize: Theme.fontSizeComponent
+
     indicator: Rectangle {
         x: control.leftPadding
         y: (parent.height / 2) - (height / 2)
@@ -21,7 +23,7 @@ Switch {
             anchors.verticalCenter: parent.verticalCenter
             width: 24
             height: width
-            radius: width/2
+            radius: (width / 2)
 
             color: control.checked ? Theme.colorPrimary : Theme.colorComponent
             border.color: control.checked ? Theme.colorPrimary : Theme.colorComponent
@@ -37,6 +39,6 @@ Switch {
         text: control.text
         font: control.font
         color: Theme.colorText
-        opacity: enabled ? 1.0 : 0.3
+        opacity: enabled ? 1.0 : 0.33
     }
 }

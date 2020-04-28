@@ -7,6 +7,7 @@ Button {
     id: control
     width: contentText.width + contentImage.width*3
     implicitHeight: Theme.componentHeight
+    font.pixelSize: Theme.fontSizeComponent
 
     property url source: ""
     property int imgSize: 28
@@ -18,10 +19,10 @@ Button {
             height: imgSize
 
             anchors.right: contentText.left
-            anchors.rightMargin: imgSize/3
+            anchors.rightMargin: (imgSize / 3)
             anchors.verticalCenter: parent.verticalCenter
 
-            opacity: enabled ? 1.0 : 0.3
+            opacity: enabled ? 1.0 : 0.33
             source: control.source
             color: Theme.colorIcon
         }
@@ -31,11 +32,11 @@ Button {
 
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: (imgSize/2)
+            anchors.horizontalCenterOffset: (imgSize / 2)
 
             text: control.text
             font: control.font
-            opacity: enabled ? 1.0 : 0.3
+            opacity: enabled ? 1.0 : 0.33
             color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -45,7 +46,7 @@ Button {
 
     background: Rectangle {
         radius: Theme.componentRadius
-        opacity: enabled ? 1 : 0.3
+        opacity: enabled ? 1 : 0.33
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
     }
 }

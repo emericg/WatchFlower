@@ -68,7 +68,7 @@ Item {
 
         source: itemMenuButton.source
         color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
-        opacity: itemMenuButton.enabled ? 1.0 : 0.3
+        opacity: itemMenuButton.enabled ? 1.0 : 0.33
     }
 
     Text {
@@ -79,7 +79,7 @@ Item {
         anchors.verticalCenter: itemMenuButton.verticalCenter
 
         text: menuText
-        font.pixelSize: 14
+        font.pixelSize: Theme.fontSizeComponent
         font.bold: true
         color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
         verticalAlignment: Text.AlignVCenter

@@ -31,8 +31,8 @@ RangeSlider {
         opacity: 1
 
         Rectangle {
-            x: (h1.x + (h1.width/3))
-            width: ((h2.x + (h2.width/3)) - (h1.x + (h1.width/3)))
+            x: (h1.x + (h1.width / 3))
+            width: ((h2.x + (h2.width / 3)) - (h1.x + (h1.width / 3)))
             height: parent.height
             color: colorFg
             radius: hhh
