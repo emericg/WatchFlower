@@ -444,11 +444,11 @@ void SettingsManager::resetSettings()
 {
     // Settings
     m_appTheme = "green";
-    Q_EMIT appthemeChanged();
+    Q_EMIT appThemeChanged();
     m_autoDark = false;
-    Q_EMIT autodarkChanged();
+    Q_EMIT autoDarkChanged();
     m_appLanguage = "auto";
-    Q_EMIT applanguageChanged();
+    Q_EMIT appLanguageChanged();
 
     m_systrayEnabled = false;
     Q_EMIT systrayChanged();
@@ -522,7 +522,7 @@ void SettingsManager::setAppTheme(const QString &value)
     {
         m_appTheme = value;
         writeSettings();
-        Q_EMIT appthemeChanged();
+        Q_EMIT appThemeChanged();
     }
 }
 
@@ -532,7 +532,7 @@ void SettingsManager::setAutoDark(const bool value)
     {
         m_autoDark = value;
         writeSettings();
-        Q_EMIT autodarkChanged();
+        Q_EMIT autoDarkChanged();
     }
 }
 
@@ -542,7 +542,7 @@ void SettingsManager::setAppLanguage(const QString &value)
     {
         m_appLanguage = value;
         writeSettings();
-        Q_EMIT applanguageChanged();
+        Q_EMIT appLanguageChanged();
     }
 }
 

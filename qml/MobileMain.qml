@@ -287,231 +287,63 @@ ApplicationWindow {
         states: [
             State {
                 name: "Tutorial"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: qsTr("Welcome")
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: appHeader; title: qsTr("Welcome"); }
+                PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "DeviceList"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: "WatchFlower"
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: appHeader; title: "WatchFlower"; }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "DeviceSensor"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: currentDevice.deviceName
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: appHeader; title: currentDevice.deviceName; }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "DeviceThermo"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: qsTr("Thermometer")
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: appHeader; title: qsTr("Thermometer"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "Settings"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: qsTr("Settings")
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    visible: true
-                    enabled: true
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: appHeader; title: qsTr("Settings"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "About"
-
-                PropertyChanges {
-                    target: appHeader
-                    title: qsTr("About")
-                }
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceList
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: true
-                    enabled: true
-                }
+                PropertyChanges { target: appHeader; title: qsTr("About"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: true; enabled: true; }
             }
         ]
     }

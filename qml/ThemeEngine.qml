@@ -26,6 +26,7 @@ Item {
     // Sidebar
     property string colorSidebar
     property string colorSidebarContent
+    property string colorSidebarHighlight
 
     // Action bar
     property string colorActionbar
@@ -61,7 +62,7 @@ Item {
     property string colorComponentBorder
     property string colorComponentDown
     property string colorComponentBackground
-    property int componentRadius: 3
+    property int componentRadius: 4
     property int componentHeight: 40
 
     ////////////////
@@ -98,7 +99,7 @@ Item {
     Component.onCompleted: loadTheme(settingsManager.appTheme)
     Connections {
         target: settingsManager
-        function onAppthemeChanged() { loadTheme(settingsManager.appTheme) }
+        function onAppThemeChanged() { loadTheme(settingsManager.appTheme) }
     }
 
     function loadTheme(themeIndex) {
@@ -134,8 +135,8 @@ Item {
             colorHeaderContent = "white"
 
             colorActionbar = colorYellow
-            colorActionbarHighlight = "#ff8b5a"
             colorActionbarContent = "white"
+            colorActionbarHighlight = "#ff8b5a"
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"
@@ -218,8 +219,8 @@ Item {
             colorHeaderContent = "white"
 
             colorActionbar = colorBlue
-            colorActionbarHighlight = "#4dabeb"
             colorActionbarContent = "white"
+            colorActionbarHighlight = "#4dabeb"
 
             colorTabletmenu = "#292929"
             colorTabletmenuContent = "#808080"
@@ -244,6 +245,7 @@ Item {
             colorComponentBorder = "#757575"
             colorComponentDown = "#555555"
             colorComponentBackground = "#dddddd"
+
         }
 
         // This will emit the signal 'onCurrentThemeChanged'

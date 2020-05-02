@@ -46,9 +46,9 @@ class SettingsManager: public QObject
     Q_PROPERTY(QSize initialPosition READ getInitialPosition NOTIFY initialSizeChanged)
     Q_PROPERTY(uint initialVisibility READ getInitialVisibility NOTIFY initialSizeChanged)
 
-    Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
-    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
-    Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY applanguageChanged)
+    Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
+    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autoDarkChanged)
+    Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY appLanguageChanged)
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
@@ -102,9 +102,9 @@ class SettingsManager: public QObject
 
 Q_SIGNALS:
     void initialSizeChanged();
-    void appthemeChanged();
-    void autodarkChanged();
-    void applanguageChanged();
+    void appThemeChanged();
+    void autoDarkChanged();
+    void appLanguageChanged();
     void minimizedChanged();
     void systrayChanged();
     void notifsChanged();

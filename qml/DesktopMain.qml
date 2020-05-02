@@ -58,6 +58,7 @@ ApplicationWindow {
     property bool isMobile: false
     property bool isPhone: false
     property bool isTablet: false
+    property bool isHdpi: (utilsScreen.screenDpi > 128)
 
     property int screenOrientation: Screen.primaryOrientation
     property int screenStatusbarPadding: 0
@@ -69,7 +70,6 @@ ApplicationWindow {
 
     WindowGeometrySaver {
         windowInstance: applicationWindow
-        windowName: "applicationWindow"
         windowStartMinimized: startMinimized
     }
 
@@ -280,213 +280,59 @@ ApplicationWindow {
         states: [
             State {
                 name: "Tutorial"
+                PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: true; enabled: true; }
 
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: true
-                    visible: true
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
             },
             State {
                 name: "DeviceList"
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
 
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
             },
             State {
                 name: "DeviceSensor"
-
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "DeviceThermo"
-
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: true
-                    visible: true
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "Settings"
-
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    visible: true
-                    enabled: true
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: false
-                    enabled: false
-                }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "About"
-
-                PropertyChanges {
-                    target: screenTutorial
-                    enabled: false
-                    visible: false
-                }
-
-                PropertyChanges {
-                    target: screenDeviceList
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceSensor
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenDeviceThermometer
-                    enabled: false
-                    visible: false
-                }
-                PropertyChanges {
-                    target: screenSettings
-                    visible: false
-                    enabled: false
-                }
-                PropertyChanges {
-                    target: screenAbout
-                    visible: true
-                    enabled: true
-                }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: true; enabled: true; }
             }
         ]
     }
