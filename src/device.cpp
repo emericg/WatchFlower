@@ -327,6 +327,14 @@ bool Device::getSqlInfos()
                 Q_EMIT sensorUpdated();
             }
         }
+        else if ((m_deviceName == "LYWSD03MMC") && (m_firmware.size() == 10))
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
     }
 
     QSqlQuery getBattery;

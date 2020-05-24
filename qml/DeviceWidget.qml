@@ -67,6 +67,8 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD02") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
+        }  else if (boxDevice.deviceName === "LYWSD03MMC") {
+            imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
         } else {
             if (boxDevice.hasData("hygro"))
                 imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"

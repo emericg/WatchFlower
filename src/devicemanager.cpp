@@ -25,6 +25,7 @@
 #include "device_hygrotemp_lcd.h"
 #include "device_hygrotemp_eink.h"
 #include "device_hygrotemp_clock.h"
+#include "device_hygrotemp_square.h"
 #include "device_ropot.h"
 
 #include <QBluetoothLocalDevice>
@@ -84,6 +85,8 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
+            else if (deviceName == "LYWSD03MMC")
+                d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
 
             if (d)
             {
@@ -523,6 +526,8 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
                 else if (deviceName == "LYWSD02")
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
+                else if (deviceName == "LYWSD03MMC")
+                    d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
 
                 if (d)
                 {
@@ -791,7 +796,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1" ||
             info.name() == "ClearGrass Temp & RH" ||
-            info.name() == "LYWSD02")
+            info.name() == "LYWSD02" ||
+            info.name() == "LYWSD03MMC")
         {
             // Check if it's not already in the UI
             for (auto ed: m_devices)
@@ -820,6 +826,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempEInk(info);
             else if (info.name() == "LYWSD02")
                 d = new DeviceHygrotempClock(info);
+            else if (info.name() == "LYWSD03MMC")
+                d = new DeviceHygrotempSquare(info);
 
             if (!d)
                 return;

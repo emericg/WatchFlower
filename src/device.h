@@ -39,6 +39,7 @@
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD     "00.00.66"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK    "1.1.2_0007"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
+#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE  "1.0.0_0106"
 
 /* ************************************************************************** */
 
