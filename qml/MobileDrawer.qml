@@ -29,6 +29,8 @@ Rectangle {
     height: parent.height
     color: Theme.colorBackground
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Column {
         id: rectangleHeader
         anchors.top: parent.top
@@ -53,6 +55,8 @@ Rectangle {
                     rectangleStatusbar.height = 0
             }
         }
+
+        ////////
 
         Rectangle {
             id: rectangleStatusbar
@@ -102,21 +106,22 @@ Rectangle {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
         anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
+
+        ////////
 
         Column {
-            id: row
             anchors.fill: parent
 
             Rectangle {
@@ -156,6 +161,8 @@ Rectangle {
                     color: Theme.colorText
                 }
             }
+
+            ////////
 
             Rectangle {
                 id: rectangleSettings
@@ -231,6 +238,8 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Item { // spacer
                 height: 8
                 anchors.right: parent.right
@@ -247,6 +256,8 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.left: parent.left
             }
+
+            ////////
 
             Item {
                 id: rectangleRefresh
@@ -304,8 +315,10 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Item {
-                id: rectangleScan
+                id: rectangleRescan
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
@@ -355,6 +368,8 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Item { // spacer
                 height: 8
                 anchors.right: parent.right
@@ -374,6 +389,8 @@ Rectangle {
                 anchors.left: parent.left
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
             }
+
+            ////////
 
             Item {
                 id: rectangleExit

@@ -87,11 +87,10 @@ Item {
         anchors.bottomMargin: 8
 
         Column {
-            id: column
-            spacing: 8
             anchors.fill: parent
             anchors.rightMargin: 16
             anchors.leftMargin: 16
+            spacing: 8
 
             Item {
                 id: logo
@@ -151,7 +150,7 @@ Item {
 
                 onWidthChanged: {
                     var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
-                    if (ww > 0) { websiteBtn.width = ww ; githubBtn.width = ww; }
+                    if (ww > 0) { websiteBtn.width = ww; githubBtn.width = ww; }
                 }
 
                 ButtonWireframeImage {

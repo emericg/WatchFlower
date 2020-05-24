@@ -29,8 +29,8 @@ import StatusBar 0.1
 
 ApplicationWindow {
     id: applicationWindow
-    minimumWidth: 480
-    minimumHeight: 720
+    minimumWidth: 400
+    minimumHeight: 800
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
@@ -55,9 +55,8 @@ ApplicationWindow {
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
 
-    Component.onCompleted: firstHandleNotches.restart()
     onScreenOrientationChanged: handleNotches()
-
+    Component.onCompleted: firstHandleNotches.restart()
     Timer {
         id: firstHandleNotches
         interval: 100

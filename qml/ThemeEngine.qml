@@ -99,7 +99,7 @@ Item {
     Component.onCompleted: loadTheme(settingsManager.appTheme)
     Connections {
         target: settingsManager
-        function onAppThemeChanged() { loadTheme(settingsManager.appTheme) }
+        onAppThemeChanged: { loadTheme(settingsManager.appTheme) }
     }
 
     function loadTheme(themeIndex) {
