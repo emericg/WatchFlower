@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2019
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
@@ -43,6 +43,7 @@
 DeviceHygrotempClock::DeviceHygrotempClock(QString &deviceAddr, QString &deviceName, QObject *parent):
     Device(deviceAddr, deviceName, parent)
 {
+    m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;
     m_capabilities += DEVICE_CLOCK;
@@ -51,6 +52,7 @@ DeviceHygrotempClock::DeviceHygrotempClock(QString &deviceAddr, QString &deviceN
 DeviceHygrotempClock::DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
+    m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;
     m_capabilities += DEVICE_CLOCK;
@@ -137,7 +139,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
                 {
                     serviceData->writeCharacteristic(chu, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
                 }
-                else if (unit[0] == 0x01&& sm->getTempUnit() == "C")
+                else if (unit[0] == 0x01 && sm->getTempUnit() == "C")
                 {
                     serviceData->writeCharacteristic(chu, QByteArray::fromHex("FF"), QLowEnergyService::WriteWithResponse);
                 }
@@ -197,6 +199,16 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
                 QLowEnergyCharacteristic chb = serviceData->characteristic(b);
                 m_notificationDesc = chb.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+            }
+
+            // Characteristic "Battery level" // 1 byte READ
+            {
+                QBluetoothUuid b(QString("EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handler 0x17
+                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+
+                const quint8 *data = reinterpret_cast<const quint8 *>(chb.value().constData());
+                //qDebug() << "Battery > " << chb.value();
+                m_battery = static_cast<int>(data[0]);
             }
         }
     }
