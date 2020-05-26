@@ -167,8 +167,8 @@ Rectangle {
             }
         }
         Item { // spacer
-            width: 12
-            height: 12
+            width: 8
+            height: 8
             anchors.verticalCenter: parent.verticalCenter
             visible: (appContent.state === "DeviceThermo")
         }

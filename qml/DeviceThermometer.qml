@@ -222,47 +222,48 @@ Item {
             color: Theme.colorHeaderContent
         }
 
-        Item {
-            id: status
-            height: 24
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-
-            ImageSvg {
-                id: imageStatus
-                width: 24
-                height: 24
-
-                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
-                color: Theme.colorHeaderContent
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            Text {
-                id: textStatus
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: imageStatus.right
-                anchors.leftMargin: 8
-
-                text: qsTr("Updating...")
-                color: Theme.colorHeaderContent
-                font.pixelSize: 17
-                font.bold: false
-            }
-        }
-
         ImageSvg {
             id: imageBattery
             width: 28
             height: 28
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 6
+            anchors.bottom: status.top
+            anchors.bottomMargin: 0
+            rotation: 90
+
             source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
             color: Theme.colorHeaderContent
+        }
+
+        Row {
+            id: status
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+
+            height: 24
+            spacing: 8
+
+            ImageSvg {
+                id: imageStatus
+                width: 22
+                height: 22
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
+                color: Theme.colorHeaderContent
+            }
+            Text {
+                id: textStatus
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: qsTr("Loading...")
+                color: Theme.colorHeaderContent
+                font.pixelSize: 17
+                font.bold: false
+            }
         }
 
         Item {
