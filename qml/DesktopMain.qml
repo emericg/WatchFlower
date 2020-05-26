@@ -34,13 +34,13 @@ ApplicationWindow {
         if (settingsManager.initialSize.width > 0)
             return settingsManager.initialSize.width
         else
-            return (Qt.platform.os === "osx") ? 800 : 1280
+            return isHdpi ? 800 : 1280
     }
     height: {
         if (settingsManager.initialSize.height > 0)
             return settingsManager.initialSize.height
         else
-            return (Qt.platform.os === "osx") ? 480 : 720
+            return isHdpi ? 480 : 720
     }
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height

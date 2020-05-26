@@ -40,12 +40,9 @@ Item {
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         Text {
             id: textTitle
@@ -80,18 +77,19 @@ Item {
         contentWidth: -1
 
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
-        anchors.topMargin: 12
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 12
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         Column {
             id: column
-            spacing: 8
             anchors.fill: parent
-            anchors.rightMargin: 0
             anchors.leftMargin: 0
+            anchors.rightMargin: 0
+
+            topPadding: 12
+            bottomPadding: 12
+            spacing: 8
 
             property int leftPad: 24
 
@@ -143,9 +141,9 @@ Item {
                     id: image_theme
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-style-24px.svg"
@@ -154,10 +152,10 @@ Item {
                 Text {
                     id: text_theme
                     height: 40
-                    anchors.right: theme_selector.left
-                    anchors.rightMargin: 16
                     anchors.left: image_theme.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: theme_selector.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
@@ -245,9 +243,9 @@ Item {
                     id: image_autoDarkmode
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
@@ -256,10 +254,10 @@ Item {
                 Text {
                     id: text_autoDarkmode
                     height: 40
-                    anchors.right: switch_autoDarkmode.left
-                    anchors.rightMargin: 16
                     anchors.left: image_autoDarkmode.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: switch_autoDarkmode.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
@@ -314,9 +312,9 @@ Item {
                     id: image_bigwidget
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
@@ -371,9 +369,9 @@ Item {
                     id: image_language
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-translate-24px.svg"
@@ -382,10 +380,10 @@ Item {
                 Text {
                     id: text_language
                     height: 40
-                    anchors.right: combobox_language.left
-                    anchors.rightMargin: 16
                     anchors.left: image_language.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: combobox_language.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Language")
@@ -462,9 +460,9 @@ Item {
                     id: image_bluetoothControl
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
@@ -488,9 +486,9 @@ Item {
 
                 SwitchThemedMobile {
                     id: switch_bluetoothControl
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
                     Component.onCompleted: checked = settingsManager.bluetoothControl
@@ -529,9 +527,9 @@ Item {
                     id: image_bluetoothCompat
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
@@ -555,9 +553,9 @@ Item {
 
                 SwitchThemedMobile {
                     id: switch_bluetoothCompat
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
                     Component.onCompleted: checked = settingsManager.bluetoothCompat
@@ -605,10 +603,10 @@ Item {
                 Text {
                     id: text_minimized
                     height: 40
-                    anchors.right: switch_minimized.left
-                    anchors.rightMargin: 16
                     anchors.left: image_minimized.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: switch_minimized.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Start application minimized")
@@ -633,9 +631,9 @@ Item {
                     id: image_minimized
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-minimize-24px.svg"
@@ -657,9 +655,9 @@ Item {
                     id: image_worker
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
@@ -668,11 +666,11 @@ Item {
                 Text {
                     id: text_worker
                     height: 40
-                    anchors.leftMargin: column.leftPad
                     anchors.left: image_worker.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: column.leftPad
                     anchors.right: switch_worker.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable background updates")
                     wrapMode: Text.WordWrap
@@ -683,9 +681,9 @@ Item {
 
                 SwitchThemedMobile {
                     id: switch_worker
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
                     Component.onCompleted: checked = settingsManager.systray
@@ -740,9 +738,9 @@ Item {
                     id: image_notifications
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
@@ -752,10 +750,10 @@ Item {
                     id: text_notifications
                     height: 40
                     anchors.left: image_notifications.right
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: column.leftPad
                     anchors.right: switch_notifiations.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable notifications")
                     wrapMode: Text.WordWrap
@@ -766,9 +764,9 @@ Item {
 
                 SwitchThemedMobile {
                     id: switch_notifiations
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
                     Component.onCompleted: checked = settingsManager.notifications
@@ -839,9 +837,9 @@ Item {
                     id: image_update
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
@@ -850,11 +848,11 @@ Item {
                 Text {
                     id: text_update
                     height: 40
-                    anchors.leftMargin: column.leftPad
                     anchors.left: image_update.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: column.leftPad
                     anchors.right: spinBox_update.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
                     font.pixelSize: 16
@@ -903,9 +901,9 @@ Item {
                     id: image_bigindicators
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
@@ -914,10 +912,10 @@ Item {
                 Text {
                     id: text_bigindicators
                     height: 40
-                    anchors.right: switch_bigindicators.left
-                    anchors.rightMargin: 16
                     anchors.left: image_bigindicators.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: switch_bigindicators.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Use bigger indicators")
@@ -949,9 +947,9 @@ Item {
                     id: image_dynascale
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
@@ -960,10 +958,10 @@ Item {
                 Text {
                     id: text_dynascale
                     height: 40
-                    anchors.right: switch_dynascale.left
-                    anchors.rightMargin: 16
                     anchors.left: image_dynascale.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: switch_dynascale.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Dynamic scale for indicators")
@@ -997,9 +995,9 @@ Item {
                     id: image_showdots
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
@@ -1008,10 +1006,10 @@ Item {
                 Text {
                     id: text_showdots
                     height: 40
-                    anchors.right: switch_showdots.left
-                    anchors.rightMargin: 16
                     anchors.left: image_showdots.right
                     anchors.leftMargin: column.leftPad
+                    anchors.right: switch_showdots.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Show graph dots")
@@ -1045,9 +1043,9 @@ Item {
                     id: image_plant_graph
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
@@ -1056,11 +1054,11 @@ Item {
                 Text {
                     id: text_graph
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_plant_graph.right
                     anchors.leftMargin: column.leftPad
                     anchors.right: radioDelegateGraphMonthly.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Histograms")
                     wrapMode: Text.WordWrap
@@ -1072,8 +1070,8 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateGraphMonthly
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: radioDelegateGraphWeekly.left
+                    anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
                     text: qsTr("Monthly")
@@ -1132,8 +1130,8 @@ Item {
                     id: image_thermometer
                     width: 24
                     height: 24
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1142,8 +1140,8 @@ Item {
 
                 Text {
                     id: text_thermometer
-                    anchors.leftMargin: column.leftPad
                     anchors.left: image_thermometer.right
+                    anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Thermometers")
@@ -1167,9 +1165,9 @@ Item {
                     id: image_thermometer_update
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
@@ -1178,11 +1176,11 @@ Item {
                 Text {
                     id: text_thermometer_update
                     height: 40
-                    anchors.leftMargin: column.leftPad
                     anchors.left: image_thermometer_update.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: column.leftPad
                     anchors.right: spinBox_thermometer_update.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
                     font.pixelSize: 16
@@ -1231,9 +1229,9 @@ Item {
                     id: image_thermometer_unit
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
@@ -1242,11 +1240,11 @@ Item {
                 Text {
                     id: text_thermometer_unit
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_thermometer_unit.right
                     anchors.leftMargin: column.leftPad
                     anchors.right: radioDelegateCelsius.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Temperature unit")
                     wrapMode: Text.WordWrap
@@ -1258,8 +1256,8 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateCelsius
                     height: 40
-                    anchors.verticalCenter: text_thermometer_unit.verticalCenter
                     anchors.right: radioDelegateFahrenheit.left
+                    anchors.verticalCenter: text_thermometer_unit.verticalCenter
 
                     z: 1
                     text: qsTr("°C")
@@ -1283,9 +1281,9 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateFahrenheit
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
                     text: qsTr("°F")

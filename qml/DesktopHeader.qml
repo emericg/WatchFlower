@@ -318,4 +318,15 @@ Rectangle {
         }
 */
     }
+
+    Rectangle {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        height: 1
+        opacity: 0.25
+        visible: (appContent.state !== "DeviceThermo")
+        color: Theme.colorHeaderHighlight
+    }
 }

@@ -46,10 +46,10 @@ Item {
     }
     Connections {
         target: Theme
-         function onCurrentThemeChanged() {
-             updateSensorData()
-             updateBoxData()
-         }
+        function onCurrentThemeChanged() {
+            updateSensorData()
+            updateBoxData()
+        }
     }
     Connections {
         target: devicesView

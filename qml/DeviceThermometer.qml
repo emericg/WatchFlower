@@ -196,9 +196,8 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        MouseArea {
-            anchors.fill: parent
-        }
+        MouseArea { anchors.fill: parent } // prevent clicks below this area
+
         Text {
             id: sensorTemp
             anchors.verticalCenterOffset: -40

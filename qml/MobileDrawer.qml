@@ -24,10 +24,9 @@ import QtQuick.Controls 2.2
 
 import ThemeEngine 1.0
 
-Rectangle {
+Item {
     width: parent.width
     height: parent.height
-    color: Theme.colorBackground
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -113,11 +112,9 @@ Rectangle {
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
 
         ////////
 
@@ -127,8 +124,8 @@ Rectangle {
             Rectangle {
                 id: rectangleHome
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: (appContent.state === "DeviceList") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
@@ -167,8 +164,8 @@ Rectangle {
             Rectangle {
                 id: rectangleSettings
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: (appContent.state === "Settings") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
@@ -262,8 +259,8 @@ Rectangle {
             Item {
                 id: rectangleRefresh
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 enabled: deviceManager.bluetooth
 
@@ -320,8 +317,8 @@ Rectangle {
             Item {
                 id: rectangleRescan
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 enabled: deviceManager.bluetooth
 
@@ -395,8 +392,8 @@ Rectangle {
             Item {
                 id: rectangleExit
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
                 MouseArea {

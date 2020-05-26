@@ -40,12 +40,9 @@ Item {
 
         visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         Text {
             id: textTitle
@@ -80,17 +77,20 @@ Item {
         contentWidth: -1
 
         anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
-        anchors.topMargin: 8
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
 
         Column {
             anchors.fill: parent
-            anchors.rightMargin: 16
             anchors.leftMargin: 16
+            anchors.rightMargin: 16
+
+            topPadding: 8
+            bottomPadding: 8
             spacing: 8
+
+            ////////
 
             Item {
                 id: logo

@@ -125,6 +125,8 @@ ApplicationWindow {
         height: applicationWindow.height
 
         background: Rectangle {
+            color: Theme.colorBackground
+
             Rectangle {
                 x: parent.width - 1
                 width: 1

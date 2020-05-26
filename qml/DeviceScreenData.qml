@@ -450,11 +450,12 @@ Item {
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
+                            padding: 4
 
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
-                            padding: 4
                             font.pixelSize: 18
+                            font.bold: false
                         }
                     }
                 }
