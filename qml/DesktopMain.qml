@@ -285,7 +285,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAbout; visible: true; enabled: true; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
 
             },
             State {
