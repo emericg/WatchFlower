@@ -33,7 +33,9 @@
 @property (nonatomic, assign) UIStatusBarAnimation preferredStatusBarUpdateAnimation;
 @property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyle;
 @end
-
+#
+define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+￼
 bool StatusBarPrivate::isAvailable_sys()
 {
     return true;
@@ -46,7 +48,12 @@ void StatusBarPrivate::setColor_sys(const QColor &color)
 
 static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)
 {
-    return theme == StatusBar::Light ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+    if (theme == StatusBar::Dark)
+        return UIStatusBarStyleLightContent;
+    else if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0"))
+        return UIStatusBarStyleDarkContent;
+    else
+        return UIStatusBarStyleDefault;
 }
 
 static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
