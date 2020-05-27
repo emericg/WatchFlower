@@ -37,7 +37,7 @@ TODOs:
 | Flower Care | RoPot | Hygro & Temp sensor | Digital Hygrometer Clock | Digital Hygrometer 2 |
 | :---------: | :---: | :-----------------: | :----------------------: | :------------------: |
 | ![FlowerCare](assets/devices/flowercare.svg) | ![RoPot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) | ![HygroTemp2](assets/devices/hygrotemp-square.svg) |
-| (International and Chinese versions)<br>Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | (MiJia LCD and ClearGrass EInk) | |
+| (International and Chinese versions)<br>(Xiaomi and VegTrug variants) | (Xiaomi and VegTrug variants) | (MiJia LCD and ClearGrass EInk) | |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) / [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) |
 
 Various Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!
@@ -57,7 +57,7 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 
 ### Dependencies
 
-You will need a C++11 compiler and Qt (Qt 5.12+ is recommended) with Qt Charts.
+You will need a C++11 compiler and Qt (Qt 5.12+ is recommended) with Qt Charts.  
 For Android builds, the appropriates SDK and NDK.
 
 ### Building WatchFlower
