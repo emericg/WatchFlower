@@ -255,7 +255,7 @@ Item {
                         height: 36
                         anchors.left: parent.left
 
-                        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                        visible: isDesktop
 
                         text: myDevice.deviceName
                         color: Theme.colorText

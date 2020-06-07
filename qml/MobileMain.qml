@@ -236,6 +236,8 @@ ApplicationWindow {
                 } else {
                     appContent.state = "DeviceList"
                 }
+            } else if (appContent.state === "Permissions") {
+                appContent.state = "About"
             } else {
                 appContent.state = "DeviceList"
             }

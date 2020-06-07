@@ -38,7 +38,7 @@ Item {
         height: 80
         z: 5
 
-        //visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+        visible: isDesktop
 
         anchors.top: parent.top
         anchors.left: parent.left
@@ -76,7 +76,7 @@ Item {
         id: scrollView
         contentWidth: -1
 
-        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
+        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -86,18 +86,15 @@ Item {
             anchors.leftMargin: 16
             anchors.rightMargin: 16
 
-            topPadding: 8
-            bottomPadding: 8
-            spacing: 8
-
-            // Android only
-            //visible: (Qt.platform.os === "android")
+            topPadding: 16
+            bottomPadding: 16
+            spacing: 16
 
             ////////
 
             Item {
                 id: element_gps
-                height: 48
+                height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
 /*
@@ -132,7 +129,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_gps
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: -8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -149,10 +146,18 @@ Item {
                 topPadding: -8
                 bottomPadding: 0
 
-                text: qsTr("Android operating system required applications to ask for device position in order to scan for Bluetooth devices.<br>You can actually remove this permission as long as you don't need to scan for new devices.")
+                text: qsTr("Android operating system required applications to ask for device location in order to scan for Bluetooth LE sensors.<br>You can actually remove this permission as long as you don't need to scan for new sensors.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
+            }
+            ButtonWireframe {
+                height: 32
+                visible: (Qt.platform.os === "android")
+
+                text: qsTr("Official information")
+                primaryColor: Theme.colorPrimary
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
             }
 
             ////////
@@ -172,13 +177,13 @@ Item {
             }
 
             Item {
-                id: element_writesd
-                height: 48
+                id: element_storage
+                height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
 /*
                 ImageSvg {
-                    id: image_writesd
+                    id: image_storage
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -190,7 +195,7 @@ Item {
                 }
 */
                 Text {
-                    id: text_writesd
+                    id: text_storage
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 0
@@ -198,7 +203,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("SD card permission")
+                    text: qsTr("Storage write permission")
                     wrapMode: Text.WordWrap
                     font.pixelSize: 16
                     color: Theme.colorText
@@ -206,9 +211,9 @@ Item {
                 }
 
                 SwitchThemedMobile {
-                    id: switch_writesd
+                    id: switch_storage
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: -8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -217,7 +222,7 @@ Item {
                 }
             }
             Text {
-                id: legend_writesd
+                id: legend_storage
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -225,7 +230,7 @@ Item {
                 topPadding: -8
                 bottomPadding: 0
 
-                text: qsTr("SD card write permission is needed for exporting sensors data.")
+                text: qsTr("Storage write permission is needed for exporting sensors data to the SD card.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -249,7 +254,7 @@ Item {
 
             Item {
                 id: element_bluetooth
-                height: 48
+                height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
 /*
@@ -284,7 +289,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bluetooth
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: -8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 

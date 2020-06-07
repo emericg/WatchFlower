@@ -38,7 +38,7 @@ Item {
         height: 80
         z: 5
 
-        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+        visible: isDesktop
 
         anchors.top: parent.top
         anchors.left: parent.left
@@ -76,7 +76,7 @@ Item {
         id: scrollView
         contentWidth: -1
 
-        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
+        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -442,7 +442,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 color: Theme.colorSeparator
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                visible: isMobile
             }
 
             ////////

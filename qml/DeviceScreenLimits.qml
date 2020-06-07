@@ -131,7 +131,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 12
 
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
 
                 text: myDevice.deviceName
                 verticalAlignment: Text.AlignVCenter

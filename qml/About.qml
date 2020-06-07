@@ -38,7 +38,7 @@ Item {
         height: 80
         z: 5
 
-        visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+        visible: isDesktop
 
         anchors.top: parent.top
         anchors.left: parent.left
@@ -76,7 +76,7 @@ Item {
         id: scrollView
         contentWidth: -1
 
-        anchors.top: (Qt.platform.os !== "android" && Qt.platform.os !== "ios") ? rectangleHeader.bottom : parent.top
+        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -104,8 +104,8 @@ Item {
                     id: imageLogo
                     width: 80
                     height: 80
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/logos/logo.svg"
                     sourceSize: Qt.size(width, height)
@@ -137,7 +137,7 @@ Item {
             }
 
             Row {
-                id: websiteANDgithub
+                id: buttonsRow
                 height: 56
 
                 anchors.left: parent.left
@@ -149,7 +149,7 @@ Item {
                 spacing: 16
 
                 onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
+                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2;
                     if (ww > 0) { websiteBtn.width = ww; githubBtn.width = ww; }
                 }
 
@@ -183,7 +183,7 @@ Item {
 
             Item {
                 id: desc
-                height: 64
+                height: 72
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -292,6 +292,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: {
                             if (Qt.platform.os === "android")
                                 Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
@@ -333,6 +334,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: screenTutorial.reopen("About")
                     }
                 }
@@ -372,6 +374,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
                 }
@@ -411,14 +414,47 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
                 }
             }
 
+            ////////
+
+            ImageSvg {
+                id: imageDevices
+                height: 96
+                anchors.left: parent.left
+                anchors.leftMargin: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+
+                visible: true
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/assets/devices/welcome-devices.svg"
+                color: Theme.colorPrimary
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
             Item {
                 id: permissions
-                height: 48
+                height: 40
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -428,8 +464,8 @@ Item {
 
                 ImageSvg {
                     id: permissionsImg
-                    width: 26
-                    height: 26
+                    width: 28
+                    height: 28
                     anchors.left: parent.left
                     anchors.leftMargin: 2
                     anchors.verticalCenter: parent.verticalCenter
@@ -445,27 +481,15 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    text: qsTr("Permissions")
+                    text: qsTr("About permissions")
                     font.pixelSize: 16
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: appContent.state = "Permissions"
                     }
                 }
-            }
-
-            ImageSvg {
-                id: imageDevices
-                height: 128
-                anchors.left: parent.left
-                anchors.leftMargin: 40
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/assets/devices/welcome-devices.svg"
-                color: Theme.colorPrimary
             }
 
             ////////
@@ -494,8 +518,8 @@ Item {
 
                 ImageSvg {
                     id: dependenciesImg
-                    width: 27
-                    height: 27
+                    width: 28
+                    height: 28
                     anchors.left: parent.left
                     anchors.leftMargin: 2
                     anchors.top: parent.top
@@ -586,8 +610,8 @@ Item {
 
                 ImageSvg {
                     id: translatorsImg
-                    width: 27
-                    height: 27
+                    width: 26
+                    height: 26
                     anchors.left: parent.left
                     anchors.leftMargin: 2
                     anchors.top: parent.top

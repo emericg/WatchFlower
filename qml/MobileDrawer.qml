@@ -371,20 +371,20 @@ Item {
                 height: 8
                 anchors.right: parent.right
                 anchors.left: parent.left
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
             }
             Rectangle {
                 height: 1
                 anchors.right: parent.right
                 anchors.left: parent.left
                 color: Theme.colorSeparator
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
             }
             Item {
                 height: 8
                 anchors.right: parent.right
                 anchors.left: parent.left
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
             }
 
             ////////
@@ -394,7 +394,7 @@ Item {
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
 
                 MouseArea {
                     anchors.fill: parent
