@@ -176,7 +176,7 @@ Item {
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                     text: qsTr("SUPPORT")
-                    source: "qrc:/assets/icons_material/outline-support-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-support-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }
             }

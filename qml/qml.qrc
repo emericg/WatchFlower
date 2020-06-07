@@ -7,6 +7,7 @@
         <file>DesktopHeader.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
+        <file>Permissions.qml</file>
         <file>Tutorial.qml</file>
         <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>

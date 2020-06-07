@@ -261,6 +261,10 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenSettings
         }
+        Permissions {
+            anchors.fill: parent
+            id: screenPermissions
+        }
         About {
             anchors.fill: parent
             id: screenAbout
@@ -294,6 +298,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -304,6 +309,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -314,6 +320,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -324,6 +331,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -334,6 +342,18 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+            },
+            State {
+                name: "Permissions"
+                PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: true; enabled: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -344,6 +364,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
             }
         ]
