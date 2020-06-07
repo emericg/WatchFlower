@@ -302,21 +302,6 @@ Rectangle {
                 onClicked: aboutButtonClicked()
             }
         }
-
-        ////////////////
-/*
-        ItemImageButton {
-            id: buttonExit
-            width: 48
-            height: 48
-            anchors.verticalCenter: parent.verticalCenter
-
-            visible: (rectangleHeader.width >= 720)
-            iconColor: Theme.colorHeaderContent
-            source: (settingsManager.systray) ? "qrc:/assets/icons_material/duotone-minimize-24px.svg" : "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
-            onClicked: (settingsManager.systray) ? applicationWindow.hide(): utilsApp.appExit()
-        }
-*/
     }
 
     Rectangle {
@@ -326,7 +311,7 @@ Rectangle {
 
         height: 1
         opacity: 0.25
-        visible: (appContent.state !== "DeviceThermo")
+        visible: (appContent.state !== "DeviceThermo" && appContent.state !== "Tutorial")
         color: Theme.colorHeaderHighlight
     }
 }
