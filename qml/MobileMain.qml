@@ -142,26 +142,26 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        function onLeftMenuClicked() {
+        onLeftMenuClicked: {
             if (appContent.state === "DeviceList")
                 appDrawer.open()
             else
                 appContent.state = "DeviceList"
         }
-        function onDeviceRefreshButtonClicked() {
+        onDeviceRefreshButtonClicked: {
             if (currentDevice) {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
-        function onRightMenuClicked() {
+        onRightMenuClicked: {
             //
         }
     }
 
     Connections {
         target: Qt.application
-        function onStateChanged(newstate) {
-            switch (newstate) {
+        onStateChanged: {
+            switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")
                 deviceManager.refreshDevices_stop();

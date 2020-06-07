@@ -55,11 +55,11 @@ Item {
 
     Connections {
         target: windowInstance
-        function onXChanged() { saveSettingsTimer.restart() }
-        function onYChanged() { saveSettingsTimer.restart() }
-        function onWidthChanged() { saveSettingsTimer.restart() }
-        function onHeightChanged() { saveSettingsTimer.restart() }
-        function onVisibilityChanged() { saveSettingsTimer.restart() }
+        onXChanged: { saveSettingsTimer.restart() }
+        onYChanged: { saveSettingsTimer.restart() }
+        onWidthChanged: { saveSettingsTimer.restart() }
+        onHeightChanged: { saveSettingsTimer.restart() }
+        onVisibilityChanged: { saveSettingsTimer.restart() }
     }
 
     function saveSettings() {

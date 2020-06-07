@@ -77,42 +77,42 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        function onBackButtonClicked() {
+        onBackButtonClicked: {
             if (appContent.state !== "DeviceList") {
                 appContent.state = "DeviceList"
             }
         }
 
-        function onDeviceRefreshButtonClicked() {
+        onDeviceRefreshButtonClicked: {
             if (currentDevice) {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             }
         }
-        function onRefreshButtonClicked() {
+        onRefreshButtonClicked: {
             if (!deviceManager.scanning && !deviceManager.refreshing) {
                 deviceManager.refreshDevices_start()
             }
         }
-        function onRescanButtonClicked() {
+        onRescanButtonClicked: {
             if (!deviceManager.scanning && !deviceManager.refreshing) {
                 deviceManager.scanDevices()
             }
         }
 
-        function onPlantsButtonClicked() { appContent.state = "DeviceList" }
-        function onSettingsButtonClicked() { appContent.state = "Settings" }
-        function onAboutButtonClicked() { appContent.state = "About" }
+        onPlantsButtonClicked: { appContent.state = "DeviceList" }
+        onSettingsButtonClicked: { appContent.state = "Settings" }
+        onAboutButtonClicked: { appContent.state = "About" }
     }
 
     Connections {
         target: systrayManager
-        function onSettingsClicked() { appContent.state = "Settings" }
+        onSettingsClicked: { appContent.state = "Settings" }
     }
 
     Connections {
         target: Qt.application
-        function onStateChanged(newstate) {
-            switch (newstate) {
+        onStateChanged: {
+            switch (Qt.application.state) {
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
 
