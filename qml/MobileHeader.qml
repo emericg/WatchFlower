@@ -36,7 +36,11 @@ Rectangle {
 
     signal leftMenuClicked()
     signal rightMenuClicked()
+
     signal deviceRefreshButtonClicked()
+    signal deviceDataButtonClicked()  // compatibility
+    signal deviceHistoryButtonClicked()  // compatibility
+    signal deviceSettingsButtonClicked()  // compatibility
 
     onLeftMenuModeChanged: {
         if (leftMenuMode === "drawer")
@@ -46,6 +50,8 @@ Rectangle {
         else // back
             leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Item {
         anchors.fill: parent

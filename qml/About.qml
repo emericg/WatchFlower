@@ -448,7 +448,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
-                visible: false
+                visible: isPhone
 
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/assets/devices/welcome-devices.svg"
@@ -475,7 +475,7 @@ Item {
 
             Item {
                 id: permissions
-                height: 40
+                height: 32
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -485,10 +485,10 @@ Item {
 
                 ImageSvg {
                     id: permissionsImg
-                    width: 28
-                    height: 28
+                    width: 24
+                    height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
@@ -539,10 +539,10 @@ Item {
 
                 ImageSvg {
                     id: dependenciesImg
-                    width: 28
-                    height: 28
+                    width: 24
+                    height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    anchors.leftMargin: 8
                     anchors.top: parent.top
                     anchors.topMargin: 12
 
@@ -631,12 +631,11 @@ Item {
 
                 ImageSvg {
                     id: translatorsImg
-                    width: 26
-                    height: 26
+                    width: 24
+                    height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 2
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
+                    anchors.leftMargin: 8
+                    anchors.verticalCenter: translatorsLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-translate-24px.svg"
                     color: Theme.colorText

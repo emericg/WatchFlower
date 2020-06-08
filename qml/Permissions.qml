@@ -200,7 +200,7 @@ Item {
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.right: switch_gps.left
+                    anchors.right: switch_storage.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -278,7 +278,7 @@ Item {
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.right: switch_gps.left
+                    anchors.right: switch_bluetooth.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 

@@ -71,6 +71,18 @@ QString android_get_external_storage();
 /* ************************************************************************** */
 
 /*!
+ * \brief android_check_phonestate_permission
+ * \return True if READ_PHONE_STATE permission has been previously obtained.
+ */
+bool android_check_phonestate_permission();
+
+/*!
+ * \brief android_ask_phonestate_permission
+ * \return True if READ_PHONE_STATE permission has been explicitly obtained.
+ */
+bool android_ask_phonestate_permission();
+
+/*!
  * \brief android_get_device_model
  * \return The device manufacturer + model.
  *
@@ -89,17 +101,19 @@ QString android_get_device_model();
  */
 QString android_get_device_serial();
 
-/*!
- * \brief android_ask_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been previously obtained.
- */
-bool android_check_phonestate_permission();
+/* ************************************************************************** */
 
 /*!
- * \brief android_ask_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been explicitly obtained.
+ * \brief android_check_location_permission
+ * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
  */
-bool android_ask_phonestate_permission();
+bool android_check_location_permission();
+
+/*!
+ * \brief android_ask_location_permission
+ * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
+ */
+bool android_ask_location_permission();
 
 /* ************************************************************************** */
 
