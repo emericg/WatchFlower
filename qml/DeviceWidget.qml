@@ -58,6 +58,12 @@ Item {
             updateBoxData()
         }
     }
+    Connections {
+        target: settingsManager
+        onAppLanguageChanged: {
+            updateBoxData()
+        }
+    }
 
     Component.onCompleted: initBoxData()
 

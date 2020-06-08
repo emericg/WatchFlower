@@ -49,6 +49,10 @@ Item {
     Connections {
         target: settingsManager
         onTempUnitChanged: { updateData() }
+        onAppLanguageChanged: {
+            updateData()
+            updateStatusText()
+        }
     }
 
     Connections {
@@ -156,11 +160,11 @@ Item {
         //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
 
         if (myDevice.status === 1) {
-            textStatus.text = qsTr("Update queued. ")
+            textStatus.text = qsTr("Update queued.") + " "
         } else if (myDevice.status === 2) {
-            textStatus.text = qsTr("Connecting... ")
+            textStatus.text = qsTr("Connecting...") + " "
         } else if (myDevice.status === 3) {
-            textStatus.text = qsTr("Updating... ")
+            textStatus.text = qsTr("Updating...") + " "
         } else {
             if (myDevice.isFresh() || myDevice.isAvailable()) {
                 if (myDevice.getLastUpdateInt() <= 1)
@@ -168,7 +172,7 @@ Item {
                 else
                     textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
             } else {
-                textStatus.text = qsTr("Offline! ")
+                textStatus.text = qsTr("Offline!") + " "
             }
         }
     }
