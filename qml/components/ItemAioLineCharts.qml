@@ -274,25 +274,41 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 28
 
-        width: 1
+        width: 2
         visible: false
-        opacity: 0.9
+        opacity: 0.66
         color: Theme.colorSubText
         Behavior on x { NumberAnimation { duration: 333 } }
     }
 
-    Row {
+    Column {
         id: indicators
-        anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: 12
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
+
         spacing: 12
+        property string direction: (verticalIndicator.x < dateIndicator.width + 12) ? "right": "left"
+
+        onDirectionChanged: {
+            if (direction === "right") {
+                indicators.anchors.right = undefined
+                indicators.anchors.left = verticalIndicator.right
+                dataIndicator.anchors.right = undefined
+                dataIndicator.anchors.left = indicators.left
+            } else {
+                indicators.anchors.left = undefined
+                indicators.anchors.right = verticalIndicator.right
+                dataIndicator.anchors.left = undefined
+                dataIndicator.anchors.right = indicators.right
+            }
+        }
 
         Rectangle {
             id: dateIndicator
             width: textTime.width + 16
             height: textTime.height + 12
-            anchors.verticalCenter: parent.verticalCenter
 
             radius: 4
             visible: false
@@ -314,7 +330,6 @@ Item {
             id: dataIndicator
             width: dataIndicatorText.width + 12
             height: dataIndicatorText.height + 12
-            anchors.verticalCenter: parent.verticalCenter
 
             radius: 4
             visible: false

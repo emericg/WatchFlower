@@ -75,11 +75,6 @@ Item {
         onTriggered: updateStatusText()
     }
 
-    onHeightChanged: {
-        // update tempBox height
-        tempBox.height = ((height * 0.33) > 256) ? (height * 0.33) : 256
-    }
-
     property var deviceScreenChart: null
 
     function loadDevice() {
@@ -191,53 +186,53 @@ Item {
 
     Rectangle {
         id: tempBox
-        height: 256
-        color: Theme.colorHeader
         anchors.top: parent.top
-        anchors.topMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
+
+        height: Math.max(deviceThermometer.height * 0.33, 256)
+        color: Theme.colorHeader
 
         MouseArea { anchors.fill: parent } // prevent clicks below this area
 
-        Text {
-            id: sensorTemp
-            anchors.verticalCenterOffset: -40
+        Column {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
+            spacing: 2
 
-            text: "22.0°"
-            font.bold: false
-            font.pixelSize: 48
-            color: Theme.colorHeaderContent
-        }
+            Text {
+                id: sensorTemp
+                anchors.horizontalCenter: parent.horizontalCenter
 
-        Text {
-            id: sensorHygro
-            anchors.top: sensorTemp.bottom
-            anchors.topMargin: 8
-            anchors.horizontalCenter: parent.horizontalCenter
+                text: "22.0°"
+                font.bold: false
+                font.pixelSize: 48
+                color: Theme.colorHeaderContent
+            }
 
-            text: "50%"
-            font.bold: false
-            font.pixelSize: 24
-            color: Theme.colorHeaderContent
-        }
+            Text {
+                id: sensorHygro
+                anchors.horizontalCenter: parent.horizontalCenter
 
-        ImageSvg {
-            id: imageBattery
-            width: 28
-            height: 28
-            anchors.left: parent.left
-            anchors.leftMargin: 6
-            anchors.bottom: status.top
-            anchors.bottomMargin: 0
-            rotation: 90
+                text: "50%"
+                font.bold: false
+                font.pixelSize: 24
+                color: Theme.colorHeaderContent
+            }
 
-            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-            color: Theme.colorHeaderContent
+            ImageSvg {
+                id: imageBattery
+                width: 24
+                height: 36
+                rotation: 90
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                visible: (myDevice.deviceTempC > -40)
+                fillMode: Image.PreserveAspectCrop
+                color: Theme.colorHeaderContent
+                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+            }
         }
 
         Row {
