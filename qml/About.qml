@@ -462,7 +462,7 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
 
-                visible: isMobile
+                visible: (Qt.platform.os === "android")
 
                 Rectangle {
                     height: 1
@@ -481,7 +481,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: isMobile
+                visible: (Qt.platform.os === "android")
 
                 ImageSvg {
                     id: permissionsImg
