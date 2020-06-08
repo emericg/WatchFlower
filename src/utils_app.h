@@ -55,6 +55,8 @@ public:
     static Q_INVOKABLE void openWith(const QString &path);
     static Q_INVOKABLE QUrl getStandardPath(const QString &type);
 
+    static Q_INVOKABLE bool checkMobileLocationPermission();
+    static Q_INVOKABLE bool getMobileLocationPermission();
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
     static Q_INVOKABLE bool checkMobilePhoneStatePermission();

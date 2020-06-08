@@ -64,7 +64,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
 
-            text: qsTr("What are we doing")
+            text: qsTr("Why are we using these permissions?")
             color: Theme.colorSubText
             font.pixelSize: 18
         }
@@ -133,8 +133,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    //Component.onCompleted: checked = settingsManager.bluetoothControl
-                    //onCheckedChanged: settingsManager.bluetoothControl = checked
+                    enabled: (!checked)
+                    Component.onCompleted: checked = utilsApp.checkMobileLocationPermission()
+                    onCheckedChanged: checked = utilsApp.getMobileLocationPermission()
                 }
             }
             Text {
@@ -146,7 +147,7 @@ Item {
                 topPadding: -8
                 bottomPadding: 0
 
-                text: qsTr("Android operating system required applications to ask for device location in order to scan for Bluetooth LE sensors.<br>You can actually remove this permission as long as you don't need to scan for new sensors.")
+                text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for Bluetooth LE sensors.<br>You can actually remove this permission, as long as you don't need to scan for new sensors.<br>WatchFlower doesn't use, store or communicate your location to anyone or anything.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -217,8 +218,10 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    //Component.onCompleted: checked = settingsManager.bluetoothControl
-                    //onCheckedChanged: settingsManager.bluetoothControl = checked
+                    enabled: false // (!checked)
+
+                    Component.onCompleted: checked = utilsApp.checkMobileStoragePermissions()
+                    onCheckedChanged: checked = utilsApp.getMobileStoragePermissions()
                 }
             }
             Text {
@@ -230,7 +233,7 @@ Item {
                 topPadding: -8
                 bottomPadding: 0
 
-                text: qsTr("Storage write permission is needed for exporting sensors data to the SD card.")
+                text: qsTr("Storage write permission can be needed for exporting sensors data to the SD card.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -293,10 +296,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    enabled: false
+                    enabled: (!checked)
                     checked: true
-                    //Component.onCompleted: checked = settingsManager.bluetoothControl
-                    //onCheckedChanged: settingsManager.bluetoothControl = checked
                 }
             }
             Text {

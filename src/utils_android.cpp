@@ -30,6 +30,47 @@
 
 /* ************************************************************************** */
 
+bool android_check_location_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult loc = QtAndroid::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+
+    if (loc == QtAndroid::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_location_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult loc = QtAndroid::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+    if (loc == QtAndroid::PermissionResult::Denied)
+    {
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.ACCESS_FINE_LOCATION");
+        loc = QtAndroid::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+        if (loc == QtAndroid::PermissionResult::Denied)
+        {
+            qDebug() << "LOCATION READ PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
 bool android_check_storage_permissions()
 {
     bool status = true;

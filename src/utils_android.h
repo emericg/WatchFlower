@@ -39,18 +39,6 @@ bool android_check_storage_permissions();
  */
 bool android_ask_storage_permissions();
 
-/* ************************************************************************** */
-
-/*!
- * \brief android_set_statusbar_color
- * \param color: 32b RGBA color.
- *
- * \note: WIP, only make the app segfault right now.
- */
-void android_set_statusbar_color(int color);
-
-/* ************************************************************************** */
-
 /*!
  * \brief android_get_storages_by_api
  * \return The path to the external storage.
@@ -103,7 +91,7 @@ QString android_get_device_serial();
 
 /*!
  * \brief android_ask_phonestate_permission
-* \return True if READ_PHONE_STATE permission has been previously obtained.
+ * \return True if READ_PHONE_STATE permission has been previously obtained.
  */
 bool android_check_phonestate_permission();
 
@@ -120,8 +108,6 @@ bool android_ask_phonestate_permission();
  */
 bool android_screen_keep_on(bool on);
 
-/* ************************************************************************** */
-
 /*!
  * \brief android_screen_lock_orientation
  * \param orientation: 0 is for landscapte, 1 for portrait
@@ -130,6 +116,16 @@ bool android_screen_keep_on(bool on);
  * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
  */
 bool android_screen_lock_orientation(int orientation);
+
+/* ************************************************************************** */
+
+/*!
+ * \brief android_set_statusbar_color
+ * \param color: 32b RGBA color.
+ *
+ * \note: WIP, only make the app segfault right now.
+ */
+void android_set_statusbar_color(int color);
 
 /* ************************************************************************** */
 
