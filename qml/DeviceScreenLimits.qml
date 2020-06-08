@@ -285,27 +285,24 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
+        id: scrollView
+        contentWidth: -1
+
         anchors.top: rectangleHeader.visible ? rectangleHeader.bottom : parent.top
-        anchors.topMargin: 8
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-
-        width: parent.width
-        contentWidth: parent.width
-
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        //ScrollBar.vertical.policy: ScrollBar.AlwaysOn
 
         Column {
-            id: deviceLimits
-            width: parent.width
+            anchors.fill: parent
+
+            topPadding: 6
+            bottomPadding: 16
             spacing: 12
 
-            Item { //////
+            ////////
+
+            Item {
                 id: itemHygro
                 height: 52
                 anchors.left: parent.left
@@ -375,7 +372,9 @@ Item {
                 font.pixelSize: 14
             }
 
-            Item { //////
+            ////////
+
+            Item {
                 id: itemTemp
                 height: 52
                 anchors.right: parent.right
@@ -445,7 +444,9 @@ Item {
                 font.pixelSize: 14
             }
 
-            Item { //////
+            ////////
+
+            Item {
                 id: itemLumi
                 height: 72
                 anchors.left: parent.left
@@ -501,9 +502,9 @@ Item {
                     Row {
                         id: sections
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: 8
                         anchors.left: parent.left
-                        anchors.leftMargin: 12
+                        anchors.leftMargin: 8
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.verticalCenterOffset: 24
 
@@ -571,7 +572,9 @@ Item {
                 font.pixelSize: 14
             }
 
-            Item { //////
+            ////////
+
+            Item {
                 id: itemCondu
                 height: 52
                 anchors.left: parent.left
@@ -637,12 +640,6 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
-            }
-
-            Item { // spacer
-                height: 16
-                anchors.right: parent.right
-                anchors.left: parent.left
             }
         }
     }

@@ -23,6 +23,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: aboutScreen
@@ -116,7 +117,7 @@ Item {
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 18
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 10
+                    anchors.bottomMargin: 8
 
                     color: Theme.colorSubText
                     text: qsTr("version %1%2").arg(utilsApp.appVersion()).arg(settingsManager.getDemoString())
@@ -126,7 +127,7 @@ Item {
                 Text {
                     id: textName
                     anchors.top: parent.top
-                    anchors.topMargin: 16
+                    anchors.topMargin: 18
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 
@@ -135,6 +136,8 @@ Item {
                     font.pixelSize: 28
                 }
             }
+
+            ////////
 
             Row {
                 id: buttonsRow
@@ -166,6 +169,7 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
+
                 ButtonWireframeImage {
                     id: githubBtn
                     width: 180
@@ -181,9 +185,13 @@ Item {
                 }
             }
 
+            ////////
+
+            Item { height: 1; width: 1; } // spacer
+
             Item {
                 id: desc
-                height: 72
+                height: Math.max(UtilsNumber.alignTo(description.height, 8), 48)
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -217,6 +225,8 @@ Item {
                     font.pixelSize: 16
                 }
             }
+
+            ////////
 
             Item {
                 id: authors
@@ -258,6 +268,8 @@ Item {
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: rate
@@ -303,6 +315,8 @@ Item {
                 }
             }
 
+            ////////
+
             Item {
                 id: tuto
                 height: 48
@@ -339,6 +353,8 @@ Item {
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: website
@@ -379,6 +395,8 @@ Item {
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: github
@@ -430,7 +448,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
-                visible: true
+                visible: false
+
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/assets/devices/welcome-devices.svg"
                 color: Theme.colorPrimary
@@ -442,6 +461,8 @@ Item {
                 height: 16
                 anchors.right: parent.right
                 anchors.left: parent.left
+
+                visible: isMobile
 
                 Rectangle {
                     height: 1

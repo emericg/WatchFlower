@@ -251,21 +251,23 @@ Item {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
+                property bool useBigButtons: (!isPhone && rectangleActions.width >= 560)
+
                 ItemImageButton {
-                    id: buttonRefresh
+                    id: buttonRefresh1
                     width: 36
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: deviceManager.bluetooth
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                    visible: !parent.useBigButtons && deviceManager.bluetooth
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenDeviceList.updateSelectedDevice()
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
 
                     NumberAnimation on rotation {
                         id: refreshAnimation
@@ -279,38 +281,42 @@ Item {
                     }
                 }
                 ItemImageButton {
-                    id: buttonDelete
+                    id: buttonDelete1
                     width: 36
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
+                    visible: !parent.useBigButtons
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: confirmDeleteDevice.open()
+                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                 }
-/*
-                ButtonWireframe {
-                    id: buttonRefresh
-                    width: 96
+
+                ButtonWireframeImage {
+                    id: buttonRefresh2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
+                    visible: parent.useBigButtons && deviceManager.bluetooth
+                    fullColor: true
                     primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Refresh")
                     onClicked: screenDeviceList.updateSelectedDevice()
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                 }
-                ButtonWireframe {
-                    id: buttonDelete
-                    width: 96
+                ButtonWireframeImage {
+                    id: buttonDelete2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
+                    visible: parent.useBigButtons
+                    fullColor: true
                     primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Delete")
                     onClicked: confirmDeleteDevice.open()
+                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                 }
-*/
             }
         }
     }

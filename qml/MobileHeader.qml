@@ -24,13 +24,13 @@ import QtQuick 2.9
 import ThemeEngine 1.0
 
 Rectangle {
+    id: rectangleHeaderBar
+    color: Theme.colorHeader
     width: parent.width
     height: screenStatusbarPadding + screenNotchPadding + headerHeight
-    color: Theme.colorHeader
     z: 10
 
     property int headerHeight: 52
-
     property string title: "WatchFlower"
     property string leftMenuMode: "drawer" // drawer / back / exit
 
@@ -70,6 +70,8 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.top: parent.top
+
+            visible: true
             onClicked: leftMenuClicked()
 
             ImageSvg {
@@ -128,13 +130,13 @@ Rectangle {
                     }
                 }
             }
-
+/*
             MouseArea {
                 id: rightMenu
                 width: headerHeight
                 height: headerHeight
 
-                visible: false // (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo")
+                visible: (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo")
                 onClicked: rightMenuClicked()
 
                 ImageSvg {
@@ -148,6 +150,7 @@ Rectangle {
                     color: Theme.colorHeaderContent
                 }
             }
+*/
         }
     }
 }

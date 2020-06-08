@@ -24,7 +24,7 @@ import QtQuick 2.9
 import ThemeEngine 1.0
 
 Rectangle {
-    id: rectangleHeader
+    id: rectangleHeaderBar
     color: Theme.colorHeader
     width: 720
     height: 64
@@ -89,7 +89,7 @@ Rectangle {
         anchors.leftMargin: 16
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeader.width >= 560)
+        visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeaderBar.width >= 560)
         source: "qrc:/assets/menus/menu_logo_large.svg"
         color: Theme.colorHeaderContent
 
@@ -122,7 +122,7 @@ Rectangle {
         anchors.leftMargin: 56
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (rectangleHeader.width >= 560)
+        visible: (rectangleHeaderBar.width >= 560)
         text: "WatchFlower"
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader
@@ -309,7 +309,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        height: 1
+        height: 2
         opacity: 0.25
         visible: (appContent.state !== "DeviceThermo" && appContent.state !== "Tutorial")
         color: Theme.colorHeaderHighlight

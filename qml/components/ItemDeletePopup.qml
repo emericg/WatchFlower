@@ -23,46 +23,47 @@ Popup {
     }
 
     contentItem: Item {
-        Text {
-            id: textArea
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
+        Column {
+            width: parent.width
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 32
 
-            text: qsTr("Are you sure you want to delete selected device(s)?")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
-            font.pixelSize: 18
-            color: Theme.colorText
-        }
+            Text {
+                width: parent.width
 
-        Row {
-            id: rowButtons
-            height: 40
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            spacing: 24
-
-            ButtonWireframe {
-                id: buttonCancel
-                width: 128
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Cancel")
-                onClicked: itemPopupDelete.close()
+                text: qsTr("Are you sure you want to delete selected device(s)?")
+                font.pixelSize: 20
+                color: Theme.colorText
+                wrapMode: Text.WordWrap
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
             }
-            ButtonWireframe {
-                id: buttonConfirm
-                width: 128
-                anchors.verticalCenter: parent.verticalCenter
 
-                text: qsTr("Delete")
-                primaryColor: Theme.colorRed
-                fullColor: true
-                onClicked: {
-                    itemPopupDelete.confirmed();
-                    itemPopupDelete.close();
+            Row {
+                height: 40
+                spacing: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                ButtonWireframe {
+                    id: buttonCancel
+                    width: 128
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Cancel")
+                    onClicked: itemPopupDelete.close()
+                }
+                ButtonWireframe {
+                    id: buttonConfirm
+                    width: 128
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Delete")
+                    primaryColor: Theme.colorRed
+                    fullColor: true
+                    onClicked: {
+                        itemPopupDelete.confirmed()
+                        itemPopupDelete.close()
+                    }
                 }
             }
         }
