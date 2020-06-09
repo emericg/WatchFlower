@@ -434,7 +434,6 @@ Item {
 
         Row {
             id: rowRight
-            z: 1
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.bottom: parent.bottom
@@ -442,6 +441,7 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 14 : 10)
 
+            z: 1
             spacing: 8
 
             Row {

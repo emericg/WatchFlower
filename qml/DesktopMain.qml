@@ -66,6 +66,13 @@ ApplicationWindow {
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
 
+    Item { // compatibility
+        id: tabletMenuDevice
+        signal deviceDataButtonClicked()
+        signal deviceHistoryButtonClicked()
+        signal deviceSettingsButtonClicked()
+    }
+
     // Desktop stuff ///////////////////////////////////////////////////////////
 
     WindowGeometrySaver {

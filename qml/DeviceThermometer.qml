@@ -239,16 +239,19 @@ Item {
             id: status
             anchors.left: parent.left
             anchors.leftMargin: 8
+            anchors.right: itemLocation.left
+            anchors.rightMargin: 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
 
+            clip: true
             height: 24
             spacing: 8
 
             ImageSvg {
                 id: imageStatus
-                width: 22
-                height: 22
+                width: 24
+                height: 24
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
@@ -265,31 +268,31 @@ Item {
             }
         }
 
-        Item {
+        Row {
             id: itemLocation
-            height: 24
-            width: 96
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 8
 
+            height: 24
+            spacing: 4
+
             ImageSvg {
-                id: imageLocation
-                width: 24
-                height: 24
-                anchors.right: parent.right
-                anchors.rightMargin: 0
+                id: imageEditLocation
+                width: 20
+                height: 20
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                 color: Theme.colorHeaderContent
-            }
 
+                //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse)
+                opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
+            }
             TextInput {
                 id: textInputLocation
-                anchors.right: imageLocation.left
-                anchors.rightMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 padding: 4
@@ -324,21 +327,14 @@ Item {
                     }
                 }
             }
-
             ImageSvg {
-                id: imageEditLocation
-                width: 20
-                height: 20
-                anchors.right: textInputLocation.left
-                anchors.rightMargin: 4
+                id: imageLocation
+                width: 24
+                height: 24
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
                 color: Theme.colorHeaderContent
-
-                //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse)
-                opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
-                Behavior on opacity { OpacityAnimator { duration: 133 } }
             }
         }
     }
