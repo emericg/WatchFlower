@@ -139,7 +139,7 @@ Item {
         legend.visible: false // works only with Qt 5.10+
         backgroundRoundness: 0
         backgroundColor: "transparent"
-        //animationOptions: ChartView.SeriesAnimations
+        animationOptions: ChartView.NoAnimation
 
         ValueAxis { id: axisHygro; visible: false; gridVisible: true; }
         ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
@@ -177,82 +177,103 @@ Item {
         MouseArea {
             id: clickableGraphArea
             anchors.fill: aioGraph
-            //propagateComposedEvents: true
-            //hoverEnabled: true
-
-            onClicked: {
-                var mmm = Qt.point(mouse.x, mouse.y)
+/*
+            onPositionChanged: {
+                moveIndicator(mouse, true)
                 mouse.accepted = true
+            }
+*/
+            onClicked: {
+                aioGraph.moveIndicator(mouse, false)
+                mouse.accepted = true
+            }
+        }
 
-                // we adjust coordinates with graph area margins
-                var ppp = Qt.point(mouse.x, mouse.y)
-                ppp.x = ppp.x + aioGraph.anchors.rightMargin
-                ppp.y = ppp.y - aioGraph.anchors.topMargin
+        function moveIndicator(mouse, isMoving) {
+            var mmm = Qt.point(mouse.x, mouse.y)
 
-                // map mouse position to graph value // mpmp.x is the timestamp
-                var mpmp = aioGraph.mapToValue(mmm, tempData)
+            // we adjust coordinates with graph area margins
+            var ppp = Qt.point(mouse.x, mouse.y)
+            ppp.x = ppp.x + aioGraph.anchors.rightMargin
+            ppp.y = ppp.y - aioGraph.anchors.topMargin
 
-                //console.log("clicked " + mouse.x + " " + mouse.y)
-                //console.log("clicked adjusted " + ppp.x + " " + ppp.y)
-                //console.log("clicked mapped " + mpmp.x + " " + mpmp.y)
+            // map mouse position to graph value // mpmp.x is the timestamp
+            var mpmp = aioGraph.mapToValue(mmm, tempData)
 
-                // did we actually clicked inside the axis?
-                if (mpmp.x >= tempData.at(0).x && mpmp.x <= tempData.at(tempData.count-1).x) {
-                    // indicators visible
-                    dateIndicator.visible = true
-                    verticalIndicator.visible = true
-                    verticalIndicator.x = ppp.x
-                    // set date & time
-                    var date = new Date(mpmp.x)
-                    var date_string = date.toLocaleDateString()
-                    //: "at" is used for DATE at HOUR
-                    var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
-                    textTime.text = date_string + " " + time_string
+            //console.log("clicked " + mouse.x + " " + mouse.y)
+            //console.log("clicked adjusted " + ppp.x + " " + ppp.y)
+            //console.log("clicked mapped " + mpmp.x + " " + mpmp.y)
 
-                    // search index corresponding to the timestamp
-                    var x1 = -1
-                    var x2 = -1
-                    for (var i = 0; i < tempData.count; i++) {
-                        var graph_at_x = tempData.at(i).x
-                        var dist = (graph_at_x - mpmp.x) / 1000000
-
-                        if (Math.abs(dist) < 1) {
-                            // nearest neighbor
-                            if (appContent.state === "DeviceSensor") {
-                                dataIndicators.updateDataBars(tempData.at(i).y, lumiData.at(i).y,
-                                                              hygroData.at(i).y, conduData.at(i).y)
-                            } else if (appContent.state === "DeviceThermo") {
-                                dataIndicator.visible = true
-                                dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
-                                dataIndicatorText.text += " " + hygroData.at(i).y.toFixed(0) + "%"
-                            }
-                            break;
-                        } else {
-                            if (dist < 0) {
-                                if (x1 < i) x1 = i
-                            } else {
-                                x2 = i
-                                break
-                            }
-                        }
-                    }
-
-                    if (x1 >= 0 && x2 > x1) {
-                        // linear interpolation
-                        if (appContent.state === "DeviceSensor") {
-                            dataIndicators.updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
-                                                          qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
-                                                          qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
-                                                          qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
-                        } else if (appContent.state === "DeviceThermo") {
-                            dataIndicator.visible = true
-                            var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
-                            dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                            dataIndicatorText.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
-                        }
-                    }
-                } else {
+            if (isMoving) {
+                // dragging outside the graph area?
+                if (mpmp.x < tempData.at(0).x){
+                    ppp.x = aioGraph.mapToPosition(tempData.at(0), tempData).x + aioGraph.anchors.rightMargin
+                    mpmp.x = tempData.at(0).x
+                }
+                if (mpmp.x > tempData.at(tempData.count-1).x){
+                    ppp.x = aioGraph.mapToPosition(tempData.at(tempData.count-1), tempData).x + aioGraph.anchors.rightMargin
+                    mpmp.x = tempData.at(tempData.count-1).x
+                }
+            } else {
+                // did we clicked outside the graph area?
+                if (mpmp.x < tempData.at(0).x || mpmp.x > tempData.at(tempData.count-1).x) {
                     resetIndicator()
+                    return
+                }
+            }
+
+            // indicators is now visible
+            dateIndicator.visible = true
+            verticalIndicator.visible = true
+            verticalIndicator.x = ppp.x
+
+            // set date & time
+            var date = new Date(mpmp.x)
+            var date_string = date.toLocaleDateString()
+            //: "at" is used for DATE at HOUR
+            var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
+            textTime.text = date_string + " " + time_string
+
+            // search index corresponding to the timestamp
+            var x1 = -1
+            var x2 = -1
+            for (var i = 0; i < tempData.count; i++) {
+                var graph_at_x = tempData.at(i).x
+                var dist = (graph_at_x - mpmp.x) / 1000000
+
+                if (Math.abs(dist) < 1) {
+                    // nearest neighbor
+                    if (appContent.state === "DeviceSensor") {
+                        dataIndicators.updateDataBars(tempData.at(i).y, lumiData.at(i).y,
+                                                      hygroData.at(i).y, conduData.at(i).y)
+                    } else if (appContent.state === "DeviceThermo") {
+                        dataIndicator.visible = true
+                        dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
+                        dataIndicatorText.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                    }
+                    break;
+                } else {
+                    if (dist < 0) {
+                        if (x1 < i) x1 = i
+                    } else {
+                        x2 = i
+                        break
+                    }
+                }
+            }
+
+            if (x1 >= 0 && x2 > x1) {
+                // linear interpolation
+                if (appContent.state === "DeviceSensor") {
+                    dataIndicators.updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
+                                                  qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
+                                                  qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
+                                                  qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
+                } else if (appContent.state === "DeviceThermo") {
+                    dataIndicator.visible = true
+                    var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
+                    dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                    dataIndicatorText.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
                 }
             }
         }
@@ -278,32 +299,72 @@ Item {
         visible: false
         opacity: 0.66
         color: Theme.colorSubText
-        Behavior on x { NumberAnimation { duration: 333 } }
+        Behavior on x { NumberAnimation { duration: 266 } }
+
+        MouseArea {
+            id: verticalIndicatorArea
+            anchors.fill: parent
+            anchors.margins: -16
+
+            propagateComposedEvents: true
+            hoverEnabled: false
+
+            onPositionChanged: {
+                var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
+                aioGraph.moveIndicator(mouseMapped, true)
+                mouse.accepted = true
+            }
+        }
+
+        onXChanged: {
+            var direction
+            if (verticalIndicator.x > dateIndicator.width + 12)
+                direction = "right"
+            else if (itemAioLineCharts.width - verticalIndicator.x > dateIndicator.width + 12)
+                direction = "left"
+            else
+                direction = "middle"
+
+            if (direction === "middle") {
+                // date indicator is too big, center on screen
+                indicators.layoutDirection = "LeftToRight"
+                indicators.columns = 2
+                indicators.rows = 1
+
+                indicators.anchors.right = undefined
+                indicators.anchors.left = undefined
+                indicators.anchors.horizontalCenter = parent.horizontalCenter
+            } else {
+                // date indicator is positioned next to the vertical indicator
+                indicators.columns = 1
+                indicators.rows = 2
+                indicators.anchors.horizontalCenter = undefined
+
+                if (direction === "left") {
+                    indicators.layoutDirection = "LeftToRight"
+                    indicators.anchors.right = undefined
+                    indicators.anchors.left = verticalIndicator.right
+                } else {
+                    indicators.layoutDirection = "RightToLeft"
+                    indicators.anchors.left = undefined
+                    indicators.anchors.right = verticalIndicator.right
+                }
+            }
+        }
     }
 
-    Column {
+    Grid {
         id: indicators
         anchors.top: parent.top
         anchors.topMargin: 12
         anchors.leftMargin: 12
         anchors.rightMargin: 12
 
-        spacing: 12
-        property string direction: (verticalIndicator.x < dateIndicator.width + 12) ? "right": "left"
+        layoutDirection: "LeftToRight"
+        columns: 2
+        rows: 1
 
-        onDirectionChanged: {
-            if (direction === "right") {
-                indicators.anchors.right = undefined
-                indicators.anchors.left = verticalIndicator.right
-                dataIndicator.anchors.right = undefined
-                dataIndicator.anchors.left = indicators.left
-            } else {
-                indicators.anchors.left = undefined
-                indicators.anchors.right = verticalIndicator.right
-                dataIndicator.anchors.left = undefined
-                dataIndicator.anchors.right = indicators.right
-            }
-        }
+        spacing: 12
 
         Rectangle {
             id: dateIndicator
