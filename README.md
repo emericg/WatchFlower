@@ -34,7 +34,7 @@ TODOs:
 
 ### Supported devices
 
-| Flower Care | RoPot | Hygro & Temp sensor | Digital Hygrometer Clock | Digital Hygrometer 2 |
+| Flower Care | RoPot | Digital Hygrometer  | Digital Hygrometer Clock | Digital Hygrometer 2 |
 | :---------: | :---: | :-----------------: | :----------------------: | :------------------: |
 | ![FlowerCare](assets/devices/flowercare.svg) | ![RoPot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) | ![HygroTemp2](assets/devices/hygrotemp-square.svg) |
 | (International and Chinese versions)<br>(Xiaomi and VegTrug variants) | (Xiaomi and VegTrug variants) | (MiJia LCD and ClearGrass EInk) | |
