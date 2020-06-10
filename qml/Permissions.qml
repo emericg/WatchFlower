@@ -97,19 +97,7 @@ Item {
                 height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
-/*
-                ImageSvg {
-                    id: image_gps
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                }
-*/
                 Text {
                     id: text_gps
                     height: 16
@@ -154,7 +142,6 @@ Item {
             }
             ButtonWireframe {
                 height: 32
-                visible: (Qt.platform.os === "android")
 
                 text: qsTr("Official information")
                 primaryColor: Theme.colorPrimary
@@ -162,7 +149,7 @@ Item {
             }
 
             ////////
-
+/*
             Item {
                 height: 8
                 anchors.right: parent.right
@@ -182,19 +169,7 @@ Item {
                 height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
-/*
-                ImageSvg {
-                    id: image_storage
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                }
-*/
                 Text {
                     id: text_storage
                     height: 16
@@ -238,7 +213,7 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: 14
             }
-
+*/
             ////////
 
             Item {
@@ -260,19 +235,7 @@ Item {
                 height: 32
                 anchors.right: parent.right
                 anchors.left: parent.left
-/*
-                ImageSvg {
-                    id: image_bluetooth
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                }
-*/
                 Text {
                     id: text_bluetooth
                     height: 16

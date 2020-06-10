@@ -488,7 +488,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
@@ -504,12 +504,22 @@ Item {
                     color: Theme.colorText
                     text: qsTr("About permissions")
                     font.pixelSize: 16
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -8
-                        onClicked: appContent.state = "Permissions"
-                    }
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px"
+                    color: Theme.colorText
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: appContent.state = "Permissions"
                 }
             }
 
@@ -542,13 +552,14 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 4
                     anchors.top: parent.top
                     anchors.topMargin: 12
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                     color: Theme.colorText
                 }
+
                 Text {
                     id: dependenciesLabel
                     anchors.top: parent.top
@@ -634,12 +645,13 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: translatorsLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-translate-24px.svg"
                     color: Theme.colorText
                 }
+
                 Text {
                     id: translatorsLabel
                     anchors.top: parent.top
