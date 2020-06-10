@@ -78,11 +78,14 @@ void DeviceHygrotempEInk::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (m_firmware.isEmpty() || m_firmware == "UNKN")
         {
-            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_infos);
+            if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+            {
+                connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_infos);
 
-            serviceInfos->discoverDetails();
+                serviceInfos->discoverDetails();
+            }
         }
     }
 }

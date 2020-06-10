@@ -1259,8 +1259,8 @@ void Device::getAioData(QtCharts::QDateTimeAxis *axis,
 
     QSqlQuery graphData;
     graphData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
-                       "FROM datas " \
-                       "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
+                      "FROM datas " \
+                      "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
     graphData.bindValue(":deviceAddr", getAddress());
 
     if (graphData.exec() == false)

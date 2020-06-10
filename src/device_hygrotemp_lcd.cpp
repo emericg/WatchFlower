@@ -102,9 +102,12 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
     {
         delete serviceInfos;
 
-        serviceInfos = controller->createServiceObject(uuid);
-        if (!serviceInfos)
-            qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+        if (m_firmware.isEmpty() || m_firmware == "UNKN")
+        {
+            serviceInfos = controller->createServiceObject(uuid);
+            if (!serviceInfos)
+                qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+        }
     }
 /*
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // (unknown service) // battery
@@ -250,8 +253,7 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             qDebug() << "- m_temp:" << m_temp;
             qDebug() << "- m_hygro:" << m_hygro;
 #endif
-            // TODO not working...
-            //controller->disconnectFromDevice();
+            controller->disconnectFromDevice();
 
             //if (m_db)
             {

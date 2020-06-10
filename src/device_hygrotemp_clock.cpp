@@ -103,9 +103,12 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
     {
         delete serviceInfos;
 
-        serviceInfos = controller->createServiceObject(uuid);
-        if (!serviceInfos)
-            qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+        if (m_firmware.isEmpty() || m_firmware == "UNKN")
+        {
+            serviceInfos = controller->createServiceObject(uuid);
+            if (!serviceInfos)
+                qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+        }
     }
 
     if (uuid.toString() == "{ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6}") // (unknown service) // data
