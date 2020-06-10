@@ -349,7 +349,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         anchors.margins: -8
-                        onClicked: screenTutorial.reopen("About")
+                        onClicked: screenTutorial.reopen()
                     }
                 }
             }
@@ -510,7 +510,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-chevron_right-24px"

@@ -143,10 +143,16 @@ ApplicationWindow {
     Connections {
         target: appHeader
         onLeftMenuClicked: {
-            if (appContent.state === "DeviceList")
+            if (appContent.state === "DeviceList") {
                 appDrawer.open()
-            else
-                appContent.state = "DeviceList"
+            } else {
+                if (appContent.state === "Tutorial")
+                    appContent.state = screenTutorial.exitTo
+                else if (appContent.state === "Permissions")
+                    appContent.state = "About"
+                else
+                    appContent.state = "DeviceList"
+            }
         }
         onDeviceRefreshButtonClicked: {
             if (currentDevice) {

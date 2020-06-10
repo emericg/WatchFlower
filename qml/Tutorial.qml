@@ -32,12 +32,12 @@ Rectangle {
     color: Theme.colorHeader
 
     property int lastPage: 3
-    property string goBackTo: "DeviceList"
+    property string exitTo: "DeviceList"
 
-    function reopen(goBackScreen) {
+    function reopen() {
+        exitTo = "About"
         tutorialPages.currentIndex = 0
         appContent.state = "Tutorial"
-        goBackTo = goBackScreen
     }
 
     SwipeView {
@@ -50,7 +50,7 @@ Rectangle {
             if (currentIndex < 0) currentIndex = 0
             if (currentIndex > lastPage) {
                 currentIndex = 0 // reset
-                appContent.state = goBackTo
+                appContent.state = exitTo
             }
         }
 
