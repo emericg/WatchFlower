@@ -75,6 +75,7 @@ Item {
             sensorPages.currentIndex = 2
         }
     }
+
     Connections {
         target: tabletMenuDevice
         // mobile only
@@ -92,11 +93,36 @@ Item {
         }
     }
 
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Left) {
+            event.accepted = true;
+            if (sensorPages.currentIndex > 0)
+                sensorPages.currentIndex--
+        } else if (event.key === Qt.Key_Right) {
+            event.accepted = true;
+            if (sensorPages.currentIndex+1 < sensorPages.count)
+                sensorPages.currentIndex++
+        } else if (event.key === Qt.Key_Backspace) {
+            event.accepted = true;
+            applicationWindow.backAction()
+        }
+    }
+
+    ////////
+
+    function isHistoryMode() {
+        return rectangleDeviceData.isHistoryMode()
+    }
+    function resetHistoryMode() {
+        rectangleDeviceData.resetHistoryMode()
+    }
+
     function loadDevice() {
         if (typeof myDevice === "undefined" || !myDevice) return
         //console.log("DeviceScreen // loadDevice() >> " + myDevice)
 
         sensorPages.currentIndex = 0
+        sensorPages.interactive = isPhone
 
         rectangleDeviceData.loadData()
         rectangleDeviceHistory.updateHeader()
@@ -107,13 +133,6 @@ Item {
 
         if (isMobile) tabletMenuDevice.setActiveDeviceData()
         if (isDesktop) appHeader.setActiveDeviceData()
-    }
-
-    function isHistoryMode() {
-        return rectangleDeviceData.isHistoryMode()
-    }
-    function resetHistoryMode() {
-        rectangleDeviceData.resetHistoryMode()
     }
 
     ////////////////////////////////////////////////////////////////////////////

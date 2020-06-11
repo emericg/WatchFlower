@@ -304,12 +304,20 @@ Item {
         MouseArea {
             id: verticalIndicatorArea
             anchors.fill: parent
-            anchors.margins: -16
+            anchors.margins: isMobile ? -24 : -8
 
             propagateComposedEvents: true
             hoverEnabled: false
 
+            onReleased: {
+                if (typeof (sensorPages) !== "undefined") sensorPages.interactive = isPhone
+            }
             onPositionChanged: {
+                if (typeof (sensorPages) !== "undefined") {
+                    // So we don't swipe pages as we drag the indicator
+                    sensorPages.interactive = false
+                }
+
                 var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
                 aioGraph.moveIndicator(mouseMapped, true)
                 mouse.accepted = true
@@ -317,13 +325,13 @@ Item {
         }
 
         onXChanged: {
-            var direction
+            if (isPhone) return // verticalIndicator default to middle
+
+            var direction = "middle"
             if (verticalIndicator.x > dateIndicator.width + 12)
                 direction = "right"
             else if (itemAioLineCharts.width - verticalIndicator.x > dateIndicator.width + 12)
                 direction = "left"
-            else
-                direction = "middle"
 
             if (direction === "middle") {
                 // date indicator is too big, center on screen
@@ -359,6 +367,7 @@ Item {
         anchors.topMargin: 12
         anchors.leftMargin: 12
         anchors.rightMargin: 12
+        anchors.horizontalCenter: parent.horizontalCenter
 
         layoutDirection: "LeftToRight"
         columns: 2

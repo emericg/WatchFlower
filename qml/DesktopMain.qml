@@ -132,7 +132,7 @@ ApplicationWindow {
                     deviceManager.refreshDevices_check();
                     lastUpdate = rightnow;
                 } else {
-                    // Check bluetooth anyway (on macOS)
+                    // Check Bluetooth anyway (on macOS)
                     if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
                 }
                 break;
@@ -293,7 +293,6 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
-
             },
             State {
                 name: "DeviceList"
@@ -303,13 +302,12 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
-
             },
             State {
                 name: "DeviceSensor"
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; focus: true; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
@@ -319,7 +317,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
-                PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; focus: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },

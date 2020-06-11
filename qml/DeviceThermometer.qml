@@ -30,13 +30,7 @@ Item {
     height: 700
 
     property var myDevice: currentDevice
-
-    function isHistoryMode() {
-        return deviceScreenChart.isIndicator()
-    }
-    function resetHistoryMode() {
-        deviceScreenChart.resetIndicator()
-    }
+    property var deviceScreenChart: null
 
     Connections {
         target: myDevice
@@ -75,7 +69,21 @@ Item {
         onTriggered: updateStatusText()
     }
 
-    property var deviceScreenChart: null
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Backspace) {
+            event.accepted = true;
+            applicationWindow.backAction()
+        }
+    }
+
+    ////////
+
+    function isHistoryMode() {
+        return deviceScreenChart.isIndicator()
+    }
+    function resetHistoryMode() {
+        deviceScreenChart.resetIndicator()
+    }
 
     function loadDevice() {
         if (typeof myDevice === "undefined" || !myDevice) return
