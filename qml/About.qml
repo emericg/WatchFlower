@@ -590,7 +590,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Qt (LGPL 3)")
+                        text: "- Qt (LGPL 3)"
                         color: Theme.colorText
                         font.pixelSize: 16
                     }
@@ -599,7 +599,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Google Material Icons (MIT)")
+                        text: "- Google Material Icons (MIT)"
                         wrapMode: Text.WordWrap
                         color: Theme.colorText
                         font.pixelSize: 16
@@ -609,7 +609,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- StatusBar & SingleApplication (MIT)")
+                        text: "- StatusBar & SingleApplication (MIT)"
                         color: Theme.colorText
                         font.pixelSize: 16
                     }
@@ -682,7 +682,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Chris Díaz (Spanish)")
+                        text: "- Chris Díaz (Español)"
                         color: Theme.colorText
                         font.pixelSize: 16
                     }
@@ -691,7 +691,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- FYr76 (Danish, Dutch, Frisian)")
+                        text: "- FYr76 (Nederlands, Frysk, Dansk)"
                         wrapMode: Text.WordWrap
                         color: Theme.colorText
                         font.pixelSize: 16
@@ -701,7 +701,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Megachip (German)")
+                        text: "- Megachip (Deutsch)"
                         color: Theme.colorText
                         font.pixelSize: 16
                     }

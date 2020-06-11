@@ -135,7 +135,9 @@ Item {
                 topPadding: -8
                 bottomPadding: 0
 
-                text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for Bluetooth LE sensors.<br>You can actually remove this permission, as long as you don't need to scan for new sensors.<br>WatchFlower doesn't use, store or communicate your location to anyone or anything.")
+                text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>" +
+                           "This permission is only needed while scanning for new sensors.<br>" +
+                           "WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

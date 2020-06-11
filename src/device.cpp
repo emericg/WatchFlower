@@ -579,9 +579,9 @@ QString Device::getLastUpdateString() const
         if (mins > 0)
         {
             if (mins < 60) {
-                lastUpdate = tr("%1 minute(s)").arg(mins);
+                lastUpdate = tr("%n minute(s)", "", mins);
             } else {
-                lastUpdate = tr("%1 hour(s)").arg(std::floor(mins / 60.0));
+                lastUpdate = tr("%n hour(s)", "", std::floor(mins / 60.0));
             }
         }
     }
