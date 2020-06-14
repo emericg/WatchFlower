@@ -620,8 +620,8 @@ Item {
                     colorBg: Theme.colorYellow
                     colorFg: Theme.colorGreen
                     from: 0
-                    to: 1000
-                    stepSize: 10
+                    to: 2000
+                    stepSize: 50
                     first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
                     second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);
                 }

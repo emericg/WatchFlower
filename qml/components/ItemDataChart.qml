@@ -44,10 +44,10 @@ Item {
             axisY0.max = 40
             myBarSet.color = Theme.colorGreen
         } else if (graphDataSelected === "luminosity") {
-            axisY0.max = 2000
+            axisY0.max = 3000
             myBarSet.color = Theme.colorYellow
         } else if (graphDataSelected === "conductivity") {
-            axisY0.max = 1000
+            axisY0.max = 2000
             myBarSet.color = Theme.colorRed
         }
         myBarSet.borderColor = "transparent"

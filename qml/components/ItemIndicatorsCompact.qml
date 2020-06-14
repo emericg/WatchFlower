@@ -123,7 +123,7 @@ Item {
 
             value: myDevice.deviceConductivity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.conduMax*1.10) : 1000
+            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.conduMax*1.10) : 2000
             limitMin: myDevice.limitConduMin
             limitMax: myDevice.limitConduMax
         }

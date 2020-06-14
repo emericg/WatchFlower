@@ -73,9 +73,9 @@ Item {
         axisTemp.min = 0
         axisTemp.max = 60
         axisCondu.min = 0
-        axisCondu.max = 1000
+        axisCondu.max = 2000
         axisLumi.min = 0
-        axisLumi.max = 3000
+        axisLumi.max = 10000
 
         // Max axis for hygrometry
         if (myDevice.hygroMax*1.20 > 100.0)
