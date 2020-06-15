@@ -299,7 +299,8 @@ Item {
         visible: false
         opacity: 0.66
         color: Theme.colorSubText
-        Behavior on x { NumberAnimation { duration: 266 } }
+
+        Behavior on x { NumberAnimation { id: vanim; duration: 266; } }
 
         MouseArea {
             id: verticalIndicatorArea
@@ -311,12 +312,14 @@ Item {
 
             onReleased: {
                 if (typeof (sensorPages) !== "undefined") sensorPages.interactive = isPhone
+                vanim.duration = 266
             }
             onPositionChanged: {
                 if (typeof (sensorPages) !== "undefined") {
                     // So we don't swipe pages as we drag the indicator
                     sensorPages.interactive = false
                 }
+                vanim.duration = 16
 
                 var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
                 aioGraph.moveIndicator(mouseMapped, true)
@@ -335,27 +338,20 @@ Item {
 
             if (direction === "middle") {
                 // date indicator is too big, center on screen
-                indicators.layoutDirection = "LeftToRight"
                 indicators.columns = 2
                 indicators.rows = 1
-
-                indicators.anchors.right = undefined
-                indicators.anchors.left = undefined
-                indicators.anchors.horizontalCenter = parent.horizontalCenter
+                indicators.state = "reanchoredmid"
+                indicators.layoutDirection = "LeftToRight"
             } else {
                 // date indicator is positioned next to the vertical indicator
                 indicators.columns = 1
                 indicators.rows = 2
-                indicators.anchors.horizontalCenter = undefined
-
                 if (direction === "left") {
+                    indicators.state = "reanchoredleft"
                     indicators.layoutDirection = "LeftToRight"
-                    indicators.anchors.right = undefined
-                    indicators.anchors.left = verticalIndicator.right
                 } else {
+                    indicators.state = "reanchoredright"
                     indicators.layoutDirection = "RightToLeft"
-                    indicators.anchors.left = undefined
-                    indicators.anchors.right = verticalIndicator.right
                 }
             }
         }
@@ -369,11 +365,43 @@ Item {
         anchors.rightMargin: 12
         anchors.horizontalCenter: parent.horizontalCenter
 
+        spacing: 12
         layoutDirection: "LeftToRight"
         columns: 2
         rows: 1
 
-        spacing: 12
+        transitions: Transition { AnchorAnimation { duration: 133; } }
+        //move: Transition { NumberAnimation { properties: "x"; duration: 133; } }
+
+        states: [
+            State {
+                name: "reanchoredmid"
+                AnchorChanges {
+                    target: indicators;
+                    anchors.right: undefined;
+                    anchors.left: undefined;
+                    anchors.horizontalCenter: parent.horizontalCenter;
+                }
+            },
+            State {
+                name: "reanchoredleft"
+                AnchorChanges {
+                    target: indicators;
+                    anchors.horizontalCenter: undefined;
+                    anchors.right: undefined;
+                    anchors.left: verticalIndicator.right;
+                }
+            },
+            State {
+                name: "reanchoredright"
+                AnchorChanges {
+                    target: indicators;
+                    anchors.horizontalCenter: undefined;
+                    anchors.left: undefined;
+                    anchors.right: verticalIndicator.right;
+                }
+            }
+        ]
 
         Rectangle {
             id: dateIndicator
