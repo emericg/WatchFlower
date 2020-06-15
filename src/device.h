@@ -34,7 +34,7 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
 
-#define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.2.1"
+#define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.2.2"
 #define LATEST_KNOWN_FIRMWARE_ROPOT             "1.1.5"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD     "00.00.66"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK    "1.1.2_0007"
