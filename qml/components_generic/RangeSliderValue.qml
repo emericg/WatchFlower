@@ -6,8 +6,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 RangeSlider {
     id: control
-    first.value: 0.25
-    second.value: 0.75
+    //first.value: 0.25
+    //second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
     property string unit: ""

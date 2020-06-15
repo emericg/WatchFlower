@@ -81,14 +81,24 @@ Item {
     function updateLimits() {
         if (typeof myDevice === "undefined" || !myDevice) return
 
-        rangeSlider_hygro.second.value = myDevice.limitHygroMax
-        rangeSlider_hygro.first.value = myDevice.limitHygroMin
-        rangeSlider_temp.second.value = myDevice.limitTempMax
-        rangeSlider_temp.first.value = myDevice.limitTempMin
-        rangeSlider_lumi.second.value = myDevice.limitLumiMax
-        rangeSlider_lumi.first.value = myDevice.limitLumiMin
-        rangeSlider_condu.second.value = myDevice.limitConduMax
-        rangeSlider_condu.first.value = myDevice.limitConduMin
+        rangeSlider_hygro.setValues(myDevice.limitHygroMin, myDevice.limitHygroMax)
+        rangeSlider_temp.setValues(myDevice.limitTempMin, myDevice.limitTempMax)
+        rangeSlider_condu.setValues(myDevice.limitConduMin, myDevice.limitConduMax)
+
+        if (myDevice.limitLumiMax > 10000) {
+            // outdoor more
+            rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 100000;
+            rangeSlider_lumi.stepSize = 5000;
+            lux_1.visible = false; lux_2.visible = false; lux_3.visible = false; lux_4.visible = false;
+            lux_5.visible = true; lux_6.visible = true;
+        } else {
+            // indoor mode
+            rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 10000;
+            rangeSlider_lumi.stepSize = 1000;
+            lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
+            lux_5.visible = false; lux_6.visible = false;
+        }
+        rangeSlider_lumi.setValues(myDevice.limitLumiMin, myDevice.limitLumiMax)
     }
 
     function updateLimitsVisibility() {
@@ -496,8 +506,29 @@ Item {
                     from: 0
                     to: 10000
                     stepSize: 1000
-                    first.onValueChanged: if (myDevice) myDevice.limitLumiMin = first.value.toFixed(0);
-                    second.onValueChanged: if (myDevice) myDevice.limitLumiMax = second.value.toFixed(0);
+
+                    first.onValueChanged: if (myDevice) { myDevice.limitLumiMin = first.value.toFixed(0) }
+                    second.onValueChanged: if (myDevice) { myDevice.limitLumiMax = second.value.toFixed(0) }
+
+                    MouseArea {
+                        anchors.fill: sections
+                        onClicked: {
+                            if (rangeSlider_lumi.to === 10000) {
+                                // outdoor more
+                                rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 100000;
+                                rangeSlider_lumi.stepSize = 5000;
+                                lux_1.visible = false; lux_2.visible = false; lux_3.visible = false; lux_4.visible = false;
+                                lux_5.visible = true; lux_6.visible = true;
+                            } else {
+                                // indoor mode
+                                rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 10000;
+                                rangeSlider_lumi.stepSize = 1000;
+                                lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
+                                lux_5.visible = false; lux_6.visible = false;
+                            }
+                            rangeSlider_lumi.setValues(myDevice.limitLumiMin, myDevice.limitLumiMax)
+                        }
+                    }
 
                     Row {
                         id: sections
@@ -511,8 +542,9 @@ Item {
                         spacing: 2
 
                         Rectangle {
+                            id: lux_1
                             height: 16
-                            width: ((sections.width - 4) / 10) * 1 // 0 to 1k
+                            width: (sections.width - 4) * 0.1 // 0 to 1k
                             color: Theme.colorGrey
                             clip: true
                             Text {
@@ -522,8 +554,9 @@ Item {
                             }
                         }
                         Rectangle {
+                            id: lux_2
                             height: 16
-                            width: ((sections.width - 8) / 10) * 2 // 1k to 3k
+                            width: (sections.width - 8) * 0.2 // 1k to 3k
                             color: "grey"
                             clip: true
                             Text {
@@ -533,8 +566,9 @@ Item {
                             }
                         }
                         Rectangle {
+                            id: lux_3
                             height: 16
-                            width: ((sections.width - 16) / 10) * 5 // 3k to 8k
+                            width: (sections.width - 16) * 0.5 // 3k to 8k
                             color: Theme.colorYellow
                             clip: true
                             Text {
@@ -544,9 +578,35 @@ Item {
                             }
                         }
                         Rectangle {
+                            id: lux_4
                             height: 16
-                            width: ((sections.width - 0) / 10) * 2 // 8k+
+                            width: (sections.width - 0) * 0.2 // 8k+
                             color: "orange"
+                            clip: true
+                            Text {
+                                text: qsTr("sunlight")
+                                font.pixelSize: 12; color: "white";
+                                anchors.horizontalCenter: parent.horizontalCenter
+                            }
+                        }
+
+                        Rectangle {
+                            id: lux_5
+                            height: 16
+                            width: (sections.width - 6) * 0.16 // 0-15k
+                            color: "grey"
+                            clip: true
+                            Text {
+                                text: qsTr("indirect")
+                                font.pixelSize: 12; color: "white";
+                                anchors.horizontalCenter: parent.horizontalCenter
+                            }
+                        }
+                        Rectangle {
+                            id: lux_6
+                            height: 16
+                            width: (sections.width - 6) * 0.84 // 15k+
+                            color: Theme.colorYellow
                             clip: true
                             Text {
                                 text: qsTr("sunlight")
