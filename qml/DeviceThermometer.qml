@@ -215,7 +215,7 @@ Item {
 
                 text: "22.0°"
                 font.bold: false
-                font.pixelSize: 48
+                font.pixelSize: isPhone ? 44 : 48
                 color: Theme.colorHeaderContent
             }
 
@@ -225,14 +225,14 @@ Item {
 
                 text: "50%"
                 font.bold: false
-                font.pixelSize: 24
+                font.pixelSize: isPhone ? 22 : 24
                 color: Theme.colorHeaderContent
             }
 
             ImageSvg {
                 id: imageBattery
-                width: 24
-                height: 36
+                width: isPhone ? 20 : 24
+                height: isPhone ? 32 : 36
                 rotation: 90
                 anchors.horizontalCenter: parent.horizontalCenter
 
