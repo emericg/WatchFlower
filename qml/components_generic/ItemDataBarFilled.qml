@@ -78,44 +78,79 @@ Item {
 
             ////////
 
-            Text {
-                anchors.right: item_limit_low.left
-                anchors.rightMargin: 4
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 0
-
-                //: Short for minimum
-                text: qsTr("min")
-                font.pixelSize: 12
-                visible: (limitMin > 0 && limitMin > valueMin) && (x + width + 4 <= item_data.width)
-                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
-                opacity: (limitMin <= value) ? 0.75 : 0.25
-            }
             Rectangle {
                 id: item_limit_low
                 width: 2
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                visible: (limitMin > 0 && limitMin > valueMin)
+                visible: (limitMin > 0 && limitMin > valueMin && limitMin < valueMax) &&
+                         (x < indicator.x || x > indicator.x+indicator.width) &&
+                         (x+width < indicator.x || x+width > indicator.x+indicator.width)
                 x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
                 color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMin <= value) ? 0.75 : 0.25
 
                 Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
+            Text {
+                anchors.right: item_limit_low.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 0
+
+                visible: (limitMin > 0 && limitMin > valueMin && limitMin < valueMax) &&
+                         (width < item_limit_low.x) &&
+                         (x < indicator.x || x > indicator.x+indicator.width) &&
+                         (x+width < indicator.x || x+width > indicator.x+indicator.width)
+
+                //: Short for minimum
+                text: qsTr("min")
+
+                font.pixelSize: 12
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
+            }
+            Rectangle {
+                anchors.horizontalCenter: item_limit_low.horizontalCenter
+                anchors.verticalCenter: item_limit_low.bottom
+                //width: 6; height: 6; radius: 1; rotation: 45; // little triangle
+                width: 6; height: 3; // little bar
+                z: 2
+
+                visible: (limitMin > 0 && limitMin > valueMin && limitMin < valueMax) &&
+                         (!(x-2 < indicator.x || x+2 > indicator.x+indicator.width) ||
+                          !(x+width-2 < indicator.x || x+width+2 > indicator.x+indicator.width))
+
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
+            }
+
+            ////////
+
             Rectangle {
                 id: item_limit_high
                 width: 2
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                visible: (limitMax > 0 && limitMax < valueMax)
+                visible: (limitMax > 0 && limitMax > valueMin && limitMax < valueMax) &&
+                         (x < indicator.x || x > indicator.x+indicator.width) &&
+                         (x+width < indicator.x || x+width > indicator.x+indicator.width)
+
                 x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
                 color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMax < value) ? 0.75 : 0.25
 
                 Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
             Text {
                 anchors.left: item_limit_high.right
@@ -123,12 +158,34 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
+                visible: (limitMax > 0 && limitMax > valueMin && limitMax < valueMax) &&
+                         (x < indicator.x || x > indicator.x+indicator.width) &&
+                         (x+width < indicator.x || x+width > indicator.x+indicator.width)
+
                 //: Short for maximum
                 text: qsTr("max")
+
                 font.pixelSize: 12
-                visible: (limitMax > 0 && limitMax < valueMax)
                 color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMax < value) ? 0.75 : 0.25
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
+            }
+            Rectangle {
+                anchors.horizontalCenter: item_limit_high.horizontalCenter
+                anchors.verticalCenter: item_limit_high.bottom
+                //width: 6; height: 6; radius: 1; rotation: 45; // little triangle
+                width: 6; height: 3; // little bar
+                z: 2
+
+                visible: (limitMax > 0 && limitMax > valueMin && limitMax < valueMax) &&
+                         (!(x-2 < indicator.x || x+2 > indicator.x+indicator.width) ||
+                          !(x+width-2 < indicator.x || x+width+2 > indicator.x+indicator.width))
+
+                color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMax < value) ? 0.75 : 0.25
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
 
             ////////
@@ -139,7 +196,7 @@ Item {
                 anchors.verticalCenterOffset: 0
 
                 height: hhh
-                width: ti.width + 12
+                width: textIndicator.width + 12
                 radius: (value <= 0 || item_data.width > indicator.width) ? hhh : 0
                 color: {
                     if (value <= 0)
@@ -151,16 +208,14 @@ Item {
                 }
 
                 x: {
-                    if (value === 0)
-                        return 0
-                    else if (item_data.width > indicator.width)
+                    if (item_data.width > indicator.width)
                         return item_data.width - indicator.width
                     else
                         return item_data.width
                 }
 
                 Text {
-                    id: ti
+                    id: textIndicator
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: 1
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -177,13 +232,14 @@ Item {
                     }
 
                     color: (item_data.width > indicator.width) ? "white" : Theme.colorText
+
                     font.bold: true
                     font.pixelSize: 12
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
                 ImageSvg {
-                    id: wi
+                    id: warningIndicator
                     width: hhh - 2
                     height: hhh - 2
                     anchors.verticalCenter: parent.verticalCenter
@@ -192,11 +248,12 @@ Item {
                         if (item_data.width > indicator.width)
                             return parent.right
                         else
-                            return ti.right
+                            return textIndicator.right
                     }
 
-                    visible: (warning && value > -20 && value < limitMin)
                     color: Theme.colorRed
+                    opacity: (warning && value > -20 && value < limitMin) ? 1 : 0
+                    Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
                     source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
 
                     Rectangle {
@@ -206,6 +263,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         z: -1
                         color: itemDataBar.colorBackground
+                        visible: (parent.opacity === 1)
                     }
                 }
             }
