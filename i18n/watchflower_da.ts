@@ -358,7 +358,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="439"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation>Stueplanter trives som regel mellem 15 og 25°C (59 til 77°F). Kun få planter tåler kulde og frost på -2 °C (28 °F) og derunder.</translation>
+        <translation>Stueplanter trives som regel mellem 15 og 25°C (59 til 77°F). Kun få planter tåler kulde og frost på -2 °C (28°F) og derunder.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
@@ -781,7 +781,7 @@
     <message>
         <location filename="../qml/Permissions.qml" line="67"/>
         <source>Why are we using these permissions?</source>
-        <translation>Hvorfor bruger vil denne tilladelser?</translation>
+        <translation>Hvorfor bruger vi denne tilladelser?</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="110"/>
