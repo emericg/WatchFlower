@@ -11,7 +11,7 @@
     <message>
         <location filename="../qml/About.qml" line="68"/>
         <source>What do you want to know?</source>
-        <translation>Hvad  vil du vide?</translation>
+        <translation>Hvad vil du vide?</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="123"/>
@@ -1059,37 +1059,3 @@
     </message>
 </context>
 </TS>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
