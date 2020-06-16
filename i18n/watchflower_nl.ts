@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/About.qml" line="222"/>
         <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="unfinished">Een plantobservatieapplicatie voor Xiaomi &apos;Flower Care&apos; en &apos;RoPot&apos; bluetoothsensoren en thermometers.</translation>
+        <translation>Een plantobservatieapplicatie voor Xiaomi &apos;Flower Care&apos; en &apos;RoPot&apos; bluetoothsensoren en -thermometers.</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="388"/>
@@ -46,17 +46,17 @@
     <message>
         <location filename="../qml/About.qml" line="505"/>
         <source>About permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Over machtigingen</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="572"/>
         <source>This application is made possible thanks to a couple of third party open source projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze applicatie is mede mogelijk gemaakt door een aantal andere open source-projecten:</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="664"/>
         <source>Special thanks to our translators:</source>
-        <translation type="unfinished"></translation>
+        <translation>Met dank voor de inzet van onze vertalers:</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="345"/>
@@ -106,17 +106,17 @@
     <message numerus="yes">
         <location filename="../src/device.cpp" line="582"/>
         <source>%n minute(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n min.</numerusform>
-            <numerusform>%n min.</numerusform>
+        <translation>
+            <numerusform>%n minuut</numerusform>
+            <numerusform>%n minuten</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/device.cpp" line="584"/>
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n h.</numerusform>
-            <numerusform>%n h.</numerusform>
+        <translation>
+            <numerusform>%n uur</numerusform>
+            <numerusform>%n uren</numerusform>
         </translation>
     </message>
     <message>
@@ -148,20 +148,20 @@
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
-            <numerusform>Apparaat geselecteerd</numerusform>
+        <translation>
+            <numerusform>%n apparaat geselecteerd</numerusform>
             <numerusform>%n apparaten geselecteerd</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="304"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Verversen</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="316"/>
         <source>Delete</source>
-        <translation type="unfinished">Verwijderen</translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -195,22 +195,22 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="107"/>
         <source>Update queued.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wacht op synchroniseren.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="109"/>
         <source>Connecting...</source>
-        <translation type="unfinished">Verbinden...</translation>
+        <translation>Verbinding maken...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Updating...</source>
-        <translation type="unfinished">Updaten...</translation>
+        <translation>Synchroniseren...</translation> 
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="119"/>
         <source>Offline!</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="296"/>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="460"/>
         <source>Loading...</source>
-        <translation>Laden...</translation>
+        <translation>Inlezen...</translation>
     </message>
 </context>
 <context>
@@ -273,7 +273,7 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="396"/>
         <source>Fertility</source>
-        <translation>Bodemvruchtbaarheid</translation>
+        <translation>Voeding</translation> 
     </message>
 </context>
 <context>
@@ -321,7 +321,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="367"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="unfinished">Kamerplanten groeien het best in potgrond met een vochtgehalte van 15 tot 50%. Tropische planten staan graag natter, vetplanten juist droger. Daar mag het dalen tot 7%.</translation>
+        <translation>Het ideale vochtgehalte van potgrond voor kamerplanten is 15 tot 50%. Tropische planten staan graag natter, terwijl cactussen en vetplanten het goed doen als de grond opdroogt (tot 7%) na elke watergift.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
@@ -335,7 +335,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation>Pas op, lange tijd teveel water kan even slecht zijn als te weinig!</translation>
+        <translation>Pas op! Lange tijd te veel water kan even slecht zijn als te weinig.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
@@ -350,17 +350,17 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="439"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation>Kamerplanten gedijen doorgaans goed tussen de 15 en 25°C (59 tot 77°F). Slechts enkele planten verdragen -2°C (28°F) en lager.</translation>
+        <translation>Kamerplanten gedijen doorgaans goed tussen 15 en 25°C (59 tot 77°F). Weinig planten kunnen tegen kou of vorst van -2°C (28°F) en lager.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
         <source>Having constant temperature is important for indoor plants.</source>
-        <translation>Kamerplanten houden van een constante temperatuur.</translation>
+        <translation>Kamerplanten houden van een constante temperatuur. Vermijd tocht.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Als je een hygrometer hebt kun je de luchtvochtigheid bewaken zodat deze tussen de 40 en 60% blijft (voor tropische planten mag dat hoger).</translation>
+        <translation>Met een hygrometer kun je de luchtvochtigheid bewaken zodat deze tussen de 40 en 60% blijft (hoger voor tropische planten).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="475"/>
@@ -390,22 +390,22 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="569"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Sommige planten staan graag de hele of een gedeelte van de dag in de volle zon, maar de meeste kamerplanten hebben liever géén direct zonlicht. Let daar op voor je planten voor een venster op het zuiden zet!</translation>
+        <translation>Kamerplanten hebben voldoende licht nodig, maar verdragen meestal géén direct zonlicht. Zet ze daarom in een lichte kamer met indirect licht en niet voor een venster op het zuiden.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="603"/>
         <source>Fertility</source>
-        <translation>Bodemvruchtbaarheid</translation>
+        <translation>Voeding</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="638"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>Het vruchtbaarheidsgehalte van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen in de grond. Met meststoffen houd je de voedingswaarde op peil; gebruik de juiste hoeveelheden passend bij het jaargetijde.</translation>
+        <translation>De voedingswaarde van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen voor de plant. Gebruik afgestemde hoeveelheden meststoffen, passend bij het jaargetijde, om die waarde op peil te houden.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
         <source>Be sure to use the right soil composition for your plants.</source>
-        <translation>Gebruik de juiste grondsamenstelling voor je planten.</translation>
+        <translation>Stem de grondsamenstelling af op het soort plant.</translation>
     </message>
 </context>
 <context>
@@ -430,12 +430,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="166"/>
         <source>Update queued.</source>
-        <translation type="unfinished">Update in wachtrij.</translation>
+        <translation>Wacht op synchroniseren.</translation> 
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="168"/>
         <source>Connecting...</source>
-        <translation type="unfinished">Verbinden...</translation>
+        <translation>Verbinding maken...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="174"/>
@@ -450,12 +450,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="178"/>
         <source>Offline!</source>
-        <translation type="unfinished">Offline!</translation>
+        <translation>Offline!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="272"/>
         <source>Loading...</source>
-        <translation type="unfinished">Laden...</translation>
+        <translation>Inlezen...</translation>
     </message>
     <message>
         <source>Offline! </source>
@@ -464,7 +464,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="170"/>
         <source>Updating...</source>
-        <translation>Updaten...</translation>
+        <translation>Synchroniseren...</translation>
     </message>
 </context>
 <context>
@@ -482,12 +482,12 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="148"/>
         <source>Connecting...</source>
-        <translation>Verbinden...</translation>
+        <translation>Verbinding maken...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="152"/>
         <source>Updating...</source>
-        <translation>Updaten...</translation>
+        <translation>Synchroniseren...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="158"/>
@@ -521,7 +521,7 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="260"/>
         <source>Fertility</source>
-        <translation>Bodemvruchtbaarheid</translation>
+        <translation>Voeding</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="295"/>
@@ -563,7 +563,7 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="34"/>
         <source>Are you sure you want to delete selected device(s)?</source>
-        <translation>Weet je zeker dat je de gekozen sensor(en) wilt verwijderen?</translation>
+        <translation>Weet je zeker dat je de geselecteerde sensor(en) wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
@@ -581,12 +581,12 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Moisture</source>
-        <translation type="unfinished">Bodemvocht</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="64"/>
         <source>Humidity</source>
-        <translation type="unfinished">Luchtvocht</translation>
+        <translation>Vochtigheid</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="81"/>
@@ -601,7 +601,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Vruchtbaarheid</translation>
+        <translation>Voeding</translation>
     </message>
 </context>
 <context>
@@ -629,7 +629,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Vruchtbaarheid</translation>
+        <translation>Voeding</translation>
     </message>
 </context>
 <context>
@@ -666,12 +666,12 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
-        <translation type="unfinished">In Android 6+ is locatie-machtiging vereist voor scannen naar Bluetooth Low Energy apparaten. De applicatie gebruikt je locatie niet en slaat deze evenmin op. Excuus voor het ongemak.</translation>
+        <translation>In Android 6+ is locatietoestemming vereist voor scannen naar Bluetooth Low Energy-apparaten. De applicatie gebruikt, bewaart en deelt je locatie niet. Excuus voor het ongemak.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
         <source>Official information</source>
-        <translation type="unfinished">Officiële informatie</translation>
+        <translation>Officiële documentatie</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
@@ -734,7 +734,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="358"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Machtigingen</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="369"/>
@@ -768,37 +768,37 @@
     <message>
         <location filename="../qml/Permissions.qml" line="54"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Machtigingen</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="67"/>
         <source>Why are we using these permissions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Waarom gebruiken wij deze machtigingen?</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="110"/>
         <source>Location</source>
-        <translation type="unfinished">Locatie</translation>
+        <translation>Locatie</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="138"/>
         <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="unfinished"></translation>
+        <translation>Android-besturingssysteem vereist dat applicaties om locatietoestemming vragen om te scannen naar Bluetooth LE-sensoren.&lt;br&gt;Deze toestemming is alleen nodig bij het scannen naar nieuwe sensoren.&lt;br&gt;WatchFlower gebruikt, bewaart en deelt je locatie niet.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="148"/>
         <source>Official information</source>
-        <translation type="unfinished">Officiële informatie</translation>
+        <translation>Officiële documentatie</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="250"/>
         <source>Bluetooth control</source>
-        <translation type="unfinished">Bluetooth-bediening</translation>
+        <translation>Bluetooth-bediening</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="277"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished">WatchFlower kan bluetooth op je apparaat inschakelen.</translation>
+        <translation>WatchFlower kan bluetooth op je apparaat inschakelen voor het inlezen van sensordata.</translation>
     </message>
 </context>
 <context>
@@ -811,7 +811,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="67"/>
         <source>Change persistent settings here!</source>
-        <translation>Pas standaardaardinstellingen hier aan!</translation>
+        <translation>Wijzig standaardaardinstellingen hier!</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="123"/>
@@ -840,13 +840,13 @@
     <message>
         <location filename="../qml/Settings.qml" line="389"/>
         <source>Language</source>
-        <translation type="unfinished">Taal</translation>
+        <translation>Taal</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="408"/>
         <source>auto</source>
         <extracomment>Short for automatic</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="480"/>
@@ -865,7 +865,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="509"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kan bluetooth op je apparaat inschakelen.</translation>
+        <translation>WatchFlower kan bluetooth op je apparaat inschakelen voor het inlezen van sensordata.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="545"/>
@@ -879,7 +879,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="576"/>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
-        <translation>De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Hoewel dit ten goede komt aan de betrouwbaarheid van de bluetoothverbinding zal synchroniseren langer gaan duren.</translation>
+        <translation>De sensoren worden na elkaar geüpdatet in plaats van gelijktijdig. Dit komt ten goede aan de betrouwbaarheid van de bluetoothverbinding, maar synchroniseren zal wel langer duren.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="612"/>
@@ -899,7 +899,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="720"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation>WatchFlower draait op de achtergrond (in systeemvak) en wordt op gezette tijden actief voor het bijwerken van sensordata.</translation>
+        <translation>WatchFlower draait op de achtergrond (in systeemvak) en wordt op gezette tijden actief om sensordata te verversen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="758"/>
@@ -909,7 +909,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="787"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation>Als een plant water nodig heeft zal WatchFlower je er op attenderen!</translation>
+        <translation>Als een plant water nodig heeft laat WatchFlower het je weten!</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="819"/>
@@ -1019,17 +1019,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation>Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in je omgeving.</translation>
+        <translation>Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in de buurt.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation>Je kunt altijd &lt;b&gt;opnieuw scannen&lt;/b&gt; naar nieuwe apparaten, of deze weer &lt;b&gt;verwijderen&lt;/b&gt; mocht je dat willen.</translation>
+        <translation>Je kunt altijd &lt;b&gt;opnieuw scannen&lt;/b&gt; naar nieuwe apparaten, of apparaten &lt;b&gt;verwijderen&lt;/b&gt; die je niet meer wilt.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
         <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
-        <translation>Eenmaal &lt;b&gt;gekoppeld&lt;/b&gt; zullen de sensoren hun data met tussenpozen synchroniseren.</translation>
+        <translation>Eenmaal &lt;b&gt;gekoppeld&lt;/b&gt; synchroniseren de sensoren hun data met tussenpozen.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
