@@ -138,7 +138,7 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="182"/>
         <source>Retry</source>
-        <translation>Nochris</translation> 
+        <translation>Nochris</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="197"/>
@@ -619,7 +619,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="81"/>
         <source>Temperature</source>
-Tpe
+        <translation>Temperatuer</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="103"/>
@@ -1024,7 +1024,7 @@ Tpe
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
         <source>You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.</source>
-        <translation>Do kinst altyd <b>op 'e nij skenne</b> nei nije apparaten, of apparaten <b>wiskje</b> dy'tso net near wolst.</translation>
+        <translation>Do kinst altyd <b>op 'e nij skenne</b> nei nije apparaten, of apparaten <b>wiskje</b> dy'tsto net mear wolst.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
