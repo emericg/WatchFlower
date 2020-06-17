@@ -448,7 +448,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="174"/>
         <source>Just synced!</source>
-        <translation>Lige opdateret... </translation>
+        <translation>Lige opdateret...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="176"/>

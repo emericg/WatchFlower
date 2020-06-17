@@ -322,7 +322,7 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation>&lt;br&gt;&lt;b&gt;Spenden: &lt;/b&gt;</translation>
+        <translation>&lt;br&gt;&lt;b&gt;Tipp: &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>

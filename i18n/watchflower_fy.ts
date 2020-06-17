@@ -70,8 +70,8 @@
     </message>
     <message>
         <location filename="../qml/About.qml" line="261"/>
-        <source>Application by <a href="https://emeric.io">Emeric Grange</a><br>Visual design by <a href="https://dribbble.com/chrisdiaz">Chris Díaz</a></source>
-        <translation>Applikaasje troch <a href="https://emeric.io">Emeric Grange</a><br>Grafysk ûntwerp troch <a href="https://dribbble.com/chrisdiaz">Chris Díaz</a></translation>
+        <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
+        <translation>Applikaasje troch &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafysk ûntwerp troch &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
         <source>A plant monitoring application for Xiaomi / MiJia 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.</source>
@@ -329,8 +329,8 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
-        <source><br><b>Tip: </b></source>
-        <translation><br><b>Tip: </b></translation>
+        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
+        <translation>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
@@ -355,12 +355,12 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
         <source>Having constant temperature is important for indoor plants.</source>
-        <translation>Keamerplanten hâlde fan in konstante temperatuer. Set se net op 'e siich.</translation>
+        <translation>Keamerplanten hâlde fan in konstante temperatuer. Set se net op &apos;e siich.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Mei in hygrometer kinsto de luchtfochtigens yn 'e gaten hâlde sa't dizze tusken de 40 en 60% bliuwt (heger foar tropyske planten).</translation>
+        <translation>Mei in hygrometer kinsto de luchtfochtigens yn &apos;e gaten hâlde sa't dizze tusken de 40 en 60% bliuwt (heger foar tropyske planten).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="475"/>
@@ -782,7 +782,7 @@
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="138"/>
-        <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>This permission is only needed while scanning for new sensors.<br>WatchFlower doesn't use, store nor communicate your location to anyone or anything.</source>
+        <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
         <translation>Android-bestjoeringssysteem fereasket dat applikaasjes freegje om lokaasjetastimming om te skennen nei Bluetooth LE-sensoaren.&lt;br&gt;Dizze tastimming is allinne nedich by it skennen nei nije sensoaren.&lt;br&gt;WatchFlower brûkt, bewarret en dielt dyn lokaasje net.</translation>
     </message>
     <message>
@@ -1008,38 +1008,38 @@
     <name>Tutorial</name>
     <message>
         <location filename="../qml/Tutorial.qml" line="75"/>
-        <source><b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>RoPot</b>' sensors.</source>
-        <translation><b>WatchFlower</b> is in plantobservaasjeapplikaasje foar Xiaomi / MiJia '<b>Flower Care</b>' en '<b>RoPot</b>' sensoaren.</translation>
+        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; is in plantobservaasjeapplikaasje foar Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; en &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensoaren.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="95"/>
-        <source>It also works great with a couple of <b>thermometers</b>!</source>
-        <translation>It wurket ek goed mei in tal <b>termometers</b>!</translation>
+        <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
+        <translation>It wurket ek goed mei in tal &lt;b&gt;termometers&lt;/b&gt;!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="119"/>
-        <source>To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.</source>
-        <translation>Om WatchFlower te brûken begjinsto mei <b>skennen</b> nei <b>geskikte bluetoothsensoaren</b> yn 'e buert.</translation>
+        <source>To start using WatchFlower, you'll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation>Om WatchFlower te brûken begjinsto mei &lt;b&gt;skennen&lt;/b&gt; nei &lt;b&gt;geskikte bluetoothsensoaren&lt;/b&gt; yn 'e buert.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="138"/>
-        <source>You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.</source>
-        <translation>Do kinst altyd <b>op 'e nij skenne</b> nei nije apparaten, of apparaten <b>wiskje</b> dy'tsto net mear wolst.</translation>
+        <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don't want.</source>
+        <translation>Do kinst altyd &lt;b&gt;op 'e nij skenne&lt;/b&gt; nei nije apparaten, of apparaten &lt;b&gt;wiskje&lt;/b&gt; dy'tsto net mear wolst.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="162"/>
-        <source>Once <b>paired</b>, sensors will periodically <b>sync</b> their data.</source>
-        <translation>Ienris <b>keppele</b> wurkje de sensoaren harren data op fêste tiden by.</translation>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
+        <translation>Ienris &lt;b&gt;keppele&lt;/b&gt; wurkje de sensoaren harren data op fêste tiden by.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="181"/>
-        <source>Click on one of the sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.</source>
-        <translation>Klik op in sensor foar <b>detaillearre ynfo</b>, <b>grafyken</b> en <b>histoaryske data</b>.</translation>
+        <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
+        <translation>Klik op in sensor foar &lt;b&gt;detaillearre ynfo&lt;/b&gt;, &lt;b&gt;grafyken&lt;/b&gt; en &lt;b&gt;histoaryske data&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
-        <source>Set <b>limits</b> like <b>optimal moisture level</b> or <b>temperature range</b> and more depending on available sensors metrics.</source>
-        <translation>Jou de <b>grinswearden</b> op, lykas <b>optimale fochtigensgraad</b>, <b>temperatuerberik</b> en mear ôfhinklik fan de sensorspesifikaasjes.</translation>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation>Jou de &lt;b&gt;grinswearden&lt;/b&gt; op, lykas &lt;b&gt;optimale fochtigensgraad&lt;/b&gt;, &lt;b&gt;temperatuerberik&lt;/b&gt; en mear ôfhinklik fan de sensorspesifikaasjes.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
@@ -1047,17 +1047,17 @@
         <translation>Slute</translation>
     </message>
     <message>
-        <source>Click on sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.</source>
-        <translation type="vanished">Klik op in sensor foar <b>detaillearre ynfo</b>, <b>grafyken</b> en <b>histoaryske data</b>.</translation>
+        <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
+        <translation type="vanished">Klik op in sensor foar &lt;b&gt;detaillearre ynfo&lt;/b&gt;, &lt;b&gt;grafyken&lt;/b&gt; en &lt;b&gt;histoaryske data&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="205"/>
-        <source>You can <b>name your plants</b> and set devices <b>location</b>.</source>
-        <translation>Do kinst dyn <b>plant labelje</b> en de <b>lokaasje</b> fan de sensor oanjaan.</translation>
+        <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
+        <translation>Do kinst dyn &lt;b&gt;plant labelje&lt;/b&gt; en de &lt;b&gt;lokaasje&lt;/b&gt; fan de sensor oanjaan.</translation>
     </message>
     <message>
-        <source>Set <b>limits</b> like <b>optimal water level</b> or <b>temperature range</b> and more depending on available sensors metrics.</source>
-        <translation type="vanished">Jou de <b>grinswearden</b> op, lykas <b>optimale fochtigensgraad</b>, <b>temperatuerberik</b> en mear ôfhinklik fan de metten data.</translation>
+        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
+        <translation type="vanished">Jou de &lt;b&gt;grinswearden&lt;/b&gt; op, lykas &lt;b&gt;optimale fochtigensgraad&lt;/b&gt;, &lt;b&gt;temperatuerberik&lt;/b&gt; en mear ôfhinklik fan de metten data.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="244"/>
