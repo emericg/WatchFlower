@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/About.qml" line="222"/>
         <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="unfinished">En planteovervågningsapplikation til Xiaomi &apos;Flower Care&apos; og &apos;RoPot&apos; bluetooth-sensorer og -termometre.</translation>
+        <translation>En planteovervågningsapplikation til Xiaomi &apos;Flower Care&apos; og &apos;RoPot&apos; bluetooth-sensorer og -termometre.</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="388"/>
@@ -46,17 +46,17 @@
     <message>
         <location filename="../qml/About.qml" line="505"/>
         <source>About permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Om tilladelser</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="572"/>
         <source>This application is made possible thanks to a couple of third party open source projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne applikation er muliggjort af nogle tredjeparts open source-projekter:</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="664"/>
         <source>Special thanks to our translators:</source>
-        <translation type="unfinished"></translation>
+        <translation>En stor ros for oversætternes indsats:</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="345"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../qml/About.qml" line="261"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
-        <translation type="unfinished">Applikation af &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafisk formgivning af &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
+        <translation>Applikation af &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Grafisk formgivning af &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Application &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
@@ -110,17 +110,17 @@
     <message numerus="yes">
         <location filename="../src/device.cpp" line="582"/>
         <source>%n minute(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n min.</numerusform>
-            <numerusform>%n min.</numerusform>
+        <translation>
+            <numerusform>%n minut</numerusform>
+            <numerusform>%n minuter</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/device.cpp" line="584"/>
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n h.</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n time</numerusform>
+            <numerusform>%n timer</numerusform>
         </translation>
     </message>
     <message>
@@ -152,20 +152,20 @@
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="243"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
-            <numerusform>Enhed valgt</numerusform>
+        <translation>
+            <numerusform>%n enhed valgt</numerusform>
             <numerusform>%n enheder valgt</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="304"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdater</translation>
     </message>
     <message>
         <location filename="../qml/DeviceList.qml" line="316"/>
         <source>Delete</source>
-        <translation type="unfinished">Slet</translation>
+        <translation>Slet</translation>
     </message>
 </context>
 <context>
@@ -199,22 +199,22 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="107"/>
         <source>Update queued.</source>
-        <translation type="unfinished">Opdatering i kø.</translation>
+        <translation>Opdatering i kø.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="109"/>
         <source>Connecting...</source>
-        <translation type="unfinished">Opretter forbindelse...</translation>
+        <translation>Opretter forbindelse...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Updating...</source>
-        <translation type="unfinished">Opdaterer...</translation>
+        <translation>Opdaterer...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="119"/>
         <source>Offline!</source>
-        <translation type="unfinished">Offline!</translation>
+        <translation>Offline!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="296"/>
@@ -277,7 +277,7 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="396"/>
         <source>Fertility</source>
-        <translation>Jordfertilitet</translation>
+        <translation>Næring</translation>
     </message>
 </context>
 <context>
@@ -329,12 +329,12 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="367"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="unfinished">Stueplanter vokser bedst i pottejord med et fugtighedsindhold på 15 til 50%. Tropiske planter kan lide vådere jord, mens kaktusser og sukkulenter har det bedst, hvis jorden tørrer ud (ned til 7%) mellem hver vanding.</translation>
+        <translation>Stueplanter vokser bedst i pottejord med et fugtighedsindhold på 15 til 50%. Tropiske planter kan lide vådere jord, mens kaktusser og sukkulenter har det bedst, hvis jorden tørrer ud (ned til 7%) mellem hver vanding.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation>Pas på, for meget vand i lang tid kan være lige så slemt som for lidt!</translation>
+        <translation>Pas på! For meget vand i lang tid kan være lige så slemt som for lidt!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="368"/>
@@ -343,7 +343,7 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation type="unfinished">&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
+        <translation>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="369"/>
@@ -358,7 +358,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="439"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation>Stueplanter trives som regel mellem 15 og 25°C (59 til 77°F). Kun få planter tåler -2°C (28°F) og koldere.</translation>
+        <translation>Stueplanter trives som regel mellem 15 og 25°C (59 til 77°F). Kun få planter tåler kulde og frost på -2 °C (28°F) og derunder.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="440"/>
@@ -368,7 +368,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="441"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Hvis du har et hygrometer, kan du overvåge fugtigheden, så den forbliver mellem 40 og 60% (højere for tropiske planter).</translation>
+        <translation>Med et hygrometer, kan du overvåge fugtigheden, så den forbliver mellem 40 og 60% (højere for tropiske planter).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="475"/>
@@ -398,17 +398,17 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="569"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation>Langt de fleste stueplanter skal omgives med naturligt lys uden direkte sol. De færreste planter vil trives i et sydvendt vindue, hvor de står i skarp sol hele dagen. Placér dem derfor i et lyst rum ud af direkt sollys.</translation>
+        <translation>Langt de fleste stueplanter har brug for naturligt lys uden direkte sol. De færreste planter vil trives i et sydvendt vindue, hvor de står i skarp sol hele dagen. Placér dem derfor i et lyst rum ud af direkt sollys.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="603"/>
         <source>Fertility</source>
-        <translation>Jordfertilitet</translation>
+        <translation>Næring</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="638"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation>Jordenfertilitet er en indikation af tilgængeligheden af næringsstoffer i jorden. Det er vigtigt, at du gøder på det rigtige tidspunkt af året og i den rigtige mængde for at opretholde ernæringsværdien.</translation>
+        <translation>Næringsstofferværdie er en indikation af tilgængeligheden af næringsstoffer til planten. Det er vigtigt, at du gøder på det rigtige tidspunkt af året og i den rigtige mængde for at opretholde værdien.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="639"/>
@@ -438,12 +438,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="166"/>
         <source>Update queued.</source>
-        <translation type="unfinished">Opdatering i kø.</translation>
+        <translation>Opdatering i kø.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="168"/>
         <source>Connecting...</source>
-        <translation type="unfinished">Opretter forbindelse...</translation>
+        <translation>Opretter forbindelse...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="174"/>
@@ -458,12 +458,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="178"/>
         <source>Offline!</source>
-        <translation type="unfinished">Offline!</translation>
+        <translation>Offline!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="272"/>
         <source>Loading...</source>
-        <translation type="unfinished">Indlæser...</translation>
+        <translation>Indlæser...</translation>
     </message>
     <message>
         <source>Offline! </source>
@@ -529,7 +529,7 @@
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="260"/>
         <source>Fertility</source>
-        <translation>Jordfertilitet</translation>
+        <translation>Næring</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemAioBarCharts.qml" line="295"/>
@@ -609,7 +609,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsCompact.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Jordfertilitet</translation>
+        <translation>Næring</translation>
     </message>
 </context>
 <context>
@@ -637,7 +637,7 @@
     <message>
         <location filename="../qml/components/ItemIndicatorsFilled.qml" line="119"/>
         <source>Fertility</source>
-        <translation>Jordfertilitet</translation>
+        <translation>Næring</translation>
     </message>
 </context>
 <context>
@@ -650,7 +650,7 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="52"/>
         <source>Retry detection</source>
-        <translation>Prøv igen</translation>
+        <translation>Søg igen</translation>
     </message>
 </context>
 <context>
@@ -674,12 +674,12 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
-        <translation type="unfinished">På Android 6 og nyere enheder kræves der tilladelse til din placering for at kunne scanne efter Bluetooth Low Energy-enheder. Appen hverken bruger eller gemmer din placering. Beklager ulejligheden.</translation>
+        <translation>På Android 6+ kræves der tilladelse til din placering til at scanne efter Bluetooth Low Energy-enheder. Applikationen hverken bruger, gemmer eller deler din placering. Beklager ulejligheden.</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="85"/>
         <source>Official information</source>
-        <translation type="unfinished">Officielle oplysninger</translation>
+        <translation>Officielle dokumentation</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="93"/>
@@ -742,7 +742,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="358"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilladelser</translation>
     </message>
     <message>
         <location filename="../qml/MobileMain.qml" line="369"/>
@@ -776,37 +776,37 @@
     <message>
         <location filename="../qml/Permissions.qml" line="54"/>
         <source>Permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilladelser</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="67"/>
         <source>Why are we using these permissions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvorfor bruger vi denne tilladelser?</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="110"/>
         <source>Location</source>
-        <translation type="unfinished">Placering</translation>
+        <translation>Placering</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="138"/>
         <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="unfinished"></translation>
+        <translation>Android-operativsystem kræver, at applikationer anmoder om placeringstilladelse til at scanne efter Bluetooth LE-sensorer.&lt;br&gt;Denne tilladelse er kun nødvendig, når der scannes efter nye sensorer.&lt;br&gt;WatchFlower hverken bruger, gemmer eller deler din placering.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="148"/>
         <source>Official information</source>
-        <translation type="unfinished">Officielle oplysninger</translation>
+        <translation>Officielle dokumentation</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="250"/>
         <source>Bluetooth control</source>
-        <translation type="unfinished">Bluetooth-betjening</translation>
+        <translation>Bluetooth-betjening</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="277"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished">WatchFlower kan aktivere enhedens bluetooth til opdatering af sensordataene.</translation>
+        <translation>WatchFlower kan aktivere enhedens bluetooth til opdatering af sensordataene.</translation>
     </message>
 </context>
 <context>
@@ -819,7 +819,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="67"/>
         <source>Change persistent settings here!</source>
-        <translation>Skift dine standardindstillinger her!</translation>
+        <translation>Skift standardindstillingerne her!</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="123"/>
@@ -849,13 +849,13 @@
     <message>
         <location filename="../qml/Settings.qml" line="389"/>
         <source>Language</source>
-        <translation type="unfinished">Sprog</translation>
+        <translation>Sprog</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="408"/>
         <source>auto</source>
         <extracomment>Short for automatic</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>auto</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="480"/>
