@@ -205,7 +205,7 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Updating...</source>
-        <translation>Synchroniseren...</translation> 
+        <translation>Synchroniseren...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="119"/>
@@ -273,7 +273,7 @@
     <message>
         <location filename="../qml/DeviceScreenHistory.qml" line="396"/>
         <source>Fertility</source>
-        <translation>Voeding</translation> 
+        <translation>Voeding</translation>
     </message>
 </context>
 <context>
@@ -430,7 +430,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="166"/>
         <source>Update queued.</source>
-        <translation>Wacht op synchroniseren.</translation> 
+        <translation>Wacht op synchroniseren.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="168"/>
@@ -1039,7 +1039,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="224"/>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation>Stel &lt;b&gt;grenswaarden&lt;/b&gt; in zoals &lt;b&gt;optimale vochtigheidsgraad&lt;/b&gt;, &lt;b&gt;temperatuurbereik&lt;/b&gt; en meer afhankelijk van de sensorspecificaties.</translation>
+        <translation>Stel &lt;b&gt;grenswaarden&lt;/b&gt; in, zoals &lt;b&gt;optimale vochtigheidsgraad&lt;/b&gt;, &lt;b&gt;temperatuurbereik&lt;/b&gt; en meer afhankelijk van de sensorspecificaties.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="266"/>
