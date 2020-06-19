@@ -73,8 +73,8 @@ class SettingsManager: public QObject
     bool m_autoDark = false;
     QString m_appLanguage = "auto";
     bool m_startMinimized = false;
-    bool m_systrayEnabled = false;
-    bool m_notificationsEnabled = false;
+    bool m_systrayEnabled = true;
+    bool m_notificationsEnabled = true;
 
     bool m_bluetoothControl = false;
     unsigned m_bluetoothSimUpdates = 6;

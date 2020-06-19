@@ -454,9 +454,11 @@ void SettingsManager::resetSettings()
     m_appLanguage = "auto";
     Q_EMIT appLanguageChanged();
 
-    m_systrayEnabled = false;
+    m_startMinimized = false;
+    Q_EMIT minimizedChanged();
+    m_systrayEnabled = true;
     Q_EMIT systrayChanged();
-    m_notificationsEnabled = false;
+    m_notificationsEnabled = true;
     Q_EMIT notifsChanged();
     m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
     Q_EMIT updateIntervalPlantChanged();
@@ -468,8 +470,6 @@ void SettingsManager::resetSettings()
     m_bluetoothSimUpdates = 6;
     Q_EMIT bluetoothSimUpdatesChanged();
 
-    m_startMinimized = false;
-    Q_EMIT minimizedChanged();
     QLocale lo;
     if (lo.measurementSystem() == QLocale::MetricSystem)
         m_tempUnit = "C";
