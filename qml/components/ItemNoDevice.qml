@@ -45,16 +45,14 @@ Item {
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
 
-            OpacityAnimator {
+            SequentialAnimation on opacity {
                 id: rescanAnimation
-                target: imageSearch
-                duration: 1000
-                from: 0.33
-                to: 1
                 loops: Animation.Infinite
                 running: deviceManager.scanning
-                alwaysRunToEnd: true
-                easing.type: Easing.OutExpo
+                onStopped: imageSearch.opacity = 1;
+
+                PropertyAnimation { to: 0.33; duration: 750; }
+                PropertyAnimation { to: 1; duration: 750; }
             }
         }
 

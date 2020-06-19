@@ -36,7 +36,7 @@ Item {
 
         tempData.visible = myDevice.hasTemperatureSensor()
         hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && myDevice.hasData("hygro")
-        lumiData.visible = false
+        lumiData.visible = myDevice.hasLuminositySensor()
         conduData.visible = myDevice.hasConductivitySensor() && myDevice.hasData("conductivity")
 
         dateIndicator.visible = false
