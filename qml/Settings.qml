@@ -1311,6 +1311,62 @@ Item {
                     }
                 }
             }
+
+            ////////
+
+            Rectangle {
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: Theme.colorForeground
+
+                ImageSvg {
+                    id: image_export
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    rotation: 270
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                }
+
+                Text {
+                    id: text_export
+                    anchors.left: image_export.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Data export")
+                    font.pixelSize: 16
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_export
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ButtonWireframe {
+                    width: 128
+                    height: 34
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Export")
+                    onClicked: deviceManager.exportData()
+                }
+            }
         }
     }
 }

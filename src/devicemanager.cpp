@@ -34,11 +34,14 @@
 #include <QBluetoothAddress>
 #include <QBluetoothDeviceInfo>
 
-#include <QStandardPaths>
 #include <QList>
-#include <QDir>
 #include <QTimer>
 #include <QDebug>
+
+#include <QStandardPaths>
+#include <QDir>
+#include <QFile>
+#include <QDateTime>
 
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -670,7 +673,7 @@ void DeviceManager::refreshDevices_check()
 
 void DeviceManager::refreshDevices_continue()
 {
-    qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_queued.size() << "device left";
+    //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_queued.size() << "device left";
 
     if (hasBluetooth() && !m_devices_queued.empty())
     {
@@ -695,7 +698,7 @@ void DeviceManager::refreshDevices_continue()
 
 void DeviceManager::refreshDevices_finished(Device *dev)
 {
-    qDebug() << "DeviceManager::refreshDevices_finished()" << dev->getAddress();
+    //qDebug() << "DeviceManager::refreshDevices_finished()" << dev->getAddress();
 
     if (m_devices_updating.contains(dev))
     {
@@ -703,12 +706,6 @@ void DeviceManager::refreshDevices_finished(Device *dev)
 
         // update next device in the list
         refreshDevices_continue();
-
-        qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_queued.size() << "device left in queue";
-    }
-    else
-    {
-        qDebug() << "DeviceManager::refreshDevices_finished() TWICE";
     }
 }
 
@@ -872,13 +869,118 @@ void DeviceManager::removeDevice(const QString &address)
 
             // Remove device
             m_devices.removeAll(dd);
-            qDebug() << "- Device removed: " << dd->getName() << "/" << dd->getAddress();
             delete dd;
             Q_EMIT devicesUpdated();
 
+            qDebug() << "- Device removed: " << dd->getName() << "/" << dd->getAddress();
             break;
         }
     }
+}
+
+/* ************************************************************************** */
+
+bool DeviceManager::exportData()
+{
+    bool status = false;
+
+    if (m_devices.isEmpty()) return status;
+
+    SettingsManager *sm = SettingsManager::getInstance();
+    bool isCelcius = (sm->getTempUnit() == "C");
+
+    // Get directory path
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    UtilsApp *apputils = UtilsApp::getInstance();
+    QString exportDirectory = apputils->getMobileStorageInternal() + "/WatchFlower";
+#else
+    QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+#endif
+
+    // Create exportDirectory
+    if (!exportDirectory.isEmpty())
+    {
+        QDir edir(exportDirectory);
+        status = edir.exists();
+        if (!edir.exists())
+        {
+            status = edir.mkpath(exportDirectory);
+        }
+        if (!edir.exists())
+        {
+            qWarning() << "DeviceManager::exportData() cannot create export directory";
+            status = false;
+        }
+    }
+    else
+    {
+        qWarning() << "DeviceManager::exportData() invalid export directory";
+        status = false;
+    }
+
+    // Get file name
+    QString exportFile = exportDirectory;
+    exportFile += "/wf_";
+    exportFile += QDateTime::currentDateTime().toString("yyyy-MM-dd");
+    exportFile += ".csv";
+
+    QFile efile;
+    efile.setFileName(exportFile);
+    if (efile.open(QIODevice::WriteOnly))
+    {
+        status = true;
+        QTextStream eout(&efile);
+
+        QString legend = "Soil humidity (%), Temperature (";
+        legend += (isCelcius ? "℃" : "℉");
+        legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
+        eout << legend << Qt::endl;
+
+        for (auto d: m_devices)
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd)
+            {
+                QString l = "> " + dd->getName() + " (" + dd->getAddress() + ")";
+                eout << l << Qt::endl;
+
+                QSqlQuery data;
+                data.prepare("SELECT ts_full, hygro, temp, luminosity, conductivity " \
+                             "FROM datas " \
+                             "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
+                data.bindValue(":deviceAddr", dd->getAddress());
+
+                if (data.exec() == true)
+                {
+                    while (data.next())
+                    {
+                        eout << data.value(0).toString() << ","
+                             << data.value(1).toString() << ",";
+
+                        if (isCelcius) eout << QString::number(data.value(2).toReal(), 'f', 1);
+                        else eout << QString::number(data.value(2).toReal()* 1.8 + 32.0, 'f', 1);
+                        eout << ",";
+
+                        if (dd->hasLuminositySensor()) eout << data.value(3).toString();
+                        eout << ",";
+
+                        if (dd->hasConductivitySensor()) eout << data.value(4).toString();
+
+                        eout << Qt::endl;
+                    }
+                }
+            }
+        }
+
+        efile.close();
+    }
+    else
+    {
+        qWarning() << "DeviceManager::exportData() cannot open export file";
+        status = false;
+    }
+
+    return status;
 }
 
 /* ************************************************************************** */

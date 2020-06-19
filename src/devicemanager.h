@@ -98,6 +98,8 @@ public:
     QVariant getDevices() const { return QVariant::fromValue(m_devices); }
     Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
 
+    Q_INVOKABLE bool exportData();
+
 public slots:
     void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
