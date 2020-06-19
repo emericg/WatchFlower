@@ -352,7 +352,7 @@ Item {
                             color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse)
-                            opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 1 : 0
+                            opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }
@@ -427,7 +427,7 @@ Item {
                             color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputArea.containsMouse)
-                            opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
+                            opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }

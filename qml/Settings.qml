@@ -532,23 +532,23 @@ Item {
                 }
 
                 Text {
-                    id: text_bluetoothSimUpdate
+                    id: text_bluetoothSimUpdate1
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
+                    visible: isDesktop
+
                     text: qsTr("Simultaneous updates") + " (" + settingsManager.bluetoothSimUpdates + ")"
                     wrapMode: Text.WordWrap
-                    anchors.right: switch_bluetoothSimUpdate.left
-                    anchors.rightMargin: 16
                     font.pixelSize: 16
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
                 SliderThemed {
                     id: slider_bluetoothSimUpdate
-                    anchors.left: text_bluetoothSimUpdate.right
+                    anchors.left: text_bluetoothSimUpdate1.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 16
@@ -565,6 +565,23 @@ Item {
                     onValueChanged: settingsManager.bluetoothSimUpdates = value
                 }
 
+                Text {
+                    id: text_bluetoothSimUpdate2
+                    height: 40
+                    anchors.left: image_bluetoothSimUpdate.right
+                    anchors.leftMargin: column.leftPad
+                    anchors.right: spinBox_bluetoothSimUpdate.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isMobile
+
+                    text: qsTr("Simultaneous updates")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 16
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
                 SpinBoxThemed {
                     id: spinBox_bluetoothSimUpdate
                     width: 128
@@ -1363,8 +1380,12 @@ Item {
                     anchors.leftMargin: 64
                     anchors.verticalCenter: parent.verticalCenter
 
+                    fullColor: false
                     text: qsTr("Export")
-                    onClicked: deviceManager.exportData()
+                    onClicked: {
+                        if (deviceManager.exportData())
+                            fullColor = true
+                    }
                 }
             }
         }

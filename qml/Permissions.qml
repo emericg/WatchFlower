@@ -116,30 +116,30 @@ Item {
 
                 ItemImageButton {
                     id: buttonGpsTest
-                    width: 40
-                    height: 40
+                    width: 36
+                    height: 36
                     anchors.right: parent.right
-                    anchors.rightMargin: -8
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    property bool validperm: true
+                    property bool validperm: false
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: (validperm) ? "white" : "black"
+                    iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
                     Component.onCompleted: validperm = utilsApp.checkMobileLocationPermission();
-                    onClicked: validperm = utilsApp.getMobileLocationPermissions();
+                    onClicked: validperm = utilsApp.getMobileLocationPermission();
                 }
             }
             Text {
                 id: legend_gps
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 4
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: 4
                 topPadding: -8
                 bottomPadding: 0
 
@@ -198,30 +198,30 @@ Item {
 
                 ItemImageButton {
                     id: buttonStorageTest
-                    width: 40
-                    height: 40
+                    width: 36
+                    height: 36
                     anchors.right: parent.right
-                    anchors.rightMargin: -8
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    property bool validperm: true
+                    property bool validperm: false
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: (validperm) ? "white" : "black"
+                    iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
-                    Component.onCompleted: validperm = utilsApp.checkMobileStoragePermission();
+                    Component.onCompleted: validperm = utilsApp.checkMobileStoragePermissions();
                     onClicked: validperm = utilsApp.getMobileStoragePermissions();
                 }
             }
             Text {
                 id: legend_storage
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 4
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: 4
                 topPadding: -8
                 bottomPadding: 0
 
@@ -269,23 +269,29 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
-                    id: switch_bluetooth
+                ItemImageButton {
+                    id: buttonBluetooth
+                    width: 36
+                    height: 36
                     anchors.right: parent.right
-                    anchors.rightMargin: -8
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    enabled: (!checked)
-                    checked: true
+                    property bool validperm: true
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    background: true
                 }
             }
             Text {
                 id: legend_bluetooth
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: 4
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: 4
                 topPadding: -8
                 bottomPadding: 0
 

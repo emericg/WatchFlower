@@ -296,7 +296,7 @@ Item {
                 color: Theme.colorHeaderContent
 
                 //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse)
-                opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 1 : 0
+                opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                 Behavior on opacity { OpacityAnimator { duration: 133 } }
             }
             TextInput {

@@ -27,6 +27,7 @@
 #include "device_hygrotemp_clock.h"
 #include "device_hygrotemp_square.h"
 #include "device_ropot.h"
+#include "utils_app.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -41,6 +42,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QFile>
+#include <QTextStream>
 #include <QDateTime>
 
 #include <QSqlDatabase>
@@ -892,6 +894,7 @@ bool DeviceManager::exportData()
     // Get directory path
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     UtilsApp *apputils = UtilsApp::getInstance();
+    apputils->getMobileStoragePermissions();
     QString exportDirectory = apputils->getMobileStorageInternal() + "/WatchFlower";
 #else
     QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
@@ -906,7 +909,72 @@ bool DeviceManager::exportData()
         {
             status = edir.mkpath(exportDirectory);
         }
-        if (!edir.exists())
+        if (edir.exists())
+        {
+
+            // Get file name
+            QString exportFile = exportDirectory;
+            exportFile += "/wf_";
+            exportFile += QDateTime::currentDateTime().toString("yyyy-MM-dd");
+            exportFile += ".csv";
+
+            QFile efile;
+            efile.setFileName(exportFile);
+            if (efile.open(QIODevice::WriteOnly))
+            {
+                status = true;
+                QTextStream eout(&efile);
+
+                QString legend = "Soil humidity (%), Temperature (";
+                legend += (isCelcius ? "℃" : "℉");
+                legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
+                eout << legend << endl;
+
+                for (auto d: m_devices)
+                {
+                    Device *dd = qobject_cast<Device*>(d);
+                    if (dd)
+                    {
+                        QString l = "> " + dd->getName() + " (" + dd->getAddress() + ")";
+                        eout << l << endl;
+
+                        QSqlQuery data;
+                        data.prepare("SELECT ts_full, hygro, temp, luminosity, conductivity " \
+                                     "FROM datas " \
+                                     "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
+                        data.bindValue(":deviceAddr", dd->getAddress());
+
+                        if (data.exec() == true)
+                        {
+                            while (data.next())
+                            {
+                                eout << data.value(0).toString() << ","
+                                     << data.value(1).toString() << ",";
+
+                                if (isCelcius) eout << QString::number(data.value(2).toReal(), 'f', 1);
+                                else eout << QString::number(data.value(2).toReal()* 1.8 + 32.0, 'f', 1);
+                                eout << ",";
+
+                                if (dd->hasLuminositySensor()) eout << data.value(3).toString();
+                                eout << ",";
+
+                                if (dd->hasConductivitySensor()) eout << data.value(4).toString();
+
+                                eout << endl;
+                            }
+                        }
+                    }
+                }
+
+                efile.close();
+            }
+            else
+            {
+                qWarning() << "DeviceManager::exportData() cannot open export file";
+                status = false;
+            }
+        }
+        else
         {
             qWarning() << "DeviceManager::exportData() cannot create export directory";
             status = false;
@@ -915,68 +983,6 @@ bool DeviceManager::exportData()
     else
     {
         qWarning() << "DeviceManager::exportData() invalid export directory";
-        status = false;
-    }
-
-    // Get file name
-    QString exportFile = exportDirectory;
-    exportFile += "/wf_";
-    exportFile += QDateTime::currentDateTime().toString("yyyy-MM-dd");
-    exportFile += ".csv";
-
-    QFile efile;
-    efile.setFileName(exportFile);
-    if (efile.open(QIODevice::WriteOnly))
-    {
-        status = true;
-        QTextStream eout(&efile);
-
-        QString legend = "Soil humidity (%), Temperature (";
-        legend += (isCelcius ? "℃" : "℉");
-        legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
-        eout << legend << Qt::endl;
-
-        for (auto d: m_devices)
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd)
-            {
-                QString l = "> " + dd->getName() + " (" + dd->getAddress() + ")";
-                eout << l << Qt::endl;
-
-                QSqlQuery data;
-                data.prepare("SELECT ts_full, hygro, temp, luminosity, conductivity " \
-                             "FROM datas " \
-                             "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
-                data.bindValue(":deviceAddr", dd->getAddress());
-
-                if (data.exec() == true)
-                {
-                    while (data.next())
-                    {
-                        eout << data.value(0).toString() << ","
-                             << data.value(1).toString() << ",";
-
-                        if (isCelcius) eout << QString::number(data.value(2).toReal(), 'f', 1);
-                        else eout << QString::number(data.value(2).toReal()* 1.8 + 32.0, 'f', 1);
-                        eout << ",";
-
-                        if (dd->hasLuminositySensor()) eout << data.value(3).toString();
-                        eout << ",";
-
-                        if (dd->hasConductivitySensor()) eout << data.value(4).toString();
-
-                        eout << Qt::endl;
-                    }
-                }
-            }
-        }
-
-        efile.close();
-    }
-    else
-    {
-        qWarning() << "DeviceManager::exportData() cannot open export file";
         status = false;
     }
 
