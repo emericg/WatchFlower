@@ -114,16 +114,24 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
-                    id: switch_gps
+                ItemImageButton {
+                    id: buttonGpsTest
+                    width: 40
+                    height: 40
                     anchors.right: parent.right
                     anchors.rightMargin: -8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    enabled: (!checked)
-                    Component.onCompleted: checked = utilsApp.checkMobileLocationPermission()
-                    onCheckedChanged: checked = utilsApp.getMobileLocationPermission()
+                    property bool validperm: true
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "black"
+                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    background: true
+
+                    Component.onCompleted: validperm = utilsApp.checkMobileLocationPermission();
+                    onClicked: validperm = utilsApp.getMobileLocationPermissions();
                 }
             }
             Text {
@@ -151,7 +159,7 @@ Item {
             }
 
             ////////
-/*
+
             Item {
                 height: 8
                 anchors.right: parent.right
@@ -188,17 +196,24 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
-                    id: switch_storage
+                ItemImageButton {
+                    id: buttonStorageTest
+                    width: 40
+                    height: 40
                     anchors.right: parent.right
                     anchors.rightMargin: -8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    enabled: false // (!checked)
+                    property bool validperm: true
 
-                    Component.onCompleted: checked = utilsApp.checkMobileStoragePermissions()
-                    onCheckedChanged: checked = utilsApp.getMobileStoragePermissions()
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "black"
+                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    background: true
+
+                    Component.onCompleted: validperm = utilsApp.checkMobileStoragePermission();
+                    onClicked: validperm = utilsApp.getMobileStoragePermissions();
                 }
             }
             Text {
@@ -215,7 +230,7 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: 14
             }
-*/
+
             ////////
 
             Item {
