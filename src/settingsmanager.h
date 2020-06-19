@@ -67,7 +67,7 @@ class SettingsManager: public QObject
 
     QSize m_appSize;
     QSize m_appPosition;
-    unsigned m_appVisibility;
+    unsigned m_appVisibility = 2;
 
     QString m_appTheme = "green";
     bool m_autoDark = false;

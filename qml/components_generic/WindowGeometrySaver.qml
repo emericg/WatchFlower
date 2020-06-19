@@ -13,19 +13,16 @@ Item {
     // Name of the setting section. Can be changed by the calling application.
     property string windowName: "ApplicationWindow"
 
-    // Bypass initial visibility state if needed. Can be changed by the calling application.
-    property bool windowStartMinimized: false
-
     // QSettings file. Will use organisation and project name.
     Settings {
-        id: s
+        id: st
         category: windowName
 
         property int x
         property int y
         property int width
         property int height
-        property int visibility
+        property int visibility // https://doc.qt.io/qt-5/qwindow.html#Visibility-enum
     }
 
     // Restore settings ////////////////////////////////////////////////////////
@@ -35,12 +32,12 @@ Item {
     function restoreSettings() {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") return;
 
-        if (s.width && s.height) {
-            windowInstance.x = s.x;
-            windowInstance.y = s.y;
-            windowInstance.width = s.width;
-            windowInstance.height = s.height;
-            if (!windowStartMinimized) windowInstance.visibility = s.visibility;
+        if (st.width && st.height) {
+            windowInstance.x = st.x;
+            windowInstance.y = st.y;
+            windowInstance.width = st.width;
+            windowInstance.height = st.height;
+            windowInstance.visibility = st.visibility;
         }
     }
 
@@ -66,19 +63,19 @@ Item {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") return;
 
         switch(windowInstance.visibility) {
-        case ApplicationWindow.Windowed:
-            s.x = windowInstance.x;
-            s.y = windowInstance.y;
-            s.width = windowInstance.width;
-            s.height = windowInstance.height;
-            s.visibility = windowInstance.visibility;
-            break;
-        case ApplicationWindow.Maximized:
-            s.visibility = windowInstance.visibility;
-            break;
-        case ApplicationWindow.FullScreen:
-            s.visibility = windowInstance.visibility;
-            break;
+            case ApplicationWindow.Windowed:
+                st.x = windowInstance.x;
+                st.y = windowInstance.y;
+                st.width = windowInstance.width;
+                st.height = windowInstance.height;
+                st.visibility = windowInstance.visibility;
+                break;
+            case ApplicationWindow.Maximized:
+                st.visibility = windowInstance.visibility;
+                break;
+            case ApplicationWindow.FullScreen:
+                st.visibility = windowInstance.visibility;
+                break;
         }
     }
 }

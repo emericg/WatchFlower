@@ -44,7 +44,6 @@ ApplicationWindow {
     }
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height
-    //visibility: settingsManager.initialVisibility
 
     flags: Qt.Window
     color: Theme.colorBackground
@@ -77,7 +76,15 @@ ApplicationWindow {
 
     WindowGeometrySaver {
         windowInstance: applicationWindow
-        windowStartMinimized: startMinimized
+        Component.onCompleted: {
+            // Make sure we handle window visibility correctly
+            if (startMinimized) {
+                if (settingsManager.systray) visibility = ApplicationWindow.Hidden
+                else visibility = ApplicationWindow.Minimized
+            } else {
+                visibility = settingsManager.initialVisibility
+            }
+        }
     }
 
     // Events handling /////////////////////////////////////////////////////////
