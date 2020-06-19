@@ -442,7 +442,6 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
                 color: Theme.colorSeparator
-                visible: isMobile
             }
 
             ////////
@@ -515,16 +514,13 @@ Item {
             ////////
 
             Item {
-                id: element_bluetoothCompat
+                id: element_bluetoothSimUpdate
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
 
-                // mobile only
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-
                 ImageSvg {
-                    id: image_bluetoothCompat
+                    id: image_bluetoothSimUpdate
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -536,34 +532,61 @@ Item {
                 }
 
                 Text {
-                    id: text_bluetoothCompat
+                    id: text_bluetoothSimUpdate
                     height: 40
-                    anchors.left: image_bluetoothCompat.right
+                    anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Bluetooth compatibility")
+                    text: qsTr("Simultaneous updates") + " (" + settingsManager.bluetoothSimUpdates + ")"
                     wrapMode: Text.WordWrap
-                    anchors.right: switch_bluetoothCompat.left
+                    anchors.right: switch_bluetoothSimUpdate.left
                     anchors.rightMargin: 16
                     font.pixelSize: 16
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
-
-                SwitchThemedMobile {
-                    id: switch_bluetoothCompat
+                SliderThemed {
+                    id: slider_bluetoothSimUpdate
+                    anchors.left: text_bluetoothSimUpdate.right
+                    anchors.leftMargin: 16
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isDesktop
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.bluetoothCompat
-                    onCheckedChanged: settingsManager.bluetoothCompat = checked
+                    from: 1
+                    to: 6
+                    stepSize: 1
+
+                    value: settingsManager.bluetoothSimUpdates
+                    onValueChanged: settingsManager.bluetoothSimUpdates = value
+                }
+
+                SpinBoxThemed {
+                    id: spinBox_bluetoothSimUpdate
+                    width: 128
+                    height: 34
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isMobile
+                    z: 1
+
+                    from: 1
+                    to: 6
+                    stepSize: 1
+                    editable: false
+
+                    value: settingsManager.bluetoothSimUpdates
+                    onValueChanged: settingsManager.bluetoothSimUpdates = value
                 }
             }
             Text {
-                id: legend_bluetoothCompat
+                id: legend_bluetoothSimUpdate
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
@@ -571,9 +594,9 @@ Item {
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: element_bluetoothCompat.visible
+                visible: element_bluetoothSimUpdate.visible
 
-                text: qsTr("Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.")
+                text: qsTr("How many sensor should we update at once? Improve Bluetooth communication reliability, at the expense of synchronization speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -876,16 +899,8 @@ Item {
                     stepSize: 1
                     editable: false
 
-                    property bool sb_inited: false
-                    Component.onCompleted: {
-                        value = (settingsManager.updateIntervalPlant / 60)
-                        sb_inited = true
-                    }
-                    onValueChanged: {
-                        if (sb_inited) {
-                            settingsManager.updateIntervalPlant = (value * 60)
-                        }
-                    }
+                    value: (settingsManager.updateIntervalPlant / 60)
+                    onValueChanged: settingsManager.updateIntervalPlant = (value * 60)
                 }
             }
 
@@ -1204,16 +1219,8 @@ Item {
                     stepSize: 1
                     editable: false
 
-                    property bool sb_inited: false
-                    Component.onCompleted: {
-                        value = (settingsManager.updateIntervalThermo / 60)
-                        sb_inited = true
-                    }
-                    onValueChanged: {
-                        if (sb_inited) {
-                            settingsManager.updateIntervalThermo = (value * 60)
-                        }
-                    }
+                    value: (settingsManager.updateIntervalThermo / 60)
+                    onValueChanged: settingsManager.updateIntervalThermo = (value * 60)
                 }
             }
 

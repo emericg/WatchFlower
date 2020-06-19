@@ -288,6 +288,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
             qDebug() << "- m_hygro:" << m_hygro;
 #endif
 
+            refreshDataFinished(true);
             controller->disconnectFromDevice();
 
             //if (m_db)
@@ -315,8 +316,6 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
-
-            refreshDataFinished(true);
         }
     }
 }

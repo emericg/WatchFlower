@@ -177,6 +177,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "- m_conductivity:" << m_conductivity;
 #endif // QT_NO_DEBUG
 
+            refreshDataFinished(true);
             controller->disconnectFromDevice();
 
             //if (m_db)
@@ -205,8 +206,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
-
-            refreshDataFinished(true);
         }
     }
 }

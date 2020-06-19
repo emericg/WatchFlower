@@ -615,31 +615,21 @@ void DeviceManager::refreshDevices_start()
     // Start refresh (if > 1 min)
     if (checkBluetooth() && !m_devices.empty())
     {
-        m_devices_updatelist.clear();
+        m_devices_queued.clear();
+        m_devices_updating.clear();
 
-        SettingsManager *sm = SettingsManager::getInstance();
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
             {
                 // as long as we didn't just update it: go for refresh
-                m_devices_updatelist.push_back(dd);
-
-                if (sm->getBluetoothCompat())
-                    dd->refreshQueue(); // sync
-                else
-                    dd->refreshStart(); // async
+                m_devices_queued.push_back(dd);
+                dd->refreshQueue();
             }
         }
 
-        if (!m_devices_updatelist.empty())
-        {
-            if (sm->getBluetoothCompat())
-                refreshDevices_continue(); // sync
-
-            Q_EMIT refreshingChanged();
-        }
+        refreshDevices_continue();
     }
 }
 
@@ -658,75 +648,67 @@ void DeviceManager::refreshDevices_check()
     // Start refresh (if needed)
     if (checkBluetooth() && !m_devices.empty())
     {
-        m_devices_updatelist.clear();
+        m_devices_queued.clear();
+        m_devices_updating.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
         for (auto d: m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd->getLastUpdateInt() < 0 ||
-                dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
+            if (dd && (dd->getLastUpdateInt() < 0 ||
+                dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo())))
             {
                 // old or no data: go for refresh
-                m_devices_updatelist.push_back(dd);
-
-                if (sm->getBluetoothCompat())
-                    dd->refreshQueue(); // sync
-                else
-                    dd->refreshStart(); // async
+                m_devices_queued.push_back(dd);
+                dd->refreshQueue();
             }
         }
 
-        if (!m_devices_updatelist.empty())
-        {
-            if (sm->getBluetoothCompat())
-                refreshDevices_continue(); // sync
-
-            Q_EMIT refreshingChanged();
-        }
+        refreshDevices_continue();
     }
 }
 
 void DeviceManager::refreshDevices_continue()
 {
-    //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_updatelist.size() << "device left";
+    qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_queued.size() << "device left";
 
-    if (hasBluetooth() && !m_devices_updatelist.empty())
+    if (hasBluetooth() && !m_devices_queued.empty())
     {
-        // update next device in the list
+        int sim = SettingsManager::getInstance()->getBluetoothSimUpdates();
 
-        Device *dd = qobject_cast<Device*>(m_devices_updatelist.first());
-        if (dd) dd->refreshStart();
-    }
-}
-
-void DeviceManager::refreshDevices_finished(Device *dev)
-{
-    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device in queue";
-
-    if (dev && !m_devices_updatelist.isEmpty())
-    {
-        for (auto d: m_devices_updatelist)
+        while (!m_devices_queued.empty() && m_devices_updating.size() < sim)
         {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd && dd->getAddress() == dev->getAddress())
+            // update next device in the list
+            Device *d = qobject_cast<Device*>(m_devices_queued.first());
+            if (d)
             {
-                m_devices_updatelist.removeAll(d);
-                break;
+                m_devices_queued.removeFirst();
+                m_devices_updating.push_back(d);
+
+                d->refreshStart();
             }
         }
     }
 
-    //qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_updatelist.size() << "device left";
+    Q_EMIT refreshingChanged();
+}
 
-    if (m_devices_updatelist.empty())
+void DeviceManager::refreshDevices_finished(Device *dev)
+{
+    qDebug() << "DeviceManager::refreshDevices_finished()" << dev->getAddress();
+
+    if (m_devices_updating.contains(dev))
     {
-        Q_EMIT refreshingChanged();
+        m_devices_updating.removeOne(dev);
+
+        // update next device in the list
+        refreshDevices_continue();
+
+        qDebug() << "DeviceManager::refreshDevices_finished()" << m_devices_queued.size() << "device left in queue";
     }
     else
     {
-        // update next device in the list
-        refreshDevices_continue();
+        qDebug() << "DeviceManager::refreshDevices_finished() TWICE";
     }
 }
 
@@ -734,9 +716,10 @@ void DeviceManager::refreshDevices_stop()
 {
     //qDebug() << "DeviceManager::refreshDevices_stop()";
 
-    if (!m_devices_updatelist.empty())
+    if (!m_devices_queued.empty())
     {
-        m_devices_updatelist.clear();
+        m_devices_queued.clear();
+        m_devices_updating.clear();
 
         for (auto d: m_devices)
         {
@@ -750,7 +733,7 @@ void DeviceManager::refreshDevices_stop()
 
 bool DeviceManager::isRefreshing() const
 {
-    return !m_devices_updatelist.empty();
+    return !m_devices_updating.empty();
 }
 
 void DeviceManager::updateDevice(const QString &address)
@@ -764,20 +747,9 @@ void DeviceManager::updateDevice(const QString &address)
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address)
             {
-                m_devices_updatelist += dd;
+                m_devices_queued += dd;
                 dd->refreshQueue();
-
-                SettingsManager *sm = SettingsManager::getInstance();
-                if (!sm->getBluetoothCompat())
-                {
-                    dd->refreshStart();
-                }
-                if (sm->getBluetoothCompat() && m_devices_updatelist.size() == 1)
-                {
-                    refreshDevices_continue();
-                }
-
-                Q_EMIT refreshingChanged();
+                refreshDevices_continue();
                 break;
             }
         }

@@ -184,6 +184,7 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             qDebug() << "- m_conductivity:" << m_conductivity;
 #endif // QT_NO_DEBUG
 
+            refreshDataFinished(true);
             controller->disconnectFromDevice();
 
             //if (m_db)
@@ -213,8 +214,6 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
-
-            refreshDataFinished(true);
         }
     }
 }

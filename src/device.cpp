@@ -427,7 +427,6 @@ bool Device::getSqlData(int minutes)
     }
 
     refreshDataFinished(status, true);
-
     return status;
 }
 

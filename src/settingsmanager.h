@@ -54,7 +54,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
 
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
-    Q_PROPERTY(bool bluetoothCompat READ getBluetoothCompat WRITE setBluetoothCompat NOTIFY bluetoothCompatChanged)
+    Q_PROPERTY(uint bluetoothSimUpdates READ getBluetoothSimUpdates WRITE setBluetoothSimUpdates NOTIFY bluetoothSimUpdatesChanged)
 
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
@@ -75,11 +75,12 @@ class SettingsManager: public QObject
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
-    bool m_bluetoothControl = false;
-    bool m_bluetoothCompat = false;
 
-    int m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
-    int m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
+    bool m_bluetoothControl = false;
+    unsigned m_bluetoothSimUpdates = 6;
+
+    unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
+    unsigned m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
     QString m_graphHistory = "monthly";
     bool m_graphShowDots = false;
@@ -109,7 +110,7 @@ Q_SIGNALS:
     void systrayChanged();
     void notifsChanged();
     void bluetoothControlChanged();
-    void bluetoothCompatChanged();
+    void bluetoothSimUpdatesChanged();
     void updateIntervalPlantChanged();
     void updateIntervalThermoChanged();
     void tempUnitChanged();
@@ -147,14 +148,14 @@ public:
     bool getBluetoothControl() const { return m_bluetoothControl; }
     void setBluetoothControl(const bool value);
 
-    bool getBluetoothCompat() const { return m_bluetoothCompat; }
-    void setBluetoothCompat(const bool value);
+    unsigned getBluetoothSimUpdates() const { return m_bluetoothSimUpdates; }
+    void setBluetoothSimUpdates(const unsigned value);
 
-    int getUpdateIntervalPlant() const { return m_updateIntervalPlant; }
-    void setUpdateIntervalPlant(const int value);
+    unsigned getUpdateIntervalPlant() const { return m_updateIntervalPlant; }
+    void setUpdateIntervalPlant(const unsigned value);
 
-    int getUpdateIntervalThermo() const { return m_updateIntervalThermo; }
-    void setUpdateIntervalThermo(const int value);
+    unsigned getUpdateIntervalThermo() const { return m_updateIntervalThermo; }
+    void setUpdateIntervalThermo(const unsigned value);
 
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);

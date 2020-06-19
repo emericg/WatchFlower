@@ -64,12 +64,15 @@ class DeviceManager: public QObject
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyController *m_controller = nullptr;
 
-    bool m_scanning = false;
-
     QList <QObject *> m_devices;
 
     QTimer m_refreshTimer;
-    QList <QObject *> m_devices_updatelist;
+
+    QList <QObject *> m_devices_queued;
+    QList <QObject *> m_devices_updating;
+
+    bool m_scanning = false;
+    bool isScanning() const;
 
     bool hasDatabase() const;
     void checkDatabase();
@@ -80,7 +83,6 @@ class DeviceManager: public QObject
 
     void checkBluetoothIos();
     void startBleAgent();
-    bool isScanning() const;
 
 public:
     DeviceManager();

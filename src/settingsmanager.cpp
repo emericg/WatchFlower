@@ -93,13 +93,16 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/bluetoothControl"))
             m_bluetoothControl = settings.value("settings/bluetoothControl").toBool();
 
-        if (settings.contains("settings/bluetoothCompat"))
-            m_bluetoothCompat = settings.value("settings/bluetoothCompat").toBool();
+        if (settings.contains("settings/bluetoothSimUpdates"))
+            m_bluetoothSimUpdates = settings.value("settings/bluetoothSimUpdates").toUInt();
         else
         {
 #if defined(Q_OS_ANDROID)
-            // bluetooth compat is default true on Android, too many weak devices
-            m_bluetoothCompat = true;
+            // Bluetooth compat is default true on Android, too many weak devices
+            m_bluetoothSimUpdates = 2;
+#elif defined(Q_OS_IOS)
+            // Bluetooth compat is default true on Android, too many weak devices
+            m_bluetoothSimUpdates = 4;
 #endif
         }
 
@@ -123,6 +126,7 @@ bool SettingsManager::readSettings()
         else
         {
             // If we have no measurement system saved, use system's one
+            // TODO: i18n may not have been set yet?
             QLocale lo;
             if (lo.measurementSystem() == QLocale::MetricSystem)
                 m_tempUnit = "C";
@@ -169,7 +173,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/autoDark", m_autoDark);
         settings.setValue("settings/appLanguage", m_appLanguage);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
-        settings.setValue("settings/bluetoothCompat", m_bluetoothCompat);
+        settings.setValue("settings/bluetoothSimUpdates", m_bluetoothSimUpdates);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
         settings.setValue("settings/updateIntervalPlant", m_updateIntervalPlant);
@@ -461,8 +465,8 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
-    m_bluetoothCompat = false;
-    Q_EMIT bluetoothCompatChanged();
+    m_bluetoothSimUpdates = 6;
+    Q_EMIT bluetoothSimUpdatesChanged();
 
     m_startMinimized = false;
     Q_EMIT minimizedChanged();
@@ -576,17 +580,17 @@ void SettingsManager::setBluetoothControl(const bool value)
     }
 }
 
-void SettingsManager::setBluetoothCompat(const bool value)
+void SettingsManager::setBluetoothSimUpdates(const unsigned value)
 {
-    if (m_bluetoothCompat != value)
+    if (m_bluetoothSimUpdates != value)
     {
-        m_bluetoothCompat = value;
+        m_bluetoothSimUpdates = value;
         writeSettings();
-        Q_EMIT bluetoothCompatChanged();
+        Q_EMIT bluetoothSimUpdatesChanged();
     }
 }
 
-void SettingsManager::setUpdateIntervalPlant(const int value)
+void SettingsManager::setUpdateIntervalPlant(const unsigned value)
 {
     if (m_updateIntervalPlant != value)
     {
@@ -596,7 +600,7 @@ void SettingsManager::setUpdateIntervalPlant(const int value)
     }
 }
 
-void SettingsManager::setUpdateIntervalThermo(const int value)
+void SettingsManager::setUpdateIntervalThermo(const unsigned value)
 {
     if (m_updateIntervalThermo!= value)
     {
