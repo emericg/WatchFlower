@@ -25,10 +25,7 @@
         <file>icons_material/baseline-battery_90-24px.svg</file>
         <file>icons_material/baseline-battery_full-24px.svg</file>
         <file>icons_material/baseline-battery_unknown-24px.svg</file>
-        <file>icons_material/baseline-bluetooth-24px.svg</file>
-        <file>icons_material/baseline-bluetooth_connected-24px.svg</file>
         <file>icons_material/baseline-bluetooth_disabled-24px.svg</file>
-        <file>icons_material/baseline-bluetooth_searching-24px.svg</file>
         <file>icons_material/baseline-chevron_right-24px.svg</file>
         <file>icons_material/baseline-crop_16_9-24px.svg</file>
         <file>icons_material/baseline-crop_square-24px.svg</file>
@@ -55,7 +52,6 @@
         <file>icons_material/baseline-supervised_user_circle-24px.svg</file>
         <file>icons_material/baseline-support-24px.svg</file>
         <file>icons_material/baseline-timeline-24px.svg</file>
-        <file>icons_material/baseline-timer-24px.svg</file>
         <file>icons_material/baseline-trip_origin-24px.svg</file>
         <file>icons_material/baseline-warning-24px.svg</file>
 
@@ -76,6 +72,7 @@
         <file>icons_material/duotone-pin_drop-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
+        <file>icons_material/duotone-timer-24px.svg</file>
         <file>icons_material/duotone-translate-24px.svg</file>
         <file>icons_material/duotone-water_full-24px.svg</file>
         <file>icons_material/duotone-water_mid-24px.svg</file>

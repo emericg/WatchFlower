@@ -865,7 +865,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                 }
 
                 Text {
@@ -1185,7 +1185,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-timer-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                 }
 
                 Text {
