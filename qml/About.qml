@@ -541,7 +541,7 @@ Item {
 
             Item {
                 id: dependencies
-                height: 64 + dependenciesColumn.height
+                height: 24 + dependenciesLabel.height + dependenciesColumn.height
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -634,7 +634,7 @@ Item {
 
             Item {
                 id: translators
-                height: 48 + translatorsColumn.height
+                height: 24 + translatorsLabel.height + translatorsColumn.height
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -648,7 +648,7 @@ Item {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: translatorsLabel.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-translate-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
                     color: Theme.colorText
                 }
 

@@ -368,11 +368,23 @@ Item {
             cellHeight = boxHeight + cellMarginTarget
         }
 
+        ScrollBar.vertical: ScrollBar {
+            visible: isDesktop
+            anchors.right: parent.right
+            anchors.rightMargin: -6
+            policy: ScrollBar.AsNeeded
+        }
+
         onBigWidgetChanged: computeCellSize()
         onWidthChanged: computeCellSize()
 
         model: deviceManager.devicesList
-        delegate: DeviceWidget { boxDevice: modelData; width: devicesView.cellSize; singleColumn: devicesView.singleColumn; bigAssMode: devicesView.bigWidget; }
+        delegate: DeviceWidget {
+            boxDevice: modelData;
+            width: devicesView.cellSize;
+            singleColumn: devicesView.singleColumn;
+            bigAssMode: devicesView.bigWidget;
+        }
     }
 
     Loader {
