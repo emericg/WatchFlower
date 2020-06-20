@@ -34,34 +34,34 @@ Item {
     property var dataCharts: null
 
     function updateHeader() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateHeader() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceScreenData // updateHeader() >> " + currentDevice)
 
         // Sensor battery level
-        if (myDevice.hasBatteryLevel()) {
+        if (currentDevice.hasBatteryLevel()) {
             imageBattery.visible = true
             imageBattery.color = Theme.colorIcon
 
-            if (myDevice.deviceBattery > 95) {
+            if (currentDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 85) {
+            } else if (currentDevice.deviceBattery > 85) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 75) {
+            } else if (currentDevice.deviceBattery > 75) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 55) {
+            } else if (currentDevice.deviceBattery > 55) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 45) {
+            } else if (currentDevice.deviceBattery > 45) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 25) {
+            } else if (currentDevice.deviceBattery > 25) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 15) {
+            } else if (currentDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery > 1) {
-                if (myDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
+            } else if (currentDevice.deviceBattery > 1) {
+                if (currentDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
-                if (myDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
+                if (currentDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
@@ -70,7 +70,7 @@ Item {
         }
 
         // Plant
-        if (myDevice.hasSoilMoistureSensor()) {
+        if (currentDevice.hasSoilMoistureSensor()) {
             itemPlant.visible = true
         } else {
             itemPlant.visible = false
@@ -96,25 +96,25 @@ Item {
     }
 
     function updateStatusText() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateStatusText() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceScreenData // updateStatusText() >> " + currentDevice)
 
         textStatus.color = Theme.colorHighContrast
         textStatus.font.bold = false
 
-        if (myDevice.status === 1) {
+        if (currentDevice.status === 1) {
             textStatus.text = qsTr("Update queued.") + " "
-        } else if (myDevice.status === 2) {
+        } else if (currentDevice.status === 2) {
             textStatus.text = qsTr("Connecting...") + " "
-        } else if (myDevice.status === 3) {
+        } else if (currentDevice.status === 3) {
             textStatus.text = qsTr("Updating...") + " "
         } else {
-            if (myDevice.isFresh() || myDevice.isAvailable()) {
-                if (myDevice.getLastUpdateInt() <= 1)
+            if (currentDevice.isFresh() || currentDevice.isAvailable()) {
+                if (currentDevice.getLastUpdateInt() <= 1)
                     textStatus.text = qsTr("Just synced!")
                 else
-                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
+                    textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
             } else {
                 textStatus.text = qsTr("Offline!") + " "
                 textStatus.color = Theme.colorRed
@@ -123,9 +123,9 @@ Item {
     }
 
     function loadData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // loadData() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceScreenData // loadData() >> " + currentDevice)
 
         updateHeader()
 
@@ -147,9 +147,9 @@ Item {
     }
 
     function updateData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateData() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceScreenData // updateData() >> " + currentDevice)
 
         resetHistoryMode()
         dataIndicators.updateData()
@@ -262,7 +262,7 @@ Item {
 
                         visible: isDesktop
 
-                        text: myDevice.deviceName
+                        text: currentDevice.deviceName
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeTitle
                         font.capitalization: Font.AllUppercase
@@ -312,9 +312,9 @@ Item {
                             font.bold: false
                             color: Theme.colorHighContrast
 
-                            text: myDevice ? myDevice.devicePlantName : ""
+                            text: currentDevice ? currentDevice.devicePlantName : ""
                             onEditingFinished: {
-                                myDevice.setPlantName(text)
+                                currentDevice.setPlantName(text)
                                 focus = false
                             }
 
@@ -387,9 +387,9 @@ Item {
                             font.bold: false
                             color: Theme.colorHighContrast
 
-                            text: myDevice ? myDevice.deviceLocationName : ""
+                            text: currentDevice ? currentDevice.deviceLocationName : ""
                             onEditingFinished: {
-                                myDevice.setLocationName(text)
+                                currentDevice.setLocationName(text)
                                 focus = false
                             }
 

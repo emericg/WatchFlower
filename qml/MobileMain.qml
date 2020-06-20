@@ -43,7 +43,7 @@ ApplicationWindow {
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
 
     property var lastUpdate
-    property var currentDevice: null
+    property var selectedDevice: null
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
@@ -155,8 +155,8 @@ ApplicationWindow {
             }
         }
         onDeviceRefreshButtonClicked: {
-            if (currentDevice) {
-                deviceManager.updateDevice(currentDevice.deviceAddress)
+            if (selectedDevice) {
+                deviceManager.updateDevice(selectedDevice.deviceAddress)
             }
         }
         onRightMenuClicked: {
@@ -322,7 +322,7 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceSensor"
-                PropertyChanges { target: appHeader; title: currentDevice.deviceName; }
+                PropertyChanges { target: appHeader; title: selectedDevice.deviceName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }

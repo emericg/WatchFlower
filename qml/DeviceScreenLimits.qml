@@ -29,33 +29,33 @@ Item {
     id: deviceScreenLimits
 
     function updateHeader() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenLimits // updateHeader() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("DeviceScreenLimits // updateHeader() >> " + currentDevice)
 
         // Sensor battery level
-        if (myDevice.hasBatteryLevel()) {
+        if (currentDevice.hasBatteryLevel()) {
             imageBattery.visible = true
             imageBattery.color = Theme.colorIcon
 
-            if (myDevice.deviceBattery > 95) {
+            if (currentDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 85) {
+            } else if (currentDevice.deviceBattery > 85) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 75) {
+            } else if (currentDevice.deviceBattery > 75) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 55) {
+            } else if (currentDevice.deviceBattery > 55) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 45) {
+            } else if (currentDevice.deviceBattery > 45) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 25) {
+            } else if (currentDevice.deviceBattery > 25) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 15) {
+            } else if (currentDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery > 1) {
-                if (myDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
+            } else if (currentDevice.deviceBattery > 1) {
+                if (currentDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
-                if (myDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
+                if (currentDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
@@ -64,12 +64,12 @@ Item {
         }
 
         // Sensor address
-        if (myDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = "[" + myDevice.deviceAddress + "]"
+        if (currentDevice.deviceAddress.charAt(0) !== '{')
+            textAddr.text = "[" + currentDevice.deviceAddress + "]"
 
         // Firmware
-        textFirmware.text = myDevice.deviceFirmware
-        if (isDesktop && !myDevice.deviceFirmwareUpToDate) {
+        textFirmware.text = currentDevice.deviceFirmware
+        if (isDesktop && !currentDevice.deviceFirmwareUpToDate) {
             imageFwUpdate.visible = true
             textFwUpdate.visible = true
         } else {
@@ -79,13 +79,13 @@ Item {
     }
 
     function updateLimits() {
-        if (typeof myDevice === "undefined" || !myDevice) return
+        if (typeof currentDevice === "undefined" || !currentDevice) return
 
-        rangeSlider_hygro.setValues(myDevice.limitHygroMin, myDevice.limitHygroMax)
-        rangeSlider_temp.setValues(myDevice.limitTempMin, myDevice.limitTempMax)
-        rangeSlider_condu.setValues(myDevice.limitConduMin, myDevice.limitConduMax)
+        rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
+        rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
+        rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
 
-        if (myDevice.limitLumiMax > 10000) {
+        if (currentDevice.limitLumiMax > 10000) {
             // outdoor more
             rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 100000;
             rangeSlider_lumi.stepSize = 5000;
@@ -98,16 +98,16 @@ Item {
             lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
             lux_5.visible = false; lux_6.visible = false;
         }
-        rangeSlider_lumi.setValues(myDevice.limitLumiMin, myDevice.limitLumiMax)
+        rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
     }
 
     function updateLimitsVisibility() {
-        if (typeof myDevice === "undefined" || !myDevice) return
+        if (typeof currentDevice === "undefined" || !currentDevice) return
 
-        itemTemp.visible = myDevice.hasTemperatureSensor()
-        itemHygro.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
-        itemLumi.visible = myDevice.hasLuminositySensor()
-        itemCondu.visible = myDevice.hasConductivitySensor()
+        itemTemp.visible = currentDevice.hasTemperatureSensor()
+        itemHygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
+        itemLumi.visible = currentDevice.hasLuminositySensor()
+        itemCondu.visible = currentDevice.hasConductivitySensor()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ Item {
 
                 visible: isDesktop
 
-                text: myDevice.deviceName
+                text: currentDevice.deviceName
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: Theme.fontSizeTitle
                 font.capitalization: Font.AllUppercase
@@ -189,7 +189,7 @@ Item {
                     anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: myDevice.deviceAddress
+                    text: currentDevice.deviceAddress
                     font.pixelSize: 17
                     color: Theme.colorHighContrast
                 }
@@ -269,7 +269,7 @@ Item {
                     anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: myDevice.deviceBattery + "%"
+                    text: currentDevice.deviceBattery + "%"
                     font.pixelSize: 17
                     color: Theme.colorHighContrast
                 }
@@ -338,7 +338,7 @@ Item {
                     anchors.verticalCenter: imageHygro.verticalCenter
                     anchors.verticalCenterOffset: 2
 
-                    text: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                    text: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                     color: Theme.colorText
                     font.bold: true
                     font.pixelSize: 14
@@ -361,8 +361,8 @@ Item {
                     from: 0
                     to: 66
                     stepSize: 1
-                    first.onValueChanged: if (myDevice) myDevice.limitHygroMin = first.value.toFixed(0);
-                    second.onValueChanged: if (myDevice) myDevice.limitHygroMax = second.value.toFixed(0);
+                    first.onValueChanged: if (currentDevice) currentDevice.limitHygroMin = first.value.toFixed(0);
+                    second.onValueChanged: if (currentDevice) currentDevice.limitHygroMax = second.value.toFixed(0);
                 }
             }
             Text {
@@ -433,8 +433,8 @@ Item {
                     from: 0
                     to: 40
                     stepSize: 1
-                    first.onValueChanged: if (myDevice) myDevice.limitTempMin = first.value.toFixed(0);
-                    second.onValueChanged: if (myDevice) myDevice.limitTempMax = second.value.toFixed(0);
+                    first.onValueChanged: if (currentDevice) currentDevice.limitTempMin = first.value.toFixed(0);
+                    second.onValueChanged: if (currentDevice) currentDevice.limitTempMax = second.value.toFixed(0);
                 }
             }
             Text {
@@ -507,8 +507,8 @@ Item {
                     to: 10000
                     stepSize: 1000
 
-                    first.onValueChanged: if (myDevice) { myDevice.limitLumiMin = first.value.toFixed(0) }
-                    second.onValueChanged: if (myDevice) { myDevice.limitLumiMax = second.value.toFixed(0) }
+                    first.onValueChanged: if (currentDevice) { currentDevice.limitLumiMin = first.value.toFixed(0) }
+                    second.onValueChanged: if (currentDevice) { currentDevice.limitLumiMax = second.value.toFixed(0) }
 
                     MouseArea {
                         anchors.fill: sections
@@ -526,7 +526,7 @@ Item {
                                 lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
                                 lux_5.visible = false; lux_6.visible = false;
                             }
-                            rangeSlider_lumi.setValues(myDevice.limitLumiMin, myDevice.limitLumiMax)
+                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
                         }
                     }
 
@@ -682,8 +682,8 @@ Item {
                     from: 0
                     to: 2000
                     stepSize: 50
-                    first.onValueChanged: if (myDevice) myDevice.limitConduMin = first.value.toFixed(0);
-                    second.onValueChanged: if (myDevice) myDevice.limitConduMax = second.value.toFixed(0);
+                    first.onValueChanged: if (currentDevice) currentDevice.limitConduMin = first.value.toFixed(0);
+                    second.onValueChanged: if (currentDevice) currentDevice.limitConduMax = second.value.toFixed(0);
                 }
             }
             Text {

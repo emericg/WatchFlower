@@ -31,13 +31,13 @@ Item {
     anchors.margins: 0
 
     function loadGraph() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("itemAioLineCharts // loadGraph() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("itemAioLineCharts // loadGraph() >> " + currentDevice)
 
-        tempData.visible = myDevice.hasTemperatureSensor()
-        hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && myDevice.hasData("hygro")
-        lumiData.visible = myDevice.hasLuminositySensor()
-        conduData.visible = myDevice.hasConductivitySensor() && myDevice.hasData("conductivity")
+        tempData.visible = currentDevice.hasTemperatureSensor()
+        hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
+        lumiData.visible = currentDevice.hasLuminositySensor()
+        conduData.visible = currentDevice.hasConductivitySensor() && currentDevice.hasData("conductivity")
 
         dateIndicator.visible = false
         dataIndicator.visible = false
@@ -45,13 +45,13 @@ Item {
     }
 
     function updateGraph() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("itemAioLineCharts // updateGraph() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("itemAioLineCharts // updateGraph() >> " + currentDevice)
 
         if (dateIndicator.visible)
             resetIndicator()
 
-        if (myDevice.countData("temp", 14) > 1) {
+        if (currentDevice.countData("temp", 14) > 1) {
             aioGraph.visible = true
             noDataIndicator.visible = false
         } else {
@@ -65,7 +65,7 @@ Item {
         lumiData.clear()
         conduData.clear()
 
-        myDevice.getAioData(axisTime, hygroData, tempData, lumiData, conduData);
+        currentDevice.getAioData(axisTime, hygroData, tempData, lumiData, conduData);
 
         //// AXIS
         axisHygro.min = 0
@@ -78,39 +78,39 @@ Item {
         axisLumi.max = 10000
 
         // Max axis for hygrometry
-        if (myDevice.hygroMax*1.20 > 100.0)
+        if (currentDevice.hygroMax*1.20 > 100.0)
             axisHygro.max = 100.0; // no need to go higher than 100% soil moisture
         else
-            axisHygro.max = myDevice.hygroMax*1.20;
+            axisHygro.max = currentDevice.hygroMax*1.20;
 
         // Max axis for temperature
-        axisTemp.max = myDevice.tempMax*1.20;
+        axisTemp.max = currentDevice.tempMax*1.20;
 
         // Max axis for conductivity
-        axisCondu.max = myDevice.conduMax*2.0;
+        axisCondu.max = currentDevice.conduMax*2.0;
 
         // Min axis computation, only for thermometers
-        if (!myDevice.hasSoilMoistureSensor()) {
-            axisHygro.min = myDevice.hygroMin*0.80;
-            axisTemp.min = myDevice.tempMin*0.80;
+        if (!currentDevice.hasSoilMoistureSensor()) {
+            axisHygro.min = currentDevice.hygroMin*0.80;
+            axisTemp.min = currentDevice.tempMin*0.80;
         }
 
         //// ADJUSTMENTS
         hygroData.width = 2
         tempData.width = 2
 
-        if (myDevice.deviceName === "ropot") {
+        if (currentDevice.deviceName === "ropot") {
             hygroData.width = 3 // Humidity is primary
         }
 
-        if (!myDevice.hasSoilMoistureSensor()) {
+        if (!currentDevice.hasSoilMoistureSensor()) {
             tempData.width = 3 // Temperature is primary
         }
 
-        if (myDevice.deviceName === "Flower care") {
+        if (currentDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroData.visible = (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) && myDevice.hasData("hygro")
-            conduData.visible = myDevice.hasConductivitySensor() && myDevice.hasData("conductivity")
+            hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
+            conduData.visible = currentDevice.hasConductivitySensor() && currentDevice.hasData("conductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {
@@ -119,7 +119,7 @@ Item {
                 tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
-                axisLumi.max = myDevice.lumiMax*1.20;
+                axisLumi.max = currentDevice.lumiMax*1.20;
             } else {
                 hygroData.width = 3 // Soil moisture is primary
             }

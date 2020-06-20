@@ -32,33 +32,33 @@ Item {
     property string graphMode: settingsManager.graphHistory
 
     function updateHeader() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreenHistory // updateHeader() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("DeviceScreenHistory // updateHeader() >> " + currentDevice)
 
         // Sensor battery level
-        if (myDevice.hasBatteryLevel()) {
+        if (currentDevice.hasBatteryLevel()) {
             imageBattery.visible = true
             imageBattery.color = Theme.colorIcon
 
-            if (myDevice.deviceBattery > 95) {
+            if (currentDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 85) {
+            } else if (currentDevice.deviceBattery > 85) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 75) {
+            } else if (currentDevice.deviceBattery > 75) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 55) {
+            } else if (currentDevice.deviceBattery > 55) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 45) {
+            } else if (currentDevice.deviceBattery > 45) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 25) {
+            } else if (currentDevice.deviceBattery > 25) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 15) {
+            } else if (currentDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery > 1) {
-                if (myDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
+            } else if (currentDevice.deviceBattery > 1) {
+                if (currentDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
-                if (myDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
+                if (currentDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
@@ -68,32 +68,32 @@ Item {
     }
 
     function loadData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
+        if (typeof currentDevice === "undefined" || !currentDevice) return
 /*
-        console.log("DeviceScreenHistory // loadData() >> " + myDevice)
+        console.log("DeviceScreenHistory // loadData() >> " + currentDevice)
 
-        console.log("hasHumiditySensor(): " + myDevice.hasHumiditySensor())
-        console.log("hasSoilMoistureSensor(): " + myDevice.hasSoilMoistureSensor())
-        console.log("hasTemperatureSensor(): " + myDevice.hasTemperatureSensor())
-        console.log("hasLuminositySensor(): " + myDevice.hasLuminositySensor())
-        console.log("hasConductivitySensor(): " + myDevice.hasConductivitySensor())
+        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor())
+        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
+        console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor())
+        console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor())
+        console.log("hasConductivitySensor(): " + currentDevice.hasConductivitySensor())
 
-        console.log("hasData(hygro): " + myDevice.hasData("hygro"))
-        console.log("hasData(temp): " + myDevice.hasData("temp"))
-        console.log("hasData(luminosity): " + myDevice.hasData("luminosity"))
-        console.log("hasData(conductivity): " + myDevice.hasData("conductivity"))
+        console.log("hasData(hygro): " + currentDevice.hasData("hygro"))
+        console.log("hasData(temp): " + currentDevice.hasData("temp"))
+        console.log("hasData(luminosity): " + currentDevice.hasData("luminosity"))
+        console.log("hasData(conductivity): " + currentDevice.hasData("conductivity"))
 */
         graphCount = 0
 
-        if (myDevice.hasTemperatureSensor()) {
+        if (currentDevice.hasTemperatureSensor()) {
             tempGraph.visible = true
             tempGraph.loadGraph()
             graphCount += 1
         } else {
             tempGraph.visible = false
         }
-        if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) {
-            if (myDevice.deviceHumidity > 0 || myDevice.countData("hygro") > 0) {
+        if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) {
+            if (currentDevice.deviceHumidity > 0 || currentDevice.countData("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
@@ -103,15 +103,15 @@ Item {
         } else {
             hygroGraph.visible = false
         }
-        if (myDevice.hasLuminositySensor()) {
+        if (currentDevice.hasLuminositySensor()) {
             lumiGraph.visible = true
             lumiGraph.loadGraph()
             graphCount += 1
         } else {
             lumiGraph.visible = false
         }
-        if (myDevice.hasConductivitySensor()) {
-            if (myDevice.deviceConductivity > 0 || myDevice.countData("conductivity") > 0) {
+        if (currentDevice.hasConductivitySensor()) {
+            if (currentDevice.deviceConductivity > 0 || currentDevice.countData("conductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
                 graphCount += 1
@@ -181,10 +181,10 @@ Item {
         graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
 
         if (graphCount === 3 && graphGrid.columns === 2) {
-            if (myDevice.hasSoilMoistureSensor() && myDevice.hasData("hygro")) {
+            if (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("hygro")) {
                 hygroGraph.width = (graphWidth*2)
                 lumiGraph.width = graphWidth
-            } else if (myDevice.hasLuminositySensor() && myDevice.hasData("luminosity")) {
+            } else if (currentDevice.hasLuminositySensor() && currentDevice.hasData("luminosity")) {
                 hygroGraph.width = graphWidth
                 lumiGraph.width = (graphWidth*2)
             }
@@ -195,13 +195,13 @@ Item {
     }
 
     function updateData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("ItemDeviceHistory // updateData() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
-        if (myDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
-        if (myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
-        if (myDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
-        if (myDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
+        if (currentDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
+        if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
+        if (currentDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
+        if (currentDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -282,7 +282,7 @@ Item {
 
             visible: isDesktop
 
-            text: myDevice.deviceName
+            text: currentDevice.deviceName
             color: Theme.colorText
             font.pixelSize: Theme.fontSizeTitle
             font.capitalization: Font.AllUppercase
@@ -336,7 +336,7 @@ Item {
                 id: hygroLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                text: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                 color: Theme.colorIcon
                 font.bold: true
                 font.pixelSize: 14

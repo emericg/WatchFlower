@@ -130,7 +130,7 @@ Rectangle {
                         from: 0
                         to: 360
                         loops: Animation.Infinite
-                        running: currentDevice.updating
+                        running: selectedDevice.updating
                         alwaysRunToEnd: true
                         easing.type: Easing.Linear
                     }

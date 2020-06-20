@@ -11,20 +11,20 @@ Item {
     z: 5
 
     function updateData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (!myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateData() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceScreenData // updateData() >> " + currentDevice)
 
         // Has data? always display them
-        if (myDevice.isAvailable()) {
-            hygro.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
-            lumi.visible = myDevice.hasLuminositySensor()
-            condu.visible = (myDevice.deviceConductivity > 0 || myDevice.deviceHumidity > 0)
+        if (currentDevice.isAvailable()) {
+            hygro.visible = (currentDevice.deviceConductivity > 0 || currentDevice.deviceHumidity > 0)
+            lumi.visible = currentDevice.hasLuminositySensor()
+            condu.visible = (currentDevice.deviceConductivity > 0 || currentDevice.deviceHumidity > 0)
         } else {
-            hygro.visible = myDevice.hasHumiditySensor() || myDevice.hasSoilMoistureSensor()
-            temp.visible = myDevice.hasTemperatureSensor()
-            lumi.visible = myDevice.hasLuminositySensor()
-            condu.visible = myDevice.hasConductivitySensor()
+            hygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
+            temp.visible = currentDevice.hasTemperatureSensor()
+            lumi.visible = currentDevice.hasLuminositySensor()
+            condu.visible = currentDevice.hasConductivitySensor()
         }
 
         resetDataBars()
@@ -38,10 +38,10 @@ Item {
     }
 
     function resetDataBars() {
-        hygro.value = myDevice.deviceHumidity
-        temp.value = (settingsManager.tempUnit === "F") ? myDevice.deviceTempF : myDevice.deviceTempC
-        lumi.value = myDevice.deviceLuminosity
-        condu.value = myDevice.deviceConductivity
+        hygro.value = currentDevice.deviceHumidity
+        temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
+        lumi.value = currentDevice.deviceLuminosity
+        condu.value = currentDevice.deviceConductivity
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -55,23 +55,23 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         spacing: 12
-        visible: (myDevice.available || myDevice.hasData())
+        visible: (currentDevice.available || currentDevice.hasData())
 
         ItemDataBarCompact {
             id: hygro
             width: parent.width
 
-            legend: myDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+            legend: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
             suffix: "%"
             warning: true
             colorForeground: Theme.colorBlue
             //colorBackground: Theme.colorBackground
 
-            value: myDevice.deviceHumidity
+            value: currentDevice.deviceHumidity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.hygroMax*1.10) : 50
-            limitMin: myDevice.limitHygroMin
-            limitMax: myDevice.limitHygroMax
+            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.hygroMax*1.10) : 50
+            limitMin: currentDevice.limitHygroMin
+            limitMax: currentDevice.limitHygroMax
         }
 
         ItemDataBarCompact {
@@ -89,11 +89,11 @@ Item {
                 return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
             }
 
-            value: tempHelper(myDevice.deviceTemp)
-            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(myDevice.tempMin*0.80) : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(myDevice.tempMax*1.20) : tempHelper(40))
-            limitMin: tempHelper(myDevice.limitTempMin)
-            limitMax: tempHelper(myDevice.limitTempMax)
+            value: tempHelper(currentDevice.deviceTemp)
+            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
+            limitMin: tempHelper(currentDevice.limitTempMin)
+            limitMax: tempHelper(currentDevice.limitTempMax)
         }
 
         ItemDataBarCompact {
@@ -105,11 +105,11 @@ Item {
             colorForeground: Theme.colorYellow
             //colorBackground: Theme.colorBackground
 
-            value: myDevice.deviceLuminosity
+            value: currentDevice.deviceLuminosity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.lumiMax*1.10) : 10000
-            limitMin: myDevice.limitLumiMin
-            limitMax: myDevice.limitLumiMax
+            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.lumiMax*1.10) : 10000
+            limitMin: currentDevice.limitLumiMin
+            limitMax: currentDevice.limitLumiMax
         }
 
         ItemDataBarCompact {
@@ -121,11 +121,11 @@ Item {
             colorForeground: Theme.colorRed
             //colorBackground: Theme.colorBackground
 
-            value: myDevice.deviceConductivity
+            value: currentDevice.deviceConductivity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(myDevice.conduMax*1.10) : 2000
-            limitMin: myDevice.limitConduMin
-            limitMax: myDevice.limitConduMax
+            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
+            limitMin: currentDevice.limitConduMin
+            limitMax: currentDevice.limitConduMax
         }
     }
 }

@@ -49,7 +49,7 @@ ApplicationWindow {
     color: Theme.colorBackground
 
     property var lastUpdate
-    property var currentDevice: null
+    property var selectedDevice: null
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
@@ -98,8 +98,8 @@ ApplicationWindow {
         }
 
         onDeviceRefreshButtonClicked: {
-            if (currentDevice) {
-                deviceManager.updateDevice(currentDevice.deviceAddress)
+            if (selectedDevice) {
+                deviceManager.updateDevice(selectedDevice.deviceAddress)
             }
         }
         onRefreshButtonClicked: {
@@ -181,8 +181,8 @@ ApplicationWindow {
         if (appContent.state === "Tutorial") return; // do nothing
 
         if (appContent.state === "DeviceList") {
-            if (currentDevice) {
-                if (!currentDevice.hasSoilMoistureSensor())
+            if (selectedDevice) {
+                if (!selectedDevice.hasSoilMoistureSensor())
                     appContent.state = "DeviceThermo"
                 else
                     appContent.state = "DeviceSensor"

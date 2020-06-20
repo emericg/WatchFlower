@@ -29,11 +29,11 @@ Item {
     width: 450
     height: 700
 
-    property var myDevice: currentDevice
+    property var currentDevice: null
     property var deviceScreenChart: null
 
     Connections {
-        target: myDevice
+        target: currentDevice
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
         onDataUpdated: { updateData() }
@@ -85,10 +85,13 @@ Item {
         deviceScreenChart.resetIndicator()
     }
 
-    function loadDevice() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceThermometer // loadDevice() >> " + myDevice)
+    function loadDevice(clickedDevice) {
+        if (typeof clickedDevice === "undefined" || !clickedDevice) return
+        if (clickedDevice.hasSoilMoistureSensor()) return
+        if (clickedDevice === currentDevice) return
+
+        currentDevice = clickedDevice
+        //console.log("DeviceThermometer // loadDevice() >> " + currentDevice)
 
         updateHeader()
         if (graphLoader.status != Loader.Ready) {
@@ -101,34 +104,34 @@ Item {
     }
 
     function updateHeader() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceThermometer // updateHeader() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceThermometer // updateHeader() >> " + currentDevice)
 
         // Sensor battery level
-        if (myDevice.hasBatteryLevel()) {
+        if (currentDevice.hasBatteryLevel()) {
             imageBattery.visible = true
             imageBattery.color = Theme.colorHeaderContent
 
-            if (myDevice.deviceBattery > 95) {
+            if (currentDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (myDevice.deviceBattery > 85) {
+            } else if (currentDevice.deviceBattery > 85) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (myDevice.deviceBattery > 75) {
+            } else if (currentDevice.deviceBattery > 75) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (myDevice.deviceBattery > 55) {
+            } else if (currentDevice.deviceBattery > 55) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (myDevice.deviceBattery > 45) {
+            } else if (currentDevice.deviceBattery > 45) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (myDevice.deviceBattery > 25) {
+            } else if (currentDevice.deviceBattery > 25) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (myDevice.deviceBattery > 15) {
+            } else if (currentDevice.deviceBattery > 15) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (myDevice.deviceBattery > 1) {
-                //if (myDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
+            } else if (currentDevice.deviceBattery > 1) {
+                //if (currentDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
             } else {
-                if (myDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
+                if (currentDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
@@ -141,16 +144,16 @@ Item {
     }
 
     function updateData() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceThermometer // updateData() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceThermometer // updateData() >> " + currentDevice)
 
-        if (myDevice.deviceTempC > -40)
-            sensorTemp.text = myDevice.getTempString()
+        if (currentDevice.deviceTempC > -40)
+            sensorTemp.text = currentDevice.getTempString()
         else
             sensorTemp.text = "?"
-        if (myDevice.deviceHumidity > 0)
-            sensorHygro.text = myDevice.deviceHumidity + "% " + qsTr("humidity")
+        if (currentDevice.deviceHumidity > 0)
+            sensorHygro.text = currentDevice.deviceHumidity + "% " + qsTr("humidity")
         else
             sensorHygro.text = ""
 
@@ -158,22 +161,22 @@ Item {
     }
 
     function updateStatusText() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        if (myDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceThermometer // updateStatusText() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (currentDevice.hasSoilMoistureSensor()) return
+        //console.log("DeviceThermometer // updateStatusText() >> " + currentDevice)
 
-        if (myDevice.status === 1) {
+        if (currentDevice.status === 1) {
             textStatus.text = qsTr("Update queued.") + " "
-        } else if (myDevice.status === 2) {
+        } else if (currentDevice.status === 2) {
             textStatus.text = qsTr("Connecting...") + " "
-        } else if (myDevice.status === 3) {
+        } else if (currentDevice.status === 3) {
             textStatus.text = qsTr("Updating...") + " "
         } else {
-            if (myDevice.isFresh() || myDevice.isAvailable()) {
-                if (myDevice.getLastUpdateInt() <= 1)
+            if (currentDevice.isFresh() || currentDevice.isAvailable()) {
+                if (currentDevice.getLastUpdateInt() <= 1)
                     textStatus.text = qsTr("Just synced!")
                 else
-                    textStatus.text = qsTr("Synced %1 ago").arg(myDevice.lastUpdateStr)
+                    textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
             } else {
                 textStatus.text = qsTr("Offline!") + " "
             }
@@ -236,7 +239,7 @@ Item {
                 rotation: 90
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                visible: (myDevice.deviceTempC > -40)
+                visible: (currentDevice.deviceTempC > -40)
                 fillMode: Image.PreserveAspectCrop
                 color: Theme.colorHeaderContent
                 source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
@@ -308,9 +311,9 @@ Item {
                 font.bold: false
                 color: Theme.colorHeaderContent
 
-                text: myDevice ? myDevice.deviceLocationName : ""
+                text: currentDevice ? currentDevice.deviceLocationName : ""
                 onEditingFinished: {
-                    myDevice.setLocationName(text)
+                    currentDevice.setLocationName(text)
                     focus = false
                 }
 

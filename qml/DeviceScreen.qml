@@ -29,10 +29,10 @@ Item {
     width: 450
     height: 700
 
-    property var myDevice: currentDevice
+    property var currentDevice: null
 
     Connections {
-        target: myDevice
+        target: currentDevice
         onStatusUpdated: {
             rectangleDeviceData.updateHeader()
         }
@@ -117,9 +117,13 @@ Item {
         rectangleDeviceData.resetHistoryMode()
     }
 
-    function loadDevice() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("DeviceScreen // loadDevice() >> " + myDevice)
+    function loadDevice(clickedDevice) {
+        if (typeof clickedDevice === "undefined" || !clickedDevice) return
+        if (!clickedDevice.hasSoilMoistureSensor()) return
+        if (clickedDevice === currentDevice) return
+
+        currentDevice = clickedDevice
+        //console.log("DeviceScreen // loadDevice() >> " + currentDevice)
 
         sensorPages.currentIndex = 0
         sensorPages.interactive = isPhone

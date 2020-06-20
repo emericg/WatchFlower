@@ -33,8 +33,8 @@ Item {
     property string graphDataSelected
 
     function loadGraph() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("itemDataCharts // loadGraph() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("itemDataCharts // loadGraph() >> " + currentDevice)
 
         axisY0.min = 0;
         if (graphDataSelected === "hygro") {
@@ -77,22 +77,22 @@ Item {
             if (graphViewSelected === "daily") {
                 myBarSeries.barWidth = 0.90
                 axisX0.labelsFont.pixelSize = 8
-                axisX0.categories = myDevice.getHours()
+                axisX0.categories = currentDevice.getHours()
             } else if (graphViewSelected === "weekly") {
                 myBarSeries.barWidth = 0.75
                 axisX0.labelsFont.pixelSize = 12
-                axisX0.categories = myDevice.getDays()
+                axisX0.categories = currentDevice.getDays()
             } else {
                 myBarSeries.barWidth = 0.94
                 axisX0.labelsFont.pixelSize = 6
-                axisX0.categories = myDevice.getMonth()
+                axisX0.categories = currentDevice.getMonth()
             }
         }
     }
 
     function updateColors() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("itemDataCharts // updateColors() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("itemDataCharts // updateColors() >> " + currentDevice)
 
         // Bars
         if (graphDataSelected === "hygro") {
@@ -121,18 +121,18 @@ Item {
     }
 
     function updateGraph() {
-        if (typeof myDevice === "undefined" || !myDevice) return
-        //console.log("itemDataCharts // updateGraph() >> " + myDevice)
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("itemDataCharts // updateGraph() >> " + currentDevice)
 
         loadAxis()
 
         // Get data
         if (graphViewSelected === "daily") {
-            myBarSet.values = myDevice.getDataHourly(graphDataSelected)
+            myBarSet.values = currentDevice.getDataHourly(graphDataSelected)
         } else if (graphViewSelected === "weekly") {
-            myBarSet.values = myDevice.getDataDaily(graphDataSelected)
+            myBarSet.values = currentDevice.getDataDaily(graphDataSelected)
         } else {
-            myBarSet.values = myDevice.getDataMonthly(graphDataSelected)
+            myBarSet.values = currentDevice.getDataMonthly(graphDataSelected)
         }
 
         // Min axis
@@ -150,12 +150,12 @@ Item {
 
         // Decorations
         if (graphViewSelected === "daily") {
-            backgroundDayBars.values = myDevice.getBackgroundHourly(max_of_legend)
-            backgroundNightBars.values = myDevice.getBackgroundNightly(max_of_legend)
+            backgroundDayBars.values = currentDevice.getBackgroundHourly(max_of_legend)
+            backgroundNightBars.values = currentDevice.getBackgroundNightly(max_of_legend)
         } else if (graphViewSelected === "weekly") {
-            backgroundDayBars.values = myDevice.getBackgroundDaily(max_of_legend)
+            backgroundDayBars.values = currentDevice.getBackgroundDaily(max_of_legend)
         } else {
-            backgroundDayBars.values = myDevice.getMonthBackground(max_of_legend)
+            backgroundDayBars.values = currentDevice.getMonthBackground(max_of_legend)
         }
     }
 
