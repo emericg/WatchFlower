@@ -1335,6 +1335,8 @@ Item {
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                visible: (Qt.platform.os !== "ios")
                 color: Theme.colorForeground
 
                 ImageSvg {
@@ -1372,6 +1374,8 @@ Item {
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                visible: (Qt.platform.os !== "ios")
 
                 ButtonWireframe {
                     width: 128

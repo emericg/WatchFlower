@@ -157,7 +157,7 @@ ApplicationWindow {
     // User generated events handling //////////////////////////////////////////
 
     function backAction() {
-        if (appContent.state === "Tutorial") return; // do nothing
+        if (appContent.state === "Tutorial" && screenTutorial.exitTo === "DeviceList") return; // do nothing
 
         if (appContent.state === "DeviceList") {
             // do nothing

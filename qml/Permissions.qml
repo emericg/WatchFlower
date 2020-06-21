@@ -82,9 +82,10 @@ Item {
         anchors.bottom: parent.bottom
 
         Column {
+            id: column
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
 
             topPadding: 16
             bottomPadding: 16
@@ -101,8 +102,8 @@ Item {
                 Text {
                     id: text_gps
                     height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.left: buttonGpsTest.right
+                    anchors.leftMargin: 8
                     anchors.right: switch_gps.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -118,8 +119,8 @@ Item {
                     id: buttonGpsTest
                     width: 36
                     height: 36
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -137,9 +138,9 @@ Item {
             Text {
                 id: legend_gps
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 44
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 0
                 topPadding: -8
                 bottomPadding: 0
 
@@ -152,6 +153,8 @@ Item {
             }
             ButtonWireframe {
                 height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 44
 
                 text: qsTr("Official information")
                 primaryColor: Theme.colorPrimary
@@ -183,8 +186,8 @@ Item {
                 Text {
                     id: text_storage
                     height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.left: buttonStorageTest.right
+                    anchors.leftMargin: 8
                     anchors.right: switch_storage.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -200,8 +203,8 @@ Item {
                     id: buttonStorageTest
                     width: 36
                     height: 36
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -219,9 +222,9 @@ Item {
             Text {
                 id: legend_storage
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 44
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 0
                 topPadding: -8
                 bottomPadding: 0
 
@@ -256,8 +259,8 @@ Item {
                 Text {
                     id: text_bluetooth
                     height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.left: buttonBluetooth.right
+                    anchors.leftMargin: 8
                     anchors.right: switch_bluetooth.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -273,8 +276,8 @@ Item {
                     id: buttonBluetooth
                     width: 36
                     height: 36
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -289,9 +292,9 @@ Item {
             Text {
                 id: legend_bluetooth
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 44
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 0
                 topPadding: -8
                 bottomPadding: 0
 

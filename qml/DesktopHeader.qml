@@ -93,12 +93,27 @@ Rectangle {
         source: "qrc:/assets/menus/menu_logo_large.svg"
         color: Theme.colorHeaderContent
 
+        Rectangle {
+            id: buttonBackBg
+            anchors.fill: parent
+            anchors.margins: -8
+            radius: height
+            z: -1
+            color: Theme.colorHeaderHighlight
+            opacity: 0
+            Behavior on opacity { OpacityAnimator { duration: 333 } }
+        }
+
         MouseArea {
             anchors.rightMargin: -8
             anchors.leftMargin: -8
             anchors.bottomMargin: -8
             anchors.topMargin: -8
             anchors.fill: parent
+
+            hoverEnabled: (buttonBack.source !== "qrc:/assets/menus/menu_logo_large.svg")
+            onEntered: buttonBackBg.opacity = 0.5
+            onExited: buttonBackBg.opacity = 0
 
             onPressed: {
                 buttonBack.anchors.topMargin += 2

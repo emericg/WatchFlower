@@ -219,7 +219,7 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial") return; // do nothing
+            if (appContent.state === "Tutorial" && screenTutorial.exitTo === "DeviceList") return; // do nothing
 
             if (appContent.state === "DeviceList") {
                 if (screenDeviceList.selectionList.length !== 0) {
