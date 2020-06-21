@@ -165,16 +165,22 @@ ApplicationWindow {
             if (screenDeviceSensor.isHistoryMode()) {
                 screenDeviceSensor.resetHistoryMode()
             } else {
+                appContent.previousStates.pop()
                 appContent.state = "DeviceList"
             }
         } else if (appContent.state === "DeviceThermo") {
             if (screenDeviceThermometer.isHistoryMode()) {
                 screenDeviceThermometer.resetHistoryMode()
             } else {
+                appContent.previousStates.pop()
                 appContent.state = "DeviceList"
             }
         } else {
-            appContent.state = "DeviceList"
+            appContent.previousStates.pop()
+            if (appContent.previousStates.length)
+                appContent.state = appContent.previousStates[appContent.previousStates.length-1]
+            else
+                appContent.state = "DeviceList"
         }
     }
     function forwardAction() {
@@ -192,12 +198,10 @@ ApplicationWindow {
     function deselectAction() {
         if (appContent.state === "DeviceList") {
             screenDeviceList.exitSelectionMode()
-        } else if (appContent.state === "DeviceSensor" &&
-                   screenDeviceSensor.isHistoryMode()) {
+        } else if (appContent.state === "DeviceSensor" && screenDeviceSensor.isHistoryMode()) {
             screenDeviceSensor.resetHistoryMode()
-        } else if (appContent.state === "DeviceThermo" &&
-                   screenDeviceThermometer.isHistoryMode()) {
-                screenDeviceThermometer.resetHistoryMode()
+        } else if (appContent.state === "DeviceThermo" && screenDeviceThermometer.isHistoryMode()) {
+            screenDeviceThermometer.resetHistoryMode()
         }
     }
 
@@ -286,9 +290,15 @@ ApplicationWindow {
         // Initial state
         state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
 
+        property var previousStates: []
+
         onStateChanged: {
             appHeader.setActiveMenu()
             screenDeviceList.exitSelectionMode()
+
+            if (previousStates[previousStates.length-1] !== state) previousStates.push(state)
+            if (previousStates.length > 4) previousStates.splice(0, 1)
+            //console.log("states > " + appContent.previousStates)
         }
 
         states: [
