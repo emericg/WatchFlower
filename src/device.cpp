@@ -818,7 +818,7 @@ int Device::countData(const QString &dataName, int days) const
     dataCount.prepare("SELECT COUNT(" + dataName + ")" \
                       "FROM datas " \
                       "WHERE deviceAddr = :deviceAddr " \
-                        "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day','+2 hour');");
+                        "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day');");
     dataCount.bindValue(":deviceAddr", getAddress());
 
     if (dataCount.exec() == false)
@@ -1038,7 +1038,7 @@ QVariantList Device::getHours()
     QSqlQuery dataPerHour;
     dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
                         "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                         "ORDER BY ts ASC;");
     dataPerHour.bindValue(":deviceAddr", getAddress());
 
@@ -1088,7 +1088,7 @@ QVariantList Device::getDataHourly(const QString &dataName)
     QSqlQuery dataPerHour;
     dataPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
                         "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day', '+2 hour') " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                         "ORDER BY ts ASC;");
     dataPerHour.bindValue(":deviceAddr", getAddress());
 
@@ -1140,7 +1140,7 @@ QVariantList Device::getBackgroundHourly(float maxValue)
     QSqlQuery dataPerHour;
     dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
                         "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                         "ORDER BY ts ASC;");
     dataPerHour.bindValue(":deviceAddr", getAddress());
 
@@ -1193,7 +1193,7 @@ QVariantList Device::getBackgroundNightly(float maxValue)
     QSqlQuery dataPerHour;
     dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
                         "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day','+2 hour') " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                         "ORDER BY ts ASC;");
     dataPerHour.bindValue(":deviceAddr", getAddress());
 
@@ -1249,9 +1249,53 @@ QVariantList Device::getBackgroundDaily(float maxValue)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::getAioData(QtCharts::QDateTimeAxis *axis,
-                        QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                        QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
+void Device::updateAioTemp(int days)
+{
+    qDeleteAll(m_aio_minmax_data);
+    m_aio_minmax_data.clear();
+    m_tempMin = 999.f;
+    m_tempMax = -99.f;
+
+    QSqlQuery graphData;
+    graphData.prepare("SELECT strftime('%d', ts), min(temp), avg(temp), max(temp), min(hygro), max(hygro) " \
+                      "FROM datas " \
+                      "WHERE deviceAddr = :deviceAddr " \
+                      "GROUP BY cast(strftime('%d', ts) as datetime)" \
+                      "ORDER BY ts DESC;");
+    graphData.bindValue(":deviceAddr", getAddress());
+
+    if (graphData.exec() == false)
+    {
+        qWarning() << "> graphData.exec() ERROR" << graphData.lastError().type() << ":" << graphData.lastError().text();
+        return;
+    }
+
+    bool minmaxChanged = false;
+
+    while (graphData.next())
+    {
+        if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); minmaxChanged = true; }
+        if (graphData.value(2).toFloat() > m_tempMax) { m_tempMax = graphData.value(2).toFloat(); minmaxChanged = true; }
+        if (graphData.value(3).toInt() < m_hygroMin) { m_hygroMin = graphData.value(3).toInt(); minmaxChanged = true; }
+        if (graphData.value(4).toInt() > m_hygroMax) { m_hygroMax = graphData.value(4).toInt(); minmaxChanged = true; }
+
+        AioMinMax *d = new AioMinMax(graphData.value(0).toInt(),
+                                     graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                     graphData.value(4).toInt(), graphData.value(5).toInt());
+        m_aio_minmax_data.push_back(d);
+
+        if (m_aio_minmax_data.size() >= days) break;
+    }
+
+    Q_EMIT minmaxUpdated();
+    Q_EMIT aioMinMaxDataUpdated();
+}
+
+/* ************************************************************************** */
+
+void Device::getAioLinesData(QtCharts::QDateTimeAxis *axis,
+                             QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                             QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
 {
     if (!axis || !hygro || !temp || !lumi || !cond)
         return;

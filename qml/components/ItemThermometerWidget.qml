@@ -50,7 +50,7 @@ Item {
             layoutDirection: Qt.RightToLeft
 
             Repeater {
-                model: currentDevice.tempData
+                model: currentDevice.aioMinMaxData
                 ItemThermometerWidgetBar { width: widgetWidth; mmd: modelData; }
             }
         }

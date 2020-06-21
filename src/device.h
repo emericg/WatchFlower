@@ -45,12 +45,17 @@
 
 enum DeviceCapabilities {
     DEVICE_BATTERY           = (1 << 0), //!< Can report its battery level
+
     DEVICE_TEMPERATURE       = (1 << 1), //!< Has a temperature sensor
     DEVICE_HUMIDITY          = (1 << 2), //!< Has an humidity sensor
     DEVICE_LUMINOSITY        = (1 << 3), //!< Has a luminosity sensor
     DEVICE_SOIL_MOISTURE     = (1 << 4), //!< Has a soil moisture sensor (can be associated to a plant)
     DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
+
     DEVICE_CLOCK             = (1 << 6), //!< Has an onboard clock
+    DEVICE_LED               = (1 << 7), //!< Has a blinkable LED
+
+    DEVICE_HISTORY           = (1 << 8), //!< Record sensor history
 };
 
 enum DeviceStatus {
@@ -58,8 +63,75 @@ enum DeviceStatus {
     DEVICE_QUEUED            = 1, //!< In the update queue, not started
     DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
     DEVICE_UPDATING          = 3, //!< Connected, update in progress
+    DEVICE_UPDATED           = 4, //!< Updated, waiting for disconnect
 };
 
+/* ************************************************************************** */
+
+class DeviceNear: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QString name READ getName NOTIFY updated)
+    Q_PROPERTY(QString addr READ getAddr NOTIFY updated)
+    Q_PROPERTY(int rssi READ getRssi NOTIFY updated)
+
+signals:
+    void updated();
+
+public:
+    DeviceNear(const QString &n, const QString &a, int r) { name = n; addr = a; rssi = r; }
+
+    QString name;
+    QString addr;
+    int rssi;
+
+public slots:
+    QString getName() { return name; }
+    QString getAddr() { return addr; }
+    int getRssi() { return rssi; }
+};
+
+/* ************************************************************************** */
+
+class AioMinMax: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(float tempMin READ getTempMin NOTIFY updated)
+    Q_PROPERTY(float tempMean READ getTempMean NOTIFY updated)
+    Q_PROPERTY(float tempMax READ getTempMax NOTIFY updated)
+    Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY updated)
+    Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY updated)
+
+signals:
+    void updated();
+
+public:
+    AioMinMax(int day, float tmin, float t, float tmax, int hmin, int hmax) {
+        dayNb = day;
+        tempMin = tmin; tempMean = t; tempMax = tmax;
+        hygroMin = hmin; hygroMax = hmax;
+    }
+
+    int dayNb;
+    float tempMin;
+    float tempMean;
+    float tempMax;
+    int hygroMin;
+    int hygroMax;
+
+public slots:
+    int getDay() { return dayNb; }
+    float getTempMin() { return tempMin; }
+    float getTempMean() { return tempMean; }
+    float getTempMax() { return tempMax; }
+    int getHygroMin() { return hygroMin; }
+    int getHygroMax() { return hygroMax; }
+};
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 /*!
@@ -97,12 +169,14 @@ class Device: public QObject
 
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
-    Q_PROPERTY(int tempMin READ getTempMin NOTIFY minmaxUpdated)
-    Q_PROPERTY(int tempMax READ getTempMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(float tempMin READ getTempMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(float tempMax READ getTempMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int lumiMin READ getLumiMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int lumiMax READ getLumiMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
+
+    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
 
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
@@ -119,6 +193,7 @@ Q_SIGNALS:
     void dataUpdated();
     void minmaxUpdated();
     void limitsUpdated();
+    void aioMinMaxDataUpdated();
 
     void deviceUpdated(Device *d);
 
@@ -153,7 +228,7 @@ protected:
     QString m_locationName;
     QString m_plantName;
 
-    // SQL min/max data
+    // SQL min/max data (x days period)
     float m_tempMin = 999.f;
     float m_tempMax = -99.f;
     int m_hygroMin = 99999;
@@ -163,15 +238,17 @@ protected:
     int m_conductivityMin = 99999;
     int m_conductivityMax = -99;
 
+    QList <QObject *> m_aio_minmax_data;
+
     // BLE device limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
-    int m_limitTempMin = 15;
-    int m_limitTempMax = 25;
+    int m_limitTempMin = 14;
+    int m_limitTempMax = 28;
     int m_limitLumiMin = 1000;
     int m_limitLumiMax = 3000;
     int m_limitConduMin = 100;
-    int m_limitConduMax = 400;
+    int m_limitConduMax = 500;
 
     // BLE
     int m_timeout = 15;
@@ -262,8 +339,8 @@ public slots:
 
     int getHygroMin() const { return m_hygroMin; }
     int getHygroMax() const { return m_hygroMax; }
-    int getTempMin() const { return m_tempMin; }
-    int getTempMax() const { return m_tempMax; }
+    float getTempMin() const { return m_tempMin; }
+    float getTempMax() const { return m_tempMax; }
     int getLumiMin() const { return m_luminosityMin; }
     int getLumiMax() const { return m_luminosityMax; }
     int getConduMin() const { return m_conductivityMin; }
@@ -288,10 +365,14 @@ public slots:
     void setLimitConduMax(int limitConduMax) { if (m_limitConduMax == limitConduMax) return; m_limitConduMax = limitConduMax; setDbLimits(); }
     bool setDbLimits();
 
-    // AIO graph
-    Q_INVOKABLE void getAioData(QtCharts::QDateTimeAxis *axis,
-                                QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                                QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
+    // AIO temperature "min max" graph
+    Q_INVOKABLE void updateAioTemp(int days);
+    QVariant getAioMinMaxData() const { return QVariant::fromValue(m_aio_minmax_data); }
+
+    // AIO line graph
+    Q_INVOKABLE void getAioLinesData(QtCharts::QDateTimeAxis *axis,
+                                     QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                                     QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 
     // Monthly graph
     QVariantList getMonth();
