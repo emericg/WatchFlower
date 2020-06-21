@@ -27,6 +27,8 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+        <file alias="ItemThermometerWidget.qml">components/ItemThermometerWidget.qml</file>
+        <file alias="ItemThermometerWidgetBar.qml">components/ItemThermometerWidgetBar.qml</file>
 
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
