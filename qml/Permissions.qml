@@ -89,39 +89,39 @@ Item {
 
             topPadding: 16
             bottomPadding: 16
-            spacing: 16
+            spacing: 8
 
             ////////
 
             Item {
                 id: element_gps
-                height: 32
+                height: 24
                 anchors.right: parent.right
                 anchors.left: parent.left
 
                 Text {
                     id: text_gps
                     height: 16
-                    anchors.left: buttonGpsTest.right
-                    anchors.leftMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
                     anchors.right: switch_gps.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Location")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 ItemImageButton {
                     id: buttonGpsTest
-                    width: 36
-                    height: 36
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    width: 32
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
                     z: 1
 
                     property bool validperm: false
@@ -138,10 +138,10 @@ Item {
             Text {
                 id: legend_gps
                 anchors.left: parent.left
-                anchors.leftMargin: 44
+                anchors.leftMargin: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                topPadding: -8
+                anchors.rightMargin: 4
+                topPadding: 0
                 bottomPadding: 0
 
                 text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>" +
@@ -154,7 +154,7 @@ Item {
             ButtonWireframe {
                 height: 32
                 anchors.left: parent.left
-                anchors.leftMargin: 44
+                anchors.leftMargin: 48
 
                 text: qsTr("Official information")
                 primaryColor: Theme.colorPrimary
@@ -164,7 +164,7 @@ Item {
             ////////
 
             Item {
-                height: 8
+                height: 16
                 anchors.right: parent.right
                 anchors.left: parent.left
 
@@ -179,32 +179,32 @@ Item {
 
             Item {
                 id: element_storage
-                height: 32
+                height: 24
                 anchors.right: parent.right
                 anchors.left: parent.left
 
                 Text {
                     id: text_storage
                     height: 16
-                    anchors.left: buttonStorageTest.right
-                    anchors.leftMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
                     anchors.right: switch_storage.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Storage write permission")
+                    text: qsTr("Storage write")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 ItemImageButton {
                     id: buttonStorageTest
-                    width: 36
-                    height: 36
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -222,11 +222,9 @@ Item {
             Text {
                 id: legend_storage
                 anchors.left: parent.left
-                anchors.leftMargin: 44
+                anchors.leftMargin: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                topPadding: -8
-                bottomPadding: 0
+                anchors.rightMargin: 4
 
                 text: qsTr("Storage write permission can be needed for exporting sensors data to the SD card.")
                 wrapMode: Text.WordWrap
@@ -237,7 +235,7 @@ Item {
             ////////
 
             Item {
-                height: 8
+                height: 16
                 anchors.right: parent.right
                 anchors.left: parent.left
 
@@ -252,32 +250,32 @@ Item {
 
             Item {
                 id: element_bluetooth
-                height: 32
+                height: 24
                 anchors.right: parent.right
                 anchors.left: parent.left
 
                 Text {
                     id: text_bluetooth
                     height: 16
-                    anchors.left: buttonBluetooth.right
-                    anchors.leftMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
                     anchors.right: switch_bluetooth.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth control")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
 
                 ItemImageButton {
                     id: buttonBluetooth
-                    width: 36
-                    height: 36
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -292,11 +290,9 @@ Item {
             Text {
                 id: legend_bluetooth
                 anchors.left: parent.left
-                anchors.leftMargin: 44
+                anchors.leftMargin: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                topPadding: -8
-                bottomPadding: 0
+                anchors.rightMargin: 4
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 wrapMode: Text.WordWrap
