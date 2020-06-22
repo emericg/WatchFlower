@@ -13,54 +13,74 @@ Item {
     property var mmd: null
     property int hhh: 22
 
-    //Component.onCompleted: computeSize()
+    Component.onCompleted: computeSize()
     onHeightChanged: computeSize()
 
     function computeSize() {
-        var base = height
-        var h = UtilsNumber.normalize(mmd.tempMax, graphMin*0.94, graphMax*1.06)
-        var m = UtilsNumber.normalize(mmd.tempMean, graphMin*0.94, graphMax*1.06)
-        var l = UtilsNumber.normalize(mmd.tempMin, graphMin*0.94, graphMax*1.06)
-
-        rectangle_temp.y = base - (base * h)
-        rectangle_temp.height = ((base * h) - (base * l))
-
-        rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.2)
-        rectangle_temp_mean.y = base - (base * m) -  rectangle_temp.y
-
-        if (rectangle_temp.height < hhh) {
-            rectangle_temp.y -= (hhh - rectangle_temp.height) / 2
-            rectangle_temp.height = hhh
-        }
-
-        if ((mmd.tempMax === mmd.tempMin) && (mmd.hygroMax === mmd.hygroMin)) {
-            text_temp_low.visible = false
+        if (mmd.tempMean < -10) {
+            rectangle_temp.visible = false
             rectangle_water_low.visible = false
-        }
+            rectangle_water_high.visible = false
+        } else {
+            var base = height
+            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*0.92, graphMax*1.05)
+            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*0.92, graphMax*1.05)
+            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*0.92, graphMax*1.05)
 
-        //console.log("h : " + h)
-        //console.log("m : " + m)
-        //console.log("l : " + l)
-        //console.log("base : " + base)
+            rectangle_temp.visible = true
+            rectangle_temp.y = base - (base * h)
+            rectangle_temp.height = ((base * h) - (base * l))
+
+            if (rectangle_temp.height < hhh) {
+                rectangle_temp.y -= (hhh - rectangle_temp.height) / 2
+                rectangle_temp.height = hhh
+            }
+
+            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.2)
+            rectangle_temp_mean.y = base - (base * m) - rectangle_temp.y
+
+            if ((mmd.tempMax === mmd.tempMin && mmd.hygroMax === mmd.hygroMin)) {
+                text_temp_low.visible = false
+                rectangle_water_low.visible = false
+            } else {
+                text_temp_low.visible = true
+                rectangle_water_low.visible = true
+            }
+            rectangle_water_high.visible = true
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
+        id: background
         anchors.fill: parent
-        //anchors.margins: -8
         color: (index % 2 === 0) ? Theme.colorForeground : "transparent"
         opacity: 0.66
     }
 
+    ImageSvg {
+        id: nodata
+        width: 24; height: 24;
+        anchors.bottom: dayoftheweek.top
+        anchors.bottomMargin: 16
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        visible: (mmd.tempMean < -10)
+        color: Theme.colorSubText
+        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+    }
+
     Text {
+        id: dayoftheweek
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
         anchors.horizontalCenter: parent.horizontalCenter
 
-        text: modelData.day
+        text: mmd.day
         color: Theme.colorText
         font.pixelSize: 16
+        font.bold: mmd.today
     }
 
     ////////
@@ -112,7 +132,7 @@ Item {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////
 
     Rectangle {
         id: rectangle_water_high

@@ -9,6 +9,7 @@ Item {
     anchors.fill: parent
     anchors.margins: 0
 
+    property var widgetWidthTarget: (isPhone ? 48 : 64)
     property var widgetWidth: 64
     property var graphMin: currentDevice.tempMin
     property var graphMax: currentDevice.tempMax
@@ -22,9 +23,9 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("thermoWidget // updateGraph() >> " + currentDevice)
 
-        var days = Math.floor(width / 64)
+        var days = Math.floor(width / widgetWidthTarget)
         widgetWidth = (width / days)
-        currentDevice.updateAioTemp(days)
+        currentDevice.updateAioMinMaxData(days)
     }
 
     onWidthChanged: updateGraph()
@@ -47,7 +48,7 @@ Item {
             anchors.right: parent.right
             spacing: 0
 
-            layoutDirection: Qt.RightToLeft
+            //layoutDirection: Qt.RightToLeft
 
             Repeater {
                 model: currentDevice.aioMinMaxData

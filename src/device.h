@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QList>
 #include <QTimer>
+#include <QDate>
 #include <QDateTime>
 
 #include <QBluetoothDeviceInfo>
@@ -98,32 +99,39 @@ class AioMinMax: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QDate date READ getDate NOTIFY updated)
     Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(bool today READ isToday NOTIFY updated)
+
     Q_PROPERTY(float tempMin READ getTempMin NOTIFY updated)
     Q_PROPERTY(float tempMean READ getTempMean NOTIFY updated)
     Q_PROPERTY(float tempMax READ getTempMax NOTIFY updated)
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY updated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY updated)
 
-signals:
-    void updated();
-
-public:
-    AioMinMax(int day, float tmin, float t, float tmax, int hmin, int hmax) {
-        dayNb = day;
-        tempMin = tmin; tempMean = t; tempMax = tmax;
-        hygroMin = hmin; hygroMax = hmax;
-    }
-
-    int dayNb;
+    QDate date;
+    int dayNb = -1;
     float tempMin;
-    float tempMean;
+    float tempMean = -99;
     float tempMax;
     int hygroMin;
     int hygroMax;
 
+signals:
+    void updated();
+
+public:
+    AioMinMax(const QDate &dt, float tmin, float t, float tmax, int hmin, int hmax) {
+        date = dt;
+        dayNb = dt.day();
+        tempMin = tmin; tempMean = t; tempMax = tmax;
+        hygroMin = hmin; hygroMax = hmax;
+    }
+
 public slots:
+    QDate getDate() { return date; }
     int getDay() { return dayNb; }
+    bool isToday() { return (date == QDate::currentDate()); }
     float getTempMin() { return tempMin; }
     float getTempMean() { return tempMean; }
     float getTempMax() { return tempMax; }
@@ -366,7 +374,7 @@ public slots:
     bool setDbLimits();
 
     // AIO temperature "min max" graph
-    Q_INVOKABLE void updateAioTemp(int days);
+    Q_INVOKABLE void updateAioMinMaxData(int maxDays);
     QVariant getAioMinMaxData() const { return QVariant::fromValue(m_aio_minmax_data); }
 
     // AIO line graph
