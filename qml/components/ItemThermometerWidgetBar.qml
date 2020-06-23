@@ -89,9 +89,9 @@ Item {
         id: containerbar
         width: parent.width
         anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors.topMargin: 24
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isPhone ? 48 : 52
+        anchors.bottomMargin: 56
 
         Rectangle {
             id: rectangle_temp

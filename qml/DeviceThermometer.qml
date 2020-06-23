@@ -201,7 +201,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: Math.max(deviceThermometer.height * 0.33, 256)
+        height: Math.max(deviceThermometer.height * 0.33, isPhone ? 96 : 256)
         color: Theme.colorHeader
 
         MouseArea { anchors.fill: parent } // prevent clicks below this area
