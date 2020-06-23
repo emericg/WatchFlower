@@ -90,6 +90,7 @@ private:
     void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceData = nullptr;
+    QLowEnergyService *serviceHistory = nullptr;
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };

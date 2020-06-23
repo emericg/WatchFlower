@@ -63,9 +63,10 @@ enum DeviceStatus {
     DEVICE_OFFLINE           = 0, //!< Not connected
     DEVICE_QUEUED            = 1, //!< In the update queue, not started
     DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
-    DEVICE_UPDATING          = 3, //!< Connected, data update in progress
-    DEVICE_UPDATING_HISTORY  = 4, //!< Connected, history update in progress
-    DEVICE_UPDATED           = 5, //!< Updated, waiting for disconnect
+    DEVICE_ACTION            = 3, //!< Connected, doing something
+    DEVICE_UPDATING          = 4, //!< Connected, data update in progress
+    DEVICE_UPDATING_HISTORY  = 5, //!< Connected, history update in progress
+    DEVICE_UPDATED           = 6, //!< Updated, waiting for disconnect
 };
 
 /* ************************************************************************** */
@@ -191,8 +192,6 @@ class Device: public QObject
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
 
-    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
-
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
@@ -202,10 +201,13 @@ class Device: public QObject
     Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
 
+    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
+
 Q_SIGNALS:
     void statusUpdated();
     void sensorUpdated();
     void dataUpdated();
+    void historyUpdated();
     void minmaxUpdated();
     void limitsUpdated();
     void aioMinMaxDataUpdated();
@@ -310,12 +312,14 @@ public slots:
     QString getAddress() const { return m_deviceAddress; }
 
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
+    bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
+    bool hasLED() const { return (m_capabilities & DEVICE_LED); }
+    bool hasHistory() const { return (m_capabilities & DEVICE_HISTORY); }
     bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
     bool hasHumiditySensor() const { return (m_capabilities & DEVICE_HUMIDITY); }
     bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
     bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
     bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
-    bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
 
     int getStatus() const { return m_status; }
     bool isUpdating() const { return m_updating; } //!< Is currently being updated
@@ -324,8 +328,8 @@ public slots:
     bool isAvailable() const;   //!< Has at least >12h old data
 
     // BLE device infos
-    QString getFirmware() const { return m_firmware; }
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
+    QString getFirmware() const { return m_firmware; }
     int getBattery() const { return m_battery; }
 
     // BLE device data

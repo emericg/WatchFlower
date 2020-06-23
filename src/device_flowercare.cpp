@@ -58,6 +58,7 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *paren
 
 DeviceFlowercare::~DeviceFlowercare()
 {
+    delete serviceHistory;
     delete serviceData;
 }
 
@@ -77,6 +78,16 @@ void DeviceFlowercare::serviceScanDone()
             serviceData->discoverDetails();
         }
     }
+
+    if (serviceHistory)
+    {
+        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
+            connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
+            serviceHistory->discoverDetails();
+        }
+    }
 }
 
 void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
@@ -86,6 +97,7 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
         delete serviceData;
+        serviceData = nullptr;
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)
