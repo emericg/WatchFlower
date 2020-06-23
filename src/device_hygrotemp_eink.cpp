@@ -199,17 +199,6 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-#ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceHygrotempEInk update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
-            qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
-#endif
-
-            refreshDataFinished(true);
-            controller->disconnectFromDevice();
-
             //if (m_db)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
@@ -235,6 +224,17 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
+
+            refreshDataFinished(true);
+            controller->disconnectFromDevice();
+
+#ifndef QT_NO_DEBUG
+            qDebug() << "* DeviceHygrotempEInk update:" << getAddress();
+            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_temp:" << m_temp;
+            qDebug() << "- m_hygro:" << m_hygro;
+#endif
         }
     }
 }

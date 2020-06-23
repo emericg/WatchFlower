@@ -110,7 +110,7 @@ Item {
 
         // Sensor battery level
         if (currentDevice.hasBatteryLevel()) {
-            imageBattery.visible = true
+            //imageBattery.visible = true
             imageBattery.color = Theme.colorHeaderContent
 
             if (currentDevice.deviceBattery > 95) {
@@ -135,8 +135,8 @@ Item {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
             }
         } else {
+            //imageBattery.visible = false
             imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            imageBattery.visible = false
         }
 
         // Status
@@ -239,7 +239,7 @@ Item {
                 rotation: 90
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                visible: (currentDevice.deviceTempC > -40)
+                visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
                 fillMode: Image.PreserveAspectCrop
                 color: Theme.colorHeaderContent
                 source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"

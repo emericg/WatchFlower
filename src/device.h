@@ -63,8 +63,9 @@ enum DeviceStatus {
     DEVICE_OFFLINE           = 0, //!< Not connected
     DEVICE_QUEUED            = 1, //!< In the update queue, not started
     DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
-    DEVICE_UPDATING          = 3, //!< Connected, update in progress
-    DEVICE_UPDATED           = 4, //!< Updated, waiting for disconnect
+    DEVICE_UPDATING          = 3, //!< Connected, data update in progress
+    DEVICE_UPDATING_HISTORY  = 4, //!< Connected, history update in progress
+    DEVICE_UPDATED           = 5, //!< Updated, waiting for disconnect
 };
 
 /* ************************************************************************** */
@@ -81,7 +82,11 @@ signals:
     void updated();
 
 public:
-    DeviceNear(const QString &n, const QString &a, int r) { name = n; addr = a; rssi = r; }
+    DeviceNear(const QString &n, const QString &a, int r,
+               QObject *parent) : QObject(parent)
+    {
+        name = n; addr = a; rssi = r;
+    }
 
     QString name;
     QString addr;
@@ -121,7 +126,9 @@ signals:
     void updated();
 
 public:
-    AioMinMax(const QDate &dt, float tmin, float t, float tmax, int hmin, int hmax) {
+    AioMinMax(const QDate &dt, float tmin, float t, float tmax, int hmin, int hmax,
+              QObject *parent) : QObject(parent)
+    {
         date = dt;
         dayNb = dt.day();
         tempMin = tmin; tempMean = t; tempMax = tmax;

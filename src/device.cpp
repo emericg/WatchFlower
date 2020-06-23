@@ -1253,6 +1253,7 @@ void Device::updateAioMinMaxData(int maxDays)
 {
     qDeleteAll(m_aio_minmax_data);
     m_aio_minmax_data.clear();
+    AioMinMax *previousdata = nullptr;
     m_tempMin = 999.f;
     m_tempMax = -99.f;
 
@@ -1270,12 +1271,9 @@ void Device::updateAioMinMaxData(int maxDays)
         return;
     }
 
-    bool minmaxChanged = false;
-    AioMinMax *previousdata = nullptr;
-
     while (graphData.next())
     {
-        // missing days?
+        // missing day(s)?
         if (previousdata)
         {
             QDate datefromsql = graphData.value(0).toDate();
@@ -1283,19 +1281,19 @@ void Device::updateAioMinMaxData(int maxDays)
             for (int i = diff; i > 1; i--)
             {
                 QDate fakedate(datefromsql.addDays(i-1));
-                m_aio_minmax_data.push_front(new AioMinMax(fakedate, -99, -99, -99, -99, -99));
+                m_aio_minmax_data.push_front(new AioMinMax(fakedate, -99, -99, -99, -99, -99, this));
             }
         }
 
         // data
-        if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); minmaxChanged = true; }
-        if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
-        if (graphData.value(4).toInt() < m_hygroMin) { m_hygroMin = graphData.value(4).toInt(); minmaxChanged = true; }
-        if (graphData.value(5).toInt() > m_hygroMax) { m_hygroMax = graphData.value(5).toInt(); minmaxChanged = true; }
+        if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); }
+        if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); }
+        if (graphData.value(4).toInt() < m_hygroMin) { m_hygroMin = graphData.value(4).toInt(); }
+        if (graphData.value(5).toInt() > m_hygroMax) { m_hygroMax = graphData.value(5).toInt(); }
 
         AioMinMax *d = new AioMinMax(graphData.value(0).toDate(),
                                      graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                     graphData.value(4).toInt(), graphData.value(5).toInt());
+                                     graphData.value(4).toInt(), graphData.value(5).toInt(), this);
         m_aio_minmax_data.push_front(d);
         previousdata = d;
 
@@ -1303,14 +1301,19 @@ void Device::updateAioMinMaxData(int maxDays)
         if (m_aio_minmax_data.size() >= maxDays) break;
     }
 
-    // not the last day?
-    QDate today = QDate::currentDate();
-    int diff = maxDays;
-    if (previousdata) diff = previousdata->getDate().daysTo(today) + 1;
-    for (int i = diff; i < maxDays; i++)
+    // missing day(s)?
     {
-        QDate fakedate(today.addDays(-(maxDays-i)));
-        m_aio_minmax_data.push_back(new AioMinMax(fakedate, -99, -99, -99, -99, -99));
+        QDate today = QDate::currentDate();
+        int missing = 0;
+
+        if (previousdata) missing = static_cast<AioMinMax *>(m_aio_minmax_data.last())->getDate().daysTo(today);
+        else missing = maxDays;
+
+        for (int i = missing - 1; i >= 0; i--)
+        {
+            QDate fakedate(today.addDays(-i));
+            m_aio_minmax_data.push_back(new AioMinMax(fakedate, -99, -99, -99, -99, -99, this));
+        }
     }
 
     Q_EMIT minmaxUpdated();

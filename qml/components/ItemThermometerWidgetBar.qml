@@ -22,10 +22,10 @@ Item {
             rectangle_water_low.visible = false
             rectangle_water_high.visible = false
         } else {
-            var base = height
-            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*0.92, graphMax*1.05)
-            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*0.92, graphMax*1.05)
-            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*0.92, graphMax*1.05)
+            var base = containerbar.height
+            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*0.95, graphMax*1.05)
+            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*0.95, graphMax*1.05)
+            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*0.95, graphMax*1.05)
 
             rectangle_temp.visible = true
             rectangle_temp.y = base - (base * h)
@@ -74,7 +74,7 @@ Item {
     Text {
         id: dayoftheweek
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
+        anchors.bottomMargin: isPhone ? 8 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: mmd.day
@@ -83,123 +83,132 @@ Item {
         font.bold: mmd.today
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangle_temp
-        width: hhh
-        height: 0
-        radius: 16
-        //anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        color: Theme.colorGreen
-        opacity: 0.9
-
-        border.color: "#6db300" //"#70b700"
-        border.width: 1
+    Item {
+        id: containerbar
+        width: parent.width
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: isPhone ? 48 : 52
 
         Rectangle {
-            id: rectangle_temp_mean
-            width: hhh*0.66; height: hhh*0.66; radius: hhh;
+            id: rectangle_temp
+            width: hhh
+            height: 0
+            radius: 16
+            //anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "white"
+
+            color: Theme.colorGreen
             opacity: 0.9
-        }
 
-        Text {
-            id: text_temp_high
-            anchors.bottom: parent.top
-            anchors.bottomMargin: 8
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 2
+            border.color: "#6db300" //"#70b700"
+            border.width: 1
 
-            color: Theme.colorSubText
-            text: mmd.tempMax.toFixed(1) + "°"
-            font.pixelSize: 12
-        }
-
-        Text {
-            id: text_temp_low
-            anchors.top: parent.bottom
-            anchors.topMargin: 8
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 2
-
-            color: Theme.colorSubText
-            text: mmd.tempMin.toFixed(1) + "°"
-            font.pixelSize: 12
-        }
-    }
-
-    ////////
-
-    Rectangle {
-        id: rectangle_water_high
-        width: 32
-        height: 32
-        radius: 16
-        anchors.bottom: rectangle_temp.top
-        anchors.bottomMargin: 32
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        color: Theme.colorBlue
-        opacity: 0.9
-
-        border.color: "#2695c5"
-        border.width: 1
-
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+            Rectangle {
+                id: rectangle_temp_mean
+                width: hhh*0.66; height: hhh*0.66; radius: hhh;
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: "white"
+                opacity: 0.9
+            }
 
             Text {
-                id: element_water_high
-                anchors.verticalCenter: parent.verticalCenter
-                color: "white"
-                text: mmd.hygroMax
+                id: text_temp_high
+                anchors.bottom: parent.top
+                anchors.bottomMargin: 8
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: 2
+
+                color: Theme.colorSubText
+                text: mmd.tempMax.toFixed(1) + "°"
                 font.pixelSize: 12
             }
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                color: "white"
-                text: "%"
-                font.pixelSize: 8
-            }
-        }
-    }
-
-    Rectangle {
-        id: rectangle_water_low
-        width: 32
-        height: 32
-        radius: 16
-        anchors.top: rectangle_temp.bottom
-        anchors.topMargin: 32
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        color: Theme.colorBlue
-        opacity: 0.9
-
-        border.color: "#2695c5"
-        border.width: 1
-
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                id: text_water_low
-                anchors.verticalCenter: parent.verticalCenter
-                color: "white"
-                text: mmd.hygroMin
+                id: text_temp_low
+                anchors.top: parent.bottom
+                anchors.topMargin: 8
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: 2
+
+                color: Theme.colorSubText
+                text: mmd.tempMin.toFixed(1) + "°"
                 font.pixelSize: 12
             }
-            Text {
+        }
+
+        ////////
+
+        Rectangle {
+            id: rectangle_water_high
+            width: 32
+            height: 32
+            radius: 16
+            anchors.bottom: rectangle_temp.top
+            anchors.bottomMargin: 32
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            color: Theme.colorBlue
+            opacity: 0.9
+
+            border.color: "#2695c5"
+            border.width: 1
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                color: "white"
-                text: "%"
-                font.pixelSize: 8
+
+                Text {
+                    id: element_water_high
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "white"
+                    text: mmd.hygroMax
+                    font.pixelSize: 12
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "white"
+                    text: "%"
+                    font.pixelSize: 8
+                }
+            }
+        }
+
+        Rectangle {
+            id: rectangle_water_low
+            width: 32
+            height: 32
+            radius: 16
+            anchors.top: rectangle_temp.bottom
+            anchors.topMargin: 32
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            color: Theme.colorBlue
+            opacity: 0.9
+
+            border.color: "#2695c5"
+            border.width: 1
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    id: text_water_low
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "white"
+                    text: mmd.hygroMin
+                    font.pixelSize: 12
+                }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "white"
+                    text: "%"
+                    font.pixelSize: 8
+                }
             }
         }
     }

@@ -174,19 +174,6 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-#ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceFlowercare update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
-            qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
-            qDebug() << "- m_luminosity:" << m_luminosity;
-            qDebug() << "- m_conductivity:" << m_conductivity;
-#endif // QT_NO_DEBUG
-
-            refreshDataFinished(true);
-            controller->disconnectFromDevice();
-
             //if (m_db)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
@@ -214,6 +201,19 @@ void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
+
+            refreshDataFinished(true);
+            controller->disconnectFromDevice();
+
+#ifndef QT_NO_DEBUG
+            qDebug() << "* DeviceFlowercare update:" << getAddress();
+            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_temp:" << m_temp;
+            qDebug() << "- m_hygro:" << m_hygro;
+            qDebug() << "- m_luminosity:" << m_luminosity;
+            qDebug() << "- m_conductivity:" << m_conductivity;
+#endif
         }
     }
 }
