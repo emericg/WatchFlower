@@ -46,8 +46,8 @@ class DeviceManager: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool devices READ areDevicesAvailable NOTIFY devicesUpdated)
-    Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesUpdated)
+    Q_PROPERTY(bool devices READ areDevicesAvailable NOTIFY devicesListUpdated)
+    Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesListUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
@@ -100,19 +100,20 @@ public:
     Q_INVOKABLE bool exportData();
 
 public slots:
+    bool isRefreshing() const;
+
     void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
 
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
     void refreshDevices_stop();
-    bool isRefreshing() const;
 
     void updateDevice(const QString &address);
-
     void removeDevice(const QString &address);
 
     void listenDevices();
+
     void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
 
 private slots:
@@ -127,12 +128,12 @@ private slots:
     void bleDiscoveryFinished();
 
 Q_SIGNALS:
-    void devicesUpdated();
-    void disconnected();
+    void devicesListUpdated();
+    void devicesNearUpdated();
 
+    void bluetoothChanged();
     void scanningChanged();
     void refreshingChanged();
-    void bluetoothChanged();
 };
 
 /* ************************************************************************** */

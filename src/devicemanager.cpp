@@ -102,7 +102,7 @@ DeviceManager::DeviceManager()
             }
         }
 
-        Q_EMIT devicesUpdated();
+        Q_EMIT devicesListUpdated();
     }
 
     //listenDevices(); // WIP
@@ -479,7 +479,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
     m_scanning = false;
 
-    Q_EMIT devicesUpdated();
+    Q_EMIT devicesListUpdated();
     Q_EMIT scanningChanged();
 }
 
@@ -547,7 +547,7 @@ void DeviceManager::deviceDiscoveryFinished()
 
     m_scanning = false;
 
-    Q_EMIT devicesUpdated();
+    Q_EMIT devicesListUpdated();
     Q_EMIT scanningChanged();
 
     // Now refresh devices data
@@ -837,7 +837,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             // Add it to the UI
             m_devices.append(d);
-            Q_EMIT devicesUpdated();
+            Q_EMIT devicesListUpdated();
 
             qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
         }
@@ -872,7 +872,7 @@ void DeviceManager::removeDevice(const QString &address)
             // Remove device
             m_devices.removeAll(dd);
             delete dd;
-            Q_EMIT devicesUpdated();
+            Q_EMIT devicesListUpdated();
 
             qDebug() << "- Device removed: " << dd->getName() << "/" << dd->getAddress();
             break;

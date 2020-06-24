@@ -55,7 +55,6 @@ enum DeviceCapabilities {
 
     DEVICE_CLOCK             = (1 << 6), //!< Has an onboard clock
     DEVICE_LED               = (1 << 7), //!< Has a blinkable LED
-
     DEVICE_HISTORY           = (1 << 8), //!< Record sensor history
 };
 
@@ -63,9 +62,9 @@ enum DeviceStatus {
     DEVICE_OFFLINE           = 0, //!< Not connected
     DEVICE_QUEUED            = 1, //!< In the update queue, not started
     DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
-    DEVICE_ACTION            = 3, //!< Connected, doing something
-    DEVICE_UPDATING          = 4, //!< Connected, data update in progress
-    DEVICE_UPDATING_HISTORY  = 5, //!< Connected, history update in progress
+    DEVICE_UPDATING          = 3, //!< Connected, data update in progress
+    DEVICE_UPDATING_HISTORY  = 4, //!< Connected, history update in progress
+    DEVICE_ACTION            = 5, //!< Connected, doing something
     DEVICE_UPDATED           = 6, //!< Updated, waiting for disconnect
 };
 
