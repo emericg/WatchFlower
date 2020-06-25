@@ -76,10 +76,14 @@ Item {
         }  else if (boxDevice.deviceName === "LYWSD03MMC") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
         } else {
-            if (boxDevice.hasData("hygro"))
-                imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-            else
+            if (boxDevice.hasData("hygro")) {
+                if (boxDevice.deviceName === "ropot")
+                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist_pot-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+            } else {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+            }
         }
 
         updateBoxData()
@@ -502,7 +506,6 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
 
-                        height: 0
                         color: Theme.colorBlue
                         radius: rectangleSensors.sensorRadius
                         Behavior on height { NumberAnimation { duration: 333 } }
@@ -533,7 +536,6 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
 
-                        height: 0
                         visible: true
                         color: Theme.colorGreen
                         radius: rectangleSensors.sensorRadius
@@ -566,7 +568,6 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
 
-                        height: 0
                         color: Theme.colorYellow
                         radius: rectangleSensors.sensorRadius
                         Behavior on height { NumberAnimation { duration: 333 } }
@@ -598,7 +599,6 @@ Item {
                         anchors.left: parent.left
                         anchors.leftMargin: 0
 
-                        height: 0
                         color: Theme.colorRed
                         radius: rectangleSensors.sensorRadius
                         Behavior on height { NumberAnimation { duration: 333 } }
