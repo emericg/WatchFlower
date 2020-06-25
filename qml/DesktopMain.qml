@@ -97,6 +97,17 @@ ApplicationWindow {
             }
         }
 
+        onDeviceLedButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.ledActionStart()
+            }
+        }
+        onDeviceRefreshHistoryButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.refreshHistoryStart()
+            }
+        }
+
         onDeviceRefreshButtonClicked: {
             if (selectedDevice) {
                 deviceManager.updateDevice(selectedDevice.deviceAddress)

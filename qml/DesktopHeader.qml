@@ -33,6 +33,8 @@ Rectangle {
     signal backButtonClicked()
     signal rightMenuClicked() // compatibility
 
+    signal deviceLedButtonClicked()
+    signal deviceRefreshHistoryButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
@@ -177,6 +179,31 @@ Rectangle {
                 else
                     settingsManager.graphThermometer = "lines"
             }
+        }
+        ItemImageButton {
+            id: buttonLed
+            width: 36
+            height: 36
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+            source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceLedButtonClicked()
+        }
+        ItemImageButton {
+            id: buttonRefreshHistory
+            width: 36
+            height: 36
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
+                      ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceRefreshHistoryButtonClicked()
         }
         ItemImageButton {
             id: buttonRefresh

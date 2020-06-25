@@ -93,7 +93,7 @@ public:
 
     Q_INVOKABLE void scanDevices();
 
-    Q_INVOKABLE bool areDevicesAvailable() const { return !m_devices_model->m_devices.empty(); }
+    Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 

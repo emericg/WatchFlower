@@ -22,11 +22,12 @@
 #include "devicemanager.h"
 #include "device.h"
 #include "device_flowercare.h"
+#include "device_ropot.h"
 #include "device_hygrotemp_lcd.h"
 #include "device_hygrotemp_eink.h"
 #include "device_hygrotemp_clock.h"
 #include "device_hygrotemp_square.h"
-#include "device_ropot.h"
+
 #include "utils_app.h"
 
 #include <QBluetoothLocalDevice>

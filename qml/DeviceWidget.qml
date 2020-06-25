@@ -39,29 +39,29 @@ Item {
 
     Connections {
         target: boxDevice
-        onStatusUpdated: { updateBoxData() }
-        onSensorUpdated: { updateSensorData() }
-        onDataUpdated: { updateBoxData() }
-        onLimitsUpdated: { updateBoxData() }
+        onStatusUpdated: { updateSensorData() }
+        onSensorUpdated: { updateSensorBattery() }
+        onDataUpdated: { updateSensorData() }
+        onLimitsUpdated: { updateSensorData() }
     }
     Connections {
         target: Theme
         onCurrentThemeChanged: {
+            updateSensorBattery()
             updateSensorData()
-            updateBoxData()
         }
     }
     Connections {
         target: devicesView
         onBigWidgetChanged: {
+            updateSensorBattery()
             updateSensorData()
-            updateBoxData()
         }
     }
     Connections {
         target: settingsManager
         onAppLanguageChanged: {
-            updateBoxData()
+            updateSensorData()
         }
     }
 
@@ -86,11 +86,11 @@ Item {
             }
         }
 
-        updateBoxData()
         updateSensorData()
+        updateSensorBattery()
     }
 
-    function updateSensorData() {
+    function updateSensorBattery() {
         // Sensor battery level
         if (boxDevice.hasBatteryLevel()) {
             imageBattery.visible = true
@@ -123,7 +123,7 @@ Item {
         }
     }
 
-    function updateBoxData() {
+    function updateSensorData() {
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
 

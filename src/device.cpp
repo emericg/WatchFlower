@@ -109,6 +109,18 @@ Device::~Device()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void Device::ledActionStart()
+{
+    //qDebug() << "Device::ledActionStart()" << getAddress() << getName();
+
+    if (!isUpdating())
+    {
+        m_ble_action = 2;
+        refreshDataStarted();
+        getBleData();
+    }
+}
+
 void Device::refreshQueue()
 {
     if (m_status == DEVICE_OFFLINE)
@@ -124,6 +136,19 @@ void Device::refreshStart()
 
     if (!isUpdating())
     {
+        m_ble_action = 0;
+        refreshDataStarted();
+        getBleData();
+    }
+}
+
+void Device::refreshHistoryStart()
+{
+    //qDebug() << "Device::refreshHistoryStart()" << getAddress() << getName();
+
+    if (!isUpdating())
+    {
+        m_ble_action = 1;
         refreshDataStarted();
         getBleData();
     }

@@ -163,6 +163,9 @@ class Device: public QObject
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
+    Q_PROPERTY(bool hasLED READ hasLED NOTIFY statusUpdated)
+    Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY statusUpdated)
+
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
@@ -222,6 +225,8 @@ protected:
 
     int m_status = 0;           //!< See DeviceStatus enum
     bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
+
+    int m_ble_action = 0; // 0: update data, 1: update history, 2: led
 
     QDateTime m_lastUpdate;
     QDateTime m_lastError;
@@ -302,8 +307,10 @@ public:
     virtual ~Device();
 
 public slots:
+    void ledActionStart();
     void refreshQueue();
     void refreshStart();
+    void refreshHistoryStart();
     void refreshStop();
 
     // BLE device
