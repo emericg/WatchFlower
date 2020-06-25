@@ -164,7 +164,7 @@ Rectangle {
         ////////////
 
         ItemImageButton {
-            anchors.top: graphLoader.top
+            id: buttonThermoChart
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter
@@ -206,7 +206,7 @@ Rectangle {
             onClicked: deviceRefreshHistoryButtonClicked()
         }
         ItemImageButton {
-            id: buttonRefresh
+            id: buttonRefreshData
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter

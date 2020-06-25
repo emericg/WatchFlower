@@ -37,6 +37,8 @@ Rectangle {
     signal leftMenuClicked()
     signal rightMenuClicked()
 
+    signal deviceLedButtonClicked()
+    signal deviceRefreshHistoryButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceDataButtonClicked()  // compatibility
     signal deviceHistoryButtonClicked()  // compatibility
@@ -98,45 +100,78 @@ Rectangle {
         Row {
             id: menu
             anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.rightMargin: 10
+            anchors.bottom: parent.bottom
 
-            spacing: 0
+            spacing: 4
             visible: true
 
             ////////////
 
-            MouseArea {
-                id: refreshButton
-                width: headerHeight
-                height: headerHeight
+            ItemImageButton {
+                id: buttonThermoChart
+                width: 36; height: 36;
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: (appContent.state === "DeviceThermo")
+                source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+                iconColor: Theme.colorHeaderContent
+                backgroundColor: Theme.colorHeaderHighlight
+
+                onClicked: {
+                    if (settingsManager.graphThermometer === "lines")
+                        settingsManager.graphThermometer = "minmax"
+                    else
+                        settingsManager.graphThermometer = "lines"
+                }
+            }
+            ItemImageButton {
+                id: buttonLed
+                width: 36; height: 36;
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+                source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+                iconColor: Theme.colorHeaderContent
+                backgroundColor: Theme.colorHeaderHighlight
+
+                onClicked: deviceLedButtonClicked()
+            }
+            ItemImageButton {
+                id: buttonRefreshHistory
+                width: 36
+                height: 36
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
+                          ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                iconColor: Theme.colorHeaderContent
+                backgroundColor: Theme.colorHeaderHighlight
+                onClicked: deviceRefreshHistoryButtonClicked()
+            }
+            ItemImageButton {
+                id: buttonRefreshData
+                width: 36; height: 36;
+                anchors.verticalCenter: parent.verticalCenter
 
                 visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+                source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                iconColor: Theme.colorHeaderContent
+                backgroundColor: Theme.colorHeaderHighlight
+
                 onClicked: deviceRefreshButtonClicked()
 
-                ImageSvg {
-                    id: refreshButtonImg
-                    width: headerHeight/2
-                    height: headerHeight/2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    color: Theme.colorHeaderContent
-
-                    NumberAnimation on rotation {
-                        id: refreshAnimation
-                        duration: 2000
-                        from: 0
-                        to: 360
-                        loops: Animation.Infinite
-                        running: selectedDevice.updating
-                        alwaysRunToEnd: true
-                        easing.type: Easing.Linear
-                    }
+                NumberAnimation on rotation {
+                    id: refreshAnimation
+                    duration: 2000
+                    from: 0
+                    to: 360
+                    loops: Animation.Infinite
+                    running: selectedDevice.updating
+                    alwaysRunToEnd: true
+                    easing.type: Easing.Linear
                 }
             }
 /*
