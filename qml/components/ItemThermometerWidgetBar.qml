@@ -74,7 +74,7 @@ Item {
     Text {
         id: dayoftheweek
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isPhone ? 8 : 16
+        anchors.bottomMargin: isPhone ? 10 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: mmd.day
@@ -102,7 +102,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorGreen
-            opacity: 0.9
+            opacity: 0.85
 
             border.color: "#6db300" //"#70b700"
             border.width: 1
@@ -112,7 +112,7 @@ Item {
                 width: hhh*0.66; height: hhh*0.66; radius: hhh;
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "white"
-                opacity: 0.9
+                opacity: 0.85
             }
 
             Text {
@@ -152,7 +152,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorBlue
-            opacity: 0.9
+            opacity: 0.85
 
             border.color: "#2695c5"
             border.width: 1
@@ -187,7 +187,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorBlue
-            opacity: 0.9
+            opacity: 0.85
 
             border.color: "#2695c5"
             border.width: 1

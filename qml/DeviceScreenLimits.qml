@@ -311,6 +311,66 @@ Item {
             spacing: 12
 
             ////////
+/*
+            Row {
+                id: itemInOut
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                height: 102
+                spacing: 12
+
+                Rectangle {
+                    id: rectangleInside
+                    width: parent.width/2 - parent.spacing/2
+                    height: 96
+                    anchors.bottom: parent.bottom
+                    color: Theme.colorForeground
+
+                    // temp: 12 - 32
+                    // lumi: 0 - 8k
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: insideImage.color = Theme.colorText
+                    }
+
+                    ImageSvg {
+                        id: insideImage
+                        width: 48; height: 48;
+                        anchors.centerIn: parent
+                        source: "qrc:/assets/menus/menu_logo.svg"
+                        color: Theme.colorSubText
+                    }
+                }
+
+                Rectangle {
+                    id: rectangleOutside
+                    width: parent.width/2 - parent.spacing/2
+                    height: 96
+                    anchors.bottom: parent.bottom
+                    color: Theme.colorForeground
+
+                    // temp: 0 - 50
+                    // lumi: 0 - 100k
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: outsideImage.color = Theme.colorText
+                    }
+
+                    ImageSvg {
+                        id: outsideImage
+                        width: 48; height: 48;
+                        anchors.centerIn: parent
+                        source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                        color: Theme.colorSubText
+                    }
+                }
+            }
+*/
+            ////////
 
             Item {
                 id: itemHygro
