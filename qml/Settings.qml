@@ -766,7 +766,7 @@ Item {
             ////////
 
             Item {
-                id: element_notifiations
+                id: element_notifications
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -791,7 +791,7 @@ Item {
                     height: 40
                     anchors.left: image_notifications.right
                     anchors.leftMargin: column.leftPad
-                    anchors.right: switch_notifiations.left
+                    anchors.right: switch_notifications.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -803,7 +803,7 @@ Item {
                 }
 
                 SwitchThemedMobile {
-                    id: switch_notifiations
+                    id: switch_notifications
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -822,7 +822,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 
-                visible: element_notifiations.visible
+                visible: element_notifications.visible
 
                 text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
                 wrapMode: Text.WordWrap
@@ -912,7 +912,7 @@ Item {
 
                     legend: qsTr(" h.")
                     from: 1
-                    to: 6
+                    to: 12
                     stepSize: 1
                     editable: false
 
@@ -1065,93 +1065,6 @@ Item {
 
             ////////
 
-            Item {
-                id: element_plant_graph
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                ImageSvg {
-                    id: image_plant_graph
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
-                }
-
-                Text {
-                    id: text_graph
-                    height: 40
-                    anchors.left: image_plant_graph.right
-                    anchors.leftMargin: column.leftPad
-                    anchors.right: radioDelegateGraphMonthly.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Histograms")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 16
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                RadioButtonThemed {
-                    id: radioDelegateGraphMonthly
-                    height: 40
-                    anchors.right: radioDelegateGraphWeekly.left
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    z: 1
-                    text: qsTr("Monthly")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.graphHistory === "monthly") {
-                            radioDelegateGraphMonthly.checked = true
-                            radioDelegateGraphWeekly.checked = false
-                        } else {
-                            radioDelegateGraphMonthly.checked = false
-                            radioDelegateGraphWeekly.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.graphHistory = "monthly"
-                    }
-                }
-                RadioButtonThemed {
-                    id: radioDelegateGraphWeekly
-                    height: 40
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    z: 1
-                    text: qsTr("Weekly")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.graphHistory === "weekly") {
-                            radioDelegateGraphMonthly.checked = false
-                            radioDelegateGraphWeekly.checked = true
-                        } else {
-                            radioDelegateGraphWeekly.checked = false
-                            radioDelegateGraphMonthly.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.graphHistory = "weekly"
-                    }
-                }
-            }
-
-            ////////
-
             Rectangle {
                 height: 48
                 anchors.right: parent.right
@@ -1232,7 +1145,7 @@ Item {
 
                     legend: qsTr(" h.")
                     from: 1
-                    to: 6
+                    to: 12
                     stepSize: 1
                     editable: false
 

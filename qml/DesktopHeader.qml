@@ -81,6 +81,9 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    // prevent clicks into this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
     ImageSvg {
         id: buttonBack
         width: 24
@@ -158,6 +161,23 @@ Rectangle {
 
         ////////////
 
+        ItemImageButton {
+            anchors.top: graphLoader.top
+            width: 36
+            height: 36
+            anchors.verticalCenter: parent.verticalCenter
+            visible: (appContent.state === "DeviceThermo")
+
+            source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: {
+                if (settingsManager.graphThermometer === "lines")
+                    settingsManager.graphThermometer = "minmax"
+                else
+                    settingsManager.graphThermometer = "lines"
+            }
+        }
         ItemImageButton {
             id: buttonRefresh
             width: 36

@@ -58,8 +58,10 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
+    Q_PROPERTY(QString orderBy READ getOrderBy WRITE setOrderBy NOTIFY orderByChanged)
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
-    Q_PROPERTY(QString graphHistory READ getGraphHistory WRITE setGraphHistory NOTIFY graphHistoryChanged)
+    Q_PROPERTY(QString graphHistory READ getGraphHistogram WRITE setGraphHistogram NOTIFY graphHistogramChanged)
+    Q_PROPERTY(QString graphThermometer READ getGraphThermometer WRITE setGraphThermometer NOTIFY graphThermometerChanged)
     Q_PROPERTY(bool graphShowDots READ getGraphShowDots WRITE setGraphShowDots NOTIFY graphShowDotsChanged)
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
@@ -82,11 +84,13 @@ class SettingsManager: public QObject
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
     unsigned m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
-    QString m_graphHistory = "monthly";
+    QString m_graphHistogram = "monthly";
+    QString m_graphThermometer = "minmax";
     bool m_graphShowDots = false;
     bool m_bigWidget = false;
     bool m_bigIndicator = false;
     bool m_dynaScale = false;
+    QString m_orderBy = "location";
 
     // Singleton
     static SettingsManager *instance;
@@ -114,11 +118,13 @@ Q_SIGNALS:
     void updateIntervalPlantChanged();
     void updateIntervalThermoChanged();
     void tempUnitChanged();
-    void graphHistoryChanged();
+    void graphHistogramChanged();
+    void graphThermometerChanged();
     void graphShowDotsChanged();
     void bigWidgetChanged();
     void bigIndicatorChanged();
     void dynaScaleChanged();
+    void orderByChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -160,8 +166,11 @@ public:
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);
 
-    QString getGraphHistory() const { return m_graphHistory; }
-    void setGraphHistory(const QString &value);
+    QString getGraphHistogram() const { return m_graphHistogram; }
+    void setGraphHistogram(const QString &value);
+
+    QString getGraphThermometer() const { return m_graphThermometer; }
+    void setGraphThermometer(const QString &value);
 
     bool getGraphShowDots() const { return m_graphShowDots; }
     void setGraphShowDots(const bool value);
@@ -174,6 +183,9 @@ public:
 
     bool getDynaScale() const { return m_dynaScale; }
     void setDynaScale(const bool value);
+
+    QString getOrderBy() const { return m_orderBy; }
+    void setOrderBy(const QString &value);
 
     // Utils
     Q_INVOKABLE void resetSettings();

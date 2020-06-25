@@ -1322,7 +1322,8 @@ void Device::updateAioMinMaxData(int maxDays)
 
 /* ************************************************************************** */
 
-void Device::getAioLinesData(QtCharts::QDateTimeAxis *axis,
+void Device::getAioLinesData(int maxDays,
+                             QtCharts::QDateTimeAxis *axis,
                              QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
                              QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
 {
@@ -1332,7 +1333,7 @@ void Device::getAioLinesData(QtCharts::QDateTimeAxis *axis,
     QSqlQuery graphData;
     graphData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
                       "FROM datas " \
-                      "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(14) + " days');");
+                      "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(maxDays) + " days');");
     graphData.bindValue(":deviceAddr", getAddress());
 
     if (graphData.exec() == false)

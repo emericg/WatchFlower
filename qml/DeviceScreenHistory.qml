@@ -236,7 +236,7 @@ Item {
 
                 text: qsTr("Month")
                 onClicked: {
-                    graphMode = "monthly"
+                    settingsManager.graphHistory = "monthly"
                     updateData()
                 }
             }
@@ -251,7 +251,7 @@ Item {
 
                 text: qsTr("Week")
                 onClicked: {
-                    graphMode = "weekly"
+                    settingsManager.graphHistory = "weekly"
                     updateData()
                 }
             }
@@ -266,7 +266,7 @@ Item {
 
                 text: qsTr("Day")
                 onClicked: {
-                    graphMode = "daily"
+                    settingsManager.graphHistory = "daily"
                     updateData()
                 }
             }

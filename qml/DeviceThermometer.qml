@@ -30,7 +30,7 @@ Item {
     height: 700
 
     property var currentDevice: null
-    property var deviceScreenChart: null
+    property alias deviceScreenChart: graphLoader.item
 
     Connections {
         target: currentDevice
@@ -46,6 +46,9 @@ Item {
         onAppLanguageChanged: {
             updateData()
             updateStatusText()
+        }
+        onGraphThermometerChanged: {
+            loadGraph()
         }
     }
 
@@ -93,14 +96,19 @@ Item {
         currentDevice = clickedDevice
         //console.log("DeviceThermometer // loadDevice() >> " + currentDevice)
 
+        loadGraph()
         updateHeader()
-        if (graphLoader.status != Loader.Ready) {
+        updateData()
+    }
+
+    function loadGraph() {
+        if (settingsManager.graphThermometer === "lines") {
             graphLoader.source = "ItemAioLineCharts.qml"
-            deviceScreenChart = graphLoader.item
+        } else {
+            graphLoader.source = "ItemThermometerWidget.qml"
         }
         deviceScreenChart.loadGraph()
-
-        updateData()
+        deviceScreenChart.updateGraph()
     }
 
     function updateHeader() {

@@ -388,7 +388,8 @@ public slots:
     QVariant getAioMinMaxData() const { return QVariant::fromValue(m_aio_minmax_data); }
 
     // AIO line graph
-    Q_INVOKABLE void getAioLinesData(QtCharts::QDateTimeAxis *axis,
+    Q_INVOKABLE void getAioLinesData(int maxDays,
+                                     QtCharts::QDateTimeAxis *axis,
                                      QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
                                      QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 

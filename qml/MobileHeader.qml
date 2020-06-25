@@ -53,6 +53,9 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    // prevent clicks into this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
     Item {
         anchors.fill: parent
         anchors.topMargin: screenStatusbarPadding + screenNotchPadding

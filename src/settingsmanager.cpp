@@ -135,7 +135,10 @@ bool SettingsManager::readSettings()
         }
 
         if (settings.contains("settings/graphHistory"))
-            m_graphHistory = settings.value("settings/graphHistory").toString();
+            m_graphHistogram = settings.value("settings/graphHistory").toString();
+
+        if (settings.contains("settings/graphThermometer"))
+            m_graphThermometer = settings.value("settings/graphThermometer").toString();
 
         if (settings.contains("settings/graphShowDots"))
             m_graphShowDots = settings.value("settings/graphShowDots").toBool();
@@ -148,6 +151,9 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/dynaScale"))
             m_dynaScale = settings.value("settings/dynaScale").toBool();
+
+        if (settings.contains("settings/orderBy"))
+            m_orderBy = settings.value("settings/orderBy").toString();
 
         status = true;
     }
@@ -179,12 +185,14 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/updateIntervalPlant", m_updateIntervalPlant);
         settings.setValue("settings/updateIntervalThermo", m_updateIntervalThermo);
         settings.setValue("settings/startMinimized", m_startMinimized);
-        settings.setValue("settings/graphHistory", m_graphHistory);
+        settings.setValue("settings/graphHistory", m_graphHistogram);
+        settings.setValue("settings/graphThermometer", m_graphThermometer);
         settings.setValue("settings/graphShowDots", m_graphShowDots);
         settings.setValue("settings/bigWidget", m_bigWidget);
         settings.setValue("settings/bigIndicator", m_bigIndicator);
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
+        settings.setValue("settings/orderBy", m_orderBy);
 
         if (settings.status() == QSettings::NoError)
         {
@@ -476,8 +484,10 @@ void SettingsManager::resetSettings()
     else
         m_tempUnit = "F";
     Q_EMIT tempUnitChanged();
-    m_graphHistory = "monthly";
-    Q_EMIT graphHistoryChanged();
+    m_graphHistogram = "monthly";
+    Q_EMIT graphHistogramChanged();
+    m_graphThermometer = "minmax";
+    Q_EMIT graphThermometerChanged();
     m_graphShowDots = false;
     Q_EMIT graphShowDotsChanged();
     m_bigWidget = false;
@@ -620,13 +630,23 @@ void SettingsManager::setTempUnit(const QString &value)
     }
 }
 
-void SettingsManager::setGraphHistory(const QString &value)
+void SettingsManager::setGraphHistogram(const QString &value)
 {
-    if (m_graphHistory != value)
+    if (m_graphHistogram != value)
     {
-        m_graphHistory = value;
+        m_graphHistogram = value;
         writeSettings();
-        Q_EMIT graphHistoryChanged();
+        Q_EMIT graphHistogramChanged();
+    }
+}
+
+void SettingsManager::setGraphThermometer(const QString &value)
+{
+    if (m_graphThermometer != value)
+    {
+        m_graphThermometer = value;
+        writeSettings();
+        Q_EMIT graphThermometerChanged();
     }
 }
 
@@ -667,6 +687,16 @@ void SettingsManager::setDynaScale(const bool value)
         m_dynaScale = value;
         writeSettings();
         Q_EMIT dynaScaleChanged();
+    }
+}
+
+void SettingsManager::setOrderBy(const QString &value)
+{
+    if (m_orderBy != value)
+    {
+        m_orderBy = value;
+        writeSettings();
+        Q_EMIT orderByChanged();
     }
 }
 
