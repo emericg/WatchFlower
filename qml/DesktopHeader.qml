@@ -287,14 +287,14 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
 
             property var sortmode: {
-                if (settingsManager.orderBy === "location") {
-                    return 0
-                } else if (settingsManager.orderBy === "model") {
-                    return 1
+                if (settingsManager.orderBy === "waterlevel") {
+                    return 3
                 } else if (settingsManager.orderBy === "plant") {
                     return 2
-                } else if (settingsManager.orderBy === "waterlevel") {
-                    return 3
+                } else if (settingsManager.orderBy === "model") {
+                    return 1
+                } else { // if (settingsManager.orderBy === "location") {
+                    return 0
                 }
             }
 

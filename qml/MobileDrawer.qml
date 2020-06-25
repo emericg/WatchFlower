@@ -262,20 +262,21 @@ Item {
                 anchors.right: parent.right
                 anchors.left: parent.left
 
-                property var sortmode: {
-                    if (settingsManager.orderBy === "location") {
-                        return 0
-                    } else if (settingsManager.orderBy === "model") {
-                        return 1
-                    } else if (settingsManager.orderBy === "plant") {
-                        return 2
-                    } else if (settingsManager.orderBy === "waterlevel") {
-                        return 3
-                    }
-                }
-
                 MouseArea {
                     anchors.fill: parent
+
+                    property var sortmode: {
+                        if (settingsManager.orderBy === "waterlevel") {
+                            return 3
+                        } else if (settingsManager.orderBy === "plant") {
+                            return 2
+                        } else if (settingsManager.orderBy === "model") {
+                            return 1
+                        } else { // if (settingsManager.orderBy === "location") {
+                            return 0
+                        }
+                    }
+
                     onClicked: {
                         sortmode++
                         if (sortmode > 3) sortmode = 0
@@ -283,19 +284,15 @@ Item {
                         if (sortmode === 0) {
                             settingsManager.orderBy = "location"
                             deviceManager.orderby_location()
-                            textOrderBy.text = qsTr("Order by") + " " + qsTr("location")
                         } else if (sortmode === 1) {
                             settingsManager.orderBy = "model"
                             deviceManager.orderby_model()
-                            textOrderBy.text = qsTr("Order by") + " " + qsTr("device model")
                         } else if (sortmode === 2) {
                             settingsManager.orderBy = "plant"
                             deviceManager.orderby_plant()
-                            textOrderBy.text = qsTr("Order by") + " " + qsTr("plant name")
                         } else if (sortmode === 3) {
                             settingsManager.orderBy = "waterlevel"
                             deviceManager.orderby_waterlevel()
-                            textOrderBy.text = qsTr("Order by") + " " + qsTr("water level")
                         }
                     }
                 }
@@ -315,6 +312,26 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
+
+                    function setText() {
+                        var txt = qsTr("Order by") + " "
+                        if (settingsManager.orderBy === "waterlevel") {
+                            txt += qsTr("water level")
+                        } else if (settingsManager.orderBy === "plant") {
+                            txt += qsTr("plant name")
+                        } else if (settingsManager.orderBy === "model") {
+                            txt += qsTr("device model")
+                        } else if (settingsManager.orderBy === "location") {
+                            txt += qsTr("location")
+                        }
+                        textOrderBy.text = txt
+                    }
+
+                    Component.onCompleted: textOrderBy.setText()
+                    Connections {
+                        target: settingsManager
+                        onOrderByChanged: textOrderBy.setText()
+                    }
 
                     font.pixelSize: 13
                     font.bold: true
