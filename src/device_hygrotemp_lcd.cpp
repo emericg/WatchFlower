@@ -171,6 +171,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::Ser
             if (chb.value().size() == 1)
             {
                 m_battery = chb.value();
+                Q_EMIT sensorUpdated();
             }
         }
 */

@@ -212,6 +212,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
                 const quint8 *data = reinterpret_cast<const quint8 *>(chb.value().constData());
                 //qDebug() << "Battery > " << chb.value();
                 m_battery = static_cast<int>(data[0]);
+                Q_EMIT sensorUpdated();
             }
         }
     }
