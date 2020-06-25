@@ -380,7 +380,6 @@ Item {
 
         model: deviceManager.devicesList
         delegate: DeviceWidget {
-            boxDevice: modelData;
             width: devicesView.cellSize;
             singleColumn: devicesView.singleColumn;
             bigAssMode: devicesView.bigWidget;

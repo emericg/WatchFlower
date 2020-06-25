@@ -24,8 +24,7 @@
 /* ************************************************************************** */
 
 #include "settingsmanager.h"
-
-class Device;
+#include "device_filter.h"
 
 #include <QObject>
 #include <QVariant>
@@ -47,7 +46,7 @@ class DeviceManager: public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool devices READ areDevicesAvailable NOTIFY devicesListUpdated)
-    Q_PROPERTY(QVariant devicesList READ getDevices NOTIFY devicesListUpdated)
+    Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
@@ -64,7 +63,9 @@ class DeviceManager: public QObject
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyController *m_controller = nullptr;
 
-    QList <QObject *> m_devices;
+    DeviceModel *m_devices_model = nullptr;
+    DeviceFilter *m_devices_filter = nullptr;
+
     QList <QObject *> m_devices_queued;
     QList <QObject *> m_devices_updating;
 
@@ -92,10 +93,9 @@ public:
 
     Q_INVOKABLE void scanDevices();
 
-    Q_INVOKABLE bool areDevicesAvailable() const { return !m_devices.empty(); }
+    Q_INVOKABLE bool areDevicesAvailable() const { return !m_devices_model->m_devices.empty(); }
 
-    QVariant getDevices() const { return QVariant::fromValue(m_devices); }
-    Q_INVOKABLE QVariant getFirstDevice() const { if (m_devices.empty()) return QVariant(); return QVariant::fromValue(m_devices.at(0)); }
+    DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 
     Q_INVOKABLE bool exportData();
 
@@ -115,6 +115,11 @@ public slots:
     void listenDevices();
 
     void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+
+    void orderby_model();
+    void orderby_location();
+    void orderby_waterlevel();
+    void orderby_plant();
 
 private slots:
     // QBluetoothLocalDevice related

@@ -42,6 +42,7 @@ SOURCES  += src/main.cpp \
             src/notificationmanager.cpp \
             src/devicemanager.cpp \
             src/device.cpp \
+            src/device_filter.cpp \
             src/device_flowercare.cpp \
             src/device_hygrotemp_lcd.cpp \
             src/device_hygrotemp_eink.cpp \
@@ -59,6 +60,7 @@ HEADERS  += src/demomode.h \
             src/notificationmanager.h \
             src/devicemanager.h \
             src/device.h \
+            src/device_filter.h \
             src/device_flowercare.h \
             src/device_hygrotemp_lcd.h \
             src/device_hygrotemp_eink.h \

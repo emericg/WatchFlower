@@ -29,7 +29,7 @@ Item {
     implicitWidth: 640
     implicitHeight: bigAssMode ? 140 : 100
 
-    property var boxDevice: null
+    property var boxDevice: pointer
 
     property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
     property bool bigAssMode: false

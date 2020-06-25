@@ -54,21 +54,27 @@
 
 DeviceManager::DeviceManager()
 {
+    // Data model init
+    m_devices_model = new DeviceModel;
+    m_devices_filter = new DeviceFilter;
+    m_devices_filter->setSourceModel(m_devices_model);
+    SettingsManager *sm = SettingsManager::getInstance();
+    if (sm) {
+        if (sm->getOrderBy() == "location") orderby_location();
+        if (sm->getOrderBy() == "plant") orderby_plant();
+        if (sm->getOrderBy() == "waterlevel") orderby_waterlevel();
+        if (sm->getOrderBy() == "model") orderby_model();
+    }
+
+    // BLE init
     startBleAgent();
-
-    // Enables adapter // if off and permission given ONLY
-    enableBluetooth(true);
-
+    enableBluetooth(true); // Enables adapter // ONLY if off and permission given
     checkBluetooth();
     checkDatabase();
 
     // Load saved devices
     if (m_db)
     {
-        // Make sure the list is clean
-        qDeleteAll(m_devices);
-        m_devices.clear();
-
         qDebug() << "Scanning (database) for devices...";
 
         QSqlQuery queryDevices;
@@ -96,7 +102,7 @@ DeviceManager::DeviceManager()
             if (d)
             {
                 connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-                m_devices.append(d);
+                m_devices_model->addDevice(d);
 
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
             }
@@ -114,8 +120,8 @@ DeviceManager::~DeviceManager()
     delete m_discoveryAgent;
     delete m_controller;
 
-    qDeleteAll(m_devices);
-    m_devices.clear();
+    delete m_devices_filter;
+    delete m_devices_model;
 }
 
 /* ************************************************************************** */
@@ -508,7 +514,7 @@ void DeviceManager::deviceDiscoveryFinished()
 
             // device lookup
             bool found = false;
-            for (auto d: m_devices)
+            for (auto d: m_devices_model->m_devices)
             {
                 Device *dd = qobject_cast<Device*>(d);
                 if (dd && dd->getAddress() == deviceAddr)
@@ -537,7 +543,7 @@ void DeviceManager::deviceDiscoveryFinished()
                 if (d)
                 {
                     connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-                    m_devices.append(d);
+                    m_devices_model->addDevice(d);
 
                     qDebug() << "* Device added (from SQL database): " << deviceName << "/" << deviceAddr;
                 }
@@ -618,12 +624,12 @@ void DeviceManager::refreshDevices_start()
     }
 
     // Start refresh (if > 1 min)
-    if (checkBluetooth() && !m_devices.empty())
+    if (checkBluetooth() && m_devices_model->hasDevices())
     {
         m_devices_queued.clear();
         m_devices_updating.clear();
 
-        for (auto d: m_devices)
+        for (auto d: m_devices_model->m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
@@ -651,13 +657,13 @@ void DeviceManager::refreshDevices_check()
     }
 
     // Start refresh (if needed)
-    if (checkBluetooth() && !m_devices.empty())
+    if (checkBluetooth() && m_devices_model->hasDevices())
     {
         m_devices_queued.clear();
         m_devices_updating.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
-        for (auto d: m_devices)
+        for (auto d: m_devices_model->m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 ||
@@ -720,7 +726,7 @@ void DeviceManager::refreshDevices_stop()
         m_devices_queued.clear();
         m_devices_updating.clear();
 
-        for (auto d: m_devices)
+        for (auto d: m_devices_model->m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd) dd->refreshStop();
@@ -741,7 +747,7 @@ void DeviceManager::updateDevice(const QString &address)
 
     if (hasBluetooth())
     {
-        for (auto d: m_devices)
+        for (auto d: m_devices_model->m_devices)
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address)
@@ -771,7 +777,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "LYWSD03MMC")
         {
             // Check if it's not already in the UI
-            for (auto ed: m_devices)
+            for (auto ed: m_devices_model->m_devices)
             {
                 Device *edd = qobject_cast<Device*>(ed);
 #if defined(Q_OS_OSX) || defined(Q_OS_IOS)
@@ -836,7 +842,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             }
 
             // Add it to the UI
-            m_devices.append(d);
+            m_devices_model->addDevice(d);
             Q_EMIT devicesListUpdated();
 
             qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
@@ -850,7 +856,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
 void DeviceManager::removeDevice(const QString &address)
 {
-    for (auto d: m_devices)
+    for (auto d: m_devices_model->m_devices)
     {
         Device *dd = qobject_cast<Device*>(d);
 
@@ -870,11 +876,10 @@ void DeviceManager::removeDevice(const QString &address)
             removeDevice.exec();
 
             // Remove device
-            m_devices.removeAll(dd);
-            delete dd;
+            m_devices_model->removeDevice(dd);
             Q_EMIT devicesListUpdated();
 
-            qDebug() << "- Device removed: " << dd->getName() << "/" << dd->getAddress();
+            qDebug() << "- Device removed!";
             break;
         }
     }
@@ -886,7 +891,7 @@ bool DeviceManager::exportData()
 {
     bool status = false;
 
-    if (m_devices.isEmpty()) return status;
+    if (!m_devices_model->hasDevices()) return status;
 
     SettingsManager *sm = SettingsManager::getInstance();
     bool isCelcius = (sm->getTempUnit() == "C");
@@ -911,7 +916,6 @@ bool DeviceManager::exportData()
         }
         if (edir.exists())
         {
-
             // Get file name
             QString exportFile = exportDirectory;
             exportFile += "/wf_";
@@ -930,7 +934,7 @@ bool DeviceManager::exportData()
                 legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
                 eout << legend << endl;
 
-                for (auto d: m_devices)
+                for (auto d: m_devices_model->m_devices)
                 {
                     Device *dd = qobject_cast<Device*>(d);
                     if (dd)
@@ -987,6 +991,36 @@ bool DeviceManager::exportData()
     }
 
     return status;
+}
+
+/* ************************************************************************** */
+
+void DeviceManager::orderby_model()
+{
+    m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
+void DeviceManager::orderby_location()
+{
+    m_devices_filter->setSortRole(DeviceModel::LocationRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
+void DeviceManager::orderby_waterlevel()
+{
+    m_devices_filter->setSortRole(DeviceModel::WaterLevelRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
+void DeviceManager::orderby_plant()
+{
+    m_devices_filter->setSortRole(DeviceModel::PlantNameRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
 }
 
 /* ************************************************************************** */
