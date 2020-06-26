@@ -613,7 +613,7 @@ Item {
 
                 visible: element_bluetoothSimUpdate.visible
 
-                text: qsTr("How many sensor should we update at once? Improve Bluetooth communication reliability, at the expense of synchronization speed.")
+                text: qsTr("How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -1271,7 +1271,7 @@ Item {
                     anchors.leftMargin: column.leftPad
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Data export")
+                    text: qsTr("Data archiving")
                     font.pixelSize: 16
                     font.bold: false
                     color: Theme.colorText
@@ -1281,6 +1281,23 @@ Item {
             }
 
             ////////
+
+            Text {
+                id: legend_export
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                topPadding: 8
+
+                visible: (Qt.platform.os !== "ios")
+
+                text: qsTr("Export up to 30 days of data into a CSV file. Saved in the Document / WatchFlower directory.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+                verticalAlignment: Text.AlignBottom
+            }
 
             Item {
                 id: element_export
