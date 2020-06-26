@@ -99,6 +99,8 @@ public:
 
     Q_INVOKABLE bool exportData();
 
+    void invalidate();
+
 public slots:
     bool isRefreshing() const;
 

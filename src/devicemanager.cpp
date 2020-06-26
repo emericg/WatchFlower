@@ -996,6 +996,11 @@ bool DeviceManager::exportData()
 
 /* ************************************************************************** */
 
+void DeviceManager::invalidate()
+{
+    m_devices_filter->invalidate();
+}
+
 void DeviceManager::orderby_model()
 {
     m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);

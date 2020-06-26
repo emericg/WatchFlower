@@ -21,6 +21,7 @@
 
 #include "device.h"
 #include "settingsmanager.h"
+#include "devicemanager.h"
 #include "notificationmanager.h"
 #include "utils_versionchecker.h"
 
@@ -217,26 +218,36 @@ void Device::refreshDataFinished(bool status, bool cached)
         // Reset last error
         m_lastError = QDateTime();
 
-        // 'Water me' notification, if enabled
-        SettingsManager *sm = SettingsManager::getInstance();
-        if (sm && sm->getNotifs())
+        // Plant sensor?
+        if (hasSoilMoistureSensor())
         {
-            // Only if the sensor has a plant
-            if (hasSoilMoistureSensor() &&
-                m_hygro > 0 && m_hygro < m_limitHygroMin)
-            {
-                NotificationManager *nm = NotificationManager::getInstance();
-                if (nm)
-                {
-                    QString message;
-                    if (!m_plantName.isEmpty())
-                        message = tr("You need to water your '%1' now!").arg(m_plantName);
-                    else if (!m_locationName.isEmpty())
-                        message = tr("You need to water the plant near '%1'").arg(m_locationName);
-                    else
-                        message = tr("You need to water one of your (unnamed) plants!");
+            SettingsManager *sm = SettingsManager::getInstance();
 
-                    nm->setNotification(message);
+            // Reorder the device list by water level, if needed
+            if (sm->getOrderBy() == "waterlevel")
+            {
+                static_cast<DeviceManager *>(parent())->invalidate();
+            }
+
+            // 'Water me' notification, if enabled
+            if (sm->getNotifs())
+            {
+                // Only if the sensor has a plant
+                if (m_hygro > 0 && m_hygro < m_limitHygroMin)
+                {
+                    NotificationManager *nm = NotificationManager::getInstance();
+                    if (nm)
+                    {
+                        QString message;
+                        if (!m_plantName.isEmpty())
+                            message = tr("You need to water your '%1' now!").arg(m_plantName);
+                        else if (!m_locationName.isEmpty())
+                            message = tr("You need to water the plant near '%1'").arg(m_locationName);
+                        else
+                            message = tr("You need to water one of your (unnamed) plants!");
+
+                        nm->setNotification(message);
+                    }
                 }
             }
         }
@@ -627,6 +638,9 @@ void Device::setLocationName(const QString &name)
         updateLocation.exec();
 
         Q_EMIT dataUpdated();
+
+        if (SettingsManager::getInstance()->getOrderBy() == "location")
+            static_cast<DeviceManager *>(parent())->invalidate();
     }
 }
 
@@ -644,6 +658,9 @@ void Device::setPlantName(const QString &name)
         updatePlant.exec();
 
         Q_EMIT dataUpdated();
+
+        if (SettingsManager::getInstance()->getOrderBy() == "plant")
+            static_cast<DeviceManager *>(parent())->invalidate();
     }
 }
 
