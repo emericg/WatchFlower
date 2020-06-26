@@ -84,20 +84,6 @@ Item {
         rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
         rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
         rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
-
-        if (currentDevice.limitLumiMax > 10000) {
-            // outdoor more
-            rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 100000;
-            rangeSlider_lumi.stepSize = 5000;
-            lux_1.visible = false; lux_2.visible = false; lux_3.visible = false; lux_4.visible = false;
-            lux_5.visible = true; lux_6.visible = true;
-        } else {
-            // indoor mode
-            rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 10000;
-            rangeSlider_lumi.stepSize = 1000;
-            lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
-            lux_5.visible = false; lux_6.visible = false;
-        }
         rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
     }
 
@@ -109,6 +95,8 @@ Item {
         itemLumi.visible = currentDevice.hasLuminositySensor()
         itemCondu.visible = currentDevice.hasConductivitySensor()
     }
+
+    property var outsideMode: (currentDevice && currentDevice.limitLumiMax > 10000)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -318,54 +306,86 @@ Item {
                 anchors.leftMargin: 12
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                height: 102
+                topPadding: 6
                 spacing: 12
 
                 Rectangle {
                     id: rectangleInside
                     width: parent.width/2 - parent.spacing/2
-                    height: 96
+                    height: isDesktop ? 112 : 96
                     anchors.bottom: parent.bottom
-                    color: Theme.colorForeground
 
                     // temp: 12 - 32
                     // lumi: 0 - 8k
 
+                    color: Theme.colorForeground
+                    opacity: outsideMode ? 0.5 : 1
+                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: insideImage.color = Theme.colorText
+                        onClicked: {
+                            outsideMode = false
+                            rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
+                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
+                        }
                     }
 
-                    ImageSvg {
-                        id: insideImage
-                        width: 48; height: 48;
+                    Column {
                         anchors.centerIn: parent
-                        source: "qrc:/assets/menus/menu_logo.svg"
-                        color: Theme.colorSubText
+
+                        ImageSvg {
+                            id: insideImage
+                            width: 48; height: 48;
+                            color: Theme.colorText
+                            source: "qrc:/assets/icons_material/inside-24px.svg"
+                        }
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr("inside")
+                            color: Theme.colorText
+                            font.pixelSize: 14
+                        }
                     }
                 }
 
                 Rectangle {
                     id: rectangleOutside
                     width: parent.width/2 - parent.spacing/2
-                    height: 96
+                    height: isDesktop ? 112 : 96
                     anchors.bottom: parent.bottom
-                    color: Theme.colorForeground
 
                     // temp: 0 - 50
                     // lumi: 0 - 100k
 
+                    color: Theme.colorForeground
+                    opacity: outsideMode ? 1 : 0.5
+                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: outsideImage.color = Theme.colorText
+                        onClicked: {
+                            outsideMode = true
+                            rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
+                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
+                        }
                     }
 
-                    ImageSvg {
-                        id: outsideImage
-                        width: 48; height: 48;
+                    Column {
                         anchors.centerIn: parent
-                        source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                        color: Theme.colorSubText
+
+                        ImageSvg {
+                            id: outsideImage
+                            width: 48; height: 48;
+                            source: "qrc:/assets/icons_material/outside-24px.svg"
+                            color: Theme.colorText
+                        }
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr("outside")
+                            color: Theme.colorText
+                            font.pixelSize: 14
+                        }
                     }
                 }
             }
@@ -564,31 +584,11 @@ Item {
                     unit: "k"
                     kshort: true
                     from: 0
-                    to: 10000
-                    stepSize: 1000
+                    to: outsideMode ? 100000 : 10000
+                    stepSize: outsideMode ? 5000 : 1000
 
-                    first.onValueChanged: if (currentDevice) { currentDevice.limitLumiMin = first.value.toFixed(0) }
-                    second.onValueChanged: if (currentDevice) { currentDevice.limitLumiMax = second.value.toFixed(0) }
-
-                    MouseArea {
-                        anchors.fill: sections
-                        onClicked: {
-                            if (rangeSlider_lumi.to === 10000) {
-                                // outdoor more
-                                rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 100000;
-                                rangeSlider_lumi.stepSize = 5000;
-                                lux_1.visible = false; lux_2.visible = false; lux_3.visible = false; lux_4.visible = false;
-                                lux_5.visible = true; lux_6.visible = true;
-                            } else {
-                                // indoor mode
-                                rangeSlider_lumi.from = 0; rangeSlider_lumi.to = 10000;
-                                rangeSlider_lumi.stepSize = 1000;
-                                lux_1.visible = true; lux_2.visible = true; lux_3.visible = true; lux_4.visible = true;
-                                lux_5.visible = false; lux_6.visible = false;
-                            }
-                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
-                        }
-                    }
+                    first.onValueChanged: if (currentDevice) currentDevice.limitLumiMin = first.value.toFixed(0);
+                    second.onValueChanged: if (currentDevice) currentDevice.limitLumiMax = second.value.toFixed(0);
 
                     Row {
                         id: sections
@@ -605,6 +605,7 @@ Item {
                             id: lux_1
                             height: 16
                             width: (sections.width - 4) * 0.1 // 0 to 1k
+                            visible: !outsideMode
                             color: Theme.colorGrey
                             clip: true
                             Text {
@@ -617,6 +618,7 @@ Item {
                             id: lux_2
                             height: 16
                             width: (sections.width - 8) * 0.2 // 1k to 3k
+                            visible: !outsideMode
                             color: "grey"
                             clip: true
                             Text {
@@ -629,6 +631,7 @@ Item {
                             id: lux_3
                             height: 16
                             width: (sections.width - 16) * 0.5 // 3k to 8k
+                            visible: !outsideMode
                             color: Theme.colorYellow
                             clip: true
                             Text {
@@ -641,6 +644,7 @@ Item {
                             id: lux_4
                             height: 16
                             width: (sections.width - 0) * 0.2 // 8k+
+                            visible: !outsideMode
                             color: "orange"
                             clip: true
                             Text {
@@ -654,6 +658,7 @@ Item {
                             id: lux_5
                             height: 16
                             width: (sections.width - 6) * 0.16 // 0-15k
+                            visible: outsideMode
                             color: "grey"
                             clip: true
                             Text {
@@ -666,6 +671,7 @@ Item {
                             id: lux_6
                             height: 16
                             width: (sections.width - 6) * 0.84 // 15k+
+                            visible: outsideMode
                             color: Theme.colorYellow
                             clip: true
                             Text {
