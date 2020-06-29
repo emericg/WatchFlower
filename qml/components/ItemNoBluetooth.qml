@@ -37,7 +37,7 @@ Item {
         spacing: 16
 
         ImageSvg {
-            width: (isDesktop || isTablet) ? 256 : (parent.width*0.66)
+            width: (isDesktop || isTablet || (isPhone && screenOrientation == 2)) ? 256 : (parent.width*0.66)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 

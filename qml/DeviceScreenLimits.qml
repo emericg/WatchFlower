@@ -294,19 +294,330 @@ Item {
         Column {
             anchors.fill: parent
 
-            topPadding: 6
+            topPadding: 12
             bottomPadding: 16
             spacing: 12
 
             ////////
 /*
+            Rectangle {
+                id: itemDevice
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                height: 280
+                color: Theme.colorForeground
+
+                ImageSvg {
+                    width: 80
+                    height: 80
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    color: Theme.colorSubText
+                    source: "qrc:/assets/devices/flowercare.svg"
+                }
+
+                Column {
+                    id: itemDeviceRow
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 0
+
+                    Row {
+                        height: 32
+                        spacing: 12
+
+                        Text {
+                            text: currentDevice.deviceName
+                            verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: Theme.fontSizeTitle
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorText
+                        }
+
+                        ImageSvg {
+                            id: imageBattery
+                            width: 32; height: 32;
+                            rotation: 90
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                            color: Theme.colorIcon
+                        }
+                    }
+
+                    Row {
+                        height: 24
+                        spacing: 12
+
+                        Text {
+                            width: isPhone ? 80 : 96
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Address")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+                        Text {
+                            id: textAddr
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: "[" + currentDevice.deviceAddress + "]"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Row {
+                        height: 24
+                        spacing: 12
+
+                        Text {
+                            width: isPhone ? 80 : 96
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Firmware")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+                        Text {
+                            id: textFirmware
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: currentDevice.deviceFirmware
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+
+                        ImageSvg {
+                            id: imageFwUpdate
+                            width: 24
+                            height: 24
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
+                            color: Theme.colorIcon
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onEntered: textFwUpdate.text = qsTr("Use official app to upgrade")
+                                onExited: textFwUpdate.text = qsTr("Update available!")
+                            }
+                        }
+                        Text {
+                            id: textFwUpdate
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Update available!")
+                            font.pixelSize: 14
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Row {
+                        height: 24
+                        spacing: 12
+
+                        Text {
+                            width: isPhone ? 80 : 96
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Battery")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: currentDevice.deviceBattery + "%"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item { width: 8; height: 8; }
+
+                    Grid {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: 12
+                        columns: 2
+                        rows: 3
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasTemperatureSensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "Temperature"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "-15 → 50°C ±0.5°C"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasSoilMoistureSensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "Soil moisture"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "0 → 100% ±1%"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasLuminositySensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "Luminosity"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "0 → 100k lux ±100lux"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasConductivitySensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                rotation: 90
+                                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "Soil fertility"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "0 → 100 uc/cm ±1%"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasLED()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: "LED blink"
+                                font.pixelSize: 12
+                                color: Theme.colorText
+                            }
+                        }
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasHistory()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: "Data history"
+                                font.pixelSize: 12
+                                color: Theme.colorText
+                            }
+                        }
+                    }
+                }
+            }
+*/
+            ////////
+
             Row {
                 id: itemInOut
                 anchors.left: parent.left
                 anchors.leftMargin: 12
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                topPadding: 6
                 spacing: 12
 
                 Rectangle {
@@ -389,12 +700,12 @@ Item {
                     }
                 }
             }
-*/
+
             ////////
 
             Item {
                 id: itemHygro
-                height: 52
+                height: 40
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -405,7 +716,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
@@ -429,7 +740,7 @@ Item {
                     id: rangeSlider_hygro
                     height: 20
                     anchors.top: imageHygro.bottom
-                    anchors.topMargin: 4
+                    anchors.topMargin: 2
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -466,7 +777,7 @@ Item {
 
             Item {
                 id: itemTemp
-                height: 52
+                height: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
@@ -477,7 +788,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
@@ -501,7 +812,7 @@ Item {
                     id: rangeSlider_temp
                     height: 20
                     anchors.top: imageTemp.bottom
-                    anchors.topMargin: 4
+                    anchors.topMargin: 2
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -510,11 +821,28 @@ Item {
                     colorBg: Theme.colorYellow
                     colorFg: Theme.colorGreen
                     unit: "°"
-                    from: 0
-                    to: 40
+                    from: outsideMode ? 0 : 12
+                    to: outsideMode ? 50 : 32
                     stepSize: 1
-                    first.onValueChanged: if (currentDevice) currentDevice.limitTempMin = first.value.toFixed(0);
-                    second.onValueChanged: if (currentDevice) currentDevice.limitTempMax = second.value.toFixed(0);
+
+                    first.onValueChanged: {
+                        if (currentDevice) {
+                            if ((first.value > rangeSlider_temp.from && first.value < rangeSlider_temp.to) ||
+                                (first.value >= rangeSlider_temp.from && first.value <= rangeSlider_temp.to &&
+                                 currentDevice.limitTempMin >= rangeSlider_temp.from && currentDevice.limitTempMin <= rangeSlider_temp.to)) {
+                                currentDevice.limitTempMin = first.value.toFixed(0)
+                            }
+                        }
+                    }
+                    second.onValueChanged: {
+                        if (currentDevice) {
+                            if ((second.value > rangeSlider_temp.from && second.value < rangeSlider_temp.to) ||
+                                (second.value >= rangeSlider_temp.from && second.value <= rangeSlider_temp.to &&
+                                 currentDevice.limitTempMax >= rangeSlider_temp.from && currentDevice.limitTempMax <= rangeSlider_temp.to)) {
+                                currentDevice.limitTempMax = second.value.toFixed(0)
+                            }
+                        }
+                    }
                 }
             }
             Text {
@@ -538,7 +866,7 @@ Item {
 
             Item {
                 id: itemLumi
-                height: 72
+                height: 64
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -549,7 +877,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
@@ -573,7 +901,7 @@ Item {
                     id: rangeSlider_lumi
                     height: 20
                     anchors.top: imageLumi.bottom
-                    anchors.topMargin: 4
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
@@ -587,8 +915,22 @@ Item {
                     to: outsideMode ? 100000 : 10000
                     stepSize: outsideMode ? 5000 : 1000
 
-                    first.onValueChanged: if (currentDevice) currentDevice.limitLumiMin = first.value.toFixed(0);
-                    second.onValueChanged: if (currentDevice) currentDevice.limitLumiMax = second.value.toFixed(0);
+                    first.onValueChanged: {
+                        if (currentDevice) {
+                            if (first.value < rangeSlider_lumi.to ||
+                                (first.value <= rangeSlider_lumi.to && currentDevice.limitLumiMin <= rangeSlider_lumi.to)) {
+                                currentDevice.limitLumiMin = first.value.toFixed(0)
+                            }
+                        }
+                    }
+                    second.onValueChanged: {
+                        if (currentDevice) {
+                            if (second.value < rangeSlider_lumi.to ||
+                                (second.value <= rangeSlider_lumi.to && currentDevice.limitLumiMax <= rangeSlider_lumi.to)) {
+                                currentDevice.limitLumiMax = second.value.toFixed(0)
+                            }
+                        }
+                    }
 
                     Row {
                         id: sections
@@ -702,7 +1044,7 @@ Item {
 
             Item {
                 id: itemCondu
-                height: 52
+                height: 40
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -713,7 +1055,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
@@ -737,7 +1079,7 @@ Item {
                     id: rangeSlider_condu
                     height: 20
                     anchors.top: imageCondu.bottom
-                    anchors.topMargin: 4
+                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 32
                     anchors.right: parent.right
