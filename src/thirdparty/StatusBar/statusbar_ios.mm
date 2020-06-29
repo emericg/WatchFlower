@@ -50,7 +50,7 @@ static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)
 {
     if (theme == StatusBar::Dark)
         return UIStatusBarStyleLightContent;
-    else if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0"))
+    else if (@available(iOS 13.0, *))
         return UIStatusBarStyleDarkContent;
     else
         return UIStatusBarStyleDefault;
@@ -69,14 +69,14 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 void togglePreferredStatusBarStyle()
 {
     UIStatusBarStyle style = statusBarStyle(StatusBar::Light);
-    if(StatusBarPrivate::theme == StatusBar::Light) {
+    if(StatusBarPrivate::sbTheme == StatusBar::Light) {
         style = statusBarStyle(StatusBar::Dark);
     }
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
     QTimer::singleShot(200, []() {
-        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::theme);
+        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (keyWindow)
             setPreferredStatusBarStyle(keyWindow, style);
@@ -85,7 +85,7 @@ void togglePreferredStatusBarStyle()
 
 static void updatePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::theme);
+    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
