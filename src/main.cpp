@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
     // Keep the StatusBar the same color as the splashscreen until UI starts
     StatusBar sb;
-    sb.setColor("#fff");
+    sb.setSbColor("#fff");
 
     // Set QML material theme
     //QQuickStyle::setStyle("material");

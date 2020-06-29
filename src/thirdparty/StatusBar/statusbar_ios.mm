@@ -41,7 +41,7 @@ bool StatusBarPrivate::isAvailable_sys()
     return true;
 }
 
-void StatusBarPrivate::setColor_sys(const QColor &color)
+void StatusBarPrivate::setColor_sb(const QColor &color)
 {
     Q_UNUSED(color)
 }
@@ -91,7 +91,7 @@ static void updatePreferredStatusBarStyle()
         setPreferredStatusBarStyle(keyWindow, style);
 }
 
-void StatusBarPrivate::setTheme_sys(StatusBar::Theme)
+void StatusBarPrivate::setTheme_sb(StatusBar::Theme)
 {
     updatePreferredStatusBarStyle();
 
@@ -105,4 +105,14 @@ void StatusBarPrivate::setTheme_sys(StatusBar::Theme)
     QObject::connect(screen, &QScreen::orientationChanged, qApp, [](Qt::ScreenOrientation) {
         togglePreferredStatusBarStyle();
     }, Qt::UniqueConnection);
+}
+
+void StatusBarPrivate::setColor_nav(const QColor &color)
+{
+    Q_UNUSED(color)
+}
+
+void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
+{
+    Q_UNUSED(theme)
 }

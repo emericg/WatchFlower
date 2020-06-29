@@ -23,11 +23,14 @@
 #include "statusbar.h"
 #include "statusbar_p.h"
 
-QColor StatusBarPrivate::color;
-StatusBar::Theme StatusBarPrivate::theme = StatusBar::Light;
+QColor StatusBarPrivate::sbColor;
+StatusBar::Theme StatusBarPrivate::sbTheme = StatusBar::Light;
+QColor StatusBarPrivate::navColor;
+StatusBar::Theme StatusBarPrivate::navTheme = StatusBar::Light;
 
 StatusBar::StatusBar(QObject *parent) : QObject(parent)
 {
+    //
 }
 
 bool StatusBar::isAvailable()
@@ -35,24 +38,46 @@ bool StatusBar::isAvailable()
     return StatusBarPrivate::isAvailable_sys();
 }
 
-QColor StatusBar::color()
+QColor StatusBar::sbColor()
 {
-    return StatusBarPrivate::color;
+    return StatusBarPrivate::sbColor;
 }
 
-void StatusBar::setColor(const QColor &color)
+void StatusBar::setSbColor(const QColor &color)
 {
-    StatusBarPrivate::color = color;
-    StatusBarPrivate::setColor_sys(color);
+    StatusBarPrivate::sbColor = color;
+    StatusBarPrivate::setColor_sb(color);
 }
 
-StatusBar::Theme StatusBar::theme()
+StatusBar::Theme StatusBar::sbTheme()
 {
-    return StatusBarPrivate::theme;
+    return StatusBarPrivate::sbTheme;
 }
 
-void StatusBar::setTheme(Theme theme)
+void StatusBar::setSbTheme(Theme theme)
 {
-    StatusBarPrivate::theme = theme;
-    StatusBarPrivate::setTheme_sys(theme);
+    StatusBarPrivate::sbTheme = theme;
+    StatusBarPrivate::setTheme_sb(theme);
+}
+
+QColor StatusBar::navColor()
+{
+    return StatusBarPrivate::navColor;
+}
+
+void StatusBar::setNavColor(const QColor &color)
+{
+    StatusBarPrivate::navColor = color;
+    StatusBarPrivate::setColor_nav(color);
+}
+
+StatusBar::Theme StatusBar::navTheme()
+{
+    return StatusBarPrivate::navTheme;
+}
+
+void StatusBar::setNavTheme(Theme theme)
+{
+    StatusBarPrivate::navTheme = theme;
+    StatusBarPrivate::setTheme_nav(theme);
 }

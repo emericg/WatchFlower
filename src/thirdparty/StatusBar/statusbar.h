@@ -30,22 +30,31 @@ class StatusBar : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
-    Q_PROPERTY(QColor color READ color WRITE setColor)
-    Q_PROPERTY(Theme theme READ theme WRITE setTheme)
+
+    Q_PROPERTY(QColor sbColor READ sbColor WRITE setSbColor)
+    Q_PROPERTY(Theme sbTheme READ sbTheme WRITE setSbTheme)
+
+    Q_PROPERTY(QColor navColor READ navColor WRITE setNavColor)
+    Q_PROPERTY(Theme navTheme READ navTheme WRITE setNavTheme)
 
 public:
     explicit StatusBar(QObject *parent = nullptr);
-
     static bool isAvailable();
-
-    static QColor color();
-    static void setColor(const QColor &color);
 
     enum Theme { Light, Dark };
     Q_ENUM(Theme)
 
-    static Theme theme();
-    static void setTheme(Theme theme);
+    static QColor sbColor();
+    static void setSbColor(const QColor &color);
+
+    static Theme sbTheme();
+    static void setSbTheme(Theme theme);
+
+    static QColor navColor();
+    static void setNavColor(const QColor &color);
+
+    static Theme navTheme();
+    static void setNavTheme(Theme theme);
 };
 
 #endif // STATUSBAR_H

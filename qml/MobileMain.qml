@@ -109,8 +109,8 @@ ApplicationWindow {
     }
 
     StatusBar {
-        theme: Theme.themeStatusbar
-        color: Theme.colorStatusbar
+        sbColor: Theme.colorStatusbar
+        navColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
     }
 
     MobileHeader {

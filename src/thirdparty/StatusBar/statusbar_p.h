@@ -29,11 +29,18 @@ class StatusBarPrivate
 {
 public:
     static bool isAvailable_sys();
-    static void setColor_sys(const QColor &color);
-    static void setTheme_sys(StatusBar::Theme theme);
 
-    static QColor color;
-    static StatusBar::Theme theme;
+    static void setColor_sb(const QColor &color);
+    static void setTheme_sb(StatusBar::Theme theme);
+
+    static void setColor_nav(const QColor &color);
+    static void setTheme_nav(StatusBar::Theme theme);
+
+    static QColor sbColor;
+    static StatusBar::Theme sbTheme;
+
+    static QColor navColor;
+    static StatusBar::Theme navTheme;
 };
 
 #endif // STATUSBAR_P_H

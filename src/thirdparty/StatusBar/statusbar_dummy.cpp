@@ -27,12 +27,22 @@ bool StatusBarPrivate::isAvailable_sys()
     return false;
 }
 
-void StatusBarPrivate::setColor_sys(const QColor &color)
+void StatusBarPrivate::setColor_sb(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
-void StatusBarPrivate::setTheme_sys(StatusBar::Theme theme)
+void StatusBarPrivate::setTheme_sb(StatusBar::Theme theme)
+{
+    Q_UNUSED(theme)
+}
+
+void StatusBarPrivate::setColor_nav(const QColor &color)
+{
+    Q_UNUSED(color)
+}
+
+void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
 {
     Q_UNUSED(theme)
 }
