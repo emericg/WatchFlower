@@ -23,7 +23,6 @@
 /* ************************************************************************** */
 
 #include <QObject>
-#include <QString>
 #include <QVariantMap>
 #include <QQuickWindow>
 
@@ -46,7 +45,7 @@ Q_SIGNALS:
     void screenChanged();
 
 public:
-    UtilsScreen() = default;
+    UtilsScreen(QObject *parent = nullptr);
     ~UtilsScreen() = default;
 
     Q_INVOKABLE void getScreenInfos();
@@ -56,6 +55,20 @@ public:
     Q_INVOKABLE int getScreenDpi();
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
+
+    Q_INVOKABLE void keepScreenOn(bool on);
+
+    Q_INVOKABLE void lockScreenOrientation(int orientation);
+
+    enum ScreenOrientation {
+        ScreenOrientation_LANDSCAPE = 0,
+        ScreenOrientation_PORTRAIT = 1,
+        ScreenOrientation_SENSOR_LANDSCAPE = 6,
+        ScreenOrientation_SENSOR_PORTRAIT = 7,
+        ScreenOrientation_REVERSE_LANDSCAPE = 8,
+        ScreenOrientation_REVERSE_PORTRAIT = 9,
+    };
+    Q_ENUM(ScreenOrientation)
 };
 
 /* ************************************************************************** */

@@ -1,5 +1,5 @@
 // UtilsNumber.js
-// Version 0.5
+// Version 6
 .pragma library
 
 /* ************************************************************************** */
@@ -7,7 +7,7 @@
 /*!
  * Pad a number
  * \param n: number to pad
- * \param width: width after padding (default '2')
+ * \param width: width after padding (default 2)
  * \param z: character to insert (default '0')
  *
  * example: padNumber(2, 3, 'x') => xx2
@@ -17,7 +17,7 @@ function padNumber(n, width, z) {
     width = width || 2;
 
     n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    return (n.length >= width) ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
 /*!
@@ -28,33 +28,31 @@ function padNumber(n, width, z) {
  * example: trimNumber(154.54645698, 100000) => 154.54645
  */
 function trimNumber(n, p) {
-    if (typeof p == "undefined") {
-        p = 100000;
-    }
+    p = p || 100000;
 
-    return (Math.round(n*p)) / p;
+    return (Math.round(n * p)) / p;
 }
 
 /*!
- * Normalize value between min and max
+ * Normalize n between min and max
  */
-function normalize(value, min, max) {
-    if (value <= 0) return 0
-    return Math.min(((value - min) / (max - min)), 1)
+function normalize(n, min, max) {
+    if (n <= 0) return 0
+    return Math.min(((n - min) / (max - min)), 1)
 }
 
 /*!
- * Align value to the closest r
+ * Align n to the closest r
  */
-function alignTo(value, r) {
-    return (value + (r - 1)) & ~(r - 1);
+function alignTo(n, r) {
+    return (n + (r - 1)) & ~(r - 1);
 }
 
 /*!
  * Round n to a multiple of two
  */
 function round2(n) {
-    return Math.ceil(n/2)*2;
+    return Math.ceil(n / 2) * 2;
 }
 
 /*!
@@ -93,6 +91,16 @@ function isEven(n) {
  */
 function isOdd(n) {
     return n % 2 !== 0;
+}
+
+/* ************************************************************************** */
+
+function radToDeg(radian) {
+    return radian * (180/Math.PI)
+}
+
+function degToRad(degree) {
+    return degree * (Math.PI/180)
 }
 
 /* ************************************************************************** */

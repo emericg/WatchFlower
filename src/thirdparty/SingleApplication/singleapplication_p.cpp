@@ -77,7 +77,7 @@ SingleApplicationPrivate::~SingleApplicationPrivate()
             delete server;
             inst->primary = false;
             inst->primaryPid = -1;
-            inst->primaryUser[0] =  '\0';
+            inst->primaryUser[0] = '\0';
             inst->checksum = blockChecksum();
         }
         memory->unlock();
@@ -153,7 +153,7 @@ void SingleApplicationPrivate::initializeMemoryBlock()
     inst->primary = false;
     inst->secondary = 0;
     inst->primaryPid = -1;
-    inst->primaryUser[0] =  '\0';
+    inst->primaryUser[0] = '\0';
     inst->checksum = blockChecksum();
 }
 

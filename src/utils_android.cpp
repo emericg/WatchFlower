@@ -167,30 +167,6 @@ bool android_ask_phonestate_permission()
 
 /* ************************************************************************** */
 
-void android_set_statusbar_color(int color)
-{
-#ifdef Q_OS_ANDROID
-
-    QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
-/*
-    window.callMethod<void>("addFlags", "(I)V", 0x80000000);
-    window.callMethod<void>("clearFlags", "(I)V", 0x04000000);
-    window.callMethod<void>("setStatusBarColor", "(I)V", color); // Desired statusbar color
-
-    // Note: If you're using white, or some other very bright color as background, the statusbar's text can be made a little darker using the following code:
-    QAndroidJniObject decorView = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
-    decorView.callMethod<void>("setSystemUiVisibility", "(I)V", 0x00002000);
-
-    setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-    getWindow().setStatusBarColor(Color.TRANSPARENT);
-*/
-#else
-    Q_UNUSED(color)
-#endif // Q_OS_ANDROID
-}
-
-/* ************************************************************************** */
-
 QStringList android_get_storages_by_api()
 {
     QStringList storages;
@@ -282,7 +258,7 @@ QString android_get_device_model()
 
     QAndroidJniObject manufacturerField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "MANUFACTURER");
     QAndroidJniObject modelField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "MODEL");
-    device_model =  manufacturerField.toString() + " " + modelField.toString();
+    device_model = manufacturerField.toString() + " " + modelField.toString();
 
     //qDebug() << "> android_get_device_model()" << device_model;
 
@@ -318,7 +294,7 @@ QString android_get_device_serial()
 bool android_screen_keep_on(bool on)
 {
 #ifdef Q_OS_ANDROID
-/*
+
     //qDebug() << "> android_keep_screen_on(" << on << ")";
 
     QtAndroid::runOnAndroidThread([on]{
@@ -326,7 +302,6 @@ bool android_screen_keep_on(bool on)
         if (activity.isValid())
         {
             QAndroidJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
-
             if (window.isValid())
             {
                 const int FLAG_KEEP_SCREEN_ON = 128;
@@ -344,7 +319,7 @@ bool android_screen_keep_on(bool on)
             env->ExceptionClear();
         }
     });
-*/
+
 #else
     Q_UNUSED(on)
 #endif // Q_OS_ANDROID
@@ -355,13 +330,16 @@ bool android_screen_keep_on(bool on)
 bool android_screen_lock_orientation(int orientation)
 {
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject activity = QtAndroid::androidActivity();
 
-    if(activity.isValid())
+    //qDebug() << "> android_screen_lock_orientation(" << orientation << ")";
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    if (activity.isValid())
     {
         activity.callMethod<void>("setRequestedOrientation", "(I)V", orientation);
         return true;
     }
+
 #else
     Q_UNUSED(orientation)
 #endif // Q_OS_ANDROID
@@ -371,15 +349,33 @@ bool android_screen_lock_orientation(int orientation)
 
 /* ************************************************************************** */
 
-void android_vibrate()
+void android_vibrate(int milliseconds)
 {
 #ifdef Q_OS_ANDROID
-/*
-    QAndroidJniObject vibvib = QAndroidJniObject::getStaticObjectField("android/os/Vibrator",
-                                                                         "vibrate",
-                                                                         "(I)V;",
-                                                                         1000);
-*/
+
+    if (milliseconds > 100) milliseconds = 100;
+
+    QtAndroid::runOnAndroidThread([=]() {
+        QAndroidJniObject activity = QtAndroid::androidActivity();
+        if (activity.isValid())
+        {
+            QAndroidJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+            if (appctx.isValid())
+            {
+                QAndroidJniObject vibroString = QAndroidJniObject::fromString("vibrator");
+                QAndroidJniObject vibratorService = appctx.callObjectMethod("getSystemService",
+                                                                            "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                            vibroString.object<jstring>());
+                if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
+                {
+                    vibratorService.callMethod<void>("vibrate", "(J)V", milliseconds);
+                }
+            }
+        }
+    });
+
+#else
+    Q_UNUSED(milliseconds)
 #endif // Q_OS_ANDROID
 }
 

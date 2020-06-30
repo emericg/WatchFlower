@@ -39,6 +39,8 @@ bool android_check_storage_permissions();
  */
 bool android_ask_storage_permissions();
 
+/* ************************************************************************** */
+
 /*!
  * \brief android_get_storages_by_api
  * \return The path to the external storage.
@@ -95,36 +97,37 @@ QString android_get_device_model();
  * \return The device serial number.
  *
  * Need READ_PHONE_STATE permission.
- * Only work before Android 10.
+ * Only work before Android 10 (API < 29).
  *
  * - https://developer.android.com/reference/android/os/Build#getSerial()
  */
 QString android_get_device_serial();
 
-/* ************************************************************************** */
+/*!
+ * \brief android_ask_phonestate_permission
+ * \return True if READ_PHONE_STATE permission has been previously obtained.
+ */
+bool android_check_phonestate_permission();
 
 /*!
- * \brief android_check_location_permission
- * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
+ * \brief android_ask_phonestate_permission
+ * \return True if READ_PHONE_STATE permission has been explicitly obtained.
  */
-bool android_check_location_permission();
-
-/*!
- * \brief android_ask_location_permission
- * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
- */
-bool android_ask_location_permission();
+bool android_ask_phonestate_permission();
 
 /* ************************************************************************** */
 
 /*!
  * \brief android_screen_keep_on
+ * \param on: screen on or off.
  */
 bool android_screen_keep_on(bool on);
 
+/* ************************************************************************** */
+
 /*!
  * \brief android_screen_lock_orientation
- * \param orientation: 0 is for landscapte, 1 for portrait
+ * \param orientation: 0 is for landscapte, 1 for portrait.
  *
  * Lock screen orientation, using:
  * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
@@ -134,19 +137,15 @@ bool android_screen_lock_orientation(int orientation);
 /* ************************************************************************** */
 
 /*!
- * \brief android_set_statusbar_color
- * \param color: 32b RGBA color.
- *
- * \note: WIP, only make the app segfault right now.
- */
-void android_set_statusbar_color(int color);
-
-/* ************************************************************************** */
-
-/*!
  * \brief android_vibrate
+ * \param milliseconds: vibration duration.
+ *
+ * Need VIBRATE permission.
+ *
+ * - 25 is a small keyboard like vibration
+ * - 100 is a
  */
-void android_vibrate();
+void android_vibrate(int milliseconds);
 
 /* ************************************************************************** */
 #endif // UTILS_ANDROID_H

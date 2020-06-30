@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2019 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \author    Emeric Grange <emeric.grange@gmail.com>
- * \date      2019
+ * \date      2020
  */
 
 #include "utils_ios.h"

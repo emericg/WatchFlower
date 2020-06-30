@@ -64,6 +64,8 @@ public:
     static Q_INVOKABLE QString getMobileDeviceModel();
     static Q_INVOKABLE QString getMobileDeviceSerial();
 
+    static Q_INVOKABLE void vibrate(int ms);
+
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     static Q_INVOKABLE int getMobileStorageCount();
     static Q_INVOKABLE QString getMobileStorageInternal();
