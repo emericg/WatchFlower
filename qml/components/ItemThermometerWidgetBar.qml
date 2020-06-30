@@ -11,7 +11,7 @@ Item {
     height: parent.height
 
     property var mmd: null
-    property int hhh: 22
+    property int hhh: 20
 
     Component.onCompleted: computeSize()
     onHeightChanged: computeSize()
@@ -109,7 +109,7 @@ Item {
 
             Rectangle {
                 id: rectangle_temp_mean
-                width: hhh*0.66; height: hhh*0.66; radius: hhh;
+                width: UtilsNumber.alignTo(hhh*0.666, 2); height: width; radius: width;
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "white"
                 opacity: 0.85

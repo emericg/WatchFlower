@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemImageButton
@@ -15,64 +16,67 @@ Item {
     property bool selected: false
 
     // settings
-    property string highlightMode: "circle" // circle / color / both / off
+    property int btnSize: height
+    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
+
     property bool background: false
+    property bool border: false
+
+    property string highlightMode: "circle" // circle / color / both / off
 
     property string iconColor: Theme.colorIcon
     property string highlightColor: Theme.colorPrimary
     property string backgroundColor: Theme.colorComponent
+    property string borderColor: Theme.colorComponentBorder
 
+    property url source: ""
     property string tooltipText: ""
 
-    // image
-    property url source: ""
+    clip: tooltipText
+    Behavior on width { NumberAnimation { duration: 133 } }
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill: bgRect
         onClicked: itemImageButton.clicked()
 
         hoverEnabled: true
         onEntered: {
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both") ? 0.9 : 0.50
             itemImageButton.highlighted = true
+            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
+            if (tooltipText) itemImageButton.width = btnSize + (tooltip.width + tooltip.anchors.leftMargin)
         }
         onExited: {
             itemImageButton.highlighted = false
-            bgRect.opacity = background ? 0.50 : 0
+            bgRect.opacity = itemImageButton.background ? 0.75 : 0
+            if (tooltipText) itemImageButton.width = btnSize
         }
     }
 
     Rectangle {
         id: bgRect
-        anchors.fill: parent
-        radius: itemImageButton.width
-        color: parent.backgroundColor
-        opacity: background ? 0.50 : 0
-        visible: (highlightMode === "circle" || highlightMode === "both" || background)
+        width: btnSize
+        height: btnSize
+        radius: btnSize
+        anchors.verticalCenter: itemImageButton.verticalCenter
 
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        visible: (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background)
+        color: itemImageButton.backgroundColor
+
+        border.width: itemImageButton.border ? 1 : 0
+        border.color: itemImageButton.borderColor
+
+        opacity: itemImageButton.background ? 0.75 : 0
+        Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
-    Image {
+    ImageSvg {
         id: contentImage
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-
-        width: Math.round(itemImageButton.width * 0.666)
-        height: Math.round(itemImageButton.height * 0.666)
-        visible: false
+        width: imgSize
+        height: imgSize
+        anchors.centerIn: bgRect
 
         source: itemImageButton.source
-        sourceSize: Qt.size(width, height)
-    }
-    ColorOverlay {
-        anchors.centerIn: parent
-        source: contentImage
-        width: contentImage.sourceSize.width
-        height: contentImage.sourceSize.height
-        cached: true
-        opacity: itemImageButton.enabled ? 1.0 : 0.5
-
+        opacity: itemImageButton.enabled ? 1.0 : 0.75
         color: {
             if (selected === true) {
                 itemImageButton.highlightColor
@@ -87,12 +91,11 @@ Item {
     Text {
         id: tooltip
         anchors.left: contentImage.right
-        anchors.leftMargin: (itemImageButton.width / 3)
+        anchors.leftMargin: (btnSize / 3)
         anchors.verticalCenter: contentImage.verticalCenter
 
         text: tooltipText
         color: Theme.colorText
-        visible: tooltipText && highlighted
-        font.pixelSize: 14
+        font.pixelSize: Theme.fontSizeComponent
     }
 }
