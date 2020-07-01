@@ -396,6 +396,7 @@ Item {
                 ComboBoxThemed {
                     id: combobox_language
                     width: 160
+                    height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -1317,8 +1318,13 @@ Item {
                     fullColor: false
                     text: qsTr("Export")
                     onClicked: {
-                        if (deviceManager.exportData())
+                        if (deviceManager.exportData()) {
+                            text = qsTr("Exported")
                             fullColor = true
+                        } else {
+                            text = qsTr("Export")
+                            fullColor = false
+                        }
                     }
                 }
             }

@@ -19,7 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.9
+import QtQuick 2.12
+import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
 
@@ -83,25 +84,31 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    // prevent clicks into this area
-    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+    DragHandler {
+        // make that surface draggable
+        // also, prevent clicks below this area
+        onActiveChanged: if (active) applicationWindow.startSystemMove();
+        target: null
+    }
 
-    ImageSvg {
-        id: buttonBack
-        width: 24
-        height: 24
+    MouseArea {
+        width: 40
+        height: 40
         anchors.left: parent.left
-        anchors.leftMargin: 16
+        anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeaderBar.width >= 560)
-        source: "qrc:/assets/menus/menu_logo_large.svg"
-        color: Theme.colorHeaderContent
+        hoverEnabled: (buttonBack.source !== "qrc:/assets/menus/menu_logo_large.svg")
+        onEntered: { buttonBackBg.opacity = 0.5; }
+        onExited: { buttonBackBg.opacity = 0; buttonBack.width = 24; }
+
+        onPressed: buttonBack.width = 20
+        onReleased: buttonBack.width = 24
+        onClicked: backButtonClicked()
 
         Rectangle {
             id: buttonBackBg
             anchors.fill: parent
-            anchors.margins: -8
             radius: height
             z: -1
             color: Theme.colorHeaderHighlight
@@ -109,40 +116,25 @@ Rectangle {
             Behavior on opacity { OpacityAnimator { duration: 333 } }
         }
 
-        MouseArea {
-            anchors.rightMargin: -8
-            anchors.leftMargin: -8
-            anchors.bottomMargin: -8
-            anchors.topMargin: -8
-            anchors.fill: parent
+        ImageSvg {
+            id: buttonBack
+            width: 24
+            height: width
+            anchors.centerIn: parent
 
-            hoverEnabled: (buttonBack.source !== "qrc:/assets/menus/menu_logo_large.svg")
-            onEntered: buttonBackBg.opacity = 0.5
-            onExited: buttonBackBg.opacity = 0
-
-            onPressed: {
-                buttonBack.anchors.topMargin += 2
-                buttonBack.anchors.leftMargin += 2
-                buttonBack.width -= 4
-                buttonBack.height -= 4
-            }
-            onReleased: {
-                buttonBack.anchors.topMargin -= 2
-                buttonBack.anchors.leftMargin -= 2
-                buttonBack.width += 4
-                buttonBack.height += 4
-            }
-            onClicked: backButtonClicked()
+            visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeaderBar.width >= 580)
+            source: "qrc:/assets/menus/menu_logo_large.svg"
+            color: Theme.colorHeaderContent
         }
     }
 
     Text {
         id: title
         anchors.left: parent.left
-        anchors.leftMargin: 56
+        anchors.leftMargin: 64
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (rectangleHeaderBar.width >= 560)
+        visible: (rectangleHeaderBar.width >= 580)
         text: "WatchFlower"
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader

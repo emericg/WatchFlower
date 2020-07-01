@@ -227,7 +227,6 @@ Item {
             anchors.topMargin: isMobile ? 8 : 52
 
             ButtonWireframe {
-                id: buttonDone
                 width: 100
                 height: 32
 
@@ -242,7 +241,6 @@ Item {
             }
 
             ButtonWireframe {
-                id: buttonDone1
                 width: 100
                 height: 32
 
@@ -257,7 +255,6 @@ Item {
             }
 
             ButtonWireframe {
-                id: buttonDone2
                 width: 100
                 height: 32
 
