@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.9
+import QtQuick 2.12
 
 import ThemeEngine 1.0
 

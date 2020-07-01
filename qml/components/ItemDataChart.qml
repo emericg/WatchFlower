@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.9
-import QtCharts 2.2
+import QtQuick 2.12
+import QtCharts 2.3
 
 import ThemeEngine 1.0
 
@@ -170,7 +170,7 @@ Item {
         anchors.rightMargin: -20
 
         antialiasing: false
-        legend.visible: false // this will only work with Qt 5.10+
+        legend.visible: false
         backgroundColor: "transparent"
 
         //animationOptions: ChartView.SeriesAnimations

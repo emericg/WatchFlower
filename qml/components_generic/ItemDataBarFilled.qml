@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber

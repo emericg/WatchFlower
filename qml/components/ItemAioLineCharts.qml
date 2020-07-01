@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-import QtQuick 2.9
-import QtCharts 2.2
+import QtQuick 2.12
+import QtCharts 2.3
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -136,7 +136,7 @@ Item {
         anchors.margins: -20
 
         antialiasing: true
-        legend.visible: false // works only with Qt 5.10+
+        legend.visible: false
         backgroundRoundness: 0
         backgroundColor: "transparent"
         animationOptions: ChartView.NoAnimation

@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -25,11 +25,12 @@ CheckBox {
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 14
-            height: 14
+            width: 13
+            height: 13
 
-            visible: control.checked
             color: Theme.colorSecondary
+            opacity: control.checked ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: 133 } }
         }
     }
 

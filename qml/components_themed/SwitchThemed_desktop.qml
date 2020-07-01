@@ -1,11 +1,12 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
 Switch {
     id: control
 
+    spacing: 16
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
@@ -37,6 +38,7 @@ Switch {
         verticalAlignment: Text.AlignVCenter
 
         text: control.text
+        font: control.font
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.33
     }

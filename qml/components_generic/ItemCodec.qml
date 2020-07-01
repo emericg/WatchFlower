@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -28,7 +28,7 @@ Item {
             text: codec.text
             color: codec.colorText
             font.capitalization: Font.AllUppercase
-            font.pixelSize: Theme.fontSizeComponentText
+            font.pixelSize: Theme.fontSizeComponent
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

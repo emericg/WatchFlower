@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -8,7 +8,7 @@ TextField {
     implicitWidth: 128
     implicitHeight: Theme.componentHeight
 
-    property string colorText: Theme.colorComponentText
+    property string colorText: Theme.colorComponentContent
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
 
@@ -19,6 +19,7 @@ TextField {
     background: Rectangle {
         border.width: 2
         border.color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
+        radius: Theme.componentRadius
         color: colorBackground
     }
 }
