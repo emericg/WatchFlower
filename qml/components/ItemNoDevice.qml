@@ -77,7 +77,6 @@ Item {
             spacing: 16
 
             ButtonWireframe {
-                height: 40
                 visible: (Qt.platform.os === "android")
 
                 text: qsTr("Official information")
@@ -86,8 +85,6 @@ Item {
             }
 
             ButtonWireframe {
-                height: 40
-
                 text: qsTr("Launch detection")
                 primaryColor: Theme.colorPrimary
                 onClicked: deviceManager.scanDevices()

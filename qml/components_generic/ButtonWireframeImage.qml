@@ -61,6 +61,7 @@ Button {
             id: contentRow
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: -4
             spacing: 8
 
             ImageSvg {

@@ -28,6 +28,20 @@
 /* ************************************************************************** */
 
 /*!
+ * \brief android_check_location_permission
+ * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
+ */
+bool android_check_location_permission();
+
+/*!
+ * \brief android_ask_location_permission
+ * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
+ */
+bool android_ask_location_permission();
+
+/* ************************************************************************** */
+
+/*!
  * \brief android_check_storage_permissions
  * \return True if R/W permissions on main storage have been previously obtained.
  */
@@ -38,8 +52,6 @@ bool android_check_storage_permissions();
  * \return True if R/W permissions on main storage have been explicitly obtained.
  */
 bool android_ask_storage_permissions();
-
-/* ************************************************************************** */
 
 /*!
  * \brief android_get_storages_by_api
@@ -71,18 +83,6 @@ QStringList android_get_storages_by_env();
 QString android_get_external_storage();
 
 /* ************************************************************************** */
-
-/*!
- * \brief android_check_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been previously obtained.
- */
-bool android_check_phonestate_permission();
-
-/*!
- * \brief android_ask_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been explicitly obtained.
- */
-bool android_ask_phonestate_permission();
 
 /*!
  * \brief android_get_device_model

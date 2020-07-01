@@ -152,7 +152,7 @@ Item {
                 font.pixelSize: 14
             }
             ButtonWireframe {
-                height: 32
+                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 48
 

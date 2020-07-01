@@ -1310,7 +1310,7 @@ Item {
 
                 ButtonWireframe {
                     width: 128
-                    height: 34
+                    height: 36
                     anchors.left: parent.left
                     anchors.leftMargin: 64
                     anchors.verticalCenter: parent.verticalCenter

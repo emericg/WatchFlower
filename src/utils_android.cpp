@@ -297,7 +297,7 @@ bool android_screen_keep_on(bool on)
 
     //qDebug() << "> android_keep_screen_on(" << on << ")";
 
-    QtAndroid::runOnAndroidThread([on]{
+    QtAndroid::runOnAndroidThread([=]() {
         QAndroidJniObject activity = QtAndroid::androidActivity();
         if (activity.isValid())
         {

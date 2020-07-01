@@ -161,7 +161,7 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 26
+                    imgSize: 28
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -175,7 +175,7 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 20
+                    imgSize: 22
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -187,7 +187,7 @@ Item {
 
             ////////
 
-            Item { height: 1; width: 1; } // spacer
+            //Item { height: 1; width: 1; } // spacer
 
             Item {
                 id: desc

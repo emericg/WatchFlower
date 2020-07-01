@@ -63,6 +63,7 @@ Rectangle {
         anchors.topMargin: screenStatusbarPadding + screenNotchPadding
 
         Text {
+            height: parent.height
             anchors.left: parent.left
             anchors.leftMargin: 64
             anchors.verticalCenter: parent.verticalCenter
@@ -72,6 +73,7 @@ Rectangle {
             font.bold: false
             font.pixelSize: Theme.fontSizeHeader
             font.capitalization: Font.Capitalize
+            verticalAlignment: Text.AlignVCenter
         }
 
         MouseArea {
