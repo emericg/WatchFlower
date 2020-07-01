@@ -10,8 +10,8 @@ android { QT += androidextras }
 ios { QT += gui-private }
 
 # Validate Qt version
-if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 10)) {
-    error("You need AT LEAST Qt 5.10 to build $${TARGET}")
+if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 12)) {
+    error("You need AT LEAST Qt 5.12 to build $${TARGET}")
 }
 
 # Project features #############################################################
@@ -101,6 +101,7 @@ unix {
 }
 
 DEFINES += QT_DEPRECATED_WARNINGS
+QT_LOGGING_RULES="qt.qml.connections=false"
 
 CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
 
