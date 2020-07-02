@@ -926,7 +926,7 @@ QVariantList Device::getDataMonthly(const QString &dataName)
     QSqlQuery dataPerMonth;
     dataPerMonth.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
                          "FROM datas WHERE deviceAddr = :deviceAddr " \
-                         "GROUP BY cast(strftime('%d', ts) as datetime) " \
+                         "GROUP BY strftime('%Y-%m-%d', ts) " \
                          "ORDER BY ts DESC;");
     dataPerMonth.bindValue(":deviceAddr", getAddress());
 
@@ -1026,7 +1026,7 @@ QVariantList Device::getDataDaily(const QString &dataName)
     QSqlQuery dataPerDay;
     dataPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
                        "FROM datas WHERE deviceAddr = :deviceAddr " \
-                       "GROUP BY cast(strftime('%d', ts) as datetime) " \
+                       "GROUP BY strftime('%Y-%m-%d', ts) " \
                        "ORDER BY ts DESC;");
     dataPerDay.bindValue(":deviceAddr", getAddress());
 
@@ -1305,7 +1305,7 @@ void Device::updateAioMinMaxData(int maxDays)
     graphData.prepare("SELECT strftime('%Y-%m-%d', ts), min(temp), avg(temp), max(temp), min(hygro), max(hygro) " \
                       "FROM datas " \
                       "WHERE deviceAddr = :deviceAddr " \
-                      "GROUP BY cast(strftime('%d', ts) as datetime)" \
+                      "GROUP BY strftime('%Y-%m-%d', ts)" \
                       "ORDER BY ts DESC;");
     graphData.bindValue(":deviceAddr", getAddress());
 
