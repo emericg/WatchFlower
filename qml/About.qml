@@ -187,11 +187,11 @@ Item {
 
             ////////
 
-            //Item { height: 1; width: 1; } // spacer
+            Item { height: 1; width: 1; visible: isDesktop; } // spacer
 
             Item {
                 id: desc
-                height: Math.max(UtilsNumber.alignTo(description.height, 8), 48)
+                height: Math.max(UtilsNumber.alignTo(description.contentHeight, 8), 32)
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -209,19 +209,18 @@ Item {
                     color: Theme.colorText
                 }
 
-                TextArea {
+                Text {
                     id: description
                     anchors.top: parent.top
                     anchors.topMargin: 0
                     anchors.left: parent.left
-                    anchors.leftMargin: 40
+                    anchors.leftMargin: 48
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    color: Theme.colorText
                     text: qsTr("A plant monitoring application for Xiaomi 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.")
                     wrapMode: Text.WordWrap
-                    readOnly: true
+                    color: Theme.colorText
                     font.pixelSize: 16
                 }
             }
