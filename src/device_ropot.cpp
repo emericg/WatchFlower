@@ -85,6 +85,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
         delete serviceData;
+        serviceData = nullptr;
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)

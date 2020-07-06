@@ -97,6 +97,7 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
     {
         delete serviceInfos;
+        serviceInfos = nullptr;
 
         serviceInfos = controller->createServiceObject(uuid);
         if (!serviceInfos)
@@ -106,6 +107,7 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{22210000-554a-4546-5542-46534450464d}") // (unknown service) // data
     {
         delete serviceData;
+        serviceData = nullptr;
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)

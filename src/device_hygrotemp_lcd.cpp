@@ -101,6 +101,7 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
     {
         delete serviceInfos;
+        serviceInfos = nullptr;
 
         if (m_firmware.isEmpty() || m_firmware == "UNKN")
         {
@@ -116,6 +117,7 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
         Q_EMIT statusUpdated();
 
         delete serviceBattery;
+        serviceBattery = nullptr;
 
         serviceBattery = controller->createServiceObject(uuid);
         if (!serviceBattery)
@@ -125,6 +127,7 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // data
     {
         delete serviceData;
+        serviceData = nullptr;
 
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)
