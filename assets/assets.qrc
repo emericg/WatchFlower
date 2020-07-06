@@ -36,7 +36,6 @@
         <file>icons_material/baseline-edit-24px.svg</file>
         <file>icons_material/baseline-filter_list-24px.svg</file>
         <file>icons_material/baseline-flaky-24px.svg</file>
-        <file>icons_material/baseline-flash_on-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg</file>
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-insert_link-24px.svg</file>
@@ -49,18 +48,17 @@
         <file>icons_material/baseline-sort-24px.svg</file>
         <file>icons_material/baseline-search-24px.svg</file>
         <file>icons_material/baseline-settings-20px.svg</file>
-        <file>icons_material/baseline-settings_bluetooth-24px.svg</file>
         <file>icons_material/baseline-stars-24px.svg</file>
         <file>icons_material/baseline-straighten-24px.svg</file>
         <file>icons_material/baseline-supervised_user_circle-24px.svg</file>
         <file>icons_material/baseline-support-24px.svg</file>
         <file>icons_material/baseline-timeline-24px.svg</file>
+        <file>icons_material/baseline-tonality-24px.svg</file>
         <file>icons_material/baseline-trip_origin-24px.svg</file>
         <file>icons_material/baseline-warning-24px.svg</file>
         <file>icons_material/inside-24px.svg</file>
         <file>icons_material/outside-24px.svg</file>
 
-        <file>icons_material/outline-email-24px.svg</file>
         <file>icons_material/outline-info-24px.svg</file>
         <file>icons_material/outline-local_florist-24px.svg</file>
         <file>icons_material/outline-local_florist_pot-24px.svg</file>

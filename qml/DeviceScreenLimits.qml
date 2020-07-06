@@ -1059,8 +1059,9 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
+                    rotation: 90
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-flash_on-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
                 }
                 Text {
                     anchors.left: imageCondu.right
