@@ -30,6 +30,7 @@ Button {
 
         clip: hoverAnimation
         MouseArea {
+            id: mmmm
             anchors.fill: parent
             acceptedButtons: Qt.NoButton
 
@@ -37,18 +38,24 @@ Button {
             visible: hoverAnimation
             hoverEnabled: hoverAnimation
 
-            onEntered: mouseBackground.opacity = 0.15
-            onExited: mouseBackground.opacity = 0
-            onPositionChanged: {
-                mouseBackground.x = mouseX + 4 - (mouseBackground.width / 2)
-                mouseBackground.y = mouseY + 4 - (mouseBackground.width / 2)
+            onEntered: {
+                mouseBackground.width = 80
+                mouseBackground.opacity = 0.16
             }
+            onExited: {
+                mouseBackground.width = 0
+                mouseBackground.opacity = 0
+            }
+
             Rectangle {
                 id: mouseBackground
-                width: 80; height: width; radius: width;
+                width: 0; height: width; radius: width;
+                x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
+                y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
                 color: "#fff"
                 opacity: 0
-                Behavior on opacity { NumberAnimation { duration: 200 } }
+                Behavior on opacity { NumberAnimation { duration: 133 } }
+                Behavior on width { NumberAnimation { duration: 133 } }
             }
         }
     }
