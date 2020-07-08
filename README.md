@@ -18,19 +18,19 @@ Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 ### Features
 
 * Support plant sensors and thermometers
-* Name your plants and set your own limits for optimal plants care
+* Name your plants and set your own limits for optimal care
+* Background updates & notifications (desktop only)
+* Configurable update intervals
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
-* Configurable update intervals
-* Background updates & notifications (desktop only)
+* CSV data export
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
 TODOs:
 
-- Continuous measurements
-- Read offline sensors history
-- Android: background updates & notifications
-- Add more compatible sensors!
+* Read offline sensors history
+* Continuous measurements (BLE advertising support)
+* Background updates & notifications (Android, maybe iOS)
 
 ### Supported devices
 
