@@ -77,15 +77,15 @@ Item {
             if (graphViewSelected === "daily") {
                 myBarSeries.barWidth = 0.90
                 axisX0.labelsFont.pixelSize = 8
-                axisX0.categories = currentDevice.getHours()
+                axisX0.categories = currentDevice.getLegendHours()
             } else if (graphViewSelected === "weekly") {
                 myBarSeries.barWidth = 0.75
                 axisX0.labelsFont.pixelSize = 12
-                axisX0.categories = currentDevice.getDays()
+                axisX0.categories = currentDevice.getLegendDays(7)
             } else {
                 myBarSeries.barWidth = 0.94
                 axisX0.labelsFont.pixelSize = 6
-                axisX0.categories = currentDevice.getMonth()
+                axisX0.categories = currentDevice.getLegendDays(30)
             }
         }
     }
@@ -128,11 +128,11 @@ Item {
 
         // Get data
         if (graphViewSelected === "daily") {
-            myBarSet.values = currentDevice.getDataHourly(graphDataSelected)
+            myBarSet.values = currentDevice.getDataHours(graphDataSelected)
         } else if (graphViewSelected === "weekly") {
-            myBarSet.values = currentDevice.getDataDaily(graphDataSelected)
+            myBarSet.values = currentDevice.getDataDays(graphDataSelected, 7)
         } else {
-            myBarSet.values = currentDevice.getDataMonthly(graphDataSelected)
+            myBarSet.values = currentDevice.getDataDays(graphDataSelected, 30)
         }
 
         // Min axis
@@ -150,12 +150,12 @@ Item {
 
         // Decorations
         if (graphViewSelected === "daily") {
-            backgroundDayBars.values = currentDevice.getBackgroundHourly(max_of_legend)
-            backgroundNightBars.values = currentDevice.getBackgroundNightly(max_of_legend)
+            backgroundDayBars.values = currentDevice.getBackgroundDaytime(max_of_legend)
+            backgroundNightBars.values = currentDevice.getBackgroundNighttime(max_of_legend)
         } else if (graphViewSelected === "weekly") {
-            backgroundDayBars.values = currentDevice.getBackgroundDaily(max_of_legend)
+            backgroundDayBars.values = currentDevice.getBackgroundDays(max_of_legend, 7)
         } else {
-            backgroundDayBars.values = currentDevice.getMonthBackground(max_of_legend)
+            backgroundDayBars.values = currentDevice.getBackgroundDays(max_of_legend, 30)
         }
     }
 

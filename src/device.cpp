@@ -877,417 +877,248 @@ int Device::countData(const QString &dataName, int days) const
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+QVariantList Device::getBackgroundDays(float maxValue, int maxDays)
+{
+    QVariantList background;
+
+    while (background.size() < maxDays)
+    {
+        background.append(maxValue);
+    }
+
+    return background;
+}
+
 /*!
- * \brief Device::getMonth
  * \return Last 30 days
  *
  * First day is always xxx
  */
-QVariantList Device::getMonth()
+QVariantList Device::getLegendDays(int maxDays)
 {
-    QVariantList lastSevenDays;
+    QVariantList legend;
+    QString legendFormat = "dd";
+    if (maxDays <= 7) legendFormat = "dddd";
 
     // first day is always today
     QDate currentDay = QDate::currentDate();
-    lastSevenDays.prepend(currentDay.toString("dd"));
+    QString d = currentDay.toString(legendFormat);
+    if (maxDays <= 7)
+    {
+        d.truncate(3);
+        d += ".";
+    }
+    legend.push_front(d);
 
-    // then fill the 6 days before that
-    while (lastSevenDays.size() < 30)
+    // then fill the days before that
+    while (legend.size() < maxDays)
     {
         currentDay = currentDay.addDays(-1);
-        lastSevenDays.prepend(currentDay.toString("dd"));
+        d = currentDay.toString(legendFormat);
+        if (maxDays <= 7)
+        {
+            d.truncate(3);
+            d += ".";
+        }
+        legend.push_front(d);
     }
 
-    return lastSevenDays;
-/*
-    // format days (ex: "mon.")
-    QVariantList lastSevenDaysFormated;
-    for (int i = 0; i < lastSevenDays.size(); i++)
-    {
-        QString day = qvariant_cast<QString>(lastSevenDays.at(i));
-        day.truncate(2);
-        day += ".";
-        lastSevenDaysFormated.append(day);
-    }
-*/
-/*
-    qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
-    for (auto d: lastSevenDaysFormated)
-        qDebug() << d;
-*/
-    //return lastSevenDaysFormated;
+    return legend;
 }
 
-QVariantList Device::getDataMonthly(const QString &dataName)
+QVariantList Device::getDataDays(const QString &dataName, int maxDays)
 {
-    QVariantList data;
-    QDate nextDayToHandle = QDate::currentDate();
+    QVariantList graphData;
+    QDate currentDay = QDate::currentDate(); // today
+    QDate previousDay;
+    QDate firstDay;
 
-    QSqlQuery dataPerMonth;
-    dataPerMonth.prepare("SELECT strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg'" \
-                         "FROM datas WHERE deviceAddr = :deviceAddr " \
-                         "GROUP BY strftime('%Y-%m-%d', ts) " \
-                         "ORDER BY ts DESC;");
-    dataPerMonth.bindValue(":deviceAddr", getAddress());
+    QSqlQuery sqlData;
+    sqlData.prepare("SELECT strftime('%Y-%m-%d', ts), avg(" + dataName + ") as 'avg'" \
+                    "FROM datas " \
+                    "WHERE deviceAddr = :deviceAddr " \
+                    "GROUP BY strftime('%Y-%m-%d', ts) " \
+                    "ORDER BY ts DESC;");
+    sqlData.bindValue(":deviceAddr", getAddress());
 
-    if (dataPerMonth.exec() == false)
-        qWarning() << "> dataPerMonth.exec() ERROR" << dataPerMonth.lastError().type() << ":" << dataPerMonth.lastError().text();
-
-    while (dataPerMonth.next() && (data.size() <= 30))
+    if (sqlData.exec() == false)
     {
-        int currentDay = dataPerMonth.value(0).toInt();
+        qWarning() << "> dataPerMonth.exec() ERROR" << sqlData.lastError().type() << ":" << sqlData.lastError().text();
+    }
 
-        // fill holes
-        while (currentDay != nextDayToHandle.day() && (data.size() <= 30))
+    while (sqlData.next())
+    {
+        QDate datefromsql = sqlData.value(0).toDate();
+
+        // missing day(s)?
+        if (previousDay.isValid())
         {
-            data.prepend(0);
-            //qDebug() << "> filling hole for day" << nextDayToHandle.day();
-            nextDayToHandle = nextDayToHandle.addDays(-1);
+            int diff = datefromsql.daysTo(previousDay);
+            for (int i = diff; i > 1; i--)
+            {
+                //qDebug() << "> filling hole for day" << datefromsql.daysTo(previousDay);
+                graphData.push_front(0);
+            }
         }
-        nextDayToHandle = nextDayToHandle.addDays(-1);
 
-        data.prepend(dataPerMonth.value(1));
-        //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
+        // data
+        graphData.push_front(sqlData.value(1));
+        previousDay = datefromsql;
+        if (!firstDay.isValid()) firstDay = datefromsql;
+        //qDebug() << "> we have data (" << sqlData.value(1) << ") for date" << datefromsql;
 
         // max days reached?
-        if (data.size() >= 30) break;
+        if (graphData.size() >= maxDays) break;
     }
 
-    // add front padding if we don't have 7 days
-    while (data.size() < 30)
+    // missing day(s) front?
+    while (graphData.size() < maxDays)
     {
-        data.prepend(0);
+        graphData.push_front(0);
+    }
+    // missing day(s) back?
+    int missing = maxDays;
+    if (firstDay.isValid()) missing = firstDay.daysTo(currentDay);
+    for (int i = missing; i > 0; i--)
+    {
+        if (graphData.size() >= maxDays) graphData.pop_front();
+        graphData.push_back(0);
     }
 /*
     // debug
     qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
     for (auto d: data) qDebug() << d;
 */
-    return data;
-}
-
-QVariantList Device::getMonthBackground(float maxValue)
-{
-    QVariantList lastSevenDays;
-
-    while (lastSevenDays.size() < 30)
-    {
-        lastSevenDays.append(maxValue);
-    }
-
-    return lastSevenDays;
+    return graphData;
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-/*!
- * \brief Device::getDays
- * \return List of days of the week
- *
- * First day is always today, then fill it up with the previous 6 days
- */
-QVariantList Device::getDays()
+QVariantList Device::getDataHours(const QString &dataName)
 {
-    QVariantList lastSevenDays;
+    QVariantList graphData;
+    QTime currentTime = QTime::currentTime(); // right now
+    QTime previousTime;
+    QTime firstTime;
 
-    // first day is always today
-    QDate currentDay = QDate::currentDate();
-    lastSevenDays.prepend(currentDay.toString("dddd"));
+    QSqlQuery sqlData;
+    sqlData.prepare("SELECT strftime('%H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
+                    "FROM datas " \
+                    "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                    "GROUP BY strftime('%H:%m:%s', ts) " \
+                    "ORDER BY ts DESC;");
+    sqlData.bindValue(":deviceAddr", getAddress());
 
-    // then fill the 6 days before that
-    while (lastSevenDays.size() < 7)
+    if (sqlData.exec() == false)
     {
-        currentDay = currentDay.addDays(-1);
-        lastSevenDays.prepend(currentDay.toString("dddd"));
+        qWarning() << "> dataPerHour.exec() ERROR" << sqlData.lastError().type() << ":" << sqlData.lastError().text();
     }
 
-    // format days (ex: "mon.")
-    QVariantList lastSevenDaysFormated;
-    for (const auto & lastSevenDay : lastSevenDays)
+    while (sqlData.next())
     {
-        QString day = qvariant_cast<QString>(lastSevenDay);
-        day.truncate(3);
-        day += ".";
-        lastSevenDaysFormated.append(day);
-    }
-/*
-    qDebug() << "Days (" << lastSevenDaysFormated.size() << ") : ";
-    for (auto d: lastSevenDaysFormated) qDebug() << d;
-*/
-    return lastSevenDaysFormated;
-}
+        QTime timefromsql = sqlData.value(0).toTime();
 
-QVariantList Device::getDataDaily(const QString &dataName)
-{
-    QVariantList data;
-    QDate nextDayToHandle = QDate::currentDate();
-
-    QSqlQuery dataPerDay;
-    dataPerDay.prepare("SELECT strftime('%Y-%m-%d', ts) as 'date', strftime('%d', ts) as 'day', avg(" + dataName + ") as 'avg' " \
-                       "FROM datas WHERE deviceAddr = :deviceAddr " \
-                       "GROUP BY strftime('%Y-%m-%d', ts) " \
-                       "ORDER BY ts DESC;");
-    dataPerDay.bindValue(":deviceAddr", getAddress());
-
-    if (dataPerDay.exec() == false)
-    {
-        qWarning() << "> dataPerDay.exec() ERROR" << dataPerDay.lastError().type() << ":" << dataPerDay.lastError().text();
-    }
-
-    while (dataPerDay.next() && (data.size() < 7))
-    {
-        int currentDay = dataPerDay.value(1).toInt();
-
-        // fill holes
-        while (currentDay != nextDayToHandle.day() && (data.size() <= 7))
+        // missing hour(s)?
+        if (previousTime.isValid())
         {
-            data.prepend(0);
-            //qDebug() << "> filling hole for day" << nextDayToHandle.day();
-            nextDayToHandle = nextDayToHandle.addDays(-1);
+            int diff = previousTime.hour() - timefromsql.hour();
+            for (int i = diff; i > 1; i--)
+            {
+                //qDebug() << "> filling hole for hour" << diff;
+                graphData.push_front(0);
+            }
         }
-        nextDayToHandle = nextDayToHandle.addDays(-1);
 
-        data.prepend(dataPerDay.value(2));
-        //qDebug() << "> we have data for day" << currentDay << ", next day to handle is" << nextDayToHandle.day();
+        // data
+        graphData.push_front(sqlData.value(1));
+        previousTime = timefromsql;
+        if (!firstTime.isValid()) firstTime = timefromsql;
+        //qDebug() << "> we have data (" << sqlData.value(1) << ") for hour" << timefromsql;
+
+        // max hours reached?
+        if (graphData.size() >= 24) break;
     }
 
-    // add front padding if we don't have 7 days
-    while (data.size() < 7)
+    // missing hour(s) front?
+    while (graphData.size() < 24)
     {
-        data.prepend(0);
+        graphData.push_front(0);
+    }
+    // missing hour(s) back?
+    int missing = 24;
+    if (firstTime.isValid()) missing = (currentTime.hour() - firstTime.hour());
+    for (int i = missing; i > 0; i--)
+    {
+        if (graphData.size() >= 24) graphData.pop_front();
+        graphData.push_back(0);
     }
 /*
     // debug
     qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
     for (auto d: data) qDebug() << d;
 */
-    return data;
+    return graphData;
 }
 
-/* ************************************************************************** */
-
 /*!
- * \brief Device::getHours
  * \return List of hours
  *
  * Two possibilities:
  * - We have data, so we go from last data available +24
  * - We don't have data, so we go from current hour to +24
  */
-QVariantList Device::getHours()
+QVariantList Device::getLegendHours()
 {
-    QVariantList lastTwentyfourHours;
-    int firstHour = -1;
+    QVariantList legend;
 
-    QSqlQuery dataPerHour;
-    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                        "ORDER BY ts ASC;");
-    dataPerHour.bindValue(":deviceAddr", getAddress());
-
-    if (dataPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
-
-    while (dataPerHour.next())
+    QTime now = QTime::currentTime();
+    while (legend.size() < 24)
     {
-        if (firstHour == -1)
-        {
-            firstHour = dataPerHour.value(0).toInt();
-        }
-    }
-
-    if (firstHour == -1) // We don't have data
-    {
-        QTime now = QTime::currentTime();
-        while (lastTwentyfourHours.size() < 24)
-        {
-            lastTwentyfourHours.append(now.hour());
-            now = now.addSecs(3600);
-        }
-    }
-    else // We have data
-    {
-        QTime now(firstHour, 0);
-        while (lastTwentyfourHours.size() < 24)
-        {
-            lastTwentyfourHours.append(now.hour());
-            now = now.addSecs(3600);
-        }
+        legend.push_front(now.hour());
+        now = now.addSecs(-3600);
     }
 /*
     // debug
-    qDebug() << "Hours (" << lastTwentyfourHours.size() << ") : ";
-    for (auto h: lastTwentyfourHours) qDebug() << h;
+    qDebug() << "Hours (" << legend.size() << ") : ";
+    for (auto h: legend) qDebug() << h;
 */
-    return lastTwentyfourHours;
+    return legend;
 }
 
-QVariantList Device::getDataHourly(const QString &dataName)
+QVariantList Device::getBackgroundDaytime(float maxValue)
 {
-    QVariantList data;
-    QTime nexHourToHandle = QTime::currentTime();
-    int firstHour = -1;
+    QVariantList bgDaytime;
 
-    QSqlQuery dataPerHour;
-    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hour', " + dataName + " " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                        "ORDER BY ts ASC;");
-    dataPerHour.bindValue(":deviceAddr", getAddress());
-
-    if (dataPerHour.exec() == false)
-        qWarning() << "> dataPerHour.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
-
-    while (dataPerHour.next() && (data.size() < 24))
+    QTime now = QTime::currentTime();
+    while (bgDaytime.size() < 24)
     {
-        int currentHour = dataPerHour.value(0).toInt();
+        if (now.hour() >= 21 || now.hour() <= 8)
+            bgDaytime.push_front(0);
+        else
+            bgDaytime.push_front(maxValue);
 
-        if (firstHour == -1)
-        {
-            firstHour = dataPerHour.value(0).toInt();
-            nexHourToHandle = QTime(firstHour, 0);
-        }
-
-        // fill holes
-        while (currentHour != nexHourToHandle.hour() && (data.size() < 24))
-        {
-            data.append(0);
-            //qDebug() << "> filling hole for hour" << nexHourToHandle.hour();
-            nexHourToHandle = nexHourToHandle.addSecs(3600);
-        }
-        nexHourToHandle = nexHourToHandle.addSecs(3600);
-
-        data.append(dataPerHour.value(1));
-        //qDebug() << "> we have data for hour" << currentHour << ", next hour to handle is" << nexHourToHandle.hour();
+        now = now.addSecs(-3600);
     }
 
-    // add front padding (if we don't have 24H)
-    while (data.size() < 24)
-    {
-        data.append(0);
-    }
-/*
-    // debug
-    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
-    for (auto d: data) qDebug() << d;
-*/
-    return data;
+    return bgDaytime;
 }
 
-QVariantList Device::getBackgroundHourly(float maxValue)
+QVariantList Device::getBackgroundNighttime(float maxValue)
 {
-    QVariantList lastTwentyfourHours;
-    int firstHour = -1;
+    QVariantList bgNighttime;
 
-    QSqlQuery dataPerHour;
-    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                        "ORDER BY ts ASC;");
-    dataPerHour.bindValue(":deviceAddr", getAddress());
-
-    if (dataPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
-
-    while (dataPerHour.next())
+    QTime now = QTime::currentTime();
+    while (bgNighttime.size() < 24)
     {
-        if (firstHour == -1)
-        {
-            firstHour = dataPerHour.value(0).toInt();
-        }
+        if (now.hour() >= 21 || now.hour() <= 8)
+            bgNighttime.push_front(maxValue);
+        else
+            bgNighttime.push_front(0);
+        now = now.addSecs(-3600);
     }
 
-    if (firstHour == -1) // We don't have data
-    {
-        QTime now = QTime::currentTime();
-        while (lastTwentyfourHours.size() < 24)
-        {
-            if (now.hour() >= 21 || now.hour() <= 8)
-                lastTwentyfourHours.append(0);
-            else
-                lastTwentyfourHours.append(maxValue);
-
-            now = now.addSecs(3600);
-        }
-    }
-    else // We have data
-    {
-        QTime now(firstHour, 0);
-        while (lastTwentyfourHours.size() < 24)
-        {
-            if (now.hour() >= 21 || now.hour() <= 8)
-                lastTwentyfourHours.append(0);
-            else
-                lastTwentyfourHours.append(maxValue);
-
-            now = now.addSecs(3600);
-        }
-    }
-
-    return lastTwentyfourHours;
-}
-
-QVariantList Device::getBackgroundNightly(float maxValue)
-{
-    QVariantList lastTwentyfourHours;
-    int firstHour = -1;
-
-    QSqlQuery dataPerHour;
-    dataPerHour.prepare("SELECT strftime('%H', ts) as 'hours' " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                        "ORDER BY ts ASC;");
-    dataPerHour.bindValue(":deviceAddr", getAddress());
-
-    if (dataPerHour.exec() == false)
-        qWarning() << "> dataPerHours.exec() ERROR" << dataPerHour.lastError().type() << ":" << dataPerHour.lastError().text();
-
-    while (dataPerHour.next())
-    {
-        if (firstHour == -1)
-            firstHour = dataPerHour.value(0).toInt();
-    }
-
-    if (firstHour == -1) // We don't have data
-    {
-        QTime now = QTime::currentTime();
-        while (lastTwentyfourHours.size() < 24)
-        {
-            if (now.hour() >= 21 || now.hour() <= 8)
-                lastTwentyfourHours.append(maxValue);
-            else
-                lastTwentyfourHours.append(0);
-            now = now.addSecs(3600);
-        }
-    }
-    else // We have data
-    {
-        QTime now(firstHour, 0);
-        while (lastTwentyfourHours.size() < 24)
-        {
-            if (now.hour() >= 21 || now.hour() <= 8)
-                lastTwentyfourHours.append(maxValue);
-            else
-                lastTwentyfourHours.append(0);
-            now = now.addSecs(3600);
-        }
-    }
-
-    return lastTwentyfourHours;
-}
-
-QVariantList Device::getBackgroundDaily(float maxValue)
-{
-    QVariantList lastSevenDays;
-
-    while (lastSevenDays.size() < 7)
-    {
-        lastSevenDays.append(maxValue);
-    }
-
-    return lastSevenDays;
+    return bgNighttime;
 }
 
 /* ************************************************************************** */
@@ -1297,9 +1128,9 @@ void Device::updateAioMinMaxData(int maxDays)
 {
     qDeleteAll(m_aio_minmax_data);
     m_aio_minmax_data.clear();
-    AioMinMax *previousdata = nullptr;
     m_tempMin = 999.f;
     m_tempMax = -99.f;
+    AioMinMax *previousdata = nullptr;
 
     QSqlQuery graphData;
     graphData.prepare("SELECT strftime('%Y-%m-%d', ts), min(temp), avg(temp), max(temp), min(hygro), max(hygro) " \
@@ -1348,10 +1179,8 @@ void Device::updateAioMinMaxData(int maxDays)
     // missing day(s)?
     {
         QDate today = QDate::currentDate();
-        int missing = 0;
-
+        int missing = maxDays;
         if (previousdata) missing = static_cast<AioMinMax *>(m_aio_minmax_data.last())->getDate().daysTo(today);
-        else missing = maxDays;
 
         for (int i = missing - 1; i >= 0; i--)
         {
@@ -1364,6 +1193,7 @@ void Device::updateAioMinMaxData(int maxDays)
     Q_EMIT aioMinMaxDataUpdated();
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void Device::getAioLinesData(int maxDays,
@@ -1418,3 +1248,5 @@ void Device::getAioLinesData(int maxDays,
 
     if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
 }
+
+/* ************************************************************************** */

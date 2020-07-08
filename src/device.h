@@ -391,30 +391,24 @@ public slots:
     bool setDbLimits();
 
     // AIO temperature "min max" graph
-    Q_INVOKABLE void updateAioMinMaxData(int maxDays);
+    void updateAioMinMaxData(int maxDays);
     QVariant getAioMinMaxData() const { return QVariant::fromValue(m_aio_minmax_data); }
 
     // AIO line graph
-    Q_INVOKABLE void getAioLinesData(int maxDays,
-                                     QtCharts::QDateTimeAxis *axis,
-                                     QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                                     QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
+    void getAioLinesData(int maxDays, QtCharts::QDateTimeAxis *axis,
+                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
+                         QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
 
-    // Monthly graph
-    QVariantList getMonth();
-    QVariantList getDataMonthly(const QString &dataName);
-    QVariantList getMonthBackground(float maxValue);
+    // Histograms (days)
+    QVariantList getDataDays(const QString &dataName, int maxDays);
+    QVariantList getBackgroundDays(float maxValue, int maxDays);
+    QVariantList getLegendDays(int maxDays);
 
-    // Daily graph
-    QVariantList getDays();
-    QVariantList getDataDaily(const QString &dataName);
-    QVariantList getBackgroundDaily(float maxValue);
-
-    // Hourly graph
-    QVariantList getHours();
-    QVariantList getDataHourly(const QString &dataName);
-    QVariantList getBackgroundHourly(float maxValue);
-    QVariantList getBackgroundNightly(float maxValue);
+    // Histograms (hours)
+    QVariantList getDataHours(const QString &dataName);
+    QVariantList getBackgroundDaytime(float maxValue);
+    QVariantList getBackgroundNighttime(float maxValue);
+    QVariantList getLegendHours();
 };
 
 /* ************************************************************************** */
