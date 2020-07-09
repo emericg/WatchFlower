@@ -986,8 +986,8 @@ QVariantList Device::getDataDays(const QString &dataName, int maxDays)
     }
 /*
     // debug
-    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
-    for (auto d: data) qDebug() << d;
+    qDebug() << "Data (" << dataName << "/" << graphData.size() << ") : ";
+    for (auto d: graphData) qDebug() << d;
 */
     return graphData;
 }
@@ -998,15 +998,15 @@ QVariantList Device::getDataDays(const QString &dataName, int maxDays)
 QVariantList Device::getDataHours(const QString &dataName)
 {
     QVariantList graphData;
-    QTime currentTime = QTime::currentTime(); // right now
-    QTime previousTime;
-    QTime firstTime;
+    QDateTime currentTime = QDateTime::currentDateTime(); // right now
+    QDateTime previousTime;
+    QDateTime firstTime;
 
     QSqlQuery sqlData;
-    sqlData.prepare("SELECT strftime('%H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
+    sqlData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
                     "FROM datas " \
                     "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                    "GROUP BY strftime('%H:%m:%s', ts) " \
+                    "GROUP BY strftime('%d-%H', ts) " \
                     "ORDER BY ts DESC;");
     sqlData.bindValue(":deviceAddr", getAddress());
 
@@ -1017,12 +1017,12 @@ QVariantList Device::getDataHours(const QString &dataName)
 
     while (sqlData.next())
     {
-        QTime timefromsql = sqlData.value(0).toTime();
+        QDateTime timefromsql = sqlData.value(0).toDateTime();
 
         // missing hour(s)?
         if (previousTime.isValid())
         {
-            int diff = previousTime.hour() - timefromsql.hour();
+            int diff = timefromsql.secsTo(previousTime) / 3600;
             for (int i = diff; i > 1; i--)
             {
                 //qDebug() << "> filling hole for hour" << diff;
@@ -1047,7 +1047,7 @@ QVariantList Device::getDataHours(const QString &dataName)
     }
     // missing hour(s) back?
     int missing = 24;
-    if (firstTime.isValid()) missing = (currentTime.hour() - firstTime.hour());
+    if (firstTime.isValid()) missing = firstTime.secsTo(currentTime) / 3600;
     for (int i = missing; i > 0; i--)
     {
         if (graphData.size() >= 24) graphData.pop_front();
@@ -1055,8 +1055,8 @@ QVariantList Device::getDataHours(const QString &dataName)
     }
 /*
     // debug
-    qDebug() << "Data (" << dataName << "/" << data.size() << ") : ";
-    for (auto d: data) qDebug() << d;
+    qDebug() << "Data (" << dataName << "/" << graphData.size() << ") : ";
+    for (auto d: graphData) qDebug() << d;
 */
     return graphData;
 }
