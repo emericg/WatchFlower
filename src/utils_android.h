@@ -127,7 +127,7 @@ bool android_screen_keep_on(bool on);
 
 /*!
  * \brief android_screen_lock_orientation
- * \param orientation: 0 is for landscapte, 1 for portrait.
+ * \param orientation: 0 is for landscape, 1 for portrait.
  *
  * Lock screen orientation, using:
  * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)

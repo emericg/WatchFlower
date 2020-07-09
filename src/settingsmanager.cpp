@@ -98,11 +98,14 @@ bool SettingsManager::readSettings()
         else
         {
 #if defined(Q_OS_ANDROID)
-            // Bluetooth compat is default true on Android, too many weak devices
-            m_bluetoothSimUpdates = 2;
+            // too many weak devices on Android...
+            m_bluetoothSimUpdates = 1;
 #elif defined(Q_OS_IOS)
-            // Bluetooth compat is default true on Android, too many weak devices
-            m_bluetoothSimUpdates = 4;
+            // iOS is better
+            m_bluetoothSimUpdates = 2;
+#else
+            // desktops are usually good with simultaneous updates
+            m_bluetoothSimUpdates = 6;
 #endif
         }
 
@@ -475,7 +478,7 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
-    m_bluetoothSimUpdates = 6;
+    m_bluetoothSimUpdates = 1;
     Q_EMIT bluetoothSimUpdatesChanged();
 
     QLocale lo;

@@ -79,7 +79,7 @@ class SettingsManager: public QObject
     bool m_notificationsEnabled = true;
 
     bool m_bluetoothControl = false;
-    unsigned m_bluetoothSimUpdates = 6;
+    unsigned m_bluetoothSimUpdates = 1;
 
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
     unsigned m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
