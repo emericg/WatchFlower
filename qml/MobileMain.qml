@@ -21,7 +21,6 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
 import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
@@ -49,13 +48,13 @@ ApplicationWindow {
 
     // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
+    onScreenOrientationChanged: handleNotches()
 
     property int screenStatusbarPadding: 0
     property int screenNotchPadding: 0
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
 
-    onScreenOrientationChanged: handleNotches()
     Component.onCompleted: firstHandleNotches.restart()
     Timer {
         id: firstHandleNotches

@@ -24,15 +24,14 @@ import QtQuick 2.12
 import ThemeEngine 1.0
 
 Rectangle {
-    id: rectangleHeaderBar
-    color: Theme.colorHeader
     width: parent.width
     height: screenStatusbarPadding + screenNotchPadding + headerHeight
+    color: Theme.colorHeader
     z: 10
 
     property int headerHeight: 52
     property string title: "WatchFlower"
-    property string leftMenuMode: "drawer" // drawer / back / exit
+    property string leftMenuMode: "drawer" // drawer / back / close
 
     signal leftMenuClicked()
     signal rightMenuClicked()
@@ -80,9 +79,9 @@ Rectangle {
             id: leftArea
             width: headerHeight
             height: headerHeight
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
             anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
 
             visible: true
             onClicked: leftMenuClicked()
