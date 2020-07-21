@@ -119,23 +119,10 @@ ApplicationWindow {
         anchors.top: parent.top
     }
 
-    Drawer {
+    MobileDrawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1 || applicationWindow.width < 480) ? 0.80 * applicationWindow.width : 0.50 * applicationWindow.width
-        height: applicationWindow.height
-
-        background: Rectangle {
-            color: Theme.colorBackground
-
-            Rectangle {
-                x: parent.width - 1
-                width: 1
-                height: parent.height
-                color: Theme.colorSeparator
-            }
-        }
-
-        MobileDrawer { id: drawerscreen }
+        width: (Screen.primaryOrientation === 1 || parent.width < 480) ? 0.80 * parent.width : 0.50 * parent.width
+        height: parent.height
     }
 
     // Events handling /////////////////////////////////////////////////////////
