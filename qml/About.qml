@@ -193,7 +193,7 @@ Item {
 
             Item {
                 id: desc
-                height: Math.max(UtilsNumber.alignTo(description.contentHeight, 8), 32)
+                height: Math.max(UtilsNumber.alignTo(description.contentHeight, 8), 48)
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -205,7 +205,7 @@ Item {
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.verticalCenter: description.verticalCenter
+                    anchors.verticalCenter: desc.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorText
@@ -213,12 +213,11 @@ Item {
 
                 Text {
                     id: description
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.right: parent.right
                     anchors.rightMargin: 0
+                    anchors.verticalCenter: desc.verticalCenter
 
                     text: qsTr("A plant monitoring application for Xiaomi 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.")
                     wrapMode: Text.WordWrap
