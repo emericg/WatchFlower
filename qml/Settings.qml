@@ -1248,7 +1248,6 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                visible: (Qt.platform.os !== "ios")
                 color: Theme.colorForeground
 
                 ImageSvg {
@@ -1289,8 +1288,6 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: 8
 
-                visible: (Qt.platform.os !== "ios")
-
                 text: qsTr("Export up to 30 days of data into a CSV file. Saved in the Document / WatchFlower directory.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -1298,31 +1295,50 @@ Item {
                 verticalAlignment: Text.AlignBottom
             }
 
-            Item {
+            Row {
                 id: element_export
-                height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: 64
                 anchors.right: parent.right
-
-                visible: (Qt.platform.os !== "ios")
+                height: 48
+                spacing: 16
 
                 ButtonWireframe {
                     width: 128
                     height: 36
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
                     anchors.verticalCenter: parent.verticalCenter
 
+                    visible: (Qt.platform.os !== "ios")
+
                     fullColor: false
-                    text: qsTr("Export")
+                    text: qsTr("Export file")
                     onClicked: {
+                        utilsApp.checkMobileStoragePermissions()
+
                         if (deviceManager.exportData()) {
                             text = qsTr("Exported")
+                            primaryColor = Theme.colorPrimary
                             fullColor = true
                         } else {
-                            text = qsTr("Export")
+                            text = qsTr("Export file")
+                            primaryColor = Theme.colorWarning
                             fullColor = false
                         }
+                    }
+                }
+
+                ButtonWireframe {
+                    width: 128
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isMobile
+
+                    fullColor: false
+                    text: qsTr("Open with")
+                    onClicked: {
+                        primaryColor = Theme.colorWarning
+                        fullColor = false
                     }
                 }
             }
