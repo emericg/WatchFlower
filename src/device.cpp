@@ -226,7 +226,7 @@ void Device::refreshDataFinished(bool status, bool cached)
             // Reorder the device list by water level, if needed
             if (sm->getOrderBy() == "waterlevel")
             {
-                static_cast<DeviceManager *>(parent())->invalidate();
+                if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
             }
 
             // 'Water me' notification, if enabled
@@ -640,7 +640,9 @@ void Device::setLocationName(const QString &name)
         Q_EMIT dataUpdated();
 
         if (SettingsManager::getInstance()->getOrderBy() == "location")
-            static_cast<DeviceManager *>(parent())->invalidate();
+        {
+            if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
+        }
     }
 }
 
@@ -660,7 +662,9 @@ void Device::setPlantName(const QString &name)
         Q_EMIT dataUpdated();
 
         if (SettingsManager::getInstance()->getOrderBy() == "plant")
-            static_cast<DeviceManager *>(parent())->invalidate();
+        {
+            if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
+        }
     }
 }
 

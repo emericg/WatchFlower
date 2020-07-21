@@ -56,8 +56,8 @@
 DeviceManager::DeviceManager()
 {
     // Data model init
-    m_devices_model = new DeviceModel;
-    m_devices_filter = new DeviceFilter;
+    m_devices_model = new DeviceModel(this);
+    m_devices_filter = new DeviceFilter(this);
     m_devices_filter->setSourceModel(m_devices_model);
     SettingsManager *sm = SettingsManager::getInstance();
     if (sm) {
@@ -795,17 +795,17 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             Device *d = nullptr;
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
-                d = new DeviceFlowercare(info);
+                d = new DeviceFlowercare(info, this);
             else if (info.name() == "ropot")
-                d = new DeviceRopot(info);
+                d = new DeviceRopot(info, this);
             else if (info.name() == "MJ_HT_V1")
-                d = new DeviceHygrotempLCD(info);
+                d = new DeviceHygrotempLCD(info, this);
             else if (info.name() == "ClearGrass Temp & RH")
-                d = new DeviceHygrotempEInk(info);
+                d = new DeviceHygrotempEInk(info, this);
             else if (info.name() == "LYWSD02")
-                d = new DeviceHygrotempClock(info);
+                d = new DeviceHygrotempClock(info, this);
             else if (info.name() == "LYWSD03MMC")
-                d = new DeviceHygrotempSquare(info);
+                d = new DeviceHygrotempSquare(info, this);
 
             if (!d)
                 return;
