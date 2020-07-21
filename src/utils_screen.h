@@ -56,8 +56,20 @@ public:
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 
+    /*!
+     * \note: Android only
+     * \param on: screen on or off.
+     */
     Q_INVOKABLE void keepScreenOn(bool on);
 
+    /*!
+     * \note: Android only
+     * \param orientation: 0 is for landscape, 1 for portrait.
+     *
+     * You can achieve similar functionality through application manifest or plist:
+     * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
+     * - https://developer.apple.com/documentation/bundleresources/information_property_list/uisupportedinterfaceorientations
+     */
     Q_INVOKABLE void lockScreenOrientation(int orientation);
 
     enum ScreenOrientation {

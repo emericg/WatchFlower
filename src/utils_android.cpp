@@ -30,6 +30,102 @@
 
 /* ************************************************************************** */
 
+bool android_check_storage_permissions()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
+    if (r == QtAndroid::PermissionResult::Denied || w == QtAndroid::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_check_storage_read_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    status = (r == QtAndroid::PermissionResult::Granted);
+#endif
+
+    return status;
+}
+
+bool android_check_storage_write_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+    status = (w == QtAndroid::PermissionResult::Granted);
+#endif
+
+    return status;
+}
+
+bool android_ask_storage_read_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    if (r == QtAndroid::PermissionResult::Denied)
+    {
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.READ_EXTERNAL_STORAGE");
+        r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+        if (r == QtAndroid::PermissionResult::Denied)
+        {
+            qDebug() << "STORAGE READ PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_storage_write_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+    if (w == QtAndroid::PermissionResult::Denied)
+    {
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.WRITE_EXTERNAL_STORAGE");
+        w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+        if (w == QtAndroid::PermissionResult::Denied)
+        {
+            qDebug() << "STORAGE WRITE PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_storage_permissions()
+{
+    return (android_ask_storage_read_permission() & android_ask_storage_write_permission());
+}
+
+/* ************************************************************************** */
+
 bool android_check_location_permission()
 {
     bool status = true;
@@ -62,60 +158,6 @@ bool android_ask_location_permission()
         if (loc == QtAndroid::PermissionResult::Denied)
         {
             qDebug() << "LOCATION READ PERMISSION DENIED";
-            status = false;
-        }
-    }
-
-#endif // Q_OS_ANDROID
-
-    return status;
-}
-
-bool android_check_storage_permissions()
-{
-    bool status = true;
-
-#ifdef Q_OS_ANDROID
-
-    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-
-    if (r == QtAndroid::PermissionResult::Denied || w == QtAndroid::PermissionResult::Denied)
-    {
-        status = false;
-    }
-
-#endif // Q_OS_ANDROID
-
-    return status;
-}
-
-bool android_ask_storage_permissions()
-{
-    bool status = true;
-
-#ifdef Q_OS_ANDROID
-
-    QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-    if (r == QtAndroid::PermissionResult::Denied)
-    {
-        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.READ_EXTERNAL_STORAGE");
-        r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-        if (r == QtAndroid::PermissionResult::Denied)
-        {
-            qDebug() << "STORAGE READ PERMISSION DENIED";
-            status = false;
-        }
-    }
-
-    QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    if (w == QtAndroid::PermissionResult::Denied)
-    {
-        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.WRITE_EXTERNAL_STORAGE");
-        w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-        if (w == QtAndroid::PermissionResult::Denied)
-        {
-            qDebug() << "STORAGE WRITE PERMISSION DENIED";
             status = false;
         }
     }
@@ -291,7 +333,7 @@ QString android_get_device_serial()
 
 /* ************************************************************************** */
 
-bool android_screen_keep_on(bool on)
+void android_screen_keep_on(bool on)
 {
 #ifdef Q_OS_ANDROID
 
@@ -309,8 +351,6 @@ bool android_screen_keep_on(bool on)
                     window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
                 else
                     window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
-
-                return true;
             }
         }
         QAndroidJniEnvironment env;
@@ -323,11 +363,9 @@ bool android_screen_keep_on(bool on)
 #else
     Q_UNUSED(on)
 #endif // Q_OS_ANDROID
-
-    return false;
 }
 
-bool android_screen_lock_orientation(int orientation)
+void android_screen_lock_orientation(int orientation)
 {
 #ifdef Q_OS_ANDROID
 
@@ -337,14 +375,11 @@ bool android_screen_lock_orientation(int orientation)
     if (activity.isValid())
     {
         activity.callMethod<void>("setRequestedOrientation", "(I)V", orientation);
-        return true;
     }
 
 #else
     Q_UNUSED(orientation)
 #endif // Q_OS_ANDROID
-
-    return false;
 }
 
 /* ************************************************************************** */

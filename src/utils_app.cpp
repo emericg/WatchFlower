@@ -156,7 +156,7 @@ void UtilsApp::openWith(const QString &path)
 QUrl UtilsApp::getStandardPath(const QString &type)
 {
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    android_ask_storage_permissions();
+    android_ask_storage_read_permission();
 #endif
 
     QUrl path;
@@ -223,6 +223,50 @@ bool UtilsApp::getMobileStoragePermissions()
 {
 #if defined(Q_OS_ANDROID)
     return android_ask_storage_permissions();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::checkMobileStorageReadPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_check_storage_read_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileStorageReadPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_ask_storage_read_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::checkMobileStorageWritePermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_check_storage_write_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileStorageWritePermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_ask_storage_write_permission();
 #elif defined(Q_OS_IOS)
     return false;
 #else

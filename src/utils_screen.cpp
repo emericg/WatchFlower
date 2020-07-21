@@ -152,4 +152,5 @@ void UtilsScreen::lockScreenOrientation(int orientation)
     Q_UNUSED(orientation)
 #endif
 }
+
 /* ************************************************************************** */

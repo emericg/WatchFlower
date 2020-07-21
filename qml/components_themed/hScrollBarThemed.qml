@@ -5,16 +5,24 @@ import ThemeEngine 1.0
 
 ScrollBar {
     id: control
-    size: 0.3
-    position: 0.2
+    width: parent.width
+    anchors.bottom: parent.bottom
+
+    //size: 0.3
+    //position: 0.2
     active: true
-    orientation: Qt.Vertical
+    orientation: Qt.Horizontal
+    policy: ScrollBar.AsNeeded
+
+    opacity: 1
+    Behavior on opacity { OpacityAnimator { duration: 333; } }
+
+    ////////
 
     contentItem: Rectangle {
         height: control.height
-        anchors.margins: 0
-        implicitWidth: 6
-        implicitHeight: 100
+        implicitWidth: 100
+        implicitHeight: 6
 
         radius: 0
         color: control.pressed ? Theme.colorPrimary : Theme.colorSecondary
@@ -22,8 +30,8 @@ ScrollBar {
 
     background: Rectangle {
         height: control.height
-        implicitWidth: 6
-        implicitHeight: 100
+        implicitWidth: 100
+        implicitHeight: 6
         color: Theme.colorForeground
     }
 }
