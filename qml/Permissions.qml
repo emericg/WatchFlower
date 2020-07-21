@@ -104,7 +104,7 @@ Item {
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 48
-                    anchors.right: switch_gps.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -116,7 +116,7 @@ Item {
                 }
 
                 ItemImageButton {
-                    id: buttonGpsTest
+                    id: button_gps_test
                     width: 32
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
@@ -188,7 +188,7 @@ Item {
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 48
-                    anchors.right: switch_storage.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -200,7 +200,7 @@ Item {
                 }
 
                 ItemImageButton {
-                    id: buttonStorageTest
+                    id: button_storage_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -259,7 +259,7 @@ Item {
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 48
-                    anchors.right: switch_bluetooth.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -271,7 +271,7 @@ Item {
                 }
 
                 ItemImageButton {
-                    id: buttonBluetooth
+                    id: button_bluetooth_test
                     width: 32
                     height: 32
                     anchors.left: parent.left

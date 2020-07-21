@@ -255,7 +255,7 @@ ApplicationWindow {
             } else if (appContent.state === "Permissions") {
                 appContent.state = "About"
             } else if (appContent.state === "Tutorial") {
-                    appContent.state = screenTutorial.exitTo
+                appContent.state = screenTutorial.exitTo
             } else {
                 appContent.state = "DeviceList"
             }

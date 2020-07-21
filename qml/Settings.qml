@@ -84,8 +84,6 @@ Item {
         Column {
             id: column
             anchors.fill: parent
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
 
             topPadding: 12
             bottomPadding: 12

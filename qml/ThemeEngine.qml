@@ -44,13 +44,15 @@ Item {
 
     property string colorPrimary
     property string colorSecondary
-    property string colorWarning // todo
-    property string colorError // todo
 
     property string colorText
     property string colorSubText
     property string colorIcon
     property string colorSeparator
+
+    property string colorSuccess
+    property string colorWarning
+    property string colorError
 
     property string colorLowContrast
     property string colorHighContrast
@@ -74,6 +76,7 @@ Item {
     property string colorBlue
     property string colorYellow
     property string colorRed
+    property string colorOrange
     property string colorGrey: "#555151" // unused
     property string colorLightGrey: "#a9bcb8" // unused
 
@@ -131,8 +134,8 @@ Item {
             colorStatusbar = "#009688"
 
             colorHeader = colorGreen
-            colorHeaderHighlight = "#009688"
             colorHeaderContent = "white"
+            colorHeaderHighlight = "#009688"
 
             colorActionbar = colorYellow
             colorActionbarContent = "white"
@@ -147,6 +150,10 @@ Item {
 
             colorPrimary = colorGreen
             colorSecondary = colorLightGreen
+
+            colorSuccess = colorGreen
+            colorWarning = colorRed
+            colorError = colorRed
 
             colorText = "#333333"
             colorSubText = "#666666"
@@ -173,12 +180,12 @@ Item {
             colorStatusbar = colorNeutralNight
 
             colorHeader = "#ffcf00"
-            colorHeaderHighlight = colorNeutralNight
             colorHeaderContent = "white"
+            colorHeaderHighlight = colorNeutralNight
 
             colorActionbar = colorGreen
-            colorActionbarHighlight = "#7ab800"
             colorActionbarContent = "white"
+            colorActionbarHighlight = "#7ab800"
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"
@@ -189,6 +196,10 @@ Item {
 
             colorPrimary = colorYellow
             colorSecondary = "#ffe800"
+
+            colorSuccess = colorGreen
+            colorWarning = colorRed
+            colorError = colorRed
 
             colorText = "#4b4747"
             colorSubText = "#666666"
@@ -231,6 +242,10 @@ Item {
 
             colorPrimary = "#bb86fc"
             colorSecondary = "#b16bee"
+
+            colorSuccess = colorGreen
+            colorWarning = colorRed
+            colorError = colorRed
 
             colorText = "#EEEEEE"
             colorSubText = "#AAAAAA"

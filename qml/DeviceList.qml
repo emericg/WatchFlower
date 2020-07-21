@@ -118,20 +118,20 @@ Item {
         id: rowbar
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         z: 2
 
         ////////////////
 
         Rectangle {
             id: rectangleStatus
-            anchors.right: parent.right
-            anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
 
             height: 48
             color: Theme.colorActionbar
@@ -157,8 +157,8 @@ Item {
             Text {
                 id: textStatus
                 anchors.fill: parent
-                anchors.rightMargin: 16
                 anchors.leftMargin: 16
+                anchors.rightMargin: 16
 
                 color: Theme.colorActionbarContent
                 verticalAlignment: Text.AlignVCenter
@@ -209,10 +209,10 @@ Item {
 
         Rectangle {
             id: rectangleActions
-            anchors.right: parent.right
-            anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
 
             height: 48
             color: Theme.colorActionbar

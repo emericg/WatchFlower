@@ -33,6 +33,8 @@ Item {
     anchors.leftMargin: screenLeftPadding
     anchors.rightMargin: screenRightPadding
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
@@ -458,16 +460,16 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 visible: (Qt.platform.os === "android")
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -512,7 +514,7 @@ Item {
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px"
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
                     color: Theme.colorText
                 }
 
@@ -526,14 +528,14 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -619,14 +621,14 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

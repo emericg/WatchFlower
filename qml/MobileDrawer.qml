@@ -116,10 +116,10 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        ////////
-
         Column {
             anchors.fill: parent
+
+            ////////
 
             Rectangle {
                 id: rectangleHome
@@ -473,21 +473,21 @@ Item {
 
             Item { // spacer
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 visible: isDesktop
             }
             Rectangle {
                 height: 1
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: Theme.colorSeparator
                 visible: isDesktop
             }
             Item {
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 visible: isDesktop
             }
 
