@@ -186,6 +186,9 @@ ApplicationWindow {
                 appContent.previousStates.pop()
                 appContent.state = "DeviceList"
             }
+        } else if (appContent.state === "DeviceGeiger") {
+            appContent.previousStates.pop()
+            appContent.state = "DeviceList"
         } else {
             appContent.previousStates.pop()
             if (appContent.previousStates.length)
@@ -199,10 +202,12 @@ ApplicationWindow {
 
         if (appContent.state === "DeviceList") {
             if (selectedDevice) {
-                if (!selectedDevice.hasSoilMoistureSensor())
-                    appContent.state = "DeviceThermo"
-                else
+                if (selectedDevice.deviceType === 0)
                     appContent.state = "DeviceSensor"
+                else if (selectedDevice.deviceType === 1)
+                    appContent.state = "DeviceThermo"
+                else if (selectedDevice.deviceType === 2)
+                    appContent.state = "DeviceGeiger"
             }
         }
     }

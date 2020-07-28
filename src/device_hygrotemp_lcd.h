@@ -63,9 +63,9 @@ private:
     void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
 
-    QLowEnergyService *serviceData = nullptr;
-    QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceInfos = nullptr;
+    QLowEnergyService *serviceBattery = nullptr;
+    QLowEnergyService *serviceData = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
 

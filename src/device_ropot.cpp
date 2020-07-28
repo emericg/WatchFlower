@@ -40,19 +40,23 @@
 DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent):
     Device(deviceAddr, deviceName, parent)
 {
+    m_deviceType = DEVICE_PLANTSENSOR;
+
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
+    m_capabilities += DEVICE_TEMPERATURE;
 }
 
 DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
+    m_deviceType = DEVICE_PLANTSENSOR;
+
     m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
+    m_capabilities += DEVICE_TEMPERATURE;
 }
 
 DeviceRopot::~DeviceRopot()

@@ -93,7 +93,7 @@ Item {
         itemTemp.visible = currentDevice.hasTemperatureSensor()
         itemHygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
         itemLumi.visible = currentDevice.hasLuminositySensor()
-        itemCondu.visible = currentDevice.hasConductivitySensor()
+        itemCondu.visible = currentDevice.hasSoilConductivitySensor()
     }
 
     property var outsideMode: (currentDevice && currentDevice.limitLumiMax > 10000)
@@ -542,7 +542,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasConductivitySensor()
+                            visible: currentDevice.hasSoilConductivitySensor()
 
                             ItemImageButton {
                                 width: 40; height: 40;

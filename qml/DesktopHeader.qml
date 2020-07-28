@@ -406,8 +406,10 @@ Rectangle {
         anchors.bottom: parent.bottom
 
         height: 2
-        opacity: 0.25
-        visible: (appContent.state !== "DeviceThermo" && appContent.state !== "Tutorial")
+        opacity: 0.33
+        visible: (appContent.state !== "DeviceThermo" &&
+                  appContent.state !== "DeviceGeiger" &&
+                  appContent.state !== "Tutorial")
         color: Theme.colorHeaderHighlight
     }
 }

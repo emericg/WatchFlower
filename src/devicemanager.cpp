@@ -963,7 +963,7 @@ bool DeviceManager::exportData()
                                 if (dd->hasLuminositySensor()) eout << data.value(3).toString();
                                 eout << ",";
 
-                                if (dd->hasConductivitySensor()) eout << data.value(4).toString();
+                                if (dd->hasSoilConductivitySensor()) eout << data.value(4).toString();
 
                                 eout << endl;
                             }

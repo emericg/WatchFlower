@@ -37,7 +37,7 @@ Item {
         tempData.visible = currentDevice.hasTemperatureSensor()
         hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
         lumiData.visible = currentDevice.hasLuminositySensor()
-        conduData.visible = currentDevice.hasConductivitySensor() && currentDevice.hasData("conductivity")
+        conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("conductivity")
 
         dateIndicator.visible = false
         dataIndicator.visible = false
@@ -110,7 +110,7 @@ Item {
         if (currentDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
             hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
-            conduData.visible = currentDevice.hasConductivitySensor() && currentDevice.hasData("conductivity")
+            conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("conductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {

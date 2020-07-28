@@ -39,6 +39,8 @@
 DeviceHygrotempEInk::DeviceHygrotempEInk(QString &deviceAddr, QString &deviceName, QObject *parent):
     Device(deviceAddr, deviceName, parent)
 {
+    m_deviceType = DEVICE_THERMOMETER;
+
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;
 }
@@ -46,6 +48,8 @@ DeviceHygrotempEInk::DeviceHygrotempEInk(QString &deviceAddr, QString &deviceNam
 DeviceHygrotempEInk::DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
+    m_deviceType = DEVICE_THERMOMETER;
+
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;
 }

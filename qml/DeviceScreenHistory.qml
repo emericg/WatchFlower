@@ -72,11 +72,11 @@ Item {
 /*
         console.log("DeviceScreenHistory // loadData() >> " + currentDevice)
 
-        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor())
-        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
         console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor())
+        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor())
         console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor())
-        console.log("hasConductivitySensor(): " + currentDevice.hasConductivitySensor())
+        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
+        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor())
 
         console.log("hasData(hygro): " + currentDevice.hasData("hygro"))
         console.log("hasData(temp): " + currentDevice.hasData("temp"))
@@ -110,7 +110,7 @@ Item {
         } else {
             lumiGraph.visible = false
         }
-        if (currentDevice.hasConductivitySensor()) {
+        if (currentDevice.hasSoilConductivitySensor()) {
             if (currentDevice.deviceConductivity > 0 || currentDevice.countData("conductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
@@ -201,7 +201,7 @@ Item {
         if (currentDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
         if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
         if (currentDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
-        if (currentDevice.hasConductivitySensor()) { conduGraph.updateGraph() }
+        if (currentDevice.hasSoilConductivitySensor()) { conduGraph.updateGraph() }
     }
 
     ////////////////////////////////////////////////////////////////////////////

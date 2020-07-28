@@ -35,118 +35,8 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
 
-#define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.2.2"
-#define LATEST_KNOWN_FIRMWARE_ROPOT             "1.1.5"
-#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD     "00.00.66"
-#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK    "1.1.2_0007"
-#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
-#define LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE  "1.0.0_0106"
+#include "device_utils.h"
 
-/* ************************************************************************** */
-
-enum DeviceCapabilities {
-    DEVICE_BATTERY           = (1 << 0), //!< Can report its battery level
-
-    DEVICE_TEMPERATURE       = (1 << 1), //!< Has a temperature sensor
-    DEVICE_HUMIDITY          = (1 << 2), //!< Has an humidity sensor
-    DEVICE_LUMINOSITY        = (1 << 3), //!< Has a luminosity sensor
-    DEVICE_SOIL_MOISTURE     = (1 << 4), //!< Has a soil moisture sensor (can be associated to a plant)
-    DEVICE_SOIL_CONDUCTIVITY = (1 << 5), //!< Has a conductivity/fertility sensor
-
-    DEVICE_CLOCK             = (1 << 6), //!< Has an onboard clock
-    DEVICE_LED               = (1 << 7), //!< Has a blinkable LED
-    DEVICE_HISTORY           = (1 << 8), //!< Record sensor history
-};
-
-enum DeviceStatus {
-    DEVICE_OFFLINE           = 0, //!< Not connected
-    DEVICE_QUEUED            = 1, //!< In the update queue, not started
-    DEVICE_CONNECTING        = 2, //!< Update started, trying to connect to the device
-    DEVICE_UPDATING          = 3, //!< Connected, data update in progress
-    DEVICE_UPDATING_HISTORY  = 4, //!< Connected, history update in progress
-    DEVICE_ACTION            = 5, //!< Connected, doing something
-    DEVICE_UPDATED           = 6, //!< Updated, waiting for disconnect
-};
-
-/* ************************************************************************** */
-
-class DeviceNear: public QObject
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QString name READ getName NOTIFY updated)
-    Q_PROPERTY(QString addr READ getAddr NOTIFY updated)
-    Q_PROPERTY(int rssi READ getRssi NOTIFY updated)
-
-signals:
-    void updated();
-
-public:
-    DeviceNear(const QString &n, const QString &a, int r,
-               QObject *parent) : QObject(parent)
-    {
-        name = n; addr = a; rssi = r;
-    }
-
-    QString name;
-    QString addr;
-    int rssi;
-
-public slots:
-    QString getName() { return name; }
-    QString getAddr() { return addr; }
-    int getRssi() { return rssi; }
-};
-
-/* ************************************************************************** */
-
-class AioMinMax: public QObject
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QDate date READ getDate NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
-    Q_PROPERTY(bool today READ isToday NOTIFY updated)
-
-    Q_PROPERTY(float tempMin READ getTempMin NOTIFY updated)
-    Q_PROPERTY(float tempMean READ getTempMean NOTIFY updated)
-    Q_PROPERTY(float tempMax READ getTempMax NOTIFY updated)
-    Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY updated)
-    Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY updated)
-
-    QDate date;
-    int dayNb = -1;
-    float tempMin;
-    float tempMean = -99;
-    float tempMax;
-    int hygroMin;
-    int hygroMax;
-
-signals:
-    void updated();
-
-public:
-    AioMinMax(const QDate &dt, float tmin, float t, float tmax, int hmin, int hmax,
-              QObject *parent) : QObject(parent)
-    {
-        date = dt;
-        dayNb = dt.day();
-        tempMin = tmin; tempMean = t; tempMax = tmax;
-        hygroMin = hmin; hygroMax = hmax;
-    }
-
-public slots:
-    QDate getDate() { return date; }
-    int getDay() { return dayNb; }
-    bool isToday() { return (date == QDate::currentDate()); }
-    float getTempMin() { return tempMin; }
-    float getTempMean() { return tempMean; }
-    float getTempMax() { return tempMax; }
-    int getHygroMin() { return hygroMin; }
-    int getHygroMax() { return hygroMax; }
-};
-
-/* ************************************************************************** */
 /* ************************************************************************** */
 
 /*!
@@ -169,6 +59,7 @@ class Device: public QObject
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
+    Q_PROPERTY(int deviceType READ getDeviceType NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
@@ -178,6 +69,7 @@ class Device: public QObject
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
 
+    // datas
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
@@ -193,7 +85,9 @@ class Device: public QObject
     Q_PROPERTY(int lumiMax READ getLumiMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
 
+    // limits
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
@@ -203,8 +97,6 @@ class Device: public QObject
     Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
 
-    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
-
 Q_SIGNALS:
     void statusUpdated();
     void sensorUpdated();
@@ -213,25 +105,25 @@ Q_SIGNALS:
     void minmaxUpdated();
     void limitsUpdated();
     void aioMinMaxDataUpdated();
-
     void deviceUpdated(Device *d);
 
 protected:
     QString m_deviceName;
     QString m_deviceAddress;
     QBluetoothDeviceInfo m_bleDevice;
-
+    int m_deviceType = 0;       //!< See DeviceType enum
     int m_capabilities = 0;     //!< See DeviceCapabilities enum
 
     int m_status = 0;           //!< See DeviceStatus enum
     bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
-
-    int m_ble_action = 0; // 0: update data, 1: update history, 2: led
-
     QDateTime m_lastUpdate;
     QDateTime m_lastError;
 
+    // BLE
+    int m_ble_action = 0;       //!< See DeviceActions enum
+    int m_update_interval = 0;
     QTimer m_updateTimer;
+    int m_timeout = 15;
     QTimer m_timeoutTimer;
 
     // BLE device infos
@@ -241,8 +133,9 @@ protected:
 
     // BLE device data
     float m_temp = -99.f;
-    int m_hygro = -99;
+    int m_humi = -99;
     int m_luminosity = -99;
+    int m_hygro = -99;
     int m_conductivity = -99;
 
     // SQL associated data
@@ -270,10 +163,6 @@ protected:
     int m_limitLumiMax = 3000;
     int m_limitConduMin = 100;
     int m_limitConduMax = 500;
-
-    // BLE
-    int m_timeout = 15;
-    int m_update_interval = 0;
 
     // QLowEnergyController related
     QLowEnergyController *controller = nullptr;
@@ -316,16 +205,29 @@ public slots:
     // BLE device
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
+    int getDeviceType() const { return m_deviceType; }
 
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
     bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
     bool hasLED() const { return (m_capabilities & DEVICE_LED); }
     bool hasHistory() const { return (m_capabilities & DEVICE_HISTORY); }
+
+    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
+    bool hasSoilConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
+    bool hasSoilTemperatureSensor() const { return (m_capabilities & DEVICE_SOIL_TEMPERATURE); }
+    bool hasSoilPhSensor() const { return (m_capabilities & DEVICE_SOIL_PH); }
+
     bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
     bool hasHumiditySensor() const { return (m_capabilities & DEVICE_HUMIDITY); }
-    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LUMINOSITY); }
-    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
-    bool hasConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
+    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LIGHT); }
+    bool hasUvSensor() const { return (m_capabilities & DEVICE_UV); }
+    bool hasBarometer() const { return (m_capabilities & DEVICE_BAROMETER); }
+    bool hasCoSensor() const { return (m_capabilities & DEVICE_CO); }
+    bool hasCo2Sensor() const { return (m_capabilities & DEVICE_CO2); }
+    bool hasVocSensor() const { return (m_capabilities & DEVICE_VOC); }
+    bool hasPM25Sensor() const { return (m_capabilities & DEVICE_PM25); }
+    bool hasPM10Sensor() const { return (m_capabilities & DEVICE_PM10); }
+    bool hasGeigerCounter() const { return (m_capabilities & DEVICE_GEIGER); }
 
     int getStatus() const { return m_status; }
     bool isUpdating() const { return m_updating; } //!< Is currently being updated

@@ -73,7 +73,7 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD02") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
-        }  else if (boxDevice.deviceName === "LYWSD03MMC") {
+        } else if (boxDevice.deviceName === "LYWSD03MMC") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
         } else {
             if (boxDevice.hasData("hygro")) {
@@ -128,12 +128,14 @@ Item {
         rectangleHygroTemp.visible = false
 
         // Texts
-        if (!boxDevice.hasSoilMoistureSensor()) {
-            textPlant.text = qsTr("Thermometer")
+        if (boxDevice.hasGeigerCounter()) {
+            textTitle.text = qsTr("Geiger counter")
+        } else if (!boxDevice.hasSoilMoistureSensor()) {
+            textTitle.text = qsTr("Thermometer")
         } else if (boxDevice.devicePlantName !== "") {
-            textPlant.text = boxDevice.devicePlantName
+            textTitle.text = boxDevice.devicePlantName
         } else {
-            textPlant.text = boxDevice.deviceName
+            textTitle.text = boxDevice.deviceName
         }
 
         if (boxDevice.deviceLocationName !== "") {
@@ -246,7 +248,7 @@ Item {
                 cond_bg.visible = (boxDevice.deviceHumidity > 0 || boxDevice.deviceConductivity > 0)
             } else {
                 rectangleHygroTemp.visible = true
-                textTemp.text = boxDevice.getTemp().toFixed(1) + "°"
+                textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
                 textHygro.text = boxDevice.deviceHumidity + "%"
             }
         }
@@ -365,7 +367,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
-                    id: textPlant
+                    id: textTitle
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.rightMargin: bigAssMode ? 0 : 8

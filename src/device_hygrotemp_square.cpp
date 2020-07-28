@@ -43,6 +43,8 @@
 DeviceHygrotempSquare::DeviceHygrotempSquare(QString &deviceAddr, QString &deviceName, QObject *parent):
     Device(deviceAddr, deviceName, parent)
 {
+    m_deviceType = DEVICE_THERMOMETER;
+
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;
@@ -51,6 +53,8 @@ DeviceHygrotempSquare::DeviceHygrotempSquare(QString &deviceAddr, QString &devic
 DeviceHygrotempSquare::DeviceHygrotempSquare(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
+    m_deviceType = DEVICE_THERMOMETER;
+
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_TEMPERATURE;
     m_capabilities += DEVICE_HUMIDITY;

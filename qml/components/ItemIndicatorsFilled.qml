@@ -24,7 +24,7 @@ Item {
             hygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
             temp.visible = currentDevice.hasTemperatureSensor()
             lumi.visible = currentDevice.hasLuminositySensor()
-            condu.visible = currentDevice.hasConductivitySensor()
+            condu.visible = currentDevice.hasSoilConductivitySensor()
         }
 
         resetDataBars()

@@ -60,6 +60,7 @@ HEADERS  += src/demomode.h \
             src/notificationmanager.h \
             src/devicemanager.h \
             src/device.h \
+            src/device_utils.h \
             src/device_filter.h \
             src/device_flowercare.h \
             src/device_hygrotemp_lcd.h \
