@@ -37,7 +37,6 @@ Item {
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
         onDataUpdated: { updateData() }
-        onLimitsUpdated: { updateData() }
     }
 
     Connections {
@@ -177,7 +176,7 @@ Item {
             textStatus.text = qsTr("Update queued.") + " "
         } else if (currentDevice.status === 2) {
             textStatus.text = qsTr("Connecting...") + " "
-        } else if (currentDevice.status === 3) {
+        } else if (currentDevice.status === 4 || currentDevice.status === 5) {
             textStatus.text = qsTr("Updating...") + " "
         } else {
             if (currentDevice.isFresh() || currentDevice.isAvailable()) {
