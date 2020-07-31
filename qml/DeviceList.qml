@@ -137,6 +137,9 @@ Item {
             color: Theme.colorActionbar
             visible: false
             opacity: 0
+
+            // prevent clicks into this area
+            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 /*
             Behavior on opacity {
                 OpacityAnimator {
@@ -217,6 +220,9 @@ Item {
             height: 48
             color: Theme.colorActionbar
             visible: (screenDeviceList.selectionCount)
+
+            // prevent clicks into this area
+            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
             Row {
                 anchors.left: parent.left

@@ -153,7 +153,7 @@ Item {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Connecting...")
             opa.start()
-        }  else if (boxDevice.status === 3) {
+        } else if (boxDevice.status === 3) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Working...")
             opa.start()

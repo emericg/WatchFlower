@@ -115,6 +115,9 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
+        // prevent clicks into this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
         Column {
             id: devicePanel
             anchors.right: parent.right

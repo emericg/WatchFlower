@@ -47,6 +47,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
+        // prevent clicks into this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
         Text {
             id: textTitle
             anchors.left: parent.left
