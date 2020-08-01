@@ -67,8 +67,6 @@ public:
 
     QList<Device *> m_devices;
 
-    Q_ENUMS(DeviceRoles)
-
     enum DeviceRoles {
         DeviceModelRole = Qt::UserRole+1,
         LocationRole,
@@ -77,6 +75,7 @@ public:
 
         PointerRole,
     };
+    Q_ENUM(DeviceRoles)
 
 public slots:
     void addDevice(Device *d);

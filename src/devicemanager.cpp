@@ -515,7 +515,7 @@ void DeviceManager::deviceDiscoveryFinished()
 
             // device lookup
             bool found = false;
-            for (auto d: m_devices_model->m_devices)
+            for (auto d: qAsConst(m_devices_model->m_devices))
             {
                 Device *dd = qobject_cast<Device*>(d);
                 if (dd && dd->getAddress() == deviceAddr)
@@ -630,7 +630,7 @@ void DeviceManager::refreshDevices_start()
         m_devices_queued.clear();
         m_devices_updating.clear();
 
-        for (auto d: m_devices_model->m_devices)
+        for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
@@ -664,7 +664,7 @@ void DeviceManager::refreshDevices_check()
         m_devices_updating.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
-        for (auto d: m_devices_model->m_devices)
+        for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 ||
@@ -727,7 +727,7 @@ void DeviceManager::refreshDevices_stop()
         m_devices_queued.clear();
         m_devices_updating.clear();
 
-        for (auto d: m_devices_model->m_devices)
+        for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd) dd->refreshStop();
@@ -748,7 +748,7 @@ void DeviceManager::updateDevice(const QString &address)
 
     if (hasBluetooth())
     {
-        for (auto d: m_devices_model->m_devices)
+        for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address)
@@ -778,7 +778,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "LYWSD03MMC")
         {
             // Check if it's not already in the UI
-            for (auto ed: m_devices_model->m_devices)
+            for (auto ed: qAsConst(m_devices_model->m_devices))
             {
                 Device *edd = qobject_cast<Device*>(ed);
 #if defined(Q_OS_OSX) || defined(Q_OS_IOS)
@@ -857,7 +857,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
 void DeviceManager::removeDevice(const QString &address)
 {
-    for (auto d: m_devices_model->m_devices)
+    for (auto d: qAsConst(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
 
@@ -910,11 +910,13 @@ bool DeviceManager::exportData()
     if (!exportDirectory.isEmpty())
     {
         QDir edir(exportDirectory);
-        status = edir.exists();
+
+        // check if firectory creation is needed
         if (!edir.exists())
         {
-            status = edir.mkpath(exportDirectory);
+            edir.mkpath(exportDirectory);
         }
+        // retry
         if (edir.exists())
         {
             // Get file name
@@ -935,7 +937,7 @@ bool DeviceManager::exportData()
                 legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
                 eout << legend << endl;
 
-                for (auto d: m_devices_model->m_devices)
+                for (auto d: qAsConst(m_devices_model->m_devices))
                 {
                     Device *dd = qobject_cast<Device*>(d);
                     if (dd)

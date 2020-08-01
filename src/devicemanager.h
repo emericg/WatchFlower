@@ -70,6 +70,7 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_updating;
 
     QTimer m_refreshTimer;
+    bool isRefreshing() const;
 
     bool m_scanning = false;
     bool isScanning() const;
@@ -102,8 +103,6 @@ public:
     void invalidate();
 
 public slots:
-    bool isRefreshing() const;
-
     void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
 

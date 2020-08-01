@@ -187,7 +187,7 @@ protected:
     void setTimeoutTimer();
 
     bool getSqlInfos();
-    virtual bool getSqlData(int minutes);
+    bool getSqlData(int minutes);
     bool getBleData();
 
 public:

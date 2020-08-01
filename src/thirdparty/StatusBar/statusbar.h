@@ -31,11 +31,11 @@ class StatusBar : public QObject
     Q_OBJECT
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
 
-    Q_PROPERTY(QColor sbColor READ sbColor WRITE setSbColor)
-    Q_PROPERTY(Theme sbTheme READ sbTheme WRITE setSbTheme)
+    Q_PROPERTY(QColor sbColor READ sbColor WRITE setSbColor CONSTANT)
+    Q_PROPERTY(Theme sbTheme READ sbTheme WRITE setSbTheme CONSTANT)
 
-    Q_PROPERTY(QColor navColor READ navColor WRITE setNavColor)
-    Q_PROPERTY(Theme navTheme READ navTheme WRITE setNavTheme)
+    Q_PROPERTY(QColor navColor READ navColor WRITE setNavColor CONSTANT)
+    Q_PROPERTY(Theme navTheme READ navTheme WRITE setNavTheme CONSTANT)
 
 public:
     explicit StatusBar(QObject *parent = nullptr);
