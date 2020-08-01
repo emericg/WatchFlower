@@ -91,7 +91,7 @@ void DeviceHygrotempLCD::serviceScanDone()
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_data);
-            connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempLCD::confirmedDescriptorWrite);
+            //connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempLCD::confirmedDescriptorWrite);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempLCD::bleReadNotify);
             serviceData->discoverDetails();
         }

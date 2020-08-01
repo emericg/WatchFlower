@@ -22,11 +22,14 @@
 #include "devicemanager.h"
 #include "device.h"
 #include "device_flowercare.h"
+#include "device_flowerpower.h"
 #include "device_ropot.h"
 #include "device_hygrotemp_lcd.h"
 #include "device_hygrotemp_eink.h"
 #include "device_hygrotemp_clock.h"
 #include "device_hygrotemp_square.h"
+#include "device_esp32_higrow.h"
+#include "device_esp32_geiger.h"
 
 #include "utils_app.h"
 
@@ -89,6 +92,10 @@ DeviceManager::DeviceManager()
 
             if (deviceName == "Flower care" || deviceName == "Flower mate")
                 d = new DeviceFlowercare(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Flower power"))
+                d = new DeviceFlowerPower(deviceAddr, deviceName, this);
+            else if (deviceName == "HiGrow")
+                d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
                 d = new DeviceRopot(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
@@ -99,6 +106,8 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD03MMC")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
+            else if (deviceName == "GeigerCounter")
+                d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
             if (d)
             {
@@ -530,6 +539,10 @@ void DeviceManager::deviceDiscoveryFinished()
 
                 if (deviceName == "Flower care" || deviceName == "Flower mate")
                     d = new DeviceFlowercare(deviceAddr, deviceName, this);
+                else if (deviceName.startsWith("Flower power"))
+                    d = new DeviceFlowerPower(deviceAddr, deviceName, this);
+                else if (deviceName == "HiGrow")
+                    d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
                 else if (deviceName == "ropot")
                     d = new DeviceRopot(deviceAddr, deviceName, this);
                 else if (deviceName == "MJ_HT_V1")
@@ -540,6 +553,8 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
                 else if (deviceName == "LYWSD03MMC")
                     d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
+                else if (deviceName == "GeigerCounter")
+                    d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
                 if (d)
                 {
@@ -771,11 +786,13 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
+            info.name().startsWith("Flower power") ||
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1" ||
             info.name() == "ClearGrass Temp & RH" ||
             info.name() == "LYWSD02" ||
-            info.name() == "LYWSD03MMC")
+            info.name() == "LYWSD03MMC" ||
+            info.name() == "GeigerCounter" || info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
             for (auto ed: qAsConst(m_devices_model->m_devices))
@@ -796,6 +813,10 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
                 d = new DeviceFlowercare(info, this);
+            else if (info.name().startsWith("Flower power"))
+                d = new DeviceFlowerPower(info, this);
+            else if (info.name() == "HiGrow")
+                d = new DeviceEsp32HiGrow(info, this);
             else if (info.name() == "ropot")
                 d = new DeviceRopot(info, this);
             else if (info.name() == "MJ_HT_V1")
@@ -806,6 +827,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempClock(info, this);
             else if (info.name() == "LYWSD03MMC")
                 d = new DeviceHygrotempSquare(info, this);
+            else if (info.name() == "GeigerCounter")
+                d = new DeviceEsp32Geiger(info, this);
 
             if (!d)
                 return;

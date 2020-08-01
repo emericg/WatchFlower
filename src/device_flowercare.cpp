@@ -79,7 +79,7 @@ void DeviceFlowercare::serviceScanDone()
     {
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
             serviceData->discoverDetails();
         }
@@ -89,7 +89,7 @@ void DeviceFlowercare::serviceScanDone()
     {
         if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered);
+            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered_history);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
             connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowercare::bleWriteDone);
             serviceHistory->discoverDetails();
@@ -106,7 +106,7 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != 1)
+        if (m_ble_action != ACTION_UPDATE_HISTORY)
         {
             serviceData = controller->createServiceObject(uuid);
             if (!serviceData)
@@ -119,7 +119,7 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHistory;
         serviceHistory = nullptr;
 
-        if (m_ble_action == 1)
+        if (m_ble_action == ACTION_UPDATE_HISTORY)
         {
             serviceHistory = controller->createServiceObject(uuid);
             if (!serviceHistory)
@@ -128,13 +128,13 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
     }
 }
 
-void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
+void DeviceFlowercare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == 0)
+        if (serviceData && m_ble_action == ACTION_UPDATE)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
@@ -171,7 +171,7 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
             serviceData->readCharacteristic(chb);
         }
 
-        if (serviceData && m_ble_action == 2)
+        if (serviceData && m_ble_action == ACTION_LED_BLINK)
         {
             // Make LED blink
             QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
@@ -179,8 +179,16 @@ void DeviceFlowercare::serviceDetailsDiscovered(QLowEnergyService::ServiceState 
             serviceData->writeCharacteristic(cha, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
             controller->disconnectFromDevice();
         }
+    }
+}
 
-        if (serviceHistory && m_ble_action == 1)
+void DeviceFlowercare::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
         {
             qDebug() << "DeviceFlowercare > HISTORY " << m_ble_action;
 

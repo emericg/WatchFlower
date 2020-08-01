@@ -37,7 +37,7 @@
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE  "1.0.0_0106"
 #define LATEST_KNOWN_FIRMWARE_ESP32_GEIGER      "0.1"
-#define LATEST_KNOWN_FIRMWARE_ESP32_HIGHGROW    "0.1"
+#define LATEST_KNOWN_FIRMWARE_ESP32_HIGROW      "0.1"
 
 /* ************************************************************************** */
 

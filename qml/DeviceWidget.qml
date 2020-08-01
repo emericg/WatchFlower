@@ -75,6 +75,8 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD03MMC") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
+        } else if (boxDevice.deviceName === "GeigerCounter") {
+            imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
         } else {
             if (boxDevice.hasData("hygro")) {
                 if (boxDevice.deviceName === "ropot")
@@ -240,7 +242,11 @@ Item {
 
         // Has data? always display them
         if (boxDevice.isAvailable()) {
-            if (boxDevice.hasSoilMoistureSensor()) {
+            if (boxDevice.hasGeigerCounter()) {
+                rectangleHygroTemp.visible = true
+                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
+                textTemp.text = ""
+            } else if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHumidity, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
@@ -319,6 +325,9 @@ Item {
                         if (boxDevice.hasSoilMoistureSensor()){
                             screenDeviceSensor.loadDevice(boxDevice)
                             appContent.state = "DeviceSensor"
+                        } else if (boxDevice.hasGeigerCounter()) {
+                            screenDeviceGeiger.loadDevice(boxDevice)
+                            appContent.state = "DeviceGeiger"
                         } else {
                             screenDeviceThermometer.loadDevice(boxDevice)
                             appContent.state = "DeviceThermo"

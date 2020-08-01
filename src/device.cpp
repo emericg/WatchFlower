@@ -116,7 +116,7 @@ void Device::ledActionStart()
 
     if (!isUpdating())
     {
-        m_ble_action = 2;
+        m_ble_action = ACTION_LED_BLINK;
         refreshDataStarted();
         getBleData();
     }
@@ -137,7 +137,7 @@ void Device::refreshStart()
 
     if (!isUpdating())
     {
-        m_ble_action = 0;
+        m_ble_action = ACTION_UPDATE;
         refreshDataStarted();
         getBleData();
     }
@@ -149,7 +149,7 @@ void Device::refreshHistoryStart()
 
     if (!isUpdating())
     {
-        m_ble_action = 1;
+        m_ble_action = ACTION_UPDATE_HISTORY;
         refreshDataStarted();
         getBleData();
     }
@@ -326,6 +326,14 @@ bool Device::getSqlInfos()
         if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_firmware.size() == 5))
         {
             if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
+        else if ((m_deviceName.startsWith("Flower power")) && (m_firmware.size() == 5))
+        {
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT sensorUpdated();

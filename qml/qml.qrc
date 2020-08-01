@@ -12,10 +12,11 @@
         <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>
         <file>DeviceScreen.qml</file>
-        <file>DeviceThermometer.qml</file>
         <file>DeviceScreenData.qml</file>
         <file>DeviceScreenHistory.qml</file>
         <file>DeviceScreenLimits.qml</file>
+        <file>DeviceThermometer.qml</file>
+        <file>DeviceGeiger.qml</file>
 
         <file>ThemeEngine.qml</file>
 

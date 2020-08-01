@@ -203,7 +203,10 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+            visible: (deviceManager.bluetooth &&
+                      ((appContent.state === "DeviceSensor") ||
+                       (appContent.state === "DeviceThermo") ||
+                       (appContent.state === "DeviceGeiger")))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -224,7 +227,7 @@ Rectangle {
             width: 8
             height: 8
             anchors.verticalCenter: parent.verticalCenter
-            visible: (appContent.state === "DeviceThermo")
+            visible: (appContent.state === "DeviceThermo" || appContent.state === "DeviceGeiger")
         }
 
         Row {

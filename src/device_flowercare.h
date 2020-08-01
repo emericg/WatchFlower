@@ -34,8 +34,6 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceFlowercare class
- *
  * Xiaomi "Flower Care" or "MiFlora" (HHCCJCY01)
  * VegTrug "Grow Care Home" and "Grow Care Garden" (GCLS002)
  *
@@ -87,7 +85,8 @@ private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyService *serviceHistory = nullptr;

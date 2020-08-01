@@ -44,11 +44,15 @@ SOURCES  += src/main.cpp \
             src/device.cpp \
             src/device_filter.cpp \
             src/device_flowercare.cpp \
+            src/device_flowerpower.cpp \
             src/device_hygrotemp_lcd.cpp \
             src/device_hygrotemp_eink.cpp \
             src/device_hygrotemp_clock.cpp \
             src/device_hygrotemp_square.cpp \
             src/device_ropot.cpp \
+            src/device_environmental.cpp \
+            src/device_esp32_higrow.cpp \
+            src/device_esp32_geiger.cpp \
             src/utils_app.cpp \
             src/utils_android.cpp \
             src/utils_language.cpp \
@@ -63,11 +67,15 @@ HEADERS  += src/demomode.h \
             src/device_utils.h \
             src/device_filter.h \
             src/device_flowercare.h \
+            src/device_flowerpower.h \
             src/device_hygrotemp_lcd.h \
             src/device_hygrotemp_eink.h \
             src/device_hygrotemp_clock.h \
             src/device_hygrotemp_square.h \
             src/device_ropot.h \
+            src/device_environmental.h \
+            src/device_esp32_geiger.h \
+            src/device_esp32_higrow.h \
             src/utils_app.h \
             src/utils_android.h \
             src/utils_language.h \
