@@ -47,7 +47,6 @@ DeviceFlowerPower::DeviceFlowerPower(QString &deviceAddr, QString &deviceName, Q
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_SOIL_TEMPERATURE;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HUMIDITY;
     m_capabilities += DEVICE_LIGHT;
 }
 
@@ -62,7 +61,6 @@ DeviceFlowerPower::DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *par
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_SOIL_TEMPERATURE;
     m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HUMIDITY;
     m_capabilities += DEVICE_LIGHT;
 }
 
@@ -208,59 +206,66 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
         if (m_ble_action == ACTION_UPDATE)
         {
-            double rawValue = 1;
+            double rawValue = 0;
+            const quint8 *rawData = nullptr;
+
+            /////////
 
             QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic chlx = serviceData->characteristic(lx);
-            //serviceData->readCharacteristic(chlx);
-            qDebug() << "ligh value : " << chlx.value();
 
-            const quint8 *lxdata = reinterpret_cast<const quint8 *>(chlx.value().constData());
-            rawValue = static_cast<uint16_t>(lxdata[0] + (lxdata[1] << 8));
-            qDebug() << "ligh value2 : " << 80000000 * rawValue;
+            rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
+            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
+            m_luminosity = 0.08640000000000001 * (192773.17000000001 * pow(rawValue, -1.0606619));
 
             /////////
 
             QBluetoothUuid sf(QString("39e1fa02-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic chsf = serviceData->characteristic(sf);
-            //serviceData->readCharacteristic(chsf);
-            qDebug() << "soil EC value : " << chsf.value();
+
+            rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
+            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
+            qDebug() << "soil EC value : " << rawValue;
 
             /////////
 
             QBluetoothUuid st(QString("39e1fa03-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic chst = serviceData->characteristic(st);
-            //serviceData->readCharacteristic(chst);
-            qDebug() << "soil temp value : " << chst.value();
 
-            const quint8 *stdata = reinterpret_cast<const quint8 *>(chst.value().constData());
-            rawValue = static_cast<uint16_t>(stdata[0] + (stdata[1] << 8));
+            rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
+            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             float m_stemp = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-            qDebug() << "soil temperature value : " << m_stemp;
+            qDebug() << "soil temperature : " << m_stemp;
 
             /////////
 
             QBluetoothUuid t(QString("39e1fa04-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic cht = serviceData->characteristic(t);
 
-            const quint8 *atdata = reinterpret_cast<const quint8 *>(cht.value().constData());
-             rawValue = static_cast<uint16_t>(atdata[0] + (atdata[1] << 8));
+            rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
+            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             m_temp = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-            qDebug() << "air temperature value : " << m_temp;
 
             /////////
 
             QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic chsm = serviceData->characteristic(sm);
-            //serviceData->readCharacteristic(chsm);
-            qDebug() << "soil moisture value : " << chsm.value();
+
+            rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
+            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
+            double hygro = 11.4293 + (0.0000000010698 * pow(rawValue, 4.0) - 0.00000152538 * pow(rawValue, 3.0) +  0.000866976 * pow(rawValue, 2.0) - 0.169422 * rawValue);
+            m_hygro = 100.0 * (0.0000045 * pow(hygro, 3.0) - 0.00055 * pow(hygro, 2.0) + 0.0292 * hygro - 0.053);
+            if (m_hygro < 0.0) m_hygro = 0.0;
+            if (m_hygro > 60.0) m_hygro = 60.0;
 
             /////////
 
             QBluetoothUuid lm(QString("39e1fa08-84a8-11e2-afba-0002a5d5c51b")); // handler 0x?
             QLowEnergyCharacteristic chlm = serviceData->characteristic(lm);
-            //serviceData->readCharacteristic(chlm);
-            qDebug() << "last move date : " << chlm.value();
+
+            rawData = reinterpret_cast<const quint8 *>(chlm.value().constData());
+            rawValue = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
+            qDebug() << "last move date : " << rawValue;
 
             /////////
 
