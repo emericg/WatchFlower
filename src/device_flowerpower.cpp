@@ -315,7 +315,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             // sensor output 0 - 1771 wich maps to 0 - 10 (mS/cm)
-            m_conductivity = rawValue / 1.771;
+            m_soil_conductivity = rawValue / 1.771;
 
             /////////
 
@@ -324,7 +324,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_soil_temp = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+            m_soil_temperature = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
 
             /////////
 
@@ -333,9 +333,9 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_temp = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-            if (m_temp < -10.0) m_temp = -10.0;
-            if (m_temp > 55.0) m_temp = 55.0;
+            m_temperature = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+            if (m_temperature < -10.0) m_temperature = -10.0;
+            if (m_temperature > 55.0) m_temperature = 55.0;
 
             /////////
 
@@ -345,9 +345,9 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             double hygro = 11.4293 + (0.0000000010698 * pow(rawValue, 4.0) - 0.00000152538 * pow(rawValue, 3.0) + 0.000866976 * pow(rawValue, 2.0) - 0.169422 * rawValue);
-            m_hygro = 100.0 * (0.0000045 * pow(hygro, 3.0) - 0.00055 * pow(hygro, 2.0) + 0.0292 * hygro - 0.053);
-            if (m_hygro < 0.0) m_hygro = 0.0;
-            if (m_hygro > 60.0) m_hygro = 60.0;
+            m_soil_moisture = 100.0 * (0.0000045 * pow(hygro, 3.0) - 0.00055 * pow(hygro, 2.0) + 0.0292 * hygro - 0.053);
+            if (m_soil_moisture < 0.0) m_soil_moisture = 0.0;
+            if (m_soil_moisture > 60.0) m_soil_moisture = 60.0;
 
             /////////
 
@@ -374,10 +374,10 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temp);
-                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":hygro", m_soil_moisture);
                 addData.bindValue(":luminosity", m_luminosity);
-                addData.bindValue(":conductivity", m_conductivity);
+                addData.bindValue(":conductivity", m_soil_conductivity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
@@ -389,12 +389,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             qDebug() << "* DeviceFlowerPower update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temperature:" << m_temp;
-            qDebug() << "- m_humidity:" << m_hygro;
+            qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_luminosity:" << m_luminosity;
-            qDebug() << "- m_soil_temp : " << m_soil_temp;
-            qDebug() << "- m_soil_moisture:" << m_humi;
-            qDebug() << "- m_soil_conductivity:" << m_conductivity;
+            qDebug() << "- m_soil_temperature : " << m_soil_temperature;
+            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
+            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
 #endif
         }
     }

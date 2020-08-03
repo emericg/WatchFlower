@@ -93,7 +93,7 @@ Item {
             tempGraph.visible = false
         }
         if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) {
-            if (currentDevice.deviceHumidity > 0 || currentDevice.countData("hygro") > 0) {
+            if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("hygro") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
@@ -111,7 +111,7 @@ Item {
             lumiGraph.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor()) {
-            if (currentDevice.deviceConductivity > 0 || currentDevice.countData("conductivity") > 0) {
+            if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("conductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
                 graphCount += 1

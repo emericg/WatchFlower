@@ -185,12 +185,12 @@ Item {
         if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
 
             // Water me notif
-            if (boxDevice.deviceHumidity > 0 && boxDevice.deviceHumidity < boxDevice.limitHygroMin) {
+            if (boxDevice.deviceSoilMoisture > 0 && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
                 lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                 temp.color = Theme.colorBlue
-            } else if (boxDevice.deviceHumidity > boxDevice.limitHygroMax) {
+            } else if (boxDevice.deviceSoilMoisture > boxDevice.limitHygroMax) {
                 lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
@@ -248,14 +248,14 @@ Item {
                 textTemp.text = ""
             } else if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
-                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceHumidity, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
                 lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * rowRight.height
-                cond_data.height = UtilsNumber.normalize(boxDevice.deviceConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
+                cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
-                hygro_bg.visible = (boxDevice.deviceHumidity > 0 || boxDevice.deviceConductivity > 0)
+                hygro_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
-                cond_bg.visible = (boxDevice.deviceHumidity > 0 || boxDevice.deviceConductivity > 0)
+                cond_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
             } else {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"

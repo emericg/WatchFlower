@@ -68,7 +68,6 @@ private:
 
     int64_t m_clock;
     int64_t m_lastmove;
-    float m_soil_temp;
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);

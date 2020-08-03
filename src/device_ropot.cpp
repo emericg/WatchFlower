@@ -168,9 +168,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (data[0] == 0xAA && data[1] == 0xbb)
                 return;
 
-            m_temp = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_hygro = data[7];
-            m_conductivity = data[8] + (data[9] << 8);
+            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
+            m_soil_moisture = data[7];
+            m_soil_conductivity = data[8] + (data[9] << 8);
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -186,9 +186,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temp);
-                addData.bindValue(":hygro", m_hygro);
-                addData.bindValue(":conductivity", m_conductivity);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":hygro", m_soil_moisture);
+                addData.bindValue(":conductivity", m_soil_conductivity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -208,9 +208,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
-            qDebug() << "- m_conductivity:" << m_conductivity;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
+            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
 #endif
         }
     }

@@ -17,9 +17,9 @@ Item {
 
         // Has data? always display them
         if (currentDevice.isAvailable()) {
-            hygro.visible = (currentDevice.deviceConductivity > 0 || currentDevice.deviceHumidity > 0)
+            hygro.visible = (currentDevice.deviceSoilConductivity > 0 || currentDevice.deviceSoilMoisture > 0)
             lumi.visible = currentDevice.hasLuminositySensor()
-            condu.visible = (currentDevice.deviceConductivity > 0 || currentDevice.deviceHumidity > 0)
+            condu.visible = (currentDevice.deviceSoilConductivity > 0 || currentDevice.deviceSoilMoisture > 0)
         } else {
             hygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
             temp.visible = currentDevice.hasTemperatureSensor()
@@ -38,10 +38,10 @@ Item {
     }
 
     function resetDataBars() {
-        hygro.value = currentDevice.deviceHumidity
+        hygro.value = currentDevice.deviceSoilMoisture
         temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
         lumi.value = currentDevice.deviceLuminosity
-        condu.value = currentDevice.deviceConductivity
+        condu.value = currentDevice.deviceSoilConductivity
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ Item {
             colorForeground: Theme.colorBlue
             //colorBackground: Theme.colorBackground
 
-            value: currentDevice.deviceHumidity
+            value: currentDevice.deviceSoilMoisture
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.hygroMax*1.10) : 50
             limitMin: currentDevice.limitHygroMin
@@ -121,7 +121,7 @@ Item {
             colorForeground: Theme.colorRed
             //colorBackground: Theme.colorBackground
 
-            value: currentDevice.deviceConductivity
+            value: currentDevice.deviceSoilConductivity
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
             limitMin: currentDevice.limitConduMin

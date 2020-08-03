@@ -275,8 +275,8 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
 
         if (value.size() == 5)
         {
-            m_temp = static_cast<int16_t>(data[0] + (data[1] << 8)) / 100.f;
-            m_hygro = data[2];
+            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 100.f;
+            m_humidity = data[2];
 
             float voltage = static_cast<int16_t>(data[3] + (data[4] << 8)) / 1000.f;
             //qDebug() << " voltage:" << voltage;
@@ -300,8 +300,8 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temp);
-                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":hygro", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -321,8 +321,8 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
             qDebug() << "* DeviceHygrotempSquare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_humidity:" << m_humidity;
 #endif
         }
     }

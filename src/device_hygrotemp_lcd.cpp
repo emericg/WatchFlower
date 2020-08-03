@@ -250,8 +250,8 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             if (data[1] != 0x3D && data[8] != 0x3D)
                 return;
 
-            m_temp = value.mid(2, 4).toFloat();
-            m_hygro = static_cast<int>(value.mid(9, 4).toFloat()); // FIXME hygro could be a float too
+            m_temperature = value.mid(2, 4).toFloat();
+            m_humidity = static_cast<int>(value.mid(9, 4).toFloat());
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -267,8 +267,8 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temp);
-                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":hygro", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -288,8 +288,8 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             qDebug() << "* DeviceHygrotempLCD update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_hygro:" << m_hygro;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_humidity:" << m_humidity;
 #endif
         }
     }

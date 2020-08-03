@@ -75,7 +75,8 @@ class Device: public QObject
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceConductivity READ getConductivity NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
 
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
@@ -133,11 +134,13 @@ protected:
     int m_battery = -1;
 
     // BLE device data
-    float m_temp = -99.f;
-    int m_humi = -99;
+    float m_temperature = -99.f;
+    int m_humidity = -99;
     int m_luminosity = -99;
-    int m_hygro = -99;
-    int m_conductivity = -99;
+    int m_soil_moisture = -99;
+    int m_soil_conductivity = -99;
+    float m_soil_temperature = -99.f;
+    float m_soil_ph = -99.f;
 
     // SQL associated data
     QString m_locationName;
@@ -244,13 +247,16 @@ public slots:
     int getBattery() const { return m_battery; }
 
     // BLE device data
-    int getHumidity() const { return m_hygro; }
-    int getLuminosity() const { return m_luminosity; }
-    int getConductivity() const { return m_conductivity; }
+    int getSoilMoisture() const { return m_soil_moisture; }
+    int getSoilConductivity() const { return m_soil_conductivity; }
+    int getSoilTemperature() const { return m_soil_temperature; }
+    int getSoilPH() const { return m_soil_ph; }
     float getTemp() const;
-    float getTempC() const { return m_temp; }
-    float getTempF() const { return (m_temp * 9.f/5.f + 32.f); }
+    float getTempC() const { return m_temperature; }
+    float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
     QString getTempString() const;
+    int getHumidity() const { return m_humidity; }
+    int getLuminosity() const { return m_luminosity; }
 
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;

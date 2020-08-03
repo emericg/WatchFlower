@@ -241,7 +241,7 @@ void Device::refreshDataFinished(bool status, bool cached)
             if (sm->getNotifs())
             {
                 // Only if the sensor has a plant
-                if (m_hygro > 0 && m_hygro < m_limitHygroMin)
+                if (m_soil_moisture > 0 && m_soil_moisture < m_limitHygroMin)
                 {
                     NotificationManager *nm = NotificationManager::getInstance();
                     if (nm)
@@ -467,10 +467,11 @@ bool Device::getSqlData(int minutes)
 
     while (cachedData.next())
     {
-        m_temp = cachedData.value(0).toFloat();
-        m_hygro =  cachedData.value(1).toInt();
+        m_temperature = cachedData.value(0).toFloat();
+        m_humidity =  cachedData.value(1).toInt();
         m_luminosity = cachedData.value(2).toInt();
-        m_conductivity = cachedData.value(3).toInt();
+        m_soil_moisture =  cachedData.value(1).toInt();
+        m_soil_conductivity = cachedData.value(3).toInt();
 
         QString datetime = cachedData.value(4).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
@@ -832,7 +833,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 bool Device::hasData() const
 {
     // If we have immediate data (<12h old)
-    if (m_hygro > 0 || m_temp > -20.f || m_luminosity > 0 || m_conductivity > 0)
+    if (m_soil_moisture > 0 || m_temperature > -20.f || m_luminosity > 0 || m_soil_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored data
@@ -855,13 +856,13 @@ bool Device::hasData() const
 bool Device::hasData(const QString &dataName) const
 {
     // If we have immediate data (<12h old)
-    if (dataName == "hygro" && m_hygro > 0)
+    if (dataName == "hygro" && m_soil_moisture > 0)
         return true;
-    if (dataName == "temp" && m_temp > -20.f)
+    if (dataName == "temp" && m_temperature > -20.f)
         return true;
     if (dataName == "luminosity" && m_luminosity > 0)
         return true;
-    if (dataName == "conductivity" && m_conductivity > 0)
+    if (dataName == "conductivity" && m_soil_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored data

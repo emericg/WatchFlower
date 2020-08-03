@@ -162,10 +162,10 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
         if (value.size() == 16)
         {
-            m_temp = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_humi = data[2];
-            m_hygro = data[3];
-            m_conductivity = static_cast<uint16_t>(data[4] + (data[5] << 8));
+            m_temperature = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
+            m_humidity = data[2];
+            m_soil_moisture = data[3];
+            m_soil_conductivity = static_cast<uint16_t>(data[4] + (data[5] << 8));
             m_luminosity = static_cast<uint32_t>(data[6] + (data[7] << 8) + (data[8] << 16) /*+ (data[6] << 24)*/);
 
             m_lastUpdate = QDateTime::currentDateTime();
@@ -182,10 +182,10 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temp);
-                addData.bindValue(":hygro", m_hygro);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":hygro", m_soil_moisture);
                 addData.bindValue(":luminosity", m_luminosity);
-                addData.bindValue(":conductivity", m_conductivity);
+                addData.bindValue(":conductivity", m_soil_conductivity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -205,11 +205,11 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temp:" << m_temp;
-            qDebug() << "- m_humidity:" << m_humi;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_humidity:" << m_humidity;
             qDebug() << "- m_luminosity:" << m_luminosity;
-            qDebug() << "- m_hygro:" << m_hygro;
-            qDebug() << "- m_conductivity:" << m_conductivity;
+            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
+            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
 #endif
         }
     }
