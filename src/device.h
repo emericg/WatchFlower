@@ -125,6 +125,7 @@ protected:
     QTimer m_updateTimer;
     int m_timeout = 15;
     QTimer m_timeoutTimer;
+    int m_retries = 1;
 
     // BLE device infos
     QString m_firmware = "UNKN";
@@ -171,6 +172,7 @@ protected:
     void deviceConnected();
     void deviceDisconnected();
     void errorReceived(QLowEnergyController::Error);
+    void stateChanged(QLowEnergyController::ControllerState state);
     virtual void serviceScanDone();
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
     virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
@@ -199,6 +201,7 @@ public slots:
     void ledActionStart();
     void refreshQueue();
     void refreshStart();
+    void refreshRetry();
     void refreshHistoryStart();
     void refreshStop();
 

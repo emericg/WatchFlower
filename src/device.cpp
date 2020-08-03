@@ -71,7 +71,7 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
 
-    // Configure update timer (only on desktop)
+    // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 }
 
@@ -98,7 +98,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
 
-    // Configure update timer (only on desktop)
+    // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 }
 
@@ -137,6 +137,7 @@ void Device::refreshStart()
 
     if (!isUpdating())
     {
+        m_retries = 1;
         m_ble_action = ACTION_UPDATE;
         refreshDataStarted();
         getBleData();
@@ -170,6 +171,13 @@ void Device::refreshStop()
         m_status = DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
+}
+
+void Device::refreshRetry()
+{
+    //qDebug() << "Device::refreshRetry()" << getAddress() << getName();
+
+    // TODO
 }
 
 void Device::refreshDataCanceled()
@@ -498,10 +506,12 @@ bool Device::getBleData()
 
             // Connecting signals and slots for connecting to LE services.
             connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
-            connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
             connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
             connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
             connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone);
+            connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
+            connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
+            controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
         }
         else
         {
@@ -744,6 +754,12 @@ void Device::errorReceived(QLowEnergyController::Error error)
 
     m_lastError = QDateTime::currentDateTime();
     refreshDataFinished(false);
+}
+
+void Device::stateChanged(QLowEnergyController::ControllerState state)
+{
+    //qDebug() << "Device::stateChanged(" << m_deviceAddress << ") state:" << state;
+    Q_UNUSED(state)
 }
 
 void Device::serviceScanDone()

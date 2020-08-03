@@ -608,7 +608,7 @@ void DeviceManager::listenDevices()
 void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-    //qDebug() << "deviceUpdateReceived() device: " << info.address();// << info.deviceUuid();//<< " updatedFields: " << updatedFields;
+    //qDebug() << "deviceUpdateReceived() device: " << info.address() /*<< info.deviceUuid()*/ << " updatedFields: " << updatedFields;
 
     if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
     {
@@ -619,6 +619,18 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
         QHash<quint16, QByteArray> dat = info.manufacturerData();
         qDebug() << "manufacturerData > " << dat;
     }
+/*
+    if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
+    {
+        //updatedFields = QBluetoothDeviceInfo::Field::All;
+        for (auto id : info.manufacturerIds()) {
+            qDebug() << info.name() << info.address() << hex
+                     << "ID" << id
+                     << "data" << dec << info.manufacturerData(id).count() << hex
+                     << "bytes:" << info.manufacturerData(id).toHex();
+        }
+    }
+*/
 #endif // Qt 5.12+
 }
 
