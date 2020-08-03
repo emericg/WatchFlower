@@ -29,7 +29,7 @@
 #include "devicemanager.h"
 #include "demomode.h"
 
-#include <statusbar.h>
+#include <MobileUI.h>
 #include <singleapplication.h>
 
 #include <QtGlobal>
@@ -128,11 +128,11 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // Mobile statusbar helper
-    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+    qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
 
     // Keep the StatusBar the same color as the splashscreen until UI starts
-    StatusBar sb;
-    sb.setSbColor("#fff");
+    MobileUI sb;
+    sb.setStatusbarColor("#fff");
 
     // Set QML material theme
     //QQuickStyle::setStyle("material");

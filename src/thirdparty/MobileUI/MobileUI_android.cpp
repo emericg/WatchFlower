@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,11 +19,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
-#include "statusbar_p.h"
+#include "MobileUI_private.h"
 
 #include <QtAndroid>
+
+/* ************************************************************************** */
 
 // WindowManager.LayoutParams
 #define FLAG_TRANSLUCENT_STATUS             0x04000000
@@ -35,7 +38,10 @@
 #define SYSTEM_UI_FLAG_LIGHT_STATUS_BAR         0x00002000
 #define SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR     0x00000010
 
-static bool isColorLight(int color) {
+/* ************************************************************************** */
+
+static bool isColorLight(int color)
+{
     int r = (color & 0x00FF0000) >> 16;
     int g = (color & 0x0000FF00) >> 8;
     int b = (color & 0x000000FF);
@@ -44,7 +50,8 @@ static bool isColorLight(int color) {
     return darkness < 0.2;
 }
 
-static bool isQColorLight(QColor color) {
+static bool isQColorLight(QColor color)
+{
     double darkness = 1.0 - (0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()) / 255.0;
     return darkness < 0.2;
 }
@@ -57,12 +64,14 @@ static QAndroidJniObject getAndroidWindow()
     return window;
 }
 
-bool StatusBarPrivate::isAvailable_sys()
+/* ************************************************************************** */
+
+bool MobileUIPrivate::isAvailable_sys()
 {
     return QtAndroid::androidSdkVersion() >= 21;
 }
 
-void StatusBarPrivate::setColor_sb(const QColor &color)
+void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
     if (QtAndroid::androidSdkVersion() < 21)
         return;
@@ -87,7 +96,7 @@ void StatusBarPrivate::setColor_sb(const QColor &color)
     });
 }
 
-void StatusBarPrivate::setTheme_sb(StatusBar::Theme theme)
+void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
 {
     if (QtAndroid::androidSdkVersion() < 23)
         return;
@@ -96,7 +105,7 @@ void StatusBarPrivate::setTheme_sb(StatusBar::Theme theme)
         QAndroidJniObject window = getAndroidWindow();
         QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
-        if (theme == StatusBar::Theme::Light)
+        if (theme == MobileUI::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -104,7 +113,7 @@ void StatusBarPrivate::setTheme_sb(StatusBar::Theme theme)
     });
 }
 
-void StatusBarPrivate::setColor_nav(const QColor &color)
+void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
     if (QtAndroid::androidSdkVersion() < 21)
         return;
@@ -129,7 +138,7 @@ void StatusBarPrivate::setColor_nav(const QColor &color)
     });
 }
 
-void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
+void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 {
     if (QtAndroid::androidSdkVersion() < 23)
         return;
@@ -138,11 +147,10 @@ void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
         QAndroidJniObject window = getAndroidWindow();
         QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
-        if (theme == StatusBar::Theme::Light)
+        if (theme == MobileUI::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
 }
-

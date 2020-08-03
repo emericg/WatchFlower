@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,15 +19,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
-#include "statusbar_p.h"
+#include "MobileUI_private.h"
 
 #include <UIKit/UIKit.h>
 #include <QGuiApplication>
 
 #include <QScreen>
 #include <QTimer>
+
+/* ************************************************************************** */
 
 @interface QIOSViewController : UIViewController
 @property (nonatomic, assign) BOOL prefersStatusBarHidden;
@@ -36,19 +39,9 @@
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-bool StatusBarPrivate::isAvailable_sys()
+static UIStatusBarStyle statusBarStyle(MobileUI::Theme theme)
 {
-    return true;
-}
-
-void StatusBarPrivate::setColor_sb(const QColor &color)
-{
-    Q_UNUSED(color)
-}
-
-static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)
-{
-    if (theme == StatusBar::Dark)
+    if (theme == MobileUI::Dark)
         return UIStatusBarStyleLightContent;
     else if (@available(iOS 13.0, *))
         return UIStatusBarStyleDarkContent;
@@ -68,15 +61,15 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 
 void togglePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBar::Light);
-    if(StatusBarPrivate::sbTheme == StatusBar::Light) {
-        style = statusBarStyle(StatusBar::Dark);
+    UIStatusBarStyle style = statusBarStyle(MobileUI::Light);
+    if(MobileUIPrivate::statusbarTheme == MobileUI::Light) {
+        style = statusBarStyle(MobileUI::Dark);
     }
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
     QTimer::singleShot(200, []() {
-        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
+        UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (keyWindow)
             setPreferredStatusBarStyle(keyWindow, style);
@@ -85,13 +78,25 @@ void togglePreferredStatusBarStyle()
 
 static void updatePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
+    UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
 }
 
-void StatusBarPrivate::setTheme_sb(StatusBar::Theme)
+/* ************************************************************************** */
+
+bool MobileUIPrivate::isAvailable_sys()
+{
+    return true;
+}
+
+void MobileUIPrivate::setColor_statusbar(const QColor &color)
+{
+    Q_UNUSED(color)
+}
+
+void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme)
 {
     updatePreferredStatusBarStyle();
 
@@ -102,17 +107,17 @@ void StatusBarPrivate::setTheme_sb(StatusBar::Theme)
 
     QScreen *screen = qApp->primaryScreen();
     screen->setOrientationUpdateMask(Qt::PortraitOrientation | Qt::LandscapeOrientation | Qt::InvertedPortraitOrientation | Qt::InvertedLandscapeOrientation);
-    QObject::connect(screen, &QScreen::orientationChanged, qApp, [](Qt::ScreenOrientation) {
-        togglePreferredStatusBarStyle();
-    }, Qt::UniqueConnection);
+    QObject::connect(screen, &QScreen::orientationChanged, qApp, [](Qt::ScreenOrientation) { togglePreferredStatusBarStyle(); }, Qt::UniqueConnection);
 }
 
-void StatusBarPrivate::setColor_nav(const QColor &color)
+void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
-void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
+void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 {
     Q_UNUSED(theme)
 }
+
+/* ************************************************************************** */

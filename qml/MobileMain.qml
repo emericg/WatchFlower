@@ -24,7 +24,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
-import StatusBar 0.1
+import MobileUI 0.1
 
 ApplicationWindow {
     id: applicationWindow
@@ -107,10 +107,10 @@ ApplicationWindow {
 */
     }
 
-    StatusBar {
-        sbColor: Theme.colorStatusbar
-        sbTheme: Theme.themeStatusbar
-        navColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
+    MobileUI {
+        statusbarColor: Theme.colorStatusbar
+        statusbarTheme: Theme.themeStatusbar
+        navbarColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
     }
 
     MobileHeader {

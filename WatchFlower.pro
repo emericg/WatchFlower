@@ -21,8 +21,8 @@ ios | android { CONFIG += qtquickcompiler }
 
 win32 { DEFINES += _USE_MATH_DEFINES }
 
-# StatusBar for mobile OS
-include(src/thirdparty/StatusBar/statusbar.pri)
+# MobileUI for mobile OS
+include(src/thirdparty/MobileUI/MobileUI.pri)
 
 # SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/singleapplication.pri)

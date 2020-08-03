@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,29 +19,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
-#ifndef STATUSBAR_P_H
-#define STATUSBAR_P_H
+#include "MobileUI_private.h"
 
-#include "statusbar.h"
+/* ************************************************************************** */
 
-class StatusBarPrivate
+bool MobileUIPrivate::isAvailable_sys()
 {
-public:
-    static bool isAvailable_sys();
+    return false;
+}
 
-    static void setColor_sb(const QColor &color);
-    static void setTheme_sb(StatusBar::Theme theme);
+void MobileUIPrivate::setColor_statusbar(const QColor &color)
+{
+    Q_UNUSED(color)
+}
 
-    static void setColor_nav(const QColor &color);
-    static void setTheme_nav(StatusBar::Theme theme);
+void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
+{
+    Q_UNUSED(theme)
+}
 
-    static QColor sbColor;
-    static StatusBar::Theme sbTheme;
+void MobileUIPrivate::setColor_navbar(const QColor &color)
+{
+    Q_UNUSED(color)
+}
 
-    static QColor navColor;
-    static StatusBar::Theme navTheme;
-};
-
-#endif // STATUSBAR_P_H
+void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
+{
+    Q_UNUSED(theme)
+}

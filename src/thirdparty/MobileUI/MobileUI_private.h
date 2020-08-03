@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,43 +19,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
-#ifndef STATUSBAR_H
-#define STATUSBAR_H
+#ifndef MOBILEUI_PRIVATE_H
+#define MOBILEUI_PRIVATE_H
+/* ************************************************************************** */
 
-#include <QObject>
-#include <QColor>
+#include "MobileUI.h"
 
-class StatusBar : public QObject
+/* ************************************************************************** */
+
+class MobileUIPrivate
 {
-    Q_OBJECT
-    Q_PROPERTY(bool available READ isAvailable CONSTANT)
-
-    Q_PROPERTY(QColor sbColor READ sbColor WRITE setSbColor CONSTANT)
-    Q_PROPERTY(Theme sbTheme READ sbTheme WRITE setSbTheme CONSTANT)
-
-    Q_PROPERTY(QColor navColor READ navColor WRITE setNavColor CONSTANT)
-    Q_PROPERTY(Theme navTheme READ navTheme WRITE setNavTheme CONSTANT)
-
 public:
-    explicit StatusBar(QObject *parent = nullptr);
-    static bool isAvailable();
+    static bool isAvailable_sys();
 
-    enum Theme { Light, Dark };
-    Q_ENUM(Theme)
+    static void setColor_statusbar(const QColor &color);
+    static void setTheme_statusbar(MobileUI::Theme theme);
 
-    static QColor sbColor();
-    static void setSbColor(const QColor &color);
+    static void setColor_navbar(const QColor &color);
+    static void setTheme_navbar(MobileUI::Theme theme);
 
-    static Theme sbTheme();
-    static void setSbTheme(Theme theme);
+    static QColor statusbarColor;
+    static MobileUI::Theme statusbarTheme;
 
-    static QColor navColor();
-    static void setNavColor(const QColor &color);
-
-    static Theme navTheme();
-    static void setNavTheme(Theme theme);
+    static QColor navbarColor;
+    static MobileUI::Theme navbarTheme;
 };
 
-#endif // STATUSBAR_H
+/* ************************************************************************** */
+#endif // MOBILEUI_PRIVATE_H

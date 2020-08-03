@@ -612,7 +612,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: "- StatusBar & SingleApplication (MIT)"
+                        text: "- MobileUI & SingleApplication (MIT)"
                         color: Theme.colorText
                         font.pixelSize: 16
                     }
