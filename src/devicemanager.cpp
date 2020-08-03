@@ -40,7 +40,6 @@
 #include <QBluetoothDeviceInfo>
 
 #include <QList>
-#include <QTimer>
 #include <QDebug>
 
 #include <QStandardPaths>

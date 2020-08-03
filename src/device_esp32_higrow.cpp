@@ -80,7 +80,7 @@ void DeviceEsp32HiGrow::serviceScanDone()
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered);
-            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceEsp32HiGrow::bleReadDone);
+            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceEsp32HiGrow::bleReadDone);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32HiGrow::bleReadNotify);
             serviceData->discoverDetails();
         }
@@ -91,7 +91,7 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32HiGrow::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{5d061333-01fc-4c1a-919b-e68b8a2796e3}") // custom data service
+    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
     {
         delete serviceData;
         serviceData = nullptr;
@@ -110,7 +110,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("beb5483e-36e1-4688-b7f5-ea07361b26a1")); // firmware
+            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // firmware
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {
@@ -124,7 +124,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered(QLowEnergyService::ServiceState
                 }
             }
 
-            QBluetoothUuid b(QString("beb5483e-36e1-4688-b7f5-ea07361b26a2")); // battery
+            QBluetoothUuid b(QString("eeee9a32-a003-4cbd-b00b-6b519bf2780f")); // battery
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             if (chb.value().size() > 0)
             {
@@ -133,7 +133,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
             Q_EMIT sensorUpdated();
 
-            QBluetoothUuid rt(QString("0d563a58-196a-48ce-ace2-dfec78acc814")); // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             //serviceData->readCharacteristic(chrt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
@@ -155,7 +155,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
              << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
              << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
-    if (c.uuid().toString() == "{0d563a58-196a-48ce-ace2-dfec78acc814}")
+    if (c.uuid().toString() == "{eeee9a32-a0a0-4cbd-b00b-6b519bf2780f}")
     {
         // HiGrow realtime data // handler 0x?
 

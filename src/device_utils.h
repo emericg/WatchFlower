@@ -32,6 +32,7 @@
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.2.2"
 #define LATEST_KNOWN_FIRMWARE_FLOWERPOWER       "2.0.3"
 #define LATEST_KNOWN_FIRMWARE_ROPOT             "1.1.5"
+#define LATEST_KNOWN_FIRMWARE_PARROTPOT         "1.2.0"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD     "00.00.66"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK    "1.1.2_0007"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
@@ -48,14 +49,14 @@ enum DeviceCapabilities {
     DEVICE_HISTORY           = (1 <<  3), //!< Record sensor history
 
     DEVICE_SOIL_MOISTURE     = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
-    DEVICE_SOIL_CONDUCTIVITY = (1 <<  9), //!< Has a conductivity/fertility sensor
-    DEVICE_SOIL_TEMPERATURE  = (1 << 10), //!<
-    DEVICE_SOIL_PH           = (1 << 11), //!<
+    DEVICE_SOIL_CONDUCTIVITY = (1 <<  9), //!< Has a soil conductivity/fertility sensor
+    DEVICE_SOIL_TEMPERATURE  = (1 << 10), //!< Has a soil temperature sensor
+    DEVICE_SOIL_PH           = (1 << 11), //!< Has a soil PH sensor
 
     DEVICE_TEMPERATURE       = (1 << 12), //!< Has a temperature sensor
     DEVICE_HUMIDITY          = (1 << 13), //!< Has an humidity sensor
     DEVICE_LIGHT             = (1 << 14), //!< Has a light sensor
-    DEVICE_UV                = (1 << 15), //!<
+    DEVICE_UV                = (1 << 15), //!< Has an UV light sensor
     DEVICE_BAROMETER         = (1 << 16), //!<
     DEVICE_CO                = (1 << 17), //!<
     DEVICE_CO2               = (1 << 18), //!<

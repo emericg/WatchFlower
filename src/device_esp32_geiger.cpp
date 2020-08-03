@@ -78,7 +78,7 @@ void DeviceEsp32Geiger::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32Geiger::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{5d061333-01fc-4c1a-919b-e68b8a2796e3}") // custom data service
+    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
     {
         delete serviceData;
         serviceData = nullptr;
@@ -97,7 +97,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("beb5483e-36e1-4688-b7f5-ea07361b26a1")); // firmware
+            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // firmware
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {
@@ -113,7 +113,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
             Q_EMIT sensorUpdated();
 
-            QBluetoothUuid d(QString("beb5483e-36e1-4688-b7f5-ea07361b26a8")); // recap data
+            QBluetoothUuid d(QString("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // recap data
             QLowEnergyCharacteristic chd = serviceData->characteristic(d);
 
             m_rh = chd.value().toFloat();
@@ -121,7 +121,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
             m_rs = chd.value().toFloat();
             Q_EMIT dataUpdated();
 
-            QBluetoothUuid rt(QString("beb5483e-36e1-4688-b7f5-ea07361b26a9")); // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             //serviceData->readCharacteristic(chrt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
@@ -160,7 +160,7 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
              << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
              << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
 */
-    if (c.uuid().toString() == "{beb5483e-36e1-4688-b7f5-ea07361b26a9}")
+    if (c.uuid().toString() == "{eeee9a32-a0c0-4cbd-b00b-6b519bf2780f}")
     {
         // Geiger Counter realtime data // handler 0x?
 
