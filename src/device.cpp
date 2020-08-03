@@ -451,8 +451,8 @@ bool Device::getSqlData(int minutes)
 
     QSqlQuery cachedData;
     cachedData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
-                        "FROM datas " \
-                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+                       "FROM datas " \
+                       "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
     cachedData.bindValue(":deviceAddr", getAddress());
 
     if (cachedData.exec() == false)
@@ -512,7 +512,6 @@ bool Device::getBleData()
             connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone);
             connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
             connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
-            controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
         }
         else
         {
@@ -750,8 +749,7 @@ void Device::deviceDisconnected()
 
 void Device::errorReceived(QLowEnergyController::Error error)
 {
-    //qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
-    Q_UNUSED(error)
+    qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
 
     m_lastError = QDateTime::currentDateTime();
     refreshDataFinished(false);
@@ -763,68 +761,35 @@ void Device::stateChanged(QLowEnergyController::ControllerState state)
     Q_UNUSED(state)
 }
 
+void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState)
+{
+    //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
+}
+
 void Device::serviceScanDone()
 {
     //qDebug() << "Device::serviceScanDone(" << m_deviceAddress << ")";
 }
 
-void Device::addLowEnergyService(const QBluetoothUuid &uuid)
+void Device::addLowEnergyService(const QBluetoothUuid &)
 {
     //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
-    Q_UNUSED(uuid)
 }
 
-void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
-{
-    //qDebug() << "Device::serviceDetailsDiscovered(" << m_deviceAddress << ")";
-    Q_UNUSED(newState)
-}
-
-bool Device::hasControllerError() const
-{
-    //qWarning() << "Device::hasControllerError(" << m_deviceAddress << ") error:" << error;
-
-    if (controller && controller->error() != QLowEnergyController::NoError)
-        return true;
-
-    return false;
-}
 
 void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
 }
 
-void Device::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void Device::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    Q_UNUSED(c)
-    Q_UNUSED(value)
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "Device::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+    //qDebug() << "Device::bleReadDone(" << m_deviceAddress << ")";
 }
 
-void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void Device::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    Q_UNUSED(c)
-    Q_UNUSED(value)
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-             << hex << data[12]  << hex << data[13];
-*/
+    //qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ")";
 }
 
 /* ************************************************************************** */
@@ -833,7 +798,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &
 bool Device::hasData() const
 {
     // If we have immediate data (<12h old)
-    if (m_soil_moisture > 0 || m_temperature > -20.f || m_luminosity > 0 || m_soil_conductivity > 0)
+    if (m_humidity > 0 || m_temperature > -20.f || m_luminosity > 0 || m_soil_moisture > 0 || m_soil_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored data
@@ -856,11 +821,13 @@ bool Device::hasData() const
 bool Device::hasData(const QString &dataName) const
 {
     // If we have immediate data (<12h old)
-    if (dataName == "hygro" && m_soil_moisture > 0)
+    if (dataName == "hygro" && m_humidity > 0)
         return true;
     if (dataName == "temp" && m_temperature > -20.f)
         return true;
     if (dataName == "luminosity" && m_luminosity > 0)
+        return true;
+    if (dataName == "hygro" && m_soil_moisture > 0)
         return true;
     if (dataName == "conductivity" && m_soil_conductivity > 0)
         return true;

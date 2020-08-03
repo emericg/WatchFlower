@@ -170,16 +170,15 @@ protected:
 
     // QLowEnergyController related
     QLowEnergyController *controller = nullptr;
-    bool hasControllerError() const;
 
     void deviceConnected();
     void deviceDisconnected();
     void errorReceived(QLowEnergyController::Error);
     void stateChanged(QLowEnergyController::ControllerState state);
+
     virtual void serviceScanDone();
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
     virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
-
     virtual void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
