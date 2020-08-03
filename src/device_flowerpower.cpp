@@ -22,6 +22,7 @@
 #include "device_flowerpower.h"
 #include "utils_versionchecker.h"
 
+#include <cstdint>
 #include <cmath>
 
 #include <QBluetoothUuid>

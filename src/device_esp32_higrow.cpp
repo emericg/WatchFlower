@@ -22,6 +22,7 @@
 #include "device_esp32_higrow.h"
 #include "utils_versionchecker.h"
 
+#include <cstdint>
 #include <cmath>
 
 #include <QBluetoothUuid>

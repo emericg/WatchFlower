@@ -22,6 +22,7 @@
 #include "device_hygrotemp_eink.h"
 #include "utils_versionchecker.h"
 
+#include <cstdint>
 #include <cmath>
 
 #include <QBluetoothUuid>
