@@ -44,20 +44,20 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 
 ### Screenshots
 
-![GUI_DESKTOP1](https://i.imgur.com/1cAIta8.png)
-![GUI_DESKTOP2](https://i.imgur.com/joJB4pB.png)
-
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
 ![GUI_MOBILE2](https://i.imgur.com/e1bXFXM.png)
 
 ![GUI_MOBILE3](https://i.imgur.com/UiirNMw.png)
+
+![GUI_DESKTOP1](https://i.imgur.com/1cAIta8.png)
+![GUI_DESKTOP2](https://i.imgur.com/joJB4pB.png)
 
 
 ## Documentation
 
 ### Dependencies
 
-You will need a C++11 compiler and Qt (5.12+) with Qt Charts.  
+You will need a C++11 compiler and Qt 5.12+ (with Qt Charts).  
 For Android builds, the appropriates SDK and NDK.
 
 ### Building WatchFlower

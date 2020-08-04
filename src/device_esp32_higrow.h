@@ -36,7 +36,7 @@
 /*!
  * ESP32 HiGrow sensor with custom firmware.
  *
- * - https://github.com/emericg/esp32-sensors
+ * - https://github.com/emericg/esp32-environmental-sensors
  */
 class DeviceEsp32HiGrow: public Device
 {

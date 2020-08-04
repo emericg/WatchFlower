@@ -126,8 +126,8 @@ Item {
                          (!(x-2 < indicator.x || x+2 > indicator.x+indicator.width) ||
                           !(x+width-2 < indicator.x || x+width+2 > indicator.x+indicator.width))
 
-                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
-                opacity: (limitMin <= value) ? 0.75 : 0.25
+                color: (limitMin < value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin < value) ? 0.75 : 0.25
                 Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
                 Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
