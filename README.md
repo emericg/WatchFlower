@@ -34,11 +34,11 @@ TODOs:
 
 ### Supported devices
 
-| Flower Care | RoPot | Parot Flower Power | Parrot Pot | HiGrow |
+| Flower Care | RoPot | Parrot Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :----------------: | :--------: | :----: |
 | ![FlowerCare](doc/flowercare.svg) | ![RoPot](doc/ropot.svg) | ![FlowerPower](doc/flowerpower.svg) | ![ParrotPot](doc/parrotpot.svg) | ![HiGrow](doc/higrow.svg) |
 | Xiaomi and VegTrug variants<br>(International and Chinese versions)<br>HHCCJCY01 | Xiaomi and VegTrug variants<br>HHCCPOT002 |  |  | (with custom firmware) |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [build](https://github.com/emericg/esp32-environmental-sensors/HiGrow) |
+| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
 | :-----------------------: | :-----------------------: | :-------------------------: | :------------------------: | :----------------------: |

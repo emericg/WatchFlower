@@ -36,7 +36,7 @@
 /*!
  * Homemade ESP32 Geiger Counter.
  *
- * - https://github.com/emericg/esp32-environmental-sensors/GeigerCounter
+ * - https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter
  */
 class DeviceEsp32Geiger: public DeviceEnvironmental
 {
