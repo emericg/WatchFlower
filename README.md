@@ -34,12 +34,19 @@ TODOs:
 
 ### Supported devices
 
-| Flower Care | RoPot | Digital Hygrometer  | Digital Hygrometer Clock | Digital Hygrometer 2 |
-| :---------: | :---: | :-----------------: | :----------------------: | :------------------: |
-| ![FlowerCare](assets/devices/flowercare.svg) | ![RoPot](assets/devices/ropot.svg) | ![HygroTemp](assets/devices/hygrotemp.svg) | ![HygroTempClock](assets/devices/hygrotemp-clock.svg) | ![HygroTemp2](assets/devices/hygrotemp-square.svg) |
-| (International and Chinese versions)<br>(Xiaomi and VegTrug variants) | (Xiaomi and VegTrug variants) | (MiJia LCD and ClearGrass EInk) | |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) / [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) |
+| Flower Care | RoPot | Parot Flower Power | Parrot Pot | HiGrow |
+| :---------: | :---: | :----------------: | :--------: | :----: |
+| ![FlowerCare](doc/flowercare.svg) | ![RoPot](doc/ropot.svg) | ![FlowerPower](doc/flowerpower.svg) | ![ParrotPot](doc/parrotpot.svg) | ![HiGrow](doc/higrow.svg) |
+| Xiaomi and VegTrug variants<br>(International and Chinese versions)<br>HHCCJCY01 | Xiaomi and VegTrug variants<br>HHCCPOT002 |  |  | (with custom firmware) |
+| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [build](https://github.com/emericg/esp32-environmental-sensors/HiGrow) |
 
+| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
+| :-----------------------: | :-----------------------: | :-------------------------: | :------------------------: | :----------------------: |
+| ![HygroTemp](doc/hygrotemp_lcd.svg) | ![HygroTemp](doc/hygrotemp_eink.svg) | ![HygroTempClock](doc/hygrotemp_clock.svg) | ![HygroTemp2](doc/hygrotemp_square_lcd.svg) | ![HygroTemp2](doc/hygrotemp_square_eink.svg) |
+| LYWSDCGQ | CGG1 | LYWSD02 / MHO-C303 | LYWSD03MMC | MHO-C401 |
+| [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
+
+WatchFlower has been built to be easily extensible, and compatible with as many Bluetooth sensors as possible.
 Various Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!
 
 ### Screenshots
@@ -73,8 +80,6 @@ For Android builds, the appropriates SDK and NDK.
 * Chris Díaz <christiandiaz.design@gmail.com> for his extensive work on the application design and logo!
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * Everyone who gave time to [help translate](i18n/README.md) this application!
-* [MiFlora](https://github.com/open-homeautomation/miflora) GitHub repository, for the *Flower care* protocol reverse engineering.
-* [This thread](https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18), for the *bluetooth temperature and humidity sensor* protocol reverse engineering.
 
 
 ## Get involved!

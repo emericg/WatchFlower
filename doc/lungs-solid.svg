@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="lungs-solid.svg"
+   id="svg4"
+   version="1.1"
+   viewBox="0 0 128 128"
+   role="img"
+   class="svg-inline--fa fa-lungs fa-w-20"
+   data-icon="lungs"
+   data-prefix="fas"
+   focusable="false"
+   aria-hidden="true"
+   width="128"
+   height="128">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     inkscape:current-layer="svg4"
+     inkscape:window-maximized="0"
+     inkscape:window-y="123"
+     inkscape:window-x="1024"
+     inkscape:cy="65.927673"
+     inkscape:cx="46.370915"
+     inkscape:zoom="5.3625468"
+     showgrid="false"
+     id="namedview6"
+     inkscape:window-height="1052"
+     inkscape:window-width="1955"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-page="true"
+     inkscape:snap-grids="false"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true" />
+  <path
+     style="fill:#848e98;fill-opacity:1;stroke-width:0.2"
+     id="path2"
+     d="M 127.222,90.029998 C 122.888,73.769999 116.014,58.199997 106.82,43.825998 102.39599,36.911999 99.605997,31.2 90.809995,31.2 c -7.737999,0 -14.01,5.883998 -14.01,13.141999 v 12.021999 l -6.575999,-4.383999 a 3.1991997,3.1991997 0 0 1 -1.424,-2.662002 V 15.2 c 0,-1.768 -1.432,-3.2 -3.2,-3.2 h -3.199999 c -1.768,0 -3.200001,1.432 -3.200001,3.2 v 34.117997 c 0,1.070001 -0.533999,2.068001 -1.424,2.662002 l -6.575999,4.383999 V 44.341999 C 51.199997,37.083998 44.927998,31.2 37.189998,31.2 c -8.796,0 -11.585999,5.711999 -16.009999,12.625998 C 11.986,58.199997 5.1119997,73.769999 0.77799996,90.029998 0.25999998,91.967996 0,93.957996 0,95.955997 0,108.202 12.496,117.04399 25.047998,113.68 l 11.9,-3.19 c 8.436,-2.26 14.251999,-9.494 14.251999,-17.724004 v -17.498 l -17.167998,11.446 a 1.5983999,1.5983999 0 0 1 -2.218001,-0.443998 l -1.776,-2.662 a 1.5983999,1.5983999 0 0 1 0.444,-2.218002 L 63.999996,59.045997 97.517995,81.389996 a 1.5988,1.5988 0 0 1 0.444,2.218002 l -1.776,2.662 a 1.5988,1.5988 0 0 1 -2.218001,0.443998 l -17.167999,-11.446 v 17.498 c 0,8.230004 5.816,15.462004 14.252,17.724004 l 11.899995,3.19 C 115.504,117.04399 128,108.202 128,95.955997 c 0,-1.998001 -0.26,-3.988001 -0.778,-5.925999 z"
+     fill="currentColor" />
+</svg>
