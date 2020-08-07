@@ -59,6 +59,10 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
 
+    // Parrot hack // Remove MAC address from device name
+    if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
+    else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+
     if (m_bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
 
@@ -79,6 +83,10 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 {
     m_bleDevice = d;
     m_deviceName = m_bleDevice.name();
+
+    // Parrot hack // Remove MAC address from device name
+    if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
+    else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
 
 #if defined(Q_OS_OSX) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();

@@ -50,6 +50,7 @@ SOURCES  += src/main.cpp \
             src/device_hygrotemp_clock.cpp \
             src/device_hygrotemp_square.cpp \
             src/device_ropot.cpp \
+            src/device_parrotpot.cpp \
             src/device_environmental.cpp \
             src/device_esp32_higrow.cpp \
             src/device_esp32_geiger.cpp \
@@ -73,6 +74,7 @@ HEADERS  += src/demomode.h \
             src/device_hygrotemp_clock.h \
             src/device_hygrotemp_square.h \
             src/device_ropot.h \
+            src/device_parrotpot.h \
             src/device_environmental.h \
             src/device_esp32_geiger.h \
             src/device_esp32_higrow.h \

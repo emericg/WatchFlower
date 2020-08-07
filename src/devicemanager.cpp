@@ -23,6 +23,7 @@
 #include "device.h"
 #include "device_flowercare.h"
 #include "device_flowerpower.h"
+#include "device_parrotpot.h"
 #include "device_ropot.h"
 #include "device_hygrotemp_lcd.h"
 #include "device_hygrotemp_eink.h"
@@ -90,13 +91,15 @@ DeviceManager::DeviceManager()
             Device *d = nullptr;
 
             if (deviceName == "Flower care" || deviceName == "Flower mate")
-                d = new DeviceFlowercare(deviceAddr, deviceName, this);
-            else if (deviceName.startsWith("Flower power"))
-                d = new DeviceFlowerPower(deviceAddr, deviceName, this);
-            else if (deviceName == "HiGrow")
-                d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
+                d = new DeviceFlowerCare(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
                 d = new DeviceRopot(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Flower power"))
+                d = new DeviceFlowerPower(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Parrot pot"))
+                d = new DeviceParrotPot(deviceAddr, deviceName, this);
+            else if (deviceName == "HiGrow")
+                d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
             else if (deviceName == "ClearGrass Temp & RH")
@@ -537,13 +540,15 @@ void DeviceManager::deviceDiscoveryFinished()
                 Device *d = nullptr;
 
                 if (deviceName == "Flower care" || deviceName == "Flower mate")
-                    d = new DeviceFlowercare(deviceAddr, deviceName, this);
-                else if (deviceName.startsWith("Flower power"))
-                    d = new DeviceFlowerPower(deviceAddr, deviceName, this);
-                else if (deviceName == "HiGrow")
-                    d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
+                    d = new DeviceFlowerCare(deviceAddr, deviceName, this);
                 else if (deviceName == "ropot")
                     d = new DeviceRopot(deviceAddr, deviceName, this);
+                else if (deviceName.startsWith("Flower power"))
+                    d = new DeviceFlowerPower(deviceAddr, deviceName, this);
+                else if (deviceName.startsWith("Parrot pot"))
+                    d = new DeviceParrotPot(deviceAddr, deviceName, this);
+                else if (deviceName == "HiGrow")
+                    d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
                 else if (deviceName == "MJ_HT_V1")
                     d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
                 else if (deviceName == "ClearGrass Temp & RH")
@@ -798,6 +803,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     {
         if (info.name() == "Flower care" || info.name() == "Flower mate" ||
             info.name().startsWith("Flower power") ||
+            info.name().startsWith("Parrot pot") ||
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1" ||
             info.name() == "ClearGrass Temp & RH" ||
@@ -823,13 +829,15 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             Device *d = nullptr;
 
             if (info.name() == "Flower care" || info.name() == "Flower mate")
-                d = new DeviceFlowercare(info, this);
-            else if (info.name().startsWith("Flower power"))
-                d = new DeviceFlowerPower(info, this);
-            else if (info.name() == "HiGrow")
-                d = new DeviceEsp32HiGrow(info, this);
+                d = new DeviceFlowerCare(info, this);
             else if (info.name() == "ropot")
                 d = new DeviceRopot(info, this);
+            else if (info.name().startsWith("Flower power"))
+                d = new DeviceFlowerPower(info, this);
+            else if (info.name().startsWith("Parrot pot"))
+                d = new DeviceParrotPot(info, this);
+            else if (info.name() == "HiGrow")
+                d = new DeviceEsp32HiGrow(info, this);
             else if (info.name() == "MJ_HT_V1")
                 d = new DeviceHygrotempLCD(info, this);
             else if (info.name() == "ClearGrass Temp & RH")
