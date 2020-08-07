@@ -72,14 +72,14 @@
  * - > char-write-req 0x0033 A01F   // required if firmware version >= 2.6.6
  * - > char-read-hnd 35             // the 16b of data
  */
-class DeviceFlowercare: public Device
+class DeviceFlowerCare: public Device
 {
     Q_OBJECT
 
 public:
-    DeviceFlowercare(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceFlowercare();
+    DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceFlowerCare();
 
 private:
     // QLowEnergyController related

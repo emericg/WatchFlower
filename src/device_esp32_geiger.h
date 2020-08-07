@@ -36,7 +36,7 @@
 /*!
  * Homemade ESP32 Geiger Counter.
  *
- * - https://github.com/emericg/esp32-environmental-sensors
+ * - https://github.com/emericg/esp32-environmental-sensors/GeigerCounter
  */
 class DeviceEsp32Geiger: public DeviceEnvironmental
 {
@@ -55,6 +55,7 @@ private:
 
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
+
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };

@@ -37,7 +37,7 @@
 
 /* ************************************************************************** */
 
-DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent):
     Device(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
@@ -50,7 +50,7 @@ DeviceFlowercare::DeviceFlowercare(QString &deviceAddr, QString &deviceName, QOb
     m_capabilities += DEVICE_LIGHT;
 }
 
-DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *parent):
+DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent):
     Device(d, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
@@ -63,7 +63,7 @@ DeviceFlowercare::DeviceFlowercare(const QBluetoothDeviceInfo &d, QObject *paren
     m_capabilities += DEVICE_LIGHT;
 }
 
-DeviceFlowercare::~DeviceFlowercare()
+DeviceFlowerCare::~DeviceFlowerCare()
 {
     delete serviceHistory;
     delete serviceData;
@@ -72,7 +72,7 @@ DeviceFlowercare::~DeviceFlowercare()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceFlowercare::serviceScanDone()
+void DeviceFlowerCare::serviceScanDone()
 {
     //qDebug() << "DeviceFlowercare::serviceScanDone(" << m_deviceAddress << ")";
 
@@ -80,8 +80,8 @@ void DeviceFlowercare::serviceScanDone()
     {
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered_data);
-            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_data);
+            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
             serviceData->discoverDetails();
         }
     }
@@ -90,15 +90,15 @@ void DeviceFlowercare::serviceScanDone()
     {
         if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowercare::serviceDetailsDiscovered_history);
-            connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowercare::bleReadDone);
-            connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowercare::bleWriteDone);
+            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_history);
+            connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
+            connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
             serviceHistory->discoverDetails();
         }
     }
 }
 
-void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
+void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceFlowercare::addLowEnergyService(" << uuid.toString() << ")";
 
@@ -129,7 +129,7 @@ void DeviceFlowercare::addLowEnergyService(const QBluetoothUuid &uuid)
     }
 }
 
-void DeviceFlowercare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
+void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
@@ -183,7 +183,7 @@ void DeviceFlowercare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
     }
 }
 
-void DeviceFlowercare::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
+void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
@@ -203,7 +203,7 @@ void DeviceFlowercare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 
 /* ************************************************************************** */
 
-void DeviceFlowercare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     qDebug() << "DeviceFlowercare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
 
@@ -218,7 +218,7 @@ void DeviceFlowercare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
     }
 }
 
-void DeviceFlowercare::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*

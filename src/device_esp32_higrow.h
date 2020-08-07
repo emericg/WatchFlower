@@ -34,9 +34,9 @@
 /* ************************************************************************** */
 
 /*!
- * ESP32 HiGrow sensor with custom firmware.
+ * ESP32 HiGrow sensor (with custom firmware).
  *
- * - https://github.com/emericg/esp32-environmental-sensors
+ * - https://github.com/emericg/esp32-environmental-sensors/HiGrow
  */
 class DeviceEsp32HiGrow: public Device
 {
@@ -55,6 +55,7 @@ private:
 
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
+
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 

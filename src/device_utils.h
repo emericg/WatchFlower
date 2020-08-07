@@ -57,13 +57,17 @@ enum DeviceCapabilities {
     DEVICE_HUMIDITY          = (1 << 13), //!< Has an humidity sensor
     DEVICE_LIGHT             = (1 << 14), //!< Has a light sensor
     DEVICE_UV                = (1 << 15), //!< Has an UV light sensor
-    DEVICE_BAROMETER         = (1 << 16), //!<
-    DEVICE_CO                = (1 << 17), //!<
-    DEVICE_CO2               = (1 << 18), //!<
-    DEVICE_VOC               = (1 << 19), //!<
-    DEVICE_PM25              = (1 << 20), //!<
-    DEVICE_PM10              = (1 << 21), //!<
-    DEVICE_GEIGER            = (1 << 22), //!<
+    DEVICE_BAROMETER         = (1 << 16), //!< Has a barometer
+
+    DEVICE_PM1               = (1 << 17),
+    DEVICE_PM25              = (1 << 18),
+    DEVICE_PM10              = (1 << 19),
+    DEVICE_O3                = (1 << 20),
+    DEVICE_CO                = (1 << 21),
+    DEVICE_CO2               = (1 << 22),
+    DEVICE_NOX               = (1 << 23),
+    DEVICE_VOC               = (1 << 24),
+    DEVICE_GEIGER            = (1 << 31),
 };
 
 enum DeviceType {
