@@ -104,9 +104,9 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
             else if (deviceName == "ClearGrass Temp & RH")
                 d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD02")
+            else if (deviceName == "LYWSD02" || deviceName == "MHOC303")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD03MMC")
+            else if (deviceName == "LYWSD03MMC" || deviceName == "MHOC401")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
                 d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
@@ -553,9 +553,9 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
                 else if (deviceName == "ClearGrass Temp & RH")
                     d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
-                else if (deviceName == "LYWSD02")
+                else if (deviceName == "LYWSD02" || deviceName == "MHOC303")
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-                else if (deviceName == "LYWSD03MMC")
+                else if (deviceName == "LYWSD03MMC" || deviceName == "MHOC401")
                     d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
                 else if (deviceName == "GeigerCounter")
                     d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
@@ -807,8 +807,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1" ||
             info.name() == "ClearGrass Temp & RH" ||
-            info.name() == "LYWSD02" ||
-            info.name() == "LYWSD03MMC" ||
+            info.name() == "LYWSD02" || info.name() == "MHOC303" ||
+            info.name() == "LYWSD03MMC" || info.name() == "MHOC401" ||
             info.name() == "GeigerCounter" || info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
@@ -842,9 +842,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempLCD(info, this);
             else if (info.name() == "ClearGrass Temp & RH")
                 d = new DeviceHygrotempEInk(info, this);
-            else if (info.name() == "LYWSD02")
+            else if (info.name() == "LYWSD02" || info.name() == "MHOC303")
                 d = new DeviceHygrotempClock(info, this);
-            else if (info.name() == "LYWSD03MMC")
+            else if (info.name() == "LYWSD03MMC" || info.name() == "MHOC401")
                 d = new DeviceHygrotempSquare(info, this);
             else if (info.name() == "GeigerCounter")
                 d = new DeviceEsp32Geiger(info, this);
