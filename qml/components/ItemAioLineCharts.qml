@@ -99,7 +99,7 @@ Item {
         hygroData.width = 2
         tempData.width = 2
 
-        if (currentDevice.deviceName === "ropot") {
+        if (currentDevice.deviceName === "ropot" || currentDevice.deviceName === "Parrot pot") {
             hygroData.width = 3 // Humidity is primary
         }
 

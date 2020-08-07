@@ -110,16 +110,24 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         if (role == DeviceModelRole) {
             if (device->getName() == "Flower care" || device->getName() == "Flower mate") {
                 return "a";
-            } else if (device->getName() == "ropot") {
+            } else if (device->getName() == "Flower power") {
                 return "b";
-            } else if (device->getName() == "MJ_HT_V1") {
+            } else if (device->getName() == "ropot") {
                 return "c";
-            } else if (device->getName() == "ClearGrass Temp & RH") {
+            } else if (device->getName() == "Parrot pot") {
                 return "d";
-            } else if (device->getName() == "LYWSD02") {
+            } else if (device->getName() == "MJ_HT_V1") {
                 return "e";
-            } else if (device->getName() == "LYWSD03MMC") {
+            } else if (device->getName() == "ClearGrass Temp & RH") {
                 return "f";
+            } else if (device->getName() == "LYWSD02") {
+                return "g";
+            } else if (device->getName() == "MHOC303") {
+                return "h";
+            } else if (device->getName() == "LYWSD03MMC") {
+                return "i";
+            } else if (device->getName() == "MHOC401") {
+                return "j";
             } else {
                 return "z"; //return device.getName();
             }

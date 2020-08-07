@@ -79,7 +79,7 @@ Item {
             imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
         } else {
             if (boxDevice.hasData("hygro")) {
-                if (boxDevice.deviceName === "ropot")
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_material/outline-local_florist_pot-24px.svg"
                 else
                     imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
