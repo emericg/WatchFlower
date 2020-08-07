@@ -509,7 +509,7 @@ bool Device::getBleData()
             connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
             connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
             connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
-            connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone);
+            connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection);
             connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
             connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
         }
