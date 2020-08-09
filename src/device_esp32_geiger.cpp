@@ -100,7 +100,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // firmware
+            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x3031 // firmware version
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {
@@ -116,7 +116,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
             Q_EMIT sensorUpdated();
 
-            QBluetoothUuid d(QString("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // recap data
+            QBluetoothUuid d(QString("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // handle 0x? // recap data
             QLowEnergyCharacteristic chd = serviceData->characteristic(d);
 
             m_rh = chd.value().toFloat();
@@ -124,7 +124,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
             m_rs = chd.value().toFloat();
             Q_EMIT dataUpdated();
 
-            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // handle 0x? // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             //serviceData->readCharacteristic(chrt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
@@ -165,7 +165,7 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 */
     if (c.uuid().toString() == "{eeee9a32-a0c0-4cbd-b00b-6b519bf2780f}")
     {
-        // Geiger Counter realtime data // handler 0x?
+        // Geiger Counter realtime data // handle 0x?
 
         if (value.size() > 0)
         {

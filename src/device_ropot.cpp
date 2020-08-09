@@ -62,6 +62,7 @@ DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
 
 DeviceRopot::~DeviceRopot()
 {
+    delete serviceHistory;
     delete serviceData;
 }
 
@@ -76,11 +77,24 @@ void DeviceRopot::serviceScanDone()
     {
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+        }
+    }
+
+    if (serviceHistory)
+    {
+        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_history);
+            connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
+            connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceRopot::bleWriteDone);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceHistory->discoverDetails(); });
         }
     }
 }
@@ -94,19 +108,35 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
-        if (!serviceData)
-            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
+        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        {
+            serviceData = controller->createServiceObject(uuid);
+            if (!serviceData)
+                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
+        }
+    }
+
+    if (uuid.toString() == "{00001206-0000-1000-8000-00805f9b34fb}")
+    {
+        delete serviceHistory;
+        serviceHistory = nullptr;
+
+        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        {
+            serviceHistory = controller->createServiceObject(uuid);
+            if (!serviceHistory)
+                qWarning() << "Cannot create service (history) for uuid:" << uuid.toString();
+        }
     }
 }
 
-void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newState)
+void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceRopot::serviceDetailsDiscovered(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceRopot::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        if (serviceData && m_ble_action == ACTION_UPDATE)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
@@ -138,6 +168,14 @@ void DeviceRopot::serviceDetailsDiscovered(QLowEnergyService::ServiceState newSt
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             serviceData->readCharacteristic(chb);
         }
+    }
+}
+
+void DeviceRopot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceRopot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
     }
 }
 

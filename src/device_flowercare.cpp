@@ -74,7 +74,7 @@ DeviceFlowerCare::~DeviceFlowerCare()
 
 void DeviceFlowerCare::serviceScanDone()
 {
-    //qDebug() << "DeviceFlowercare::serviceScanDone(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceFlowerCare::serviceScanDone(" << m_deviceAddress << ")";
 
     if (serviceData)
     {
@@ -104,7 +104,7 @@ void DeviceFlowerCare::serviceScanDone()
 
 void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    //qDebug() << "DeviceFlowercare::addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceFlowerCare::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{00001204-0000-1000-8000-00805f9b34fb}") // Generic Telephony
     {
@@ -137,7 +137,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceData && m_ble_action == ACTION_UPDATE)
         {
@@ -166,12 +166,12 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 
             if (need_firstsend) // if firmware > 2.6.6
             {
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
+                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
-            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handler 0x35
+            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             serviceData->readCharacteristic(chb);
         }
@@ -179,7 +179,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
         if (serviceData && m_ble_action == ACTION_LED_BLINK)
         {
             // Make LED blink
-            QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
+            QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
             QLowEnergyCharacteristic cha = serviceData->characteristic(a);
             serviceData->writeCharacteristic(cha, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
 
@@ -192,11 +192,11 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceFlowercare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
         {
-            qDebug() << "DeviceFlowercare > HISTORY " << m_ble_action;
+            qDebug() << "DeviceFlowerCare > HISTORY " << m_ble_action;
 
             // Change the device mode and wait for a response
             QBluetoothUuid h(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handler 0x3e
@@ -210,7 +210,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 
 void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceFlowercare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "DeviceFlowerCare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
 
     if (c.uuid().toString() == "{00001a10-0000-1000-8000-00805f9b34fb}")
     {
@@ -227,7 +227,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 {
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 /*
-    qDebug() << "DeviceFlowercare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "DeviceFlowerCare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     qDebug() << "WE HAVE DATA: 0x" \
              << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
              << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
@@ -296,7 +296,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             controller->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceFlowercare update:" << getAddress();
+            qDebug() << "* DeviceFlowerCare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_temperature:" << m_temperature;
