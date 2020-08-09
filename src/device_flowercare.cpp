@@ -82,7 +82,8 @@ void DeviceFlowerCare::serviceScanDone()
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
-            serviceData->discoverDetails();
+
+            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -93,7 +94,8 @@ void DeviceFlowerCare::serviceScanDone()
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_history);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
             connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
-            serviceHistory->discoverDetails();
+
+            QTimer::singleShot(0, [=] () { serviceHistory->discoverDetails(); });
         }
     }
 }
@@ -178,6 +180,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
             QLowEnergyCharacteristic cha = serviceData->characteristic(a);
             serviceData->writeCharacteristic(cha, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
+
             controller->disconnectFromDevice();
         }
     }

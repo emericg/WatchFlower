@@ -427,11 +427,9 @@ void DeviceManager::scanDevices()
                        this, &DeviceManager::deviceUpdateReceived);
 
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                    this, &DeviceManager::addBleDevice,
-                    Qt::UniqueConnection);
+                    this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                    this, &DeviceManager::deviceDiscoveryFinished,
-                    Qt::UniqueConnection);
+                    this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
 
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                        this, &DeviceManager::bleDiscoveryFinished);
