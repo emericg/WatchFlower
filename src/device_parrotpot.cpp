@@ -85,7 +85,9 @@ void DeviceParrotPot::serviceScanDone()
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_infos);
             //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
-            serviceInfos->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
         }
     }
 
@@ -95,7 +97,9 @@ void DeviceParrotPot::serviceScanDone()
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_battery);
             //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
-            serviceBattery->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceBattery->discoverDetails(); });
         }
     }
 
@@ -105,7 +109,9 @@ void DeviceParrotPot::serviceScanDone()
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_data);
             //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
-            serviceData->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -115,7 +121,9 @@ void DeviceParrotPot::serviceScanDone()
         {
             connect(serviceClock, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_clock);
             //connect(serviceClock, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
-            serviceClock->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceClock->discoverDetails(); });
         }
     }
 
@@ -126,7 +134,9 @@ void DeviceParrotPot::serviceScanDone()
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_history);
             //connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
             //connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceParrotPot::bleWriteDone);
-            serviceHistory->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceHistory->discoverDetails(); });
         }
     }
 }

@@ -83,7 +83,9 @@ void DeviceEsp32HiGrow::serviceScanDone()
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceEsp32HiGrow::bleReadDone);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32HiGrow::bleReadNotify);
-            serviceData->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
         }
     }
 }

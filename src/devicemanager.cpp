@@ -402,8 +402,7 @@ void DeviceManager::checkBluetoothIos()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::deviceDiscoveryFinished);
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                this, &DeviceManager::bleDiscoveryFinished,
-                Qt::UniqueConnection);
+                this, &DeviceManager::bleDiscoveryFinished, Qt::UniqueConnection);
 
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(100);
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);

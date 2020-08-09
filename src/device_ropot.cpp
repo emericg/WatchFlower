@@ -78,7 +78,9 @@ void DeviceRopot::serviceScanDone()
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
-            serviceData->discoverDetails();
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
         }
     }
 }

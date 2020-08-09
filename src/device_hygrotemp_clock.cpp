@@ -81,11 +81,10 @@ void DeviceHygrotempClock::serviceScanDone()
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_data);
-            //connect(serviceData, &QLowEnergyService::descriptorWritten, this, &DeviceHygrotempClock::confirmedDescriptorWrite);
-            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceHygrotempClock::bleReadDone);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempClock::bleReadNotify);
 
-            serviceData->discoverDetails();
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -95,7 +94,8 @@ void DeviceHygrotempClock::serviceScanDone()
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_infos);
 
-            serviceInfos->discoverDetails();
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
         }
     }
 }
