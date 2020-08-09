@@ -44,6 +44,7 @@ DeviceFlowerPower::DeviceFlowerPower(QString &deviceAddr, QString &deviceName, Q
 
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_LED;
+    m_capabilities += DEVICE_LAST_MOVE;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_SOIL_TEMPERATURE;
@@ -58,6 +59,7 @@ DeviceFlowerPower::DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *par
 
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_LED;
+    m_capabilities += DEVICE_LAST_MOVE;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_SOIL_TEMPERATURE;

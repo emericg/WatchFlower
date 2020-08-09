@@ -44,6 +44,7 @@ DeviceParrotPot::DeviceParrotPot(QString &deviceAddr, QString &deviceName, QObje
 
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_LED;
+    m_capabilities += DEVICE_WATER_TANK;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_TEMPERATURE;
@@ -57,6 +58,7 @@ DeviceParrotPot::DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent)
 
     m_capabilities += DEVICE_BATTERY;
     m_capabilities += DEVICE_LED;
+    m_capabilities += DEVICE_WATER_TANK;
     m_capabilities += DEVICE_SOIL_MOISTURE;
     m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
     m_capabilities += DEVICE_TEMPERATURE;

@@ -48,6 +48,8 @@ enum DeviceCapabilities {
     DEVICE_CLOCK             = (1 <<  1), //!< Has an onboard clock
     DEVICE_LED               = (1 <<  2), //!< Has a blinkable LED
     DEVICE_HISTORY           = (1 <<  3), //!< Record sensor history
+    DEVICE_LAST_MOVE         = (1 <<  4),
+    DEVICE_WATER_TANK        = (1 <<  5),
 
     DEVICE_SOIL_MOISTURE     = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
     DEVICE_SOIL_CONDUCTIVITY = (1 <<  9), //!< Has a soil conductivity/fertility sensor
@@ -90,8 +92,10 @@ enum DeviceStatus {
 enum DeviceActions {
     ACTION_UPDATE = 0,
     ACTION_UPDATE_HISTORY,
-    ACTION_LED_BLINK,
     ACTION_DATA_STREAMING,
+
+    ACTION_LED_BLINK = 8,
+    ACTION_WATERING,
 };
 
 /* ************************************************************************** */
