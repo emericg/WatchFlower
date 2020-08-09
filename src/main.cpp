@@ -19,15 +19,15 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "utils_app.h"
-#include "utils_screen.h"
-#include "utils_language.h"
-#include "utils_macosdock.h"
 #include "settingsmanager.h"
 #include "systraymanager.h"
 #include "notificationmanager.h"
 #include "devicemanager.h"
 #include "demomode.h"
+#include "utils/utils_app.h"
+#include "utils/utils_screen.h"
+#include "utils/utils_language.h"
+#include "utils/utils_macosdock.h"
 
 #include <MobileUI.h>
 #include <singleapplication.h>
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    // Init WatchFlower utils
+    // Init generic utils
     UtilsScreen *utilsScreen = new UtilsScreen();
     UtilsApp *utilsApp = UtilsApp::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();

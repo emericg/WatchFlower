@@ -54,10 +54,10 @@ SOURCES  += src/main.cpp \
             src/device_environmental.cpp \
             src/device_esp32_higrow.cpp \
             src/device_esp32_geiger.cpp \
-            src/utils_app.cpp \
-            src/utils_android.cpp \
-            src/utils_language.cpp \
-            src/utils_screen.cpp
+            src/utils/utils_app.cpp \
+            src/utils/utils_android.cpp \
+            src/utils/utils_language.cpp \
+            src/utils/utils_screen.cpp
 
 HEADERS  += src/demomode.h \
             src/settingsmanager.h \
@@ -78,11 +78,11 @@ HEADERS  += src/demomode.h \
             src/device_environmental.h \
             src/device_esp32_geiger.h \
             src/device_esp32_higrow.h \
-            src/utils_app.h \
-            src/utils_android.h \
-            src/utils_language.h \
-            src/utils_screen.h \
-            src/utils_versionchecker.h
+            src/utils/utils_app.h \
+            src/utils/utils_android.h \
+            src/utils/utils_language.h \
+            src/utils/utils_screen.h \
+            src/utils/utils_versionchecker.h
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

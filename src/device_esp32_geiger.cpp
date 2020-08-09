@@ -20,7 +20,7 @@
  */
 
 #include "device_esp32_geiger.h"
-#include "utils_versionchecker.h"
+#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

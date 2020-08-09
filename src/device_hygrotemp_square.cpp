@@ -21,7 +21,7 @@
 
 #include "device_hygrotemp_square.h"
 #include "settingsmanager.h"
-#include "utils_versionchecker.h"
+#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

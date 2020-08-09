@@ -32,7 +32,7 @@
 #include "device_esp32_higrow.h"
 #include "device_esp32_geiger.h"
 
-#include "utils_app.h"
+#include "utils/utils_app.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
