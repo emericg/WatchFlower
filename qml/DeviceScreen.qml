@@ -104,7 +104,7 @@ Item {
                 sensorPages.currentIndex++
         } else if (event.key === Qt.Key_Backspace) {
             event.accepted = true;
-            applicationWindow.backAction()
+            appWindow.backAction()
         }
     }
 

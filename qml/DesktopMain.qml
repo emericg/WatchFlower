@@ -26,7 +26,16 @@ import QtQuick.Window 2.12
 import ThemeEngine 1.0
 
 ApplicationWindow {
-    id: applicationWindow
+    id: appWindow
+
+    flags: Qt.Window
+    color: Theme.colorBackground
+
+    property var lastUpdate
+    property var selectedDevice: null
+
+    // Desktop stuff ///////////////////////////////////////////////////////////
+
     minimumWidth: 480
     minimumHeight: 480
 
@@ -45,11 +54,18 @@ ApplicationWindow {
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height
 
-    flags: Qt.Window
-    color: Theme.colorBackground
-
-    property var lastUpdate
-    property var selectedDevice: null
+    WindowGeometrySaver {
+        windowInstance: appWindow
+        Component.onCompleted: {
+            // Make sure we handle window visibility correctly
+            if (startMinimized) {
+                if (settingsManager.systray) visibility = ApplicationWindow.Hidden
+                else visibility = ApplicationWindow.Minimized
+            } else {
+                visibility = settingsManager.initialVisibility
+            }
+        }
+    }
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
@@ -70,21 +86,6 @@ ApplicationWindow {
         signal deviceDataButtonClicked()
         signal deviceHistoryButtonClicked()
         signal deviceSettingsButtonClicked()
-    }
-
-    // Desktop stuff ///////////////////////////////////////////////////////////
-
-    WindowGeometrySaver {
-        windowInstance: applicationWindow
-        Component.onCompleted: {
-            // Make sure we handle window visibility correctly
-            if (startMinimized) {
-                if (settingsManager.systray) visibility = ApplicationWindow.Hidden
-                else visibility = ApplicationWindow.Minimized
-            } else {
-                visibility = settingsManager.initialVisibility
-            }
-        }
     }
 
     // Events handling /////////////////////////////////////////////////////////
@@ -161,7 +162,7 @@ ApplicationWindow {
     onClosing: {
         if (settingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false;
-            applicationWindow.hide();
+            appWindow.hide();
         }
     }
 
@@ -256,7 +257,7 @@ ApplicationWindow {
     }
     Shortcut {
         sequence: StandardKey.Close
-        onActivated: applicationWindow.close()
+        onActivated: appWindow.close()
     }
     Shortcut {
         sequence: StandardKey.Quit

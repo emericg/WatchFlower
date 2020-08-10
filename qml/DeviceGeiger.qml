@@ -71,7 +71,7 @@ Item {
     Keys.onPressed: {
         if (event.key === Qt.Key_Backspace) {
             event.accepted = true;
-            applicationWindow.backAction()
+            appWindow.backAction()
         }
     }
 

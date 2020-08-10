@@ -53,7 +53,7 @@ Drawer {
             z: 5
 
             Connections {
-                target: applicationWindow
+                target: appWindow
                 onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
             }
             Connections {

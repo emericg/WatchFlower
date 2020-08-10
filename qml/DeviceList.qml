@@ -103,10 +103,10 @@ Item {
 
     ItemDeletePopup {
         id: confirmDeleteDevice
-        width: (applicationWindow.width < 480) ? applicationWindow.width : 480
+        width: (appWindow.width < 480) ? appWindow.width : 480
         height: 180
-        x: (applicationWindow.width / 2) - (confirmDeleteDevice.width / 2)
-        y: (applicationWindow.height / 2) - (confirmDeleteDevice.height / 2) - appHeader.height
+        x: (appWindow.width / 2) - (confirmDeleteDevice.width / 2)
+        y: (appWindow.height / 2) - (confirmDeleteDevice.height / 2) - appHeader.height
 
         onConfirmed: {
             // actual device deletion

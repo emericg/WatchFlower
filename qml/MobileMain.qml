@@ -27,7 +27,7 @@ import ThemeEngine 1.0
 import MobileUI 0.1
 
 ApplicationWindow {
-    id: applicationWindow
+    id: appWindow
     minimumWidth: 400
     minimumHeight: 800
 
@@ -405,7 +405,7 @@ ApplicationWindow {
             id: tabletMenuScreen
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width >= 480) ? 24 : 0
+            spacing: (appWindow.width >= 480) ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||
@@ -456,7 +456,7 @@ ApplicationWindow {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            spacing: (applicationWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
+            spacing: (appWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDataButtonClicked()
             signal deviceHistoryButtonClicked()
