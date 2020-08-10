@@ -189,8 +189,8 @@ macx {
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
     # macOS dock click handler
-    SOURCES += src/utils_macosdock.mm
-    HEADERS += src/utils_macosdock.h
+    SOURCES += src/utils/utils_macosdock.mm
+    HEADERS += src/utils/utils_macosdock.h
     LIBS    += -framework AppKit
 
     # OS entitlement (sandbox and stuff)
