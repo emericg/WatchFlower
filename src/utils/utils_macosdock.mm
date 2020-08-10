@@ -1,4 +1,5 @@
 /*!
+ * This file is part of WatchFlower.
  * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify

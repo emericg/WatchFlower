@@ -30,7 +30,7 @@
 #include <QDir>
 #include <QSize>
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QStandardPaths>
 #include <QDesktopServices>
 
@@ -51,7 +51,7 @@ UtilsApp *UtilsApp::getInstance()
 UtilsApp::UtilsApp()
 {
     // Set default application path
-    m_appPath = QApplication::applicationDirPath();
+    m_appPath = QCoreApplication::applicationDirPath();
 
     //m_appPath = newpath.absolutePath();
     // Make sure the path is terminated with a separator.
@@ -94,7 +94,7 @@ QString UtilsApp::appBuildMode()
 
 void UtilsApp::appExit()
 {
-    QApplication::exit();
+    QCoreApplication::exit();
 }
 
 /* ************************************************************************** */

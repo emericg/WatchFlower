@@ -20,7 +20,7 @@
 
 #include "utils_language.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QLibraryInfo>
 #include <QTranslator>
 #include <QDebug>
@@ -42,8 +42,8 @@ UtilsLanguage *UtilsLanguage::getInstance()
 UtilsLanguage::UtilsLanguage()
 {
     // Set a default application name and instance
-    m_appName = QApplication::applicationName().toLower();
-    m_qt_app = QApplication::instance();
+    m_appName = QCoreApplication::applicationName().toLower();
+    m_qt_app = QCoreApplication::instance();
 }
 
 UtilsLanguage::~UtilsLanguage()

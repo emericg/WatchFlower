@@ -22,7 +22,7 @@
 #include "settingsmanager.h"
 #include "systraymanager.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QStandardPaths>
 #include <QLocale>
 #include <QDir>
@@ -66,7 +66,7 @@ bool SettingsManager::readSettings()
 {
     bool status = false;
 
-    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     if (settings.status() == QSettings::NoError)
     {
@@ -174,7 +174,7 @@ bool SettingsManager::writeSettings()
 {
     bool status = false;
 
-    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     if (settings.isWritable())
     {
