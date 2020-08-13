@@ -40,11 +40,6 @@
  *
  * Protocol infos:
  * - https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18
- *
- * // Connect using btgatt-client:
- * - $ btgatt-client -d 4C:65:A8:D0:6D:C8
- * - > register-notify 0x000e   // temp and humidity
- * - > read-value 0x0018        // battery
  */
 class DeviceHygrotempLCD: public Device
 {

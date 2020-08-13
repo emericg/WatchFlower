@@ -40,13 +40,13 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 | Flower Care | RoPot | Parrot Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :-----------------: | :--------: | :----: |
 | ![FlowerCare](doc/flowercare.svg) | ![RoPot](doc/ropot.svg) | ![FlowerPower](doc/flowerpower.svg) | ![ParrotPot](doc/parrotpot.svg) | ![HiGrow](doc/higrow.svg) |
-| Xiaomi and VegTrug variants<br>(International and Chinese versions)<br>HHCCJCY01 | Xiaomi and VegTrug variants<br>HHCCPOT002 |  | (monitoring only) | (with custom firmware) |
+| HHCCJCY01<br>Xiaomi and VegTrug variants<br>(International and Chinese versions) | HHCCPOT002<br>Xiaomi and VegTrug variants |  | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
 | :-----------------------------: | :----------------------------------: | :---------------------------: | :------------------------: | :------------------------------------: |
 | ![HygroTemp](doc/hygrotemp_lcd.svg) | ![HygroTemp](doc/hygrotemp_eink.svg) | ![HygroTempClock](doc/hygrotemp_clock.svg) | ![HygroTemp2](doc/hygrotemp_square_lcd.svg) | ![HygroTemp2](doc/hygrotemp_square_eink.svg) |
-| LYWSDCGQ | CGG1 | LYWSD02 / MHO-C303 | LYWSD03MMC | MHO-C401 |
+| LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
 ### Screenshots

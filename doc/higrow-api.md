@@ -10,7 +10,7 @@
 
 Boards are available from Weemo or LilyGo chinese manufacturers.
 
-I would not really recommend an HiGrow for serious plant monitoring, only for tinkering with an esp32 board with onboard sensors.  
+I would not really recommend an HiGrow for serious plant monitoring, only for tinkering with an esp32 board with onboard sensors.
 
 ## Features
 
@@ -19,7 +19,8 @@ I would not really recommend an HiGrow for serious plant monitoring, only for ti
 
 ## Protocol
 
-The device uses BLE GATT for communication. Sensor values are available through a read/notify characteristic.
+The device uses BLE GATT for communication.  
+Sensor values are immediately available for reading, through standard read/notify characteristics.  
 
 ### BLE & GATT
 
@@ -35,16 +36,16 @@ The name advertised by the device is `HiGrow`
 
 | Characteristic UUID                  | Handle | Access      | Description |
 | ------------------------------------ | ------ | ----------- | ----------- |
-| 00002A00-0000-1000-8000-00805f9b34fb | 0x03   | read        | device name |
+| 00002a00-0000-1000-8000-00805f9b34fb | 0x16   | read        | device name |
 
 ##### Data service (UUID eeee9a32-a000-4cbd-b00b-6b519bf2780f)
 
 | Characteristic UUID                  | Handle | Access      | Description                            |
 | ------------------------------------ | ------ | ----------- | -------------------------------------- |
-| eeee9a32-a001-4cbd-b00b-6b519bf2780f | 0x38   | read        | get device name                        |
-| eeee9a32-a002-4cbd-b00b-6b519bf2780f | 0x3031 | read        | get firmware version                   |
-| eeee9a32-a003-4cbd-b00b-6b519bf2780f | 0x3231 | read        | get battery level                      |
-| eeee9a32-a0a0-4cbd-b00b-6b519bf2780f | 0x3431 | read/notify | get HiGrow realtime data               |
+| eeee9a32-a001-4cbd-b00b-6b519bf2780f | 0x2a   | read        | get device name                        |
+| eeee9a32-a002-4cbd-b00b-6b519bf2780f | 0x2c   | read        | get firmware version                   |
+| eeee9a32-a003-4cbd-b00b-6b519bf2780f | 0x2e   | read        | get battery level                      |
+| eeee9a32-a0a0-4cbd-b00b-6b519bf2780f | 0x30   | read/notify | get HiGrow realtime data               |
 | eeee9a32-a0b0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Air Monitor realtime data          |
 | eeee9a32-a0c0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Geiger Counter realtime data       |
 | eeee9a32-a0c1-4cbd-b00b-6b519bf2780f | 0x0?   | read        | get Geiger Counter daily recap         |
@@ -60,7 +61,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ### Name
 
-A read request to the `0x03` or `0x38` handle will return n bytes of data, for example `0x486947726f77` corresponding to the device name.
+A read request to the `0x16` handle will return n bytes of data, for example `0x486947726f77` corresponding to the device name.
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 |
 | -------- | -- | -- | -- | -- | -- | -- |
@@ -72,7 +73,7 @@ A read request to the `0x03` or `0x38` handle will return n bytes of data, for e
 
 ### Firmware
 
-A read request to the `0x3031` handle will return 3 bytes of data, for example `0x302e31`.
+A read request to the `0x2c` handle will return 3 bytes of data, for example `0x302e31`.
 
 | Position | 00 | 01 | 02 |
 | -------- | -- | -- | -- |
@@ -84,7 +85,7 @@ A read request to the `0x3031` handle will return 3 bytes of data, for example `
 
 ### Battery
 
-A read request to the `0x3231` handle will return 4 bytes of data, for example `0x64000000`.
+A read request to the `0x2e` handle will return 4 bytes of data, for example `0x64000000`.
 
 | Position | 00 | 01 | 02 | 03 |
 | -------- | -- | -- | -- | -- |
@@ -118,8 +119,8 @@ None
 
 ## Reference
 
-[1] https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow  
-[2] https://emeric.io/EnvironmentalSensors/  
+[1] https://emeric.io/EnvironmentalSensors/  
+[2] https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow  
 
 ## License
 

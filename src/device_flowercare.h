@@ -38,39 +38,7 @@
  * VegTrug "Grow Care Garden" (GCLS002)
  *
  * Protocol infos:
- * - https://github.com/barnybug/miflora
- * - https://github.com/open-homeautomation/miflora
- * - https://github.com/sandeepmistry/node-flower-power
- *
- * Connection steps:
- * 1/ Connect to device MAC address (prefix should be C4:7C:8D:xx:xx:xx)
- * 2/ Use QBluetoothUuid::GenericTelephony service
- * 2a/ Read _HANDLE_READ_NAME(0x03) if you care
- * 2b/ Read _HANDLE_READ_VERSION_BATTERY(0x38)
- *     - byte 0: battery level percentage
- *     - bytes 2-5: firmware version (ASCII)
- * 3/ If (firmware version >= 2.6.6) then write _DATA_MODE_CHANGE = bytes([0xA0, 0x1F]) to _HANDLE_WRITE_MODE_CHANGE(0x33)
- * 4/ Read _HANDLE_READ_SENSOR_DATA(0x35)
- *    * the sensor should return 16 bytes (values are encoded in little endian):
- *    - bytes 0-1: temperature in 0.1°C
- *    - byte 2: unknown
- *    - bytes 3-4: brightness in lux
- *    - bytes 5-6: unknown
- *    - byte 7: humidity
- *    - byte 8-9: conductivity in µS/cm
- *    - bytes 10-15: unknown
- * 5/ Disconnect (or let the device disconnect you after a couple of seconds)
- *
- * // Connect using btgatt-client:
- * - $ btgatt-client -d C4:7C:8D:xx:xx:xx
- * - > write-value 0x0033 0xA0 0x1F // required if firmware version >= 2.6.6
- * - > read-value 0x0035            // the 16b of data
- *
- * // Connect using gattool (DEPRECATED):
- * - $ gatttool -b C4:7C:8D:xx:xx:xx -I
- * - > connect
- * - > char-write-req 0x0033 A01F   // required if firmware version >= 2.6.6
- * - > char-read-hnd 35             // the 16b of data
+ * - WatchFlower/doc/flowercare-api.md
  */
 class DeviceFlowerCare: public Device
 {

@@ -100,7 +100,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered(QLowEnergyService::ServiceState
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x3031 // firmware version
+            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {

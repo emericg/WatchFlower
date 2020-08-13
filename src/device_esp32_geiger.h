@@ -35,8 +35,10 @@
 
 /*!
  * Homemade ESP32 Geiger Counter.
- *
  * - https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter
+ *
+ * Protocol infos:
+ * - WatchFlower/doc/geigercounter-api.md
  */
 class DeviceEsp32Geiger: public DeviceEnvironmental
 {

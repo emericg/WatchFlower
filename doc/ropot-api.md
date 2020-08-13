@@ -23,8 +23,9 @@ Xiaomi MiJia **RoPot** / VegTrug **Grow Care Home** (HHCCPOT002)
 
 ## Protocol
 
-The device uses BLE GATT for communication, but the sensor values are not immediately available.
-When the original app connects to the device, it performs an elaborate initialization, required only to keep the connection opened for more than a few seconds.
+The device uses BLE GATT for communication, but the sensor values are not immediately available.  
+When the official application connects to the device, it performs an elaborate initialization, required only to keep the connection opened for more than a few seconds.  
+Sensor values are available for reading only after sending a *change mode* request detailed below.
 
 ### BLE & GATT
 
@@ -40,7 +41,7 @@ The name advertised by the device is `ropot`
 
 | Characteristic UUID                  | Handle | Access     | Description |
 | ------------------------------------ | ------ | ---------- | ----------- |
-| 00002800-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name |
+| 00002a00-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name |
 
 ##### Root service (UUID 0000fe95-0000-1000-8000-00805f9b34fb)
 
@@ -60,9 +61,9 @@ The name advertised by the device is `ropot`
 
 | Characteristic UUID                  | Handle | Access     | Description                            |
 | ------------------------------------ | ------ | ---------- | -------------------------------------- |
-| 00001a10-0000-1000-8000-00805f9b34fb | 0x3331 | r/w/notify |                                        |
-| 00001a11-0000-1000-8000-00805f9b34fb | 0x3531 | read       | get historical sensor values           |
-| 00001a12-0000-1000-8000-00805f9b34fb | 0x3831 | read       | device time                            |
+| 00001a10-0000-1000-8000-00805f9b34fb | 0x3e   | r/w/notify |                                        |
+| 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read       | get historical sensor values           |
+| 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read       | device time                            |
 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />

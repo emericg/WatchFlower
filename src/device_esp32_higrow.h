@@ -35,8 +35,10 @@
 
 /*!
  * ESP32 HiGrow sensor (with custom firmware).
- *
  * - https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow
+ *
+ * Protocol infos:
+ * - WatchFlower/doc/higrow-api.md
  */
 class DeviceEsp32HiGrow: public Device
 {
@@ -51,7 +53,7 @@ private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyDescriptor m_notificationDesc;

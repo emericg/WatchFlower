@@ -226,7 +226,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x09
+        QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb"));
         QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
         if (cfw.value().size() > 0)
         {
@@ -262,7 +262,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x28
+        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
         QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
         if (cbat.value().size() > 0)
         {
@@ -291,7 +291,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
 
         if (m_ble_action == ACTION_LED_BLINK)
         {
-            // Make LED blink
+            // Make LED blink // handle 0x
             QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cled = serviceData->characteristic(led);
             serviceData->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);

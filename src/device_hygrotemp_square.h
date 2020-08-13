@@ -39,10 +39,6 @@
  *
  * Protocol infos:
  * - TODO
- *
- * // Connect using btgatt-client:
- * - $ btgatt-client -d 3F:59:C8:83:0C:DF
- * >
  */
 class DeviceHygrotempSquare: public Device
 {

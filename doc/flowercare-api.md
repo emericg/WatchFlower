@@ -24,8 +24,9 @@ VegTrug **Grow Care Garden** (GCLS002)
 
 ## Protocol
 
-The device uses BLE GATT for communication, but the sensor values are not immediately available.
-When the original app connects to the device, it performs an elaborate initialization, required only to keep the connection opened for more than a few seconds.
+The device uses BLE GATT for communication, but the sensor values are not immediately available.  
+When the official application connects to the device, it performs an elaborate initialization, required only to keep the connection opened for more than a few seconds.  
+Sensor values are available for reading only after sending a *change mode* request detailed below.
 
 ### BLE & GATT
 
@@ -41,7 +42,7 @@ The name advertised by the device is `Flower care`
 
 | Characteristic UUID                  | Handle | Access     | Description |
 | ------------------------------------ | ------ | ---------- | ----------- |
-| 00002800-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name |
+| 00002a00-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name |
 
 ##### Root service (UUID 0000fe95-0000-1000-8000-00805f9b34fb)
 

@@ -38,7 +38,6 @@
  *
  * Protocol infos:
  * - https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf
- * - https://www.fanjoe.be/?p=3520
  */
 class DeviceParrotPot: public Device
 {

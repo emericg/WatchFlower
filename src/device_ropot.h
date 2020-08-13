@@ -36,6 +36,9 @@
 /*!
  * Xiaomi MiJia "RoPot" or "FlowerPot" (HHCCPOT002)
  * VegTrug "Grow Care Home"
+ *
+ * Protocol infos:
+ * - WatchFlower/doc/ropot-api.md
  */
 class DeviceRopot: public Device
 {
