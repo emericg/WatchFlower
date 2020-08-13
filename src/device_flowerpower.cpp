@@ -317,7 +317,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_luminosity = 1000.0 * 0.08640000000000001 * (192773.17000000001 * pow(rawValue, -1.0606619));
+            m_luminosity = std::round(1000.0 * 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619)));
 
             /////////
 
@@ -327,7 +327,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             // sensor output 0 - 1771 wich maps to 0 - 10 (mS/cm)
-            m_soil_conductivity = rawValue / 1.771;
+            m_soil_conductivity = std::round(rawValue / 1.771);
 
             /////////
 
@@ -336,7 +336,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_soil_temperature = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+            m_soil_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
 
             /////////
 
@@ -345,7 +345,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_temperature = 0.00000003044 * pow(rawValue, 3.0) - 0.00008038 * pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+            m_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
             if (m_temperature < -10.0) m_temperature = -10.0;
             if (m_temperature > 55.0) m_temperature = 55.0;
 
@@ -356,10 +356,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            double hygro = 11.4293 + (0.0000000010698 * pow(rawValue, 4.0) - 0.00000152538 * pow(rawValue, 3.0) + 0.000866976 * pow(rawValue, 2.0) - 0.169422 * rawValue);
-            m_soil_moisture = 100.0 * (0.0000045 * pow(hygro, 3.0) - 0.00055 * pow(hygro, 2.0) + 0.0292 * hygro - 0.053);
-            if (m_soil_moisture < 0.0) m_soil_moisture = 0.0;
-            if (m_soil_moisture > 60.0) m_soil_moisture = 60.0;
+            double hygro1 = 11.4293 + (0.0000000010698 * std::pow(rawValue, 4.0) - 0.00000152538 * std::pow(rawValue, 3.0) + 0.000866976 * std::pow(rawValue, 2.0) - 0.169422 * rawValue);
+            double hygro2 = 100.0 * (0.0000045 * std::pow(hygro1, 3.0) - 0.00055 * std::pow(hygro1, 2.0) + 0.0292 * hygro1 - 0.053);
+            if (hygro2 < 0.0) hygro2 = 0.0;
+            if (hygro2 > 60.0) hygro2 = 60.0;
+            m_soil_moisture = std::round(hygro2);
 
             /////////
 
