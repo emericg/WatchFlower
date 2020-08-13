@@ -27,7 +27,6 @@ import ThemeEngine 1.0
 
 ApplicationWindow {
     id: appWindow
-
     flags: Qt.Window
     color: Theme.colorBackground
 

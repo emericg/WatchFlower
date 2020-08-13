@@ -44,15 +44,14 @@ Item {
 
     property string colorPrimary
     property string colorSecondary
+    property string colorSuccess
+    property string colorWarning
+    property string colorError
 
     property string colorText
     property string colorSubText
     property string colorIcon
     property string colorSeparator
-
-    property string colorSuccess
-    property string colorWarning
-    property string colorError
 
     property string colorLowContrast
     property string colorHighContrast
@@ -64,8 +63,9 @@ Item {
     property string colorComponentBorder
     property string colorComponentDown
     property string colorComponentBackground
-    property int componentRadius: 4
+
     property int componentHeight: 40
+    property int componentRadius: 4
 
     ////////////////
 

@@ -19,7 +19,6 @@
  */
 
 #include "utils_screen.h"
-#include "utils_android.h"
 
 #include <cmath>
 
@@ -28,6 +27,9 @@
 #include <QWindow>
 #include <QDebug>
 
+#if defined(Q_OS_ANDROID)
+#include "utils_android.h"
+#endif
 #if defined(Q_OS_IOS)
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
