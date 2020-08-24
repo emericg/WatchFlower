@@ -236,7 +236,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
         if (m_firmware.size() == 5)
         {
-            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
             {
                 m_firmware_uptodate = true;
             }
@@ -262,24 +262,25 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
+        // Characteristic "Battery Level"
         QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
         QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
         if (cbat.value().size() > 0)
         {
             m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
-        }
 
-        //if (m_db)
-        {
-            QSqlQuery updateDevice;
-            updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-            updateDevice.bindValue(":battery", m_battery);
-            updateDevice.bindValue(":deviceAddr", getAddress());
-            if (updateDevice.exec() == false)
-                qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-        }
+            //if (m_db)
+            {
+                QSqlQuery updateDevice;
+                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":deviceAddr", getAddress());
+                if (updateDevice.exec() == false)
+                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+            }
 
-        Q_EMIT sensorUpdated();
+            Q_EMIT sensorUpdated();
+        }
     }
 }
 

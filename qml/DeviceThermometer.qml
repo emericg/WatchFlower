@@ -176,7 +176,13 @@ Item {
             textStatus.text = qsTr("Update queued.") + " "
         } else if (currentDevice.status === 2) {
             textStatus.text = qsTr("Connecting...") + " "
-        } else if (currentDevice.status === 4 || currentDevice.status === 5) {
+        } else if (currentDevice.status === 3) {
+            textStatus.text = qsTr("Connected") + " "
+        } else if (currentDevice.status === 8) {
+            textStatus.text = qsTr("Working...") + " "
+        } else if (currentDevice.status === 9 ||
+                   currentDevice.status === 10 ||
+                   currentDevice.status === 11) {
             textStatus.text = qsTr("Updating...") + " "
         } else {
             if (currentDevice.isFresh() || currentDevice.isAvailable()) {

@@ -253,24 +253,25 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
+        // Characteristic "Battery Level"
         QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x44
         QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
         if (cbat.value().size() > 0)
         {
             m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
-        }
 
-        //if (m_db)
-        {
-            QSqlQuery updateDevice;
-            updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-            updateDevice.bindValue(":battery", m_battery);
-            updateDevice.bindValue(":deviceAddr", getAddress());
-            if (updateDevice.exec() == false)
-                qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-        }
+            //if (m_db)
+            {
+                QSqlQuery updateDevice;
+                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":deviceAddr", getAddress());
+                if (updateDevice.exec() == false)
+                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+            }
 
-        Q_EMIT sensorUpdated();
+            Q_EMIT sensorUpdated();
+        }
     }
 }
 

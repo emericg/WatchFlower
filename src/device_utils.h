@@ -44,55 +44,58 @@
 /* ************************************************************************** */
 
 enum DeviceCapabilities {
-    DEVICE_BATTERY           = (1 <<  0), //!< Can report its battery level
-    DEVICE_CLOCK             = (1 <<  1), //!< Has an onboard clock
-    DEVICE_LED               = (1 <<  2), //!< Has a blinkable LED
-    DEVICE_HISTORY           = (1 <<  3), //!< Record sensor history
-    DEVICE_LAST_MOVE         = (1 <<  4),
-    DEVICE_WATER_TANK        = (1 <<  5),
+    DEVICE_BATTERY              = (1 <<  0), //!< Can report its battery level
+    DEVICE_CLOCK                = (1 <<  1), //!< Has an onboard clock
+    DEVICE_LED                  = (1 <<  2), //!< Has a blinkable LED
+    DEVICE_HISTORY              = (1 <<  3), //!< Record sensor history
+    DEVICE_LAST_MOVE            = (1 <<  4),
+    DEVICE_WATER_TANK           = (1 <<  5),
 
-    DEVICE_SOIL_MOISTURE     = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
-    DEVICE_SOIL_CONDUCTIVITY = (1 <<  9), //!< Has a soil conductivity/fertility sensor
-    DEVICE_SOIL_TEMPERATURE  = (1 << 10), //!< Has a soil temperature sensor
-    DEVICE_SOIL_PH           = (1 << 11), //!< Has a soil PH sensor
+    DEVICE_SOIL_MOISTURE        = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
+    DEVICE_SOIL_CONDUCTIVITY    = (1 <<  9), //!< Has a soil conductivity/fertility sensor
+    DEVICE_SOIL_TEMPERATURE     = (1 << 10), //!< Has a soil temperature sensor
+    DEVICE_SOIL_PH              = (1 << 11), //!< Has a soil PH sensor
 
-    DEVICE_TEMPERATURE       = (1 << 12), //!< Has a temperature sensor
-    DEVICE_HUMIDITY          = (1 << 13), //!< Has an humidity sensor
-    DEVICE_LIGHT             = (1 << 14), //!< Has a light sensor
-    DEVICE_UV                = (1 << 15), //!< Has an UV light sensor
-    DEVICE_BAROMETER         = (1 << 16), //!< Has a barometer
+    DEVICE_TEMPERATURE          = (1 << 12), //!< Has a temperature sensor
+    DEVICE_HUMIDITY             = (1 << 13), //!< Has an humidity sensor
+    DEVICE_LIGHT                = (1 << 14), //!< Has a light sensor
+    DEVICE_UV                   = (1 << 15), //!< Has an UV light sensor
+    DEVICE_BAROMETER            = (1 << 16), //!< Has a barometer
 
-    DEVICE_PM1               = (1 << 17),
-    DEVICE_PM25              = (1 << 18),
-    DEVICE_PM10              = (1 << 19),
-    DEVICE_O3                = (1 << 20),
-    DEVICE_CO                = (1 << 21),
-    DEVICE_CO2               = (1 << 22),
-    DEVICE_NOX               = (1 << 23),
-    DEVICE_VOC               = (1 << 24),
-    DEVICE_GEIGER            = (1 << 31),
+    DEVICE_PM1                  = (1 << 17),
+    DEVICE_PM25                 = (1 << 18),
+    DEVICE_PM10                 = (1 << 19),
+    DEVICE_O2                   = (1 << 20),
+    DEVICE_O3                   = (1 << 21),
+    DEVICE_CO                   = (1 << 22),
+    DEVICE_CO2                  = (1 << 23),
+    DEVICE_NOX                  = (1 << 24),
+    DEVICE_VOC                  = (1 << 25),
+    DEVICE_GEIGER               = (1 << 31),
 };
 
 enum DeviceType {
-    DEVICE_PLANTSENSOR      = 0,
+    DEVICE_PLANTSENSOR          = 0,
     DEVICE_THERMOMETER,
     DEVICE_ENVIRONMENTAL,
 };
 
 enum DeviceStatus {
-    DEVICE_OFFLINE          = 0, //!< Not connected
-    DEVICE_QUEUED           = 1, //!< In the update queue, not started
-    DEVICE_CONNECTING       = 2, //!< Update started, trying to connect to the device
-    DEVICE_ACTION           = 3, //!< Connected, doing something
-    DEVICE_UPDATING         = 4, //!< Connected, data update in progress
-    DEVICE_UPDATING_HISTORY = 5, //!< Connected, history update in progress
-    DEVICE_UPDATED          = 6, //!< Updated, waiting for disconnect
+    DEVICE_OFFLINE              =  0, //!< Not connected
+    DEVICE_QUEUED               =  1, //!< In the update queue, not started
+    DEVICE_CONNECTING           =  2, //!< Update started, trying to connect to the device
+    DEVICE_CONNECTED            =  3, //!< Connected
+
+    DEVICE_ACTION               =  8, //!< Connected, doing something
+    DEVICE_UPDATING             =  9, //!< Connected, data update in progress
+    DEVICE_UPDATING_HISTORY     = 10, //!< Connected, history update in progress
+    DEVICE_UPDATING_REALTIME    = 11, //!< Connected, reading realtime data
 };
 
 enum DeviceActions {
     ACTION_UPDATE = 0,
     ACTION_UPDATE_HISTORY,
-    ACTION_DATA_STREAMING,
+    ACTION_UPDATE_REALTIME,
 
     ACTION_LED_BLINK = 8,
     ACTION_WATERING,

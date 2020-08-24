@@ -156,10 +156,16 @@ Item {
             textStatus.text = qsTr("Connecting...")
             opa.start()
         } else if (boxDevice.status === 3) {
+            textStatus.color = Theme.colorGreen
+            textStatus.text = qsTr("Connected")
+            opa.stop()
+        } else if (boxDevice.status === 8) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Working...")
             opa.start()
-        } else if (boxDevice.status === 4 || boxDevice.status === 5) {
+        } else if (boxDevice.status === 9 ||
+                   boxDevice.status === 10 ||
+                   boxDevice.status === 11) {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Updating...")
             opa.start()
@@ -228,10 +234,10 @@ Item {
             if (boxDevice.status === 1) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
                 refreshAnimation.running = false;
-            } else if (boxDevice.status === 2) {
+            } else if (boxDevice.status === 2 || boxDevice.status === 3) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
                 refreshAnimation.running = true;
-            } else if (boxDevice.status === 3) {
+            } else if (boxDevice.status >= 8) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
                 refreshAnimation.running = true;
             } else {
@@ -354,12 +360,12 @@ Item {
             id: rowLeft
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: bigAssMode ? 16 : 8
             anchors.left: parent.left
             anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
             anchors.right: (rowRight.width > 0) ? rowRight.left : imageStatus.left
             anchors.rightMargin: singleColumn ? 0 : 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: bigAssMode ? 16 : 8
 
             clip: true
             spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
@@ -513,13 +519,12 @@ Item {
                     }
                     Rectangle {
                         id: hygro_data
-
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
 
                         color: Theme.colorBlue
                         radius: rectangleSensors.sensorRadius
@@ -530,10 +535,10 @@ Item {
                 Item {
                     id: temp_bg
                     width: rectangleSensors.sensorWidth
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
                     anchors.top: parent.top
                     anchors.topMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
 
                     Rectangle {
                         id: bg2
@@ -544,12 +549,12 @@ Item {
                     }
                     Rectangle {
                         id: temp_data
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
 
                         visible: true
                         color: Theme.colorGreen
@@ -576,12 +581,12 @@ Item {
                     }
                     Rectangle {
                         id: lumi_data
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
 
                         color: Theme.colorYellow
                         radius: rectangleSensors.sensorRadius
@@ -607,12 +612,12 @@ Item {
                     }
                     Rectangle {
                         id: cond_data
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
                         anchors.bottomMargin: 0
                         anchors.bottom: parent.bottom
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
 
                         color: Theme.colorRed
                         radius: rectangleSensors.sensorRadius
@@ -663,8 +668,8 @@ Item {
                 id: imageForward
                 width: 32
                 height: 32
-                anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 0
 
                 z: 1
                 visible: singleColumn
@@ -679,9 +684,9 @@ Item {
             id: imageStatus
             width: 32
             height: 32
-            anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: singleColumn ? 56 : 36
+            anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             visible: false
@@ -704,11 +709,11 @@ Item {
         visible: singleColumn
         height: 1
 
+        anchors.left: parent.left
+        anchors.leftMargin: -6
+        anchors.right: parent.right
+        anchors.rightMargin: -6
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.leftMargin: -6
-        anchors.rightMargin: -6
-        anchors.left: parent.left
     }
 }

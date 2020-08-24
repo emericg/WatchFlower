@@ -104,7 +104,8 @@ void DeviceHygrotempSquare::serviceScanDone()
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempSquare::serviceDetailsDiscovered_infos);
 
-            serviceInfos->discoverDetails();
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
         }
     }
 }
@@ -116,6 +117,7 @@ void DeviceHygrotempSquare::addLowEnergyService(const QBluetoothUuid &uuid)
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // battery
     {
         delete serviceBattery;
+        serviceBattery = nullptr;
 
         serviceBattery = controller->createServiceObject(uuid);
         if (!serviceBattery)
