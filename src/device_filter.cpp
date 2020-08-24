@@ -107,7 +107,8 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
     Device *device = m_devices[index.row()];
     if (device)
     {
-        if (role == DeviceModelRole) {
+        if (role == DeviceModelRole)
+        {
             if (device->getName() == "Flower care" || device->getName() == "Flower mate") {
                 return "a";
             } else if (device->getName() == "Flower power") {
@@ -116,28 +117,36 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "c";
             } else if (device->getName() == "Parrot pot") {
                 return "d";
-            } else if (device->getName() == "MJ_HT_V1") {
+            } else if (device->getName() == "HiGrow") {
                 return "e";
-            } else if (device->getName() == "ClearGrass Temp & RH") {
+            } else if (device->getName() == "MJ_HT_V1") {
                 return "f";
-            } else if (device->getName() == "LYWSD02") {
+            } else if (device->getName() == "ClearGrass Temp & RH") {
                 return "g";
-            } else if (device->getName() == "MHOC303") {
+            } else if (device->getName() == "LYWSD02") {
                 return "h";
-            } else if (device->getName() == "LYWSD03MMC") {
+            } else if (device->getName() == "MHOC303") {
                 return "i";
-            } else if (device->getName() == "MHOC401") {
+            } else if (device->getName() == "LYWSD03MMC") {
                 return "j";
+            } else if (device->getName() == "MHOC401") {
+                return "k";
             } else {
                 return "z"; //return device.getName();
             }
         }
+        if (role == WaterLevelRole)
+        {
+            if (device->hasSoilMoistureSensor())
+                if (device->getHumidity() > -1)
+                    return device->getHumidity();
+                else
+                    return 99;
+            else
+                return 199;
+        }
         if (role == LocationRole)
             return device->getLocationName().toLower();
-        if (role == WaterLevelRole) {
-            if (device->hasSoilMoistureSensor()) return device->getHumidity();
-            else return 199;
-        }
         if (role == PlantNameRole)
             return device->getPlantName();
 

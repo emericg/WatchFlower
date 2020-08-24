@@ -692,9 +692,12 @@ void DeviceManager::refreshDevices_check()
         m_devices_updating.clear();
 
         SettingsManager *sm = SettingsManager::getInstance();
-        for (auto d: qAsConst(m_devices_model->m_devices))
+
+        for (int i = 0; i < m_devices_model->rowCount(); i++)
         {
-            Device *dd = qobject_cast<Device*>(d);
+            QModelIndex e = m_devices_filter->index(i, 0);
+            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+
             if (dd && (dd->getLastUpdateInt() < 0 ||
                 dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo())))
             {
