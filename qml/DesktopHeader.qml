@@ -145,10 +145,10 @@ Rectangle {
         id: menu
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: buttonExit.visible ? 8 : 0
 
         spacing: 8
         visible: true

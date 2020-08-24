@@ -114,7 +114,6 @@ public slots:
     void removeDevice(const QString &address);
 
     void listenDevices();
-
     void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
 
     void orderby_model();

@@ -31,17 +31,11 @@ Rectangle {
 
     property int headerHeight: 52
     property string title: "WatchFlower"
+
+    ////////////////////////////////////////////////////////////////////////////
+
     property string leftMenuMode: "drawer" // drawer / back / close
-
     signal leftMenuClicked()
-    signal rightMenuClicked()
-
-    signal deviceLedButtonClicked()
-    signal deviceRefreshHistoryButtonClicked()
-    signal deviceRefreshButtonClicked()
-    signal deviceDataButtonClicked()  // compatibility
-    signal deviceHistoryButtonClicked()  // compatibility
-    signal deviceSettingsButtonClicked()  // compatibility
 
     onLeftMenuModeChanged: {
         if (leftMenuMode === "drawer")
@@ -54,26 +48,24 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    property string rightMenuMode: "off" // on / off
+    signal rightMenuClicked()
+
+    signal deviceLedButtonClicked()
+    signal deviceRefreshHistoryButtonClicked()
+    signal deviceRefreshButtonClicked()
+    signal deviceDataButtonClicked()  // compatibility
+    signal deviceHistoryButtonClicked()  // compatibility
+    signal deviceSettingsButtonClicked()  // compatibility
+
+    ////////////////////////////////////////////////////////////////////////////
+
     // prevent clicks into this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     Item {
         anchors.fill: parent
         anchors.topMargin: screenStatusbarPadding + screenNotchPadding
-
-        Text {
-            height: parent.height
-            anchors.left: parent.left
-            anchors.leftMargin: 64
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: title
-            color: Theme.colorHeaderContent
-            font.bold: false
-            font.pixelSize: Theme.fontSizeHeader
-            font.capitalization: Font.Capitalize
-            verticalAlignment: Text.AlignVCenter
-        }
 
         MouseArea {
             id: leftArea
@@ -96,6 +88,20 @@ Rectangle {
                 source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
                 color: Theme.colorHeaderContent
             }
+        }
+
+        Text {
+            height: parent.height
+            anchors.left: parent.left
+            anchors.leftMargin: 64
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: title
+            color: Theme.colorHeaderContent
+            font.bold: false
+            font.pixelSize: Theme.fontSizeHeader
+            font.capitalization: Font.Capitalize
+            verticalAlignment: Text.AlignVCenter
         }
 
         Row {

@@ -434,8 +434,8 @@ void DeviceManager::scanDevices()
                        this, &DeviceManager::bleDiscoveryFinished);
 
             m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
-
             m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
             if (m_discoveryAgent->isActive())
             {
                 m_scanning = true;
