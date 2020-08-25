@@ -104,6 +104,8 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
         }
 
+        ////////////
+
         Row {
             id: menu
             anchors.top: parent.top
@@ -114,7 +116,43 @@ Rectangle {
             spacing: 4
             visible: true
 
-            ////////////
+            Item {
+                width: 36; height: 36;
+                anchors.verticalCenter: parent.verticalCenter
+                visible: (appContent.state === "DeviceList")
+
+                ImageSvg {
+                    id: workingIndicator
+                    width: 24; height: 24;
+                    anchors.centerIn: parent
+
+                    source: (deviceManager.scanning) ? "qrc:/assets/icons_material/baseline-autorenew-24px.svg" : "qrc:/assets/icons_material/baseline-autorenew-24px.svg";
+                    color: Theme.colorHeaderContent
+                    opacity: 0
+                    Behavior on opacity { OpacityAnimator { duration: 333 } }
+
+                    NumberAnimation on rotation {
+                        //id: refreshAnimation
+                        from: 0
+                        to: 360
+                        duration: 2000
+                        loops: Animation.Infinite
+                        easing.type: Easing.Linear
+                        running: deviceManager.refreshing
+                        alwaysRunToEnd: true
+                        onStarted: workingIndicator.opacity = 1;
+                        onStopped: workingIndicator.opacity = 0;
+                    }
+                    SequentialAnimation on opacity {
+                        //id: rescanAnimation
+                        loops: Animation.Infinite
+                        running: deviceManager.scanning
+                        onStopped: workingIndicator.opacity = 0;
+                        PropertyAnimation { to: 1; duration: 750; }
+                        PropertyAnimation { to: 0.33; duration: 750; }
+                    }
+                }
+            }
 
             ItemImageButton {
                 id: buttonThermoChart
