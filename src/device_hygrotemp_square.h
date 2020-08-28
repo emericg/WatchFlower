@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_SQUARE_H
 /* ************************************************************************** */
 
-#include "device.h"
+#include "device_sensors.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - TODO
  */
-class DeviceHygrotempSquare: public Device
+class DeviceHygrotempSquare: public DeviceSensors
 {
     Q_OBJECT
 

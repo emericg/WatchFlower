@@ -24,6 +24,7 @@
 /* ************************************************************************** */
 
 #include "device.h"
+#include "device_sensors.h"
 
 #include <QObject>
 #include <QMetaType>
@@ -69,9 +70,11 @@ public:
 
     enum DeviceRoles {
         DeviceModelRole = Qt::UserRole+1,
-        LocationRole,
-        WaterLevelRole,
+        DeviceNameRole,
+        DeviceLocationRole,
+        AssociatedNameRole,
         PlantNameRole,
+        SoilMoistureRole,
 
         PointerRole,
     };

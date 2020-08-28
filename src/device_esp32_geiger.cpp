@@ -38,14 +38,14 @@
 /* ************************************************************************** */
 
 DeviceEsp32Geiger::DeviceEsp32Geiger(QString &deviceAddr, QString &deviceName, QObject *parent):
-    DeviceEnvironmental(deviceAddr, deviceName, parent)
+    DeviceSensors(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_ENVIRONMENTAL;
     m_capabilities += DEVICE_GEIGER;
 }
 
 DeviceEsp32Geiger::DeviceEsp32Geiger(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceEnvironmental(d, parent)
+    DeviceSensors(d, parent)
 {
     m_deviceType = DEVICE_ENVIRONMENTAL;
     m_capabilities += DEVICE_GEIGER;

@@ -23,7 +23,7 @@
 #define DEVICE_FLOWERCARE_H
 /* ************************************************************************** */
 
-#include "device.h"
+#include "device_sensors.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - WatchFlower/doc/flowercare-api.md
  */
-class DeviceFlowerCare: public Device
+class DeviceFlowerCare: public DeviceSensors
 {
     Q_OBJECT
 

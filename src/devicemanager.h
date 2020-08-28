@@ -50,6 +50,7 @@ class DeviceManager: public QObject
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
+    Q_PROPERTY(bool updating READ isRefreshing NOTIFY refreshingChanged)
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
@@ -92,17 +93,15 @@ public:
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
-    Q_INVOKABLE void scanDevices();
-
-    Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
+    Q_INVOKABLE bool exportData();
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
-
-    Q_INVOKABLE bool exportData();
 
     void invalidate();
 
 public slots:
+    bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
+
     void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
 
@@ -113,10 +112,14 @@ public slots:
     void updateDevice(const QString &address);
     void removeDevice(const QString &address);
 
+    void scanDevices();
     void listenDevices();
     void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+    void activeScanningStart();
+    void activeScanningStop();
 
     void orderby_model();
+    void orderby_name();
     void orderby_location();
     void orderby_waterlevel();
     void orderby_plant();

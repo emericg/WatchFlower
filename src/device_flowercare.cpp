@@ -38,7 +38,7 @@
 /* ************************************************************************** */
 
 DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent):
-    Device(deviceAddr, deviceName, parent)
+    DeviceSensors(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
 
@@ -51,7 +51,7 @@ DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QOb
 }
 
 DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent):
-    Device(d, parent)
+    DeviceSensors(d, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
 

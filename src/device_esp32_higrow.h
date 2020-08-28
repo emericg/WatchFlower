@@ -23,7 +23,7 @@
 #define DEVICE_ESP32_HIGROW_H
 /* ************************************************************************** */
 
-#include "device.h"
+#include "device_sensors.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - WatchFlower/doc/higrow-api.md
  */
-class DeviceEsp32HiGrow: public Device
+class DeviceEsp32HiGrow: public DeviceSensors
 {
     Q_OBJECT
 

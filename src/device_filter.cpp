@@ -82,9 +82,12 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
     QHash <int, QByteArray> roles;
 
     roles[DeviceModelRole] = "model";
-    roles[LocationRole] = "location";
-    roles[WaterLevelRole] = "waterlevel";
+    roles[DeviceNameRole] = "name";
+    roles[DeviceLocationRole] = "location";
+
+    roles[AssociatedNameRole] = "plant";
     roles[PlantNameRole] = "plant";
+    roles[SoilMoistureRole] = "waterlevel";
 
     roles[PointerRole] = "pointer";
 
@@ -135,19 +138,20 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "z"; //return device.getName();
             }
         }
-        if (role == WaterLevelRole)
+        if (role == SoilMoistureRole)
         {
-            if (device->hasSoilMoistureSensor())
-                if (device->getHumidity() > -1)
-                    return device->getHumidity();
+            DeviceSensors *sensor = dynamic_cast<DeviceSensors *>(device);
+            if (sensor && sensor->hasSoilMoistureSensor())
+                if (sensor->getHumidity() > -1)
+                    return sensor->getHumidity();
                 else
                     return 99;
             else
                 return 199;
         }
-        if (role == LocationRole)
+        if (role == DeviceLocationRole)
             return device->getLocationName().toLower();
-        if (role == PlantNameRole)
+        if (role == AssociatedNameRole || role == PlantNameRole)
             return device->getPlantName();
 
         if (role == PointerRole)

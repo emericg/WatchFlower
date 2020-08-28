@@ -414,38 +414,6 @@ void DeviceManager::checkBluetoothIos()
     }
 }
 
-void DeviceManager::scanDevices()
-{
-    //qDebug() << "DeviceManager::scanDevices()";
-
-    if (hasBluetooth())
-    {
-        if (m_discoveryAgent && !m_discoveryAgent->isActive())
-        {
-            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                       this, &DeviceManager::deviceUpdateReceived);
-
-            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                    this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
-            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                    this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
-
-            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                       this, &DeviceManager::bleDiscoveryFinished);
-
-            m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
-            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-
-            if (m_discoveryAgent->isActive())
-            {
-                m_scanning = true;
-                Q_EMIT scanningChanged();
-                qDebug() << "Scanning (Bluetooth) for devices...";
-            }
-        }
-    }
-}
-
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
 {
     if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError)
@@ -578,6 +546,41 @@ void DeviceManager::deviceDiscoveryFinished()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceManager::scanDevices()
+{
+    //qDebug() << "DeviceManager::scanDevices()";
+
+    if (hasBluetooth())
+    {
+        if (m_discoveryAgent && !m_discoveryAgent->isActive())
+        {
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                       this, &DeviceManager::deviceUpdateReceived);
+
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                    this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                    this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
+
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                       this, &DeviceManager::bleDiscoveryFinished);
+
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
+            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
+            if (m_discoveryAgent->isActive())
+            {
+                m_scanning = true;
+                Q_EMIT scanningChanged();
+                qDebug() << "Scanning (Bluetooth) for devices...";
+            }
+        }
+    }
+}
+
+/* ************************************************************************** */
 
 void DeviceManager::listenDevices()
 {
@@ -614,11 +617,24 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
     if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
     {
         //qDebug() << "RSSI > " << info.rssi();
+
+        for (auto d: qAsConst(m_devices_model->m_devices))
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd)
+            {
+                if (dd->getAddress() == info.address().toString())
+                {
+                    dd->updateRssi(info.rssi());
+                    break;
+                }
+            }
+        }
     }
     if ((updatedFields & 0x0002) == 0x0002) // ManufacturerData = 0x0002 // DOESN'T WORK
     {
         QHash<quint16, QByteArray> dat = info.manufacturerData();
-        qDebug() << "manufacturerData > " << dat;
+        qDebug() << "device > " << info.address() << " manufacturerData > " << dat;
     }
 /*
     if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
@@ -633,6 +649,53 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
     }
 */
 #endif // Qt 5.12+
+}
+
+/* ************************************************************************** */
+
+void DeviceManager::activeScanningStart()
+{
+    qDebug() << "DeviceManager::activeScanningStart()";
+
+    if (hasBluetooth())
+    {
+        if (m_discoveryAgent && !m_discoveryAgent->isActive())
+        {
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                       this, &DeviceManager::deviceUpdateReceived);
+
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                    this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                    this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
+
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                    this, &DeviceManager::bleDiscoveryFinished);
+
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(0);
+            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
+            if (m_discoveryAgent->isActive())
+            {
+                m_scanning = true;
+                Q_EMIT scanningChanged();
+                qDebug() << "Active scanning (Bluetooth) for devices...";
+            }
+        }
+    }
+}
+
+void DeviceManager::activeScanningStop()
+{
+    //qDebug() << "DeviceManager::activeScanningStart()";
+
+    if (hasBluetooth())
+    {
+        if (m_discoveryAgent && m_discoveryAgent->isActive())
+        {
+            m_discoveryAgent->stop();
+        }
+    }
 }
 
 /* ************************************************************************** */
@@ -1052,16 +1115,23 @@ void DeviceManager::orderby_model()
     m_devices_filter->invalidate();
 }
 
+void DeviceManager::orderby_name()
+{
+    m_devices_filter->setSortRole(DeviceModel::DeviceNameRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
 void DeviceManager::orderby_location()
 {
-    m_devices_filter->setSortRole(DeviceModel::LocationRole);
+    m_devices_filter->setSortRole(DeviceModel::DeviceLocationRole);
     m_devices_filter->sort(0, Qt::AscendingOrder);
     m_devices_filter->invalidate();
 }
 
 void DeviceManager::orderby_waterlevel()
 {
-    m_devices_filter->setSortRole(DeviceModel::WaterLevelRole);
+    m_devices_filter->setSortRole(DeviceModel::SoilMoistureRole);
     m_devices_filter->sort(0, Qt::AscendingOrder);
     m_devices_filter->invalidate();
 }

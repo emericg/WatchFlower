@@ -38,7 +38,7 @@
 /* ************************************************************************** */
 
 DeviceHygrotempLCD::DeviceHygrotempLCD(QString &deviceAddr, QString &deviceName, QObject *parent):
-    Device(deviceAddr, deviceName, parent)
+    DeviceSensors(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_THERMOMETER;
 
@@ -47,7 +47,7 @@ DeviceHygrotempLCD::DeviceHygrotempLCD(QString &deviceAddr, QString &deviceName,
 }
 
 DeviceHygrotempLCD::DeviceHygrotempLCD(const QBluetoothDeviceInfo &d, QObject *parent):
-    Device(d, parent)
+    DeviceSensors(d, parent)
 {
     m_deviceType = DEVICE_THERMOMETER;
 

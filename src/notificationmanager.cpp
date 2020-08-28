@@ -92,7 +92,7 @@ void NotificationManager::updateIosNotification()
 {
 #ifdef Q_OS_IOS
     //
-#endif // Q_OS_IOS
+#endif
 }
 
 void NotificationManager::updateAndroidNotification()

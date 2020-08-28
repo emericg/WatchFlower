@@ -23,7 +23,7 @@
 #define DEVICE_ROPOT_H
 /* ************************************************************************** */
 
-#include "device.h"
+#include "device_sensors.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - WatchFlower/doc/ropot-api.md
  */
-class DeviceRopot: public Device
+class DeviceRopot: public DeviceSensors
 {
     Q_OBJECT
 
