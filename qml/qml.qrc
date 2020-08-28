@@ -20,6 +20,8 @@
 
         <file>ThemeEngine.qml</file>
 
+        <file alias="ActionButton.qml">components/ActionButton.qml</file>
+        <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>

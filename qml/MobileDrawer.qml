@@ -168,7 +168,7 @@ Drawer {
                         anchors.leftMargin: screenLeftPadding + 56
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("My plants")
+                        text: qsTr("My sensors")
                         font.pixelSize: 13
                         font.bold: true
                         color: Theme.colorText

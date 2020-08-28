@@ -51,12 +51,14 @@ Rectangle {
     property string rightMenuMode: "off" // on / off
     signal rightMenuClicked()
 
+    function closeRightMenu() { actionMenu.close(); }
+
     signal deviceLedButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
     signal deviceRefreshButtonClicked()
-    signal deviceDataButtonClicked()  // compatibility
-    signal deviceHistoryButtonClicked()  // compatibility
-    signal deviceSettingsButtonClicked()  // compatibility
+    signal deviceDataButtonClicked() // compatibility
+    signal deviceHistoryButtonClicked() // compatibility
+    signal deviceSettingsButtonClicked() // compatibility
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -140,14 +142,14 @@ Rectangle {
                         easing.type: Easing.Linear
                         running: deviceManager.refreshing
                         alwaysRunToEnd: true
-                        onStarted: workingIndicator.opacity = 1;
-                        onStopped: workingIndicator.opacity = 0;
+                        onStarted: workingIndicator.opacity = 1
+                        onStopped: workingIndicator.opacity = 0
                     }
                     SequentialAnimation on opacity {
                         //id: rescanAnimation
                         loops: Animation.Infinite
                         running: deviceManager.scanning
-                        onStopped: workingIndicator.opacity = 0;
+                        onStopped: workingIndicator.opacity = 0
                         PropertyAnimation { to: 1; duration: 750; }
                         PropertyAnimation { to: 0.33; duration: 750; }
                     }
@@ -219,6 +221,8 @@ Rectangle {
                     easing.type: Easing.Linear
                 }
             }
+
+            ////////////
 /*
             MouseArea {
                 id: rightMenu
@@ -226,7 +230,10 @@ Rectangle {
                 height: headerHeight
 
                 visible: (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo")
-                onClicked: rightMenuClicked()
+                onClicked: {
+                    rightMenuClicked()
+                    actionMenu.open()
+                }
 
                 ImageSvg {
                     id: rightMenuImg
@@ -237,6 +244,27 @@ Rectangle {
 
                     source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
                     color: Theme.colorHeaderContent
+                }
+            }
+
+            MouseArea {
+                x: 0; y: 0; z: 10;
+                width: appWindow.width
+                height: appWindow.height
+
+                enabled: actionMenu.isOpen
+                onClicked: actionMenu.close()
+            }
+            ActionMenu {
+                id: actionMenu
+                anchors.top: rectangleHeaderBar.bottom
+                anchors.topMargin: 0
+                anchors.right: rectangleHeaderBar.right
+                anchors.rightMargin: 8
+                z: 5
+
+                onMenuSelected: {
+                    console.log(" MENU " + index)
                 }
             }
 */
