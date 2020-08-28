@@ -89,6 +89,10 @@ ApplicationWindow {
 
     // Events handling /////////////////////////////////////////////////////////
 
+    Component.onCompleted: {
+        deviceManager.refreshDevices_check();
+    }
+
     Connections {
         target: appHeader
         onBackButtonClicked: {
