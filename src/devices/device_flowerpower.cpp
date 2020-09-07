@@ -207,7 +207,19 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    //if (uuid.toString() == "{39e1fd00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower clock service
+    if (uuid.toString() == "{39e1fd00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower clock service
+    {
+        delete serviceClock;
+        serviceClock = nullptr;
+
+        if (m_ble_action == ACTION_UPDATE)
+        {
+            //serviceClock = controller->createServiceObject(uuid);
+            //if (!serviceClock)
+            //    qWarning() << "Cannot create service (clock) for uuid:" << uuid.toString();
+        }
+    }
+
     //if (uuid.toString() == "{39e1fe00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower calibration service
 }
 
