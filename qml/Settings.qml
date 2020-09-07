@@ -1253,6 +1253,8 @@ Item {
 
                 color: Theme.colorForeground
 
+                visible: deviceManager.hasDevices
+
                 ImageSvg {
                     id: image_export
                     width: 24
@@ -1291,6 +1293,8 @@ Item {
                 anchors.rightMargin: 16
                 topPadding: 8
 
+                visible: deviceManager.hasDevices
+
                 text: qsTr("Export up to 30 days of data into a CSV file. Saved in the Document / WatchFlower directory.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -1306,6 +1310,8 @@ Item {
                 height: 48
                 spacing: 16
 
+                visible: deviceManager.hasDevices
+
                 ButtonWireframe {
                     width: 128
                     height: 36
@@ -1318,7 +1324,7 @@ Item {
                     onClicked: {
                         utilsApp.checkMobileStoragePermissions()
 
-                        if (deviceManager.exportData()) {
+                        if (deviceManager.exportDataSave()) {
                             text = qsTr("Exported")
                             primaryColor = Theme.colorPrimary
                             fullColor = true
@@ -1342,6 +1348,11 @@ Item {
                     onClicked: {
                         primaryColor = Theme.colorWarning
                         fullColor = false
+                        if (deviceManager.exportDataOpen()) {
+                            primaryColor = Theme.colorPrimary
+                        } else {
+                            primaryColor = Theme.colorWarning
+                        }
                     }
                 }
             }

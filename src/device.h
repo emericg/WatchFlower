@@ -74,8 +74,11 @@ class Device: public QObject
     Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
 
 Q_SIGNALS:
+    void connected();
+    void disconnected();
     void statusUpdated();
     void sensorUpdated();
     void dataUpdated();
@@ -168,6 +171,7 @@ public slots:
     bool hasHistory() const { return (m_capabilities & DEVICE_HISTORY); }
     bool hasLastMove() const { return (m_capabilities & DEVICE_LAST_MOVE); }
     bool hasWaterTank() const { return (m_capabilities & DEVICE_WATER_TANK); }
+    bool hasButtons() const { return (m_capabilities & DEVICE_BUTTONS); }
 
     bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
     bool hasSoilConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }

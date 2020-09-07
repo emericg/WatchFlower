@@ -50,6 +50,7 @@ enum DeviceCapabilities {
     DEVICE_HISTORY              = (1 <<  3), //!< Record sensor history
     DEVICE_LAST_MOVE            = (1 <<  4),
     DEVICE_WATER_TANK           = (1 <<  5),
+    DEVICE_BUTTONS              = (1 <<  6),
 
     DEVICE_SOIL_MOISTURE        = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
     DEVICE_SOIL_CONDUCTIVITY    = (1 <<  9), //!< Has a soil conductivity/fertility sensor
@@ -99,35 +100,6 @@ enum DeviceActions {
 
     ACTION_LED_BLINK = 8,
     ACTION_WATERING,
-};
-
-/* ************************************************************************** */
-
-class DeviceNear: public QObject
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QString name READ getName NOTIFY updated)
-    Q_PROPERTY(QString addr READ getAddr NOTIFY updated)
-    Q_PROPERTY(int rssi READ getRssi NOTIFY updated)
-
-signals:
-    void updated();
-
-public:
-    DeviceNear(const QString &n, const QString &a, int r, QObject *parent) : QObject(parent)
-    {
-        name = n; addr = a; rssi = r;
-    }
-
-    QString name;
-    QString addr;
-    int rssi;
-
-public slots:
-    QString getName() { return name; }
-    QString getAddr() { return addr; }
-    int getRssi() { return rssi; }
 };
 
 /* ************************************************************************** */

@@ -46,6 +46,7 @@ class DeviceManager: public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool devices READ areDevicesAvailable NOTIFY devicesListUpdated)
+    Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
@@ -93,7 +94,9 @@ public:
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
-    Q_INVOKABLE bool exportData();
+    Q_INVOKABLE bool exportDataSave();
+    Q_INVOKABLE bool exportDataOpen();
+    bool exportData(const QString &path);
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 

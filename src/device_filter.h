@@ -72,6 +72,7 @@ public:
         DeviceModelRole = Qt::UserRole+1,
         DeviceNameRole,
         DeviceLocationRole,
+        RssiRole,
         AssociatedNameRole,
         PlantNameRole,
         SoilMoistureRole,

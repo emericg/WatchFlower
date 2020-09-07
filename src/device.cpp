@@ -624,6 +624,8 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
+    Q_EMIT connected();
+
     m_updating = true;
     m_status = DEVICE_UPDATING;
     Q_EMIT statusUpdated();
@@ -634,6 +636,8 @@ void Device::deviceConnected()
 void Device::deviceDisconnected()
 {
     //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
+
+    Q_EMIT disconnected();
 
     if (m_status == DEVICE_CONNECTING || m_status == DEVICE_UPDATING)
     {

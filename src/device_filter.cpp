@@ -21,6 +21,8 @@
 
 #include "device_filter.h"
 
+#include <cmath>
+
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -85,6 +87,8 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
     roles[DeviceNameRole] = "name";
     roles[DeviceLocationRole] = "location";
 
+    roles[RssiRole] = "rssi";
+
     roles[AssociatedNameRole] = "plant";
     roles[PlantNameRole] = "plant";
     roles[SoilMoistureRole] = "waterlevel";
@@ -135,8 +139,38 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
             } else if (device->getName() == "MHOC401") {
                 return "k";
             } else {
-                return "z"; //return device.getName();
+                return "zzz";
             }
+        }
+        if (role == DeviceNameRole)
+        {
+            return device->getName();
+        }
+        if (role == DeviceLocationRole)
+        {
+            if (device->getLocationName().isEmpty())
+                return  "zzz";
+            else
+                return device->getLocationName().toLower();
+        }
+        if (role == RssiRole)
+        {
+            return std::abs(device->getRssi());
+        }
+        if (role == AssociatedNameRole)
+        {
+            if (device->getAssociatedName().isEmpty())
+                return  "zzz";
+            else
+                return device->getAssociatedName();
+        }
+        // plant sensors
+        if (role == PlantNameRole)
+        {
+            if (device->getPlantName().isEmpty())
+                return  "zzz";
+            else
+                return device->getPlantName();
         }
         if (role == SoilMoistureRole)
         {
@@ -149,10 +183,6 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
             else
                 return 199;
         }
-        if (role == DeviceLocationRole)
-            return device->getLocationName().toLower();
-        if (role == AssociatedNameRole || role == PlantNameRole)
-            return device->getPlantName();
 
         if (role == PointerRole)
             return QVariant::fromValue(device);
