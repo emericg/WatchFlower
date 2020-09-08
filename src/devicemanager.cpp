@@ -1033,19 +1033,18 @@ bool DeviceManager::exportDataSave()
             }
             else
             {
-                qWarning() << "DeviceManager::exportData() cannot open export file";
                 status = false;
             }
         }
         else
         {
-            qWarning() << "DeviceManager::exportData() cannot create export directory";
+            qWarning() << "DeviceManager::exportDataSave() cannot create export directory";
             status = false;
         }
     }
     else
     {
-        qWarning() << "DeviceManager::exportData() invalid export directory";
+        qWarning() << "DeviceManager::exportDataSave() invalid export directory";
         status = false;
     }
 
@@ -1063,14 +1062,10 @@ bool DeviceManager::exportDataOpen()
     // Get temp path
     QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
 
-    qDebug() << "exportDataOpen() " << exportDirectory;
-
     if (!exportDirectory.isEmpty())
     {
         // Get file name
-        QString exportFile = exportDirectory;
-        exportFile += "/exporteddata";
-        exportFile += ".csv";
+        QString exportFile = exportDirectory + "exporteddata.txt";
 
         if (exportData(exportFile))
         {
@@ -1080,13 +1075,12 @@ bool DeviceManager::exportDataOpen()
         }
         else
         {
-            qWarning() << "DeviceManager::exportData() cannot open export file";
             status = false;
         }
     }
     else
     {
-        qWarning() << "DeviceManager::exportData() invalid export directory";
+        qWarning() << "DeviceManager::exportDataOpen() invalid export directory";
         status = false;
     }
 
