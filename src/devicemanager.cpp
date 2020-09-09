@@ -761,12 +761,16 @@ void DeviceManager::refreshDevices_check()
             QModelIndex e = m_devices_filter->index(i, 0);
             Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
 
-            if (dd && (dd->getLastUpdateInt() < 0 ||
-                dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo())))
+            if (dd)
             {
-                // old or no data: go for refresh
-                m_devices_queued.push_back(dd);
-                dd->refreshQueue();
+
+                if (dd->getLastUpdateInt() < 0 ||
+                    dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
+                {
+                    // old or no data: go for refresh
+                    m_devices_queued.push_back(dd);
+                    dd->refreshQueue();
+                }
             }
         }
 

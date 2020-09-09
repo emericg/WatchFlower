@@ -24,10 +24,11 @@ import QtQuick 2.12
 import ThemeEngine 1.0
 
 Rectangle {
+    id: rectangleHeaderBar
     width: parent.width
     height: screenStatusbarPadding + screenNotchPadding + headerHeight
-    color: Theme.colorHeader
     z: 10
+    color: Theme.colorHeader
 
     property int headerHeight: 52
     property string title: "WatchFlower"
@@ -51,7 +52,8 @@ Rectangle {
     property string rightMenuMode: "off" // on / off
     signal rightMenuClicked()
 
-    function closeRightMenu() { actionMenu.close(); }
+    function rightMenuIsOpen() { return actionMenu.visible; }
+    function rightMenuClose() { actionMenu.close(); }
 
     signal deviceLedButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
@@ -112,14 +114,14 @@ Rectangle {
             id: menu
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.rightMargin: 10
             anchors.bottom: parent.bottom
 
             spacing: 4
             visible: true
 
             Item {
-                width: 36; height: 36;
+                width: parent.height;
+                height: width;
                 anchors.verticalCenter: parent.verticalCenter
                 visible: (appContent.state === "DeviceList")
 
@@ -128,7 +130,7 @@ Rectangle {
                     width: 24; height: 24;
                     anchors.centerIn: parent
 
-                    source: (deviceManager.scanning) ? "qrc:/assets/icons_material/baseline-autorenew-24px.svg" : "qrc:/assets/icons_material/baseline-autorenew-24px.svg";
+                    source: (deviceManager.scanning) ? "qrc:/assets/icons_material/baseline-search-24px.svg" : "qrc:/assets/icons_material/baseline-autorenew-24px.svg";
                     color: Theme.colorHeaderContent
                     opacity: 0
                     Behavior on opacity { OpacityAnimator { duration: 333 } }
@@ -156,6 +158,8 @@ Rectangle {
                 }
             }
 
+            ////////////
+/*
             ItemImageButton {
                 id: buttonThermoChart
                 width: 36; height: 36;
@@ -187,8 +191,7 @@ Rectangle {
             }
             ItemImageButton {
                 id: buttonRefreshHistory
-                width: 36
-                height: 36
+                width: 36; height: 36;
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
@@ -221,9 +224,9 @@ Rectangle {
                     easing.type: Easing.Linear
                 }
             }
-
+*/
             ////////////
-/*
+
             MouseArea {
                 id: rightMenu
                 width: headerHeight
@@ -246,28 +249,27 @@ Rectangle {
                     color: Theme.colorHeaderContent
                 }
             }
+        }
+    }
 
-            MouseArea {
-                x: 0; y: 0; z: 10;
-                width: appWindow.width
-                height: appWindow.height
+    MouseArea {
+        x: 0; y: 0;
+        width: appWindow.width
+        height: appWindow.height
 
-                enabled: actionMenu.isOpen
-                onClicked: actionMenu.close()
-            }
-            ActionMenu {
-                id: actionMenu
-                anchors.top: rectangleHeaderBar.bottom
-                anchors.topMargin: 0
-                anchors.right: rectangleHeaderBar.right
-                anchors.rightMargin: 8
-                z: 5
+        enabled: actionMenu.isOpen
+        onClicked: actionMenu.close()
+    }
 
-                onMenuSelected: {
-                    console.log(" MENU " + index)
-                }
-            }
-*/
+    ActionMenu {
+        id: actionMenu
+        anchors.top: parent.bottom
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+
+        onMenuSelected: {
+            //console.log(" MENU " + index)
         }
     }
 }

@@ -228,13 +228,19 @@ ApplicationWindow {
                         exitTimer.start()
                 }
             } else if (appContent.state === "DeviceSensor") {
-                if (screenDeviceSensor.isHistoryMode()) {
+                console.log("BACK DeviceSensor")
+                if (appHeader.rightMenuIsOpen()) {
+                    appHeader.rightMenuClose()
+                } else if (screenDeviceSensor.isHistoryMode()) {
                     screenDeviceSensor.resetHistoryMode()
                 } else {
                     appContent.state = "DeviceList"
                 }
             } else if (appContent.state === "DeviceThermo") {
-                if (screenDeviceThermometer.isHistoryMode()) {
+                console.log("BACK DeviceThermo")
+                if (appHeader.rightMenuIsOpen()) {
+                    appHeader.rightMenuClose()
+                } else if (screenDeviceThermometer.isHistoryMode()) {
                     screenDeviceThermometer.resetHistoryMode()
                 } else {
                     appContent.state = "DeviceList"

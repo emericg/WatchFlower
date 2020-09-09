@@ -7,7 +7,7 @@ Rectangle {
     width: 192
     height: menuHolder.height
     visible: isOpen
-    focus: isOpen
+    focus: isOpen && !isMobile
 
     color: Theme.colorBackground
     radius: Theme.componentRadius
@@ -35,8 +35,9 @@ Rectangle {
             button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
             visible: (appContent.state === "DeviceThermo")
             onButtonClicked: {
-                menuSelected(index)
                 deviceDataButtonClicked()
+                menuSelected(index)
+                close()
             }
         }
 
@@ -47,8 +48,9 @@ Rectangle {
             button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
             onButtonClicked: {
-                menuSelected(index)
                 deviceLedButtonClicked()
+                menuSelected(index)
+                close()
             }
         }
 
@@ -59,8 +61,9 @@ Rectangle {
             button_text: qsTr("Update data")
             button_source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             onButtonClicked: {
-                menuSelected(index)
                 deviceRefreshButtonClicked()
+                menuSelected(index)
+                close()
             }
         }
 
@@ -71,8 +74,9 @@ Rectangle {
             button_text: qsTr("Update history")
             button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
             onButtonClicked: {
-                menuSelected(index)
                 deviceRefreshHistoryButtonClicked()
+                menuSelected(index)
+                close()
             }
         }
     }

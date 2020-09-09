@@ -26,10 +26,10 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: rectangleHeaderBar
-    color: Theme.colorHeader
     width: 720
     height: 64
     z: 10
+    color: Theme.colorHeader
 
     signal backButtonClicked()
     signal rightMenuClicked() // compatibility

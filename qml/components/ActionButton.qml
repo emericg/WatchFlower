@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 Item {
     id: actionButtonItem
-    height: 32
+    height: 36
     width: parent.width
 
     property string button_text
@@ -45,29 +45,32 @@ Item {
 
             text: qsTr(button_text)
             font.bold: false
-            font.pixelSize: Theme.fontSizeContent
+            font.pixelSize: Theme.fontSizeContentBig
             color: Theme.colorText
         }
 
         ImageSvg {
             id: iButton
+            width: parent.height * 0.6
+            height: parent.height * 0.6
             anchors.right: parent.right
             anchors.rightMargin: 12
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.height * 0.5
-            height: parent.height * 0.5
+
             source: button_source
             color: Theme.colorSubText
         }
 
         MouseArea {
-            hoverEnabled: enable
             anchors.fill: parent
+
             enabled: enable
+            hoverEnabled: enable
             onClicked: buttonClicked()
             onEntered: viewButtonHovered()
             onExited: viewButtonExited()
         }
+
         states: [
             State {
                 name: "clicked";
