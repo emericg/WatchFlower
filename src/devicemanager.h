@@ -95,7 +95,7 @@ public:
     Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
     Q_INVOKABLE bool exportDataSave();
-    Q_INVOKABLE bool exportDataOpen();
+    Q_INVOKABLE QString exportDataOpen();
     bool exportData(const QString &path);
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }

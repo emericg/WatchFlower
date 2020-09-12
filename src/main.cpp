@@ -30,6 +30,7 @@
 #include "utils/utils_macosdock.h"
 
 #include <MobileUI.h>
+#include <SharingUtils.h>
 #include <singleapplication.h>
 
 #include <QtGlobal>
@@ -187,6 +188,8 @@ int main(int argc, char *argv[])
 
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
+    ShareUtils *mShareUtils = new ShareUtils();
+    engine_context->setContextProperty("utilsShare", mShareUtils);
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));

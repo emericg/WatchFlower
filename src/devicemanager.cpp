@@ -1003,6 +1003,9 @@ bool DeviceManager::exportDataSave()
 
     if (!m_devices_model->hasDevices()) return status;
 
+    UtilsApp *utilsApp = UtilsApp::getInstance();
+    utilsApp->getMobileStorageWritePermission();
+
     // Get directory path
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     UtilsApp *apputils = UtilsApp::getInstance();
@@ -1057,38 +1060,22 @@ bool DeviceManager::exportDataSave()
 
 /* ************************************************************************** */
 
-bool DeviceManager::exportDataOpen()
+QString DeviceManager::exportDataOpen()
 {
-    bool status = false;
+    QString filePath;
 
-    if (!m_devices_model->hasDevices()) return status;
+    if (!m_devices_model->hasDevices()) return filePath;
 
     // Get temp path
-    QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
+    QString exportDirectory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+    filePath = exportDirectory + "/wf_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
 
-    if (!exportDirectory.isEmpty())
+    if (!exportData(filePath))
     {
-        // Get file name
-        QString exportFile = exportDirectory + "exporteddata.txt";
-
-        if (exportData(exportFile))
-        {
-            status = true;
-
-            UtilsApp::openWith(exportFile);
-        }
-        else
-        {
-            status = false;
-        }
-    }
-    else
-    {
-        qWarning() << "DeviceManager::exportDataOpen() invalid export directory";
-        status = false;
+        filePath = "";
     }
 
-    return status;
+    return filePath;
 }
 
 /* ************************************************************************** */
@@ -1154,7 +1141,7 @@ bool DeviceManager::exportData(const QString &path)
     }
     else
     {
-        qWarning() << "DeviceManager::exportData() cannot open export file";
+        qWarning() << "DeviceManager::exportData() cannot open export file: " << path;
         status = false;
     }
 

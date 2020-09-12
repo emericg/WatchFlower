@@ -21,6 +21,8 @@
 
 package com.emeric.watchflower;
 
+import com.emeric.utils.*;
+
 // Qt
 import org.qtproject.qt5.android.QtNative;
 import org.qtproject.qt5.android.bindings.QtActivity;

@@ -1346,13 +1346,8 @@ Item {
                     fullColor: false
                     text: qsTr("Open with")
                     onClicked: {
-                        primaryColor = Theme.colorWarning
-                        fullColor = false
-                        if (deviceManager.exportDataOpen()) {
-                            primaryColor = Theme.colorPrimary
-                        } else {
-                            primaryColor = Theme.colorWarning
-                        }
+                        var file = deviceManager.exportDataOpen()
+                        utilsShare.sendFile(file, "Send file", "text/csv", 0)
                     }
                 }
             }

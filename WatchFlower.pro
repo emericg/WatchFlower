@@ -23,6 +23,7 @@ win32 { DEFINES += _USE_MATH_DEFINES }
 
 # MobileUI for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
+include(src/thirdparty/MobileSharing/MobileSharing.pri)
 
 # SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/singleapplication.pri)
@@ -168,7 +169,9 @@ android {
     QMAKE_BUNDLE = watchflower
 
     # 
-    OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java
+    OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java \
+                   assets/android/src/com/emeric/utils/QShareUtils.java \
+                   assets/android/src/com/emeric/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android

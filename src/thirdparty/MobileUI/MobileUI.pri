@@ -2,10 +2,9 @@ QT += core
 
 MOBILEUI_VERSION = 1.0
 
-INCLUDEPATH += $${PWD}
-
 SOURCES += $${PWD}/MobileUI.cpp
 HEADERS += $${PWD}/MobileUI.h
+INCLUDEPATH += $${PWD}
 
 android {
     QT += androidextras
