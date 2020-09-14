@@ -25,6 +25,7 @@
 #include "notificationmanager.h"
 #include "utils/utils_versionchecker.h"
 
+#include <cstdlib>
 #include <cmath>
 
 #include <QBluetoothUuid>
@@ -411,6 +412,7 @@ bool Device::getSqlLimits()
 bool Device::getSqlData(int minutes)
 {
     //qDebug() << "Device::getSqlData(" << m_deviceAddress << ")";
+    Q_UNUSED(minutes)
     return false;
 }
 

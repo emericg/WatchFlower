@@ -21,6 +21,7 @@
 
 #include "device_filter.h"
 
+#include <cstdlib>
 #include <cmath>
 
 #include <QDebug>
@@ -42,6 +43,9 @@ DeviceFilter::~DeviceFilter()
 
 bool DeviceFilter::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
+    Q_UNUSED(sourceRow)
+    Q_UNUSED(sourceParent)
+
     bool accepted = true;
 /*
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

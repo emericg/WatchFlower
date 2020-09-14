@@ -739,7 +739,7 @@ void DeviceSensors::getAioLinesData(int maxDays,
             axis->setMin(date);
             minSet = true;
         }
-        int64_t timecode = date.toMSecsSinceEpoch();
+        qint64 timecode = date.toMSecsSinceEpoch();
 
         temp->append(timecode, graphData.value(0).toReal());
         hygro->append(timecode, graphData.value(1).toReal());

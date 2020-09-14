@@ -25,6 +25,8 @@
 
 #include "device_sensors.h"
 
+#include <cstdint>
+
 #include <QObject>
 #include <QList>
 
