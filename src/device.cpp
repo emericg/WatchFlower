@@ -126,7 +126,7 @@ void Device::deviceConnect()
             // Connecting signals and slots for connecting to LE services.
             connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
             connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
-            connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
+            connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
             connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
             connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
             connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
