@@ -77,8 +77,8 @@ void IosShareUtils::share(const QString &text, const QUrl &url) {
     [qtUIViewController presentViewController:activityController animated:YES completion:nil];
 }
 
-void IosShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl) {
-#pragma unused (title, mimeType, altImpl)
+void IosShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) {
+#pragma unused (title, mimeType)
 
     NSString *nsFilePath = filePath.toNSString();
     NSURL *nsFileUrl = [NSURL fileURLWithPath:nsFilePath];
@@ -105,21 +105,21 @@ void IosShareUtils::sendFile(const QString &filePath, const QString &title, cons
         documentInteractionController.delegate = docViewController;
         // [documentInteractionController presentPreviewAnimated:YES];
         if (![documentInteractionController presentPreviewAnimated:YES]) {
-            emit shareError(0, tr("No App found to open: %1").arg(filePath));
+            emit shareError(0, QString("No App found to open: %1").arg(filePath));
         }
     }
 }
 
-void IosShareUtils::viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl) {
+void IosShareUtils::viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) {
 #pragma unused (title, mimeType)
 
-    sendFile(filePath, title, mimeType, requestId, altImpl);
+    sendFile(filePath, title, mimeType, requestId);
 }
 
-void IosShareUtils::editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl) {
+void IosShareUtils::editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) {
 #pragma unused (title, mimeType)
 
-    sendFile(filePath, title, mimeType, requestId, altImpl);
+    sendFile(filePath, title, mimeType, requestId);
 }
 
 void IosShareUtils::handleDocumentPreviewDone(const int &requestId)
@@ -134,7 +134,7 @@ void IosShareUtils::handleFileUrlReceived(const QUrl &url)
     QString incomingUrl = url.toString();
     if (incomingUrl.isEmpty()) {
         qWarning() << "setFileUrlReceived: we got an empty URL";
-        emit shareError(0, tr("Empty URL received"));
+        emit shareError(0, "Empty URL received");
         return;
     }
     qDebug() << "IosShareUtils setFileUrlReceived: we got the File URL from iOS: " << incomingUrl;
@@ -152,7 +152,7 @@ void IosShareUtils::handleFileUrlReceived(const QUrl &url)
         emit fileUrlReceived(myUrl);
     } else {
         qDebug() << "setFileUrlReceived: FILE does NOT exist ";
-        emit shareError(0, tr("File does not exist: %1").arg(myUrl));
+        emit shareError(0, QString("File does not exist: %1").arg(myUrl));
     }
 }
 
