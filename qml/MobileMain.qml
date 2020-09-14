@@ -425,7 +425,7 @@ ApplicationWindow {
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
-                menuText: qsTr("My plants")
+                menuText: qsTr("Sensors")
                 selected: (appContent.state === "DeviceList")
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                 onClicked: appContent.state = "DeviceList"
