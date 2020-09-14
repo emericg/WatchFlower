@@ -263,8 +263,8 @@ Rectangle {
 
     ActionMenu {
         id: actionMenu
-        anchors.top: parent.bottom
-        anchors.topMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 8
         anchors.right: parent.right
         anchors.rightMargin: 8
 

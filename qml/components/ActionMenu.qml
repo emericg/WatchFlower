@@ -29,32 +29,6 @@ Rectangle {
         spacing: 4
 
         ActionButton {
-            id: actionGraphMode
-            index: 0
-            button_text: qsTr("Switch graph")
-            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
-            visible: (appContent.state === "DeviceThermo")
-            onButtonClicked: {
-                deviceDataButtonClicked()
-                menuSelected(index)
-                close()
-            }
-        }
-
-        ActionButton {
-            id: actionLed
-            index: 1
-            button_text: qsTr("Blink LED")
-            button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
-            onButtonClicked: {
-                deviceLedButtonClicked()
-                menuSelected(index)
-                close()
-            }
-        }
-
-        ActionButton {
             id: actionUpdate
             index: 2
             visible: (deviceManager.bluetooth && selectedDevice)
@@ -75,6 +49,32 @@ Rectangle {
             button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
             onButtonClicked: {
                 deviceRefreshHistoryButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionLed
+            index: 1
+            button_text: qsTr("Blink LED")
+            button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+            onButtonClicked: {
+                deviceLedButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionGraphMode
+            index: 0
+            button_text: qsTr("Switch graph")
+            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            visible: (appContent.state === "DeviceThermo")
+            onButtonClicked: {
+                deviceDataButtonClicked()
                 menuSelected(index)
                 close()
             }
