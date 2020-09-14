@@ -88,8 +88,8 @@ class SettingsManager: public QObject
     QString m_graphThermometer = "minmax";
     bool m_graphShowDots = false;
     bool m_bigWidget = false;
-    bool m_bigIndicator = false;
-    bool m_dynaScale = false;
+    bool m_bigIndicator = true;
+    bool m_dynaScale = true;
     QString m_orderBy = "location";
 
     // Singleton
