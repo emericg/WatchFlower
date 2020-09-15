@@ -250,26 +250,29 @@ Rectangle {
                 }
             }
         }
+
+        ////////////
+
+        ActionMenu {
+            id: actionMenu
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+
+            onMenuSelected: {
+                //console.log(" MENU " + index)
+            }
+        }
     }
 
     MouseArea {
+        id: actionMenuCloseArea
         x: 0; y: 0;
         width: appWindow.width
         height: appWindow.height
 
         enabled: actionMenu.isOpen
         onClicked: actionMenu.close()
-    }
-
-    ActionMenu {
-        id: actionMenu
-        anchors.top: parent.top
-        anchors.topMargin: 8
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-
-        onMenuSelected: {
-            //console.log(" MENU " + index)
-        }
     }
 }

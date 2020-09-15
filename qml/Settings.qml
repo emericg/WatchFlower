@@ -1285,21 +1285,40 @@ Item {
 
             ////////
 
-            Text {
-                id: legend_export
+            Column {
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad
                 anchors.right: parent.right
                 anchors.rightMargin: 16
+
                 topPadding: 8
 
                 visible: deviceManager.hasDevices
 
-                text: qsTr("Export up to 30 days of data into a CSV file. Saved in the Document / WatchFlower directory.")
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: 14
-                verticalAlignment: Text.AlignBottom
+                Text {
+                    id: legend_export1
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    text: qsTr("Export up to 30 days of data into a CSV file.")
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: 14
+                    verticalAlignment: Text.AlignBottom
+                }
+                Text {
+                    id: legend_export2
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    visible: (Qt.platform.os !== "ios")
+
+                    text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: 14
+                    verticalAlignment: Text.AlignBottom
+                }
             }
 
             Row {

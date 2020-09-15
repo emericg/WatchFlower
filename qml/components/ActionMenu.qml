@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Rectangle {
-    width: 192
+    width: isPhone ? 192 : 256
     height: menuHolder.height
     visible: isOpen
     focus: isOpen && !isMobile
