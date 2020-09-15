@@ -250,21 +250,9 @@ Rectangle {
                 }
             }
         }
-
-        ////////////
-
-        ActionMenu {
-            id: actionMenu
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-
-            onMenuSelected: {
-                //console.log(" MENU " + index)
-            }
-        }
     }
+
+    ////////////
 
     MouseArea {
         id: actionMenuCloseArea
@@ -274,5 +262,15 @@ Rectangle {
 
         enabled: actionMenu.isOpen
         onClicked: actionMenu.close()
+    }
+
+    ActionMenu {
+        id: actionMenu
+        anchors.top: parent.top
+        anchors.topMargin: screenStatusbarPadding + screenNotchPadding + 8
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+
+        //onMenuSelected: console.log(" MENU " + index)
     }
 }
