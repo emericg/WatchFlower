@@ -615,7 +615,7 @@ Item {
 
                 visible: element_bluetoothSimUpdate.visible
 
-                text: qsTr("How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.")
+                text: qsTr("How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -1332,7 +1332,6 @@ Item {
                 visible: deviceManager.hasDevices
 
                 ButtonWireframe {
-                    width: 128
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1356,7 +1355,6 @@ Item {
                 }
 
                 ButtonWireframe {
-                    width: 128
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 

@@ -91,7 +91,7 @@
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="35"/>
         <source>Update data</source>
-        <translation type="unfinished">Mettre à jour</translation>
+        <translation>Mettre à jour</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="48"/>
@@ -1054,7 +1054,7 @@
         <translation type="unfinished">position</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="428"/>
+        <location filename="../qml/MobileDrawer.qml" line="429"/>
         <source>Refresh sensors data</source>
         <translation>Rafraichir les données</translation>
     </message>
@@ -1069,13 +1069,13 @@
         <translation type="obsolete">Rafraichir les données</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="481"/>
+        <location filename="../qml/MobileDrawer.qml" line="482"/>
         <source>Search for new devices</source>
         <translatorcomment>shorten</translatorcomment>
         <translation>Recherchez des appareils</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="539"/>
+        <location filename="../qml/MobileDrawer.qml" line="540"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
@@ -1399,8 +1399,12 @@
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="618"/>
-        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
+        <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
         <translation type="unfinished">Combien de capteurs doivent être mis à jour simultanément. Un nombre bas améliore la fiabilité de la synchronisation Bluetooth, au détriment de la vitesse.</translation>
+    </message>
+    <message>
+        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
+        <translation type="obsolete">Combien de capteurs doivent être mis à jour simultanément. Un nombre bas améliore la fiabilité de la synchronisation Bluetooth, au détriment de la vitesse.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1277"/>
@@ -1418,18 +1422,18 @@
         <translation type="unfinished">Enregistré dans vos documents, dans le répertoire &apos;WatchFlower&apos;.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1342"/>
-        <location filename="../qml/Settings.qml" line="1351"/>
+        <location filename="../qml/Settings.qml" line="1341"/>
+        <location filename="../qml/Settings.qml" line="1350"/>
         <source>Export file</source>
         <translation>Exporter le fichier</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1347"/>
+        <location filename="../qml/Settings.qml" line="1346"/>
         <source>Exported</source>
         <translation>Exporté</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1366"/>
+        <location filename="../qml/Settings.qml" line="1364"/>
         <source>Open with</source>
         <translation>Ouvrir avec</translation>
     </message>

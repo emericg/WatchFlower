@@ -87,22 +87,22 @@
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="35"/>
         <source>Update data</source>
-        <translation type="unfinished"></translation>
+        <translation>Indlæser data</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="48"/>
         <source>Update history</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdateringshistorie</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="60"/>
         <source>Blink LED</source>
-        <translation type="unfinished"></translation>
+        <translation>Blink LED</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="73"/>
         <source>Switch graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Skift graf</translation>
     </message>
 </context>
 <context>
@@ -157,47 +157,47 @@
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="129"/>
         <source>Update queued.</source>
-        <translation type="unfinished">Opdatering i kø.</translation>
+        <translation>Opdatering i kø.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="131"/>
         <source>Connecting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opretter forbindelse...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="133"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilsluttet</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="135"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kører...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="139"/>
         <source>Updating...</source>
-        <translation type="unfinished">Opdaterer...</translation>
+        <translation>Opdaterer...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="143"/>
         <source>Just synced!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lige opdateret!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="145"/>
         <source>Synced %1 ago</source>
-        <translation type="unfinished"></translation>
+        <translation>Opdateret for %1 siden</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="147"/>
         <source>Offline!</source>
-        <translation type="unfinished">Offline!</translation>
+        <translation>Offline!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="238"/>
         <source>Loading...</source>
-        <translation type="unfinished">Indlæser...</translation>
+        <translation>Indlæser...</translation>
     </message>
 </context>
 <context>
@@ -277,12 +277,12 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilsluttet</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="113"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kører...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="117"/>
@@ -389,12 +389,12 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="659"/>
         <source>inside</source>
-        <translation type="unfinished"></translation>
+        <translation>indenfor</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="699"/>
         <source>outside</source>
-        <translation type="unfinished"></translation>
+        <translation>udenfor</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="735"/>
@@ -472,12 +472,12 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="970"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="1010"/>
         <source>indirect</source>
-        <translation>indirekte lys</translation>
+        <translation>indirekte </translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="983"/>
         <source>direct light (indoor)</source>
-        <translation>direkte lys (indendørs)</translation>
+        <translation>direkte lys (indenfor)</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="996"/>
@@ -511,17 +511,17 @@
     <message>
         <location filename="../src/device_sensors.cpp" line="109"/>
         <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="unfinished">Vand din &apos;%1&apos; straks!</translation>
+        <translation>Vand din &apos;%1&apos; lige straks!</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="111"/>
         <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="unfinished">Vand din plante i nærheden af &apos;%1&apos;</translation>
+        <translation>Vand din plante i nærheden af &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="113"/>
         <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="unfinished">En af dine planter har brug for vand!</translation>
+        <translation>En af dine planter har brug for vand!</translation>
     </message>
 </context>
 <context>
@@ -556,12 +556,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="180"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilsluttet</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="182"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kører...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="190"/>
@@ -571,7 +571,7 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="192"/>
         <source>Synced %1 ago</source>
-        <translation>Opdateret %1 siden</translation>
+        <translation>Opdateret for %1 siden</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="194"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="134"/>
         <source>Geiger counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Geigertæller</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="136"/>
@@ -613,17 +613,17 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="156"/>
         <source>Connecting...</source>
-        <translation>Opretter forbindelse... </translation>
+        <translation type="unfinished">Opretter forbindelse...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="160"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilsluttet</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="164"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kører...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="170"/>
@@ -772,7 +772,7 @@
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="51"/>
         <source>Enable Bluetooth</source>
-        <translation>Tænd bluetooth</translation>
+        <translation>Tænd for bluetooth</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemNoBluetooth.qml" line="51"/>
@@ -823,7 +823,7 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="171"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensorer</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="210"/>
@@ -838,40 +838,40 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="333"/>
         <source>Order by</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrangere efter</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="335"/>
         <source>water level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fugtindhold</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="337"/>
         <source>plant name</source>
-        <translation type="unfinished"></translation>
+        <translation>plantenavn</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="339"/>
         <source>device model</source>
-        <translation type="unfinished"></translation>
+        <translation>enhed model</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="341"/>
         <source>location</source>
-        <translation type="unfinished"></translation>
+        <translation>placering</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="428"/>
+        <location filename="../qml/MobileDrawer.qml" line="429"/>
         <source>Refresh sensors data</source>
         <translation>Opdater sensordata</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="481"/>
+        <location filename="../qml/MobileDrawer.qml" line="482"/>
         <source>Search for new devices</source>
         <translation>Søg efter nye enheder</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="539"/>
+        <location filename="../qml/MobileDrawer.qml" line="540"/>
         <source>Exit</source>
         <translation>Luk ned</translation>
     </message>
@@ -909,7 +909,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="428"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensorer</translation>
     </message>
     <message>
         <source>My plants</source>
@@ -961,12 +961,12 @@
     <message>
         <location filename="../qml/Permissions.qml" line="195"/>
         <source>Storage write</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerplads-skrivetilladelser</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="229"/>
         <source>Storage write permission can be needed for exporting sensors data to the SD card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerplads-skrivetilladelse kan være nødvendig for at eksportere sensordata til SD-kortet.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="266"/>
@@ -1035,7 +1035,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="510"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kan aktivere enhedens bluetooth til opdatering af sensordataene.</translation>
+        <translation>WatchFlower kan automatisk tænde Bluetooth på enheden for at læse i sensordata.</translation>
     </message>
     <message>
         <source>Bluetooth compatibility</source>
@@ -1049,12 +1049,16 @@
         <location filename="../qml/Settings.qml" line="545"/>
         <location filename="../qml/Settings.qml" line="581"/>
         <source>Simultaneous updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtidige opdateringer</translation>
+    </message>
+    <message>
+        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
+        <translation type="vanished">Hvor mange sensorer skal opdateres samtidigt? Et lavere tal forbedrer pålideligheden af ​​Bluetooth-synkronisering, men tager ekstra tid.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="618"/>
-        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
-        <translation type="unfinished"></translation>
+        <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
+        <translation type="unfinished">Hvor mange sensorer skal opdateres samtidigt? Et lavere tal forbedrer pålideligheden af ​​Bluetooth-synkronisering, men tager ekstra tid.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="654"/>
@@ -1121,33 +1125,33 @@
     <message>
         <location filename="../qml/Settings.qml" line="1277"/>
         <source>Data archiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Dataarkivering</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1303"/>
         <source>Export up to 30 days of data into a CSV file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporter op til 30 dages data i en CSV-fil.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1316"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gemt i dine dokumenter under mappen &apos;WatchFlower&apos;.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1342"/>
-        <location filename="../qml/Settings.qml" line="1351"/>
+        <location filename="../qml/Settings.qml" line="1341"/>
+        <location filename="../qml/Settings.qml" line="1350"/>
         <source>Export file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporter fil</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1347"/>
+        <location filename="../qml/Settings.qml" line="1346"/>
         <source>Exported</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporteret</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1366"/>
+        <location filename="../qml/Settings.qml" line="1364"/>
         <source>Open with</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbn med</translation>
     </message>
     <message>
         <source>Histograms</source>

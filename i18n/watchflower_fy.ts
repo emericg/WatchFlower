@@ -11,7 +11,7 @@
     <message>
         <location filename="../qml/About.qml" line="73"/>
         <source>What do you want to know?</source>
-        <translation>Wat wolsto witte?</translation>
+        <translation>Wat wolst witte?</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="128"/>
@@ -26,6 +26,7 @@
     <message>
         <location filename="../qml/About.qml" line="187"/>
         <source>SUPPORT</source>
+        <translatorcomment>I&apos;ve chosen STIPE instead of HELP</translatorcomment>
         <translation>STIPE</translation>
     </message>
     <message>
@@ -51,7 +52,7 @@
     <message>
         <location filename="../qml/About.qml" line="575"/>
         <source>This application is made possible thanks to a couple of third party open source projects:</source>
-        <translation>Applikaasje is mei mooglik makke troch in tal oare open source-projekten:</translation>
+        <translation>Dizze applikaasje is mei mooglik makke troch in tal oare open source-projekten:</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="667"/>
@@ -66,7 +67,7 @@
     <message>
         <location filename="../qml/About.qml" line="304"/>
         <source>Rate the application</source>
-        <translation>Wurdearje dizze applikaasje</translation>
+        <translation>Beoardielje dizze applikaasje</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="264"/>
@@ -83,22 +84,22 @@
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="35"/>
         <source>Update data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ynlêze data</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="48"/>
         <source>Update history</source>
-        <translation type="unfinished"></translation>
+        <translation>Bywurkhistoarje</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="60"/>
         <source>Blink LED</source>
-        <translation type="unfinished"></translation>
+        <translation>Knipperje LED</translation>
     </message>
     <message>
         <location filename="../qml/components/ActionMenu.qml" line="73"/>
         <source>Switch graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiizigje grafyk</translation>
     </message>
 </context>
 <context>
@@ -153,47 +154,47 @@
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="129"/>
         <source>Update queued.</source>
-        <translation type="unfinished">Wurdt aanst bywurke.</translation>
+        <translation>Wurdt aanst bywurke.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="131"/>
         <source>Connecting...</source>
-        <translation type="unfinished">Ferbining meitsje...</translation>
+        <translation>Ferbining meitsje...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="133"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferbûn</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="135"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwaande...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="139"/>
         <source>Updating...</source>
-        <translation type="unfinished">Bywurkje...</translation>
+        <translation>Bywurkje...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="143"/>
         <source>Just synced!</source>
-        <translation type="unfinished">Krekt bywurke!</translation>
+        <translation>Krekt bywurke!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="145"/>
         <source>Synced %1 ago</source>
-        <translation type="unfinished">%1 lyn bywurke</translation>
+        <translation>%1 lyn bywurke</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="147"/>
         <source>Offline!</source>
-        <translation type="unfinished">Gjin ferbining!</translation>
+        <translation>Gjin ferbining!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceGeiger.qml" line="238"/>
         <source>Loading...</source>
-        <translation type="unfinished">Ynlêze...</translation>
+        <translation>Ynlêze...</translation>
     </message>
 </context>
 <context>
@@ -211,7 +212,7 @@
     <message>
         <location filename="../qml/DeviceList.qml" line="200"/>
         <source>Bluetooth disabled...</source>
-        <translation>Bluetooth ynskeakelje...</translation>
+        <translation>Bluetooth útskeakele...</translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="249"/>
@@ -273,12 +274,12 @@
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="111"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferbûn</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="113"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwaande...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenData.qml" line="117"/>
@@ -385,12 +386,12 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="659"/>
         <source>inside</source>
-        <translation type="unfinished"></translation>
+        <translation>binnendoar</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="699"/>
         <source>outside</source>
-        <translation type="unfinished"></translation>
+        <translation>bûtendoar</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="735"/>
@@ -443,12 +444,12 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="861"/>
         <source>Having constant temperature is important for indoor plants.</source>
-        <translation>Keamerplanten hâlde fan in konstante temperatuer. Set se net op &apos;e siich.</translation>
+        <translation>Keamerplanten hâlde fan in konstante temperatuer. Set se net op &apos;e siich!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="862"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation>Mei in hygrometer kinsto de luchtfochtigens yn &apos;e gaten hâlde sa&apos;t dizze tusken de 40 en 60% bliuwt (heger foar tropyske planten).</translation>
+        <translation>Mei in hygrometer kinst de luchtfochtigens yn &apos;e gaten hâlde, sa&apos;t dizze tusken de 40 en 60% bliuwt (heger foar tropyske planten).</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="896"/>
@@ -503,17 +504,17 @@
     <message>
         <location filename="../src/device_sensors.cpp" line="109"/>
         <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="unfinished">Dyn &apos;%1&apos; daaliks wetter jaan!</translation>
+        <translation>Dyn &apos;%1&apos; daaliks wetter jaan!</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="111"/>
         <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="unfinished">Dyn plant tichteby &apos;%1&apos; wetter jaan</translation>
+        <translation>Dyn plant tichteby &apos;%1&apos; wetter jaan</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="113"/>
         <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="unfinished">Ien fan dyn planten hat ferlet fan wetter!</translation>
+        <translation>Ien fan dyn planten hat ferlet fan wetter!</translation>
     </message>
 </context>
 <context>
@@ -548,12 +549,12 @@
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="180"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferbûn</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="182"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwaande...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="190"/>
@@ -590,7 +591,7 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="134"/>
         <source>Geiger counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Geigerteller</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="136"/>
@@ -610,12 +611,12 @@
     <message>
         <location filename="../qml/DeviceWidget.qml" line="160"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferbûn</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="164"/>
         <source>Working...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwaande</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="170"/>
@@ -690,7 +691,7 @@
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="34"/>
         <source>Are you sure you want to delete selected device(s)?</source>
-        <translation>Bisto der wis fan datsto de keazen sensor/sensoaren wiskje wolst?</translation>
+        <translation>Bist der wis fan datst de keazen sensor/sensoaren wiskje wolst?</translation>
     </message>
     <message>
         <location filename="../qml/components/ItemDeletePopup.qml" line="52"/>
@@ -815,7 +816,7 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="171"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensoaren</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="210"/>
@@ -830,40 +831,40 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="333"/>
         <source>Order by</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Regelje op</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="335"/>
         <source>water level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fochtgehalte</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="337"/>
         <source>plant name</source>
-        <translation type="unfinished"></translation>
+        <translation>plantnamme</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="339"/>
         <source>device model</source>
-        <translation type="unfinished"></translation>
+        <translation>apparaat model</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="341"/>
         <source>location</source>
-        <translation type="unfinished"></translation>
+        <translation>lokaasje</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="428"/>
+        <location filename="../qml/MobileDrawer.qml" line="429"/>
         <source>Refresh sensors data</source>
         <translation>Ferfarskje sensordata</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="481"/>
+        <location filename="../qml/MobileDrawer.qml" line="482"/>
         <source>Search for new devices</source>
         <translation>Sykje nei nije apparaten</translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="539"/>
+        <location filename="../qml/MobileDrawer.qml" line="540"/>
         <source>Exit</source>
         <translation>Ofslute</translation>
     </message>
@@ -901,7 +902,7 @@
     <message>
         <location filename="../qml/MobileMain.qml" line="428"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensoaren</translation>
     </message>
     <message>
         <source>My plants</source>
@@ -953,12 +954,12 @@
     <message>
         <location filename="../qml/Permissions.qml" line="195"/>
         <source>Storage write</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslachskriuwrjochten</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="229"/>
         <source>Storage write permission can be needed for exporting sensors data to the SD card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslachskriuwrjochten kinne nedich wêze foar it eksportearjen fan sensordata nei de SD-kaart.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="266"/>
@@ -968,7 +969,7 @@
     <message>
         <location filename="../qml/Permissions.qml" line="297"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kin bluetooth op dyn apparaat ynskeakelje foar it ynlêzen fan sensordata</translation>
+        <translation type="unfinished">WatchFlower kin bluetooth op dyn apparaat ynskeakelje foar it ynlêzen fan sensordata.</translation>
     </message>
 </context>
 <context>
@@ -1035,7 +1036,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="510"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower kin bluetooth op dyn apparaat ynskeakelje foar it ynlêzen fan sensordata</translation>
+        <translation type="unfinished">WatchFlower kin bluetooth op dyn apparaat automatysk ynskeakelje foar it ynlêzen fan sensordata.</translation>
     </message>
     <message>
         <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
@@ -1049,12 +1050,17 @@
         <location filename="../qml/Settings.qml" line="545"/>
         <location filename="../qml/Settings.qml" line="581"/>
         <source>Simultaneous updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyktidig bywurkjen</translation>
+    </message>
+    <message>
+        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
+        <translation type="vanished">Hoefolle sensoaren moatte tagelyk bywurke wurde? Een leger oantal ferbetteret de betrouberens fan it ynlêzen fia Bluetooth, mar nimt al mear tiid.
+</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="618"/>
-        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
-        <translation type="unfinished"></translation>
+        <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
+        <translation type="unfinished">Hoefolle sensoaren moatte tagelyk bywurke wurde? Een leger oantal ferbetteret de betrouberens fan it ynlêzen fia Bluetooth, mar nimt al mear tiid.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="654"/>
@@ -1116,38 +1122,38 @@
     <message>
         <location filename="../qml/Settings.qml" line="1049"/>
         <source>Show graph dots</source>
-        <translation>Lit grafykpunten sjen</translation>
+        <translation>Toan grafykpunten</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1277"/>
         <source>Data archiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Data-argivearring</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1303"/>
         <source>Export up to 30 days of data into a CSV file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportearje oant 30 dagen oan data yn in CSV-bestân.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1316"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslein yn dyn dokuminten, ûnder de map &apos;WatchFlower&apos;.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1342"/>
-        <location filename="../qml/Settings.qml" line="1351"/>
+        <location filename="../qml/Settings.qml" line="1341"/>
+        <location filename="../qml/Settings.qml" line="1350"/>
         <source>Export file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportearje bestân</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1347"/>
+        <location filename="../qml/Settings.qml" line="1346"/>
         <source>Exported</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportearre</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1366"/>
+        <location filename="../qml/Settings.qml" line="1364"/>
         <source>Open with</source>
-        <translation type="unfinished"></translation>
+        <translation>Iepenje mei</translation>
     </message>
     <message>
         <source>Histograms</source>
@@ -1222,12 +1228,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="120"/>
         <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation>Om WatchFlower te brûken begjinsto mei &lt;b&gt;skennen&lt;/b&gt; nei &lt;b&gt;geskikte bluetoothsensoaren&lt;/b&gt; yn &apos;e buert.</translation>
+        <translation>Om WatchFlower te brûken begjinst mei &lt;b&gt;skennen&lt;/b&gt; nei &lt;b&gt;geskikte bluetoothsensoaren&lt;/b&gt; yn &apos;e buert.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="139"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation>Do kinst altyd &lt;b&gt;op &apos;e nij skenne&lt;/b&gt; nei nije apparaten, of apparaten &lt;b&gt;wiskje&lt;/b&gt; dy&apos;tsto net mear wolst.</translation>
+        <translation>Do kinst altyd &lt;b&gt;op &apos;e nij skenne&lt;/b&gt; nei nije apparaten, of apparaten &lt;b&gt;wiskje&lt;/b&gt; dy&apos;tst net mear wolst.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="163"/>
@@ -1256,7 +1262,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="206"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
-        <translation>Do kinst dyn &lt;b&gt;plant labelje&lt;/b&gt; en de &lt;b&gt;lokaasje&lt;/b&gt; fan de sensor oanjaan.</translation>
+        <translation>Do kinst dyn &lt;b&gt;plant labelje&lt;/b&gt; en de &lt;b&gt;lokaasje&lt;/b&gt; fan de sensor opjaan.</translation>
     </message>
     <message>
         <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>

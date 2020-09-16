@@ -754,17 +754,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="428"/>
+        <location filename="../qml/MobileDrawer.qml" line="429"/>
         <source>Refresh sensors data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="481"/>
+        <location filename="../qml/MobileDrawer.qml" line="482"/>
         <source>Search for new devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileDrawer.qml" line="539"/>
+        <location filename="../qml/MobileDrawer.qml" line="540"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -933,11 +933,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="618"/>
-        <source>How many sensor should be updated simultaneously. A lower number improve Bluetooth synchronization reliability, at the expense of speed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="654"/>
         <source>Start application minimized</source>
         <translation type="unfinished"></translation>
@@ -1015,24 +1010,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1342"/>
-        <location filename="../qml/Settings.qml" line="1351"/>
+        <location filename="../qml/Settings.qml" line="1341"/>
+        <location filename="../qml/Settings.qml" line="1350"/>
         <source>Export file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1347"/>
+        <location filename="../qml/Settings.qml" line="1346"/>
         <source>Exported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1366"/>
+        <location filename="../qml/Settings.qml" line="1364"/>
         <source>Open with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1094"/>
         <source>Thermometers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="618"/>
+        <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

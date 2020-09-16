@@ -347,6 +347,7 @@ Drawer {
                         Connections {
                             target: settingsManager
                             onOrderByChanged: textOrderBy.setText()
+                            onAppLanguageChanged: textOrderBy.setText()
                         }
 
                         font.pixelSize: 13
