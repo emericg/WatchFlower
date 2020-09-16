@@ -1062,9 +1062,9 @@ bool DeviceManager::exportDataSave()
 
 QString DeviceManager::exportDataOpen()
 {
-    QString filePath;
+    QString exportFilePath;
 
-    if (!m_devices_model->hasDevices()) return filePath;
+    if (!m_devices_model->hasDevices()) return exportFilePath;
 
     // Get temp directory path
     QString exportDirectory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
@@ -1073,14 +1073,14 @@ QString DeviceManager::exportDataOpen()
     if (!ddd.exists()) ddd.mkpath(exportDirectory + "/export");
 
     // Get temp file path
-    filePath = exportDirectory + "/export/watchflower_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
+    exportFilePath = exportDirectory + "/export/watchflower_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
 
-    if (!exportData(filePath))
+    if (!exportData(exportFilePath))
     {
-        filePath = "";
+        exportFilePath = "";
     }
 
-    return filePath;
+    return exportFilePath;
 }
 
 /* ************************************************************************** */
