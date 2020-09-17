@@ -13,7 +13,3 @@ win32 {
     msvc:LIBS += Advapi32.lib
     gcc:LIBS += -ladvapi32
 }
-macx {
-    # to handle the macOS dock click
-    LIBS += -framework CoreFoundation -framework Carbon -lobjc
-}
