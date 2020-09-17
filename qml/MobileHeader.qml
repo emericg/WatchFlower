@@ -232,7 +232,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo")
+                visible: (deviceManager.bluetooth && (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo"))
                 onClicked: {
                     rightMenuClicked()
                     actionMenu.open()
@@ -254,16 +254,6 @@ Rectangle {
 
     ////////////
 
-    MouseArea {
-        id: actionMenuCloseArea
-        x: 0; y: 0;
-        width: appWindow.width
-        height: appWindow.height
-
-        enabled: actionMenu.isOpen
-        onClicked: actionMenu.close()
-    }
-
     ActionMenu {
         id: actionMenu
         anchors.top: parent.top
@@ -272,5 +262,25 @@ Rectangle {
         anchors.rightMargin: 8
 
         //onMenuSelected: console.log(" MENU " + index)
+
+        Connections {
+            target: appDrawer
+            onVisibleChanged: actionMenu.close()
+        }
+        Connections {
+            target: deviceManager
+            onBluetoothChanged: {
+                if (!deviceManager.bluetooth) actionMenu.close()
+            }
+        }
+        MouseArea {
+            id: actionMenuCloseArea
+            x: 0; y: 0; z: -1;
+            width: appWindow.width
+            height: appWindow.height
+
+            enabled: actionMenu.isOpen
+            onClicked: actionMenu.close()
+        }
     }
 }

@@ -228,7 +228,6 @@ ApplicationWindow {
                         exitTimer.start()
                 }
             } else if (appContent.state === "DeviceSensor") {
-                console.log("BACK DeviceSensor")
                 if (appHeader.rightMenuIsOpen()) {
                     appHeader.rightMenuClose()
                 } else if (screenDeviceSensor.isHistoryMode()) {
@@ -237,7 +236,6 @@ ApplicationWindow {
                     appContent.state = "DeviceList"
                 }
             } else if (appContent.state === "DeviceThermo") {
-                console.log("BACK DeviceThermo")
                 if (appHeader.rightMenuIsOpen()) {
                     appHeader.rightMenuClose()
                 } else if (screenDeviceThermometer.isHistoryMode()) {
