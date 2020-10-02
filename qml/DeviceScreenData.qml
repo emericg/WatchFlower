@@ -80,16 +80,6 @@ Item {
         updateStatusText()
     }
 
-    function updateHeaderColor() {
-        if (isPhone) {
-            if (screenOrientation === Qt.PortraitOrientation) {
-                rectangleHeader.color = Theme.colorForeground
-            } else {
-                rectangleHeader.color = "transparent"
-            }
-        }
-    }
-
     Timer {
         interval: 60000; running: true; repeat: true;
         onTriggered: updateStatusText()
@@ -186,11 +176,7 @@ Item {
             updateStatusText()
         }
     }
-    Connections {
-        target: Theme
-        onCurrentThemeChanged: { updateHeaderColor() }
-    }
-
+/*
     onWidthChanged: {
         if (isPhone) {
             if (screenOrientation === Qt.PortraitOrientation) {
@@ -204,7 +190,6 @@ Item {
             }
         }
         if (isDesktop) {
-/*
             if (deviceScreenData.width < deviceScreenData.height) {
                 contentGrid_lvl2.columns = 1
                 contentGrid_lvl2.rows = 2
@@ -214,16 +199,15 @@ Item {
                 contentGrid_lvl2.rows = 1
                 rectangleHeader.color = "transparent"
             }
-*/
         }
     }
-
+*/
     ////////////////////////////////////////////////////////////////////////////
 
     Grid {
         id: contentGrid_lvl1
-        columns: 1
-        rows: 2
+        columns: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? 2 : 1
+        rows: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? 1 : 2
         spacing: (rows > 1) ? 12 : 0
 
         anchors.top: parent.top
@@ -246,7 +230,7 @@ Item {
 
             Rectangle {
                 id: rectangleHeader
-                color: Theme.colorForeground
+                color: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? "transparent" : Theme.colorForeground
                 width: parent.width / parent.columns
                 height: columnHeader.height + 12
                 z: 5
