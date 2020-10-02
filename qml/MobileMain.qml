@@ -46,7 +46,7 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
+    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
     onScreenOrientationChanged: handleNotches()
 

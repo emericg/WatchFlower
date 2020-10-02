@@ -38,8 +38,8 @@
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK   "1.1.2_0019"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_ALARM   "?"
 #define LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE  "1.0.0_0106"
-#define LATEST_KNOWN_FIRMWARE_ESP32_GEIGER      "0.1"
-#define LATEST_KNOWN_FIRMWARE_ESP32_HIGROW      "0.1"
+#define LATEST_KNOWN_FIRMWARE_ESP32_GEIGER      "0.2"
+#define LATEST_KNOWN_FIRMWARE_ESP32_HIGROW      "0.2"
 
 /* ************************************************************************** */
 
@@ -59,19 +59,20 @@ enum DeviceCapabilities {
 
     DEVICE_TEMPERATURE          = (1 << 12), //!< Has a temperature sensor
     DEVICE_HUMIDITY             = (1 << 13), //!< Has an humidity sensor
-    DEVICE_LIGHT                = (1 << 14), //!< Has a light sensor
-    DEVICE_UV                   = (1 << 15), //!< Has an UV light sensor
-    DEVICE_BAROMETER            = (1 << 16), //!< Has a barometer
+    DEVICE_BAROMETER            = (1 << 14), //!< Has a barometer
+    DEVICE_LIGHT                = (1 << 15), //!< Has a light sensor
+    DEVICE_UV                   = (1 << 16), //!< Has an UV light sensor
+    DEVICE_SOUND                = (1 << 17), //!< Has a sound level sensor
 
-    DEVICE_PM1                  = (1 << 17),
-    DEVICE_PM25                 = (1 << 18),
-    DEVICE_PM10                 = (1 << 19),
-    DEVICE_O2                   = (1 << 20),
-    DEVICE_O3                   = (1 << 21),
-    DEVICE_CO                   = (1 << 22),
-    DEVICE_CO2                  = (1 << 23),
-    DEVICE_NOX                  = (1 << 24),
-    DEVICE_VOC                  = (1 << 25),
+    DEVICE_PM1                  = (1 << 18),
+    DEVICE_PM25                 = (1 << 19),
+    DEVICE_PM10                 = (1 << 20),
+    DEVICE_O2                   = (1 << 21),
+    DEVICE_O3                   = (1 << 22),
+    DEVICE_CO                   = (1 << 23),
+    DEVICE_CO2                  = (1 << 24),
+    DEVICE_NOX                  = (1 << 26),
+    DEVICE_VOC                  = (1 << 26),
     DEVICE_GEIGER               = (1 << 31),
 };
 

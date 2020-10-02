@@ -95,7 +95,7 @@ Item {
 
     Keys.onPressed: {
         if (event.key === Qt.Key_Left) {
-            event.accepted = true;
+            event.accepted = true
             if (sensorPages.currentIndex > 0)
                 sensorPages.currentIndex--
         } else if (event.key === Qt.Key_Right) {
@@ -103,7 +103,7 @@ Item {
             if (sensorPages.currentIndex+1 < sensorPages.count)
                 sensorPages.currentIndex++
         } else if (event.key === Qt.Key_Backspace) {
-            event.accepted = true;
+            event.accepted = true
             appWindow.backAction()
         }
     }

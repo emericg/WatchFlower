@@ -37,7 +37,7 @@ Item {
 
         ImageSvg {
             id: imageSearch
-            width: (isDesktop || isTablet || (isPhone && screenOrientation == 2)) ? 256 : (parent.width*0.666)
+            width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -49,7 +49,7 @@ Item {
                 id: rescanAnimation
                 loops: Animation.Infinite
                 running: deviceManager.scanning
-                onStopped: imageSearch.opacity = 1;
+                onStopped: imageSearch.opacity = 1
 
                 PropertyAnimation { to: 0.33; duration: 750; }
                 PropertyAnimation { to: 1; duration: 750; }
@@ -69,7 +69,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Item { width: 1; height: 16; anchors.horizontalCenter: parent.horizontalCenter } // spacer
+        Item { width: 1; height: 16; anchors.horizontalCenter: parent.horizontalCenter; } // spacer
 
         Row {
             id: row
