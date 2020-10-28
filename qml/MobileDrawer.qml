@@ -383,7 +383,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: deviceManager.bluetooth
+                    enabled: deviceManager.bluetooth && !deviceManager.scanning
 
                     MouseArea {
                         anchors.fill: parent
@@ -408,7 +408,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                        color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
+                        color: rectangleRefresh.enabled ? Theme.colorText : Theme.colorSubText
 
                         NumberAnimation on rotation {
                             id: refreshAnimation
@@ -429,7 +429,7 @@ Drawer {
                         text: qsTr("Refresh sensors data")
                         font.pixelSize: 13
                         font.bold: true
-                        color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
+                        color: rectangleRefresh.enabled ? Theme.colorText : Theme.colorSubText
                     }
                 }
 
@@ -441,7 +441,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: deviceManager.bluetooth
+                    enabled: deviceManager.bluetooth && !deviceManager.refreshing
 
                     MouseArea {
                         anchors.fill: parent
@@ -462,7 +462,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                        color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
+                        color: rectangleRescan.enabled ? Theme.colorText : Theme.colorSubText
 
                         SequentialAnimation on opacity {
                             id: rescanAnimation
@@ -482,7 +482,7 @@ Drawer {
                         text: qsTr("Search for new devices")
                         font.pixelSize: 13
                         font.bold: true
-                        color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
+                        color: rectangleRescan.enabled ? Theme.colorText : Theme.colorSubText
                     }
                 }
 

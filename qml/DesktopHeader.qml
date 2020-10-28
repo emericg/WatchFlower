@@ -319,6 +319,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
+            enabled: !deviceManager.scanning
 
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -343,6 +344,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
+            enabled: !deviceManager.refreshing
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
