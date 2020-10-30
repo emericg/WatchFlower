@@ -285,6 +285,8 @@ ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
+    CONFIG += no_autoqmake
+
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
     QMAKE_BUNDLE = watchflower

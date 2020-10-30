@@ -148,7 +148,6 @@ Item {
             id: sensorPages
             anchors.fill: parent
 
-            //anchors.bottomMargin: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? 48 : 0
             interactive: isPhone
 
             currentIndex: 0

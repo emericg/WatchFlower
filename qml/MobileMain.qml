@@ -55,10 +55,27 @@ ApplicationWindow {
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
 
-    Component.onCompleted: firstHandleNotches.restart()
+    Component.onCompleted: {
+        if (Qt.platform.os !== "ios") return
+        firstHandleNotches.restart()
+        secondHandleNotches.restart()
+        thirdHandleNotches.restart()
+    }
     Timer {
         id: firstHandleNotches
         interval: 100
+        repeat: false
+        onTriggered: handleNotches()
+    }
+    Timer {
+        id: secondHandleNotches
+        interval: 250
+        repeat: false
+        onTriggered: handleNotches()
+    }
+    Timer {
+        id: thirdHandleNotches
+        interval: 1000
         repeat: false
         onTriggered: handleNotches()
     }
@@ -68,6 +85,7 @@ ApplicationWindow {
         if (typeof quickWindow === "undefined" || !quickWindow) return
 
         var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
+        //console.log("screen width : " + Screen.width)
         //console.log("screen height : " + Screen.height)
         //console.log("screen avail  : " + Screen.desktopAvailableHeight)
         //console.log("screen padding: " + screenPadding)
@@ -115,14 +133,14 @@ ApplicationWindow {
 
     MobileHeader {
         id: appHeader
-        width: parent.width
-        anchors.top: parent.top
+        width: appWindow.width
+        anchors.top: appWindow.top
     }
 
     MobileDrawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1 || parent.width < 480) ? 0.80 * parent.width : 0.50 * parent.width
-        height: parent.height
+        width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
+        height: appWindow.height
     }
 
     // Events handling /////////////////////////////////////////////////////////
