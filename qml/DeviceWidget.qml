@@ -250,8 +250,10 @@ Item {
         if (boxDevice.isAvailable()) {
             if (boxDevice.hasGeigerCounter()) {
                 rectangleHygroTemp.visible = true
-                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
                 textTemp.text = ""
+                textHygro.font.pixelSize = bigAssMode ? 24 : 22
+                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
+                // TODO status color
             } else if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height

@@ -44,6 +44,7 @@ class DeviceSensors: public Device
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
 
     // min/max
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)

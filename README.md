@@ -49,6 +49,11 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 | LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
+| ESP32 Air Monitor | ESP32 Geiger Counter |
+| :---------------: | :------------------: |
+| ![Air Monitor](doc/lungs-solid.svg) | ![Geiger Counter](doc/radiation-alt-solid.svg) |
+| [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
+
 ### Screenshots
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)

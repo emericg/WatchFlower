@@ -175,21 +175,23 @@ Item {
         Column {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -8
+            anchors.verticalCenterOffset: -(appHeader.height / 2) + ((currentDevice.deviceRadioactivityM >= 0) ? 16: 0)
             spacing: 8
 
-            Image {
-                width: 180; height: 180;
+            ImageSvg {
+                width: isMobile ? 128 : 160
+                height: isMobile ? 128 : 160
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/assets/icons_custom/nuclear.png"
-                sourceSize: Qt.size(width, height)
+
+                color: "white"
+                source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
             }
 
             Text {
                 id: sensorRadioactivity
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                text: currentDevice.deviceRadioactivityM.toFixed(3) + " µSv/m"
+                text: (currentDevice.deviceRadioactivityM >= 0) ? currentDevice.deviceRadioactivityM.toFixed(3) + " " + qsTr("µSv/m") : ""
                 font.bold: false
                 font.pixelSize: isPhone ? 28 : 32
                 color: Theme.colorHeaderContent

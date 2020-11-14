@@ -65,8 +65,9 @@ DeviceEsp32HiGrow::DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *par
 
 DeviceEsp32HiGrow::~DeviceEsp32HiGrow()
 {
-    controller->disconnectFromDevice();
+    if (controller) controller->disconnectFromDevice();
     delete serviceData;
+    delete serviceBattery;
 }
 
 /* ************************************************************************** */
@@ -75,6 +76,17 @@ DeviceEsp32HiGrow::~DeviceEsp32HiGrow()
 void DeviceEsp32HiGrow::serviceScanDone()
 {
     //qDebug() << "DeviceEsp32HiGrow::serviceScanDone(" << m_deviceAddress << ")";
+
+    if (serviceBattery)
+    {
+        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered_battery);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceBattery->discoverDetails(); });
+        }
+    }
 
     if (serviceData)
     {
@@ -94,6 +106,16 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32HiGrow::addLowEnergyService(" << uuid.toString() << ")";
 
+    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
+    {
+        delete serviceBattery;
+        serviceBattery = nullptr;
+
+        serviceBattery = controller->createServiceObject(uuid);
+        if (!serviceBattery)
+            qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
+    }
+
     if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
     {
         delete serviceData;
@@ -102,6 +124,35 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
         serviceData = controller->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
+    }
+}
+
+void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        // Characteristic "Battery Level"
+        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x44
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
+
+        if (cbat.value().size() > 0)
+        {
+            m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
+
+            //if (m_db)
+            {
+                QSqlQuery updateDevice;
+                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":deviceAddr", getAddress());
+                if (updateDevice.exec() == false)
+                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+            }
+
+            Q_EMIT sensorUpdated();
+        }
     }
 }
 
