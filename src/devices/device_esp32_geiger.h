@@ -39,6 +39,7 @@
  *
  * Protocol infos:
  * - WatchFlower/doc/geigercounter-api.md
+ * - https://github.com/emericg/esp32-environmental-sensors/blob/master/GeigerCounter/doc/geigercounter-ble-api.md
  */
 class DeviceEsp32Geiger: public DeviceSensors
 {

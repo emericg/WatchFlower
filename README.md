@@ -5,7 +5,7 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is a plant monitoring application that reads and plots data from your Xiaomi MiJia "Flower Care" and "Ropot" sensors. WatchFlower also works great with a couple of Bluetooth thermometers!
+WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
@@ -41,7 +41,7 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 | :---------: | :---: | :-----------------: | :--------: | :----: |
 | ![FlowerCare](doc/flowercare.svg) | ![RoPot](doc/ropot.svg) | ![FlowerPower](doc/flowerpower.svg) | ![ParrotPot](doc/parrotpot.svg) | ![HiGrow](doc/higrow.svg) |
 | HHCCJCY01<br>Xiaomi and VegTrug variants<br>(International and Chinese versions) | HHCCPOT002<br>Xiaomi and VegTrug variants |  | (monitoring only) | (with custom firmware) |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
+| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
 | :-----------------------------: | :----------------------------------: | :---------------------------: | :------------------------: | :------------------------------------: |

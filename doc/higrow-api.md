@@ -8,9 +8,9 @@
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A lipo battery can be used (charging via USB)
 
-Boards are available from Weemo or LilyGo chinese manufacturers.
+Boards are available from LilyGo or Weemo Chinese manufacturers.
 
-I would not really recommend an HiGrow for serious plant monitoring, only for tinkering with an esp32 board with onboard sensors.
+I would not recommend an HiGrow for serious plant monitoring, only for tinkering with an esp32 board with onboard sensors.
 
 ## Features
 
@@ -38,6 +38,12 @@ The name advertised by the device is `HiGrow`
 | ------------------------------------ | ------ | ----------- | ----------- |
 | 00002a00-0000-1000-8000-00805f9b34fb | 0x16   | read        | device name |
 
+##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
+
+| Characteristic UUID                  | Handle | Access      | Description               |
+| ------------------------------------ | ------ | ----------- | ------------------------- |
+| 00002a19-0000-1000-8000-00805f9b34fb | 0x44   | read        | battery level             |
+
 ##### Data service (UUID eeee9a32-a000-4cbd-b00b-6b519bf2780f)
 
 | Characteristic UUID                  | Handle | Access      | Description                            |
@@ -48,7 +54,6 @@ The name advertised by the device is `HiGrow`
 | eeee9a32-a0a0-4cbd-b00b-6b519bf2780f | 0x30   | read/notify | get HiGrow realtime data               |
 | eeee9a32-a0b0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Air Monitor realtime data          |
 | eeee9a32-a0c0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Geiger Counter realtime data       |
-| eeee9a32-a0c1-4cbd-b00b-6b519bf2780f | 0x0?   | read        | get Geiger Counter daily recap         |
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
@@ -73,7 +78,7 @@ A read request to the `0x16` handle will return n bytes of data, for example `0x
 
 ### Firmware
 
-A read request to the `0x2c` handle will return 3 bytes of data, for example `0x302e31`.
+A read request to the `0x2c` handle will return 3 bytes of data, for example `0x302e33`.
 
 | Position | 00 | 01 | 02 |
 | -------- | -- | -- | -- |
@@ -81,7 +86,7 @@ A read request to the `0x2c` handle will return 3 bytes of data, for example `0x
 
 | Bytes | Type       | Value | Description        |
 | ----- | ---------- | ----- | ------------------ |
-| all   | ASCII text | 0.1   | firmware version   |
+| all   | ASCII text | 0.3   | firmware version   |
 
 ### Battery
 
