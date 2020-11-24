@@ -1020,7 +1020,7 @@ bool DeviceManager::exportDataSave()
     {
         QDir edir(exportDirectory);
 
-        // check if firectory creation is needed
+        // check if directory creation is needed
         if (!edir.exists())
         {
             edir.mkpath(exportDirectory);
@@ -1081,6 +1081,21 @@ QString DeviceManager::exportDataOpen()
     }
 
     return exportFilePath;
+}
+
+QString DeviceManager::exportDataFolder()
+{
+    // Get temp directory path
+    QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+
+    // check if directory exist
+    QDir edir(exportDirectory);
+    if (!edir.exists())
+    {
+        exportDirectory = "";
+    }
+
+    return exportDirectory;
 }
 
 /* ************************************************************************** */

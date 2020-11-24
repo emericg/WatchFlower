@@ -96,6 +96,7 @@ public:
 
     Q_INVOKABLE bool exportDataSave();
     Q_INVOKABLE QString exportDataOpen();
+    Q_INVOKABLE QString exportDataFolder();
     bool exportData(const QString &path);
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }

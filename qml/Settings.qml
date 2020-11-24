@@ -1346,11 +1346,26 @@ Item {
                             text = qsTr("Exported")
                             primaryColor = Theme.colorPrimary
                             fullColor = true
+                            if (isDesktop) openFolderButton.visible = true
                         } else {
                             text = qsTr("Export file")
                             primaryColor = Theme.colorWarning
                             fullColor = false
                         }
+                    }
+                }
+
+                ButtonWireframe {
+                    id: openFolderButton
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: false
+
+                    fullColor: false
+                    text: qsTr("Open folder")
+                    onClicked: {
+                        utilsApp.openWith(deviceManager.exportDataFolder())
                     }
                 }
 
