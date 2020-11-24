@@ -170,16 +170,16 @@ Item {
             id: soil_temperature
             width: parent.width
 
-            legend: qsTr("Soil temperature")
+            legend: qsTr("Soil temp.")
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
             //colorBackground: Theme.colorBackground
 
             value: currentDevice.deviceSoilTemperature
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 50
-            limitMin: 0
-            limitMax: 60
+            valueMax: 0
+            limitMin: tempHelper(currentDevice.limitTempMin)
+            limitMax: tempHelper(currentDevice.limitTempMax)
         }
     }
 }
