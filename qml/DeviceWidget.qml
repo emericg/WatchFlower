@@ -274,25 +274,38 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Rectangle {
+        id: bottomSeparator
+        height: 1
+        anchors.left: parent.left
+        anchors.leftMargin: -6
+        anchors.right: parent.right
+        anchors.rightMargin: -6
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+
+        visible: singleColumn
+        color: Theme.colorSeparator
+    }
+
+    Rectangle {
+        id: deviceWidgetRectangleSeparator
+        anchors.fill: deviceWidgetRectangle
+        anchors.leftMargin: (singleColumn) ? -12 : 0
+        anchors.rightMargin: (singleColumn) ? -12 : 0
+
+        radius: 2
+        border.width: 2
+        border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
+        color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Item {
         id: deviceWidgetRectangle
         anchors.fill: parent
-        anchors.topMargin: 6
-        anchors.leftMargin: 6
-        anchors.rightMargin: 6
-        anchors.bottomMargin: 6
-
-        Rectangle {
-            id: deviceWidgetRectangleBg
-            anchors.fill: parent
-            anchors.leftMargin: (singleColumn) ? -12 : 0
-            anchors.rightMargin: (singleColumn) ? -12 : 0
-
-            radius: 2
-            border.width: 2
-            border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
-            color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
-        }
+        anchors.margins: 6
 
         MouseArea {
             anchors.fill: parent
@@ -675,7 +688,8 @@ Item {
 
                 z: 1
                 visible: singleColumn
-                color: Theme.colorHighContrast
+                color: boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
+
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             }
         }
@@ -703,19 +717,5 @@ Item {
                 OpacityAnimator { from: 1; to: 0; duration: 750 }
             }
         }
-    }
-
-    Rectangle {
-        id: bottomSeparator
-        color: Theme.colorSeparator
-        visible: singleColumn
-        height: 1
-
-        anchors.left: parent.left
-        anchors.leftMargin: -6
-        anchors.right: parent.right
-        anchors.rightMargin: -6
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
     }
 }
