@@ -255,6 +255,10 @@ ApplicationWindow {
         onActivated: deviceManager.refreshDevices_check()
     }
     Shortcut {
+        sequence: "Ctrl+F5"
+        onActivated: deviceManager.refreshDevices_start()
+    }
+    Shortcut {
         sequences: [StandardKey.Deselect, StandardKey.Cancel]
         onActivated: deselectAction()
     }
