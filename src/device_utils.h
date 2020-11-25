@@ -52,7 +52,7 @@ enum DeviceCapabilities {
     DEVICE_WATER_TANK           = (1 <<  5),
     DEVICE_BUTTONS              = (1 <<  6),
 
-    DEVICE_SOIL_MOISTURE        = (1 <<  8), //!< Has a soil moisture sensor (can be associated to a plant)
+    DEVICE_SOIL_MOISTURE        = (1 <<  8), //!< Has a soil moisture sensor
     DEVICE_SOIL_CONDUCTIVITY    = (1 <<  9), //!< Has a soil conductivity/fertility sensor
     DEVICE_SOIL_TEMPERATURE     = (1 << 10), //!< Has a soil temperature sensor
     DEVICE_SOIL_PH              = (1 << 11), //!< Has a soil PH sensor
@@ -63,7 +63,6 @@ enum DeviceCapabilities {
     DEVICE_LIGHT                = (1 << 15), //!< Has a light sensor
     DEVICE_UV                   = (1 << 16), //!< Has an UV light sensor
     DEVICE_SOUND                = (1 << 17), //!< Has a sound level sensor
-
     DEVICE_PM1                  = (1 << 18),
     DEVICE_PM25                 = (1 << 19),
     DEVICE_PM10                 = (1 << 20),
@@ -71,7 +70,7 @@ enum DeviceCapabilities {
     DEVICE_O3                   = (1 << 22),
     DEVICE_CO                   = (1 << 23),
     DEVICE_CO2                  = (1 << 24),
-    DEVICE_NOX                  = (1 << 26),
+    DEVICE_NO2                  = (1 << 26),
     DEVICE_VOC                  = (1 << 26),
     DEVICE_GEIGER               = (1 << 31),
 };

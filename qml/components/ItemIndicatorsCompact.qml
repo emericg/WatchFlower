@@ -124,7 +124,7 @@ Item {
             value: currentDevice.deviceHumidity
             valueMin: 0
             valueMax: 100
-            limitMin: 1
+            limitMin: 0
             limitMax: 100
         }
 
@@ -176,10 +176,10 @@ Item {
             //colorBackground: Theme.colorBackground
 
             value: currentDevice.deviceSoilTemperature
-            valueMin: 0
-            valueMax: 0
-            limitMin: tempHelper(currentDevice.limitTempMin)
-            limitMax: tempHelper(currentDevice.limitTempMax)
+            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
+            limitMin: 0
+            limitMax: 0
         }
     }
 }

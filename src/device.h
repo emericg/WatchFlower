@@ -190,7 +190,7 @@ public slots:
     bool hasO3Sensor() const { return (m_capabilities & DEVICE_O3); }
     bool hasCoSensor() const { return (m_capabilities & DEVICE_CO); }
     bool hasCo2Sensor() const { return (m_capabilities & DEVICE_CO2); }
-    bool hasNoxSensor() const { return (m_capabilities & DEVICE_NOX); }
+    bool hasNo2Sensor() const { return (m_capabilities & DEVICE_NO2); }
     bool hasVocSensor() const { return (m_capabilities & DEVICE_VOC); }
     bool hasGeigerCounter() const { return (m_capabilities & DEVICE_GEIGER); }
 

@@ -396,7 +396,7 @@ bool SettingsManager::loadDatabase()
                     }
                     else
                     {
-                        qWarning() << "Cannot open cache database... Error:" << dbFile.lastError();
+                        qWarning() << "Cannot open database... Error:" << dbFile.lastError();
                     }
                 }
             }
