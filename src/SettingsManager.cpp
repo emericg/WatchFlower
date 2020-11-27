@@ -19,8 +19,10 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "settingsmanager.h"
-#include "systraymanager.h"
+#include "SettingsManager.h"
+#include "SystrayManager.h"
+
+#include <cmath>
 
 #include <QCoreApplication>
 #include <QStandardPaths>
@@ -28,11 +30,6 @@
 #include <QDir>
 #include <QSettings>
 #include <QDebug>
-
-#include <QSqlQuery>
-#include <QSqlError>
-
-#include <cmath>
 
 /* ************************************************************************** */
 
@@ -51,7 +48,6 @@ SettingsManager *SettingsManager::getInstance()
 SettingsManager::SettingsManager()
 {
     readSettings();
-    loadDatabase();
 }
 
 SettingsManager::~SettingsManager()
@@ -217,244 +213,6 @@ bool SettingsManager::writeSettings()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool SettingsManager::loadDatabase()
-{
-    if (!QSqlDatabase::isDriverAvailable("QSQLITE"))
-    {
-        qWarning() << "> SQLite is NOT available";
-        return false;
-    }
-
-    if (m_db)
-    {
-        closeDatabase();
-    }
-
-    if (QSqlDatabase::isDriverAvailable("QSQLITE"))
-    {
-        QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-
-        if (dbPath.isEmpty() == false)
-        {
-            QDir dbDirectory(dbPath);
-            if (dbDirectory.exists() == false)
-            {
-                if (dbDirectory.mkpath(dbPath) == false)
-                    qWarning() << "Cannot create dbDirectory...";
-            }
-
-            if (dbDirectory.exists())
-            {
-                dbPath += "/datas.db";
-
-                QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
-                dbFile.setDatabaseName(dbPath);
-
-                if (dbFile.isOpen())
-                {
-                    m_db = true;
-                }
-                else
-                {
-                    if (dbFile.open())
-                    {
-                        m_db = true;
-
-                        // Migrations //////////////////////////////////////////
-
-                        QSqlQuery checkVersion;
-                        checkVersion.exec("PRAGMA table_info(version);");
-                        if (!checkVersion.next())
-                        {
-                            qDebug() << "+ Adding 'version' table to local database";
-
-                            QSqlQuery createVersion;
-                            createVersion.prepare("CREATE TABLE version (dbVersion INT);");
-                            if (createVersion.exec())
-                            {
-                                QSqlQuery addVersion;
-                                addVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
-                                addVersion.bindValue(":dbVersion", 1);
-                                addVersion.exec();
-                            }
-                            else
-                            {
-                                qWarning() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":" << createVersion.lastError().text();
-                            }
-                        }
-
-                        int dbVersion = 0;
-
-                        QSqlQuery readVersion;
-                        readVersion.prepare("SELECT dbVersion FROM version");
-                        readVersion.exec();
-                        if (readVersion.next())
-                        {
-                            dbVersion = readVersion.value(0).toInt();
-                            //qDebug() << "dbVersion is #" << dbVersion;
-                        }
-
-                        if (dbVersion > 0 && dbVersion != CURRENT_DB_VERSION)
-                        {
-                            bool migration_status = false;
-/*
-                            // Migration exemple: correct a typo
-                            QSqlQuery renameHygro;
-                            renameHygro.prepare("ALTER TABLE limits RENAME COLUMN hyroMin TO hygroMin");
-                            migration_status = renameHygro.exec();
-                            if (migration_status == false)
-                                qDebug() << "> renameHygro.exec() ERROR" << renameHygro.lastError().type() << ":" << renameHygro.lastError().text();
-*/
-                            // Then update version
-                            if (migration_status)
-                            {
-                                QSqlQuery updateDbVersion;
-                                updateDbVersion.prepare("UPDATE version SET dbVersion=:dbVersion");
-                                updateDbVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
-                                if (updateDbVersion.exec() == false)
-                                    qWarning() << "> updateDbVersion.exec() ERROR" << updateDbVersion.lastError().type() << ":" << updateDbVersion.lastError().text();
-                            }
-                        }
-
-                        // Check if our tables exists //////////////////////////
-
-                        QSqlQuery checkDevices;
-                        checkDevices.exec("PRAGMA table_info(devices);");
-                        if (!checkDevices.next())
-                        {
-                            qDebug() << "+ Adding 'devices' table to local database";
-
-                            QSqlQuery createDevices;
-                            createDevices.prepare("CREATE TABLE devices (" \
-                                                  "deviceAddr CHAR(17) PRIMARY KEY," \
-                                                  "deviceName VARCHAR(255)," \
-                                                  "deviceFirmware VARCHAR(255)," \
-                                                  "deviceBattery INT," \
-                                                  "locationName VARCHAR(255)," \
-                                                  "plantName VARCHAR(255)" \
-                                                  ");");
-
-                            if (createDevices.exec() == false)
-                                qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":" << createDevices.lastError().text();
-                        }
-
-                        QSqlQuery checkData;
-                        checkData.exec("PRAGMA table_info(datas);");
-                        if (!checkData.next())
-                        {
-                            qDebug() << "+ Adding 'datas' table to local database";
-
-                            QSqlQuery createData;
-                            createData.prepare("CREATE TABLE datas (" \
-                                               "deviceAddr CHAR(17)," \
-                                               "ts DATETIME," \
-                                               "ts_full DATETIME," \
-                                                 "temp FLOAT," \
-                                                 "hygro INT," \
-                                                 "luminosity INT," \
-                                                 "conductivity INT," \
-                                               " PRIMARY KEY(deviceAddr, ts) " \
-                                               " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
-                                               ");");
-
-                            if (createData.exec() == false)
-                                qWarning() << "> createData.exec() ERROR" << createData.lastError().type() << ":" << createData.lastError().text();
-                        }
-
-                        QSqlQuery checkLimits;
-                        checkLimits.exec("PRAGMA table_info(limits);");
-                        if (!checkLimits.next())
-                        {
-                            qDebug() << "+ Adding 'limits' table to local database";
-                            QSqlQuery createLimits;
-                            createLimits.prepare("CREATE TABLE limits (" \
-                                                 "deviceAddr CHAR(17)," \
-                                                   "hygroMin INT," \
-                                                   "hygroMax INT," \
-                                                   "tempMin INT," \
-                                                   "tempMax INT," \
-                                                   "lumiMin INT," \
-                                                   "lumiMax INT," \
-                                                   "conduMin INT," \
-                                                   "conduMax INT," \
-                                                 " PRIMARY KEY(deviceAddr) " \
-                                                 " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
-                                                 ");");
-
-                            if (createLimits.exec() == false)
-                                qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
-                        }
-
-                        // Delete everything 30+ days old ///////////////////////
-                        // DATETIME: YYY-MM-JJ HH:MM:SS
-
-                        QSqlQuery sanitizeData;
-                        sanitizeData.prepare("DELETE FROM datas WHERE ts < DATE('now', '-30 days')");
-
-                        if (sanitizeData.exec() == false)
-                            qWarning() << "> sanitizeData.exec() ERROR" << sanitizeData.lastError().type() << ":" << sanitizeData.lastError().text();
-                    }
-                    else
-                    {
-                        qWarning() << "Cannot open database... Error:" << dbFile.lastError();
-                    }
-                }
-            }
-            else
-            {
-                qWarning() << "Cannot create nor open dbDirectory...";
-            }
-        }
-        else
-        {
-            qWarning() << "Cannot find QStandardPaths::AppDataLocation directory...";
-        }
-    }
-
-    return m_db;
-}
-
-/* ************************************************************************** */
-
-void SettingsManager::closeDatabase()
-{
-    QSqlDatabase db = QSqlDatabase::database();
-    if (db.isValid())
-    {
-        QString conName = db.connectionName();
-
-        // close db
-        db.close();
-        db = QSqlDatabase();
-        QSqlDatabase::removeDatabase(conName);
-        m_db = false;
-    }
-}
-
-/* ************************************************************************** */
-
-void SettingsManager::resetDatabase()
-{
-    QSqlDatabase db = QSqlDatabase::database();
-    if (db.isValid())
-    {
-        QString dbName = db.databaseName();
-        QString conName = db.connectionName();
-
-        // close db
-        db.close();
-        db = QSqlDatabase();
-        QSqlDatabase::removeDatabase(conName);
-        m_db = false;
-
-        // remove db file
-        QFile dbFile(dbName);
-        dbFile.remove();
-    }
-}
-
-/* ************************************************************************** */
-
 void SettingsManager::resetSettings()
 {
     // Settings
@@ -499,10 +257,6 @@ void SettingsManager::resetSettings()
     Q_EMIT bigIndicatorChanged();
     m_dynaScale = false;
     Q_EMIT dynaScaleChanged();
-
-    // Database
-    resetDatabase();
-    loadDatabase();
 }
 
 /* ************************************************************************** */

@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "notificationmanager.h"
-#include "systraymanager.h"
+#include "NotificationManager.h"
+#include "SystrayManager.h"
 
 #include <QDebug>
 #include <QString>

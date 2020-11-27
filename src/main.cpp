@@ -19,10 +19,11 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "settingsmanager.h"
-#include "systraymanager.h"
-#include "notificationmanager.h"
-#include "devicemanager.h"
+#include "DatabaseManager.h"
+#include "SettingsManager.h"
+#include "SystrayManager.h"
+#include "NotificationManager.h"
+#include "DeviceManager.h"
 #include "demomode.h"
 #include "utils/utils_app.h"
 #include "utils/utils_screen.h"
@@ -71,11 +72,12 @@ int main(int argc, char *argv[])
     if (background_service || refresh_only)
     {
         SettingsManager *sm = SettingsManager::getInstance();
+        DatabaseManager *db = DatabaseManager::getInstance();
         SystrayManager *st = SystrayManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
         DeviceManager *dm = new DeviceManager;
 
-        if (!sm || !st || !nm || !dm)
+        if (!sm || !db || !st || !nm || !dm)
             return EXIT_FAILURE;
 
         // Refresh data in the background, without starting the UI, then exit

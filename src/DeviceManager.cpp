@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "devicemanager.h"
+#include "DeviceManager.h"
 #include "device.h"
 #include "devices/device_flowercare.h"
 #include "devices/device_flowerpower.h"
@@ -33,6 +33,8 @@
 #include "devices/device_esp32_geiger.h"
 
 #include "utils/utils_app.h"
+
+#include "DatabaseManager.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -74,7 +76,12 @@ DeviceManager::DeviceManager()
     startBleAgent();
     enableBluetooth(true); // Enables adapter // ONLY if off and permission given
     checkBluetooth();
-    checkDatabase();
+
+    // Database
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (db) {
+        m_db = db->hasDatabase();
+    }
 
     // Load saved devices
     if (m_db)
@@ -320,31 +327,6 @@ void DeviceManager::bluetoothStatusChanged()
     if (m_btA && m_btE)
     {
         refreshDevices_check();
-    }
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-bool DeviceManager::hasDatabase() const
-{
-    return m_db;
-}
-
-/* ************************************************************************** */
-
-void DeviceManager::checkDatabase()
-{
-    if (QSqlDatabase::isDriverAvailable("QSQLITE"))
-    {
-        //qDebug() << "> SQLite available";
-
-        QSqlDatabase db = QSqlDatabase::database();
-        m_db = db.isValid();
-    }
-    else
-    {
-        m_db = false;
     }
 }
 

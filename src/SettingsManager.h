@@ -27,8 +27,6 @@
 #define THERMO_UPDATE_INTERVAL   60 // minutes
 #define ERROR_UPDATE_INTERVAL    60 // minutes
 
-#define CURRENT_DB_VERSION        1
-
 #include <QObject>
 #include <QString>
 #include <QSize>
@@ -99,11 +97,6 @@ class SettingsManager: public QObject
 
     bool readSettings();
     bool writeSettings();
-
-    bool m_db = false;
-    bool loadDatabase();
-    void closeDatabase();
-    void resetDatabase();
 
 Q_SIGNALS:
     void initialSizeChanged();
@@ -189,7 +182,6 @@ public:
 
     // Utils
     Q_INVOKABLE void resetSettings();
-    Q_INVOKABLE bool hasDatabase() const { return m_db; }
     Q_INVOKABLE static bool getDemoMode();
     Q_INVOKABLE static QString getDemoString();
 };

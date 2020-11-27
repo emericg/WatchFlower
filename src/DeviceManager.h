@@ -23,7 +23,7 @@
 #define DEVICE_MANAGER_H
 /* ************************************************************************** */
 
-#include "settingsmanager.h"
+#include "SettingsManager.h"
 #include "device_filter.h"
 
 #include <QObject>
@@ -76,9 +76,6 @@ class DeviceManager: public QObject
 
     bool m_scanning = false;
     bool isScanning() const;
-
-    bool hasDatabase() const;
-    void checkDatabase();
 
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;

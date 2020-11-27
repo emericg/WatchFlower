@@ -20,7 +20,7 @@
  */
 
 #include "device_hygrotemp_clock.h"
-#include "settingsmanager.h"
+#include "SettingsManager.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>

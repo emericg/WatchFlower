@@ -20,9 +20,9 @@
  */
 
 #include "device.h"
-#include "settingsmanager.h"
-#include "devicemanager.h"
-#include "notificationmanager.h"
+#include "SettingsManager.h"
+#include "DeviceManager.h"
+#include "NotificationManager.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdlib>

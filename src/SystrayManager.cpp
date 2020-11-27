@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "systraymanager.h"
+#include "SystrayManager.h"
 
 #include <QApplication>
 #include <QSystemTrayIcon>

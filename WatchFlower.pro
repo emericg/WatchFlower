@@ -38,10 +38,11 @@ exists(assets/demo/demo_bdd.db) {
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \
-            src/settingsmanager.cpp \
-            src/systraymanager.cpp \
-            src/notificationmanager.cpp \
-            src/devicemanager.cpp \
+            src/SettingsManager.cpp \
+            src/DatabaseManager.cpp \
+            src/SystrayManager.cpp \
+            src/NotificationManager.cpp \
+            src/DeviceManager.cpp \
             src/device.cpp \
             src/device_filter.cpp \
             src/device_sensors.cpp \
@@ -60,10 +61,11 @@ SOURCES  += src/main.cpp \
             src/utils/utils_language.cpp \
             src/utils/utils_screen.cpp
 
-HEADERS  += src/settingsmanager.h \
-            src/systraymanager.h \
-            src/notificationmanager.h \
-            src/devicemanager.h \
+HEADERS  += src/SettingsManager.h \
+            src/DatabaseManager.h \
+            src/SystrayManager.h \
+            src/NotificationManager.h \
+            src/DeviceManager.h \
             src/device.h \
             src/device_utils.h \
             src/device_filter.h \
