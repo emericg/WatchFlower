@@ -63,7 +63,7 @@ Drawer {
 
             function updateIOSHeader() {
                 if (Qt.platform.os === "ios") {
-                    if (screenStatusbarPadding != 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
+                    if (screenStatusbarPadding !== 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
                         rectangleStatusbar.height = screenStatusbarPadding
                     else
                         rectangleStatusbar.height = 0
@@ -74,25 +74,24 @@ Drawer {
 
             Rectangle {
                 id: rectangleStatusbar
+                height: screenStatusbarPadding
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "red" // to hide scrollview content
-                height: screenStatusbarPadding
             }
             Rectangle {
                 id: rectangleNotch
+                height: screenNotchPadding
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "yellow" // to hide scrollview content
-                height: screenNotchPadding
             }
             Rectangle {
                 id: rectangleLogo
+                height: 80
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
                 color: Theme.colorBackground
-                height: 80
 
                 Image {
                     id: imageHeader

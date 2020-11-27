@@ -60,8 +60,7 @@ SOURCES  += src/main.cpp \
             src/utils/utils_language.cpp \
             src/utils/utils_screen.cpp
 
-HEADERS  += src/demomode.h \
-            src/settingsmanager.h \
+HEADERS  += src/settingsmanager.h \
             src/systraymanager.h \
             src/notificationmanager.h \
             src/devicemanager.h \
@@ -83,7 +82,8 @@ HEADERS  += src/demomode.h \
             src/utils/utils_android.h \
             src/utils/utils_language.h \
             src/utils/utils_screen.h \
-            src/utils/utils_versionchecker.h
+            src/utils/utils_versionchecker.h \
+            src/demomode.h
 
 INCLUDEPATH += src/
 

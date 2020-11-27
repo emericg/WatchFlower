@@ -218,8 +218,8 @@ int main(int argc, char *argv[])
     }
 
 #if defined(Q_OS_LINUX)
-    // GNOME hack for the mysterious disappearences of the tray icon...
-    // Or just use gnome-shell-extension-appindicator instead of TopIcon Plus (sorry)...
+    // GNOME hack for the mysterious disappearences of the tray icon with TopIcon Plus
+    // gnome-shell-extension-appindicator is recommanded instead of TopIcon Plus
     //QObject::connect(&app, &SingleApplication::instanceStarted, st, &SystrayManager::REinstallSystray);
 #endif
 
