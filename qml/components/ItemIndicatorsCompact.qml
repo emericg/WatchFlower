@@ -10,6 +10,19 @@ Item {
     height: columnData.height + 16
     z: 5
 
+    property int legendWidth: isPhone ? 80 : 96
+    Component.onCompleted: updateSize()
+
+    function updateSize() {
+        legendWidth = 0
+        if (legendWidth < soil_moisture.legendContentWidth) legendWidth = soil_moisture.legendContentWidth
+        if (legendWidth < soil_conductivity.legendContentWidth) legendWidth = soil_conductivity.legendContentWidth
+        if (legendWidth < soil_temperature.legendContentWidth) legendWidth = soil_temperature.legendContentWidth
+        if (legendWidth < temp.legendContentWidth) legendWidth = temp.legendContentWidth
+        if (legendWidth < humi.legendContentWidth) legendWidth = humi.legendContentWidth
+        if (legendWidth < lumi.legendContentWidth) legendWidth = lumi.legendContentWidth
+    }
+
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
@@ -73,6 +86,7 @@ Item {
             width: parent.width
 
             legend: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "%"
             warning: true
             colorForeground: Theme.colorBlue
@@ -92,6 +106,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Temperature")
+            legendWidth: indicatorsCompact.legendWidth
             floatprecision: 1
             warning: true
             suffix: "°" + settingsManager.tempUnit
@@ -116,6 +131,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Humidity")
+            legendWidth: indicatorsCompact.legendWidth
             warning: false
             suffix: "%"
             colorForeground: Theme.colorBlue
@@ -135,6 +151,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Luminosity")
+            legendWidth: indicatorsCompact.legendWidth
             suffix: " " + qsTr("lux")
             colorForeground: Theme.colorYellow
             //colorBackground: Theme.colorBackground
@@ -153,6 +170,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Fertility")
+            legendWidth: indicatorsCompact.legendWidth
             suffix: " " + qsTr("µS/cm")
             colorForeground: Theme.colorRed
             //colorBackground: Theme.colorBackground
@@ -171,6 +189,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Soil temp.")
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
             //colorBackground: Theme.colorBackground

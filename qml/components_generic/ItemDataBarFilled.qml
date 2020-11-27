@@ -9,6 +9,9 @@ Item {
     implicitWidth: 128
 
     property string legend: ""
+    property int legendWidth: 80
+    property int legendContentWidth: item_legend.contentWidth
+
     property string prefix: ""
     property string suffix: ""
     property int floatprecision: 0
@@ -35,8 +38,8 @@ Item {
 
         Text {
             id: item_legend
+            width: legendWidth
             anchors.verticalCenter: parent.verticalCenter
-            width: isPhone ? 80 : 96
 
             visible: (legend.length)
             text: legend
@@ -51,9 +54,9 @@ Item {
 
         Rectangle {
             id: item_bg
-            anchors.verticalCenter: parent.verticalCenter
             width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             height: hhh
+            anchors.verticalCenter: parent.verticalCenter
 
             clip: true
             radius: hhh

@@ -132,6 +132,7 @@ Item {
                 indicatorsLoader.source = "ItemIndicatorsCompact.qml"
             dataIndicators = indicatorsLoader.item
         }
+        dataIndicators.updateSize()
 
         if (graphLoader.status != Loader.Ready) {
             graphLoader.source = "ItemAioLineCharts.qml"
@@ -174,6 +175,7 @@ Item {
         }
         onAppLanguageChanged: {
             updateStatusText()
+            dataIndicators.updateSize()
         }
     }
 /*
@@ -221,7 +223,7 @@ Item {
 
         Grid {
             id: contentGrid_lvl2
-            width: contentGrid_lvl1.width / contentGrid_lvl1.columns
+            width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
             columns: 1
             rows: 2
             spacing: 6
@@ -231,7 +233,7 @@ Item {
             Rectangle {
                 id: rectangleHeader
                 color: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? "transparent" : Theme.colorForeground
-                width: parent.width / parent.columns
+                width: (parent.width / parent.columns)
                 height: columnHeader.height + 12
                 z: 5
 
@@ -279,7 +281,7 @@ Item {
 
                         Text {
                             id: labelPlant
-                            width: isPhone ? 80 : 96
+                            width: dataIndicators.legendWidth
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -354,7 +356,7 @@ Item {
 
                         Text {
                             id: labelLocation
-                            width: isPhone ? 80 : 96
+                            width: dataIndicators.legendWidth
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -429,7 +431,7 @@ Item {
 
                         Text {
                             id: labelStatus
-                            width: isPhone ? 80 : 96
+                            width: dataIndicators.legendWidth
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
