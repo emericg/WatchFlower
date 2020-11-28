@@ -37,18 +37,24 @@ Item {
         //console.log("itemDataCharts // loadGraph() >> " + currentDevice)
 
         axisY0.min = 0;
-        if (graphDataSelected === "hygro") {
+        if (graphDataSelected === "soilMoisture") {
             axisY0.max = 66
             myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "temp") {
+        } else if (graphDataSelected === "soilConductivity") {
+            axisY0.max = 2000
+            myBarSet.color = Theme.colorRed
+        } if (graphDataSelected === "soilTemperature") {
             axisY0.max = 40
             myBarSet.color = Theme.colorGreen
+        } else if (graphDataSelected === "temperature") {
+            axisY0.max = 40
+            myBarSet.color = Theme.colorGreen
+        }  else if (graphDataSelected === "humidity") {
+            axisY0.max = 100
+            myBarSet.color = Theme.colorBlue
         } else if (graphDataSelected === "luminosity") {
             axisY0.max = 3000
             myBarSet.color = Theme.colorYellow
-        } else if (graphDataSelected === "conductivity") {
-            axisY0.max = 2000
-            myBarSet.color = Theme.colorRed
         }
         myBarSet.borderColor = "transparent"
 
@@ -95,14 +101,18 @@ Item {
         //console.log("itemDataCharts // updateColors() >> " + currentDevice)
 
         // Bars
-        if (graphDataSelected === "hygro") {
+        if (graphDataSelected === "soilMoisture") {
             myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "temp") {
+        } else if (graphDataSelected === "soilConductivity") {
+            myBarSet.color = Theme.colorRed
+        } else if (graphDataSelected === "soilTemperature") {
             myBarSet.color = Theme.colorGreen
+        } else if (graphDataSelected === "temperature") {
+            myBarSet.color = Theme.colorGreen
+        } else if (graphDataSelected === "humidity") {
+            myBarSet.color = Theme.colorBlue
         } else if (graphDataSelected === "luminosity") {
             myBarSet.color = Theme.colorYellow
-        } else if (graphDataSelected === "conductivity") {
-            myBarSet.color = Theme.colorRed
         }
         myBarSet.borderColor = "transparent"
 
@@ -142,7 +152,7 @@ Item {
         // Max axis
         var max_of_array = Math.max.apply(Math, myBarSet.values);
         var max_of_legend = max_of_array*1.20;
-        if (graphDataSelected === "hygro" && max_of_legend > 100.0) {
+        if ((graphDataSelected === "soilMoisture" || graphDataSelected === "humidity") && max_of_legend > 100.0) {
             max_of_legend = 100.0; // no need to go higher than 100% humidity
         }
         if (max_of_legend <= 0) max_of_legend = 1 // if we have no data

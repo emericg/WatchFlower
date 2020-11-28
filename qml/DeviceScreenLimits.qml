@@ -82,9 +82,9 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
 
         rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
-        rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
         rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
-        rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
+        rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
+        rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
     }
 
     function updateLimitsVisibility() {
@@ -96,7 +96,7 @@ Item {
         itemCondu.visible = currentDevice.hasSoilConductivitySensor()
     }
 
-    property var outsideMode: (currentDevice && currentDevice.limitLumiMax > 10000)
+    property var outsideMode: (currentDevice && currentDevice.limitLuxMax > 10000)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -641,7 +641,7 @@ Item {
                         onClicked: {
                             outsideMode = false
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
-                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
+                            rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }
                     }
 
@@ -681,7 +681,7 @@ Item {
                         onClicked: {
                             outsideMode = true
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
-                            rangeSlider_lumi.setValues(currentDevice.limitLumiMin, currentDevice.limitLumiMax)
+                            rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }
                     }
 
@@ -921,16 +921,16 @@ Item {
                     first.onValueChanged: {
                         if (currentDevice) {
                             if (first.value < rangeSlider_lumi.to ||
-                                (first.value <= rangeSlider_lumi.to && currentDevice.limitLumiMin <= rangeSlider_lumi.to)) {
-                                currentDevice.limitLumiMin = first.value.toFixed(0)
+                                (first.value <= rangeSlider_lumi.to && currentDevice.limitLuxMin <= rangeSlider_lumi.to)) {
+                                currentDevice.limitLuxMin = first.value.toFixed(0)
                             }
                         }
                     }
                     second.onValueChanged: {
                         if (currentDevice) {
                             if (second.value < rangeSlider_lumi.to ||
-                                (second.value <= rangeSlider_lumi.to && currentDevice.limitLumiMax <= rangeSlider_lumi.to)) {
-                                currentDevice.limitLumiMax = second.value.toFixed(0)
+                                (second.value <= rangeSlider_lumi.to && currentDevice.limitLuxMax <= rangeSlider_lumi.to)) {
+                                currentDevice.limitLuxMax = second.value.toFixed(0)
                             }
                         }
                     }

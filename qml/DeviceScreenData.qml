@@ -306,7 +306,7 @@ Item {
 
                             text: currentDevice ? currentDevice.devicePlantName : ""
                             onEditingFinished: {
-                                currentDevice.setPlantName(text)
+                                currentDevice.setAssociatedName(text)
                                 focus = false
                             }
 

@@ -48,13 +48,13 @@ Item {
         resetDataBars()
     }
 
-    function updateDataBars(tempD, lumiD, hygroD, conduD) {
+    function updateDataBars(soilM, soilC, soilT, tempD, humiD, lumiD) {
+        soil_moisture.value = soilM
+        soil_conductivity.value = soilC
+        soil_temperature.value = soilT // -99
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
-        humi.value = -99
+        humi.value = humiD // -99
         lumi.value = lumiD
-        soil_moisture.value = hygroD
-        soil_conductivity.value = conduD
-        soil_temperature.value = -99
     }
 
     function resetDataBars() {
@@ -85,7 +85,7 @@ Item {
             id: soil_moisture
             width: parent.width
 
-            legend: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+            legend: qsTr("Moisture")
             legendWidth: indicatorsFilled.legendWidth
             suffix: "%"
             warning: true
@@ -158,9 +158,9 @@ Item {
 
             value: currentDevice.deviceLuminosity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.lumiMax*1.10) : 10000
-            limitMin: currentDevice.limitLumiMin
-            limitMax: currentDevice.limitLumiMax
+            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.luxMax*1.10) : 10000
+            limitMin: currentDevice.limitLuxMin
+            limitMax: currentDevice.limitLuxMax
         }
 
         ////////

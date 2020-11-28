@@ -221,14 +221,14 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, conductivity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :conductivity)");
+                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":hygro", m_soil_moisture);
-                addData.bindValue(":conductivity", m_soil_conductivity);
+                addData.bindValue(":condu", m_soil_conductivity);
+                addData.bindValue(":temp", m_temperature);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -248,9 +248,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
+            qDebug() << "- m_temperature:" << m_temperature;
 #endif
         }
     }

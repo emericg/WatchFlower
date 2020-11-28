@@ -57,16 +57,8 @@ class Device: public QObject
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
     Q_PROPERTY(int deviceType READ getDeviceType NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString devicePlantName READ getPlantName NOTIFY sensorUpdated)
-
-    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
-    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceRssi READ getRssi NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
 
     Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasClock READ hasClock NOTIFY sensorUpdated)
@@ -75,6 +67,18 @@ class Device: public QObject
     Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
+
+    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
+    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
+
+    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
+    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceRssi READ getRssi NOTIFY sensorUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -86,37 +90,43 @@ Q_SIGNALS:
     void deviceUpdated(Device *d);
 
 protected:
-    QString m_deviceName;
+
+    int m_deviceType = 0;           //!< See DeviceType enum
+    int m_deviceCapabilities = 0;   //!< See DeviceCapabilities enum
+    int m_deviceSensors = 0;        //!< See DeviceSensors enum
+    int m_capabilities = 0;         //!< See DeviceCapabilities enum
+
+    // Device data
     QString m_deviceAddress;
-    QBluetoothDeviceInfo m_bleDevice;
-    int m_deviceType = 0;       //!< See DeviceType enum
-    int m_capabilities = 0;     //!< See DeviceCapabilities enum
-
-    int m_status = 0;           //!< See DeviceStatus enum
-    bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
-    QDateTime m_lastUpdate;
-    QDateTime m_lastError;
-
-    // BLE
-    int m_ble_action = 0;       //!< See DeviceActions enum
-    int m_update_interval = 0;
-    QTimer m_updateTimer;
-    int m_timeout = 15;
-    QTimer m_timeoutTimer;
-    int m_retries = 1;
-    QTimer m_rssiTimer;
-    int m_rssi = 1;
-
-    // BLE device infos
+    QString m_deviceModel;
+    QString m_deviceName;
     QString m_firmware = "UNKN";
+    QString m_locationName;
+    QString m_associatedName; // was m_plantName
     bool m_firmware_uptodate = false;
     int m_battery = -1;
+    // Device settings
+    bool m_isInside = false;
 
-    // SQL associated data
-    QString m_locationName;
-    QString m_plantName;
+    // Status
+    int m_status = 0;           //!< See DeviceStatus enum
+    bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
+    int m_ble_action = 0;       //!< See DeviceActions enum
+    QDateTime m_lastUpdate;
+    QDateTime m_lastError;
+    int m_retries = 1;
 
-    // QLowEnergyController related
+    QTimer m_updateTimer;
+    void setUpdateTimer(int updateIntervalMin = 0);
+
+    int m_timeoutInterval = 0;
+    QTimer m_timeoutTimer;
+    void setTimeoutTimer();
+
+    // BLE
+    QBluetoothDeviceInfo m_bleDevice;
+    QTimer m_rssiTimer;
+    int m_rssi = 1;
     QLowEnergyController *controller = nullptr;
 
     void deviceConnected();
@@ -135,13 +145,12 @@ protected:
     virtual void refreshDataCanceled();
     virtual void refreshDataFinished(bool status, bool cached = false);
 
-    void setUpdateTimer(int updateIntervalMin = 0);
-    void setTimeoutTimer();
+    //
+    bool getBleData();
 
     virtual bool getSqlInfos();
     virtual bool getSqlData(int minutes);
     virtual bool getSqlLimits();
-    bool getBleData();
 
 public:
     Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
@@ -160,10 +169,39 @@ public slots:
     void refreshHistoryStart();
     void refreshStop();
 
-    // BLE device
+    // Status
+    int getStatus() const { return m_status; }
+    bool isUpdating() const { return m_updating; } //!< Is currently being updated
+    bool isErrored() const;     //!< Has emitted a BLE error
+    bool isFresh() const;       //!< Has at least >Xh (user set) old data
+    bool isAvailable() const;   //!< Has at least >12h old data
+
+    QString getLastUpdateString() const;
+    int getLastUpdateInt() const;
+    int getLastErrorInt() const;
+
+    // Device infos
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
+    QString getFirmware() const { return m_firmware; }
+    int getBattery() const { return m_battery; }
+    int getRssi() const { return m_rssi; }
+    void updateRssi(const int rssi);
+    void cleanRssi();
+
+    // Device associated data
+    QString getLocationName() { return m_locationName; }
+    void setLocationName(const QString &name);
+    QString getAssociatedName() { return m_associatedName; }
+    void setAssociatedName(const QString &name);
+    bool isInside() const { return m_isInside; }
+    void setInside(const bool inside);
+
+    // Capabilities
     int getDeviceType() const { return m_deviceType; }
+    int getDeviceCapabilities() const { return m_deviceCapabilities; }
+    int getDeviceSensors() const { return m_deviceSensors; }
 
     bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
     bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
@@ -193,33 +231,6 @@ public slots:
     bool hasNo2Sensor() const { return (m_capabilities & DEVICE_NO2); }
     bool hasVocSensor() const { return (m_capabilities & DEVICE_VOC); }
     bool hasGeigerCounter() const { return (m_capabilities & DEVICE_GEIGER); }
-
-    int getStatus() const { return m_status; }
-    bool isUpdating() const { return m_updating; } //!< Is currently being updated
-    bool isErrored() const;     //!< Has emitted a BLE error
-    bool isFresh() const;       //!< Has at least >Xh (user set) old data
-    bool isAvailable() const;   //!< Has at least >12h old data
-
-    // BLE device infos
-    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
-    QString getFirmware() const { return m_firmware; }
-    int getBattery() const { return m_battery; }
-    int getRssi() const { return m_rssi; }
-    void updateRssi(const int rssi);
-    void cleanRssi();
-
-    QString getLastUpdateString() const;
-    int getLastUpdateInt() const;
-    int getLastErrorInt() const;
-
-    // BLE device associated data
-    QString getLocationName() { return m_locationName; }
-    void setLocationName(const QString &name);
-
-    QString getPlantName() { return m_plantName; }
-    void setPlantName(const QString &name);
-    QString getAssociatedName() { return m_plantName; }
-    void setAssociatedName(const QString &name);
 };
 
 /* ************************************************************************** */

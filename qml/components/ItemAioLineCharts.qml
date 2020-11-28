@@ -34,10 +34,11 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("itemAioLineCharts // loadGraph() >> " + currentDevice)
 
+        hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
+        conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")
         tempData.visible = currentDevice.hasTemperatureSensor()
-        hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
+        hygroData.visible |= currentDevice.hasHumiditySensor() && currentDevice.hasData("humidity")
         lumiData.visible = currentDevice.hasLuminositySensor()
-        conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("conductivity")
 
         dateIndicator.visible = false
         dataIndicator.visible = false
@@ -48,10 +49,9 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("itemAioLineCharts // updateGraph() >> " + currentDevice)
 
-        if (dateIndicator.visible)
-            resetIndicator()
+        if (dateIndicator.visible) resetIndicator()
 
-        if (currentDevice.countData("temp", 14) > 1) {
+        if (currentDevice.countData("temperature", 14) > 1) {
             aioGraph.visible = true
             noDataIndicator.visible = false
         } else {
@@ -61,11 +61,11 @@ Item {
 
         //// DATA
         hygroData.clear()
+        conduData.clear()
         tempData.clear()
         lumiData.clear()
-        conduData.clear()
 
-        currentDevice.getAioLinesData(14, axisTime, hygroData, tempData, lumiData, conduData);
+        currentDevice.getAioLinesData(14, axisTime, hygroData, conduData, tempData, lumiData);
 
         //// AXIS
         axisHygro.min = 0
@@ -109,8 +109,8 @@ Item {
 
         if (currentDevice.deviceName === "Flower care") {
             // not planted? don't show hygro and condu
-            hygroData.visible = (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) && currentDevice.hasData("hygro")
-            conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("conductivity")
+            hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
+            conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {
@@ -119,7 +119,7 @@ Item {
                 tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
-                axisLumi.max = currentDevice.lumiMax*1.20;
+                axisLumi.max = currentDevice.luxMax*1.20;
             } else {
                 hygroData.width = 3 // Soil moisture is primary
             }
@@ -244,8 +244,8 @@ Item {
                 if (Math.abs(dist) < 1) {
                     // nearest neighbor
                     if (appContent.state === "DeviceSensor") {
-                        dataIndicators.updateDataBars(tempData.at(i).y, lumiData.at(i).y,
-                                                      hygroData.at(i).y, conduData.at(i).y)
+                        dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
+                                                      tempData.at(i).y, -99, lumiData.at(i).y)
                     } else if (appContent.state === "DeviceThermo") {
                         dataIndicator.visible = true
                         dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
@@ -265,10 +265,12 @@ Item {
             if (x1 >= 0 && x2 > x1) {
                 // linear interpolation
                 if (appContent.state === "DeviceSensor") {
-                    dataIndicators.updateDataBars(qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
-                                                  qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x),
-                                                  qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
-                                                  qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x))
+                    dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
+                                                  qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x),
+                                                  -99,
+                                                  qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
+                                                  -99,
+                                                  qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x))
                 } else if (appContent.state === "DeviceThermo") {
                     dataIndicator.visible = true
                     var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)

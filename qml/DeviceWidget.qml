@@ -78,7 +78,7 @@ Item {
         } else if (boxDevice.deviceName === "GeigerCounter") {
             imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
         } else {
-            if (boxDevice.hasData("hygro")) {
+            if (boxDevice.hasData("soilMoisture")) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_material/outline-local_florist_pot-24px.svg"
                 else
@@ -258,7 +258,7 @@ Item {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
-                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLumiMin, boxDevice.limitLumiMax) * rowRight.height
+                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
                 hygro_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)

@@ -50,7 +50,7 @@ class DatabaseManager: public QObject
     void deleteDatabase();
 
     void migrateDatabase();
-    void migrate_v1v2();
+    bool migrate_v1v2();
 
 public:
     static DatabaseManager *getInstance();

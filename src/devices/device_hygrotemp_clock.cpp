@@ -318,13 +318,13 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
+                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
                 addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":hygro", m_humidity);
+                addData.bindValue(":humi", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 

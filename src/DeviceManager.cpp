@@ -1098,9 +1098,9 @@ bool DeviceManager::exportData(const QString &path)
         status = true;
         QTextStream eout(&efile);
 
-        QString legend = "Soil humidity (%), Temperature (";
+        QString legend = "Soil humidity (%), Soil conductivity (μs/cm), Temperature (";
         legend += (isCelcius ? "℃" : "℉");
-        legend += "), Luminosity (lux), Soil conductivity (μs/cm)";
+        legend += "), Luminosity (lux)";
         eout << legend << endl;
 
         for (auto d: qAsConst(m_devices_model->m_devices))
@@ -1112,8 +1112,8 @@ bool DeviceManager::exportData(const QString &path)
                 eout << l << endl;
 
                 QSqlQuery data;
-                data.prepare("SELECT ts_full, hygro, temp, luminosity, conductivity " \
-                             "FROM datas " \
+                data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                             "FROM plantData " \
                              "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
                 data.bindValue(":deviceAddr", dd->getAddress());
 
@@ -1124,14 +1124,17 @@ bool DeviceManager::exportData(const QString &path)
                         eout << data.value(0).toString() << ","
                              << data.value(1).toString() << ",";
 
-                        if (isCelcius) eout << QString::number(data.value(2).toReal(), 'f', 1);
-                        else eout << QString::number(data.value(2).toReal()* 1.8 + 32.0, 'f', 1);
+                        if (dd->hasSoilConductivitySensor()) eout << data.value(2).toString();
                         eout << ",";
 
-                        if (dd->hasLuminositySensor()) eout << data.value(3).toString();
+                        if (isCelcius) eout << QString::number(data.value(4).toReal(), 'f', 1);
+                        else eout << QString::number(data.value(4).toReal()* 1.8 + 32.0, 'f', 1);
                         eout << ",";
 
-                        if (dd->hasSoilConductivitySensor()) eout << data.value(4).toString();
+                        if (dd->hasHumiditySensor()) eout << data.value(5).toString();
+                        eout << ",";
+
+                        if (dd->hasLuminositySensor()) eout << data.value(6).toString();
 
                         eout << endl;
                     }

@@ -72,16 +72,19 @@ Item {
 /*
         console.log("DeviceScreenHistory // loadData() >> " + currentDevice)
 
+        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
+        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor())
+        console.log("hasSoilTemperatureSensor(): " + currentDevice.hasSoilTemperatureSensor())
         console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor())
         console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor())
         console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor())
-        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
-        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor())
 
-        console.log("hasData(hygro): " + currentDevice.hasData("hygro"))
-        console.log("hasData(temp): " + currentDevice.hasData("temp"))
+        console.log("hasData(soilMoisture): " + currentDevice.hasData("soilMoisture"))
+        console.log("hasData(soilConductivity): " + currentDevice.hasData("soilConductivity"))
+        console.log("hasData(soilTemperature): " + currentDevice.hasData("soilTemperature"))
+        console.log("hasData(temperature): " + currentDevice.hasData("temperature"))
+        console.log("hasData(humidity): " + currentDevice.hasData("humidity"))
         console.log("hasData(luminosity): " + currentDevice.hasData("luminosity"))
-        console.log("hasData(conductivity): " + currentDevice.hasData("conductivity"))
 */
         graphCount = 0
 
@@ -93,7 +96,7 @@ Item {
             tempGraph.visible = false
         }
         if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) {
-            if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("hygro") > 0) {
+            if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
                 graphCount += 1
@@ -111,7 +114,7 @@ Item {
             lumiGraph.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor()) {
-            if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("conductivity") > 0) {
+            if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
                 graphCount += 1
@@ -181,7 +184,7 @@ Item {
         graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
 
         if (graphCount === 3 && graphGrid.columns === 2) {
-            if (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("hygro")) {
+            if (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")) {
                 hygroGraph.width = (graphWidth*2)
                 lumiGraph.width = graphWidth
             } else if (currentDevice.hasLuminositySensor() && currentDevice.hasData("luminosity")) {
@@ -326,14 +329,14 @@ Item {
             id: hygroGraph
             height: graphHeight
             width: graphWidth
-            graphDataSelected: "hygro"
+            graphDataSelected: "soilMoisture"
             graphViewSelected: graphMode
 
             Text {
                 id: hygroLegend
                 anchors.left: parent.left
                 anchors.leftMargin: 12
-                text: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                text: qsTr("Moisture")
                 color: Theme.colorIcon
                 font.bold: true
                 font.pixelSize: 14
@@ -345,7 +348,7 @@ Item {
             id: tempGraph
             height: graphHeight
             width: graphWidth
-            graphDataSelected: "temp"
+            graphDataSelected: "temperature"
             graphViewSelected: graphMode
 
             Text {
@@ -383,7 +386,7 @@ Item {
             id: conduGraph
             height: graphHeight
             width: graphWidth
-            graphDataSelected: "conductivity"
+            graphDataSelected: "soilConductivity"
             graphViewSelected: graphMode
 
             Text {

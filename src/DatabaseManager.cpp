@@ -31,7 +31,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#define CURRENT_DB_VERSION      1
+#define CURRENT_DB_VERSION 2
 
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void DatabaseManager::createDatabase()
         {
             QSqlQuery addVersion;
             addVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
-            addVersion.bindValue(":dbVersion", 1);
+            addVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
             addVersion.exec();
         }
         else
@@ -270,8 +270,12 @@ void DatabaseManager::createDatabase()
                                "hygroMax INT," \
                                "conduMin INT," \
                                "conduMax INT," \
+                               "phMin FLOAT," \
+                               "phMax FLOAT," \
                                "tempMin INT," \
                                "tempMax INT," \
+                               "humiMin INT," \
+                               "humiMax INT," \
                                "luxMin INT," \
                                "luxMax INT," \
                                "mmolMin INT," \
@@ -315,9 +319,9 @@ void DatabaseManager::createDatabase()
         if (createSensorData.exec() == false)
             qWarning() << "> createSensorData.exec() ERROR" << createSensorData.lastError().type() << ":" << createSensorData.lastError().text();
     }
-
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void DatabaseManager::migrateDatabase()
@@ -337,7 +341,7 @@ void DatabaseManager::migrateDatabase()
     {
         bool migration_status = false;
 
-        if (dbVersion == 1) migrate_v1v2();
+        if (dbVersion == 1) migration_status = migrate_v1v2();
 
         // Then update version
         if (migration_status)
@@ -353,27 +357,15 @@ void DatabaseManager::migrateDatabase()
 
 /* ************************************************************************** */
 
-void DatabaseManager::migrate_v1v2()
+bool DatabaseManager::migrate_v1v2()
 {
     qWarning() << "DatabaseManager::migrate_v1v2()";
 
-    // TABLE devices
-    // FIELD add deviceModel
-    // FIELD plantName > associatedName
-    // FIELD add (bool) isInside
-    // FIELD add (str) settings
     QSqlQuery qmDev1("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
     QSqlQuery qmDev2("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
     QSqlQuery qmDev3("ALTER TABLE devices ADD isInside BOOLEAN");
     QSqlQuery qmDev4("ALTER TABLE devices ADD settings VARCHAR(255)");
 
-    // TABLE datas > plantData
-    // FIELD hygro > soilMoisture (change type??)
-    // FIELD conductivity > soilConductivity
-    // FIELD temp > temperature
-    // FIELD add soilTemperature
-    // FIELD add soilPH
-    // FIELD add humidity
     QSqlQuery qmDat1("ALTER TABLE datas RENAME TO plantData");
     QSqlQuery qmDat2("ALTER TABLE plantData RENAME COLUMN hygro TO soilMoisture");
     QSqlQuery qmDat3("ALTER TABLE plantData RENAME COLUMN conductivity TO soilConductivity");
@@ -382,16 +374,17 @@ void DatabaseManager::migrate_v1v2()
     QSqlQuery qmDat6("ALTER TABLE plantData ADD soilPH FLOAT");
     QSqlQuery qmDat7("ALTER TABLE plantData ADD humidity FLOAT");
 
-    // TABLE limits > plantLimits
-    // FIELD lumiMin > luxMin
-    // FIELD add mmolMin & mmolMax
     QSqlQuery qmLim1("ALTER TABLE limits RENAME TO plantLimits");
     QSqlQuery qmLim2("ALTER TABLE plantLimits RENAME COLUMN lumiMin TO luxMin");
     QSqlQuery qmLim3("ALTER TABLE plantLimits RENAME COLUMN lumiMax TO luxMax");
-    QSqlQuery qmLim4("ALTER TABLE plantLimits ADD mmolMin INT");
-    QSqlQuery qmLim5("ALTER TABLE plantLimits ADD mmolMax INT");
+    QSqlQuery qmLim4("ALTER TABLE plantLimits ADD phMin FLOAT");
+    QSqlQuery qmLim5("ALTER TABLE plantLimits ADD phMax FLOAT");
+    QSqlQuery qmLim6("ALTER TABLE plantLimits ADD humiMin INT");
+    QSqlQuery qmLim7("ALTER TABLE plantLimits ADD humiMax INT");
+    QSqlQuery qmLim8("ALTER TABLE plantLimits ADD mmolMin INT");
+    QSqlQuery qmLim9("ALTER TABLE plantLimits ADD mmolMax INT");
 
-    // add TABLE sensorData
+    return true;
 }
 
 /* ************************************************************************** */

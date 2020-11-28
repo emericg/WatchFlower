@@ -105,8 +105,8 @@ void DeviceSensors::refreshDataFinished(bool status, bool cached)
                     if (nm)
                     {
                         QString message;
-                        if (!m_plantName.isEmpty())
-                            message = tr("You need to water your '%1' now!").arg(m_plantName);
+                        if (!m_associatedName.isEmpty())
+                            message = tr("You need to water your '%1' now!").arg(m_associatedName);
                         else if (!m_locationName.isEmpty())
                             message = tr("You need to water the plant near '%1'").arg(m_locationName);
                         else
@@ -193,20 +193,28 @@ bool DeviceSensors::getSqlLimits()
     bool status = false;
 
     QSqlQuery getLimits;
-    getLimits.prepare("SELECT hygroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax "
-                      "FROM limits WHERE deviceAddr = :deviceAddr");
+    getLimits.prepare("SELECT hygroMin, hygroMax, conduMin, conduMax, phMin, phMax, " \
+                      " tempMin, tempMax, humiMin, humiMax, " \
+                      " luxMin, luxMax, mmolMin, mmolMax " \
+                      "FROM plantLimits WHERE deviceAddr = :deviceAddr");
     getLimits.bindValue(":deviceAddr", getAddress());
     getLimits.exec();
     while (getLimits.next())
     {
         m_limitHygroMin = getLimits.value(0).toInt();
         m_limitHygroMax = getLimits.value(1).toInt();
-        m_limitTempMin = getLimits.value(2).toInt();
-        m_limitTempMax = getLimits.value(3).toInt();
-        m_limitLumiMin = getLimits.value(4).toInt();
-        m_limitLumiMax = getLimits.value(5).toInt();
-        m_limitConduMin = getLimits.value(6).toInt();
-        m_limitConduMax = getLimits.value(7).toInt();
+        m_limitConduMin = getLimits.value(2).toInt();
+        m_limitConduMax = getLimits.value(3).toInt();
+        m_limitPhMin = getLimits.value(4).toInt();
+        m_limitPhMax = getLimits.value(5).toInt();
+        m_limitTempMin = getLimits.value(6).toInt();
+        m_limitTempMax = getLimits.value(7).toInt();
+        m_limitHumiMin = getLimits.value(8).toInt();
+        m_limitHumiMax = getLimits.value(9).toInt();
+        m_limitLuxMin = getLimits.value(10).toInt();
+        m_limitLuxMax = getLimits.value(11).toInt();
+        m_limitMmolMin = getLimits.value(12).toInt();
+        m_limitMmolMax = getLimits.value(13).toInt();
 
         status = true;
         Q_EMIT limitsUpdated();
@@ -221,8 +229,8 @@ bool DeviceSensors::getSqlData(int minutes)
     bool status = false;
 
     QSqlQuery cachedData;
-    cachedData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
-                       "FROM datas " \
+    cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                       "FROM plantData " \
                        "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
     cachedData.bindValue(":deviceAddr", getAddress());
 
@@ -238,13 +246,14 @@ bool DeviceSensors::getSqlData(int minutes)
 
     while (cachedData.next())
     {
-        m_temperature = cachedData.value(0).toFloat();
-        m_humidity =  cachedData.value(1).toInt();
-        m_luminosity = cachedData.value(2).toInt();
         m_soil_moisture =  cachedData.value(1).toInt();
-        m_soil_conductivity = cachedData.value(3).toInt();
+        m_soil_conductivity = cachedData.value(2).toInt();
+        m_soil_temperature = cachedData.value(3).toFloat();
+        m_temperature = cachedData.value(4).toFloat();
+        m_humidity =  cachedData.value(5).toInt();
+        m_luminosity = cachedData.value(6).toInt();
 
-        QString datetime = cachedData.value(4).toString();
+        QString datetime = cachedData.value(0).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 
         status = true;
@@ -260,12 +269,12 @@ bool DeviceSensors::getSqlData(int minutes)
 bool DeviceSensors::hasData() const
 {
     // If we have immediate data (<12h old)
-    if (m_humidity > 0 || m_temperature > -20.f || m_luminosity > 0 || m_soil_moisture > 0 || m_soil_conductivity > 0)
+    if ( m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 || m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
         return true;
 
     // Otherwise, check if we have stored data
     QSqlQuery hasData;
-    hasData.prepare("SELECT COUNT(*) FROM datas WHERE deviceAddr = :deviceAddr;");
+    hasData.prepare("SELECT COUNT(*) FROM plantData WHERE deviceAddr = :deviceAddr;");
     hasData.bindValue(":deviceAddr", getAddress());
 
     if (hasData.exec() == false)
@@ -283,20 +292,22 @@ bool DeviceSensors::hasData() const
 bool DeviceSensors::hasData(const QString &dataName) const
 {
     // If we have immediate data (<12h old)
-    if (dataName == "hygro" && m_humidity > 0)
+    if (dataName == "soilMoisture" && m_soil_moisture > 0)
         return true;
-    if (dataName == "temp" && m_temperature > -20.f)
+    if (dataName == "soilConductivity" && m_soil_conductivity > 0)
+        return true;
+    if (dataName == "soilTemperature" && m_soil_temperature > 0)
+        return true;
+    if (dataName == "temperature" && m_temperature > -20.f)
+        return true;
+    if (dataName == "humidity" && m_humidity > 0)
         return true;
     if (dataName == "luminosity" && m_luminosity > 0)
-        return true;
-    if (dataName == "hygro" && m_soil_moisture > 0)
-        return true;
-    if (dataName == "conductivity" && m_soil_conductivity > 0)
         return true;
 
     // Otherwise, check if we have stored data
     QSqlQuery hasData;
-    hasData.prepare("SELECT COUNT(" + dataName + ") FROM datas WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
+    hasData.prepare("SELECT COUNT(" + dataName + ") FROM plantData WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
     hasData.bindValue(":deviceAddr", getAddress());
 
     if (hasData.exec() == false)
@@ -316,7 +327,7 @@ int DeviceSensors::countData(const QString &dataName, int days) const
     // Count stored data
     QSqlQuery dataCount;
     dataCount.prepare("SELECT COUNT(" + dataName + ")" \
-                      "FROM datas " \
+                      "FROM plantData " \
                       "WHERE deviceAddr = :deviceAddr " \
                         "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day');");
     dataCount.bindValue(":deviceAddr", getAddress());
@@ -364,17 +375,23 @@ bool DeviceSensors::setDbLimits()
     bool status = false;
 
     QSqlQuery updateLimits;
-    updateLimits.prepare("REPLACE INTO limits (deviceAddr, hygroMin, hygroMax, tempMin, tempMax, lumiMin, lumiMax, conduMin, conduMax)"
-                         " VALUES (:deviceAddr, :hygroMin, :hygroMax, :tempMin, :tempMax, :lumiMin, :lumiMax, :conduMin, :conduMax)");
+    updateLimits.prepare("REPLACE INTO plantLimits (deviceAddr, hygroMin, hygroMax, conduMin, conduMax, phMin, phMax, tempMin, tempMax, humiMin, humiMax, luxMin, luxMax, mmolMin, mmolMax)"
+                         " VALUES (:deviceAddr, :hygroMin, :hygroMax, :conduMin, :conduMax, :phMin, :phMax, :tempMin, :tempMax, :humiMin, :humiMax, :luxMin, :luxMax, :mmolMin, :mmolMax)");
     updateLimits.bindValue(":deviceAddr", getAddress());
     updateLimits.bindValue(":hygroMin", m_limitHygroMin);
     updateLimits.bindValue(":hygroMax", m_limitHygroMax);
-    updateLimits.bindValue(":tempMin", m_limitTempMin);
-    updateLimits.bindValue(":tempMax", m_limitTempMax);
-    updateLimits.bindValue(":lumiMin", m_limitLumiMin);
-    updateLimits.bindValue(":lumiMax", m_limitLumiMax);
     updateLimits.bindValue(":conduMin", m_limitConduMin);
     updateLimits.bindValue(":conduMax", m_limitConduMax);
+    updateLimits.bindValue(":phMin", m_limitPhMin);
+    updateLimits.bindValue(":phMax", m_limitPhMax);
+    updateLimits.bindValue(":tempMin", m_limitTempMin);
+    updateLimits.bindValue(":tempMax", m_limitTempMax);
+    updateLimits.bindValue(":humiMin", m_limitHumiMin);
+    updateLimits.bindValue(":humiMax", m_limitHumiMax);
+    updateLimits.bindValue(":luxMin", m_limitLuxMin);
+    updateLimits.bindValue(":luxMax", m_limitLuxMax);
+    updateLimits.bindValue(":mmolMin", m_limitMmolMin);
+    updateLimits.bindValue(":mmolMax", m_limitMmolMax);
 
     status = updateLimits.exec();
     if (status == false)
@@ -446,7 +463,7 @@ QVariantList DeviceSensors::getDataDays(const QString &dataName, int maxDays)
 
     QSqlQuery sqlData;
     sqlData.prepare("SELECT strftime('%Y-%m-%d', ts), avg(" + dataName + ") as 'avg'" \
-                    "FROM datas " \
+                    "FROM plantData " \
                     "WHERE deviceAddr = :deviceAddr " \
                     "GROUP BY strftime('%Y-%m-%d', ts) " \
                     "ORDER BY ts DESC;");
@@ -515,7 +532,7 @@ QVariantList DeviceSensors::getDataHours(const QString &dataName)
 
     QSqlQuery sqlData;
     sqlData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
-                    "FROM datas " \
+                    "FROM plantData " \
                     "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                     "GROUP BY strftime('%d-%H', ts) " \
                     "ORDER BY ts DESC;");
@@ -644,8 +661,10 @@ void DeviceSensors::updateAioMinMaxData(int maxDays)
     AioMinMax *previousdata = nullptr;
 
     QSqlQuery graphData;
-    graphData.prepare("SELECT strftime('%Y-%m-%d', ts), min(temp), avg(temp), max(temp), min(hygro), max(hygro) " \
-                      "FROM datas " \
+    graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
+                      " min(temperature), avg(temperature), max(temperature), " \
+                      " min(humidity), max(humidity) " \
+                      "FROM plantData " \
                       "WHERE deviceAddr = :deviceAddr " \
                       "GROUP BY strftime('%Y-%m-%d', ts)" \
                       "ORDER BY ts DESC;");
@@ -708,16 +727,16 @@ void DeviceSensors::updateAioMinMaxData(int maxDays)
 /* ************************************************************************** */
 
 void DeviceSensors::getAioLinesData(int maxDays,
-                             QtCharts::QDateTimeAxis *axis,
-                             QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                             QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond)
+                                    QtCharts::QDateTimeAxis *axis,
+                                    QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                                    QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi)
 {
-    if (!axis || !hygro || !temp || !lumi || !cond)
+    if (!axis || !hygro || !condu || !temp || !lumi)
         return;
 
     QSqlQuery graphData;
-    graphData.prepare("SELECT temp, hygro, luminosity, conductivity, ts_full " \
-                      "FROM datas " \
+    graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
+                      "FROM plantData " \
                       "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(maxDays) + " days');");
     graphData.bindValue(":deviceAddr", getAddress());
 
@@ -734,27 +753,27 @@ void DeviceSensors::getAioLinesData(int maxDays,
 
     while (graphData.next())
     {
-        QDateTime date = QDateTime::fromString(graphData.value(4).toString(), "yyyy-MM-dd hh:mm:ss");
+        QDateTime date = QDateTime::fromString(graphData.value(0).toString(), "yyyy-MM-dd hh:mm:ss");
         if (!minSet) {
             axis->setMin(date);
             minSet = true;
         }
         qint64 timecode = date.toMSecsSinceEpoch();
 
-        temp->append(timecode, graphData.value(0).toReal());
         hygro->append(timecode, graphData.value(1).toReal());
-        lumi->append(timecode, graphData.value(2).toReal());
-        cond->append(timecode, graphData.value(3).toReal());
+        condu->append(timecode, graphData.value(2).toReal());
+        temp->append(timecode, graphData.value(3).toReal());
+        lumi->append(timecode, graphData.value(4).toReal());
 
-        if (graphData.value(0).toFloat() < m_tempMin) { m_tempMin = graphData.value(0).toFloat(); minmaxChanged = true; }
         if (graphData.value(1).toInt() < m_hygroMin) { m_hygroMin = graphData.value(1).toInt(); minmaxChanged = true; }
-        if (graphData.value(2).toInt() < m_luminosityMin) { m_luminosityMin = graphData.value(2).toInt(); minmaxChanged = true; }
-        if (graphData.value(3).toInt() < m_conductivityMin) { m_conductivityMin = graphData.value(3).toInt(); minmaxChanged = true; }
+        if (graphData.value(2).toInt() < m_conduMin) { m_conduMin = graphData.value(2).toInt(); minmaxChanged = true; }
+        if (graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
+        if (graphData.value(4).toInt() < m_luxMin) { m_luxMin = graphData.value(4).toInt(); minmaxChanged = true; }
 
-        if (graphData.value(0).toFloat() > m_tempMax) { m_tempMax = graphData.value(0).toFloat(); minmaxChanged = true; }
         if (graphData.value(1).toInt() > m_hygroMax) { m_hygroMax = graphData.value(1).toInt(); minmaxChanged = true; }
-        if (graphData.value(2).toInt() > m_luminosityMax) { m_luminosityMax = graphData.value(2).toInt(); minmaxChanged = true; }
-        if (graphData.value(3).toInt() > m_conductivityMax) { m_conductivityMax = graphData.value(3).toInt(); minmaxChanged = true; }
+        if (graphData.value(2).toInt() > m_conduMax) { m_conduMax = graphData.value(2).toInt(); minmaxChanged = true; }
+        if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
+        if (graphData.value(4).toInt() > m_luxMax) { m_luxMax = graphData.value(4).toInt(); minmaxChanged = true; }
     }
 
     if (minmaxChanged) { Q_EMIT minmaxUpdated(); }

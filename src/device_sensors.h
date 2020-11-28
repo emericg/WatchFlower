@@ -37,34 +37,40 @@ class DeviceSensors: public Device
     Q_OBJECT
 
     // data
+    Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
 
     // min/max
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
-    Q_PROPERTY(float tempMin READ getTempMin NOTIFY minmaxUpdated)
-    Q_PROPERTY(float tempMax READ getTempMax NOTIFY minmaxUpdated)
-    Q_PROPERTY(int lumiMin READ getLumiMin NOTIFY minmaxUpdated)
-    Q_PROPERTY(int lumiMax READ getLumiMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(float tempMin READ getTempMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(float tempMax READ getTempMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int humiMin READ getHumiMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int humiMax READ getHumiMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int luxMin READ getLuxMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int luxMax READ getLuxMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int mmolMin READ getMmolMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int mmolMax READ getMmolMax NOTIFY minmaxUpdated)
 
     // plant limits
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitLumiMin READ getLimitLumiMin WRITE setLimitLumiMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitLumiMax READ getLimitLumiMax WRITE setLimitLumiMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitLuxMin READ getLimitLuxMin WRITE setLimitLuxMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitLuxMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitMmolMin READ getLimitMmolMin WRITE setLimitMmolMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitMmolMax READ getLimitMmolMax WRITE setLimitMmolMax NOTIFY limitsUpdated)
 
     // other sensors
     Q_PROPERTY(float deviceRadioactivityH READ getRH NOTIFY dataUpdated)
@@ -89,6 +95,7 @@ protected:
     float m_temperature = -99.f;
     int m_humidity = -99;
     // environmental data
+    float m_pression = -99.f;
     int m_luminosity = -99;
     int m_uv = -99;
     float m_rh = 999.f;
@@ -98,22 +105,36 @@ protected:
     // plant limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
-    int m_limitTempMin = 14;
-    int m_limitTempMax = 28;
-    int m_limitLumiMin = 1000;
-    int m_limitLumiMax = 3000;
     int m_limitConduMin = 100;
     int m_limitConduMax = 500;
+    float m_limitPhMin = 6.5;
+    float m_limitPhMax = 7.5;
+    int m_limitTempMin = 14;
+    int m_limitTempMax = 28;
+    int m_limitHumiMin = 40;
+    int m_limitHumiMax = 60;
+    int m_limitLuxMin = 1000;
+    int m_limitLuxMax = 3000;
+    int m_limitMmolMin = 0;
+    int m_limitMmolMax = 0;
 
     // SQL min/max data (x days period)
-    float m_tempMin = 999.f;
-    float m_tempMax = -99.f;
     int m_hygroMin = 99999;
     int m_hygroMax = -99;
-    int m_luminosityMin = 99999;
-    int m_luminosityMax = -99;
-    int m_conductivityMin = 99999;
-    int m_conductivityMax = -99;
+    int m_conduMin = 99999;
+    int m_conduMax = -99;
+    float m_soilTempMin = 999.f;
+    float m_soilTempMax = -99.f;
+    float m_soilPhMin = 999.f;
+    float m_soilPhMax = -99.f;
+    float m_tempMin = 999.f;
+    float m_tempMax = -99.f;
+    int m_humiMin = 99999;
+    int m_humiMax = -99;
+    int m_luxMin = 99999;
+    int m_luxMax = -99;
+    int m_mmolMin = 99999;
+    int m_mmolMax = -99;
 
     //
     QList <QObject *> m_aio_minmax_data;
@@ -153,31 +174,43 @@ public slots:
 
     int getHygroMin() const { return m_hygroMin; }
     int getHygroMax() const { return m_hygroMax; }
+    int getConduMin() const { return m_conduMin; }
+    int getConduMax() const { return m_conduMax; }
     float getTempMin() const { return m_tempMin; }
     float getTempMax() const { return m_tempMax; }
-    int getLumiMin() const { return m_luminosityMin; }
-    int getLumiMax() const { return m_luminosityMax; }
-    int getConduMin() const { return m_conductivityMin; }
-    int getConduMax() const { return m_conductivityMax; }
+    int getHumiMin() const { return m_humiMin; }
+    int getHumiMax() const { return m_humiMax; }
+    int getLuxMin() const { return m_luxMin; }
+    int getLuxMax() const { return m_luxMax; }
+    int getMmolMin() const { return m_mmolMin; }
+    int getMmolMax() const { return m_mmolMax; }
 
     // BLE device limits
+    bool setDbLimits();
     int getLimitHygroMin() const { return m_limitHygroMin; }
     int getLimitHygroMax() const { return m_limitHygroMax; }
-    int getLimitTempMin() const { return m_limitTempMin; }
-    int getLimitTempMax() const { return m_limitTempMax; }
-    int getLimitLumiMin() const { return m_limitLumiMin; }
-    int getLimitLumiMax() const { return m_limitLumiMax; }
     int getLimitConduMin() const { return m_limitConduMin; }
     int getLimitConduMax() const { return m_limitConduMax; }
+    int getLimitTempMin() const { return m_limitTempMin; }
+    int getLimitTempMax() const { return m_limitTempMax; }
+    int getLimitHumiMin() const { return m_limitHumiMin; }
+    int getLimitHumiMax() const { return m_limitHumiMax; }
+    int getLimitLuxMin() const { return m_limitLuxMin; }
+    int getLimitLuxMax() const { return m_limitLuxMax; }
+    int getLimitMmolMin() const { return m_limitMmolMin; }
+    int getLimitMmolMax() const { return m_limitMmolMax; }
     void setLimitHygroMin(int limitHygroMin) { if (m_limitHygroMin == limitHygroMin) return; m_limitHygroMin = limitHygroMin; setDbLimits(); }
     void setLimitHygroMax(int limitHygroMax) { if (m_limitHygroMax == limitHygroMax) return; m_limitHygroMax = limitHygroMax; setDbLimits(); }
-    void setLimitTempMin(int limitTempMin) { if (m_limitTempMin == limitTempMin) return; m_limitTempMin = limitTempMin; setDbLimits(); }
-    void setLimitTempMax(int limitTempMax) { if (m_limitTempMax == limitTempMax) return; m_limitTempMax = limitTempMax; setDbLimits(); }
-    void setLimitLumiMin(int limitLumiMin) { if (m_limitLumiMin == limitLumiMin) return; m_limitLumiMin = limitLumiMin; setDbLimits(); }
-    void setLimitLumiMax(int limitLumiMax) { if (m_limitLumiMax == limitLumiMax) return; m_limitLumiMax = limitLumiMax; setDbLimits(); }
     void setLimitConduMin(int limitConduMin) { if (m_limitConduMin == limitConduMin) return; m_limitConduMin = limitConduMin; setDbLimits(); }
     void setLimitConduMax(int limitConduMax) { if (m_limitConduMax == limitConduMax) return; m_limitConduMax = limitConduMax; setDbLimits(); }
-    bool setDbLimits();
+    void setLimitTempMin(int limitTempMin) { if (m_limitTempMin == limitTempMin) return; m_limitTempMin = limitTempMin; setDbLimits(); }
+    void setLimitTempMax(int limitTempMax) { if (m_limitTempMax == limitTempMax) return; m_limitTempMax = limitTempMax; setDbLimits(); }
+    void setLimitHumiMin(int limitHumiMin) { if (m_limitHumiMin == limitHumiMin) return; m_limitHumiMin = limitHumiMin; setDbLimits(); }
+    void setLimitHumiMax(int limitHumiMax) { if (m_limitHumiMax == limitHumiMax) return; m_limitHumiMax = limitHumiMax; setDbLimits(); }
+    void setLimitLuxMin(int limitLuxMin) { if (m_limitLuxMin == limitLuxMin) return; m_limitLuxMin = limitLuxMin; setDbLimits(); }
+    void setLimitLuxMax(int limitLuxMax) { if (m_limitLuxMax == limitLuxMax) return; m_limitLuxMax = limitLuxMax; setDbLimits(); }
+    void setLimitMmolMin(int limitMmolMin) { if (m_limitMmolMin == limitMmolMin) return; m_limitMmolMin = limitMmolMin; setDbLimits(); }
+    void setLimitMmolMax(int limitMmolMax) { if (m_limitMmolMax == limitMmolMax) return; m_limitMmolMax = limitMmolMax; setDbLimits(); }
 
     // AIO temperature "min max" graph
     void updateAioMinMaxData(int maxDays);
@@ -185,8 +218,8 @@ public slots:
 
     // AIO line graph
     void getAioLinesData(int maxDays, QtCharts::QDateTimeAxis *axis,
-                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *temp,
-                         QtCharts::QLineSeries *lumi, QtCharts::QLineSeries *cond);
+                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                         QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
 
     // Histograms (days)
     QVariantList getDataDays(const QString &dataName, int maxDays);

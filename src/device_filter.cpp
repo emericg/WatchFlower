@@ -171,10 +171,10 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         // plant sensors
         if (role == PlantNameRole)
         {
-            if (device->getPlantName().isEmpty())
+            if (device->getAssociatedName().isEmpty())
                 return  "zzz";
             else
-                return device->getPlantName();
+                return device->getAssociatedName();
         }
         if (role == SoilMoistureRole)
         {

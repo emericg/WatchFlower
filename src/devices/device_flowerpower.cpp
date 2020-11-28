@@ -395,15 +395,16 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
                 QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO datas (deviceAddr, ts, ts_full, temp, hygro, luminosity, conductivity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro, :luminosity, :conductivity)");
+                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :temp, :lumi)");
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":hygro", m_soil_moisture);
-                addData.bindValue(":luminosity", m_luminosity);
-                addData.bindValue(":conductivity", m_soil_conductivity);
+                addData.bindValue(":condu", m_soil_conductivity);
+                addData.bindValue(":stemp", m_soil_temperature);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":lumi", m_luminosity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
@@ -415,11 +416,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             qDebug() << "* DeviceFlowerPower update:" << getAddress();
             qDebug() << "- m_firmware:" << m_firmware;
             qDebug() << "- m_battery:" << m_battery;
-            qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosity;
-            qDebug() << "- m_soil_temperature : " << m_soil_temperature;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
+            qDebug() << "- m_soil_temperature : " << m_soil_temperature;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_luminosity:" << m_luminosity;
 #endif
         }
     }

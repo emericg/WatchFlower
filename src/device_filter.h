@@ -73,6 +73,7 @@ public:
         DeviceNameRole,
         DeviceLocationRole,
         RssiRole,
+
         AssociatedNameRole,
         PlantNameRole,
         SoilMoistureRole,

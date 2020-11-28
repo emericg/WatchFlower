@@ -230,7 +230,7 @@ void Device::refreshStop()
 void Device::refreshRetry()
 {
     //qDebug() << "Device::refreshRetry()" << getAddress() << getName();
-    /*
+/*
     if (controller)
     {
         m_retries--;
@@ -247,7 +247,8 @@ void Device::refreshRetry()
         {
             refreshDataCanceled();
         }
-    }*/
+    }
+*/
 }
 
 void Device::refreshDataCanceled()
@@ -346,7 +347,7 @@ void Device::setUpdateTimer(int updateInterval)
 
 void Device::setTimeoutTimer()
 {
-    m_timeoutTimer.setInterval(m_timeout*1000);
+    m_timeoutTimer.setInterval(m_timeoutInterval*1000);
     m_timeoutTimer.start();
 }
 
@@ -358,47 +359,22 @@ bool Device::getSqlInfos()
     //qDebug() << "Device::getSqlInfos(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery getFirmware;
-    getFirmware.prepare("SELECT deviceFirmware FROM devices WHERE deviceAddr = :deviceAddr");
-    getFirmware.bindValue(":deviceAddr", getAddress());
-    getFirmware.exec();
-    while (getFirmware.next())
+    QSqlQuery getInfos;
+    getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isInside, settings FROM devices WHERE deviceAddr = :deviceAddr");
+    getInfos.bindValue(":deviceAddr", getAddress());
+    getInfos.exec();
+    while (getInfos.next())
     {
-        m_firmware = getFirmware.value(0).toString();
-        status = true;
-    }
+        m_firmware = getInfos.value(0).toString();
+        m_battery = getInfos.value(1).toInt();
+        m_associatedName = getInfos.value(2).toString();
+        m_locationName = getInfos.value(3).toString();
+        m_isInside = getInfos.value(4).toBool();
+        // TODO handle settings field
 
-    QSqlQuery getBattery;
-    getBattery.prepare("SELECT deviceBattery FROM devices WHERE deviceAddr = :deviceAddr");
-    getBattery.bindValue(":deviceAddr", getAddress());
-    getBattery.exec();
-    while (getBattery.next())
-    {
-        m_battery = getBattery.value(0).toInt();
         status = true;
+        Q_EMIT sensorUpdated();
     }
-
-    QSqlQuery getLocationName;
-    getLocationName.prepare("SELECT locationName FROM devices WHERE deviceAddr = :deviceAddr");
-    getLocationName.bindValue(":deviceAddr", getAddress());
-    getLocationName.exec();
-    while (getLocationName.next())
-    {
-        m_locationName = getLocationName.value(0).toString();
-        status = true;
-    }
-
-    QSqlQuery getPlantName;
-    getPlantName.prepare("SELECT plantName FROM devices WHERE deviceAddr = :deviceAddr");
-    getPlantName.bindValue(":deviceAddr", getAddress());
-    getPlantName.exec();
-    while (getPlantName.next())
-    {
-        m_plantName = getPlantName.value(0).toString();
-        status = true;
-    }
-
-    Q_EMIT sensorUpdated();
 
     return status;
 }
@@ -561,7 +537,7 @@ void Device::setLocationName(const QString &name)
     if (m_locationName != name)
     {
         m_locationName = name;
-        qDebug() << "setLocationName(" << m_locationName << ")";
+        //qDebug() << "setLocationName(" << m_locationName << ")";
 
         QSqlQuery updateLocation;
         updateLocation.prepare("UPDATE devices SET locationName = :name WHERE deviceAddr = :deviceAddr");
@@ -580,18 +556,13 @@ void Device::setLocationName(const QString &name)
 
 void Device::setAssociatedName(const QString &name)
 {
-    setPlantName(name);
-}
-
-void Device::setPlantName(const QString &name)
-{
-    if (m_plantName != name)
+    if (m_associatedName != name)
     {
-        m_plantName = name;
-        qDebug() << "setPlantName(" << m_plantName << ")";
+        m_associatedName = name;
+        //qDebug() << "setAssociatedName(" << m_associatedName << ")";
 
         QSqlQuery updatePlant;
-        updatePlant.prepare("UPDATE devices SET plantName = :name WHERE deviceAddr = :deviceAddr");
+        updatePlant.prepare("UPDATE devices SET associatedName = :name WHERE deviceAddr = :deviceAddr");
         updatePlant.bindValue(":name", name);
         updatePlant.bindValue(":deviceAddr", getAddress());
         updatePlant.exec();
@@ -602,6 +573,22 @@ void Device::setPlantName(const QString &name)
         {
             if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
         }
+    }
+}
+
+void Device::setInside(const bool inside)
+{
+    if (m_isInside != inside)
+    {
+        m_isInside = inside;
+
+        QSqlQuery updateInside;
+        updateInside.prepare("UPDATE devices SET isInside = :inside WHERE deviceAddr = :deviceAddr");
+        updateInside.bindValue(":inside", inside);
+        updateInside.bindValue(":deviceAddr", getAddress());
+        updateInside.exec();
+
+        Q_EMIT sensorUpdated();
     }
 }
 
