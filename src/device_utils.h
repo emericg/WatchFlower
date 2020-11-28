@@ -43,6 +43,16 @@
 
 /* ************************************************************************** */
 
+enum DeviceType {
+    DEVICE_PLANTSENSOR          = 0,
+    DEVICE_THERMOMETER,
+    DEVICE_ENVIRONMENTAL,
+
+    DEVICE_LAMP                 = 4,
+    DEVICE_BEACON,
+    DEVICE_PGP,
+};
+
 enum DeviceCapabilities {
     DEVICE_BATTERY              = (1 <<  0), //!< Can report its battery level
     DEVICE_CLOCK                = (1 <<  1), //!< Has an onboard clock
@@ -51,34 +61,32 @@ enum DeviceCapabilities {
     DEVICE_LAST_MOVE            = (1 <<  4),
     DEVICE_WATER_TANK           = (1 <<  5),
     DEVICE_BUTTONS              = (1 <<  6),
-
-    DEVICE_SOIL_MOISTURE        = (1 <<  8), //!< Has a soil moisture sensor
-    DEVICE_SOIL_CONDUCTIVITY    = (1 <<  9), //!< Has a soil conductivity/fertility sensor
-    DEVICE_SOIL_TEMPERATURE     = (1 << 10), //!< Has a soil temperature sensor
-    DEVICE_SOIL_PH              = (1 << 11), //!< Has a soil PH sensor
-
-    DEVICE_TEMPERATURE          = (1 << 12), //!< Has a temperature sensor
-    DEVICE_HUMIDITY             = (1 << 13), //!< Has an humidity sensor
-    DEVICE_BAROMETER            = (1 << 14), //!< Has a barometer
-    DEVICE_LIGHT                = (1 << 15), //!< Has a light sensor
-    DEVICE_UV                   = (1 << 16), //!< Has an UV light sensor
-    DEVICE_SOUND                = (1 << 17), //!< Has a sound level sensor
-    DEVICE_PM1                  = (1 << 18),
-    DEVICE_PM25                 = (1 << 19),
-    DEVICE_PM10                 = (1 << 20),
-    DEVICE_O2                   = (1 << 21),
-    DEVICE_O3                   = (1 << 22),
-    DEVICE_CO                   = (1 << 23),
-    DEVICE_CO2                  = (1 << 24),
-    DEVICE_NO2                  = (1 << 26),
-    DEVICE_VOC                  = (1 << 26),
-    DEVICE_GEIGER               = (1 << 31),
 };
 
-enum DeviceType {
-    DEVICE_PLANTSENSOR          = 0,
-    DEVICE_THERMOMETER,
-    DEVICE_ENVIRONMENTAL,
+enum DeviceSensors {
+    // plant data
+    DEVICE_SOIL_MOISTURE        = (1 <<  0), //!< Has a soil moisture sensor
+    DEVICE_SOIL_CONDUCTIVITY    = (1 <<  1), //!< Has a soil conductivity/fertility sensor
+    DEVICE_SOIL_TEMPERATURE     = (1 <<  2), //!< Has a soil temperature sensor
+    DEVICE_SOIL_PH              = (1 <<  3), //!< Has a soil PH sensor
+    // hygrometer data
+    DEVICE_TEMPERATURE          = (1 <<  4), //!< Has a temperature sensor
+    DEVICE_HUMIDITY             = (1 <<  5), //!< Has an humidity sensor
+    // environmental data
+    DEVICE_BAROMETER            = (1 <<  6), //!< Has a barometer
+    DEVICE_LIGHT                = (1 <<  7), //!< Has a light sensor
+    DEVICE_UV                   = (1 <<  8), //!< Has an UV light sensor
+    DEVICE_SOUND                = (1 <<  9), //!< Has a sound level sensor
+    DEVICE_PM1                  = (1 << 10),
+    DEVICE_PM25                 = (1 << 11),
+    DEVICE_PM10                 = (1 << 12),
+    DEVICE_O2                   = (1 << 13),
+    DEVICE_O3                   = (1 << 14),
+    DEVICE_CO                   = (1 << 15),
+    DEVICE_CO2                  = (1 << 16),
+    DEVICE_NO2                  = (1 << 17),
+    DEVICE_VOC                  = (1 << 18),
+    DEVICE_GEIGER               = (1 << 19),
 };
 
 enum DeviceStatus {

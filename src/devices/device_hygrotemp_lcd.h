@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_LCD_H
 /* ************************************************************************** */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
  * Protocol infos:
  * - https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18
  */
-class DeviceHygrotempLCD: public DeviceSensors
+class DeviceHygrotempLCD: public DeviceSensor
 {
     Q_OBJECT
 

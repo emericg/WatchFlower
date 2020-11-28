@@ -42,25 +42,23 @@
 /* ************************************************************************** */
 
 DeviceHygrotempClock::DeviceHygrotempClock(QString &deviceAddr, QString &deviceName, QObject *parent):
-    DeviceSensors(deviceAddr, deviceName, parent)
+    DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_THERMOMETER;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HUMIDITY;
-    m_capabilities += DEVICE_CLOCK;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceCapabilities += DEVICE_CLOCK;
+    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceSensors += DEVICE_HUMIDITY;
 }
 
 DeviceHygrotempClock::DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensors(d, parent)
+    DeviceSensor(d, parent)
 {
     m_deviceType = DEVICE_THERMOMETER;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_HUMIDITY;
-    m_capabilities += DEVICE_CLOCK;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceCapabilities += DEVICE_CLOCK;
+    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceSensors += DEVICE_HUMIDITY;
 }
 
 DeviceHygrotempClock::~DeviceHygrotempClock()

@@ -23,7 +23,7 @@
 #define DEVICE_FLOWERCARE_H
 /* ************************************************************************** */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <cstdint>
 
@@ -42,7 +42,7 @@
  * Protocol infos:
  * - WatchFlower/doc/flowercare-api.md
  */
-class DeviceFlowerCare: public DeviceSensors
+class DeviceFlowerCare: public DeviceSensor
 {
     Q_OBJECT
 

@@ -45,7 +45,7 @@ SOURCES  += src/main.cpp \
             src/DeviceManager.cpp \
             src/device.cpp \
             src/device_filter.cpp \
-            src/device_sensors.cpp \
+            src/device_sensor.cpp \
             src/devices/device_flowercare.cpp \
             src/devices/device_flowerpower.cpp \
             src/devices/device_hygrotemp_lcd.cpp \
@@ -69,7 +69,7 @@ HEADERS  += src/SettingsManager.h \
             src/device.h \
             src/device_utils.h \
             src/device_filter.h \
-            src/device_sensors.h \
+            src/device_sensor.h \
             src/devices/device_flowercare.h \
             src/devices/device_flowerpower.h \
             src/devices/device_hygrotemp_lcd.h \

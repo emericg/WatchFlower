@@ -24,7 +24,7 @@
 /* ************************************************************************** */
 
 #include "device.h"
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <QObject>
 #include <QMetaType>

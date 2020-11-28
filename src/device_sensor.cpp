@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 #include "SettingsManager.h"
 #include "DeviceManager.h"
 #include "NotificationManager.h"
@@ -34,7 +34,7 @@
 
 /* ************************************************************************** */
 
-DeviceSensors::DeviceSensors(QString &deviceAddr, QString &deviceName, QObject *parent) :
+DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent) :
     Device(deviceAddr, deviceName, parent)
 {
     // Load device infos and limits
@@ -45,13 +45,13 @@ DeviceSensors::DeviceSensors(QString &deviceAddr, QString &deviceName, QObject *
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensors::refreshDataCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::refreshDataCanceled);
 
     // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensors::refreshStart);
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 }
 
-DeviceSensors::DeviceSensors(const QBluetoothDeviceInfo &d, QObject *parent) :
+DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     Device(d, parent)
 {
     // Load device infos and limits
@@ -62,13 +62,13 @@ DeviceSensors::DeviceSensors(const QBluetoothDeviceInfo &d, QObject *parent) :
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensors::refreshDataCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::refreshDataCanceled);
 
     // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensors::refreshStart);
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 }
 
-DeviceSensors::~DeviceSensors()
+DeviceSensor::~DeviceSensor()
 {
     //
 }
@@ -76,9 +76,9 @@ DeviceSensors::~DeviceSensors()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceSensors::refreshDataFinished(bool status, bool cached)
+void DeviceSensor::refreshDataFinished(bool status, bool cached)
 {
-    //qDebug() << "DeviceSensors::refreshDataFinished()" << getAddress() << getName();
+    //qDebug() << "DeviceSensor::refreshDataFinished()" << getAddress() << getName();
 
     Device::refreshDataFinished(status, cached);
 
@@ -122,9 +122,9 @@ void DeviceSensors::refreshDataFinished(bool status, bool cached)
 
 /* ************************************************************************** */
 
-bool DeviceSensors::getSqlInfos()
+bool DeviceSensor::getSqlInfos()
 {
-    //qDebug() << "DeviceSensors::getSqlInfos(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceSensor::getSqlInfos(" << m_deviceAddress << ")";
     bool status = Device::getSqlInfos();
 
     if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_firmware.size() == 5))
@@ -187,9 +187,9 @@ bool DeviceSensors::getSqlInfos()
     return status;
 }
 
-bool DeviceSensors::getSqlLimits()
+bool DeviceSensor::getSqlLimits()
 {
-    //qDebug() << "DeviceSensors::getSqlLimits(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceSensor::getSqlLimits(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery getLimits;
@@ -223,9 +223,9 @@ bool DeviceSensors::getSqlLimits()
     return status;
 }
 
-bool DeviceSensors::getSqlData(int minutes)
+bool DeviceSensor::getSqlData(int minutes)
 {
-    //qDebug() << "DeviceSensors::getSqlData(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceSensor::getSqlData(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery cachedData;
@@ -266,7 +266,7 @@ bool DeviceSensors::getSqlData(int minutes)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool DeviceSensors::hasData() const
+bool DeviceSensor::hasData() const
 {
     // If we have immediate data (<12h old)
     if ( m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 || m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
@@ -289,7 +289,7 @@ bool DeviceSensors::hasData() const
     return false;
 }
 
-bool DeviceSensors::hasData(const QString &dataName) const
+bool DeviceSensor::hasData(const QString &dataName) const
 {
     // If we have immediate data (<12h old)
     if (dataName == "soilMoisture" && m_soil_moisture > 0)
@@ -322,7 +322,7 @@ bool DeviceSensors::hasData(const QString &dataName) const
     return false;
 }
 
-int DeviceSensors::countData(const QString &dataName, int days) const
+int DeviceSensor::countData(const QString &dataName, int days) const
 {
     // Count stored data
     QSqlQuery dataCount;
@@ -346,7 +346,7 @@ int DeviceSensors::countData(const QString &dataName, int days) const
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-float DeviceSensors::getTemp() const
+float DeviceSensor::getTemp() const
 {
     SettingsManager *s = SettingsManager::getInstance();
     if (s->getTempUnit() == "F")
@@ -355,7 +355,7 @@ float DeviceSensors::getTemp() const
     return getTempC();
 }
 
-QString DeviceSensors::getTempString() const
+QString DeviceSensor::getTempString() const
 {
     QString tempString;
 
@@ -370,7 +370,7 @@ QString DeviceSensors::getTempString() const
 
 /* ************************************************************************** */
 
-bool DeviceSensors::setDbLimits()
+bool DeviceSensor::setDbLimits()
 {
     bool status = false;
 
@@ -405,7 +405,7 @@ bool DeviceSensors::setDbLimits()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QVariantList DeviceSensors::getBackgroundDays(float maxValue, int maxDays)
+QVariantList DeviceSensor::getBackgroundDays(float maxValue, int maxDays)
 {
     QVariantList background;
 
@@ -422,7 +422,7 @@ QVariantList DeviceSensors::getBackgroundDays(float maxValue, int maxDays)
  *
  * First day is always xxx
  */
-QVariantList DeviceSensors::getLegendDays(int maxDays)
+QVariantList DeviceSensor::getLegendDays(int maxDays)
 {
     QVariantList legend;
     QString legendFormat = "dd";
@@ -454,7 +454,7 @@ QVariantList DeviceSensors::getLegendDays(int maxDays)
     return legend;
 }
 
-QVariantList DeviceSensors::getDataDays(const QString &dataName, int maxDays)
+QVariantList DeviceSensor::getDataDays(const QString &dataName, int maxDays)
 {
     QVariantList graphData;
     QDate currentDay = QDate::currentDate(); // today
@@ -523,7 +523,7 @@ QVariantList DeviceSensors::getDataDays(const QString &dataName, int maxDays)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-QVariantList DeviceSensors::getDataHours(const QString &dataName)
+QVariantList DeviceSensor::getDataHours(const QString &dataName)
 {
     QVariantList graphData;
     QDateTime currentTime = QDateTime::currentDateTime(); // right now
@@ -596,7 +596,7 @@ QVariantList DeviceSensors::getDataHours(const QString &dataName)
  * - We have data, so we go from last data available +24
  * - We don't have data, so we go from current hour to +24
  */
-QVariantList DeviceSensors::getLegendHours()
+QVariantList DeviceSensor::getLegendHours()
 {
     QVariantList legend;
 
@@ -614,7 +614,7 @@ QVariantList DeviceSensors::getLegendHours()
     return legend;
 }
 
-QVariantList DeviceSensors::getBackgroundDaytime(float maxValue)
+QVariantList DeviceSensor::getBackgroundDaytime(float maxValue)
 {
     QVariantList bgDaytime;
 
@@ -632,7 +632,7 @@ QVariantList DeviceSensors::getBackgroundDaytime(float maxValue)
     return bgDaytime;
 }
 
-QVariantList DeviceSensors::getBackgroundNighttime(float maxValue)
+QVariantList DeviceSensor::getBackgroundNighttime(float maxValue)
 {
     QVariantList bgNighttime;
 
@@ -652,7 +652,7 @@ QVariantList DeviceSensors::getBackgroundNighttime(float maxValue)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceSensors::updateAioMinMaxData(int maxDays)
+void DeviceSensor::updateAioMinMaxData(int maxDays)
 {
     qDeleteAll(m_aio_minmax_data);
     m_aio_minmax_data.clear();
@@ -726,10 +726,10 @@ void DeviceSensors::updateAioMinMaxData(int maxDays)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceSensors::getAioLinesData(int maxDays,
-                                    QtCharts::QDateTimeAxis *axis,
-                                    QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
-                                    QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi)
+void DeviceSensor::getAioLinesData(int maxDays,
+                                   QtCharts::QDateTimeAxis *axis,
+                                   QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                                   QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi)
 {
     if (!axis || !hygro || !condu || !temp || !lumi)
         return;
@@ -754,7 +754,8 @@ void DeviceSensors::getAioLinesData(int maxDays,
     while (graphData.next())
     {
         QDateTime date = QDateTime::fromString(graphData.value(0).toString(), "yyyy-MM-dd hh:mm:ss");
-        if (!minSet) {
+        if (!minSet)
+        {
             axis->setMin(date);
             minSet = true;
         }

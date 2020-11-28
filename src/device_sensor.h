@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_SENSORS_H
-#define DEVICE_SENSORS_H
+#ifndef DEVICE_SENSOR_H
+#define DEVICE_SENSOR_H
 /* ************************************************************************** */
 
 #include <QObject>
@@ -30,9 +30,9 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceSensors class
+ * \brief The DeviceSensor class
  */
-class DeviceSensors: public Device
+class DeviceSensor: public Device
 {
     Q_OBJECT
 
@@ -146,9 +146,9 @@ protected:
     virtual bool getSqlData(int minutes);
 
 public:
-    DeviceSensors(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceSensors(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    virtual ~DeviceSensors();
+    DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    virtual ~DeviceSensor();
 
 public slots:
     bool hasData() const;
@@ -234,4 +234,4 @@ public slots:
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_SENSORS_H
+#endif // DEVICE_SENSOR_H

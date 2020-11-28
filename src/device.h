@@ -90,11 +90,9 @@ Q_SIGNALS:
     void deviceUpdated(Device *d);
 
 protected:
-
     int m_deviceType = 0;           //!< See DeviceType enum
     int m_deviceCapabilities = 0;   //!< See DeviceCapabilities enum
     int m_deviceSensors = 0;        //!< See DeviceSensors enum
-    int m_capabilities = 0;         //!< See DeviceCapabilities enum
 
     // Device data
     QString m_deviceAddress;
@@ -105,6 +103,7 @@ protected:
     QString m_associatedName; // was m_plantName
     bool m_firmware_uptodate = false;
     int m_battery = -1;
+
     // Device settings
     bool m_isInside = false;
 
@@ -145,7 +144,7 @@ protected:
     virtual void refreshDataCanceled();
     virtual void refreshDataFinished(bool status, bool cached = false);
 
-    //
+    // Get data
     bool getBleData();
 
     virtual bool getSqlInfos();
@@ -203,34 +202,34 @@ public slots:
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
 
-    bool hasBatteryLevel() const { return (m_capabilities & DEVICE_BATTERY); }
-    bool hasClock() const { return (m_capabilities & DEVICE_CLOCK); }
-    bool hasLED() const { return (m_capabilities & DEVICE_LED); }
-    bool hasHistory() const { return (m_capabilities & DEVICE_HISTORY); }
-    bool hasLastMove() const { return (m_capabilities & DEVICE_LAST_MOVE); }
-    bool hasWaterTank() const { return (m_capabilities & DEVICE_WATER_TANK); }
-    bool hasButtons() const { return (m_capabilities & DEVICE_BUTTONS); }
+    bool hasBatteryLevel() const { return (m_deviceCapabilities & DEVICE_BATTERY); }
+    bool hasClock() const { return (m_deviceCapabilities & DEVICE_CLOCK); }
+    bool hasLED() const { return (m_deviceCapabilities & DEVICE_LED); }
+    bool hasHistory() const { return (m_deviceCapabilities & DEVICE_HISTORY); }
+    bool hasLastMove() const { return (m_deviceCapabilities & DEVICE_LAST_MOVE); }
+    bool hasWaterTank() const { return (m_deviceCapabilities & DEVICE_WATER_TANK); }
+    bool hasButtons() const { return (m_deviceCapabilities & DEVICE_BUTTONS); }
 
-    bool hasSoilMoistureSensor() const { return (m_capabilities & DEVICE_SOIL_MOISTURE); }
-    bool hasSoilConductivitySensor() const { return (m_capabilities & DEVICE_SOIL_CONDUCTIVITY); }
-    bool hasSoilTemperatureSensor() const { return (m_capabilities & DEVICE_SOIL_TEMPERATURE); }
-    bool hasSoilPhSensor() const { return (m_capabilities & DEVICE_SOIL_PH); }
+    bool hasSoilMoistureSensor() const { return (m_deviceSensors & DEVICE_SOIL_MOISTURE); }
+    bool hasSoilConductivitySensor() const { return (m_deviceSensors & DEVICE_SOIL_CONDUCTIVITY); }
+    bool hasSoilTemperatureSensor() const { return (m_deviceSensors & DEVICE_SOIL_TEMPERATURE); }
+    bool hasSoilPhSensor() const { return (m_deviceSensors & DEVICE_SOIL_PH); }
 
-    bool hasTemperatureSensor() const { return (m_capabilities & DEVICE_TEMPERATURE); }
-    bool hasHumiditySensor() const { return (m_capabilities & DEVICE_HUMIDITY); }
-    bool hasLuminositySensor() const { return (m_capabilities & DEVICE_LIGHT); }
-    bool hasUvSensor() const { return (m_capabilities & DEVICE_UV); }
-    bool hasBarometer() const { return (m_capabilities & DEVICE_BAROMETER); }
-    bool hasPM1Sensor() const { return (m_capabilities & DEVICE_PM1); }
-    bool hasPM25Sensor() const { return (m_capabilities & DEVICE_PM25); }
-    bool hasPM10Sensor() const { return (m_capabilities & DEVICE_PM10); }
-    bool hasO2Sensor() const { return (m_capabilities & DEVICE_O2); }
-    bool hasO3Sensor() const { return (m_capabilities & DEVICE_O3); }
-    bool hasCoSensor() const { return (m_capabilities & DEVICE_CO); }
-    bool hasCo2Sensor() const { return (m_capabilities & DEVICE_CO2); }
-    bool hasNo2Sensor() const { return (m_capabilities & DEVICE_NO2); }
-    bool hasVocSensor() const { return (m_capabilities & DEVICE_VOC); }
-    bool hasGeigerCounter() const { return (m_capabilities & DEVICE_GEIGER); }
+    bool hasTemperatureSensor() const { return (m_deviceSensors & DEVICE_TEMPERATURE); }
+    bool hasHumiditySensor() const { return (m_deviceSensors & DEVICE_HUMIDITY); }
+    bool hasLuminositySensor() const { return (m_deviceSensors & DEVICE_LIGHT); }
+    bool hasUvSensor() const { return (m_deviceSensors & DEVICE_UV); }
+    bool hasBarometer() const { return (m_deviceSensors & DEVICE_BAROMETER); }
+    bool hasPM1Sensor() const { return (m_deviceSensors & DEVICE_PM1); }
+    bool hasPM25Sensor() const { return (m_deviceSensors & DEVICE_PM25); }
+    bool hasPM10Sensor() const { return (m_deviceSensors & DEVICE_PM10); }
+    bool hasO2Sensor() const { return (m_deviceSensors & DEVICE_O2); }
+    bool hasO3Sensor() const { return (m_deviceSensors & DEVICE_O3); }
+    bool hasCoSensor() const { return (m_deviceSensors & DEVICE_CO); }
+    bool hasCo2Sensor() const { return (m_deviceSensors & DEVICE_CO2); }
+    bool hasNo2Sensor() const { return (m_deviceSensors & DEVICE_NO2); }
+    bool hasVocSensor() const { return (m_deviceSensors & DEVICE_VOC); }
+    bool hasGeigerCounter() const { return (m_deviceSensors & DEVICE_GEIGER); }
 };
 
 /* ************************************************************************** */

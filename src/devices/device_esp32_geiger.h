@@ -23,7 +23,7 @@
 #define DEVICE_ESP32_GEIGER_H
 /* ************************************************************************** */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
  * - WatchFlower/doc/geigercounter-api.md
  * - https://github.com/emericg/esp32-environmental-sensors/blob/master/GeigerCounter/doc/geigercounter-ble-api.md
  */
-class DeviceEsp32Geiger: public DeviceSensors
+class DeviceEsp32Geiger: public DeviceSensor
 {
     Q_OBJECT
 

@@ -23,7 +23,7 @@
 #define DEVICE_ESP32_HIGROW_H
 /* ************************************************************************** */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
  * - WatchFlower/doc/higrow-api.md
  * - https://github.com/emericg/esp32-environmental-sensors/blob/master/HiGrow/doc/higrow-ble-api.md
  */
-class DeviceEsp32HiGrow: public DeviceSensors
+class DeviceEsp32HiGrow: public DeviceSensor
 {
     Q_OBJECT
 

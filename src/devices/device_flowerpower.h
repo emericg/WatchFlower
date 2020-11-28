@@ -23,7 +23,7 @@
 #define DEVICE_FLOWERPOWER_H
 /* ************************************************************************** */
 
-#include "device_sensors.h"
+#include "device_sensor.h"
 
 #include <cstdint>
 
@@ -42,7 +42,7 @@
  * - WatchFlower/doc/flowerpower-api.md
  * - https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf
  */
-class DeviceFlowerPower: public DeviceSensors
+class DeviceFlowerPower: public DeviceSensor
 {
     Q_OBJECT
 

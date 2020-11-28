@@ -178,7 +178,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         }
         if (role == SoilMoistureRole)
         {
-            DeviceSensors *sensor = dynamic_cast<DeviceSensors *>(device);
+            DeviceSensor *sensor = dynamic_cast<DeviceSensor *>(device);
             if (sensor && sensor->hasSoilMoistureSensor())
                 if (sensor->getHumidity() > -1)
                     return sensor->getHumidity();

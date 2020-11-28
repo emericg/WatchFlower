@@ -39,25 +39,23 @@
 /* ************************************************************************** */
 
 DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent):
-    DeviceSensors(deviceAddr, deviceName, parent)
+    DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_SOIL_MOISTURE;
-    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
-    m_capabilities += DEVICE_TEMPERATURE;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceSensors += DEVICE_SOIL_MOISTURE;
+    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DEVICE_TEMPERATURE;
 }
 
 DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensors(d, parent)
+    DeviceSensor(d, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_SOIL_MOISTURE;
-    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
-    m_capabilities += DEVICE_TEMPERATURE;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceSensors += DEVICE_SOIL_MOISTURE;
+    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DEVICE_TEMPERATURE;
 }
 
 DeviceRopot::~DeviceRopot()

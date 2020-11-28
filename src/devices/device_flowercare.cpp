@@ -38,29 +38,27 @@
 /* ************************************************************************** */
 
 DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent):
-    DeviceSensors(deviceAddr, deviceName, parent)
+    DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_LED;
-    m_capabilities += DEVICE_SOIL_MOISTURE;
-    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
-    m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_LIGHT;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceCapabilities += DEVICE_LED;
+    m_deviceSensors += DEVICE_SOIL_MOISTURE;
+    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceSensors += DEVICE_LIGHT;
 }
 
 DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensors(d, parent)
+    DeviceSensor(d, parent)
 {
     m_deviceType = DEVICE_PLANTSENSOR;
-
-    m_capabilities += DEVICE_BATTERY;
-    m_capabilities += DEVICE_LED;
-    m_capabilities += DEVICE_SOIL_MOISTURE;
-    m_capabilities += DEVICE_SOIL_CONDUCTIVITY;
-    m_capabilities += DEVICE_TEMPERATURE;
-    m_capabilities += DEVICE_LIGHT;
+    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceCapabilities += DEVICE_LED;
+    m_deviceSensors += DEVICE_SOIL_MOISTURE;
+    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceSensors += DEVICE_LIGHT;
 }
 
 DeviceFlowerCare::~DeviceFlowerCare()
