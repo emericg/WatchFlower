@@ -74,7 +74,8 @@ Rectangle {
             button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
             visible: (appContent.state === "DeviceThermo")
             onButtonClicked: {
-                deviceDataButtonClicked()
+                if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
+                else settingsManager.graphThermometer = "minmax"
                 menuSelected(index)
                 close()
             }
