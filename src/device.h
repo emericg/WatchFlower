@@ -46,16 +46,6 @@ class Device: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
-    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
-
-    Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
-    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
-    Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
-
-    Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
-    Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-
     Q_PROPERTY(int deviceType READ getDeviceType NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
@@ -73,12 +63,19 @@ class Device: public QObject
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
     Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
-    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
-
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY sensorUpdated)
+    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
+
+    Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
+    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
+    Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
+    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
+    Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
+    Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -105,7 +102,7 @@ protected:
     int m_battery = -1;
 
     // Device settings
-    bool m_isInside = false;
+    bool m_isInside = true;
 
     // Status
     int m_status = 0;           //!< See DeviceStatus enum

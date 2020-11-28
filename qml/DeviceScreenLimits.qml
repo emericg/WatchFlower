@@ -96,7 +96,7 @@ Item {
         itemCondu.visible = currentDevice.hasSoilConductivitySensor()
     }
 
-    property var outsideMode: (currentDevice && currentDevice.limitLuxMax > 10000)
+    property var outsideMode: (currentDevice && !currentDevice.deviceIsInside)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -310,7 +310,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                height: 280
+                height: itemDeviceRow.height + 24
                 color: Theme.colorForeground
 
                 ImageSvg {
@@ -326,13 +326,17 @@ Item {
 
                 Column {
                     id: itemDeviceRow
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 0
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    spacing: 6
 
                     Row {
                         height: 32
-                        spacing: 12
+                        spacing: 16
 
                         Text {
                             text: currentDevice.deviceName
@@ -453,41 +457,14 @@ Item {
                         }
                     }
 
-                    Item { width: 8; height: 8; }
+                    Item { width: 8; height: 8; } // spacer
 
                     Grid {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         spacing: 12
                         columns: 2
-                        rows: 3
-
-                        Row {
-                            spacing: 12
-                            visible: currentDevice.hasTemperatureSensor()
-
-                            ItemImageButton {
-                                width: 40; height: 40;
-                                border: true
-                                background: true
-                                backgroundColor: "white"
-                                iconColor: Theme.colorText
-                                source: "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
-                            }
-                            Column {
-                                anchors.verticalCenter: parent.verticalCenter
-                                Text {
-                                    text: "Temperature"
-                                    font.pixelSize: 13
-                                    color: Theme.colorText
-                                }
-                                Text {
-                                    text: "-15 → 50°C ±0.5°C"
-                                    font.pixelSize: 13
-                                    color: Theme.colorText
-                                }
-                            }
-                        }
+                        //rows: 3
 
                         Row {
                             spacing: 12
@@ -504,8 +481,117 @@ Item {
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text {
-                                    text: "Soil moisture"
+                                    text: qsTr("Soil moisture")
+                                    font.pixelSize: 15
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "0 → 100% ±1%"
                                     font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasSoilConductivitySensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                rotation: 90
+                                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: qsTr("Soil fertility")
+                                    font.pixelSize: 15
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "0 → 100 uc/cm ±1%"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasSoilTemperatureSensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: qsTr("Soil temperature")
+                                    font.pixelSize: 15
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "-15 → 50°C ±0.5°C"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasTemperatureSensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: qsTr("Temperature")
+                                    font.pixelSize: 15
+                                    color: Theme.colorText
+                                }
+                                Text {
+                                    text: "-15 → 50°C ±0.5°C"
+                                    font.pixelSize: 13
+                                    color: Theme.colorText
+                                }
+                            }
+                        }
+
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasHumiditySensor()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                            }
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: qsTr("Humidity")
+                                    font.pixelSize: 15
                                     color: Theme.colorText
                                 }
                                 Text {
@@ -531,40 +617,12 @@ Item {
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text {
-                                    text: "Luminosity"
-                                    font.pixelSize: 13
+                                    text: qsTr("Luminosity")
+                                    font.pixelSize: 15
                                     color: Theme.colorText
                                 }
                                 Text {
                                     text: "0 → 100k lux ±100lux"
-                                    font.pixelSize: 13
-                                    color: Theme.colorText
-                                }
-                            }
-                        }
-
-                        Row {
-                            spacing: 12
-                            visible: currentDevice.hasSoilConductivitySensor()
-
-                            ItemImageButton {
-                                width: 40; height: 40;
-                                border: true
-                                background: true
-                                backgroundColor: "white"
-                                iconColor: Theme.colorText
-                                rotation: 90
-                                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
-                            }
-                            Column {
-                                anchors.verticalCenter: parent.verticalCenter
-                                Text {
-                                    text: "Soil fertility"
-                                    font.pixelSize: 13
-                                    color: Theme.colorText
-                                }
-                                Text {
-                                    text: "0 → 100 uc/cm ±1%"
                                     font.pixelSize: 13
                                     color: Theme.colorText
                                 }
@@ -585,8 +643,8 @@ Item {
                             }
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
-                                text: "LED blink"
-                                font.pixelSize: 12
+                                text: qsTr("LED indicator")
+                                font.pixelSize: 15
                                 color: Theme.colorText
                             }
                         }
@@ -604,8 +662,65 @@ Item {
                             }
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
-                                text: "Data history"
-                                font.pixelSize: 12
+                                text: qsTr("Data history")
+                                font.pixelSize: 15
+                                color: Theme.colorText
+                            }
+                        }
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasClock()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: qsTr("Clock")
+                                font.pixelSize: 15
+                                color: Theme.colorText
+                            }
+                        }
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasWaterTank()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: qsTr("Water tank")
+                                font.pixelSize: 15
+                                color: Theme.colorText
+                            }
+                        }
+                        Row {
+                            spacing: 12
+                            visible: currentDevice.hasButtons()
+
+                            ItemImageButton {
+                                width: 40; height: 40;
+                                border: true
+                                background: true
+                                backgroundColor: "white"
+                                iconColor: Theme.colorText
+                                source: "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: qsTr("Buttons")
+                                font.pixelSize: 15
                                 color: Theme.colorText
                             }
                         }
@@ -629,9 +744,6 @@ Item {
                     height: isDesktop ? 112 : 96
                     anchors.bottom: parent.bottom
 
-                    // temp: 12 - 32
-                    // lumi: 0 - 8k
-
                     color: Theme.colorForeground
                     opacity: outsideMode ? 0.5 : 1
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
@@ -639,7 +751,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            outsideMode = false
+                            currentDevice.setInside(true)
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
                             rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }
@@ -665,12 +777,9 @@ Item {
 
                 Rectangle {
                     id: rectangleOutside
-                    width: parent.width/2 - parent.spacing/2
+                    width: (parent.width/2 - parent.spacing/2)
                     height: isDesktop ? 112 : 96
                     anchors.bottom: parent.bottom
-
-                    // temp: 0 - 50
-                    // lumi: 0 - 100k
 
                     color: Theme.colorForeground
                     opacity: outsideMode ? 1 : 0.5
@@ -679,7 +788,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            outsideMode = true
+                            currentDevice.setInside(false)
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
                             rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }

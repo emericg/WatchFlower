@@ -89,6 +89,9 @@ Item {
         // Max axis for conductivity
         axisCondu.max = currentDevice.conduMax*2.0;
 
+        // Max axis for luminosity?
+        axisLumi.max = currentDevice.luxMax*3.0;
+
         // Min axis computation, only for thermometers
         if (!currentDevice.hasSoilMoistureSensor()) {
             axisHygro.min = currentDevice.hygroMin*0.80;
@@ -119,7 +122,7 @@ Item {
                 tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
-                axisLumi.max = currentDevice.luxMax*1.20;
+                axisLumi.max = currentDevice.luxMax*1.5;
             } else {
                 hygroData.width = 3 // Soil moisture is primary
             }
@@ -141,10 +144,10 @@ Item {
         backgroundColor: "transparent"
         animationOptions: ChartView.NoAnimation
 
-        ValueAxis { id: axisHygro; visible: false; gridVisible: true; }
-        ValueAxis { id: axisTemp; visible: false; gridVisible: true; }
-        ValueAxis { id: axisLumi; visible: false; gridVisible: true; }
-        ValueAxis { id: axisCondu; visible: false; gridVisible: true; }
+        ValueAxis { id: axisHygro; visible: false; gridVisible: false; }
+        ValueAxis { id: axisTemp; visible: false; gridVisible: false; }
+        ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
+        ValueAxis { id: axisCondu; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
                        labelsFont.pixelSize: 14; labelsColor: Theme.colorText;
                        gridLineColor: Theme.colorSeparator; }
