@@ -115,7 +115,7 @@ protected:
     QTimer m_updateTimer;
     void setUpdateTimer(int updateIntervalMin = 0);
 
-    int m_timeoutInterval = 0;
+    int m_timeoutInterval = 15;
     QTimer m_timeoutTimer;
     void setTimeoutTimer();
 
