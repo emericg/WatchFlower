@@ -24,6 +24,7 @@
 /* ************************************************************************** */
 
 #include <QObject>
+#include <QString>
 
 /* ************************************************************************** */
 
@@ -39,23 +40,28 @@ class DatabaseManager: public QObject
     DatabaseManager();
     ~DatabaseManager();
 
-    bool m_dbAvailable = false;
-    bool m_dbOpen = false;
+    bool m_dbInternalAvailable = false;
+    bool m_dbInternalOpen = false;
+    bool m_dbExternalAvailable = false;
+    bool m_dbExternalOpen = false;
 
-    bool openDatabase();
+    bool openDatabase_sqlite();
+    bool openDatabase_mysql();
     void closeDatabase();
 
     void createDatabase();
     void resetDatabase();
     void deleteDatabase();
 
+    bool tableExists(const QString &tableName);
     void migrateDatabase();
     bool migrate_v1v2();
 
 public:
     static DatabaseManager *getInstance();
 
-    Q_INVOKABLE bool hasDatabase() const { return m_dbOpen; }
+    Q_INVOKABLE bool hasDatabaseInternal() const { return m_dbInternalOpen; }
+    Q_INVOKABLE bool hasDatabaseExternal() const { return m_dbExternalOpen; }
 };
 
 /* ************************************************************************** */

@@ -154,6 +154,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/orderBy"))
             m_orderBy = settings.value("settings/orderBy").toString();
 
+        if (settings.contains("settings/externalDb"))
+            m_externalDb = settings.value("settings/externalDb").toString();
+
         status = true;
     }
     else
@@ -192,6 +195,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/orderBy", m_orderBy);
+        settings.setValue("settings/externalDb", m_externalDb);
 
         if (settings.status() == QSettings::NoError)
         {
@@ -454,6 +458,16 @@ void SettingsManager::setOrderBy(const QString &value)
         m_orderBy = value;
         writeSettings();
         Q_EMIT orderByChanged();
+    }
+}
+
+void SettingsManager::setExternalDb(const QString &value)
+{
+    if (m_externalDb != value)
+    {
+        m_externalDb = value;
+        writeSettings();
+        Q_EMIT externalDbChanged();
     }
 }
 

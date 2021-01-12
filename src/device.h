@@ -148,6 +148,9 @@ protected:
     virtual bool getSqlData(int minutes);
     virtual bool getSqlLimits();
 
+    bool m_dbInternal = false;
+    bool m_dbExternal = false;
+
 public:
     Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);

@@ -21,6 +21,7 @@
 
 #include "device_sensor.h"
 #include "SettingsManager.h"
+#include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "NotificationManager.h"
 #include "utils/utils_versionchecker.h"
@@ -37,11 +38,21 @@
 DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent) :
     Device(deviceAddr, deviceName, parent)
 {
+    // Database
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (db) {
+        m_dbInternal = db->hasDatabaseInternal();
+        m_dbExternal = db->hasDatabaseExternal();
+    }
+
     // Load device infos and limits
-    getSqlInfos();
-    getSqlLimits();
-    // Load initial data into the GUI (if they are no more than 12h old)
-    getSqlData(12*60);
+    if (m_dbInternal || m_dbExternal)
+    {
+        getSqlInfos();
+        getSqlLimits();
+        // Load initial data into the GUI (if they are no more than 12h old)
+        getSqlData(12*60);
+    }
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
@@ -54,11 +65,21 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     Device(d, parent)
 {
+    // Database
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (db) {
+        m_dbInternal = db->hasDatabaseInternal();
+        m_dbExternal = db->hasDatabaseExternal();
+    }
+
     // Load device infos and limits
-    getSqlInfos();
-    getSqlLimits();
-    // Load initial data into the GUI (if they are no more than 12h old)
-    getSqlData(12*60);
+    if (m_dbInternal || m_dbExternal)
+    {
+        getSqlInfos();
+        getSqlLimits();
+        // Load initial data into the GUI (if they are no more than 12h old)
+        getSqlData(12*60);
+    }
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
@@ -229,9 +250,18 @@ bool DeviceSensor::getSqlData(int minutes)
     bool status = false;
 
     QSqlQuery cachedData;
-    cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
-                       "FROM plantData " \
-                       "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+    if (m_dbInternal) // sqlite
+    {
+        cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                           "FROM plantData " \
+                           "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                           "FROM plantData " \
+                           "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW());");
+    }
     cachedData.bindValue(":deviceAddr", getAddress());
 
     if (cachedData.exec() == false)
@@ -257,7 +287,15 @@ bool DeviceSensor::getSqlData(int minutes)
 
         QString datetime = cachedData.value(0).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
-
+/*
+        qDebug() << ">> timestamp" << m_lastUpdate;
+        qDebug() << "- m_soil_moisture:" << m_soil_moisture;
+        qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
+        qDebug() << "- m_soil_temperature:" << m_soil_temperature;
+        qDebug() << "- m_temperature:" << m_temperature;
+        qDebug() << "- m_humidity:" << m_humidity;
+        qDebug() << "- m_luminosity:" << m_luminosity;
+*/
         status = true;
     }
 
@@ -328,10 +366,20 @@ int DeviceSensor::countData(const QString &dataName, int days) const
 {
     // Count stored data
     QSqlQuery dataCount;
-    dataCount.prepare("SELECT COUNT(" + dataName + ")" \
-                      "FROM plantData " \
-                      "WHERE deviceAddr = :deviceAddr " \
-                        "AND " + dataName + " > -99 AND ts >= datetime('now','-" + QString::number(days) + " day');");
+    if (m_dbInternal) // sqlite
+    {
+        dataCount.prepare("SELECT COUNT(" + dataName + ")" \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND " + dataName + " > -99 AND ts >= datetime('now','-" + QString::number(days) + " day');");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        dataCount.prepare("SELECT COUNT(" + dataName + ")" \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND " + dataName + " > -99 AND ts >= DATE_SUB(NOW(), INTERVAL " + QString::number(days) + " DAY);");
+    }
     dataCount.bindValue(":deviceAddr", getAddress());
 
     if (dataCount.exec() == false)
@@ -464,11 +512,22 @@ QVariantList DeviceSensor::getDataDays(const QString &dataName, int maxDays)
     QDate firstDay;
 
     QSqlQuery sqlData;
-    sqlData.prepare("SELECT strftime('%Y-%m-%d', ts), avg(" + dataName + ") as 'avg'" \
-                    "FROM plantData " \
-                    "WHERE deviceAddr = :deviceAddr " \
-                    "GROUP BY strftime('%Y-%m-%d', ts) " \
-                    "ORDER BY ts DESC;");
+    if (m_dbInternal) // sqlite
+    {
+        sqlData.prepare("SELECT strftime('%Y-%m-%d', ts), avg(" + dataName + ") as 'avg'" \
+                        "FROM plantData " \
+                        "WHERE deviceAddr = :deviceAddr " \
+                        "GROUP BY strftime('%Y-%m-%d', ts) " \
+                        "ORDER BY ts DESC;");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        sqlData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d'), avg(" + dataName + ") as 'avg'" \
+                            "FROM plantData " \
+                            "WHERE deviceAddr = :deviceAddr " \
+                            "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
+                            "ORDER BY ts DESC;");
+    }
     sqlData.bindValue(":deviceAddr", getAddress());
 
     if (sqlData.exec() == false)
@@ -533,11 +592,22 @@ QVariantList DeviceSensor::getDataHours(const QString &dataName)
     QDateTime firstTime;
 
     QSqlQuery sqlData;
-    sqlData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
-                    "FROM plantData " \
-                    "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                    "GROUP BY strftime('%d-%H', ts) " \
-                    "ORDER BY ts DESC;");
+    if (m_dbInternal) // sqlite
+    {
+        sqlData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), avg(" + dataName + ") as 'avg'" \
+                        "FROM plantData " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                        "GROUP BY strftime('%d-%H', ts) " \
+                        "ORDER BY ts DESC;");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        sqlData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%m:%s'), avg(" + dataName + ") as 'avg'" \
+                        "FROM plantData " \
+                        "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                        "GROUP BY DATE_FORMAT(ts, '%d-%H') " \
+                        "ORDER BY ts DESC;");
+    }
     sqlData.bindValue(":deviceAddr", getAddress());
 
     if (sqlData.exec() == false)
@@ -663,13 +733,26 @@ void DeviceSensor::updateAioMinMaxData(int maxDays)
     AioMinMax *previousdata = nullptr;
 
     QSqlQuery graphData;
-    graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
-                      " min(temperature), avg(temperature), max(temperature), " \
-                      " min(humidity), max(humidity) " \
-                      "FROM plantData " \
-                      "WHERE deviceAddr = :deviceAddr " \
-                      "GROUP BY strftime('%Y-%m-%d', ts)" \
-                      "ORDER BY ts DESC;");
+    if (m_dbInternal) // sqlite
+    {
+        graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
+                          " min(temperature), avg(temperature), max(temperature), " \
+                          " min(humidity), max(humidity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                          "GROUP BY strftime('%Y-%m-%d', ts) " \
+                          "ORDER BY ts DESC;");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d'), " \
+                          " min(temperature), avg(temperature), max(temperature), " \
+                          " min(humidity), max(humidity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                          "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
+                          "ORDER BY ts DESC;");
+    }
     graphData.bindValue(":deviceAddr", getAddress());
 
     if (graphData.exec() == false)
@@ -737,9 +820,18 @@ void DeviceSensor::getAioLinesData(int maxDays,
         return;
 
     QSqlQuery graphData;
-    graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
-                      "FROM plantData " \
-                      "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(maxDays) + " days');");
+    if (m_dbInternal) // sqlite
+    {
+        graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(maxDays) + " days');");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr AND ts_full >= DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY);");
+    }
     graphData.bindValue(":deviceAddr", getAddress());
 
     if (graphData.exec() == false)

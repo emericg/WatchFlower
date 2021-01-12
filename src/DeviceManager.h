@@ -57,7 +57,8 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
 
-    bool m_db = false;
+    bool m_dbInternal = false;
+    bool m_dbExternal = false;
     bool m_btA = false;
     bool m_btE = false;
 
@@ -112,6 +113,7 @@ public slots:
 
     void updateDevice(const QString &address);
     void removeDevice(const QString &address);
+    void removeDeviceData(const QString &address);
 
     void scanDevices();
     void listenDevices();

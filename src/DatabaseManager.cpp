@@ -20,6 +20,7 @@
  */
 
 #include "DatabaseManager.h"
+#include "SettingsManager.h"
 
 #include <QDir>
 #include <QFile>
@@ -49,7 +50,8 @@ DatabaseManager *DatabaseManager::getInstance()
 
 DatabaseManager::DatabaseManager()
 {
-    openDatabase();
+    openDatabase_sqlite();
+    //openDatabase_mysql();
 }
 
 DatabaseManager::~DatabaseManager()
@@ -60,13 +62,13 @@ DatabaseManager::~DatabaseManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool DatabaseManager::openDatabase()
+bool DatabaseManager::openDatabase_sqlite()
 {
     if (QSqlDatabase::isDriverAvailable("QSQLITE"))
     {
-        m_dbAvailable = true;
+        m_dbInternalAvailable = true;
 
-        if (m_dbOpen)
+        if (m_dbInternalOpen)
         {
             closeDatabase();
         }
@@ -91,13 +93,13 @@ bool DatabaseManager::openDatabase()
 
                 if (dbFile.isOpen())
                 {
-                    m_dbOpen = true;
+                    m_dbInternalOpen = true;
                 }
                 else
                 {
                     if (dbFile.open())
                     {
-                        m_dbOpen = true;
+                        m_dbInternalOpen = true;
 
                         // Migrations //////////////////////////////////////////
 
@@ -138,10 +140,76 @@ bool DatabaseManager::openDatabase()
     else
     {
         qWarning() << "> SQLite is NOT available";
-        m_dbAvailable = false;
+        m_dbInternalAvailable = false;
     }
 
-    return m_dbOpen;
+    return m_dbInternalOpen;
+}
+/* ************************************************************************** */
+
+bool DatabaseManager::openDatabase_mysql()
+{
+    if (QSqlDatabase::isDriverAvailable("QMYSQL"))
+    {
+        m_dbExternalAvailable = true;
+
+        if (m_dbExternalOpen)
+        {
+            closeDatabase();
+        }
+
+        SettingsManager *sm = SettingsManager::getInstance();
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+        db.setHostName(sm->getExternalDb());
+        db.setPort(3306);
+        db.setDatabaseName("watchflower");
+        db.setUserName("watchflower");
+        db.setPassword("watchflower");
+
+        if (db.isOpen())
+        {
+            m_dbExternalOpen = true;
+        }
+        else
+        {
+            if (db.open())
+            {
+                m_dbExternalOpen = true;
+
+                // Migrations //////////////////////////////////////////
+
+                // must be done before the creation, so we migrate old data tables
+                // instead of creating new empty tables
+
+                migrateDatabase();
+
+                // Check if our tables exists //////////////////////////
+
+                createDatabase();
+
+                // Delete everything 90+ days old ///////////////////////
+
+                // DATETIME: YYY-MM-JJ HH:MM:SS
+                QSqlQuery sanitizeData;
+                sanitizeData.prepare("DELETE FROM plantData WHERE ts < DATE_SUB(NOW(), INTERVAL 90 DAY)");
+
+                if (sanitizeData.exec() == false)
+                    qWarning() << "> sanitizeData.exec() ERROR" << sanitizeData.lastError().type() << ":" << sanitizeData.lastError().text();
+            }
+            else
+            {
+                qWarning() << "Cannot open database... Error:" << db.lastError();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "> MySQL is NOT available";
+        m_dbExternalAvailable = false;
+    }
+
+    return m_dbExternalOpen;
 }
 
 /* ************************************************************************** */
@@ -157,7 +225,9 @@ void DatabaseManager::closeDatabase()
         db.close();
         db = QSqlDatabase();
         QSqlDatabase::removeDatabase(conName);
-        m_dbOpen = false;
+
+        m_dbInternalOpen = false;
+        m_dbExternalOpen = false;
     }
 }
 
@@ -175,7 +245,9 @@ void DatabaseManager::resetDatabase()
         db.close();
         db = QSqlDatabase();
         QSqlDatabase::removeDatabase(conName);
-        m_dbOpen = false;
+
+        m_dbInternalOpen = false;
+        m_dbExternalOpen = false;
 
         // remove db file
         QFile dbFile(dbName);
@@ -186,11 +258,38 @@ void DatabaseManager::resetDatabase()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DatabaseManager::tableExists(const QString &tableName)
+{
+    bool result = false;
+
+    if (tableName.isEmpty())
+    {
+        qWarning() << "tableExists() with empty table name!";
+    }
+    else
+    {
+        QSqlQuery checkTable;
+        if (m_dbInternalOpen) // sqlite
+        {
+            checkTable.exec("PRAGMA table_info(" + tableName + ");");
+        }
+        else if (m_dbExternalOpen) // mysql
+        {
+            checkTable.exec("SELECT * FROM information_schema.tables WHERE table_schema = 'watchflower' AND table_name = '" + tableName + "' LIMIT 1;");
+            //checkTable.exec("SELECT * FROM information_schema.TABLES WHERE TABLE_NAME = '" + tableName + "' AND TABLE_SCHEMA in (SELECT DATABASE());");
+        }
+        if (checkTable.next())
+        {
+            result = true;
+        }
+    }
+
+    return result;
+}
+
 void DatabaseManager::createDatabase()
 {
-    QSqlQuery checkVersion;
-    checkVersion.exec("PRAGMA table_info(version);");
-    if (!checkVersion.next())
+    if (!tableExists("version"))
     {
         qDebug() << "+ Adding 'version' table to local database";
 
@@ -209,9 +308,7 @@ void DatabaseManager::createDatabase()
         }
     }
 
-    QSqlQuery checkDevices;
-    checkDevices.exec("PRAGMA table_info(devices);");
-    if (!checkDevices.next())
+    if (!tableExists("devices"))
     {
         qDebug() << "+ Adding 'devices' table to local database";
 
@@ -232,9 +329,7 @@ void DatabaseManager::createDatabase()
             qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":" << createDevices.lastError().text();
     }
 
-    QSqlQuery checkData;
-    checkData.exec("PRAGMA table_info(plantData);");
-    if (!checkData.next())
+    if (!tableExists("plantData"))
     {
         qDebug() << "+ Adding 'plantData' table to local database";
 
@@ -250,7 +345,7 @@ void DatabaseManager::createDatabase()
                              "temperature FLOAT," \
                              "humidity FLOAT," \
                              "luminosity INT," \
-                           " PRIMARY KEY(deviceAddr, ts) " \
+                           " PRIMARY KEY(deviceAddr, ts), " \
                            " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                            ");");
 
@@ -258,9 +353,7 @@ void DatabaseManager::createDatabase()
             qWarning() << "> createData.exec() ERROR" << createData.lastError().type() << ":" << createData.lastError().text();
     }
 
-    QSqlQuery checkLimits;
-    checkLimits.exec("PRAGMA table_info(plantLimits);");
-    if (!checkLimits.next())
+    if (!tableExists("plantLimits"))
     {
         qDebug() << "+ Adding 'plantLimits' table to local database";
         QSqlQuery createLimits;
@@ -280,7 +373,7 @@ void DatabaseManager::createDatabase()
                                "luxMax INT," \
                                "mmolMin INT," \
                                "mmolMax INT," \
-                             " PRIMARY KEY(deviceAddr) " \
+                             " PRIMARY KEY(deviceAddr), " \
                              " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                              ");");
 
@@ -288,9 +381,7 @@ void DatabaseManager::createDatabase()
             qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
     }
 
-    QSqlQuery checkSensorData;
-    checkSensorData.exec("PRAGMA table_info(sensorData);");
-    if (!checkSensorData.next())
+    if (!tableExists("sensorData"))
     {
         qDebug() << "+ Adding 'sensorData' table to local database";
         QSqlQuery createSensorData;
@@ -312,7 +403,7 @@ void DatabaseManager::createDatabase()
                                    "no2 INT," \
                                    "voc INT," \
                                    "geiger FLOAT," \
-                                 " PRIMARY KEY(deviceAddr) " \
+                                 " PRIMARY KEY(deviceAddr), " \
                                  " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                                  ");");
 

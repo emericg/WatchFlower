@@ -65,6 +65,8 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
 
+    Q_PROPERTY(QString externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
+
     QSize m_appSize;
     QSize m_appPosition;
     unsigned m_appVisibility = 2;
@@ -89,6 +91,8 @@ class SettingsManager: public QObject
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
     QString m_orderBy = "location";
+
+    QString m_externalDb;
 
     // Singleton
     static SettingsManager *instance;
@@ -118,6 +122,7 @@ Q_SIGNALS:
     void bigIndicatorChanged();
     void dynaScaleChanged();
     void orderByChanged();
+    void externalDbChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -179,6 +184,9 @@ public:
 
     QString getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);
+
+    QString getExternalDb() const { return m_externalDb; }
+    void setExternalDb(const QString &value);
 
     // Utils
     Q_INVOKABLE void resetSettings();

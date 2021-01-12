@@ -80,11 +80,12 @@ DeviceManager::DeviceManager()
     // Database
     DatabaseManager *db = DatabaseManager::getInstance();
     if (db) {
-        m_db = db->hasDatabase();
+        m_dbInternal = db->hasDatabaseInternal();
+        m_dbExternal = db->hasDatabaseExternal();
     }
 
     // Load saved devices
-    if (m_db)
+    if (m_dbInternal || m_dbExternal)
     {
         qDebug() << "Scanning (database) for devices...";
 
@@ -460,7 +461,7 @@ void DeviceManager::deviceDiscoveryFinished()
 {
     //qDebug() << "deviceDiscoveryFinished()";
 
-    if (m_db)
+    if (m_dbInternal || m_dbExternal)
     {
         qDebug() << "Scanning (database) for saved devices (not found by scanning)...";
 
@@ -912,7 +913,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             }
 
             // Add it to the database?
-            if (m_db)
+            if (m_dbInternal || m_dbExternal)
             {
                 // if
                 QSqlQuery queryDevice;
@@ -954,24 +955,47 @@ void DeviceManager::removeDevice(const QString &address)
 
         if (dd->getAddress() == address)
         {
+            qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "from local database";
+
             // Make sure its not being used
             disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
             dd->refreshStop();
             refreshDevices_finished(dd);
 
-            // Remove from database // don't remove the actual data, nor limits
-            qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "from local database";
-
-            QSqlQuery removeDevice;
-            removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
-            removeDevice.bindValue(":deviceAddr", dd->getAddress());
-            removeDevice.exec();
+            // Remove from database // Don't remove the actual data, nor the limits
+            if (m_dbInternal || m_dbExternal)
+            {
+                QSqlQuery removeDevice;
+                removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
+                removeDevice.bindValue(":deviceAddr", dd->getAddress());
+                removeDevice.exec();
+            }
 
             // Remove device
             m_devices_model->removeDevice(dd);
             Q_EMIT devicesListUpdated();
 
-            qDebug() << "- Device removed!";
+            break;
+        }
+    }
+}
+
+void DeviceManager::removeDeviceData(const QString &address)
+{
+    for (auto d: qAsConst(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+
+        if (dd->getAddress() == address)
+        {
+            qDebug() << "- Removing device data: " << dd->getName() << "/" << dd->getAddress() << "from local database";
+
+            // Remove the actual data & limits
+            if (m_dbInternal || m_dbExternal)
+            {
+                // TODO
+            }
+
             break;
         }
     }
@@ -1087,6 +1111,7 @@ bool DeviceManager::exportData(const QString &path)
     bool status = false;
 
     if (!m_devices_model->hasDevices()) return status;
+    if (!m_dbInternal && !m_dbExternal) return status;
 
     SettingsManager *sm = SettingsManager::getInstance();
     bool isCelcius = (sm->getTempUnit() == "C");
@@ -1112,9 +1137,18 @@ bool DeviceManager::exportData(const QString &path)
                 eout << l << endl;
 
                 QSqlQuery data;
-                data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
-                             "FROM plantData " \
-                             "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
+                if (m_dbInternal) // sqlite
+                {
+                    data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                                 "FROM plantData " \
+                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
+                }
+                else if (m_dbExternal) // mysql
+                {
+                    data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                                 "FROM plantData " \
+                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= DATE_SUB(NOW(), INTERVAL " + QString::number(31) + " DAY);");
+                }
                 data.bindValue(":deviceAddr", dd->getAddress());
 
                 if (data.exec() == true)
