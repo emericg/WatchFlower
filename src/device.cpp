@@ -359,21 +359,24 @@ bool Device::getSqlInfos()
     //qDebug() << "Device::getSqlInfos(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery getInfos;
-    getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isInside, settings FROM devices WHERE deviceAddr = :deviceAddr");
-    getInfos.bindValue(":deviceAddr", getAddress());
-    getInfos.exec();
-    while (getInfos.next())
+    if (m_dbInternal || m_dbExternal)
     {
-        m_firmware = getInfos.value(0).toString();
-        m_battery = getInfos.value(1).toInt();
-        m_associatedName = getInfos.value(2).toString();
-        m_locationName = getInfos.value(3).toString();
-        m_isInside = getInfos.value(4).toBool();
-        // TODO handle settings field
+        QSqlQuery getInfos;
+        getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isInside, settings FROM devices WHERE deviceAddr = :deviceAddr");
+        getInfos.bindValue(":deviceAddr", getAddress());
+        getInfos.exec();
+        while (getInfos.next())
+        {
+            m_firmware = getInfos.value(0).toString();
+            m_battery = getInfos.value(1).toInt();
+            m_associatedName = getInfos.value(2).toString();
+            m_locationName = getInfos.value(3).toString();
+            m_isInside = getInfos.value(4).toBool();
+            // TODO handle settings field
 
-        status = true;
-        Q_EMIT sensorUpdated();
+            status = true;
+            Q_EMIT sensorUpdated();
+        }
     }
 
     return status;
@@ -539,11 +542,14 @@ void Device::setLocationName(const QString &name)
         m_locationName = name;
         //qDebug() << "setLocationName(" << m_locationName << ")";
 
-        QSqlQuery updateLocation;
-        updateLocation.prepare("UPDATE devices SET locationName = :name WHERE deviceAddr = :deviceAddr");
-        updateLocation.bindValue(":name", name);
-        updateLocation.bindValue(":deviceAddr", getAddress());
-        updateLocation.exec();
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery updateLocation;
+            updateLocation.prepare("UPDATE devices SET locationName = :name WHERE deviceAddr = :deviceAddr");
+            updateLocation.bindValue(":name", name);
+            updateLocation.bindValue(":deviceAddr", getAddress());
+            updateLocation.exec();
+        }
 
         Q_EMIT dataUpdated();
 
@@ -561,11 +567,14 @@ void Device::setAssociatedName(const QString &name)
         m_associatedName = name;
         //qDebug() << "setAssociatedName(" << m_associatedName << ")";
 
-        QSqlQuery updatePlant;
-        updatePlant.prepare("UPDATE devices SET associatedName = :name WHERE deviceAddr = :deviceAddr");
-        updatePlant.bindValue(":name", name);
-        updatePlant.bindValue(":deviceAddr", getAddress());
-        updatePlant.exec();
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery updatePlant;
+            updatePlant.prepare("UPDATE devices SET associatedName = :name WHERE deviceAddr = :deviceAddr");
+            updatePlant.bindValue(":name", name);
+            updatePlant.bindValue(":deviceAddr", getAddress());
+            updatePlant.exec();
+        }
 
         Q_EMIT dataUpdated();
 
@@ -582,11 +591,14 @@ void Device::setInside(const bool inside)
     {
         m_isInside = inside;
 
-        QSqlQuery updateInside;
-        updateInside.prepare("UPDATE devices SET isInside = :inside WHERE deviceAddr = :deviceAddr");
-        updateInside.bindValue(":inside", inside);
-        updateInside.bindValue(":deviceAddr", getAddress());
-        updateInside.exec();
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery updateInside;
+            updateInside.prepare("UPDATE devices SET isInside = :inside WHERE deviceAddr = :deviceAddr");
+            updateInside.bindValue(":inside", inside);
+            updateInside.bindValue(":deviceAddr", getAddress());
+            updateInside.exec();
+        }
 
         Q_EMIT sensorUpdated();
     }

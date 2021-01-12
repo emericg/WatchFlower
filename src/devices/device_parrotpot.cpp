@@ -240,7 +240,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
             }
         }
 
-        //if (m_db)
+        if (m_dbInternal || m_dbExternal)
         {
             QSqlQuery updateDevice;
             updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
@@ -267,7 +267,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
         {
             m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
 
-            //if (m_db)
+            if (m_dbInternal || m_dbExternal)
             {
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -367,7 +367,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            //if (m_db)
+            if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");

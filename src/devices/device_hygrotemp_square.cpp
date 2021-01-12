@@ -288,7 +288,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            //if (m_db)
+            if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
                 QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");

@@ -120,7 +120,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         {
             m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
 
-            //if (m_db)
+            if (m_dbInternal || m_dbExternal)
             {
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");

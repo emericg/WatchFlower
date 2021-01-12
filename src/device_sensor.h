@@ -119,21 +119,21 @@ protected:
     int m_limitMmolMax = 0;
 
     // SQL min/max data (x days period)
-    int m_hygroMin = 99999;
+    int m_hygroMin = 999999;
     int m_hygroMax = -99;
-    int m_conduMin = 99999;
+    int m_conduMin = 999999;
     int m_conduMax = -99;
-    float m_soilTempMin = 999.f;
+    float m_soilTempMin = 99.f;
     float m_soilTempMax = -99.f;
     float m_soilPhMin = 999.f;
     float m_soilPhMax = -99.f;
-    float m_tempMin = 999.f;
+    float m_tempMin = 99.f;
     float m_tempMax = -99.f;
-    int m_humiMin = 99999;
+    int m_humiMin = 999999;
     int m_humiMax = -99;
-    int m_luxMin = 99999;
+    int m_luxMin = 999999;
     int m_luxMax = -99;
-    int m_mmolMin = 99999;
+    int m_mmolMin = 999999;
     int m_mmolMax = -99;
 
     //
