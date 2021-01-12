@@ -21,7 +21,7 @@ ios | android { CONFIG += qtquickcompiler }
 
 win32 { DEFINES += _USE_MATH_DEFINES }
 
-# MobileUI for mobile OS
+# MobileUI and MobileSharing for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
 include(src/thirdparty/MobileSharing/MobileSharing.pri)
 

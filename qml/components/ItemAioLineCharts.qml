@@ -28,7 +28,6 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: itemAioLineCharts
     width: parent.width
-    anchors.margins: 0
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -51,7 +50,9 @@ Item {
 
         if (dateIndicator.visible) resetIndicator()
 
-        if (currentDevice.countData("temperature", 14) > 1) {
+        var days = 14;
+
+        if (currentDevice.countData("temperature", days) > 1) {
             aioGraph.visible = true
             noDataIndicator.visible = false
         } else {
@@ -65,7 +66,7 @@ Item {
         tempData.clear()
         lumiData.clear()
 
-        currentDevice.getAioLinesData(14, axisTime, hygroData, conduData, tempData, lumiData);
+        currentDevice.getAioLinesData(days, axisTime, hygroData, conduData, tempData, lumiData);
 
         //// AXIS
         axisHygro.min = 0
