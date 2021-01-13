@@ -155,7 +155,7 @@ Rectangle {
 
         ////////////
 
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonThermoChart
             width: 36
             height: 36
@@ -171,8 +171,9 @@ Rectangle {
                 else
                     settingsManager.graphThermometer = "lines"
             }
+            tooltipText: qsTr("Switch graph")
         }
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonLed
             width: 36
             height: 36
@@ -183,8 +184,9 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceLedButtonClicked()
+            tooltipText: qsTr("Blink LED")
         }
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonRefreshHistory
             width: 36
             height: 36
@@ -196,8 +198,9 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshHistoryButtonClicked()
+            tooltipText: qsTr("Sync history")
         }
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonRefreshData
             width: 36
             height: 36
@@ -212,16 +215,9 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshButtonClicked()
 
-            NumberAnimation on rotation {
-                id: refreshAnimation
-                duration: 2000
-                from: 0
-                to: 360
-                loops: Animation.Infinite
-                running: selectedDevice.updating
-                alwaysRunToEnd: true
-                easing.type: Easing.Linear
-            }
+            tooltipText: qsTr("Refresh device")
+            animation: "rotate"
+            animationRunning: selectedDevice.updating
         }
         Item { // spacer
             width: 8
@@ -270,7 +266,7 @@ Rectangle {
 
         ////////////
 
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonSort
             width: 36
             height: 36
@@ -280,6 +276,27 @@ Rectangle {
             source: "qrc:/assets/icons_material/baseline-filter_list-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
+
+            function setText() {
+                var txt = qsTr("Order by:") + " "
+                if (settingsManager.orderBy === "waterlevel") {
+                    txt += qsTr("water level")
+                } else if (settingsManager.orderBy === "plant") {
+                    txt += qsTr("plant name")
+                } else if (settingsManager.orderBy === "model") {
+                    txt += qsTr("device model")
+                } else if (settingsManager.orderBy === "location") {
+                    txt += qsTr("location")
+                }
+                buttonSort.tooltipText = txt
+            }
+
+            Component.onCompleted: buttonSort.setText()
+            Connections {
+                target: settingsManager
+                onOrderByChanged: buttonSort.setText()
+                onAppLanguageChanged: buttonSort.setText()
+            }
 
             property var sortmode: {
                 if (settingsManager.orderBy === "waterlevel") {
@@ -312,7 +329,7 @@ Rectangle {
                 }
             }
         }
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonRefreshAll
             width: 36
             height: 36
@@ -325,19 +342,12 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: refreshButtonClicked()
+            tooltipText: qsTr("Refresh devices")
 
-            NumberAnimation on rotation {
-                id: refreshAllAnimation
-                duration: 2000
-                from: 0
-                to: 360
-                loops: Animation.Infinite
-                running: deviceManager.refreshing
-                alwaysRunToEnd: true
-                easing.type: Easing.Linear
-            }
+            animation: "rotate"
+            animationRunning: deviceManager.refreshing
         }
-        ItemImageButton {
+        ItemImageButtonTooltip {
             id: buttonRescan
             width: 36
             height: 36
@@ -350,16 +360,10 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: rescanButtonClicked()
+            tooltipText: qsTr("Scan for devices")
 
-            SequentialAnimation on opacity {
-                id: rescanAnimation
-                loops: Animation.Infinite
-                running: deviceManager.scanning
-                onStopped: buttonRescan.opacity = 1;
-
-                PropertyAnimation { to: 0.33; duration: 750; }
-                PropertyAnimation { to: 1; duration: 750; }
-            }
+            animation: "fade"
+            animationRunning: deviceManager.scanning
         }
 
         Row {

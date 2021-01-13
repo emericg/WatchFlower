@@ -29,10 +29,6 @@ Item {
     property string borderColor: Theme.colorComponentBorder
 
     property url source: ""
-    property string tooltipText: ""
-
-    clip: tooltipText
-    Behavior on width { NumberAnimation { duration: 133 } }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -44,12 +40,10 @@ Item {
         onEntered: {
             itemImageButton.highlighted = true
             bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
-            if (tooltipText) itemImageButton.width = btnSize + (tooltip.width + tooltip.anchors.leftMargin)
         }
         onExited: {
             itemImageButton.highlighted = false
             bgRect.opacity = itemImageButton.background ? 0.75 : 0
-            if (tooltipText) itemImageButton.width = btnSize
         }
     }
 
@@ -87,16 +81,5 @@ Item {
                 itemImageButton.iconColor
             }
         }
-    }
-
-    Text {
-        id: tooltip
-        anchors.left: contentImage.right
-        anchors.leftMargin: (btnSize / 2)
-        anchors.verticalCenter: contentImage.verticalCenter
-
-        text: tooltipText
-        color: iconColor
-        font.pixelSize: Theme.fontSizeComponent
     }
 }

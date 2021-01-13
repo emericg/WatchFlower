@@ -1181,7 +1181,7 @@ Item {
                     height: 40
                     anchors.left: image_thermometer_unit.right
                     anchors.leftMargin: column.leftPad
-                    anchors.right: radioDelegateCelsius.left
+                    anchors.right: row_thermometer_unit.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1193,6 +1193,7 @@ Item {
                 }
 
                 Row {
+                    id: row_thermometer_unit
                     anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: text_thermometer_unit.verticalCenter
@@ -1330,8 +1331,10 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: (Qt.platform.os !== "ios")
-
                     fullColor: false
+                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    secondaryColor: Theme.colorBackground
+
                     text: qsTr("Export file")
                     onClicked: {
                         utilsApp.checkMobileStoragePermissions()
@@ -1355,8 +1358,10 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: false
-
                     fullColor: false
+                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    secondaryColor: Theme.colorBackground
+
                     text: qsTr("Open folder")
                     onClicked: {
                         utilsApp.openWith(deviceManager.exportDataFolder())
@@ -1368,8 +1373,10 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: isMobile
-
                     fullColor: false
+                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    secondaryColor: Theme.colorBackground
+
                     text: qsTr("Open with")
                     onClicked: {
                         var file = deviceManager.exportDataOpen()

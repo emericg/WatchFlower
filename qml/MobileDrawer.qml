@@ -329,7 +329,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         function setText() {
-                            var txt = qsTr("Order by") + " "
+                            var txt = qsTr("Order by:") + " "
                             if (settingsManager.orderBy === "waterlevel") {
                                 txt += qsTr("water level")
                             } else if (settingsManager.orderBy === "plant") {

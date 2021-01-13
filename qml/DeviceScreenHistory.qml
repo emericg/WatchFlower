@@ -225,7 +225,7 @@ Item {
         Row {
             id: buttonPanel
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 16
+            spacing: 12
             anchors.top: parent.top
             anchors.topMargin: isMobile ? 8 : 52
 
@@ -234,6 +234,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "monthly")
+                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Month")
@@ -248,6 +249,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "weekly")
+                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Week")
@@ -262,6 +264,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "daily")
+                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Day")

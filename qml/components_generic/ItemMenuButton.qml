@@ -24,7 +24,6 @@ Item {
     property string highlightMode: "background" // available: background & text
 
     property string menuText: ""
-    property string tooltipText: ""
     property url source: ""
 
     MouseArea {

@@ -157,7 +157,7 @@ Item {
                 anchors.leftMargin: 48
 
                 text: qsTr("Official information")
-                primaryColor: Theme.colorPrimary
+                primaryColor: Theme.colorHeaderHighlight
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
             }
 

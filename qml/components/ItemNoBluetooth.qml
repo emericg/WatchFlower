@@ -48,6 +48,7 @@ Item {
 
         ButtonWireframe {
             anchors.horizontalCenter: parent.horizontalCenter
+            fullColor: true
             text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
             onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
         }
