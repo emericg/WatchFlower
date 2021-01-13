@@ -21,7 +21,7 @@ ComboBox {
     }
 
     background: Rectangle {
-        color: Theme.colorComponent
+        color: control.down ? Theme.colorComponentDown : Theme.colorComponent
         radius: Theme.componentRadius
         //border.color: control.pressed ? "#17a81a" : "#21be2b"
         //border.width: control.visualFocus ? 2 : 1

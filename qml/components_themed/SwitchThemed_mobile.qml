@@ -6,6 +6,8 @@ import ThemeEngine 1.0
 Switch {
     id: control
 
+    leftPadding: 0
+    rightPadding: 0
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {

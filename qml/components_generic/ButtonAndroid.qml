@@ -8,27 +8,19 @@ Button {
     width: contentText.width + 24
     implicitHeight: Theme.componentHeight
 
-    font.pixelSize: Theme.fontSizeComponent
-    font.bold: fullColor ? true : false
-
     focusPolicy: Qt.NoFocus
 
-    property bool fullColor: false
-    property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
-    property string secondaryColor: Theme.colorComponentBackground
-    property bool hoverAnimation: isDesktop
 
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         radius: Theme.componentRadius
-        opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
-        color: fullColor ? control.primaryColor : control.secondaryColor
-        border.width: 1
-        border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
-        clip: hoverAnimation
-
+        opacity: control.down ? 0.1 : 0.0
+        color: control.primaryColor
+        clip: true
+        Behavior on opacity { NumberAnimation { duration: 133 } }
+/*
         MouseArea {
             id: mmmm
             anchors.fill: parent
@@ -38,18 +30,22 @@ Button {
             visible: hoverAnimation
             hoverEnabled: hoverAnimation
 
-            onEntered: {
-                mouseBackground.width = 80
-                mouseBackground.opacity = 0.16
+            onPressed: {
+                mouseBackground.width = parent.width
+                mouseBackground.height = parent.height
+                mouseBackground.opacity = 0.1
             }
-            onExited: {
+            onClicked: {
+                control.clicked()
+            }
+            onReleased: {
                 mouseBackground.width = 0
                 mouseBackground.opacity = 0
             }
 
             Rectangle {
                 id: mouseBackground
-                width: 0; height: width; radius: width;
+                width: 0; height: 0; radius: Theme.componentRadius;
                 x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
                 y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
                 color: "#fff"
@@ -57,7 +53,7 @@ Button {
                 Behavior on opacity { NumberAnimation { duration: 133 } }
                 Behavior on width { NumberAnimation { duration: 133 } }
             }
-        }
+        }*/
     }
 
     contentItem: Item {
@@ -69,9 +65,13 @@ Button {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: control.text
-            font: control.font
-            opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
-            color: fullColor ? fulltextColor : control.primaryColor
+            font.bold: false
+            font.pixelSize: 14
+            font.family: fontTextMedium.name
+            font.capitalization: Font.AllUppercase
+
+            opacity: enabled ? 1.0 : 0.33
+            color: control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

@@ -31,7 +31,7 @@ Slider {
         width: 18
         height: width
         radius: (width / 2)
-        color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
-        border.color: Theme.colorPrimary
+        color: control.pressed ? Theme.colorSecondary : Theme.colorPrimary
+        border.color: (control.pressed) ? Theme.colorPrimary : Theme.colorPrimary
     }
 }

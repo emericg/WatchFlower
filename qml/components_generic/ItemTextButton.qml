@@ -19,20 +19,16 @@ Item {
     property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
 
     property bool background: false
-    property bool border: false
-
-    property string highlightMode: "circle" // circle / color / both / off
-
-    property string iconColor: Theme.colorIcon
-    property string highlightColor: Theme.colorPrimary
     property string backgroundColor: Theme.colorComponent
+
+    property bool border: false
     property string borderColor: Theme.colorComponentBorder
 
-    property url source: ""
-    property string tooltipText: ""
+    property string highlightMode: "circle" // circle / color / both / off
+    property string highlightColor: Theme.colorPrimary
 
-    clip: tooltipText
-    Behavior on width { NumberAnimation { duration: 133 } }
+    property string text: "btn"
+    property string textColor: Theme.colorText
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -44,12 +40,10 @@ Item {
         onEntered: {
             itemImageButton.highlighted = true
             bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
-            if (tooltipText) itemImageButton.width = btnSize + (tooltip.width + tooltip.anchors.leftMargin)
         }
         onExited: {
             itemImageButton.highlighted = false
             bgRect.opacity = itemImageButton.background ? 0.75 : 0
-            if (tooltipText) itemImageButton.width = btnSize
         }
     }
 
@@ -70,33 +64,24 @@ Item {
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
-    ImageSvg {
+    Text {
         id: contentImage
-        width: imgSize
-        height: imgSize
         anchors.centerIn: bgRect
 
-        source: itemImageButton.source
-        opacity: itemImageButton.enabled ? 1.0 : 0.33
+        text: itemImageButton.text
+        font.bold: true
+        font.pixelSize: 10
+        font.capitalization: Font.AllUppercase
+
+        opacity: itemImageButton.enabled ? 1.0 : 0.75
         color: {
             if (selected === true) {
                 itemImageButton.highlightColor
             } else if (highlightMode === "color" || highlightMode === "both") {
-                itemImageButton.highlighted ? itemImageButton.highlightColor : itemImageButton.iconColor
+                itemImageButton.highlighted ? itemImageButton.highlightColor : itemImageButton.textColor
             } else {
-                itemImageButton.iconColor
+                itemImageButton.textColor
             }
         }
-    }
-
-    Text {
-        id: tooltip
-        anchors.left: contentImage.right
-        anchors.leftMargin: (btnSize / 2)
-        anchors.verticalCenter: contentImage.verticalCenter
-
-        text: tooltipText
-        color: iconColor
-        font.pixelSize: Theme.fontSizeComponent
     }
 }

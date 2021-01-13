@@ -12,7 +12,9 @@ TextField {
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
 
-    text: "Text Field"
+    //placeholderText: qsTr("TODO")
+
+    text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
 

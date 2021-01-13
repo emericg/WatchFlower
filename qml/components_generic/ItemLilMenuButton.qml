@@ -1,51 +1,42 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 
 Item {
     id: itemLilMenuButton
-    implicitWidth: 64
+    implicitWidth: 96
     implicitHeight: 32
 
     width: 16 + contentText.width + sourceSize + 16
+    height: parent.height
 
     signal clicked()
     property bool selected: false
-    property bool highlighted: false
+    property bool highlighted: mouseArea.isHovered
 
     property string colorBackground: Theme.colorComponent
-    property string colorHighlight: Theme.colorHighContrast
+    property string colorBackgroundHighlight: Theme.colorHighContrast
     property string colorContent: Theme.colorComponentContent
+    property string colorContentHighlight: Theme.colorComponentContent
 
     property string text: ""
     property string source: ""
-    property int sourceSize: (source === "") ? 0 : 32
+    property int sourceSize: (source.length) ? 32 : 0
+
+    ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         onClicked: parent.clicked()
 
+        property var isHovered: false
         hoverEnabled: true
-        onEntered: {
-            bgFocus.opacity = 0.1
-            parent.highlighted = true
-        }
-        onExited: {
-            bgFocus.opacity = 0
-            parent.highlighted = false
-        }
+        onEntered: isHovered = true
+        onExited: isHovered = false
     }
-/*
-    Rectangle {
-        id: bgRect
-        anchors.fill: parent
 
-        color: parent.colorBackground
-        radius: Theme.componentRadius
-    }
-*/
     Rectangle {
         id: bgHightlight
         anchors.fill: parent
@@ -53,15 +44,14 @@ Item {
         visible: parent.selected
         opacity: 0.1
         color: parent.colorContent
-        radius: Theme.componentRadius
     }
+
     Rectangle {
         id: bgFocus
         anchors.fill: parent
 
-        opacity: 0
-        color: parent.colorHighlight
-        radius: Theme.componentRadius
+        opacity: mouseArea.isHovered ? 0.1 : 0
+        color: parent.colorBackgroundHighlight
         Behavior on opacity { OpacityAnimator { duration: 233 } }
     }
 
@@ -73,9 +63,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         source: parent.source
-        color: parent.colorContent
+        color: (parent.selected) ? parent.colorContentHighlight : parent.colorContent
         opacity: (parent.selected) ? 1 : 0.5
     }
+
     Text {
         id: contentText
         height: parent.height
@@ -84,7 +75,7 @@ Item {
 
         text: parent.text
         font.pixelSize: 15
-        color: parent.colorContent
+        color: (parent.selected) ? parent.colorContentHighlight : parent.colorContent
         opacity: (parent.selected) ? 1 : 0.5
         verticalAlignment: Text.AlignVCenter
     }

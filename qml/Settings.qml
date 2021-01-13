@@ -1192,54 +1192,48 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                RadioButtonThemed {
-                    id: radioDelegateCelsius
-                    height: 40
-                    anchors.right: radioDelegateFahrenheit.left
-                    anchors.verticalCenter: text_thermometer_unit.verticalCenter
-
-                    z: 1
-                    text: qsTr("°C")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.tempUnit === 'C') {
-                            radioDelegateCelsius.checked = true
-                            radioDelegateFahrenheit.checked = false
-                        } else {
-                            radioDelegateCelsius.checked = false
-                            radioDelegateFahrenheit.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.tempUnit = 'C'
-                    }
-                }
-
-                RadioButtonThemed {
-                    id: radioDelegateFahrenheit
-                    height: 40
+                Row {
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: text_thermometer_unit.verticalCenter
+                    spacing: 16
 
-                    z: 1
-                    text: qsTr("°F")
-                    font.pixelSize: 14
+                    RadioButtonThemed {
+                        id: radioDelegateCelsius
+                        text: qsTr("°C")
 
-                    checked: {
-                        if (settingsManager.tempUnit === 'F') {
-                            radioDelegateCelsius.checked = false
-                            radioDelegateFahrenheit.checked = true
-                        } else {
-                            radioDelegateFahrenheit.checked = false
-                            radioDelegateCelsius.checked = true
+                        checked: {
+                            if (settingsManager.tempUnit === 'C') {
+                                radioDelegateCelsius.checked = true
+                                radioDelegateFahrenheit.checked = false
+                            } else {
+                                radioDelegateCelsius.checked = false
+                                radioDelegateFahrenheit.checked = true
+                            }
+                        }
+                        onCheckedChanged: {
+                            if (checked === true)
+                                settingsManager.tempUnit = 'C'
                         }
                     }
-                    onCheckedChanged: {
-                        if (checked === true)
-                            settingsManager.tempUnit = 'F'
+
+                    RadioButtonThemed {
+                        id: radioDelegateFahrenheit
+                        text: qsTr("°F")
+
+                        checked: {
+                            if (settingsManager.tempUnit === 'F') {
+                                radioDelegateCelsius.checked = false
+                                radioDelegateFahrenheit.checked = true
+                            } else {
+                                radioDelegateFahrenheit.checked = false
+                                radioDelegateCelsius.checked = true
+                            }
+                        }
+                        onCheckedChanged: {
+                            if (checked === true)
+                                settingsManager.tempUnit = 'F'
+                        }
                     }
                 }
             }

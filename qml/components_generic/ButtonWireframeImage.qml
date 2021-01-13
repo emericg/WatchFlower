@@ -6,7 +6,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Button {
     id: control
-    width: contentRow.width + 16 + (source && !text ? 0 : 16)
+    width: contentRow.width + 16 + ((source && !text) ? 0 : 16)
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
@@ -19,7 +19,7 @@ Button {
     property bool fullColor: false
     property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
-    property string secondaryColor: Theme.colorBackground
+    property string secondaryColor: Theme.colorComponentBackground
     property bool hoverAnimation: isDesktop
 
     ////////////////////////////////////////////////////////////////////////////
@@ -30,8 +30,8 @@ Button {
         color: fullColor ? control.primaryColor : control.secondaryColor
         border.width: 1
         border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
-
         clip: hoverAnimation
+
         MouseArea {
             id: mmmm
             anchors.fill: parent
@@ -68,7 +68,7 @@ Button {
             id: contentRow
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -4
+            anchors.horizontalCenterOffset: 0
             spacing: 8
 
             ImageSvg {
