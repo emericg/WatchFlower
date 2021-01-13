@@ -870,19 +870,16 @@ void DeviceSensor::getAioLinesData(int maxDays,
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString data = "soilMoisture";
+        if (!hasSoilMoistureSensor()) data = "humidity";
+
+        QString time = "datetime('now', 'localtime', '-" + QString::number(maxDays) + " days')";
+        if (m_dbExternal)  time = "DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY)";
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(maxDays) + " days');");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts_full >= DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY);");
-        }
+        graphData.prepare("SELECT ts_full, " + data + ", soilConductivity, temperature, luminosity " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr AND ts_full >= " + time + ";");
         graphData.bindValue(":deviceAddr", getAddress());
 
         if (graphData.exec() == false)
