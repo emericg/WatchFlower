@@ -95,6 +95,11 @@ Item {
         currentDevice = clickedDevice
         //console.log("DeviceThermometer // loadDevice() >> " + currentDevice)
 
+        sensorTemp.visible = false
+        heatIndex.visible = false
+        sensorHygro.visible = false
+        imageBattery.visible = false
+
         loadGraph()
         updateHeader()
         updateData()
@@ -155,14 +160,35 @@ Item {
         if (currentDevice.hasSoilMoistureSensor()) return
         //console.log("DeviceThermometer // updateData() >> " + currentDevice)
 
-        if (currentDevice.deviceTempC > -40)
-            sensorTemp.text = currentDevice.getTempString()
-        else
-            sensorTemp.text = "?"
-        if (currentDevice.deviceHumidity > 0)
-            sensorHygro.text = currentDevice.deviceHumidity + "% " + qsTr("humidity")
-        else
-            sensorHygro.text = ""
+        if (currentDevice.deviceTempC < -40) {
+            sensorDisconnected.visible = true
+
+            sensorTemp.visible = false
+            heatIndex.visible = false
+            sensorHygro.visible = false
+            imageBattery.visible = false
+        } else {
+            sensorDisconnected.visible = false
+
+            if (currentDevice.deviceTempC >= -40) {
+                sensorTemp.text = currentDevice.getTempString()
+                sensorTemp.visible = true
+            }
+            if (currentDevice.deviceHumidity >= 0) {
+                sensorHygro.text = currentDevice.deviceHumidity + "% " + qsTr("humidity")
+                sensorHygro.visible = true
+            }
+            if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
+                if (currentDevice.getHeatIndex() > currentDevice.getTemp()) {
+                    heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
+                    heatIndex.visible = true
+                }
+            }
+
+            if (currentDevice.hasBatteryLevel()) {
+                imageBattery.visible = true
+            }
+        }
 
         deviceScreenChart.updateGraph()
     }
@@ -225,13 +251,30 @@ Item {
             anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
             spacing: 2
 
+            ImageSvg {
+                id: sensorDisconnected
+                width: isMobile ? 96 : 128
+                height: isMobile ? 96 : 128
+                anchors.horizontalCenter: parent.horizontalCenter
+                source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                color: Theme.colorHeaderContent
+            }
+
             Text {
                 id: sensorTemp
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                text: "22.0°"
                 font.bold: false
                 font.pixelSize: isPhone ? 44 : 48
+                color: Theme.colorHeaderContent
+            }
+
+            Text {
+                id: heatIndex
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                font.bold: false
+                font.pixelSize: isPhone ? 18 : 20
                 color: Theme.colorHeaderContent
             }
 
@@ -239,7 +282,6 @@ Item {
                 id: sensorHygro
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                text: "50%"
                 font.bold: false
                 font.pixelSize: isPhone ? 22 : 24
                 color: Theme.colorHeaderContent
@@ -252,12 +294,14 @@ Item {
                 rotation: 90
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
+                //visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
                 fillMode: Image.PreserveAspectCrop
                 color: Theme.colorHeaderContent
                 source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
             }
         }
+
+        ////////
 
         Row {
             id: status
@@ -292,6 +336,8 @@ Item {
             }
         }
 
+        ////////
+
         Row {
             id: itemLocation
             anchors.bottom: parent.bottom
@@ -311,7 +357,6 @@ Item {
                 source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                 color: Theme.colorHeaderContent
 
-                //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse)
                 opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0
                 Behavior on opacity { OpacityAnimator { duration: 133 } }
             }

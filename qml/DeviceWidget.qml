@@ -131,7 +131,7 @@ Item {
 
         // Texts
         if (boxDevice.hasGeigerCounter()) {
-            textTitle.text = qsTr("Geiger counter")
+            textTitle.text = qsTr("Geiger Counter")
         } else if (!boxDevice.hasSoilMoistureSensor()) {
             textTitle.text = qsTr("Thermometer")
         } else if (boxDevice.devicePlantName !== "") {

@@ -266,7 +266,7 @@ Item {
                 if (!itemImageButton.highlighted) return;
 
                 var obj = mapToItem(appContent, x, y)
-                var thestart = obj.x
+                var thestart = obj.x - 12
                 var theend = obj.x + 12 + 12 + ttT.contentWidth
 
                 if (tooltip.state === "top") {

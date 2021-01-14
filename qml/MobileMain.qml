@@ -373,7 +373,7 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceGeiger"
-                PropertyChanges { target: appHeader; title: qsTr("Geiger counter"); }
+                PropertyChanges { target: appHeader; title: qsTr("Geiger Counter"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }

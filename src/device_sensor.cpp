@@ -437,6 +437,64 @@ QString DeviceSensor::getTempString() const
 
 /* ************************************************************************** */
 
+float DeviceSensor::getHeatIndex() const
+{
+    float hi = getTemp();
+
+    if (getTempC() >= 27.f && getHumidity() >= 40)
+    {
+        float T = getTemp();
+        float R = getHumidity();
+
+        float c1, c2, c3, c4, c5, c6, c7, c8, c9;
+        SettingsManager *s = SettingsManager::getInstance();
+        if (s->getTempUnit() == "F")
+        {
+            c1 = -42.379;
+            c2 = 2.04901523;
+            c3 = 10.14333127;
+            c4 = -0.22475541;
+            c5 = -6.83783e-03;
+            c6 = -5.481717e-02;
+            c7 = 1.22874e-03;
+            c8 = 8.5282e-04;
+            c9 = -1.99e-06;
+        }
+        else
+        {
+            c1 = -8.78469475556;
+            c2 = 1.61139411;
+            c3 = 2.33854883889;
+            c4 = -0.14611605;
+            c5 = -0.012308094;
+            c6 = -0.0164248277778;
+            c7 = 0.002211732;
+            c8 = 0.00072546;
+            c9 = -0.000003582;
+        }
+
+        // Compute heat index (https://en.wikipedia.org/wiki/Heat_index)
+        hi = c1 + c2*T + c3*R + c4*T*R + c5*(T*T) + c6*(R*R) +c7*(T*T)*R + c8*T*(R*R) + c9*(T*T)*(R*R);
+    }
+
+    return hi;
+}
+
+QString DeviceSensor::getHeatIndexString() const
+{
+    QString hiString;
+
+    SettingsManager *s = SettingsManager::getInstance();
+    if (s->getTempUnit() == "F")
+        hiString = QString::number(getHeatIndex(), 'f', 1) + "°F";
+    else
+        hiString = QString::number(getHeatIndex(), 'f', 1) + "°C";
+
+    return hiString;
+}
+
+/* ************************************************************************** */
+
 bool DeviceSensor::setDbLimits()
 {
     bool status = false;

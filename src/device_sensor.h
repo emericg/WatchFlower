@@ -165,7 +165,10 @@ public slots:
     float getTempC() const { return m_temperature; }
     float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
     QString getTempString() const;
+    float getHeatIndex() const;
+    QString getHeatIndexString() const;
     int getHumidity() const { return m_humidity; }
+    //
     int getLuminosity() const { return m_luminosity; }
     //
     float getRH() { return m_rh; }
