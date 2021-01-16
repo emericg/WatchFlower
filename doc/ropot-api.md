@@ -1,7 +1,7 @@
 
 <img src="ropot.svg" width="400px" alt="Flower Care" align="right" />
 
-## About Flower Care
+## About RoPot
 
 * Xiaomi [RoPot]() are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, soil moisture and soil fertility (via electrical conductivity)

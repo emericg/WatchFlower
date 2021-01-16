@@ -5,15 +5,15 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
+WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "RoPot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
-Available in Danish, Dutch, English, French, German, Spanish and Russian!  
 
-Application developed by [Emeric Grange](https://emeric.io/).
-Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
+> Available in Danish, Dutch, English, French, German, Spanish and Russian!
+
+> Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
 ### Features
 
@@ -74,10 +74,12 @@ For Android builds, the appropriates SDK and NDK.
 
 ### Building WatchFlower
 
-> $ git clone https://github.com/emericg/WatchFlower.git  
-> $ cd WatchFlower/  
-> $ qmake  
-> $ make  
+```
+$ git clone https://github.com/emericg/WatchFlower.git
+$ cd WatchFlower/
+$ qmake
+$ make
+```
 
 
 ## Special thanks
@@ -103,7 +105,7 @@ You can help us find and report bugs, suggest new features, help with translatio
 WatchFlower is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
 Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
-Emeric Grange <emeric.grange@gmail.com>
+> Emeric Grange <emeric.grange@gmail.com>
 
 ### Third party projects used by WatchFlower
 
