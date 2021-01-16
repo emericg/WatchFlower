@@ -169,7 +169,6 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // handle 0x? // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
-            //serviceData->readCharacteristic(chrt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
         }

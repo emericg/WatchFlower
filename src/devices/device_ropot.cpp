@@ -21,6 +21,7 @@
 
 #include "device_ropot.h"
 #include "utils/utils_versionchecker.h"
+#include "thirdparty/RC4/rc4.h"
 
 #include <cstdint>
 #include <cmath>
@@ -60,8 +61,9 @@ DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
 
 DeviceRopot::~DeviceRopot()
 {
-    delete serviceHistory;
     delete serviceData;
+    delete serviceHandshake;
+    delete serviceHistory;
 }
 
 /* ************************************************************************** */
@@ -83,6 +85,20 @@ void DeviceRopot::serviceScanDone()
         }
     }
 
+    if (serviceHandshake)
+    {
+        if (serviceHandshake->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceHandshake, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_handshake);
+            connect(serviceHandshake, &QLowEnergyService::characteristicChanged, this, &DeviceRopot::bleReadNotify);
+            connect(serviceHandshake, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
+            connect(serviceHandshake, &QLowEnergyService::characteristicWritten, this, &DeviceRopot::bleWriteDone);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, [=] () { serviceHandshake->discoverDetails(); });
+        }
+    }
+
     if (serviceHistory)
     {
         if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
@@ -96,6 +112,8 @@ void DeviceRopot::serviceScanDone()
         }
     }
 }
+
+/* ************************************************************************** */
 
 void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 {
@@ -114,6 +132,19 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
+    if (uuid.toString() == "{0000fe95-0000-1000-8000-00805f9b34fb}")
+    {
+        delete serviceHandshake;
+        serviceHandshake = nullptr;
+
+        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        {
+            serviceHandshake = controller->createServiceObject(uuid);
+            if (!serviceHandshake)
+                qWarning() << "Cannot create service (handshake) for uuid:" << uuid.toString();
+        }
+    }
+
     if (uuid.toString() == "{00001206-0000-1000-8000-00805f9b34fb}")
     {
         delete serviceHistory;
@@ -127,6 +158,8 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 }
+
+/* ************************************************************************** */
 
 void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
@@ -169,19 +202,116 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
     }
 }
 
+void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceRopot::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceHandshake && m_ble_action == ACTION_UPDATE_HISTORY)
+        {
+            // Generate token
+            QString addr = m_deviceAddress;
+            QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
+
+            uint8_t pid[2] = {0x01, 0x5d};
+            uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
+            uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
+            uint8_t token2[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
+
+            uint8_t mixb[8] = {0};
+            mixb[0] = mac[5];
+            mixb[1] = mac[3];
+            mixb[2] = mac[0];
+            mixb[3] = pid[1];
+            mixb[4] = mac[1];
+            mixb[5] = mac[5];
+            mixb[6] = mac[0];
+            mixb[7] = pid[0];
+
+            rc4_crypt(mixb, 8, token1, 12);
+            rc4_crypt(token2, 12, magicend, 4);
+
+            challenge_key = QByteArray::fromRawData((char*)token1, 12);
+            challenge_key.detach();
+            finish_key = QByteArray::fromRawData((char*)magicend, 4);
+            finish_key.detach();
+
+            // Handshake
+            /// start session command (write [0x90, 0xca, 0x85, 0xde] on 0x1b)
+            /// wait reply and
+            /// enable notification for 0x12 handle
+            /// send key on 0x12 handle
+            /// wait reply and
+            /// send finish key
+            /// disable notification for 0x12 handle
+
+            // start session command
+            QBluetoothUuid s(QString("00000010-0000-1000-8000-00805f9b34fb")); // handle 0x1b
+            QLowEnergyCharacteristic chs = serviceHandshake->characteristic(s);
+            serviceHandshake->writeCharacteristic(chs, QByteArray::fromHex("90ca85de"), QLowEnergyService::WriteWithResponse);
+        }
+    }
+}
+
 void DeviceRopot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
+        {
+            //
+        }
     }
 }
 
 /* ************************************************************************** */
 
-void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
+void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     //qDebug() << "DeviceRopot::bleWriteDone(" << m_deviceAddress << ")";
+
+    if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
+    {
+        // enable notification for 0x12 handle
+        QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
+        QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
+        m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+        serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
+
+        // send challenge key
+        QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+        QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
+        serviceHandshake->writeCharacteristic(chk, challenge_key, QLowEnergyService::WriteWithResponse);
+
+        return;
+    }
+
+    if (c.uuid().toString() == "{00000001-0000-1000-8000-00805f9b34fb}")
+    {
+        if (finish_key.size())
+        {
+            // send finish key
+            QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+            QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
+            serviceHandshake->writeCharacteristic(chk, finish_key, QLowEnergyService::WriteWithResponse);
+            finish_key.clear();
+
+            // disabled notification for 0x12 handle?
+        }
+        else
+        {
+            // start reading history?
+        }
+        return;
+    }
+}
+
+void DeviceRopot::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
+{
+    //qDebug() << "DeviceRopot::bleReadNotify(" << m_deviceAddress << ")";
 }
 
 void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -190,11 +320,23 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 /*
     qDebug() << "DeviceRopot::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
+             << Qt::hex << data[ 0] << Qt::hex << data[ 1] << Qt::hex << data[ 2] << Qt::hex << data[ 3] \
+             << Qt::hex << data[ 4] << Qt::hex << data[ 5] << Qt::hex << data[ 6] << Qt::hex << data[ 7] \
+             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[10] \
+             << Qt::hex << data[12] << Qt::hex << data[13] << Qt::hex << data[14] << Qt::hex << data[15];
 */
+    if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
+    {
+        // Entry count
+        return;
+    }
+
+    if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
+    {
+        // Device time
+        return;
+    }
+
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {
         // MiFlora data // handler 0x35
@@ -251,5 +393,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "- m_temperature:" << m_temperature;
 #endif
         }
+        return;
     }
 }
