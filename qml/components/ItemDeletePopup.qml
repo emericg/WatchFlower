@@ -4,29 +4,36 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Popup {
-    id: itemPopupDelete
-    implicitWidth: 480
-    implicitHeight: 180
+    id: itemDeletePopup
+    implicitWidth: 560
+    implicitHeight: 320
 
-    signal confirmed()
+    width: singleColumn ? parent.width : implicitWidth
+    height: columnContent.height + gridcontContent.height + 24
+    x: (appWindow.width / 2) - (itemDeletePopup.width / 2)
+    y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (itemDeletePopup.height / 2) - appHeader.height)
 
-    padding: 24
+    padding: singleColumn ? 24 : 32
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+    property bool singleColumn: (isPhone || appWindow.width < implicitWidth)
+
+    signal confirmed()
 
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         color: Theme.colorBackground
-        radius: 8
+        radius: singleColumn ? 0 : 4
     }
 
     contentItem: Item {
         Column {
+            id: columnContent
             width: parent.width
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: 32
+            spacing: 24
 
             Text {
                 width: parent.width
@@ -35,34 +42,49 @@ Popup {
                 font.pixelSize: 20
                 color: Theme.colorText
                 wrapMode: Text.WordWrap
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+                //verticalAlignment: Text.AlignVCenter
+                //horizontalAlignment: Text.AlignHCenter
             }
 
-            Row {
-                height: 40
-                spacing: 24
+            Text {
+                width: parent.width
+
+                text: qsTr("Data from the device(s) will be kept for an additional 90 days, if you want to re-add this device later.")
+                font.pixelSize: 16
+                color: Theme.colorSubText
+                wrapMode: Text.WordWrap
+                //verticalAlignment: Text.AlignVCenter
+                //horizontalAlignment: Text.AlignHCenter
+            }
+
+            Grid {
+                id: gridcontContent
+                width: singleColumn ? parent.width : 300+24
+                height: singleColumn ? 80+16 : 40
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                columns: singleColumn ? 1 : 2
+                rows: singleColumn ? 2 : 1
+                spacing: 24
 
                 ButtonWireframe {
                     id: buttonCancel
-                    width: 128
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: singleColumn ? parent.width : 150
 
                     text: qsTr("Cancel")
-                    onClicked: itemPopupDelete.close()
+                    primaryColor: Theme.colorHeaderHighlight
+                    onClicked: itemDeletePopup.close()
                 }
                 ButtonWireframe {
                     id: buttonConfirm
-                    width: 128
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: singleColumn ? parent.width : 150
 
                     text: qsTr("Delete")
                     primaryColor: Theme.colorRed
                     fullColor: true
                     onClicked: {
-                        itemPopupDelete.confirmed()
-                        itemPopupDelete.close()
+                        itemDeletePopup.confirmed()
+                        itemDeletePopup.close()
                     }
                 }
             }

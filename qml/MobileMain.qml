@@ -317,9 +317,9 @@ ApplicationWindow {
                 appHeader.leftMenuMode = "back"
 
             if (state === "Tutorial")
-                appDrawer.interactive = false;
+                appDrawer.interactive = false
             else
-                appDrawer.interactive = true;
+                appDrawer.interactive = true
         }
 
         states: [

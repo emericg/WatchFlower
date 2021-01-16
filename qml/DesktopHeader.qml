@@ -174,19 +174,6 @@ Rectangle {
             tooltipText: qsTr("Switch graph")
         }
         ItemImageButtonTooltip {
-            id: buttonLed
-            width: 36
-            height: 36
-            anchors.verticalCenter: parent.verticalCenter
-
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
-            source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceLedButtonClicked()
-            tooltipText: qsTr("Blink LED")
-        }
-        ItemImageButtonTooltip {
             id: buttonRefreshHistory
             width: 36
             height: 36
@@ -199,6 +186,19 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshHistoryButtonClicked()
             tooltipText: qsTr("Sync history")
+        }
+        ItemImageButtonTooltip {
+            id: buttonLed
+            width: 36
+            height: 36
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+            source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceLedButtonClicked()
+            tooltipText: qsTr("Blink LED")
         }
         ItemImageButtonTooltip {
             id: buttonRefreshData
