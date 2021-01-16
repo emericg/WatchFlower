@@ -7,7 +7,7 @@
 | Thermometer                   | -15 → 50 °C (± 0.5 °C)    |
 | Soil moisture                 | 0 → 100%                  |
 | Light sensor                  | 0 → 100k lux (± 100 lux)  |
-| IP Code                       | IPX5                       |
+| IP Code                       | IPX5                      |
 | BLE API                       | [link](flowercare-api.md) |
 
 | RoPot                         | HHCCPOT002                |
@@ -30,13 +30,21 @@
 | Parrot Pot                    | ?                         |
 | ----------------------------- | ------------------------- |
 | Battery                       | 4 x AA                    |
-| Battery                       | LiPo (embeded)            |
 | Water tank                    | 2.2 l                     |
 | Thermometer                   | -10 → 55 °C               |
 | Soil moisture                 | 0 → 50%                   |
 | Light sensor                  | 0 → 1000 μmole.m-2.s-1    |
 | IP Code                       | IPX5                      |
 | BLE API                       | TODO                      |
+
+| HiGrow                        |                           |
+| ----------------------------- | ------------------------- |
+| Battery                       | 1 x 18650 or 1 * LiPo     |
+| Thermometer                   |                           |
+| Hygrometer                    |                           |
+| Soil moisture                 |                           |
+| Light sensor                  |                           |
+| BLE API                       | [link](higrow-api.md)     |
 
 # Thermometers
 

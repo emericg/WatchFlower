@@ -155,7 +155,7 @@ This will return 16 bytes of data, for example `0x2b007b04ba130800c8150800000000
 
 | Bytes | Type       | Value | Description                         |
 | ----- | ---------- | ----- | ----------------------------------- |
-| 00-01 | unint16    | 43    | number of stored historical records |
+| 00-01 | uint16     | 43    | number of stored historical records |
 | 02-15 | ?          | ?     | ?                                   |
 
 ##### Read entry
