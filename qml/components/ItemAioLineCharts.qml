@@ -29,6 +29,8 @@ Item {
     id: itemAioLineCharts
     width: parent.width
 
+    property bool showGraphDots: settingsManager.graphShowDots
+
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("itemAioLineCharts // loadGraph() >> " + currentDevice)
@@ -50,9 +52,12 @@ Item {
 
         if (dateIndicator.visible) resetIndicator()
 
-        var days = 14;
+        var days = 14
+        var count = currentDevice.countData("temperature", days)
 
-        if (currentDevice.countData("temperature", days) > 1) {
+        showGraphDots = (settingsManager.graphShowDots && count <= 21)
+
+        if (count > 1) {
             aioGraph.visible = true
             noDataIndicator.visible = false
         } else {
@@ -75,17 +80,17 @@ Item {
         axisTemp.max = 60
         axisCondu.min = 0
         axisCondu.max = 2000
-        axisLumi.min = 0
-        axisLumi.max = 10000
+        axisLumi.min = 1
+        axisLumi.max = 100000
 
         // Max axis for hygrometry
-        if (currentDevice.hygroMax*1.20 > 100.0)
+        if (currentDevice.hygroMax*1.15 > 100.0)
             axisHygro.max = 100.0; // no need to go higher than 100% soil moisture
         else
-            axisHygro.max = currentDevice.hygroMax*1.20;
+            axisHygro.max = currentDevice.hygroMax*1.15;
 
         // Max axis for temperature
-        axisTemp.max = currentDevice.tempMax*1.20;
+        axisTemp.max = currentDevice.tempMax*1.15;
 
         // Max axis for conductivity
         axisCondu.max = currentDevice.conduMax*2.0;
@@ -95,8 +100,8 @@ Item {
 
         // Min axis computation, only for thermometers
         if (!currentDevice.hasSoilMoistureSensor()) {
-            axisHygro.min = currentDevice.hygroMin*0.80;
-            axisTemp.min = currentDevice.tempMin*0.80;
+            axisHygro.min = currentDevice.hygroMin*0.85;
+            axisTemp.min = currentDevice.tempMin*0.85;
         }
 
         //// ADJUSTMENTS
@@ -155,25 +160,25 @@ Item {
 
         LineSeries {
             id: lumiData
-            pointsVisible: settingsManager.graphShowDots;
+            pointsVisible: showGraphDots;
             color: Theme.colorYellow; width: 2;
             axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
             id: conduData
-            pointsVisible: settingsManager.graphShowDots;
+            pointsVisible: showGraphDots;
             color: Theme.colorRed; width: 2;
             axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
             id: tempData
-            pointsVisible: settingsManager.graphShowDots;
+            pointsVisible: showGraphDots;
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
             id: hygroData
-            pointsVisible: settingsManager.graphShowDots;
+            pointsVisible: showGraphDots;
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
         }
