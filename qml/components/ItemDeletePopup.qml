@@ -13,7 +13,7 @@ Popup {
     x: (appWindow.width / 2) - (itemDeletePopup.width / 2)
     y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (itemDeletePopup.height / 2) - appHeader.height)
 
-    padding: singleColumn ? 24 : 32
+    padding: 24
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -59,8 +59,8 @@ Popup {
 
             Grid {
                 id: gridcontContent
-                width: singleColumn ? parent.width : 300+24
-                height: singleColumn ? 80+16 : 40
+                width: parent.width
+                height: singleColumn ? 80+16 : 32
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 columns: singleColumn ? 1 : 2
@@ -69,7 +69,7 @@ Popup {
 
                 ButtonWireframe {
                     id: buttonCancel
-                    width: singleColumn ? parent.width : 150
+                    width: buttonConfirm.width
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorHeaderHighlight
@@ -77,7 +77,7 @@ Popup {
                 }
                 ButtonWireframe {
                     id: buttonConfirm
-                    width: singleColumn ? parent.width : 150
+                    width: singleColumn ? parent.width : ((parent.width / 2) - (parent.spacing / 2))
 
                     text: qsTr("Delete")
                     primaryColor: Theme.colorRed
