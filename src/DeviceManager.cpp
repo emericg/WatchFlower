@@ -581,12 +581,12 @@ void DeviceManager::listenDevices()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::bleDiscoveryFinished);
 
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(600000); // 10m
+        m_discoveryAgent->setLowEnergyDiscoveryTimeout(60*1000); // 1m
 
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
         if (m_discoveryAgent->isActive())
         {
-            qDebug() << "Listening for ble advertisement devices...";
+            qDebug() << "Listening for BLE advertisement devices...";
         }
     }
 #endif // Qt 5.12+
@@ -623,10 +623,10 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
     if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
     {
         //updatedFields = QBluetoothDeviceInfo::Field::All;
-        for (auto id : info.manufacturerIds()) {
-            qDebug() << info.name() << info.address() << hex
+        for (const auto id: info.manufacturerIds()) {
+            qDebug() << info.name() << info.address() << Qt::hex
                      << "ID" << id
-                     << "data" << dec << info.manufacturerData(id).count() << hex
+                     << "data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
                      << "bytes:" << info.manufacturerData(id).toHex();
         }
     }

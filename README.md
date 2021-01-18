@@ -19,8 +19,9 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 * Support plant sensors and thermometers
 * Name your plants and set your own limits for optimal care
-* Background updates & notifications (desktop only)
-* Configurable update intervals
+* Synchronize sensors history
+* Background updates & notifications (desktop ONLY)
+* Configurable update interval
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
 * CSV data export
@@ -28,9 +29,8 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 TODOs:
 
-* Read offline sensors history
-* Continuous measurements (BLE advertising support)
 * Background updates & notifications (Android, maybe iOS)
+* Continuous measurements (BLE advertising support)
 
 ### Supported devices
 

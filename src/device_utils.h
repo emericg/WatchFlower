@@ -102,11 +102,12 @@ enum DeviceStatus {
 };
 
 enum DeviceActions {
-    ACTION_UPDATE = 0,
-    ACTION_UPDATE_HISTORY,
-    ACTION_UPDATE_REALTIME,
+    ACTION_UPDATE = 0,              //!< Read current sensor data
+    ACTION_UPDATE_REALTIME,         //!< Stay connected and read sensor data
+    ACTION_UPDATE_HISTORY,          //!< Read sensor history
 
     ACTION_LED_BLINK = 8,
+    ACTION_CLEAR_HISTORY,
     ACTION_WATERING,
 };
 

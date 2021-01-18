@@ -67,8 +67,17 @@ private:
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    QByteArray challenge_key;
-    QByteArray finish_key;
+    // Handshake
+    QByteArray m_key_challenge;
+    QByteArray m_key_finish;
+
+    // Clock
+    int64_t m_device_time = -1;
+    int64_t m_device_wall_time = -1;
+
+    // History control
+    int m_history_entry_count = -1;
+    int m_history_entry_read = -1;
 };
 
 /* ************************************************************************** */

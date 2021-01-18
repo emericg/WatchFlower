@@ -73,7 +73,7 @@
 | ----------------------------- | ------------------------- |
 | Screen                        | LCD                       |
 | Battery                       | 1 x CR2032                |
-| Thermometer                   | 0 ~ 60 °C (± 0.1 °C)      |
+| Thermometer                   | -9.9 ~ 60 °C (± 0.1 °C)   |
 | Hygrometer                    | 0 ~ 99% RH (± 1% RH)      |
 
 | Digital Hygrometer Alarm      | MHO-C303                  |

@@ -232,10 +232,10 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
             rc4_crypt(mixb, 8, token1, 12);
             rc4_crypt(token2, 12, magicend, 4);
 
-            challenge_key = QByteArray::fromRawData((char*)token1, 12);
-            challenge_key.detach();
-            finish_key = QByteArray::fromRawData((char*)magicend, 4);
-            finish_key.detach();
+            m_key_challenge = QByteArray::fromRawData((char*)token1, 12);
+            m_key_challenge.detach();
+            m_key_finish = QByteArray::fromRawData((char*)magicend, 4);
+            m_key_finish.detach();
 
             // Handshake
             /// start session command (write [0x90, 0xca, 0x85, 0xde] on 0x1b)
@@ -246,7 +246,7 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
             /// send finish key
             /// disable notification for 0x12 handle
 
-            // start session command
+            // Start session command
             QBluetoothUuid s(QString("00000010-0000-1000-8000-00805f9b34fb")); // handle 0x1b
             QLowEnergyCharacteristic chs = serviceHandshake->characteristic(s);
             serviceHandshake->writeCharacteristic(chs, QByteArray::fromHex("90ca85de"), QLowEnergyService::WriteWithResponse);
@@ -275,29 +275,32 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {
-        // enable notification for 0x12 handle
-        QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
-        QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
-        m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-        serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
-
-        // send challenge key
-        QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
-        QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
-        serviceHandshake->writeCharacteristic(chk, challenge_key, QLowEnergyService::WriteWithResponse);
-
+        if (m_key_finish.size())
+        {
+/*
+            // enable notification for 0x12 handle
+            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
+            QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
+            m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
+*/
+            // send challenge key
+            QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+            QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
+            serviceHandshake->writeCharacteristic(chk, m_key_challenge, QLowEnergyService::WriteWithResponse);
+        }
         return;
     }
 
     if (c.uuid().toString() == "{00000001-0000-1000-8000-00805f9b34fb}")
     {
-        if (finish_key.size())
+        if (m_key_finish.size())
         {
             // send finish key
             QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
-            serviceHandshake->writeCharacteristic(chk, finish_key, QLowEnergyService::WriteWithResponse);
-            finish_key.clear();
+            serviceHandshake->writeCharacteristic(chk, m_key_finish, QLowEnergyService::WriteWithResponse);
+            m_key_finish.clear();
 
             // disabled notification for 0x12 handle?
         }
@@ -322,20 +325,41 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
     qDebug() << "WE HAVE DATA: 0x" \
              << Qt::hex << data[ 0] << Qt::hex << data[ 1] << Qt::hex << data[ 2] << Qt::hex << data[ 3] \
              << Qt::hex << data[ 4] << Qt::hex << data[ 5] << Qt::hex << data[ 6] << Qt::hex << data[ 7] \
-             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[10] \
+             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[11] \
              << Qt::hex << data[12] << Qt::hex << data[13] << Qt::hex << data[14] << Qt::hex << data[15];
 */
     if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
     {
-        // Entry count
+        QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handler 0x3c
+        QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
+
+        if (m_history_entry_count < 0)
+        {
+            // Entry count
+            m_history_entry_count = static_cast<int>(data[0] + (data[1] << 8));
+            //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
+
+            // Read first entry
+            serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
+            m_history_entry_read = 0;
+        }
+        else
+        {
+            // Parse entry
+        }
         return;
     }
 
     if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
     {
         // Device time
-        return;
-    }
+        m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+        m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
+
+#ifndef QT_NO_DEBUG
+        qDebug() << "* DeviceRopot clock:" << m_device_time;
+#endif
+        return;    }
 
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {

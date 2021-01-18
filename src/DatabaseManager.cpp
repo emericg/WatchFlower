@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFile>
 #include <QString>
+#include <QDateTime>
 #include <QStandardPaths>
 #include <QDebug>
 
@@ -112,14 +113,27 @@ bool DatabaseManager::openDatabase_sqlite()
 
                         createDatabase();
 
-                        // Delete everything 90+ days old ///////////////////////
+                        // Sanitize database ///////////////////////////////////
 
-                        // DATETIME: YYY-MM-JJ HH:MM:SS
-                        QSqlQuery sanitizeData;
-                        sanitizeData.prepare("DELETE FROM plantData WHERE ts < DATE('now', '-90 days')");
+                        if (QDate::currentDate().year() >= 2021)
+                        {
+                            // DATETIME: YYY-MM-JJ HH:MM:SS
 
-                        if (sanitizeData.exec() == false)
-                            qWarning() << "> sanitizeData.exec() ERROR" << sanitizeData.lastError().type() << ":" << sanitizeData.lastError().text();
+                            // Delete everything 90+ days old
+                            QSqlQuery sanitizeDataPast;
+                            sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts < DATE('now', '-90 days')");
+
+                            if (sanitizeDataPast.exec() == false)
+                                qWarning() << "> sanitizeDataPast.exec() ERROR" << sanitizeDataPast.lastError().type() << ":" << sanitizeDataPast.lastError().text();
+
+                            // Delete everything that's in the future
+
+                            QSqlQuery sanitizeDataFuture;
+                            sanitizeDataFuture.prepare("DELETE FROM plantData WHERE ts > DATE('now', '+1 days')");
+
+                            if (sanitizeDataFuture.exec() == false)
+                                qWarning() << "> sanitizeDataFuture.exec() ERROR" << sanitizeDataFuture.lastError().type() << ":" << sanitizeDataFuture.lastError().text();
+                        }
                     }
                     else
                     {
@@ -177,25 +191,42 @@ bool DatabaseManager::openDatabase_mysql()
             {
                 m_dbExternalOpen = true;
 
-                // Migrations //////////////////////////////////////////
+                // Migrations ///////////////////////////////////////////////////
 
                 // must be done before the creation, so we migrate old data tables
                 // instead of creating new empty tables
 
                 migrateDatabase();
 
-                // Check if our tables exists //////////////////////////
+                // Check if our tables exists //////////////////////////////////
 
                 createDatabase();
 
-                // Delete everything 90+ days old ///////////////////////
+                // Delete everything that's in the future //////////////////////
 
-                // DATETIME: YYY-MM-JJ HH:MM:SS
-                QSqlQuery sanitizeData;
-                sanitizeData.prepare("DELETE FROM plantData WHERE ts < DATE_SUB(NOW(), INTERVAL 90 DAY)");
+                // TODO
 
-                if (sanitizeData.exec() == false)
-                    qWarning() << "> sanitizeData.exec() ERROR" << sanitizeData.lastError().type() << ":" << sanitizeData.lastError().text();
+                // Sanitize database ///////////////////////////////////
+
+                if (QDate::currentDate().year() >= 2021)
+                {
+                    // DATETIME: YYY-MM-JJ HH:MM:SS
+
+                    // Delete everything 90+ days old
+                    QSqlQuery sanitizeDataPast;
+                    sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts < DATE_SUB(NOW(), INTERVAL 90 DAY)");
+
+                    if (sanitizeDataPast.exec() == false)
+                        qWarning() << "> sanitizeDataPast.exec() ERROR" << sanitizeDataPast.lastError().type() << ":" << sanitizeDataPast.lastError().text();
+
+                    // Delete everything that's in the future
+
+                    QSqlQuery sanitizeDataFuture;
+                    sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts > DATE_ADD(NOW(), 1 DAY)");
+
+                    if (sanitizeDataFuture.exec() == false)
+                        qWarning() << "> sanitizeDataFuture.exec() ERROR" << sanitizeDataFuture.lastError().type() << ":" << sanitizeDataFuture.lastError().text();
+                }
             }
             else
             {

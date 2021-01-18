@@ -221,7 +221,6 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
     }
 }
 
-
 void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
@@ -252,10 +251,10 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
             rc4_crypt(mixa, 8, token1, 12);
             rc4_crypt(token2, 12, magicend, 4);
 
-            challenge_key = QByteArray::fromRawData((char*)token1, 12);
-            challenge_key.detach();
-            finish_key = QByteArray::fromRawData((char*)magicend, 4);
-            finish_key.detach();
+            m_key_challenge = QByteArray::fromRawData((char*)token1, 12);
+            m_key_challenge.detach();
+            m_key_finish = QByteArray::fromRawData((char*)magicend, 4);
+            m_key_finish.detach();
 
             // Handshake
             /// start session command (write [0x90, 0xca, 0x85, 0xde] on 0x1b)
@@ -266,13 +265,14 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
             /// send finish key
             /// disable notification for 0x12 handle
 
-            // start session command
+            // Start session command
             QBluetoothUuid s(QString("00000010-0000-1000-8000-00805f9b34fb")); // handle 0x1b
             QLowEnergyCharacteristic chs = serviceHandshake->characteristic(s);
             serviceHandshake->writeCharacteristic(chs, QByteArray::fromHex("90ca85de"), QLowEnergyService::WriteWithResponse);
         }
     }
 }
+
 void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
@@ -283,6 +283,10 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
         {
             //
         }
+        if (serviceHistory && m_ble_action == ACTION_CLEAR_HISTORY)
+        {
+            //
+        }
     }
 }
 
@@ -290,46 +294,65 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 
 void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceFlowerCare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DeviceFlowerCare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {
-        // enable notification for 0x12 handle
-        QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
-        QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
-        m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-        serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
-
-        // send challenge key
-        QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
-        QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
-        serviceHandshake->writeCharacteristic(chk, challenge_key, QLowEnergyService::WriteWithResponse);
-
+        if (m_key_challenge.size())
+        {
+/*
+            // Enable notification for 0x12 handle?
+            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
+            QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
+            m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
+*/
+            // Send challenge key
+            QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+            QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
+            serviceHandshake->writeCharacteristic(chk, m_key_challenge, QLowEnergyService::WriteWithResponse);
+        }
         return;
     }
 
     if (c.uuid().toString() == "{00000001-0000-1000-8000-00805f9b34fb}")
     {
-        if (finish_key.size())
+        if (m_key_finish.size())
         {
-            // send finish key
+            // Send finish key
             QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
-            serviceHandshake->writeCharacteristic(chk, finish_key, QLowEnergyService::WriteWithResponse);
-            finish_key.clear();
+            serviceHandshake->writeCharacteristic(chk, m_key_finish, QLowEnergyService::WriteWithResponse);
+            m_key_finish.clear();
 
-            // disabled notification for 0x12 handle?
+            // Disable notification for 0x12 handle?
         }
         else
         {
-            // start reading history?
+            // Start reading history?
+/*
+            // Enable notification for 0x3e handle
+            QBluetoothUuid n(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x3f
+            QLowEnergyCharacteristic chn = serviceHistory->characteristic(n);
+            m_notificationHistory = chn.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
+*/
+            // Read device time
+            QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handler 0x41
+            QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
+            serviceHistory->readCharacteristic(chh);
+
+            // Change the device mode
+            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handler 0x3e
+            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
         }
         return;
     }
 
     if (c.uuid().toString() == "{00001a10-0000-1000-8000-00805f9b34fb}")
     {
-        // Device mode has been changed to history
+        // Device mode has been changed to 'history'
 
         // Read history entry count
         QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handler 0x3c
@@ -352,26 +375,82 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
     qDebug() << "WE HAVE DATA: 0x" \
              << Qt::hex << data[ 0] << Qt::hex << data[ 1] << Qt::hex << data[ 2] << Qt::hex << data[ 3] \
              << Qt::hex << data[ 4] << Qt::hex << data[ 5] << Qt::hex << data[ 6] << Qt::hex << data[ 7] \
-             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[10] \
+             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[11] \
              << Qt::hex << data[12] << Qt::hex << data[13] << Qt::hex << data[14] << Qt::hex << data[15];
 */
     if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
     {
-        // Entry count
-        int entries = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
-        qDebug() << "History has" << entries << "entries";
+        QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handler 0x3c
+        QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
 
-        // Read first entry
-        //QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handler 0x3c
-        //QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
-        //serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
+        if (m_history_entry_count < 0)
+        {
+            // Entry count
+            m_history_entry_count = static_cast<int>(data[0] + (data[1] << 8));
+            //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
+
+            // Read first entry
+            serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
+            m_history_entry_read = 0;
+        }
+        else
+        {
+            // Parse entry
+            m_history_entry_read++;
+            int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
+            float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)+ (data[6] << 16)) / 10.f;
+            int luminosity = data[7] + (data[8] << 8) + (data[9] << 16) + (data[10] << 24);
+            int soil_moisture = data[11];
+            int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
+
+            if (m_dbInternal || m_dbExternal)
+            {
+                // SQL date format YYYY-MM-DD HH:MM:SS
+                QDateTime tmcd_qt = QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
+
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature, luminosity)"
+                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp, :lumi)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tmcd_qt.toString("yyyy-MM-dd hh:00:00"));
+                addData.bindValue(":ts_full", tmcd_qt.toString("yyyy-MM-dd hh:mm:ss"));
+                addData.bindValue(":hygro", soil_moisture);
+                addData.bindValue(":condu", soil_conductivity);
+                addData.bindValue(":temp", temperature);
+                addData.bindValue(":lumi", luminosity);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+            }
+/*
+#ifndef QT_NO_DEBUG
+            qDebug() << "* History entry" << m_history_entry_read-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
+            qDebug() << "- soil_moisture:" << soil_moisture;
+            qDebug() << "- soil_conductivity:" << soil_conductivity;
+            qDebug() << "- temperature:" << temperature;
+            qDebug() << "- luminosity:" << luminosity;
+#endif
+*/
+            // Read next entry (format: 0xA1 + entry / 16b little endian)
+            if (m_history_entry_read < m_history_entry_count)
+            {
+                QByteArray nextentry(QByteArray::fromHex("A1"));
+                nextentry.push_back(m_history_entry_read%256);
+                nextentry.push_back(m_history_entry_read/256);
+                serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
+            }
+        }
         return;
     }
 
     if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
     {
         // Device time
+        m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+        m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
+#ifndef QT_NO_DEBUG
+        qDebug() << "* DeviceFlowerCare clock:" << m_device_time;
+#endif
         return;
     }
 
@@ -387,8 +466,8 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 return;
 
             m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_soil_moisture = data[7];
             m_luminosity = data[3] + (data[4] << 8);
+            m_soil_moisture = data[7];
             m_soil_conductivity = data[8] + (data[9] << 8);
 
             m_lastUpdate = QDateTime::currentDateTime();
