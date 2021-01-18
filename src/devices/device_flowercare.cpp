@@ -85,7 +85,7 @@ void DeviceFlowerCare::serviceScanDone()
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -99,7 +99,7 @@ void DeviceFlowerCare::serviceScanDone()
             connect(serviceHandshake, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceHandshake->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceHandshake->discoverDetails(); });
         }
     }
 
@@ -113,7 +113,7 @@ void DeviceFlowerCare::serviceScanDone()
             connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceHistory->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
         }
     }
 }

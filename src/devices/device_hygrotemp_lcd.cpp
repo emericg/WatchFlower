@@ -74,7 +74,7 @@ void DeviceHygrotempLCD::serviceScanDone()
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_infos); // custom
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
         }
     }
 
@@ -85,7 +85,7 @@ void DeviceHygrotempLCD::serviceScanDone()
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_battery);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceBattery->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
         }
     }
 
@@ -97,7 +97,7 @@ void DeviceHygrotempLCD::serviceScanDone()
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempLCD::bleReadNotify);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 }

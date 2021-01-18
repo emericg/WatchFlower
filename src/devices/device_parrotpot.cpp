@@ -87,7 +87,7 @@ void DeviceParrotPot::serviceScanDone()
             //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
         }
     }
 
@@ -99,7 +99,7 @@ void DeviceParrotPot::serviceScanDone()
             //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceBattery->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
         }
     }
 
@@ -111,7 +111,7 @@ void DeviceParrotPot::serviceScanDone()
             //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -123,7 +123,7 @@ void DeviceParrotPot::serviceScanDone()
             //connect(serviceClock, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceClock->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceClock->discoverDetails(); });
         }
     }
 
@@ -136,7 +136,7 @@ void DeviceParrotPot::serviceScanDone()
             //connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceParrotPot::bleWriteDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceHistory->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
         }
     }
 }

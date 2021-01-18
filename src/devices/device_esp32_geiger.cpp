@@ -72,7 +72,7 @@ void DeviceEsp32Geiger::serviceScanDone()
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32Geiger::serviceDetailsDiscovered_battery);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceBattery->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
         }
     }
 
@@ -84,7 +84,7 @@ void DeviceEsp32Geiger::serviceScanDone()
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32Geiger::bleReadNotify);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 }

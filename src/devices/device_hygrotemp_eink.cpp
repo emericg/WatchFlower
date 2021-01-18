@@ -74,7 +74,7 @@ void DeviceHygrotempEInk::serviceScanDone()
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempEInk::bleReadNotify);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -87,7 +87,7 @@ void DeviceHygrotempEInk::serviceScanDone()
                 connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_infos);
 
                 // Windows hack, see: QTBUG-80770 and QTBUG-78488
-                QTimer::singleShot(0, [=] () { serviceInfos->discoverDetails(); });
+                QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
             }
         }
     }
