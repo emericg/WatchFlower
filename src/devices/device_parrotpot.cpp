@@ -141,6 +141,8 @@ void DeviceParrotPot::serviceScanDone()
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceParrotPot::addLowEnergyService(" << uuid.toString() << ")";
@@ -175,20 +177,6 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}" ||
-        uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // Live service?
-    {
-        delete serviceData;
-        serviceData = nullptr;
-
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
-        {
-            serviceData = controller->createServiceObject(uuid);
-            if (!serviceData)
-                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
-        }
-    }
-
     //if (uuid.toString() == "{39e1fb00-84a8-11e2-afba-0002a5d5c51b}") // Upload service
 
     if (uuid.toString() == "{39e1fc00-84a8-11e2-afba-0002a5d5c51b}") // History service
@@ -216,7 +204,23 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
     }
 
     //if (uuid.toString() == "{39e1fe00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower calibration service
+
+    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}" ||
+        uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // Live service?
+    {
+        delete serviceData;
+        serviceData = nullptr;
+
+        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        {
+            serviceData = controller->createServiceObject(uuid);
+            if (!serviceData)
+                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
+        }
+    }
 }
+
+/* ************************************************************************** */
 
 void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
@@ -224,54 +228,29 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
-        if (cfw.value().size() > 0)
+        if (serviceInfos)
         {
-            m_firmware = cfw.value();
-            m_firmware =  m_firmware.split('_')[1].split('-')[1];
-        }
-
-        if (m_firmware.size() == 5)
-        {
-            if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+            QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
+            if (cfw.value().size() > 0)
             {
-                m_firmware_uptodate = true;
+                m_firmware = cfw.value();
+                m_firmware =  m_firmware.split('_')[1].split('-')[1];
             }
-        }
 
-        if (m_dbInternal || m_dbExternal)
-        {
-            QSqlQuery updateDevice;
-            updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
-            updateDevice.bindValue(":firmware", m_firmware);
-            updateDevice.bindValue(":deviceAddr", getAddress());
-            if (updateDevice.exec() == false)
-                qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-        }
-
-        Q_EMIT sensorUpdated();
-    }
-}
-
-void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::ServiceDiscovered)
-    {
-        //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
-
-        // Characteristic "Battery Level"
-        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
-        if (cbat.value().size() > 0)
-        {
-            m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
+            if (m_firmware.size() == 5)
+            {
+                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                {
+                    m_firmware_uptodate = true;
+                }
+            }
 
             if (m_dbInternal || m_dbExternal)
             {
                 QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
+                updateDevice.bindValue(":firmware", m_firmware);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -282,13 +261,44 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
     }
 }
 
+void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceInfos)
+        {
+            // Characteristic "Battery Level"
+            QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
+            if (cbat.value().size() > 0)
+            {
+                m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
+
+                if (m_dbInternal || m_dbExternal)
+                {
+                    QSqlQuery updateDevice;
+                    updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                    updateDevice.bindValue(":battery", m_battery);
+                    updateDevice.bindValue(":deviceAddr", getAddress());
+                    if (updateDevice.exec() == false)
+                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+                }
+
+                Q_EMIT sensorUpdated();
+            }
+        }
+    }
+}
+
 void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (m_ble_action == ACTION_LED_BLINK)
+        if (serviceData && m_ble_action == ACTION_LED_BLINK)
         {
             // Make LED blink // handle 0x
             QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
@@ -297,7 +307,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
             //controller->disconnectFromDevice();
         }
 
-        if (m_ble_action == ACTION_UPDATE)
+        if (serviceData && m_ble_action == ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;
@@ -407,7 +417,23 @@ void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceS
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceClock)
+        {
+            QBluetoothUuid clk(QString("39e1fd01-84a8-11e2-afba-0002a5d5c51b")); // handler 0x70
+            QLowEnergyCharacteristic cclk = serviceClock->characteristic(clk);
+            if (cclk.value().size() > 0)
+            {
+                const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
+                m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+                m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
+
+#ifndef QT_NO_DEBUG
+                qDebug() << "* DeviceParrotPot clock: " << m_device_time;
+#endif
+            }
+        }
     }
 }
 
@@ -415,7 +441,10 @@ void DeviceParrotPot::serviceDetailsDiscovered_history(QLowEnergyService::Servic
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
+        if (serviceHistory)
+        {
+            //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
+        }
     }
 }
 

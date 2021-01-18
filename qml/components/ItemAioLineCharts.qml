@@ -111,7 +111,7 @@ Item {
             tempData.width = 3 // Temperature is primary
         }
 
-        if (currentDevice.deviceName === "Flower care") {
+        if (currentDevice.deviceName === "Flower care" || currentDevice.deviceName === "Flower power") {
             // not planted? don't show hygro and condu
             hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
             conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")

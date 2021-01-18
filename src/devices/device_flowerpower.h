@@ -66,14 +66,19 @@ private:
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyService *serviceClock = nullptr;
     QLowEnergyService *serviceHistory = nullptr;
-    QLowEnergyDescriptor m_notificationDesc;
-
-    int64_t m_clock;
-    int64_t m_lastmove;
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
+    // Clock
+    int64_t m_device_time = -1;
+    int64_t m_device_wall_time = -1;
+    int64_t m_device_lastmove = -1;
+
+    // History control
+    int m_history_entry_count = -1;
+    int m_history_entry_read = -1;
 };
 
 /* ************************************************************************** */
