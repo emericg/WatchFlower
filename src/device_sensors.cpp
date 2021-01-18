@@ -227,7 +227,9 @@ bool DeviceSensors::getSqlData(int minutes)
     cachedData.bindValue(":deviceAddr", getAddress());
 
     if (cachedData.exec() == false)
+    {
         qWarning() << "> cachedData.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
+    }
     else
     {
 #ifndef QT_NO_DEBUG
@@ -318,7 +320,7 @@ int DeviceSensors::countData(const QString &dataName, int days) const
     dataCount.prepare("SELECT COUNT(" + dataName + ")" \
                       "FROM datas " \
                       "WHERE deviceAddr = :deviceAddr " \
-                        "AND " + dataName + " > 0 AND ts >= datetime('now','-" + QString::number(days) + " day');");
+                        "AND " + dataName + " > -99 AND ts >= datetime('now','-" + QString::number(days) + " day');");
     dataCount.bindValue(":deviceAddr", getAddress());
 
     if (dataCount.exec() == false)

@@ -22,10 +22,12 @@ Item {
             rectangle_water_low.visible = false
             rectangle_water_high.visible = false
         } else {
+            var ttt = 1.2
+            var bbb = 0.8
             var base = containerbar.height
-            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*0.95, graphMax*1.05)
-            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*0.95, graphMax*1.05)
-            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*0.95, graphMax*1.05)
+            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*bbb, graphMax*ttt)
+            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*bbb, graphMax*ttt)
+            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*bbb, graphMax*ttt)
 
             rectangle_temp.visible = true
             rectangle_temp.y = base - (base * h)

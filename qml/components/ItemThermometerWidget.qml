@@ -26,6 +26,15 @@ Item {
         var days = Math.floor(width / widgetWidthTarget)
         widgetWidth = (width / days)
         currentDevice.updateAioMinMaxData(days)
+
+        if (currentDevice.countData("temp", days) > 1) {
+            mmGraph.visible = true
+            noDataIndicator.visible = false
+        } else {
+            mmGraph.visible = false
+            noDataIndicator.visible = true
+        }
+
     }
 
     onWidthChanged: updateGraph()
@@ -34,20 +43,28 @@ Item {
     function resetHistoryMode() { }
 
     ////////////////////////////////////////////////////////////////////////////
+
+    ItemNoData {
+        id: noDataIndicator
+        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+    }
 /*
     Flickable {
+        id: mmGraphFlick
         anchors.fill: parent
 
-        contentWidth: row.width
+        contentWidth: mmGraph.width
         flickableDirection: Flickable.HorizontalFlick
         boundsBehavior: Flickable.StopAtBounds
 */
         Row {
-            id: row
+            id: mmGraph
             height: parent.height
             anchors.right: parent.right
-            spacing: 0
 
+            spacing: 0
             //layoutDirection: Qt.RightToLeft
 
             Repeater {

@@ -86,6 +86,7 @@ Item {
 
             ButtonWireframe {
                 text: qsTr("Launch detection")
+                fullColor: true
                 primaryColor: Theme.colorPrimary
                 onClicked: deviceManager.scanDevices()
             }

@@ -27,7 +27,6 @@ import ThemeEngine 1.0
 Item {
     id: itemDataCharts
     width: parent.width
-    anchors.margins: 0
 
     property string graphViewSelected
     property string graphDataSelected

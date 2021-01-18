@@ -28,7 +28,6 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: itemAioLineCharts
     width: parent.width
-    anchors.margins: 0
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -65,7 +64,7 @@ Item {
         lumiData.clear()
         conduData.clear()
 
-        currentDevice.getAioLinesData(14, axisTime, hygroData, tempData, lumiData, conduData);
+        currentDevice.getAioLinesData(14, axisTime, hygroData, tempData, conduData, lumiData);
 
         //// AXIS
         axisHygro.min = 0
