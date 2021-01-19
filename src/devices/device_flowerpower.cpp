@@ -176,19 +176,6 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // Live service
-    {
-        delete serviceData;
-        serviceData = nullptr;
-
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
-        {
-            serviceData = controller->createServiceObject(uuid);
-            if (!serviceData)
-                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
-        }
-    }
-
     //if (uuid.toString() == "{39e1fb00-84a8-11e2-afba-0002a5d5c51b}") // Upload service
 
     if (uuid.toString() == "{39e1fc00-84a8-11e2-afba-0002a5d5c51b}") // History service
@@ -218,6 +205,19 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
     }
 
     //if (uuid.toString() == "{39e1fe00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower calibration service
+
+    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // Live service
+    {
+        delete serviceData;
+        serviceData = nullptr;
+
+        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        {
+            serviceData = controller->createServiceObject(uuid);
+            if (!serviceData)
+                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
+        }
+    }
 }
 
 /* ************************************************************************** */
@@ -319,9 +319,10 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
                 QBluetoothUuid sm_calibrated(QString("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
                 QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
                 QBluetoothUuid dli_calibrated(QString("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
+
                 QBluetoothUuid ea_calibrated(QString("39e1fa0c-84a8-11e2-afba-0002a5d5c51b")); // ?
                 QBluetoothUuid ecb_calibrated(QString("39e1fa0d-84a8-11e2-afba-0002a5d5c51b")); // ?
-                QBluetoothUuid ecp_calibrated(QString("39e1fa0e-84a8-11e2-afba-0002a5d5c51b")); // ?
+                QBluetoothUuid ecbp_calibrated(QString("39e1fa0e-84a8-11e2-afba-0002a5d5c51b")); // ?
             }
             else
 */

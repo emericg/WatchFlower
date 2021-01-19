@@ -39,7 +39,9 @@ class DeviceSensor: public Device
     // data
     Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
+    Q_PROPERTY(int deviceWaterTank READ getWaterTank NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
@@ -91,6 +93,7 @@ protected:
     int m_soil_conductivity = -99;
     float m_soil_temperature = -99.f;
     float m_soil_ph = -99.f;
+    int m_water_tank = -99;
     // hygrometer data
     float m_temperature = -99.f;
     int m_humidity = -99;
@@ -158,8 +161,9 @@ public slots:
     // BLE device data
     int getSoilMoisture() const { return m_soil_moisture; }
     int getSoilConductivity() const { return m_soil_conductivity; }
-    int getSoilTemperature() const { return m_soil_temperature; }
-    int getSoilPH() const { return m_soil_ph; }
+    float getSoilTemperature() const { return m_soil_temperature; }
+    float getSoilPH() const { return m_soil_ph; }
+    int getWaterTank() const { return m_water_tank; }
     //
     float getTemp() const;
     float getTempC() const { return m_temperature; }

@@ -103,18 +103,6 @@ void DeviceParrotPot::serviceScanDone()
         }
     }
 
-    if (serviceData)
-    {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
-        {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_data);
-            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
-
-            // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
-        }
-    }
-
     if (serviceClock)
     {
         if (serviceClock->state() == QLowEnergyService::DiscoveryRequired)
@@ -137,6 +125,18 @@ void DeviceParrotPot::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
+        }
+    }
+
+    if (serviceData)
+    {
+        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_data);
+            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
         }
     }
 }
@@ -205,8 +205,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 
     //if (uuid.toString() == "{39e1fe00-84a8-11e2-afba-0002a5d5c51b}") // FlowerPower calibration service
 
-    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}" ||
-        uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // Live service?
+    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // Live service
     {
         delete serviceData;
         serviceData = nullptr;
