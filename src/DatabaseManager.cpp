@@ -352,7 +352,7 @@ void DatabaseManager::createDatabase()
                               "deviceBattery INT," \
                               "locationName VARCHAR(255)," \
                               "associatedName VARCHAR(255)," \
-                              "isInside BOOLEAN," \
+                              "isOutside BOOLEAN," \
                               "settings VARCHAR(255)" \
                               ");");
 
@@ -485,7 +485,7 @@ bool DatabaseManager::migrate_v1v2()
 
     QSqlQuery qmDev1("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
     QSqlQuery qmDev2("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
-    QSqlQuery qmDev3("ALTER TABLE devices ADD isInside BOOLEAN");
+    QSqlQuery qmDev3("ALTER TABLE devices ADD isOutside BOOLEAN");
     QSqlQuery qmDev4("ALTER TABLE devices ADD settings VARCHAR(255)");
 
     QSqlQuery qmDat1("ALTER TABLE datas RENAME TO plantData");

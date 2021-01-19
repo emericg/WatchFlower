@@ -96,7 +96,8 @@ Item {
         itemCondu.visible = currentDevice.hasSoilConductivitySensor()
     }
 
-    property var outsideMode: (currentDevice && !currentDevice.deviceIsInside)
+    property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
+    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -735,13 +736,13 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorForeground
-                    opacity: outsideMode ? 0.5 : 1
+                    opacity: insideMode ? 1 : 0.5
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            currentDevice.setInside(true)
+                            currentDevice.setOutside(false)
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
                             rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }
@@ -778,7 +779,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            currentDevice.setInside(false)
+                            currentDevice.setOutside(true)
                             rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
                             rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
                         }

@@ -362,20 +362,26 @@ bool Device::getSqlInfos()
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery getInfos;
-        getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isInside, settings FROM devices WHERE deviceAddr = :deviceAddr");
+        getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isOutside, settings FROM devices WHERE deviceAddr = :deviceAddr");
         getInfos.bindValue(":deviceAddr", getAddress());
-        getInfos.exec();
-        while (getInfos.next())
+        if (getInfos.exec())
         {
-            m_firmware = getInfos.value(0).toString();
-            m_battery = getInfos.value(1).toInt();
-            m_associatedName = getInfos.value(2).toString();
-            m_locationName = getInfos.value(3).toString();
-            m_isInside = getInfos.value(4).toBool();
-            // TODO handle settings field
+            while (getInfos.next())
+            {
+                m_firmware = getInfos.value(0).toString();
+                m_battery = getInfos.value(1).toInt();
+                m_associatedName = getInfos.value(2).toString();
+                m_locationName = getInfos.value(3).toString();
+                m_isOutside = getInfos.value(4).toBool();
+                // TODO handle settings field
 
-            status = true;
-            Q_EMIT sensorUpdated();
+                status = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
+        else
+        {
+            qWarning() << "> getInfos.exec() ERROR" << getInfos.lastError().type() << ":" << getInfos.lastError().text();
         }
     }
 
@@ -585,19 +591,19 @@ void Device::setAssociatedName(const QString &name)
     }
 }
 
-void Device::setInside(const bool inside)
+void Device::setOutside(const bool outside)
 {
-    if (m_isInside != inside)
+    if (m_isOutside != outside)
     {
-        m_isInside = inside;
+        m_isOutside = outside;
 
         if (m_dbInternal || m_dbExternal)
         {
-            QSqlQuery updateInside;
-            updateInside.prepare("UPDATE devices SET isInside = :inside WHERE deviceAddr = :deviceAddr");
-            updateInside.bindValue(":inside", inside);
-            updateInside.bindValue(":deviceAddr", getAddress());
-            updateInside.exec();
+            QSqlQuery updateOutside;
+            updateOutside.prepare("UPDATE devices SET isOutside = :outside WHERE deviceAddr = :deviceAddr");
+            updateOutside.bindValue(":outside", outside);
+            updateOutside.bindValue(":deviceAddr", getAddress());
+            updateOutside.exec();
         }
 
         Q_EMIT sensorUpdated();

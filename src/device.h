@@ -68,6 +68,7 @@ class Device: public QObject
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
+    Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
@@ -102,7 +103,7 @@ protected:
     int m_battery = -1;
 
     // Device settings
-    bool m_isInside = true;
+    bool m_isOutside = false;
 
     // Status
     int m_status = 0;           //!< See DeviceStatus enum
@@ -194,8 +195,9 @@ public slots:
     void setLocationName(const QString &name);
     QString getAssociatedName() { return m_associatedName; }
     void setAssociatedName(const QString &name);
-    bool isInside() const { return m_isInside; }
-    void setInside(const bool inside);
+    bool isInside() const { return !m_isOutside; }
+    bool isOutside() const { return m_isOutside; }
+    void setOutside(const bool outside);
 
     // Capabilities
     int getDeviceType() const { return m_deviceType; }
