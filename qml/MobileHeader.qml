@@ -254,6 +254,15 @@ Rectangle {
 
     ////////////
 
+    MouseArea {
+        id: actionMenuCloseArea
+        width: appWindow.width
+        height: appWindow.height
+        //anchors.fill: appWindow
+
+        enabled: actionMenu.isOpen
+        onClicked: actionMenu.close()
+    }
     ActionMenu {
         id: actionMenu
         anchors.top: parent.top
@@ -272,15 +281,6 @@ Rectangle {
             onBluetoothChanged: {
                 if (!deviceManager.bluetooth) actionMenu.close()
             }
-        }
-        MouseArea {
-            id: actionMenuCloseArea
-            x: 0; y: 0; z: -1;
-            width: appWindow.width
-            height: appWindow.height
-
-            enabled: actionMenu.isOpen
-            onClicked: actionMenu.close()
         }
     }
 }

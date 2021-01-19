@@ -182,7 +182,7 @@ Item {
 
             axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
             axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false;
-                                     labelsFont.pixelSize: 8; labelsColor: Theme.colorText; }
+                                     labelsFont.pixelSize: 8; labelsColor: Theme.colorSubText; }
 
             BarSet { id: myBarSet; }
             BarSet { id: backgroundDayBars; }

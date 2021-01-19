@@ -300,7 +300,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -375,7 +375,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             padding: 4
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -451,7 +451,7 @@ Item {
 
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                         }
                     }
