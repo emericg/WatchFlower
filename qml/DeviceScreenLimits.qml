@@ -100,196 +100,11 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorForeground
-        height: devicePanel.height + 12
-        z: 5
-
-        visible: !(isPhone && screenOrientation === Qt.LandscapeOrientation)
-
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        // prevent clicks into this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Column {
-            id: devicePanel
-            anchors.right: parent.right
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 2
-            spacing: 2
-
-            Text {
-                id: textDeviceName
-                height: 36
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-
-                visible: isDesktop
-
-                text: currentDevice.deviceName
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: Theme.fontSizeTitle
-                font.capitalization: Font.AllUppercase
-                color: Theme.colorText
-
-                ImageSvg {
-                    id: imageBattery
-                    width: 32
-                    height: 32
-                    rotation: 90
-                    anchors.verticalCenter: textDeviceName.verticalCenter
-                    anchors.left: textDeviceName.right
-                    anchors.leftMargin: 16
-
-                    source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
-                    color: Theme.colorIcon
-                }
-            }
-
-            Item {
-                id: itemAddress
-                height: 28
-                width: parent.width
-
-                Text {
-                    id: labelAddress
-                    width: isPhone ? 80 : 96
-                    anchors.leftMargin: 12
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Address")
-                    font.bold: true
-                    font.pixelSize: 12
-                    font.capitalization: Font.AllUppercase
-                    color: Theme.colorSubText
-                    horizontalAlignment: Text.AlignRight
-                }
-
-                Text {
-                    id: textAddr
-                    anchors.left: labelAddress.right
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: currentDevice.deviceAddress
-                    font.pixelSize: 17
-                    color: Theme.colorHighContrast
-                }
-            }
-
-            Item {
-                id: itemFirmware
-                height: 28
-                width: parent.width
-
-                Text {
-                    id: labelFirmware
-                    width: isPhone ? 80 : 96
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Firmware")
-                    font.bold: true
-                    font.pixelSize: 12
-                    font.capitalization: Font.AllUppercase
-                    color: Theme.colorSubText
-                    horizontalAlignment: Text.AlignRight
-                }
-                Text {
-                    id: textFirmware
-                    anchors.left: labelFirmware.right
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: "1"
-                    font.pixelSize: 17
-                    color: Theme.colorHighContrast
-                }
-
-                ImageSvg {
-                    id: imageFwUpdate
-                    width: 24
-                    height: 24
-                    anchors.left: textFirmware.right
-                    anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                    color: Theme.colorIcon
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onEntered: textFwUpdate.text = qsTr("Use official app to upgrade")
-                        onExited: textFwUpdate.text = qsTr("Update available!")
-                    }
-                }
-                Text {
-                    id: textFwUpdate
-                    anchors.left: imageFwUpdate.right
-                    anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Update available!")
-                    font.pixelSize: 14
-                    color: Theme.colorHighContrast
-                }
-            }
-
-            Item {
-                id: battery
-                height: 28
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: textBattery
-                    anchors.left: labelBattery.right
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: currentDevice.deviceBattery + "%"
-                    font.pixelSize: 17
-                    color: Theme.colorHighContrast
-                }
-
-                Text {
-                    id: labelBattery
-                    width: isPhone ? 80 : 96
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Battery")
-                    font.bold: true
-                    font.pixelSize: 12
-                    font.capitalization: Font.AllUppercase
-                    color: Theme.colorSubText
-                    horizontalAlignment: Text.AlignRight
-                }
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     ScrollView {
         id: scrollView
         contentWidth: -1
 
-        anchors.top: rectangleHeader.visible ? rectangleHeader.bottom : parent.top
+        anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -297,9 +112,184 @@ Item {
         Column {
             anchors.fill: parent
 
-            topPadding: 12
+            topPadding: 0
             bottomPadding: 16
             spacing: 12
+
+            ////////
+
+            Rectangle {
+                id: rectangleHeader
+                color: Theme.colorForeground
+                height: devicePanel.height + 12
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Column {
+                    id: devicePanel
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: 2
+                    spacing: 2
+
+                    Text {
+                        id: textDeviceName
+                        height: 36
+                        anchors.left: parent.left
+                        anchors.leftMargin: 12
+
+                        visible: isDesktop
+
+                        text: currentDevice.deviceName
+                        verticalAlignment: Text.AlignVCenter
+                        font.pixelSize: Theme.fontSizeTitle
+                        font.capitalization: Font.AllUppercase
+                        color: Theme.colorText
+
+                        ImageSvg {
+                            id: imageBattery
+                            width: 32
+                            height: 32
+                            rotation: 90
+                            anchors.verticalCenter: textDeviceName.verticalCenter
+                            anchors.left: textDeviceName.right
+                            anchors.leftMargin: 16
+
+                            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                            color: Theme.colorIcon
+                        }
+                    }
+
+                    Item {
+                        id: itemAddress
+                        height: 28
+                        width: parent.width
+
+                        Text {
+                            id: labelAddress
+                            width: isPhone ? 80 : 96
+                            anchors.leftMargin: 12
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Address")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            id: textAddr
+                            anchors.left: labelAddress.right
+                            anchors.leftMargin: 10
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: currentDevice.deviceAddress
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: itemFirmware
+                        height: 28
+                        width: parent.width
+
+                        Text {
+                            id: labelFirmware
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Firmware")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+                        Text {
+                            id: textFirmware
+                            anchors.left: labelFirmware.right
+                            anchors.leftMargin: 10
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: "1"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+
+                        ImageSvg {
+                            id: imageFwUpdate
+                            width: 24
+                            height: 24
+                            anchors.left: textFirmware.right
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
+                            color: Theme.colorIcon
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onEntered: textFwUpdate.text = qsTr("Use official app to upgrade")
+                                onExited: textFwUpdate.text = qsTr("Update available!")
+                            }
+                        }
+                        Text {
+                            id: textFwUpdate
+                            anchors.left: imageFwUpdate.right
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Update available!")
+                            font.pixelSize: 14
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: battery
+                        height: 28
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+
+                        Text {
+                            id: textBattery
+                            anchors.left: labelBattery.right
+                            anchors.leftMargin: 10
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: currentDevice.deviceBattery + "%"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+
+                        Text {
+                            id: labelBattery
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Battery")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+                    }
+                }
+            }
 
             ////////
 /*

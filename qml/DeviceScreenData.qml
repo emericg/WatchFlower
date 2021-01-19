@@ -212,14 +212,7 @@ Item {
         rows: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? 1 : 2
         spacing: (rows > 1) ? 12 : 0
 
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.fill: parent
 
         Grid {
             id: contentGrid_lvl2
@@ -298,9 +291,10 @@ Item {
                             anchors.left: labelPlant.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: 0
 
                             padding: 4
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -373,9 +367,10 @@ Item {
                             anchors.left: labelLocation.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: 0
 
                             padding: 4
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -447,11 +442,12 @@ Item {
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: 0
                             padding: 4
 
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
-                            font.pixelSize: 18
+                            font.pixelSize: 17
                             font.bold: false
                         }
                     }

@@ -110,7 +110,7 @@ Item {
 
                     text: qsTr("Location")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 18
+                    font.pixelSize: 17
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -194,7 +194,7 @@ Item {
 
                     text: qsTr("Storage write")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 18
+                    font.pixelSize: 17
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -265,7 +265,7 @@ Item {
 
                     text: qsTr("Bluetooth control")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 18
+                    font.pixelSize: 17
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
