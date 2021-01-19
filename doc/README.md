@@ -92,4 +92,4 @@
 
 # Environmental sensors
 
-TODO
+Check the APIs doc's directly [here](https://github.com/emericg/esp32-environmental-sensors)

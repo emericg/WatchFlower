@@ -3,7 +3,7 @@
 
 ## About HiGrow
 
-* [HiGrow sensors]() are meant to keep your plants alive by monitoring their environment
+* [HiGrow]() sensors are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, humidity, light intensity, soil moisture and soil fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A lipo battery can be used (charging via USB)
@@ -34,26 +34,27 @@ The name advertised by the device is `HiGrow`
 
 ##### Generic Access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description |
-| ------------------------------------ | ------ | ----------- | ----------- |
-| 00002a00-0000-1000-8000-00805f9b34fb | 0x16   | read        | device name |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| 00002a00-0000-1000-8000-00805f9b34fb | 0x16   | read        | device name                   |
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description               |
-| ------------------------------------ | ------ | ----------- | ------------------------- |
-| 00002a19-0000-1000-8000-00805f9b34fb | 0x44   | read        | battery level             |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| 00002a19-0000-1000-8000-00805f9b34fb | 0x44   | read        | battery level                 |
 
 ##### Data service (UUID eeee9a32-a000-4cbd-b00b-6b519bf2780f)
 
-| Characteristic UUID                  | Handle | Access      | Description                            |
-| ------------------------------------ | ------ | ----------- | -------------------------------------- |
-| eeee9a32-a001-4cbd-b00b-6b519bf2780f | 0x2a   | read        | get device name                        |
-| eeee9a32-a002-4cbd-b00b-6b519bf2780f | 0x2c   | read        | get firmware version                   |
-| eeee9a32-a003-4cbd-b00b-6b519bf2780f | 0x2e   | read        | get battery level                      |
-| eeee9a32-a0a0-4cbd-b00b-6b519bf2780f | 0x30   | read/notify | get HiGrow realtime data               |
-| eeee9a32-a0b0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Air Monitor realtime data          |
-| eeee9a32-a0c0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | get Geiger Counter realtime data       |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| eeee9a32-a001-4cbd-b00b-6b519bf2780f | 0x2a   | read        | device name                   |
+| eeee9a32-a002-4cbd-b00b-6b519bf2780f | 0x2c   | read        | firmware version              |
+| eeee9a32-a003-4cbd-b00b-6b519bf2780f | 0x2e   | read        | battery level                 |
+| eeee9a32-a0a0-4cbd-b00b-6b519bf2780f | 0x30   | read/notify | HiGrow realtime data          |
+| eeee9a32-a0b0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | Air Monitor realtime data     |
+| eeee9a32-a0c0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | Geiger Counter realtime data  |
+
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 

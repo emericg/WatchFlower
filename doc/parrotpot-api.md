@@ -1,9 +1,9 @@
 
-<img src="flowerpower.svg" width="400px" alt="Flower Power" align="right" />
+<img src="parrotpot.svg" width="400px" alt="Parrot Pot" align="right" />
 
-## About Flower Power
+## About Parrot Pot
 
-* Parrot [Flower Power](https://support.parrot.com/fr/support/produits/parrot-flower-power) sensors are meant to keep your plants alive by monitoring their environment
+* [Parrot Pot](https://support.parrot.com/fr/support/produits/parrot-pot) are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, light intensity, soil temperature, soil moisture and fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * An AAA battery is used as power source
@@ -16,7 +16,7 @@
 * Light Monitor
 * Soil moisture
 * Soil fertility
-* Soil temperature
+* Water tank
 * Notification LED
 * IPX5
 
@@ -24,7 +24,7 @@
 
 The device uses BLE GATT for communication.  
 Sensor values are immediately available for reading, but usually require elaborate conversions.  
-In order to limit connection time, the Flower Power device may disconnect from the application after a certain amount of time (around 1s) without incoming BLE request.
+In order to limit connection time, the Parrot Pot device may disconnect from the application after a certain amount of time (around 1s) without incoming BLE request.
 
 ### BLE & GATT
 
@@ -34,7 +34,7 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ### Services, characteristics and handles
 
-The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address)
+The name advertised by the device is `Parrot pot AABB` (the last 4 characters are the last characters of the device's MAC address)
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -50,7 +50,7 @@ The name advertised by the device is `Flower power AABB` (the last 4 characters 
 | 00002a25-0000-1000-8000-00805f9b34fb | 0x16   | read        | serial number string          |
 | 00002a26-0000-1000-8000-00805f9b34fb | 0x17   | read        | firmware revision string      |
 | 00002a27-0000-1000-8000-00805f9b34fb | 0x1a   | read        | hardware revision string      |
-| 00002a28-0000-1000-8000-00805f9b34fb |        | read        | software revision string      |
+| 00002a28-0000-1000-8000-00805f9b34fb | 0x?    | read        | software revision string      |
 | 00002a29-0000-1000-8000-00805f9b34fb | 0x1e   | read        | manufacturer name string      |
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
@@ -72,46 +72,24 @@ The name advertised by the device is `Flower power AABB` (the last 4 characters 
 | 39e1fa07-84a8-11e2-afba-0002a5d5c51b | 0x3c   | read/write  | LED status                    |
 | 39e1fa08-84a8-11e2-afba-0002a5d5c51b | 0x3f   | read/notify | last move date                |
 
-Firmware versions 1.1.0+ have some new characteristics:
-
-| Characteristic UUID                  | Handle | Access      | Description                   |
-| ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 39e1fa09-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil moisture (calibrated)    |
-| 39e1fa0a-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | air temperature (calibrated)  |
-| 39e1fa0b-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | sunlight (calibrated)         |
-| 39e1fa0c-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ea (calibrated)               |
-| 39e1fa0d-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ecb (calibrated)              |
-| 39e1fa0e-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ecp (calibrated)              |
-
-##### Upload service (UUID 39e1fb00-84a8-11e2-afba-0002a5d5c51b)
-
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| -                                    | -      | -          | -                              |
-
 ##### History service (UUID 39e1fc00-84a8-11e2-afba-0002a5d5c51b)
 
 | Characteristic UUID                  | Handle | Access     | Description                    |
 | ------------------------------------ | ------ | ---------- | ------------------------------ |
-| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | 0x48   | read       | number of entries              |
-| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | 0x4c   | read       | last entry index               |
-| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | 0x50   | read/write | start transfert index          |
-| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | 0x54   | read       | current session id             |
-| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | 0x58   | read       | current session start index    |
-| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x5c   | read       | current session period         |
+| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/write | ?                              |
+| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
 
 ##### Clock service (UUID 39e1fd00-84a8-11e2-afba-0002a5d5c51b)
 
 | Characteristic UUID                  | Handle | Access     | Description                    |
 | ------------------------------------ | ------ | ---------- | ------------------------------ |
 | 39e1fd01-84a8-11e2-afba-0002a5d5c51b | 0x70   | read       | current time                   |
-
-##### Calibration service (UUID 39e1fe00-84a8-11e2-afba-0002a5d5c51b)
-
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| -                                    | -      | -          | -                              |
-
+| 39e1fd02-84a8-11e2-afba-0002a5d5c51b | 0x70   | read/write | ?                              |
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
@@ -124,15 +102,15 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ### Name
 
-A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f77657220706f776572` corresponding to the device name.
+A read request to the `0x03` handle will return n bytes of data, for example `0x506172726f7420706f74` corresponding to the device name.
 
-| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 |
-| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| Value    | 46 | 6c | 6f | 77 | 65 | 72 | 20 | 70 | 6f | 77 | 65 | 72 |
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| Value    | 50 | 61 | 72 | 72 | 6f | 74 | 20 | 70 | 6f | 74 |
 
 | Bytes | Type       | Value        | Description |
 | ----- | ---------- | ------------ | ----------- |
-| all   | ASCII text | Flower power | device name |
+| all   | ASCII text | Parrot pot   | device name |
 
 ### Battery
 
@@ -162,10 +140,6 @@ TODO
 
 TODO
 
-### Blink
-
-Just write `1` to the LED handler `0xaa` to switch it on (it will keep blinking until disconnection) or write `0` to switch it off
-
 ### Advertisement data
 
 TODO
@@ -173,8 +147,6 @@ TODO
 ## Reference
 
 [1] https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf  
-[2] https://github.com/Parrot-Developers/node-flower-power  
-[3] https://www.fanjoe.be/?p=3520  
 
 ## License
 

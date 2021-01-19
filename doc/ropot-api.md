@@ -1,5 +1,5 @@
 
-<img src="ropot.svg" width="400px" alt="Flower Care" align="right" />
+<img src="ropot.svg" width="400px" alt="RoPot" align="right" />
 
 ## About RoPot
 
@@ -39,31 +39,31 @@ The name advertised by the device is `ropot`
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access     | Description |
-| ------------------------------------ | ------ | ---------- | ----------- |
-| 00002a00-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name |
+| Characteristic UUID                  | Handle | Access     | Description                    |
+| ------------------------------------ | ------ | ---------- | ------------------------------ |
+| 00002a00-0000-1000-8000-00805f9b34fb | 0x03   | read       | device name                    |
 
 ##### Root service (UUID 0000fe95-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access     | Description               |
-| ------------------------------------ | ------ | ---------- | ------------------------- |
-| -                                    | -      | -          | used for device discovery |
+| Characteristic UUID                  | Handle | Access     | Description                    |
+| ------------------------------------ | ------ | ---------- | ------------------------------ |
+| -                                    | -      | -          | used for device discovery      |
 
 ##### Data service (UUID 00001204-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access     | Description                            |
-| ------------------------------------ | ------ | ---------- | -------------------------------------- |
-| 00001a00-0000-1000-8000-00805f9b34fb | 0x33   | write      | device mode change (send command)      |
-| 00001a01-0000-1000-8000-00805f9b34fb | 0x35   | read       | get real-time sensor values            |
-| 00001a02-0000-1000-8000-00805f9b34fb | 0x38   | read       | get firmware version and battery level |
+| Characteristic UUID                  | Handle | Access     | Description                        |
+| ------------------------------------ | ------ | ---------- | ---------------------------------- |
+| 00001a00-0000-1000-8000-00805f9b34fb | 0x33   | write      | device mode change (send command)  |
+| 00001a01-0000-1000-8000-00805f9b34fb | 0x35   | read       | real-time sensor values            |
+| 00001a02-0000-1000-8000-00805f9b34fb | 0x38   | read       | firmware version and battery level |
 
 ##### History service (UUID 00001206-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access     | Description                            |
-| ------------------------------------ | ------ | ---------- | -------------------------------------- |
-| 00001a10-0000-1000-8000-00805f9b34fb | 0x3e   | r/w/notify |                                        |
-| 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read       | get historical sensor values           |
-| 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read       | device time                            |
+| Characteristic UUID                  | Handle | Access     | Description                        |
+| ------------------------------------ | ------ | ---------- | ---------------------------------- |
+| 00001a10-0000-1000-8000-00805f9b34fb | 0x3e   | r/w/notify | device mode change (send command)  |
+| 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read       | historical sensor values           |
+| 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read       | device time                        |
 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
