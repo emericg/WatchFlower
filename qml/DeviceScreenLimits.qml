@@ -839,7 +839,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueFilled {
+                RangeSliderValueSolid {
                     id: rangeSlider_hygro
                     height: 20
                     anchors.top: imageHygro.bottom
@@ -911,7 +911,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueFilled {
+                RangeSliderValueSolid {
                     id: rangeSlider_temp
                     height: 20
                     anchors.top: imageTemp.bottom
@@ -1000,7 +1000,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueFilled {
+                RangeSliderValueSolid {
                     id: rangeSlider_lumi
                     height: 20
                     anchors.top: imageLumi.bottom
@@ -1179,7 +1179,7 @@ Item {
                     font.capitalization: Font.AllUppercase
                 }
 
-                RangeSliderValueFilled {
+                RangeSliderValueSolid {
                     id: rangeSlider_condu
                     height: 20
                     anchors.top: imageCondu.bottom

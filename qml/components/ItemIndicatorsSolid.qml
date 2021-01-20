@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: indicatorsFilled
+    id: indicatorsSolid
     width: parent.width
     height: columnData.height + 16
     z: 5
@@ -55,6 +55,9 @@ Item {
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
         humi.value = humiD // -99
         lumi.value = lumiD
+
+        soil_moisture.warning = false
+        temp.warning = false
     }
 
     function resetDataBars() {
@@ -64,6 +67,9 @@ Item {
         temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
         humi.value = currentDevice.deviceHumidity
         lumi.value = currentDevice.deviceLuminosity
+
+        soil_moisture.warning = true
+        temp.warning = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -81,12 +87,12 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: soil_moisture
             width: parent.width
 
             legend: qsTr("Moisture")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: "%"
             warning: true
             colorForeground: Theme.colorBlue
@@ -101,12 +107,12 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: temp
             width: parent.width
 
             legend: qsTr("Temperature")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             floatprecision: 1
             warning: true
             suffix: "°" + settingsManager.tempUnit
@@ -126,14 +132,13 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: humi
             width: parent.width
 
             legend: qsTr("Humidity")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: "%"
-            warning: true
             colorForeground: Theme.colorBlue
             //colorBackground: Theme.colorBackground
 
@@ -146,12 +151,12 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: lumi
             width: parent.width
 
             legend: qsTr("Luminosity")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: " " + qsTr("lux")
             colorForeground: Theme.colorYellow
             //colorBackground: Theme.colorBackground
@@ -165,12 +170,12 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: soil_conductivity
             width: parent.width
 
             legend: qsTr("Fertility")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: " " + qsTr("µS/cm")
             colorForeground: Theme.colorRed
             //colorBackground: Theme.colorBackground
@@ -184,12 +189,12 @@ Item {
 
         ////////
 
-        ItemDataBarFilled {
+        ItemDataBarSolid {
             id: soil_temperature
             width: parent.width
 
             legend: qsTr("Soil temp.")
-            legendWidth: indicatorsFilled.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
             //colorBackground: Theme.colorBackground

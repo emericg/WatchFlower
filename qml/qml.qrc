@@ -26,7 +26,7 @@
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemIndicatorsCompact.qml">components/ItemIndicatorsCompact.qml</file>
-        <file alias="ItemIndicatorsFilled.qml">components/ItemIndicatorsFilled.qml</file>
+        <file alias="ItemIndicatorsSolid.qml">components/ItemIndicatorsSolid.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
@@ -36,7 +36,7 @@
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
         <file alias="ItemDataBarCompact.qml">components_generic/ItemDataBarCompact.qml</file>
-        <file alias="ItemDataBarFilled.qml">components_generic/ItemDataBarFilled.qml</file>
+        <file alias="ItemDataBarSolid.qml">components_generic/ItemDataBarSolid.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
         <file alias="ItemImageButtonTooltip.qml">components_generic/ItemImageButtonTooltip.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
@@ -45,7 +45,7 @@
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
-        <file alias="RangeSliderValueFilled.qml">components_generic/RangeSliderValueFilled.qml</file>
+        <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
         <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
 
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>

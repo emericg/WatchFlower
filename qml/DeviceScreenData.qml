@@ -127,7 +127,7 @@ Item {
 
         if (indicatorsLoader.status != Loader.Ready) {
             if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "ItemIndicatorsFilled.qml"
+                indicatorsLoader.source = "ItemIndicatorsSolid.qml"
             else
                 indicatorsLoader.source = "ItemIndicatorsCompact.qml"
             dataIndicators = indicatorsLoader.item
@@ -167,7 +167,7 @@ Item {
         }
         onBigIndicatorChanged: {
             if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "ItemIndicatorsFilled.qml"
+                indicatorsLoader.source = "ItemIndicatorsSolid.qml"
             else
                 indicatorsLoader.source = "ItemIndicatorsCompact.qml"
             dataIndicators = indicatorsLoader.item

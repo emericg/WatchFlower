@@ -55,6 +55,9 @@ Item {
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
         humi.value = humiD // -99
         lumi.value = lumiD
+
+        soil_moisture.warning = false
+        temp.warning = false
     }
 
     function resetDataBars() {
@@ -64,6 +67,9 @@ Item {
         temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
         humi.value = currentDevice.deviceHumidity
         lumi.value = currentDevice.deviceLuminosity
+
+        soil_moisture.warning = true
+        temp.warning = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -132,7 +138,6 @@ Item {
 
             legend: qsTr("Humidity")
             legendWidth: indicatorsCompact.legendWidth
-            warning: false
             suffix: "%"
             colorForeground: Theme.colorBlue
             //colorBackground: Theme.colorBackground

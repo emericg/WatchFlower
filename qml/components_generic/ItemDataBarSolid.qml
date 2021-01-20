@@ -241,6 +241,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
+
                 ImageSvg {
                     id: warningIndicator
                     width: hhh - 2

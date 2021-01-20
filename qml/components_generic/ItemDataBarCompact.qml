@@ -21,6 +21,9 @@ Item {
     property string colorForeground: Theme.colorBlue
     property string colorBackground: Theme.colorForeground
 
+    property int hhh: 8
+    property bool animated: true
+
     property real value: 0
     property int valueMin: 0
     property int valueMax: 100
@@ -51,7 +54,7 @@ Item {
 
         Rectangle {
             id: item_bg
-            height: 8
+            height: hhh
             width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             anchors.bottom: parent.bottom
 
@@ -95,6 +98,8 @@ Item {
                 opacity: (limitMin < value) ? 0.66 : 0.33
 
                 Behavior on x { NumberAnimation { duration: 333 } }
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
             Rectangle {
                 id: item_limit_high
@@ -108,10 +113,12 @@ Item {
                 opacity: (limitMax < value) ? 0.66 : 0.33
 
                 Behavior on x { NumberAnimation { duration: 333 } }
+                Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
             }
 
             Text {
-                id: condu_indicator
+                id: textIndicator
                 height: 15
                 y: -22
                 x: {
@@ -175,6 +182,20 @@ Item {
                         color: itemDataBar.colorForeground
                     }
                 }
+            }
+
+            ImageSvg {
+                id: warningIndicator
+                width: 15
+                height: 15
+                anchors.verticalCenter: textIndicator.verticalCenter
+                anchors.leftMargin: 8
+                anchors.left:  textIndicator.right
+
+                color: Theme.colorRed
+                opacity: (warning && value > -20 && value < limitMin) ? 1 : 0
+                Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
+                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
             }
         }
     }
