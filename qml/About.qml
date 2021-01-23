@@ -708,6 +708,15 @@ Item {
                         color: Theme.colorText
                         font.pixelSize: 16
                     }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
+                        text: "- Pavel Markin (Russian)"
+                        color: Theme.colorText
+                        font.pixelSize: 16
+                    }
                 }
             }
         }
