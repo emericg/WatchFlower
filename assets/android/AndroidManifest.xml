@@ -4,17 +4,21 @@
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30"/>
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
-    <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
+    <application android:hardwareAccelerated="true" android:requestLegacyExternalStorage="true"
+                 android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower"
+                 android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation"
-                  android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop">
+                  android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower"
+                  android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
