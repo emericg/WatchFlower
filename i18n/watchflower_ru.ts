@@ -31,7 +31,7 @@
     <message>
         <location filename="../qml/About.qml" line="225"/>
         <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
-        <translation>Приложение для мониторинга растений Bluetoot-датчиками и термометрами &apos;Xiaomi Flower Care&apos; и &apos;RoPor&apos;.</translation>
+        <translation>Приложение для мониторинга растений  Bluetooth-датчиками и термометрами &apos;Xiaomi Flower Care&apos; и &apos;RoPot&apos;.</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="391"/>
@@ -110,16 +110,16 @@
     <message numerus="yes">
         <location filename="../src/device.cpp" line="549"/>
         <source>%n minute(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n минута</numerusform>
             <numerusform>%n минуты</numerusform>
-            <numerusform>%n минуты</numerusform>
+            <numerusform>%n минут(ы)</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/device.cpp" line="551"/>
         <source>%n hour(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n час</numerusform>
             <numerusform>%n часа</numerusform>
             <numerusform>%n часов</numerusform>
@@ -202,8 +202,8 @@
     <message numerus="yes">
         <location filename="../qml/DeviceList.qml" line="249"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
-            <numerusform>%n устройсто выбрано</numerusform>
+        <translation>
+            <numerusform>%n устройство выбрано</numerusform>
             <numerusform>%n устройства выбрано</numerusform>
             <numerusform>%n устройств выбрано</numerusform>
         </translation>
@@ -400,7 +400,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="771"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation>Идеальная влажность почвы для домашних растений обычно от 15 до 50%. Кактусы и суккуленты могут существовать при 7%. Тропические растения требуют больше воды.</translation>
+        <translation>Идеальная влажность почвы для домашних растений обычно от 15 до 50%. Кактусы и суккуленты допускают её снижение до 7%. Тропические растения требуют больше воды.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="772"/>
@@ -429,7 +429,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="860"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation>Большинство комнатных растений развиваются при температуре от 15 до 25°C (от 59 до 77°F). Не многие растения переносят -2°C (28°F) и ниже.</translation>
+        <translation>Большинство комнатных растений развиваются при температуре от 15 до 25°C (от 59 до 77°F). Лишь некоторые растения переносят -2°C (28°F) и ниже.</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="861"/>
@@ -449,7 +449,7 @@
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="957"/>
         <source>low</source>
-        <translation>Низкий</translation>
+        <translation>Тень</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="970"/>
@@ -466,7 +466,7 @@
         <location filename="../qml/DeviceScreenLimits.qml" line="996"/>
         <location filename="../qml/DeviceScreenLimits.qml" line="1023"/>
         <source>sunlight</source>
-        <translation>Солнечный свет</translation>
+        <translation>На солнце</translation>
     </message>
     <message>
         <location filename="../qml/DeviceScreenLimits.qml" line="1040"/>
@@ -494,17 +494,17 @@
     <message>
         <location filename="../src/device_sensors.cpp" line="109"/>
         <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="unfinished">Вам необходимо полить ваш &apos;%1&apos;!</translation>
+        <translation>Вам необходимо полить ваш &apos;%1&apos;!</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="111"/>
         <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="unfinished">Вам необходимо полить растение рядом с &apos;%1&apos;</translation>
+        <translation>Вам необходимо полить растение рядом с &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/device_sensors.cpp" line="113"/>
         <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="unfinished">Вам необходимо полить одно из ваших неназванных растений!</translation>
+        <translation>Вам необходимо полить одно из ваших неназванных растений!</translation>
     </message>
 </context>
 <context>
@@ -638,7 +638,7 @@
         <location filename="../qml/components/ItemAioLineCharts.qml" line="234"/>
         <source>at</source>
         <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
-        <translation type="unfinished">в</translation>
+        <translation>в</translation>
     </message>
 </context>
 <context>
@@ -766,7 +766,7 @@
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="88"/>
         <source>Launch detection</source>
-        <translation type="unfinished">Обнаружение запуска</translation>
+        <translation>Обнаружение запуска</translation>
     </message>
 </context>
 <context>
@@ -906,7 +906,7 @@
     <message>
         <location filename="../qml/Permissions.qml" line="147"/>
         <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation>Операционная система Android требует, чтобы приложения запрашивали разрешение на определение местоположения устройства, чтобы сканировать близлежащие датчики Bluetooth LE. &lt;br&gt; Это разрешение требуется только при поиске новых датчиков. &lt;br&gt; WatchFlower не использует, не хранит и никому не передает данные о вашем местоположении.</translation>
+        <translation>Операционная система Android требует, чтобы приложения запрашивали разрешение на определение местоположения устройства для возможности сканировать близлежащие датчики Bluetooth LE. &lt;br&gt; Это разрешение требуется только при поиске новых датчиков. &lt;br&gt; WatchFlower не использует, не хранит и никому не передает данные о вашем местоположении.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="159"/>
@@ -916,12 +916,12 @@
     <message>
         <location filename="../qml/Permissions.qml" line="195"/>
         <source>Storage write</source>
-        <translation type="unfinished">Запись</translation>
+        <translation>Запись в хранилище</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="229"/>
         <source>Storage write permission can be needed for exporting sensors data to the SD card.</source>
-        <translation type="unfinished">Разрешение на запись может потребоваться для экспорта данных датчиков на SD-карту.</translation>
+        <translation>Разрешение на запись в хранилище может потребоваться для экспорта данных датчиков на SD-карту.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="266"/>
@@ -959,7 +959,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="295"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
-        <translation>Темная тема будет включаться автоматически между 21 и 9 часами.</translation>
+        <translation>Тёмная тема будет включаться автоматически между 21 и 9 часами.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="390"/>
@@ -980,7 +980,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="618"/>
         <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
-        <translation>Сколько датчиков нужно обновлять одновременно. Меньшее число повышает надежность синхронизации Bluetooth за счет скорости.</translation>
+        <translation>Сколько датчиков нужно обновлять одновременно. Меньшее число повышает надежность синхронизации Bluetooth, но снижается скорость.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1277"/>
@@ -995,7 +995,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1316"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation>Сохранено в ваших документах в каталоге WatchFlower.</translation>
+        <translation>Сохраняется в ваших документах в папке WatchFlower.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1341"/>
@@ -1159,7 +1159,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="76"/>
         <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
-        <translation>&lt;b&gt;WatchFlower&lt;/b&gt;- это приложение для отслеживания датчиков Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; и &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos;.</translation>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; - это приложение для отслеживания датчиков Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; и &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="96"/>
@@ -1199,7 +1199,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="206"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
-        <translation>Вы можете &lt;b&gt;давать названия растениям&lt;/b&gt; и устанавливать их &lt;b&gt;расположение&lt;/b&gt;.</translation>
+        <translation>Вы можете &lt;b&gt;давать названия растениям&lt;/b&gt; и указывать их &lt;b&gt;расположение&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="245"/>
