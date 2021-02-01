@@ -235,13 +235,13 @@ Item {
             ////////
 
             Item {
-                id: element_autoDarkmode
+                id: element_appThemeAuto
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
 
                 ImageSvg {
-                    id: image_autoDarkmode
+                    id: image_appThemeAuto
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -253,11 +253,11 @@ Item {
                 }
 
                 Text {
-                    id: text_autoDarkmode
+                    id: text_appThemeAuto
                     height: 40
-                    anchors.left: image_autoDarkmode.right
+                    anchors.left: image_appThemeAuto.right
                     anchors.leftMargin: column.leftPad
-                    anchors.right: switch_autoDarkmode.left
+                    anchors.right: switch_appThemeAuto.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -269,20 +269,20 @@ Item {
                 }
 
                 SwitchThemedMobile {
-                    id: switch_autoDarkmode
+                    id: switch_appThemeAuto
                     z: 1
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
-                    Component.onCompleted: checked = settingsManager.autoDark
+                    Component.onCompleted: checked = settingsManager.appThemeAuto
                     onCheckedChanged: {
-                        settingsManager.autoDark = checked
+                        settingsManager.appThemeAuto = checked
                         Theme.loadTheme(settingsManager.appTheme)
                     }
                 }
             }
             Text {
-                id: legend_autoDarkmode
+                id: legend_appThemeAuto
                 topPadding: -12
                 bottomPadding: isMobile ? 12 : 0
                 anchors.left: parent.left
@@ -290,7 +290,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 16
 
-                visible: (element_autoDarkmode.visible)
+                visible: (element_appThemeAuto.visible)
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
                 wrapMode: Text.WordWrap

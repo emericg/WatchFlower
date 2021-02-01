@@ -81,7 +81,10 @@ bool SettingsManager::readSettings()
             m_appTheme = settings.value("settings/appTheme").toString();
 
         if (settings.contains("settings/autoDark"))
-            m_autoDark = settings.value("settings/autoDark").toBool();
+            m_appThemeAuto = settings.value("settings/autoDark").toBool(); // LEGACY
+
+        if (settings.contains("settings/autoThemeAuto"))
+            m_appThemeAuto = settings.value("settings/autoThemeAuto").toBool();
 
         if (settings.contains("settings/appLanguage"))
             m_appLanguage = settings.value("settings/appLanguage").toString();
@@ -178,7 +181,7 @@ bool SettingsManager::writeSettings()
     if (settings.isWritable())
     {
         settings.setValue("settings/appTheme", m_appTheme);
-        settings.setValue("settings/autoDark", m_autoDark);
+        settings.setValue("settings/appThemeAuto", m_appThemeAuto);
         settings.setValue("settings/appLanguage", m_appLanguage);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothSimUpdates", m_bluetoothSimUpdates);
@@ -222,8 +225,8 @@ void SettingsManager::resetSettings()
     // Settings
     m_appTheme = "green";
     Q_EMIT appThemeChanged();
-    m_autoDark = false;
-    Q_EMIT autoDarkChanged();
+    m_appThemeAuto = false;
+    Q_EMIT appThemeAutoChanged();
     m_appLanguage = "auto";
     Q_EMIT appLanguageChanged();
 
@@ -301,13 +304,23 @@ void SettingsManager::setAppTheme(const QString &value)
     }
 }
 
-void SettingsManager::setAutoDark(const bool value)
+void SettingsManager::setAppThemeAuto(const bool value)
 {
-    if (m_autoDark != value)
+    if (m_appThemeAuto != value)
     {
-        m_autoDark = value;
+        m_appThemeAuto = value;
         writeSettings();
-        Q_EMIT autoDarkChanged();
+        Q_EMIT appThemeAutoChanged();
+    }
+}
+
+void SettingsManager::setAppThemeCSD(const bool value)
+{
+    if (m_appThemeCSD != value)
+    {
+        m_appThemeCSD = value;
+        writeSettings();
+        Q_EMIT appThemeCSDChanged();
     }
 }
 

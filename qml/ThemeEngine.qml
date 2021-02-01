@@ -113,7 +113,7 @@ Item {
         if (themeIndex === "night") themeIndex = ThemeEngine.THEME_NIGHT
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
 
-        if (settingsManager.autoDark) {
+        if (settingsManager.appThemeAuto) {
             var rightnow = new Date();
             var hour = Qt.formatDateTime(rightnow, "hh");
             if (hour >= 21 || hour <= 8) {
@@ -150,7 +150,6 @@ Item {
 
             colorPrimary = colorGreen
             colorSecondary = colorLightGreen
-
             colorSuccess = colorGreen
             colorWarning = colorRed
             colorError = colorRed
@@ -196,7 +195,6 @@ Item {
 
             colorPrimary = colorYellow
             colorSecondary = "#ffe800"
-
             colorSuccess = colorGreen
             colorWarning = colorRed
             colorError = colorRed
@@ -242,7 +240,6 @@ Item {
 
             colorPrimary = "#bb86fc"
             colorSecondary = "#b16bee"
-
             colorSuccess = colorGreen
             colorWarning = colorRed
             colorError = colorRed
