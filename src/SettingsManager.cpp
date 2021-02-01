@@ -83,8 +83,8 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/autoDark"))
             m_appThemeAuto = settings.value("settings/autoDark").toBool(); // LEGACY
 
-        if (settings.contains("settings/autoThemeAuto"))
-            m_appThemeAuto = settings.value("settings/autoThemeAuto").toBool();
+        if (settings.contains("settings/appThemeAuto"))
+            m_appThemeAuto = settings.value("settings/appThemeAuto").toBool();
 
         if (settings.contains("settings/appLanguage"))
             m_appLanguage = settings.value("settings/appLanguage").toString();
