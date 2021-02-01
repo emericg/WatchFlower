@@ -13,6 +13,9 @@ ios { QT += gui-private }
 if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 12)) {
     error("You need AT LEAST Qt 5.12 to build $${TARGET}")
 }
+if (equals(QT_MAJOR_VERSION, 6)) {
+    error("You need Qt 5 to build $${TARGET}")
+}
 
 # Project features #############################################################
 
@@ -125,11 +128,11 @@ CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 
-OBJECTS_DIR = build/
-MOC_DIR     = build/
-RCC_DIR     = build/
-UI_DIR      = build/
-QMLCACHE_DIR= build/
+OBJECTS_DIR = build/$${ARCH}/
+MOC_DIR     = build/$${ARCH}/
+RCC_DIR     = build/$${ARCH}/
+UI_DIR      = build/$${ARCH}/
+QMLCACHE_DIR= build/$${ARCH}/
 
 DESTDIR     = bin/
 
