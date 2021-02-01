@@ -13,7 +13,7 @@ Item {
 
     signal clicked()
     property bool selected: false
-    property bool highlighted: mouseArea.isHovered
+    property bool highlighted: false
 
     property string colorBackground: Theme.colorComponent
     property string colorBackgroundHighlight: Theme.colorHighContrast
@@ -31,10 +31,9 @@ Item {
         anchors.fill: parent
         onClicked: parent.clicked()
 
-        property var isHovered: false
         hoverEnabled: true
-        onEntered: isHovered = true
-        onExited: isHovered = false
+        onEntered: parent.highlighted = true
+        onExited: parent.highlighted = false
     }
 
     Rectangle {

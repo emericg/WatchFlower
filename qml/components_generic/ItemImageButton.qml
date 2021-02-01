@@ -11,6 +11,7 @@ Item {
 
     // states
     signal clicked()
+    signal longClicked()
     property bool highlighted: false
     property bool selected: false
 
@@ -35,6 +36,7 @@ Item {
     MouseArea {
         anchors.fill: bgRect
         onClicked: itemImageButton.clicked()
+        onPressAndHold: itemImageButton.longClicked()
 
         hoverEnabled: true
         onEntered: {

@@ -22,22 +22,4 @@ Rectangle {
             radius: itemLilMenu.radius
         }
     }
-/*
-    // How to use this component:
-    Row {
-        id: rowLilMenuItems
-        height: parent.height
-
-        ItemLilMenuButton {
-            id: lilmenu1
-            text: "menu1"
-            onClicked: lilmenu1.selected = true
-        }
-        ItemLilMenuButton {
-            id: lilmenu2
-            text: "menu2"
-            onClicked: lilmenu2.selected = true
-        }
-        }
-*/
 }

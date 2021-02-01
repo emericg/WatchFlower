@@ -13,11 +13,11 @@ TextField {
 
     property string colorText: Theme.colorComponentContent
     property string colorBorder: Theme.colorComponentBorder
-    property string colorBackground: Theme.colorComponentBackground
+    property string colorBackground: Theme.colorBackground // Theme.colorComponentBackground
 
     color: colorText
     font.family: fontText.name
-    font.pixelSize: Theme.fontSizeContent+1
+    font.pixelSize: Theme.fontSizeComponent
 
     background: Rectangle {
         border.width: 1
@@ -40,7 +40,7 @@ TextField {
                 color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
 
                 font.family: fontText.name
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeComponent
             }
         }
     }

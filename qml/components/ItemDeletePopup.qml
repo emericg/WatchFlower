@@ -5,15 +5,15 @@ import ThemeEngine 1.0
 
 Popup {
     id: itemDeletePopup
+    x: (appWindow.width / 2) - (itemDeletePopup.width / 2)
+    y: singleColumn ? (appWindow.height - itemDeletePopup.height) : ((appWindow.height / 2) - (itemDeletePopup.height / 2) - appHeader.height)
+
     implicitWidth: 560
     implicitHeight: 320
-
     width: singleColumn ? parent.width : implicitWidth
     height: columnContent.height + gridcontContent.height + 24
-    x: (appWindow.width / 2) - (itemDeletePopup.width / 2)
-    y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (itemDeletePopup.height / 2) - appHeader.height)
-
     padding: 24
+
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -27,6 +27,13 @@ Popup {
     background: Rectangle {
         color: Theme.colorBackground
         radius: singleColumn ? 0 : 4
+
+        Rectangle {
+            width: parent.width
+            height: 1
+            visible: singleColumn
+            color: Theme.colorSeparator
+        }
     }
 
     contentItem: Item {

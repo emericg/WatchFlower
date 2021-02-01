@@ -5,18 +5,19 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemImageButton
+    id: itemTextButton
     implicitWidth: 40
     implicitHeight: 40
 
     // states
     signal clicked()
+    signal longClicked()
     property bool highlighted: false
     property bool selected: false
 
     // settings
     property int btnSize: height
-    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
+    property int txtSize: (height * 0.4)
 
     property bool background: false
     property string backgroundColor: Theme.colorComponent
@@ -34,16 +35,17 @@ Item {
 
     MouseArea {
         anchors.fill: bgRect
-        onClicked: itemImageButton.clicked()
+        onClicked: itemTextButton.clicked()
+        onPressAndHold: itemTextButton.longClicked()
 
         hoverEnabled: true
         onEntered: {
-            itemImageButton.highlighted = true
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
+            itemTextButton.highlighted = true
+            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemTextButton.background) ? 1 : 0.75
         }
         onExited: {
-            itemImageButton.highlighted = false
-            bgRect.opacity = itemImageButton.background ? 0.75 : 0
+            itemTextButton.highlighted = false
+            bgRect.opacity = itemTextButton.background ? 0.75 : 0
         }
     }
 
@@ -52,15 +54,15 @@ Item {
         width: btnSize
         height: btnSize
         radius: btnSize
-        anchors.verticalCenter: itemImageButton.verticalCenter
+        anchors.verticalCenter: itemTextButton.verticalCenter
 
-        visible: (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background)
-        color: itemImageButton.backgroundColor
+        visible: (highlightMode === "circle" || highlightMode === "both" || itemTextButton.background)
+        color: itemTextButton.backgroundColor
 
-        border.width: itemImageButton.border ? 1 : 0
-        border.color: itemImageButton.borderColor
+        border.width: itemTextButton.border ? 1 : 0
+        border.color: itemTextButton.borderColor
 
-        opacity: itemImageButton.background ? 0.75 : 0
+        opacity: itemTextButton.background ? 0.75 : 0
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
@@ -68,19 +70,19 @@ Item {
         id: contentImage
         anchors.centerIn: bgRect
 
-        text: itemImageButton.text
+        text: itemTextButton.text
         font.bold: true
-        font.pixelSize: 10
+        font.pixelSize: itemTextButton.txtSize
         font.capitalization: Font.AllUppercase
 
-        opacity: itemImageButton.enabled ? 1.0 : 0.75
+        opacity: itemTextButton.enabled ? 1.0 : 0.75
         color: {
             if (selected === true) {
-                itemImageButton.highlightColor
+                itemTextButton.highlightColor
             } else if (highlightMode === "color" || highlightMode === "both") {
-                itemImageButton.highlighted ? itemImageButton.highlightColor : itemImageButton.textColor
+                itemTextButton.highlighted ? itemTextButton.highlightColor : itemTextButton.textColor
             } else {
-                itemImageButton.textColor
+                itemTextButton.textColor
             }
         }
     }

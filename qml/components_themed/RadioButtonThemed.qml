@@ -8,6 +8,7 @@ RadioButton {
     implicitHeight: Theme.componentHeight
     leftPadding: 0
     rightPadding: 0
+    spacing: 8
 
     checked: false
     text: "Radio Button"
@@ -42,7 +43,7 @@ RadioButton {
         leftPadding: control.indicator.width + control.spacing
         verticalAlignment: Text.AlignVCenter
 
-        color: Theme.colorText
+        color: Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33
     }
 }
