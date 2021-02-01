@@ -57,6 +57,9 @@
 #endif
 
 #ifdef Q_OS_WIN
+    #ifndef NOMINMAX
+        #define NOMINMAX 1
+    #endif
     #include <windows.h>
     #include <lmcons.h>
 #endif
@@ -67,7 +70,7 @@ SingleApplicationPrivate::SingleApplicationPrivate( SingleApplication *q_ptr )
     server = nullptr;
     socket = nullptr;
     memory = nullptr;
-    instanceNumber = -1;
+    instanceNumber = 0;
 }
 
 SingleApplicationPrivate::~SingleApplicationPrivate()
@@ -155,7 +158,7 @@ void SingleApplicationPrivate::genBlockServerName()
     blockServerName = appData.result().toBase64().replace("/", "_");
 }
 
-void SingleApplicationPrivate::initializeMemoryBlock()
+void SingleApplicationPrivate::initializeMemoryBlock() const
 {
     auto *inst = static_cast<InstancesInfo*>( memory->data() );
     inst->primary = false;
@@ -167,13 +170,11 @@ void SingleApplicationPrivate::initializeMemoryBlock()
 
 void SingleApplicationPrivate::startPrimary()
 {
-    Q_Q(SingleApplication);
-
     // Reset the number of connections
     auto *inst = static_cast <InstancesInfo*>( memory->data() );
 
     inst->primary = true;
-    inst->primaryPid = q->applicationPid();
+    inst->primaryPid = QCoreApplication::applicationPid();
     qstrncpy( inst->primaryUser, getUsername().toUtf8().data(), sizeof(inst->primaryUser) );
     inst->checksum = blockChecksum();
     instanceNumber = 0;
@@ -208,7 +209,7 @@ void SingleApplicationPrivate::startSecondary()
   instanceNumber = inst->secondary;
 }
 
-bool SingleApplicationPrivate::connectToPrimary( int timeout, ConnectionType connectionType )
+bool SingleApplicationPrivate::connectToPrimary( int msecs, ConnectionType connectionType )
 {
     QElapsedTimer time;
     time.start();
@@ -230,14 +231,14 @@ bool SingleApplicationPrivate::connectToPrimary( int timeout, ConnectionType con
             socket->connectToServer( blockServerName );
 
           if( socket->state() == QLocalSocket::ConnectingState ){
-              socket->waitForConnected( timeout - time.elapsed() );
+              socket->waitForConnected( static_cast<int>(msecs - time.elapsed()) );
           }
 
           // If connected break out of the loop
           if( socket->state() == QLocalSocket::ConnectedState ) break;
 
           // If elapsed time since start is longer than the method timeout return
-          if( time.elapsed() >= timeout ) return false;
+          if( time.elapsed() >= msecs ) return false;
         }
     }
 
@@ -252,7 +253,11 @@ bool SingleApplicationPrivate::connectToPrimary( int timeout, ConnectionType con
     writeStream << blockServerName.toLatin1();
     writeStream << static_cast<quint8>(connectionType);
     writeStream << instanceNumber;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    quint16 checksum = qChecksum(QByteArray(initMsg, static_cast<quint32>(initMsg.length())));
+#else
     quint16 checksum = qChecksum(initMsg.constData(), static_cast<quint32>(initMsg.length()));
+#endif
     writeStream << checksum;
 
     // The header indicates the message length that follows
@@ -266,21 +271,22 @@ bool SingleApplicationPrivate::connectToPrimary( int timeout, ConnectionType con
 
     socket->write( header );
     socket->write( initMsg );
+    bool result = socket->waitForBytesWritten( static_cast<int>(msecs - time.elapsed()) );
     socket->flush();
-    if( socket->waitForBytesWritten( timeout - time.elapsed() )) return true;
-
-    return false;
+    return result;
 }
 
-quint16 SingleApplicationPrivate::blockChecksum()
+quint16 SingleApplicationPrivate::blockChecksum() const
 {
-    return qChecksum(
-       static_cast <const char *>( memory->data() ),
-       offsetof( InstancesInfo, checksum )
-   );
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    quint16 checksum = qChecksum(QByteArray(static_cast<const char*>(memory->constData()), offsetof(InstancesInfo, checksum)));
+#else
+    quint16 checksum = qChecksum(static_cast<const char*>(memory->constData()), offsetof(InstancesInfo, checksum));
+#endif
+    return checksum;
 }
 
-qint64 SingleApplicationPrivate::primaryPid()
+qint64 SingleApplicationPrivate::primaryPid() const
 {
     qint64 pid;
 
@@ -292,7 +298,7 @@ qint64 SingleApplicationPrivate::primaryPid()
     return pid;
 }
 
-QString SingleApplicationPrivate::primaryUser()
+QString SingleApplicationPrivate::primaryUser() const
 {
     QByteArray username;
 
@@ -413,7 +419,11 @@ void SingleApplicationPrivate::readInitMessageBody( QLocalSocket *sock )
     quint16 msgChecksum = 0;
     readStream >> msgChecksum;
 
-    const quint16 actualChecksum = qChecksum( msgBytes.constData(), static_cast<quint32>( msgBytes.length() - sizeof( quint16 ) ) );
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const quint16 actualChecksum = qChecksum(QByteArray(msgBytes, static_cast<quint32>(msgBytes.length() - sizeof(quint16))));
+#else
+    const quint16 actualChecksum = qChecksum(msgBytes.constData(), static_cast<quint32>(msgBytes.length() - sizeof(quint16)));
+#endif
 
     bool isValid = readStream.status() == QDataStream::Ok &&
                    QLatin1String(latin1Name) == blockServerName &&
