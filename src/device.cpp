@@ -75,7 +75,7 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 
     m_rssiTimer.setSingleShot(true);
-    m_rssiTimer.setInterval(10000); // 10s
+    m_rssiTimer.setInterval(10*1000); // 10s
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 

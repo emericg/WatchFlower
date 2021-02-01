@@ -38,9 +38,9 @@
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
-#include <QBluetoothServiceDiscoveryAgent>
 #include <QBluetoothAddress>
 #include <QBluetoothDeviceInfo>
+#include <QLowEnergyConnectionParameters>
 
 #include <QList>
 #include <QDebug>
@@ -138,7 +138,8 @@ DeviceManager::~DeviceManager()
 {
     delete m_bluetoothAdapter;
     delete m_discoveryAgent;
-    delete m_controller;
+    delete m_ble_controller;
+    delete m_ble_params;
 
     delete m_devices_filter;
     delete m_devices_model;
@@ -968,7 +969,8 @@ void DeviceManager::removeDevice(const QString &address)
                 QSqlQuery removeDevice;
                 removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
                 removeDevice.bindValue(":deviceAddr", dd->getAddress());
-                removeDevice.exec();
+                if (removeDevice.exec() == false)
+                    qWarning() << "> removeDevice.exec() ERROR" << removeDevice.lastError().type() << ":" << removeDevice.lastError().text();
             }
 
             // Remove device
