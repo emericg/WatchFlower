@@ -47,8 +47,8 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager;
-import android.support.v4.content.FileProvider;
-import android.support.v4.app.ShareCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.app.ShareCompat;
 
 public class QShareUtils
 {

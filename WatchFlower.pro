@@ -177,7 +177,10 @@ android {
                    assets/android/src/com/emeric/utils/QShareUtils.java \
                    assets/android/src/com/emeric/utils/QSharePathResolver.java
 
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
+                 $${PWD}/assets/android/gradle.properties \
+                 $${PWD}/assets/android/build.gradle
+
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
 }
 
