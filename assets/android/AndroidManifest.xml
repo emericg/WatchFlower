@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <manifest package="com.emeric.watchflower" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.90" android:versionCode="00900002" android:installLocation="auto">
 
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30"/>
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
@@ -80,11 +79,15 @@
         </activity>
 
         <!-- Handle outgoing urls -->
-    ￼    <provider android:name="androidx.core.content.FileProvider"
-                  android:authorities="com.emeric.watchflower.fileprovider"
-                  android:grantUriPermissions="true" android:exported="false">
-    ￼        <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths"/>
-    ￼    </provider>
+    ￼   <provider 
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.emeric.watchflower.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+    ￼       <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+    ￼   </provider>
 
         <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
