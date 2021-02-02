@@ -8,7 +8,7 @@ Item {
     implicitWidth: 144
     implicitHeight: 40
 
-    visible: (settingsManager.clientSideDecoration && Qt.platform.os !== "osx")
+    visible: (settingsManager.appThemeCSD && Qt.platform.os !== "osx")
 
     MouseArea {
         id: buttonsArea

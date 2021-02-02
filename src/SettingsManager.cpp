@@ -222,11 +222,14 @@ bool SettingsManager::writeSettings()
 
 void SettingsManager::resetSettings()
 {
-    // Settings
     m_appTheme = "green";
     Q_EMIT appThemeChanged();
     m_appThemeAuto = false;
     Q_EMIT appThemeAutoChanged();
+    m_appThemeCSD = false;
+    Q_EMIT appThemeCSDChanged();
+    m_appUnits = 0;
+    Q_EMIT appUnitsChanged();
     m_appLanguage = "auto";
     Q_EMIT appLanguageChanged();
 
@@ -321,6 +324,16 @@ void SettingsManager::setAppThemeCSD(const bool value)
         m_appThemeCSD = value;
         writeSettings();
         Q_EMIT appThemeCSDChanged();
+    }
+}
+
+void SettingsManager::setAppUnits(const unsigned value)
+{
+    if (m_appUnits != value)
+    {
+        m_appUnits = value;
+        writeSettings();
+        Q_EMIT appUnitsChanged();
     }
 }
 

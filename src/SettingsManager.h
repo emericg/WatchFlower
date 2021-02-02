@@ -40,6 +40,8 @@ class SettingsManager: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool firstLaunch READ isFirstLaunch NOTIFY firstLaunchChanged)
+
     Q_PROPERTY(QSize initialSize READ getInitialSize NOTIFY initialSizeChanged)
     Q_PROPERTY(QSize initialPosition READ getInitialPosition NOTIFY initialSizeChanged)
     Q_PROPERTY(uint initialVisibility READ getInitialVisibility NOTIFY initialSizeChanged)
@@ -47,14 +49,14 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
     Q_PROPERTY(bool appThemeAuto READ getAppThemeAuto WRITE setAppThemeAuto NOTIFY appThemeAutoChanged)
     Q_PROPERTY(bool appThemeCSD READ getAppThemeCSD WRITE setAppThemeCSD NOTIFY appThemeCSDChanged)
+    Q_PROPERTY(uint appUnits READ getAppUnits WRITE setAppUnits NOTIFY appUnitsChanged)
     Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY appLanguageChanged)
+
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
-
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
     Q_PROPERTY(uint bluetoothSimUpdates READ getBluetoothSimUpdates WRITE setBluetoothSimUpdates NOTIFY bluetoothSimUpdatesChanged)
-
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
     Q_PROPERTY(QString orderBy READ getOrderBy WRITE setOrderBy NOTIFY orderByChanged)
@@ -65,17 +67,23 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
-
     Q_PROPERTY(QString externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
 
+    bool m_firstlaunch = true;
+
+    // Application window
     QSize m_appSize;
     QSize m_appPosition;
-    unsigned m_appVisibility = 2;
+    unsigned m_appVisibility = 2;               //!< QWindow::Visibility
 
+    // Application generic
     QString m_appTheme = "green";
     bool m_appThemeAuto = false;
     bool m_appThemeCSD = false;
+    unsigned m_appUnits = 0;                    //!< QLocale::MeasurementSystem
     QString m_appLanguage = "auto";
+
+    // Application specific
     bool m_startMinimized = false;
     bool m_systrayEnabled = true;
     bool m_notificationsEnabled = true;
@@ -105,10 +113,12 @@ class SettingsManager: public QObject
     bool writeSettings();
 
 Q_SIGNALS:
+    void firstLaunchChanged();
     void initialSizeChanged();
     void appThemeChanged();
     void appThemeAutoChanged();
     void appThemeCSDChanged();
+    void appUnitsChanged();
     void appLanguageChanged();
     void minimizedChanged();
     void systrayChanged();
@@ -130,6 +140,8 @@ Q_SIGNALS:
 public:
     static SettingsManager *getInstance();
 
+    bool isFirstLaunch() const { return m_firstlaunch; }
+
     QSize getInitialSize() { return m_appSize; }
     QSize getInitialPosition() { return m_appPosition; }
     unsigned getInitialVisibility() { return m_appVisibility; }
@@ -142,6 +154,9 @@ public:
 
     bool getAppThemeCSD() const { return m_appThemeCSD; }
     void setAppThemeCSD(const bool value);
+
+    unsigned getAppUnits() const { return m_appUnits; }
+    void setAppUnits(unsigned value);
 
     QString getAppLanguage() const { return m_appLanguage; }
     void setAppLanguage(const QString &value);
