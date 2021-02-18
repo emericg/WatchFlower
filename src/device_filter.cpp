@@ -132,15 +132,15 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "e";
             } else if (device->getName() == "MJ_HT_V1") {
                 return "f";
-            } else if (device->getName() == "ClearGrass Temp & RH") {
+            } else if (device->getName() == "ClearGrass Temp & RH" || device->getName().startsWith("Qingping Temp & RH")) {
                 return "g";
             } else if (device->getName() == "LYWSD02") {
                 return "h";
-            } else if (device->getName() == "MHOC303") {
+            } else if (device->getName() == "MHOC-303") {
                 return "i";
             } else if (device->getName() == "LYWSD03MMC") {
                 return "j";
-            } else if (device->getName() == "MHOC401") {
+            } else if (device->getName() == "MHOC-401") {
                 return "k";
             } else {
                 return "zzz";

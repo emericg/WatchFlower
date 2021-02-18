@@ -110,11 +110,11 @@ DeviceManager::DeviceManager()
                 d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
-            else if (deviceName == "ClearGrass Temp & RH")
+            else if (deviceName == "ClearGrass Temp & RH" || deviceName.startsWith("Qingping Temp & RH"))
                 d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD02" || deviceName == "MHOC303")
+            else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD03MMC" || deviceName == "MHOC401")
+            else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
                 d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
@@ -500,11 +500,11 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
                 else if (deviceName == "MJ_HT_V1")
                     d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
-                else if (deviceName == "ClearGrass Temp & RH")
+                else if (deviceName == "ClearGrass Temp & RH" || deviceName.startsWith("Qingping Temp & RH"))
                     d = new DeviceHygrotempEInk(deviceAddr, deviceName, this);
-                else if (deviceName == "LYWSD02" || deviceName == "MHOC303")
+                else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-                else if (deviceName == "LYWSD03MMC" || deviceName == "MHOC401")
+                else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401")
                     d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
                 else if (deviceName == "GeigerCounter")
                     d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
@@ -857,9 +857,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name().startsWith("Parrot pot") ||
             info.name() == "ropot" ||
             info.name() == "MJ_HT_V1" ||
-            info.name() == "ClearGrass Temp & RH" ||
-            info.name() == "LYWSD02" || info.name() == "MHOC303" ||
-            info.name() == "LYWSD03MMC" || info.name() == "MHOC401" ||
+            info.name() == "ClearGrass Temp & RH" || info.name().startsWith("Qingping Temp & RH") ||
+            info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
+            info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
             info.name() == "GeigerCounter" || info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
@@ -891,7 +891,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceEsp32HiGrow(info, this);
             else if (info.name() == "MJ_HT_V1")
                 d = new DeviceHygrotempLCD(info, this);
-            else if (info.name() == "ClearGrass Temp & RH")
+            else if (info.name() == "ClearGrass Temp & RH" || info.name().startsWith("Qingping Temp & RH"))
                 d = new DeviceHygrotempEInk(info, this);
             else if (info.name() == "LYWSD02" || info.name() == "MHOC303")
                 d = new DeviceHygrotempClock(info, this);

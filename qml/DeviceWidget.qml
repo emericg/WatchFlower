@@ -69,7 +69,10 @@ Item {
 
     function initBoxData() {
         // Device picture
-        if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "ClearGrass Temp & RH") {
+        if (boxDevice.deviceName === "MJ_HT_V1" ||
+            boxDevice.deviceName === "ClearGrass Temp & RH" ||
+            boxDevice.deviceName === "Qingping Temp & RH M" ||
+            boxDevice.deviceName === "Qingping Temp & RH H") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD02") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"

@@ -35,6 +35,7 @@
 
 /*!
  * Xiaomi MiJia "RoPot" or "FlowerPot" (HHCCPOT002)
+ * WANFEI "RoPot"
  * VegTrug "Grow Care Home"
  *
  * Protocol infos:
