@@ -17,7 +17,6 @@ android {
     # Add this line to the dependencies {} section of 'build.gradle' file:
     #implementation 'androidx.appcompat:appcompat:1.1.0'
     #implementation 'androidx.core:core:1.1.0'
-    #implementation 'androidx.annotation:annotation:1.1.0'
 
     # And this line in 'gradle.properties' file:
     #android.useAndroidX=true

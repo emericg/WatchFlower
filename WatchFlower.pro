@@ -128,11 +128,11 @@ CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 
-OBJECTS_DIR = build/$${ARCH}/
-MOC_DIR     = build/$${ARCH}/
-RCC_DIR     = build/$${ARCH}/
-UI_DIR      = build/$${ARCH}/
-QMLCACHE_DIR= build/$${ARCH}/
+OBJECTS_DIR = build/$${QT_ARCH}/
+MOC_DIR     = build/$${QT_ARCH}/
+RCC_DIR     = build/$${QT_ARCH}/
+UI_DIR      = build/$${QT_ARCH}/
+QMLCACHE_DIR= build/$${QT_ARCH}/
 
 DESTDIR     = bin/
 

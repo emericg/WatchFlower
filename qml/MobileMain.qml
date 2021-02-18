@@ -28,12 +28,12 @@ import MobileUI 0.1
 
 ApplicationWindow {
     id: appWindow
-    minimumWidth: 400
-    minimumHeight: 800
-
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
+
+    minimumWidth: 480
+    minimumHeight: 960
 
     property bool isHdpi: (utilsScreen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")

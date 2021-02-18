@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 #endif
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     // Mobile statusbar helper
     qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
 
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
 
     // Load the main view
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined (FORCE_MOBILE_UI)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     ShareUtils *mShareUtils = new ShareUtils();
     engine_context->setContextProperty("utilsShare", mShareUtils);
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));

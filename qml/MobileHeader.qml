@@ -62,6 +62,10 @@ Rectangle {
     signal deviceHistoryButtonClicked() // compatibility
     signal deviceSettingsButtonClicked() // compatibility
 
+    function setActiveDeviceData() { } // compatibility
+    function setActiveDeviceHistory() { } // compatibility
+    function setActiveDeviceSettings() { } // compatibility
+
     ////////////////////////////////////////////////////////////////////////////
 
     // prevent clicks into this area

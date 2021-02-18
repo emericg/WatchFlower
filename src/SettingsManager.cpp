@@ -22,13 +22,9 @@
 #include "SettingsManager.h"
 #include "SystrayManager.h"
 
-#include <cmath>
-
 #include <QCoreApplication>
-#include <QStandardPaths>
-#include <QLocale>
-#include <QDir>
 #include <QSettings>
+#include <QLocale>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -217,7 +213,6 @@ bool SettingsManager::writeSettings()
     return status;
 }
 
-/* ************************************************************************** */
 /* ************************************************************************** */
 
 void SettingsManager::resetSettings()
@@ -498,7 +493,6 @@ void SettingsManager::setExternalDb(const QString &value)
 }
 
 /* ************************************************************************** */
-/* ************************************************************************** */
 
 bool SettingsManager::getDemoMode()
 {
@@ -510,8 +504,6 @@ bool SettingsManager::getDemoMode()
 
     return demoMode;
 }
-
-/* ************************************************************************** */
 
 QString SettingsManager::getDemoString()
 {

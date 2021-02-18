@@ -30,6 +30,12 @@ ApplicationWindow {
     flags: Qt.Window
     color: Theme.colorBackground
 
+    property bool isDesktop: true
+    property bool isMobile: false
+    property bool isPhone: false
+    property bool isTablet: false
+    property bool isHdpi: (utilsScreen.screenDpi > 128)
+
     property var lastUpdate
     property var selectedDevice: null
 
@@ -67,12 +73,6 @@ ApplicationWindow {
     }
 
     // Mobile stuff ////////////////////////////////////////////////////////////
-
-    property bool isDesktop: true
-    property bool isMobile: false
-    property bool isPhone: false
-    property bool isTablet: false
-    property bool isHdpi: (utilsScreen.screenDpi > 128)
 
     property int screenOrientation: Screen.primaryOrientation
     property int screenStatusbarPadding: 0
