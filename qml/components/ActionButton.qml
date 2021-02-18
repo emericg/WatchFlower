@@ -11,7 +11,8 @@ Item {
     property string button_text
     property string button_source
     property int index
-    property bool enable: true
+
+    property alias contentWidth: tButton.contentWidth
 
     property bool clicked
     signal buttonClicked
@@ -43,7 +44,7 @@ Item {
             anchors.leftMargin: 12
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr(button_text)
+            text: button_text
             font.bold: false
             font.pixelSize: Theme.fontSizeContentBig
             color: Theme.colorText
@@ -64,8 +65,8 @@ Item {
         MouseArea {
             anchors.fill: parent
 
-            enabled: enable
-            hoverEnabled: enable
+            enabled: isDesktop
+            hoverEnabled: enabled
             onClicked: buttonClicked()
             onEntered: viewButtonHovered()
             onExited: viewButtonExited()

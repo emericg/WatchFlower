@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Rectangle {
-    width: isPhone ? 192 : 256
+    id: actionMenu
+    width: isPhone ? 190 : 256
     height: menuHolder.height
     visible: isOpen
     focus: isOpen && !isMobile
@@ -13,11 +14,26 @@ Rectangle {
     radius: Theme.componentRadius
 
     signal menuSelected(var index)
+    property int menuWidth: 0
     property bool isOpen: false
 
-    function open() { isOpen = true; }
+    function open() { isOpen = true; updateSize(); }
     function close() { isOpen = false; }
-    function openClose() { isOpen = !isOpen; }
+    function openClose() { isOpen = !isOpen; updateSize(); }
+
+    function updateSize() {
+        if (isOpen) {
+            menuWidth = 0
+            if (actionUpdate.visible && menuWidth < actionUpdate.contentWidth) menuWidth = actionUpdate.contentWidth
+            if (actionHistory.visible && menuWidth < actionHistory.contentWidth) menuWidth = actionHistory.contentWidth
+            if (actionLed.visible && menuWidth < actionLed.contentWidth) menuWidth = actionLed.contentWidth
+            if (actionGraphMode.visible && menuWidth < actionGraphMode.contentWidth) menuWidth = actionGraphMode.contentWidth
+            menuWidth += 80
+            actionMenu.width = menuWidth
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: menuHolder
