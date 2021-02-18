@@ -54,6 +54,7 @@ ApplicationWindow {
     property int screenNotchPadding: 0
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
+    property int screenBottomPadding: 0
 
     Component.onCompleted: {
         if (Qt.platform.os !== "ios") return
@@ -426,9 +427,10 @@ ApplicationWindow {
 
     Rectangle {
         id: appTabletMenu
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        anchors.bottomMargin: screenBottomPadding
 
         width: parent.width
         height: isPhone ? 40 : 48
@@ -450,6 +452,7 @@ ApplicationWindow {
             id: tabletMenuScreen
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: screenBottomPadding
             spacing: (appWindow.width >= 480) ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
@@ -501,6 +504,7 @@ ApplicationWindow {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: screenBottomPadding
             spacing: (appWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDataButtonClicked()
@@ -569,27 +573,26 @@ ApplicationWindow {
 
     ////////////////
 
-    Rectangle {
+    Text {
         id: exitWarning
-        width: exitWarningText.width + 16
-        height: exitWarningText.height + 16
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 32
         anchors.horizontalCenter: parent.horizontalCenter
 
-        radius: 4
-        color: Theme.colorSubText
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
 
-        Text {
-            id: exitWarningText
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+        text: qsTr("Press one more time to exit...")
+        textFormat: Text.PlainText
+        font.pixelSize: 16
+        color: Theme.colorForeground
 
-            text: qsTr("Press one more time to exit...")
-            font.pixelSize: 16
-            color: Theme.colorForeground
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -8
+            z: -1
+            radius: 4
+            color: Theme.colorSubText
         }
     }
 }

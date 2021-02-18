@@ -26,7 +26,9 @@ Popup {
 
     background: Rectangle {
         color: Theme.colorBackground
-        radius: singleColumn ? 0 : 4
+        border.color: Theme.colorSeparator
+        border.width: singleColumn ? 0 : 1
+        radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
             width: parent.width

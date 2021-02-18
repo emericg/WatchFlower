@@ -104,10 +104,7 @@ Item {
     ItemDeletePopup {
         id: confirmDeleteDevice
 
-        onConfirmed: {
-            // actual device deletion
-            screenDeviceList.removeSelectedDevice()
-        }
+        onConfirmed: screenDeviceList.removeSelectedDevice()
     }
 
     Column {
@@ -129,30 +126,15 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            height: 48
             color: Theme.colorActionbar
-            visible: false
-            opacity: 0
+            clip: true
 
-            // prevent clicks into this area
+            height: 0
+            Behavior on height { NumberAnimation { duration: 133 } }
+
+            // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-/*
-            Behavior on opacity {
-                OpacityAnimator {
-                    duration: 333;
-                    onStopped: {
-                        console.log("opacity on stopped")
-                        if (rectangleStatus.opacity === 0)
-                            rectangleStatus.visible = false
-                    }
-                    onFinished: { // Qt 5.12 :(
-                        console.log("opacity on finished")
-                        if (rectangleStatus.opacity === 0)
-                            rectangleStatus.visible = false
-                    }
-                }
-            }
-*/
+
             Text {
                 id: textStatus
                 anchors.fill: parent
@@ -183,15 +165,12 @@ Item {
             }
 
             function hide() {
-                rectangleStatus.visible = false;
-                rectangleStatus.opacity = 0;
-
+                rectangleStatus.height = 0
                 itemStatus.source = ""
             }
             function setBluetoothWarning() {
                 if (deviceManager.devices) {
-                    rectangleStatus.visible = true;
-                    rectangleStatus.opacity = 1;
+                    rectangleStatus.height = 48
 
                     textStatus.text = qsTr("Bluetooth disabled...");
                     buttonBluetooth.visible = true
@@ -213,11 +192,13 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            height: 48
             color: Theme.colorActionbar
-            visible: (screenDeviceList.selectionCount)
+            clip: true
 
-            // prevent clicks into this area
+            height: (screenDeviceList.selectionCount) ? 48 : 0
+            Behavior on height { NumberAnimation { duration: 133 } }
+
+            // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
             Row {
@@ -391,5 +372,6 @@ Item {
     Loader {
         id: itemStatus
         anchors.fill: parent
+        asynchronous: true
     }
 }

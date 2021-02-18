@@ -114,7 +114,7 @@ void SystrayManager::initSystray()
         }
 
 #ifdef TARGET_OS_OSX
-        m_sysTrayIcon = new QIcon(":/assets/logos/watchflower_tray_light.svg");
+        m_sysTrayIcon = new QIcon(":/assets/logos/watchflower_tray_dark.svg");
 #else
         m_sysTrayIcon = new QIcon(":/assets/logos/watchflower_tray_dark.svg");
 #endif

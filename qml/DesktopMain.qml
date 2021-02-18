@@ -79,6 +79,7 @@ ApplicationWindow {
     property int screenNotchPadding: 0
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
+    property int screenBottomPadding: 0
 
     Item { // compatibility
         id: tabletMenuDevice

@@ -56,6 +56,9 @@ Item {
     property string colorLowContrast
     property string colorHighContrast
 
+    // App specific
+    property string colorDeviceWidget
+
     // Qt Quick controls & theming
     property string colorComponent
     property string colorComponentText
@@ -161,6 +164,8 @@ Item {
             colorLowContrast = "white"
             colorHighContrast = "black"
 
+            colorDeviceWidget = "#fdfdfd"
+
             colorComponent = "#eaeaea"
             colorComponentText = "black"
             colorComponentContent = "black"
@@ -206,6 +211,8 @@ Item {
             colorLowContrast = "white"
             colorHighContrast = "#303030"
 
+            colorDeviceWidget = "#fdfdfd"
+
             colorComponent = "#efefef"
             colorComponentText = "black"
             colorComponentContent = "black"
@@ -250,6 +257,8 @@ Item {
             colorSeparator = "#404040"
             colorLowContrast = "#111111"
             colorHighContrast = "white"
+
+            colorDeviceWidget = "#333"
 
             colorComponent = "#757575"
             colorComponentText = "#222222"

@@ -257,8 +257,8 @@ Item {
         Text {
             id: ttT
             anchors.topMargin: 16
-            anchors.leftMargin: 6
-            anchors.rightMargin: 6
+            anchors.leftMargin: 16
+            anchors.rightMargin: 16
             anchors.bottomMargin: 16
 
             function checkPosition() {

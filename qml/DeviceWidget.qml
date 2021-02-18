@@ -291,13 +291,20 @@ Item {
     Rectangle {
         id: deviceWidgetRectangleSeparator
         anchors.fill: deviceWidgetRectangle
-        anchors.leftMargin: (singleColumn) ? -12 : 0
-        anchors.rightMargin: (singleColumn) ? -12 : 0
+        anchors.leftMargin: singleColumn ? -12 : 0
+        anchors.rightMargin: singleColumn ? -12 : 0
+        anchors.topMargin: singleColumn ? -6 : 0
+        anchors.bottomMargin: singleColumn ? -6 : 0
 
-        radius: 2
+        radius: 4
         border.width: 2
-        border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
-        color: deviceWidget.selected ? Theme.colorSeparator : "transparent"
+        border.color: singleColumn ? "transparent" : Theme.colorSeparator
+
+        color: deviceWidget.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
+        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
+
+        opacity: singleColumn ? (deviceWidget.selected ? 0.66 : 0) : 1
+        Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
     ////////////////////////////////////////////////////////////////////////////
