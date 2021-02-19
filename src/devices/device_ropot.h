@@ -39,7 +39,7 @@
  * VegTrug "Grow Care Home"
  *
  * Protocol infos:
- * - WatchFlower/doc/ropot-api.md
+ * - WatchFlower/docs/ropot-ble-api.md
  */
 class DeviceRopot: public DeviceSensor
 {

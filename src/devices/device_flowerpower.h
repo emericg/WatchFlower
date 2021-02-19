@@ -39,7 +39,7 @@
  * Parrot "Flower Power" devices
  *
  * Protocol infos:
- * - WatchFlower/doc/flowerpower-api.md
+ * - WatchFlower/docs/flowerpower-ble-api.md
  * - https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf
  */
 class DeviceFlowerPower: public DeviceSensor

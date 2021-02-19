@@ -100,6 +100,8 @@ void DeviceEsp32HiGrow::serviceScanDone()
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32HiGrow::addLowEnergyService(" << uuid.toString() << ")";
@@ -124,6 +126,8 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
+
+/* ************************************************************************** */
 
 void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {

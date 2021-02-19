@@ -93,6 +93,8 @@ void DeviceHygrotempEInk::serviceScanDone()
     }
 }
 
+/* ************************************************************************** */
+
 void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceHygrotempEInk::addLowEnergyService(" << uuid.toString() << ")";
@@ -117,6 +119,8 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 }
+
+/* ************************************************************************** */
 
 void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {

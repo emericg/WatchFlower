@@ -40,7 +40,7 @@
  * VegTrug "Grow Care Garden" (GCLS002)
  *
  * Protocol infos:
- * - WatchFlower/doc/flowercare-api.md
+ * - WatchFlower/docs/flowercare-ble-api.md
  */
 class DeviceFlowerCare: public DeviceSensor
 {

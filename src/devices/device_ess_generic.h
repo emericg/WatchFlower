@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2020
+ * \date      2021
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_ESP32_HIGROW_H
-#define DEVICE_ESP32_HIGROW_H
+#ifndef DEVICE_ESS_GENERIC_H
+#define DEVICE_ESS_GENERIC_H
 /* ************************************************************************** */
 
 #include "device_sensor.h"
@@ -34,35 +34,33 @@
 /* ************************************************************************** */
 
 /*!
- * ESP32 HiGrow sensor (with custom firmware).
- * - https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow
+ * Generic implementation for Bluetooth Low Energy "Environmental Sensing Service".
  *
  * Protocol infos:
- * - WatchFlower/docs/higrow-ble-api.md
- * - https://github.com/emericg/esp32-environmental-sensors/blob/master/HiGrow/doc/higrow-ble-api.md
+ * - WatchFlower/docs/ess-ble-api.md
+ * - https://www.bluetooth.com/specifications/specs/environmental-sensing-profile-1-0/
+ * - https://www.bluetooth.com/specifications/specs/environmental-sensing-service-1-0/
+ * - https://www.bluetooth.com/specifications/assigned-numbers/environmental-sensing-service-characteristics/
  */
-class DeviceEsp32HiGrow: public DeviceSensor
+class DeviceEssGeneric: public DeviceSensor
 {
     Q_OBJECT
 
 public:
-    DeviceEsp32HiGrow(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceEsp32HiGrow();
+    DeviceEssGeneric(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceEssGeneric();
 
 private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_ess(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
 
-    QLowEnergyService *serviceData = nullptr;
+    QLowEnergyService *serviceEnvironmentalSensing = nullptr;
     QLowEnergyService *serviceBattery = nullptr;
-    QLowEnergyDescriptor m_notificationDesc;
-
-    void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_ESP32_HIGROW_H
+#endif // DEVICE_ESS_GENERIC_H
