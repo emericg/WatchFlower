@@ -1,4 +1,5 @@
 
+
 # Plant sensors
 
 | Flower Care                       | HHCCJCY01                         |
@@ -45,7 +46,6 @@
 | Soil moisture                     |                                   |
 | Light sensor                      |                                   |
 | BLE API                           | [link](higrow-ble-api.md)         |
-
 
 
 # Thermometers
@@ -96,4 +96,6 @@
 
 # Environmental sensors
 
-Check the APIs doc's directly [here](https://github.com/emericg/esp32-environmental-sensors)
+* Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
+
+* ESP32 based Geiger Counter & Air Monitoring platform. Check out the APIs documentations directly [on their repository](https://github.com/emericg/esp32-environmental-sensors).
