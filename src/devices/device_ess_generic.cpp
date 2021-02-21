@@ -54,8 +54,9 @@ DeviceEssGeneric::DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *paren
 DeviceEssGeneric::~DeviceEssGeneric()
 {
     if (controller) controller->disconnectFromDevice();
-    delete serviceEnvironmentalSensing;
+    delete serviceInfos;
     delete serviceBattery;
+    delete serviceEnvironmentalSensing;
 }
 
 /* ************************************************************************** */
@@ -124,8 +125,8 @@ void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::Servi
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
         // Characteristic "Battery Level"
-        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
+        QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
         if (cbat.value().size() > 0)
         {
@@ -151,6 +152,64 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_ess(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        QBluetoothUuid uuid_elevation(QString("00002a6c-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_pressure(QString("00002a6d-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_temperature(QString("00002a6e-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_humidity(QString("00002a6f-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_truewindwpeed(QString("00002a70-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_truewinddirection(QString("00002a71-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_apparentwindwpeed(QString("00002a72-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_apparentwinddirection(QString("00002a73-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_gustfactor(QString("00002a74-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_pollen(QString("00002a75-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_uvindex(QString("00002a76-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_irradiance(QString("00002a77-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_rainfall(QString("00002a78-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_windchill(QString("00002a79-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_heatindex(QString("00002a7a-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_dewpoint(QString("00002a7b-0000-1000-8000-00805f9b34fb"));
+        QBluetoothUuid uuid_barometricpressuretrend(QString("00002aa3-0000-1000-8000-00805f9b34fb"));
+
+        // Characteristic "pressure"
+        QLowEnergyCharacteristic cpres = serviceEnvironmentalSensing->characteristic(uuid_pressure);
+        if (cpres.isValid())
+        {
+            m_pression = cpres.value().toUInt() / 10.0;
+
+            m_deviceSensors += DEVICE_BAROMETER;
+            Q_EMIT sensorUpdated();
+        }
+
+        // Characteristic "temperature"
+        QLowEnergyCharacteristic ctemp = serviceEnvironmentalSensing->characteristic(uuid_temperature);
+        if (ctemp.isValid())
+        {
+            m_temperature = ctemp.value().toInt() / 100.0;
+
+            m_deviceSensors += DEVICE_TEMPERATURE;
+            Q_EMIT sensorUpdated();
+        }
+
+        // Characteristic "humidity"
+        QLowEnergyCharacteristic chum = serviceEnvironmentalSensing->characteristic(uuid_humidity);
+        if (chum.isValid())
+        {
+            m_humidity = chum.value().toInt() / 100.0;
+
+            m_deviceSensors += DEVICE_TEMPERATURE;
+            Q_EMIT sensorUpdated();
+        }
+
+        // Characteristic "UV index"
+        QLowEnergyCharacteristic cuv = serviceEnvironmentalSensing->characteristic(uuid_uvindex);
+        if (cuv.isValid())
+        {
+            m_uv = cuv.value().toUInt();
+
+            m_deviceSensors += DEVICE_UV;
+            Q_EMIT sensorUpdated();
+        }
 
         // TODO
     }
