@@ -38,7 +38,7 @@
 | IP Code                           | IPX5                              |
 | BLE API                           | [link](parrotpot-ble-api.md)      |
 
-| HiGrow                            |                                   |
+| HiGrow                            | n/a                               |
 | --------------------------------- | --------------------------------- |
 | Battery                           | 1 x 18650 or 1 * LiPo             |
 | Thermometer                       |                                   |
@@ -98,4 +98,4 @@
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 
-* ESP32 based Geiger Counter & Air Monitoring platform. Check out the APIs documentations directly [on their repository](https://github.com/emericg/esp32-environmental-sensors).
+* ESP32 based Geiger Counter & Air Quality Monitor. Check out the APIs documentations directly [on their repository](https://github.com/emericg/esp32-environmental-sensors).

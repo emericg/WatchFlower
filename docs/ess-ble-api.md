@@ -1,7 +1,7 @@
 
 <img src="bluetooth-brands.svg" width="256px" alt="Bluetooth" align="right" />
 
-## About Bluetooth Low Energt "Environmental Sensing Service"
+## About Bluetooth Low Energy "Environmental Sensing Service"
 
 * TODO
 
@@ -17,6 +17,8 @@ They allow the devices and the app to share data in a defined manner and define 
 In general you have to know about services and characteristics to talk to a BLE device.
 
 ### Services, characteristics and handles
+
+##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |

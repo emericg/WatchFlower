@@ -19,8 +19,8 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 * Support plant sensors and thermometers
 * Name your plants and set your own limits for optimal care
-* Synchronize sensors history
-* Background updates & notifications (desktop ONLY)
+* Synchronize sensors history (FlowerCare only for now)
+* Background updates & notifications (desktop ONLY for now)
 * Configurable update interval
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
@@ -39,19 +39,19 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 
 | Flower Care | RoPot | Parrot Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :-----------------: | :--------: | :----: |
-| ![FlowerCare](doc/flowercare.svg) | ![RoPot](doc/ropot.svg) | ![FlowerPower](doc/flowerpower.svg) | ![ParrotPot](doc/parrotpot.svg) | ![HiGrow](doc/higrow.svg) |
-| HHCCJCY01<br>Xiaomi and VegTrug variants<br>(International and Chinese versions) | HHCCPOT002<br>Xiaomi and VegTrug variants |  | (monitoring only) | (with custom firmware) |
+| ![FlowerCare](docs/flowercare.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) | ![HiGrow](docs/higrow.svg) |
+| HHCCJCY01<br>Xiaomi and VegTrug variants<br>(International and Chinese versions) | HHCCPOT002<br>Xiaomi and VegTrug variants |  | (WIP, monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
 | :-----------------------------: | :----------------------------------: | :---------------------------: | :------------------------: | :------------------------------------: |
-| ![HygroTemp](doc/hygrotemp_lcd.svg) | ![HygroTemp](doc/hygrotemp_eink.svg) | ![HygroTempClock](doc/hygrotemp_clock.svg) | ![HygroTemp2](doc/hygrotemp_square_lcd.svg) | ![HygroTemp2](doc/hygrotemp_square_eink.svg) |
+| ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_eink.svg) | ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
 | LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
 | ESP32 Air Monitor | ESP32 Geiger Counter |
 | :---------------: | :------------------: |
-| ![Air Monitor](doc/lungs-solid.svg) | ![Geiger Counter](doc/radiation-alt-solid.svg) |
+| ![Air Monitor](docs/lungs-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
 | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
 
 ### Screenshots
@@ -88,6 +88,14 @@ $ make
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * Everyone who gave time to [help translate](i18n/README.md) this application!
 
+### Third party projects used by WatchFlower
+
+* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
+* SingleApplication [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
+* RC4 implementation [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
+* Graphical resources: please read [assets/COPYING](assets/COPYING)
+
 
 ## Get involved!
 
@@ -106,10 +114,3 @@ WatchFlower is free software; you can redistribute it and/or modify it under the
 Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
 > Emeric Grange <emeric.grange@gmail.com>
-
-### Third party projects used by WatchFlower
-
-* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
-* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
-* SingleApplication [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
-* Graphical resources: please read [assets/COPYING](assets/COPYING)
