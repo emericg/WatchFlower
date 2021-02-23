@@ -211,7 +211,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: Theme.colorForeground
+        color: Theme.colorDeviceHeader
         height: isMobile ? 48 : 96
         z: 5
 

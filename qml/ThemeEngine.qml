@@ -8,6 +8,7 @@ Item {
         THEME_GREEN = 0,
         THEME_DAY = 1,
         THEME_NIGHT = 2,
+        THEME_SNOW = 3,
 
         THEME_LAST
     }
@@ -57,6 +58,7 @@ Item {
     property string colorHighContrast
 
     // App specific
+    property string colorDeviceHeader
     property string colorDeviceWidget
 
     // Qt Quick controls & theming
@@ -114,6 +116,7 @@ Item {
         if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
         if (themeIndex === "night") themeIndex = ThemeEngine.THEME_NIGHT
+        if (themeIndex === "snow") themeIndex = ThemeEngine.THEME_SNOW
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
 
         if (settingsManager.appThemeAuto) {
@@ -126,7 +129,55 @@ Item {
 
         if (themeIndex === currentTheme) return;
 
-        if (themeIndex === ThemeEngine.THEME_GREEN) {
+        if (themeIndex === ThemeEngine.THEME_SNOW) {
+
+            colorGreen = "#07bf97"
+            colorBlue = "#4CA1D5"
+            colorYellow = "#ffba5a"
+            colorRed = "#ff7657"
+
+            themeStatusbar = Material.Dark
+            colorStatusbar = "white"
+
+            colorHeader = "white"
+            colorHeaderContent = "#444"
+            colorHeaderHighlight = "#80efc3"
+
+            colorActionbar = "#f3f3f3"
+            colorActionbarContent = "666666"
+            colorActionbarHighlight = "#ff8b5a"
+
+            colorTabletmenu = "#f3f3f3"
+            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuHighlight = "#0079fe"
+
+            colorBackground = "white"
+            colorForeground = "#f8f8f8"
+
+            colorPrimary = colorGreen
+            colorSecondary = colorLightGreen
+            colorSuccess = colorGreen
+            colorWarning = colorRed
+            colorError = colorRed
+
+            colorText = "#333333"
+            colorSubText = "#666666"
+            colorIcon = "#606060"
+            colorSeparator = colorMaterialDarkGrey
+            colorLowContrast = "white"
+            colorHighContrast = "black"
+
+            colorDeviceHeader = "white"
+            colorDeviceWidget = "#fdfdfd"
+
+            colorComponent = "#eaeaea"
+            colorComponentText = "black"
+            colorComponentContent = "black"
+            colorComponentBorder = "#b3b3b3"
+            colorComponentDown = "#cacaca"
+            colorComponentBackground = "#f8f8f8"
+
+        } else if (themeIndex === ThemeEngine.THEME_GREEN) {
 
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
@@ -164,6 +215,7 @@ Item {
             colorLowContrast = "white"
             colorHighContrast = "black"
 
+            colorDeviceHeader = colorForeground
             colorDeviceWidget = "#fdfdfd"
 
             colorComponent = "#eaeaea"
@@ -211,6 +263,7 @@ Item {
             colorLowContrast = "white"
             colorHighContrast = "#303030"
 
+            colorDeviceHeader = colorForeground
             colorDeviceWidget = "#fdfdfd"
 
             colorComponent = "#efefef"
@@ -258,6 +311,7 @@ Item {
             colorLowContrast = "#111111"
             colorHighContrast = "white"
 
+            colorDeviceHeader = colorForeground
             colorDeviceWidget = "#333"
 
             colorComponent = "#757575"

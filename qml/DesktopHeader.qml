@@ -416,7 +416,8 @@ Rectangle {
 
         height: 2
         opacity: 0.33
-        visible: (appContent.state !== "DeviceThermo" &&
+        visible: (Theme.colorHeader !== Theme.colorBackground &&
+                  appContent.state !== "DeviceThermo" &&
                   appContent.state !== "DeviceGeiger" &&
                   appContent.state !== "Tutorial")
         color: Theme.colorHeaderHighlight

@@ -612,7 +612,7 @@ ApplicationWindow {
 
         text: qsTr("Press one more time to exit...")
         textFormat: Text.PlainText
-        font.pixelSize: 16
+        font.pixelSize: Theme.fontSizeContent
         color: Theme.colorForeground
 
         Rectangle {

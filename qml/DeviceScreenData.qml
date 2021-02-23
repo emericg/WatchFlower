@@ -225,7 +225,7 @@ Item {
 
             Rectangle {
                 id: rectangleHeader
-                color: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? "transparent" : Theme.colorForeground
+                color: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? "transparent" : Theme.colorDeviceHeader
                 width: (parent.width / parent.columns)
                 height: columnHeader.height + 12
                 z: 5

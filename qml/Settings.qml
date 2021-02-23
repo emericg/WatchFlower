@@ -32,7 +32,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: Theme.colorForeground
+        color: Theme.colorDeviceHeader
         height: 80
         z: 5
 
@@ -188,9 +188,7 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: {
-                                settingsManager.appTheme = "green"
-                            }
+                            onClicked: settingsManager.appTheme = "green"
                         }
                     }
                     Rectangle {
@@ -206,9 +204,7 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: {
-                                settingsManager.appTheme = "day"
-                            }
+                            onClicked: settingsManager.appTheme = "day"
                         }
                     }
                     Rectangle {
@@ -224,9 +220,7 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: {
-                                settingsManager.appTheme = "night"
-                            }
+                            onClicked: settingsManager.appTheme = "night"
                         }
                     }
                 }

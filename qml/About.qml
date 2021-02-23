@@ -35,7 +35,7 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: Theme.colorForeground
+        color: Theme.colorDeviceHeader
         height: 80
         z: 5
 

@@ -121,7 +121,7 @@ Item {
 
             Rectangle {
                 id: rectangleHeader
-                color: Theme.colorForeground
+                color: Theme.colorDeviceHeader
                 height: devicePanel.height + 12
 
                 anchors.left: parent.left
