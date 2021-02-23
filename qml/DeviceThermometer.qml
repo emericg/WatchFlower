@@ -224,187 +224,197 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Loader {
-        id: graphLoader
-        anchors.top: tempBox.bottom
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-    }
+    property bool singleColumn: (isPhone || appWindow.width < 720)
 
-    ////////////////////////////////////////////////////////////////////////////
+    Flow {
+        anchors.fill: parent
 
-    Rectangle {
-        id: tempBox
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        Rectangle {
+            id: tempBox
 
-        height: Math.max(deviceThermometer.height * 0.333, isPhone ? 96 : 256)
-        color: Theme.colorHeader
+            property int dimboxw: Math.max(deviceThermometer.width * 0.333, isPhone ? 128 : 320)
+            property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 96 : 256)
 
-        MouseArea { anchors.fill: parent } // prevent clicks below this area
+            z: 5
+            width: singleColumn ? parent.width : dimboxw
+            height: singleColumn ? dimboxh: parent.height
+            color: Theme.colorHeader
 
-        Column {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
-            spacing: 2
+            //width: dimboxw - 32
+            //height: dimboxh: - 32
+            //color: singleColumn ? Theme.colorPrimary : Theme.colorHeader
+            //radius: 16
 
-            ImageSvg {
-                id: sensorDisconnected
-                width: isMobile ? 96 : 128
-                height: isMobile ? 96 : 128
+            MouseArea { anchors.fill: parent } // prevent clicks below this area
+
+            Column {
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                color: Theme.colorHeaderContent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
+                spacing: 2
+
+                ImageSvg {
+                    id: sensorDisconnected
+                    width: isMobile ? 96 : 128
+                    height: isMobile ? 96 : 128
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    color: Theme.colorHeaderContent
+                }
+
+                Text {
+                    id: sensorTemp
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    font.bold: false
+                    font.pixelSize: isPhone ? 44 : 48
+                    color: Theme.colorHeaderContent
+                }
+
+                Text {
+                    id: heatIndex
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    font.bold: false
+                    font.pixelSize: isPhone ? 18 : 20
+                    color: Theme.colorHeaderContent
+                }
+
+                Text {
+                    id: sensorHygro
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    font.bold: false
+                    font.pixelSize: isPhone ? 22 : 24
+                    color: Theme.colorHeaderContent
+                }
+
+                ImageSvg {
+                    id: imageBattery
+                    width: isPhone ? 20 : 24
+                    height: isPhone ? 32 : 36
+                    rotation: 90
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    //visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
+                    fillMode: Image.PreserveAspectCrop
+                    color: Theme.colorHeaderContent
+                    source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                }
             }
 
-            Text {
-                id: sensorTemp
-                anchors.horizontalCenter: parent.horizontalCenter
+            ////////
 
-                font.bold: false
-                font.pixelSize: isPhone ? 44 : 48
-                color: Theme.colorHeaderContent
+            Row {
+                id: status
+                anchors.left: parent.left
+                anchors.leftMargin: 8
+                anchors.right: itemLocation.left
+                anchors.rightMargin: 8
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 8
+
+                clip: true
+                height: 24
+                spacing: 8
+
+                ImageSvg {
+                    id: imageStatus
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
+                    color: Theme.colorHeaderContent
+                }
+                Text {
+                    id: textStatus
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Loading...")
+                    color: Theme.colorHeaderContent
+                    font.pixelSize: 17
+                    font.bold: false
+                }
             }
 
-            Text {
-                id: heatIndex
-                anchors.horizontalCenter: parent.horizontalCenter
+            ////////
 
-                font.bold: false
-                font.pixelSize: isPhone ? 18 : 20
-                color: Theme.colorHeaderContent
-            }
+            Row {
+                id: itemLocation
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 8
+                anchors.right: parent.right
+                anchors.rightMargin: 8
 
-            Text {
-                id: sensorHygro
-                anchors.horizontalCenter: parent.horizontalCenter
+                height: 24
+                spacing: 4
 
-                font.bold: false
-                font.pixelSize: isPhone ? 22 : 24
-                color: Theme.colorHeaderContent
-            }
+                ImageSvg {
+                    id: imageEditLocation
+                    width: 20
+                    height: 20
+                    anchors.verticalCenter: parent.verticalCenter
 
-            ImageSvg {
-                id: imageBattery
-                width: isPhone ? 20 : 24
-                height: isPhone ? 32 : 36
-                rotation: 90
-                anchors.horizontalCenter: parent.horizontalCenter
+                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                    color: Theme.colorHeaderContent
 
-                //visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
-                fillMode: Image.PreserveAspectCrop
-                color: Theme.colorHeaderContent
-                source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                    opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0
+                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+                }
+                TextInput {
+                    id: textInputLocation
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    padding: 4
+                    font.pixelSize: 17
+                    font.bold: false
+                    color: Theme.colorHeaderContent
+
+                    text: currentDevice ? currentDevice.deviceLocationName : ""
+                    onEditingFinished: {
+                        currentDevice.setLocationName(text)
+                        focus = false
+                    }
+
+                    MouseArea {
+                        id: textInputLocationArea
+                        anchors.fill: parent
+                        anchors.topMargin: -4
+                        anchors.leftMargin: -24
+                        anchors.rightMargin: -4
+                        anchors.bottomMargin: -4
+
+                        hoverEnabled: true
+                        propagateComposedEvents: true
+
+                        onClicked: {
+                            textInputLocation.forceActiveFocus()
+                            mouse.accepted = false
+                        }
+                        onPressed: {
+                            textInputLocation.forceActiveFocus()
+                            mouse.accepted = false
+                        }
+                    }
+                }
+                ImageSvg {
+                    id: imageLocation
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                    color: Theme.colorHeaderContent
+                }
             }
         }
 
-        ////////
-
-        Row {
-            id: status
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.right: itemLocation.left
-            anchors.rightMargin: 8
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
-
-            clip: true
-            height: 24
-            spacing: 8
-
-            ImageSvg {
-                id: imageStatus
-                width: 24
-                height: 24
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
-                color: Theme.colorHeaderContent
-            }
-            Text {
-                id: textStatus
-                anchors.verticalCenter: parent.verticalCenter
-
-                text: qsTr("Loading...")
-                color: Theme.colorHeaderContent
-                font.pixelSize: 17
-                font.bold: false
-            }
-        }
-
-        ////////
-
-        Row {
-            id: itemLocation
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-
-            height: 24
-            spacing: 4
-
-            ImageSvg {
-                id: imageEditLocation
-                width: 20
-                height: 20
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                color: Theme.colorHeaderContent
-
-                opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0
-                Behavior on opacity { OpacityAnimator { duration: 133 } }
-            }
-            TextInput {
-                id: textInputLocation
-                anchors.verticalCenter: parent.verticalCenter
-
-                padding: 4
-                font.pixelSize: 17
-                font.bold: false
-                color: Theme.colorHeaderContent
-
-                text: currentDevice ? currentDevice.deviceLocationName : ""
-                onEditingFinished: {
-                    currentDevice.setLocationName(text)
-                    focus = false
-                }
-
-                MouseArea {
-                    id: textInputLocationArea
-                    anchors.fill: parent
-                    anchors.topMargin: -4
-                    anchors.leftMargin: -24
-                    anchors.rightMargin: -4
-                    anchors.bottomMargin: -4
-
-                    hoverEnabled: true
-                    propagateComposedEvents: true
-
-                    onClicked: {
-                        textInputLocation.forceActiveFocus()
-                        mouse.accepted = false
-                    }
-                    onPressed: {
-                        textInputLocation.forceActiveFocus()
-                        mouse.accepted = false
-                    }
-                }
-            }
-            ImageSvg {
-                id: imageLocation
-                width: 24
-                height: 24
-                anchors.verticalCenter: parent.verticalCenter
-
-                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
-                color: Theme.colorHeaderContent
-            }
+        Loader {
+            id: graphLoader
+            width: singleColumn ? parent.width : (parent.width - tempBox.width)
+            height: singleColumn ? (parent.height - tempBox.height) : parent.height
+            asynchronous: false
         }
     }
 }
