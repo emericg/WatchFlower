@@ -175,9 +175,9 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
         QLowEnergyCharacteristic cpres = serviceEnvironmentalSensing->characteristic(uuid_pressure);
         if (cpres.isValid())
         {
-            m_pression = cpres.value().toUInt() / 10.0;
+            m_pressure = cpres.value().toUInt() / 10.0;
 
-            m_deviceSensors += DEVICE_BAROMETER;
+            m_deviceSensors += DEVICE_PRESSURE;
             Q_EMIT sensorUpdated();
         }
 

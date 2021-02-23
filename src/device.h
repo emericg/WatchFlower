@@ -221,7 +221,7 @@ public slots:
     bool hasHumiditySensor() const { return (m_deviceSensors & DEVICE_HUMIDITY); }
     bool hasLuminositySensor() const { return (m_deviceSensors & DEVICE_LIGHT); }
     bool hasUvSensor() const { return (m_deviceSensors & DEVICE_UV); }
-    bool hasBarometer() const { return (m_deviceSensors & DEVICE_BAROMETER); }
+    bool hasBarometer() const { return (m_deviceSensors & DEVICE_PRESSURE); }
     bool hasPM1Sensor() const { return (m_deviceSensors & DEVICE_PM1); }
     bool hasPM25Sensor() const { return (m_deviceSensors & DEVICE_PM25); }
     bool hasPM10Sensor() const { return (m_deviceSensors & DEVICE_PM10); }

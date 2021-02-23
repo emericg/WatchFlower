@@ -104,7 +104,7 @@ bool DatabaseManager::openDatabase_sqlite()
 
                         // Migrations //////////////////////////////////////////
 
-                        // must be done before the creation, so we migrate old data tables
+                        // Must be done before the creation, so we migrate old data tables
                         // instead of creating new empty tables
 
                         migrateDatabase();
@@ -193,7 +193,7 @@ bool DatabaseManager::openDatabase_mysql()
 
                 // Migrations ///////////////////////////////////////////////////
 
-                // must be done before the creation, so we migrate old data tables
+                // Must be done before the creation, so we migrate old data tables
                 // instead of creating new empty tables
 
                 migrateDatabase();
@@ -346,12 +346,13 @@ void DatabaseManager::createDatabase()
         QSqlQuery createDevices;
         createDevices.prepare("CREATE TABLE devices (" \
                               "deviceAddr CHAR(17) PRIMARY KEY," \
+                              "deviceAddrMAC CHAR(17)," \
                               "deviceModel VARCHAR(255)," \
                               "deviceName VARCHAR(255)," \
                               "deviceFirmware VARCHAR(255)," \
                               "deviceBattery INT," \
-                              "locationName VARCHAR(255)," \
                               "associatedName VARCHAR(255)," \
+                              "locationName VARCHAR(255)," \
                               "isOutside BOOLEAN," \
                               "settings VARCHAR(255)" \
                               ");");
@@ -420,7 +421,7 @@ void DatabaseManager::createDatabase()
                                  "deviceAddr CHAR(17)," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
-                                   "pression FLOAT," \
+                                   "pressure FLOAT," \
                                    "luminosity INT," \
                                    "uv INT," \
                                    "sound FLOAT," \
@@ -483,11 +484,25 @@ bool DatabaseManager::migrate_v1v2()
 {
     qWarning() << "DatabaseManager::migrate_v1v2()";
 
-    QSqlQuery qmDev1("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
-    QSqlQuery qmDev2("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
-    QSqlQuery qmDev3("ALTER TABLE devices ADD isOutside BOOLEAN");
-    QSqlQuery qmDev4("ALTER TABLE devices ADD settings VARCHAR(255)");
+    // TABLE devices
+    // FIELD add deviceAddrMAC
+    // FIELD add deviceModel
+    // FIELD plantName > associatedName
+    // FIELD add (bool) isOutside
+    // FIELD add (str) settings
+    QSqlQuery qmDev1("ALTER TABLE devices ADD deviceAddrMAC VARCHAR(17)");
+    QSqlQuery qmDev2("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
+    QSqlQuery qmDev3("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
+    QSqlQuery qmDev4("ALTER TABLE devices ADD isOutside BOOLEAN");
+    QSqlQuery qmDev5("ALTER TABLE devices ADD settings VARCHAR(255)");
 
+    // TABLE datas > plantData
+    // FIELD hygro > soilMoisture (change type??)
+    // FIELD conductivity > soilConductivity
+    // FIELD temp > temperature
+    // FIELD add soilTemperature
+    // FIELD add soilPH
+    // FIELD add humidity
     QSqlQuery qmDat1("ALTER TABLE datas RENAME TO plantData");
     QSqlQuery qmDat2("ALTER TABLE plantData RENAME COLUMN hygro TO soilMoisture");
     QSqlQuery qmDat3("ALTER TABLE plantData RENAME COLUMN conductivity TO soilConductivity");
@@ -496,6 +511,9 @@ bool DatabaseManager::migrate_v1v2()
     QSqlQuery qmDat6("ALTER TABLE plantData ADD soilPH FLOAT");
     QSqlQuery qmDat7("ALTER TABLE plantData ADD humidity FLOAT");
 
+    // TABLE limits > plantLimits
+    // FIELD lumiMin > luxMin
+    // FIELD add mmolMin & mmolMax
     QSqlQuery qmLim1("ALTER TABLE limits RENAME TO plantLimits");
     QSqlQuery qmLim2("ALTER TABLE plantLimits RENAME COLUMN lumiMin TO luxMin");
     QSqlQuery qmLim3("ALTER TABLE plantLimits RENAME COLUMN lumiMax TO luxMax");
@@ -505,6 +523,8 @@ bool DatabaseManager::migrate_v1v2()
     QSqlQuery qmLim7("ALTER TABLE plantLimits ADD humiMax INT");
     QSqlQuery qmLim8("ALTER TABLE plantLimits ADD mmolMin INT");
     QSqlQuery qmLim9("ALTER TABLE plantLimits ADD mmolMax INT");
+
+    // TABLE sensorData
 
     return true;
 }

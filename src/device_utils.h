@@ -73,7 +73,7 @@ enum DeviceSensors {
     DEVICE_TEMPERATURE          = (1 <<  4), //!< Has a temperature sensor
     DEVICE_HUMIDITY             = (1 <<  5), //!< Has an humidity sensor
     // environmental data
-    DEVICE_BAROMETER            = (1 <<  6), //!< Has a barometer (pressure sensor)
+    DEVICE_PRESSURE             = (1 <<  6), //!< Has a barometer (pressure sensor)
     DEVICE_LIGHT                = (1 <<  7), //!< Has a light sensor
     DEVICE_UV                   = (1 <<  8), //!< Has an UV light sensor
     DEVICE_SOUND                = (1 <<  9), //!< Has a sound level sensor

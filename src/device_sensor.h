@@ -48,7 +48,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
 
-    // min/max
+    // data min/max
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
@@ -98,9 +98,19 @@ protected:
     float m_temperature = -99.f;
     int m_humidity = -99;
     // environmental data
-    float m_pression = -99.f;
+    float m_pressure = -99.f;
     int m_luminosity = -99;
     int m_uv = -99;
+    float m_sound = -99.f;
+    int m_pm_1 = -99;
+    int m_pm_25 = -99;
+    int m_pm_10 = -99;
+    int m_o2 = -99;
+    int m_o3 = -99;
+    int m_co = -99;
+    int m_co2 = -99;
+    int m_no2 = -99;
+    int m_voc = -99;
     float m_rh = 999.f;
     float m_rm = -99.f;
     float m_rs = -99.f;
@@ -121,7 +131,7 @@ protected:
     int m_limitMmolMin = 0;
     int m_limitMmolMax = 0;
 
-    // SQL min/max data (x days period)
+    // data min/max data (x days period)
     int m_hygroMin = 999999;
     int m_hygroMax = -99;
     int m_conduMin = 999999;
