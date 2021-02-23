@@ -106,7 +106,7 @@ Rectangle {
 
             text: title
             color: Theme.colorHeaderContent
-            font.bold: false
+            font.bold: true
             font.pixelSize: Theme.fontSizeHeader
             font.capitalization: Font.Capitalize
             verticalAlignment: Text.AlignVCenter

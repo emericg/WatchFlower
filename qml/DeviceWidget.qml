@@ -143,10 +143,16 @@ Item {
             textTitle.text = boxDevice.deviceName
         }
 
+        textLocation.font.pixelSize = bigAssMode ? 20 : 18
         if (boxDevice.deviceLocationName !== "") {
             textLocation.text = boxDevice.deviceLocationName
         } else {
-            textLocation.text = boxDevice.deviceAddress
+            if (Qt.platform.os === "osx" || Qt.platform.os === "ios") {
+                textLocation.text = boxDevice.deviceAddress
+                textLocation.font.pixelSize = 14
+            } else {
+                textLocation.text = boxDevice.deviceAddress
+            }
         }
 
         // Status

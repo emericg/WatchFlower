@@ -46,8 +46,8 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
-    property int screenOrientation: Screen.primaryOrientation
+    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation, 4 = inverted portrait, 8 = inverted landscape
+    property int screenOrientation: Screen.orientation
     onScreenOrientationChanged: handleNotches()
 
     property int screenStatusbarPadding: 0
@@ -58,75 +58,98 @@ ApplicationWindow {
 
     Component.onCompleted: {
         if (Qt.platform.os !== "ios") return
-        firstHandleNotches.restart()
-        secondHandleNotches.restart()
-        thirdHandleNotches.restart()
+        handleNotchesTimer.restart()
     }
     Timer {
-        id: firstHandleNotches
-        interval: 100
+        id: handleNotchesTimer
+        interval: 33
         repeat: false
         onTriggered: handleNotches()
     }
-    Timer {
-        id: secondHandleNotches
-        interval: 250
-        repeat: false
-        onTriggered: handleNotches()
-    }
-    Timer {
-        id: thirdHandleNotches
-        interval: 1000
-        repeat: false
-        onTriggered: handleNotches()
-    }
-
     function handleNotches() {
+/*
+        console.log("handleNotches()")
+        console.log("screen width : " + Screen.width)
+        console.log("screen width avail  : " + Screen.desktopAvailableWidth)
+        console.log("screen height : " + Screen.height)
+        console.log("screen height avail  : " + Screen.desktopAvailableHeight)
+        console.log("screen orientation: " + Screen.orientation)
+        console.log("screen orientation (primary): " + Screen.primaryOrientation)
+*/
         if (Qt.platform.os !== "ios") return
-        if (typeof quickWindow === "undefined" || !quickWindow) return
+        if (typeof quickWindow === "undefined" || !quickWindow) {
+            handleNotchesTimer.restart();
+            return;
+        }
 
-        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
-        //console.log("screen width : " + Screen.width)
-        //console.log("screen height : " + Screen.height)
-        //console.log("screen avail  : " + Screen.desktopAvailableHeight)
-        //console.log("screen padding: " + screenPadding)
+        // Statusbar text color hack
+        mobileUI.statusbarTheme = (Theme.themeStatusbar === 0) ? 1 : 0
+        mobileUI.statusbarTheme = Theme.themeStatusbar
 
+        // Margins
         var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
-        //console.log("top:" + safeMargins["top"])
-        //console.log("right:" + safeMargins["right"])
-        //console.log("bottom:" + safeMargins["bottom"])
-        //console.log("left:" + safeMargins["left"])
-
-        if (safeMargins["total"] !== safeMargins["top"]) {
-            if (Screen.primaryOrientation === Qt.PortraitOrientation) {
+        if (safeMargins["total"] === safeMargins["top"]) {
+            screenStatusbarPadding = safeMargins["top"]
+            screenNotchPadding = 0
+            screenLeftPadding = 0
+            screenRightPadding = 0
+            screenBottomPadding = 0
+        } else if (safeMargins["total"] > 0) {
+            if (Screen.orientation === Qt.PortraitOrientation) {
                 screenStatusbarPadding = 20
                 screenNotchPadding = 12
+                screenLeftPadding = 0
+                screenRightPadding = 0
+                screenBottomPadding = 6
+            } else if (Screen.orientation === Qt.InvertedPortraitOrientation) {
+                screenStatusbarPadding = 12
+                screenNotchPadding = 20
+                screenLeftPadding = 0
+                screenRightPadding = 0
+                screenBottomPadding = 6
+            } else if (Screen.orientation === Qt.LandscapeOrientation) {
+                screenStatusbarPadding = 0
+                screenNotchPadding = 0
+                screenLeftPadding = 32
+                screenRightPadding = 0
+                screenBottomPadding = 0
+            } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
+                screenStatusbarPadding = 0
+                screenNotchPadding = 0
+                screenLeftPadding = 0
+                screenRightPadding = 32
+                screenBottomPadding = 0
             } else {
                 screenStatusbarPadding = 0
                 screenNotchPadding = 0
-            }
-
-            if (Screen.primaryOrientation === Qt.LandscapeOrientation) {
-                // TODO left or right ???
-                screenLeftPadding = 32
-                screenRightPadding = 0
-            } else {
                 screenLeftPadding = 0
                 screenRightPadding = 0
+                screenBottomPadding = 0
             }
         } else {
-            screenStatusbarPadding = 20
+            screenStatusbarPadding = 0
             screenNotchPadding = 0
+            screenLeftPadding = 0
+            screenRightPadding = 0
+            screenBottomPadding = 0
         }
 /*
-        console.log("RECAP screenStatusbarPadding:" + screenStatusbarPadding)
-        console.log("RECAP screenNotchPadding:" + screenNotchPadding)
-        console.log("RECAP screenLeftPadding:" + screenLeftPadding)
-        console.log("RECAP screenRightPadding:" + screenRightPadding)
+        console.log("total:" + safeMargins["total"])
+        console.log("top:" + safeMargins["top"])
+        console.log("right:" + safeMargins["right"])
+        console.log("bottom:" + safeMargins["bottom"])
+        console.log("left:" + safeMargins["left"])
+
+        console.log("RECAP screenPaddingStatusbar:" + screenStatusbarPadding)
+        console.log("RECAP screenPaddingNotch:" + screenNotchPadding)
+        console.log("RECAP screenPaddingLeft:" + screenLeftPadding)
+        console.log("RECAP screenPaddingRight:" + screenRightPadding)
+        console.log("RECAP screenPaddingBottomPadding:" + screenBottomPadding)
 */
     }
 
     MobileUI {
+        id: mobileUI
         statusbarColor: Theme.colorStatusbar
         statusbarTheme: Theme.themeStatusbar
         navbarColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
@@ -219,6 +242,7 @@ ApplicationWindow {
     Timer {
         id: exitTimer
         interval: 3000
+        running: false
         repeat: false
         onRunningChanged: exitWarning.opacity = running
     }
@@ -430,10 +454,10 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: screenBottomPadding
 
-        width: parent.width
-        height: isPhone ? 40 : 48
+        property int hhh: (isPhone ? 40 : 48)
+
+        height: hhh + screenBottomPadding
         color: isTablet ? Theme.colorTabletmenu : "transparent"
 
         Rectangle {
@@ -445,6 +469,9 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
+        // prevent clicks below this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
         visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermo") ||
                  (isPhone && appContent.state === "DeviceSensor" && screenOrientation === Qt.PortraitOrientation)
 
@@ -452,7 +479,7 @@ ApplicationWindow {
             id: tabletMenuScreen
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: screenBottomPadding
+            anchors.verticalCenterOffset: -screenBottomPadding
             spacing: (appWindow.width >= 480) ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
@@ -504,7 +531,7 @@ ApplicationWindow {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: screenBottomPadding
+            anchors.verticalCenterOffset: -screenBottomPadding
             spacing: (appWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDataButtonClicked()
@@ -579,6 +606,7 @@ ApplicationWindow {
         anchors.bottomMargin: 32
         anchors.horizontalCenter: parent.horizontalCenter
 
+        visible: opacity
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
 

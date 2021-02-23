@@ -866,7 +866,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             for (auto ed: qAsConst(m_devices_model->m_devices))
             {
                 Device *edd = qobject_cast<Device*>(ed);
-#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
                 if (edd && edd->getAddress() == info.deviceUuid().toString())
 #else
                 if (edd && edd->getAddress() == info.address().toString())

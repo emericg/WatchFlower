@@ -30,8 +30,6 @@ Item {
     width: 480
     height: 640
     anchors.fill: parent
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -53,7 +51,7 @@ Item {
         Text {
             id: textTitle
             anchors.left: parent.left
-            anchors.leftMargin: 16
+            anchors.leftMargin: 16 + screenLeftPadding
             anchors.top: parent.top
             anchors.topMargin: 12
 
@@ -66,7 +64,7 @@ Item {
         Text {
             id: textSubtitle
             anchors.left: parent.left
-            anchors.leftMargin: 16
+            anchors.leftMargin: 16 + screenLeftPadding
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
 
@@ -89,8 +87,8 @@ Item {
 
         Column {
             anchors.fill: parent
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: 16 + screenLeftPadding
+            anchors.rightMargin: 16 + screenRightPadding
 
             topPadding: 8
             bottomPadding: 8

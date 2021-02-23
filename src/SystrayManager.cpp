@@ -113,7 +113,7 @@ void SystrayManager::initSystray()
             connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
 
-#ifdef TARGET_OS_OSX
+#if defined(Q_OS_MACOS)
         m_sysTrayIcon = new QIcon(":/assets/logos/watchflower_tray_dark.svg");
 #else
         m_sysTrayIcon = new QIcon(":/assets/logos/watchflower_tray_dark.svg");
@@ -135,7 +135,7 @@ bool SystrayManager::installSystray()
 
         if (m_sysTray != nullptr && m_sysTrayMenu != nullptr && m_sysTrayIcon != nullptr)
         {
-#if !defined(TARGET_OS_OSX)
+#if !defined(Q_OS_MACOS)
             connect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
 #endif
             m_sysTray->setIcon(*m_sysTrayIcon);
@@ -178,7 +178,7 @@ void SystrayManager::REinstallSystray()
     // This hack helps in cases where the tray icon just disappears after some time, seen a lot on Gnome desktop with TopIcons Plus.
     // A different solution to this problem is to use gnome-shell-extension-appindicator instead of TopIcons Plus.
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX)
     if (m_sysTray)
     {
         if (m_sysTrayIcon && m_sysTrayMenu)
