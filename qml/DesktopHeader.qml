@@ -5,10 +5,14 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: rectangleHeaderBar
-    width: 720
-    height: 64
+    width: parent.width
+    height: headerHeight
     z: 10
     color: Theme.colorHeader
+
+    property int headerHeight: 64
+
+    ////////////////////////////////////////////////////////////////////////////
 
     signal backButtonClicked()
     signal rightMenuClicked() // compatibility
@@ -213,8 +217,8 @@ Rectangle {
 
             ItemMenuButton {
                 id: menuDeviceData
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
@@ -223,8 +227,8 @@ Rectangle {
             }
             ItemMenuButton {
                 id: menuDeviceHistory
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
@@ -233,8 +237,8 @@ Rectangle {
             }
             ItemMenuButton {
                 id: menuDeviceSettings
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
@@ -354,8 +358,8 @@ Rectangle {
 
             ItemMenuButton {
                 id: menuPlants
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 selected: (appContent.state === "DeviceList")
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
@@ -365,8 +369,8 @@ Rectangle {
             }
             ItemMenuButton {
                 id: menuSettings
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 selected: (appContent.state === "Settings")
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
@@ -376,8 +380,8 @@ Rectangle {
             }
             ItemMenuButton {
                 id: menuAbout
-                width: 64
-                height: 64
+                width: headerHeight
+                height: headerHeight
                 selected: (appContent.state === "About")
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight

@@ -160,7 +160,7 @@ Item {
             colorWarning = colorRed
             colorError = colorRed
 
-            colorText = "#333333"
+            colorText = "#393939"
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey

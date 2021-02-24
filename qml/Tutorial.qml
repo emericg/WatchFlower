@@ -22,8 +22,8 @@ Rectangle {
     SwipeView {
         id: tutorialPages
         anchors.fill: parent
-        anchors.leftMargin: screenLeftPadding
-        anchors.rightMargin: screenRightPadding
+        anchors.leftMargin: screenPaddingLeft
+        anchors.rightMargin: screenPaddingRight
         anchors.bottomMargin: 56
 
         currentIndex: 0
@@ -54,6 +54,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>RoPot</b>' sensors.")
+                    textFormat: Text.StyledText
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 18
                     color: Theme.colorHeaderContent
@@ -74,6 +75,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("It also works great with a couple of <b>thermometers</b>!")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     font.pixelSize: 18
                     horizontalAlignment: Text.AlignHCenter
@@ -98,13 +100,14 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     font.pixelSize: 18
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Image {
-                    height: tutorialPages.height / 2.5
+                    height: (tutorialPages.height / 2.5)
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
@@ -117,6 +120,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.")
+                    textFormat: Text.StyledText
                     font.pixelSize: 18
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -141,13 +145,14 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their data.")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
                 }
                 Image {
-                    width: tutorialPages.width * 0.8
+                    width: (tutorialPages.width * 0.8)
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-app-connected.svg"
@@ -160,6 +165,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("Click on one of the sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -184,13 +190,14 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("You can <b>name your plants</b> and set devices <b>location</b>.")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 18
                 }
                 Image {
-                    width: tutorialPages.width * 0.8
+                    width: (tutorialPages.width * 0.8)
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-limits.svg"
@@ -203,6 +210,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("Set <b>limits</b> like <b>optimal moisture level</b> or <b>temperature range</b> and more depending on available sensors metrics.")
+                    textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -223,6 +231,7 @@ Rectangle {
         visible: (tutorialPages.currentIndex != 0)
 
         text: qsTr("Previous")
+        textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16
@@ -245,6 +254,7 @@ Rectangle {
         anchors.verticalCenter: pageIndicator.verticalCenter
 
         text: (tutorialPages.currentIndex === lastPage) ? qsTr("All right!") : qsTr("Next")
+        textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
         font.pixelSize: 16

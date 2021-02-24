@@ -12,6 +12,7 @@ Rectangle {
 
     color: Theme.colorBackground
     radius: Theme.componentRadius
+    border.color: Theme.colorSeparator
 
     signal menuSelected(var index)
     property int menuWidth: 0

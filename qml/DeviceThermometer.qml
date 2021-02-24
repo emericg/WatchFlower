@@ -11,6 +11,9 @@ Item {
     property var currentDevice: null
     property alias deviceScreenChart: graphLoader.item
 
+    property var cchh: (Theme.colorHeader !== Theme.colorBackground) ? Theme.colorHeader : Theme.colorPrimary
+    property var cccc: (Theme.colorHeader !== Theme.colorBackground) ? Theme.colorHeaderContent : "white"
+
     Connections {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
@@ -102,7 +105,7 @@ Item {
         // Sensor battery level
         if (currentDevice.hasBatteryLevel()) {
             //imageBattery.visible = true
-            imageBattery.color = Theme.colorHeaderContent
+            imageBattery.color = cccc
 
             if (currentDevice.deviceBattery > 95) {
                 imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
@@ -203,7 +206,26 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property bool singleColumn: (isPhone || appWindow.width < 720)
+    property bool singleColumn: {
+        if (isMobile) {
+            if (isPhone) {
+                if (screenOrientation === Qt.PortraitOrientation) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            if (isTablet) {
+                if (screenOrientation === Qt.PortraitOrientation || width < 480) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        } else {
+            return (appWindow.width < 720)
+        }
+    }
 
     Flow {
         anchors.fill: parent
@@ -211,17 +233,17 @@ Item {
         Rectangle {
             id: tempBox
 
-            property int dimboxw: Math.max(deviceThermometer.width * 0.333, isPhone ? 128 : 320)
-            property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 96 : 256)
+            property int dimboxw: Math.max(deviceThermometer.width * 0.333, isPhone ? 160 : 320)
+            property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 160 : 256)
 
-            z: 5
             width: singleColumn ? parent.width : dimboxw
             height: singleColumn ? dimboxh: parent.height
-            color: Theme.colorHeader
+            color: cchh
+            z: 5
 
             //width: dimboxw - 32
             //height: dimboxh: - 32
-            //color: singleColumn ? Theme.colorPrimary : Theme.colorHeader
+            //color: singleColumn ? Theme.colorPrimary : cchh
             //radius: 16
 
             MouseArea { anchors.fill: parent } // prevent clicks below this area
@@ -238,7 +260,7 @@ Item {
                     height: isMobile ? 96 : 128
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
 
                 Text {
@@ -247,7 +269,7 @@ Item {
 
                     font.bold: false
                     font.pixelSize: isPhone ? 44 : 48
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
 
                 Text {
@@ -256,7 +278,7 @@ Item {
 
                     font.bold: false
                     font.pixelSize: isPhone ? 18 : 20
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
 
                 Text {
@@ -265,7 +287,7 @@ Item {
 
                     font.bold: false
                     font.pixelSize: isPhone ? 22 : 24
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
 
                 ImageSvg {
@@ -277,7 +299,7 @@ Item {
 
                     //visible: (currentDevice.hasBatteryLevel() && currentDevice.deviceTempC > -40)
                     fillMode: Image.PreserveAspectCrop
-                    color: Theme.colorHeaderContent
+                    color: cccc
                     source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
                 }
             }
@@ -304,14 +326,14 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
                 Text {
                     id: textStatus
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Loading...")
-                    color: Theme.colorHeaderContent
+                    color: cccc
                     font.pixelSize: 17
                     font.bold: false
                 }
@@ -336,7 +358,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                    color: Theme.colorHeaderContent
+                    color: cccc
 
                     opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
@@ -348,7 +370,7 @@ Item {
                     padding: 4
                     font.pixelSize: 17
                     font.bold: false
-                    color: Theme.colorHeaderContent
+                    color: cccc
 
                     text: currentDevice ? currentDevice.deviceLocationName : ""
                     onEditingFinished: {
@@ -384,7 +406,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
-                    color: Theme.colorHeaderContent
+                    color: cccc
                 }
             }
         }
