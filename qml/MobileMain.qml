@@ -28,6 +28,7 @@ import MobileUI 0.1
 
 ApplicationWindow {
     id: appWindow
+
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
@@ -47,25 +48,23 @@ ApplicationWindow {
     // Mobile stuff ////////////////////////////////////////////////////////////
 
     // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation, 4 = inverted portrait, 8 = inverted landscape
-    property int screenOrientation: Screen.orientation
+    property int screenPrimaryOrientation: Screen.primaryOrientation
+    property int screenOrientation: Screen.primaryOrientation
     onScreenOrientationChanged: handleNotches()
 
-    property int screenStatusbarPadding: 0
-    property int screenNotchPadding: 0
-    property int screenLeftPadding: 0
-    property int screenRightPadding: 0
-    property int screenBottomPadding: 0
+    property int screenPaddingStatusbar: 0
+    property int screenPaddingNotch: 0
+    property int screenPaddingLeft: 0
+    property int screenPaddingRight: 0
+    property int screenPaddingBottom: 0
 
-    Component.onCompleted: {
-        if (Qt.platform.os !== "ios") return
-        handleNotchesTimer.restart()
-    }
     Timer {
         id: handleNotchesTimer
         interval: 33
         repeat: false
         onTriggered: handleNotches()
     }
+
     function handleNotches() {
 /*
         console.log("handleNotches()")
@@ -82,77 +81,83 @@ ApplicationWindow {
             return;
         }
 
-        // Statusbar text color hack
+        // Statusbar text color hack (iOS)
         mobileUI.statusbarTheme = (Theme.themeStatusbar === 0) ? 1 : 0
         mobileUI.statusbarTheme = Theme.themeStatusbar
 
         // Margins
         var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
         if (safeMargins["total"] === safeMargins["top"]) {
-            screenStatusbarPadding = safeMargins["top"]
-            screenNotchPadding = 0
-            screenLeftPadding = 0
-            screenRightPadding = 0
-            screenBottomPadding = 0
+            screenPaddingStatusbar = safeMargins["top"]
+            screenPaddingNotch = 0
+            screenPaddingLeft = 0
+            screenPaddingRight = 0
+            screenPaddingBottom = 0
         } else if (safeMargins["total"] > 0) {
             if (Screen.orientation === Qt.PortraitOrientation) {
-                screenStatusbarPadding = 20
-                screenNotchPadding = 12
-                screenLeftPadding = 0
-                screenRightPadding = 0
-                screenBottomPadding = 6
+                screenPaddingStatusbar = 20
+                screenPaddingNotch = 12
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 6
             } else if (Screen.orientation === Qt.InvertedPortraitOrientation) {
-                screenStatusbarPadding = 12
-                screenNotchPadding = 20
-                screenLeftPadding = 0
-                screenRightPadding = 0
-                screenBottomPadding = 6
+                screenPaddingStatusbar = 12
+                screenPaddingNotch = 20
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 6
             } else if (Screen.orientation === Qt.LandscapeOrientation) {
-                screenStatusbarPadding = 0
-                screenNotchPadding = 0
-                screenLeftPadding = 32
-                screenRightPadding = 0
-                screenBottomPadding = 0
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 32
+                screenPaddingRight = 0
+                screenPaddingBottom = 0
             } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
-                screenStatusbarPadding = 0
-                screenNotchPadding = 0
-                screenLeftPadding = 0
-                screenRightPadding = 32
-                screenBottomPadding = 0
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 0
+                screenPaddingRight = 32
+                screenPaddingBottom = 0
             } else {
-                screenStatusbarPadding = 0
-                screenNotchPadding = 0
-                screenLeftPadding = 0
-                screenRightPadding = 0
-                screenBottomPadding = 0
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 0
             }
         } else {
-            screenStatusbarPadding = 0
-            screenNotchPadding = 0
-            screenLeftPadding = 0
-            screenRightPadding = 0
-            screenBottomPadding = 0
+            screenPaddingStatusbar = 0
+            screenPaddingNotch = 0
+            screenPaddingLeft = 0
+            screenPaddingRight = 0
+            screenPaddingBottom = 0
         }
 /*
         console.log("total:" + safeMargins["total"])
         console.log("top:" + safeMargins["top"])
+        console.log("left:" + safeMargins["left"])
         console.log("right:" + safeMargins["right"])
         console.log("bottom:" + safeMargins["bottom"])
-        console.log("left:" + safeMargins["left"])
 
-        console.log("RECAP screenPaddingStatusbar:" + screenStatusbarPadding)
-        console.log("RECAP screenPaddingNotch:" + screenNotchPadding)
-        console.log("RECAP screenPaddingLeft:" + screenLeftPadding)
-        console.log("RECAP screenPaddingRight:" + screenRightPadding)
-        console.log("RECAP screenPaddingBottomPadding:" + screenBottomPadding)
+        console.log("RECAP screenPaddingStatusbar:" + screenPaddingStatusbar)
+        console.log("RECAP screenPaddingNotch:" + screenPaddingNotch)
+        console.log("RECAP screenPaddingLeft:" + screenPaddingLeft)
+        console.log("RECAP screenPaddingRight:" + screenPaddingRight)
+        console.log("RECAP screenPaddingBottom:" + screenPaddingBottom)
 */
     }
 
     MobileUI {
         id: mobileUI
-        statusbarColor: Theme.colorStatusbar
+        property var isLoading: true
+
         statusbarTheme: Theme.themeStatusbar
-        navbarColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
+        statusbarColor: isLoading ? "white" : Theme.colorStatusbar
+        navbarColor: {
+            if (isLoading) return "white"
+            if (appContent.state === "Tutorial") return Theme.colorHeader
+            return Theme.colorBackground
+        }
     }
 
     MobileHeader {
@@ -168,6 +173,11 @@ ApplicationWindow {
     }
 
     // Events handling /////////////////////////////////////////////////////////
+
+    Component.onCompleted: {
+        if (Qt.platform.os === "ios") handleNotchesTimer.restart()
+        mobileUI.isLoading = false
+    }
 
     Connections {
         target: appHeader
@@ -457,7 +467,7 @@ ApplicationWindow {
 
         property int hhh: (isPhone ? 40 : 48)
 
-        height: hhh + screenBottomPadding
+        height: hhh + screenPaddingBottom
         color: isTablet ? Theme.colorTabletmenu : "transparent"
 
         Rectangle {
@@ -479,7 +489,7 @@ ApplicationWindow {
             id: tabletMenuScreen
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -screenBottomPadding
+            anchors.verticalCenterOffset: -screenPaddingBottom
             spacing: (appWindow.width >= 480) ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
@@ -531,7 +541,7 @@ ApplicationWindow {
             id: tabletMenuDevice
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -screenBottomPadding
+            anchors.verticalCenterOffset: -screenPaddingBottom
             spacing: (appWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDataButtonClicked()

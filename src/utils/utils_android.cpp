@@ -121,7 +121,7 @@ bool android_ask_storage_write_permission()
 
 bool android_ask_storage_permissions()
 {
-    return (android_ask_storage_read_permission() & android_ask_storage_write_permission());
+    return (android_ask_storage_read_permission() && android_ask_storage_write_permission());
 }
 
 /* ************************************************************************** */
@@ -166,6 +166,51 @@ bool android_ask_location_permission()
 
     return status;
 }
+
+/* ************************************************************************** */
+
+bool android_check_camera_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult cam = QtAndroid::checkPermission("android.permission.CAMERA");
+
+    if (cam == QtAndroid::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_camera_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroid::PermissionResult cam = QtAndroid::checkPermission("android.permission.CAMERA");
+    if (cam == QtAndroid::PermissionResult::Denied)
+    {
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.CAMERA");
+        cam = QtAndroid::checkPermission("android.permission.CAMERA");
+        if (cam == QtAndroid::PermissionResult::Denied)
+        {
+            qDebug() << "CAMERA PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+/* ************************************************************************** */
 
 bool android_check_phonestate_permission()
 {
@@ -403,7 +448,8 @@ void android_vibrate(int milliseconds)
                                                                             vibroString.object<jstring>());
                 if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
                 {
-                    vibratorService.callMethod<void>("vibrate", "(J)V", milliseconds);
+                    jlong ms = milliseconds;
+                    vibratorService.callMethod<void>("vibrate", "(J)V", ms);
                 }
             }
         }

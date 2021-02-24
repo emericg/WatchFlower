@@ -122,6 +122,20 @@ bool android_ask_location_permission();
 /* ************************************************************************** */
 
 /*!
+ * \brief android_check_camera_permission
+ * \return True if CAMERA permission has been previously obtained.
+ */
+bool android_check_camera_permission();
+
+/*!
+ * \brief android_ask_camera_permission
+ * \return True if CAMERA permission has been explicitly obtained.
+ */
+bool android_ask_camera_permission();
+
+/* ************************************************************************** */
+
+/*!
  * \brief android_screen_keep_on
  * \param on: screen on or off.
  */

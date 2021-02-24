@@ -51,7 +51,7 @@ Item {
         Text {
             id: textTitle
             anchors.left: parent.left
-            anchors.leftMargin: 16 + screenLeftPadding
+            anchors.leftMargin: 16 + screenPaddingLeft
             anchors.top: parent.top
             anchors.topMargin: 12
 
@@ -64,7 +64,7 @@ Item {
         Text {
             id: textSubtitle
             anchors.left: parent.left
-            anchors.leftMargin: 16 + screenLeftPadding
+            anchors.leftMargin: 16 + screenPaddingLeft
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
 
@@ -87,8 +87,8 @@ Item {
 
         Column {
             anchors.fill: parent
-            anchors.leftMargin: 16 + screenLeftPadding
-            anchors.rightMargin: 16 + screenRightPadding
+            anchors.leftMargin: 16 + screenPaddingLeft
+            anchors.rightMargin: 16 + screenPaddingRight
 
             topPadding: 8
             bottomPadding: 8
@@ -155,7 +155,7 @@ Item {
                 spacing: 16
 
                 onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2;
+                    var ww = (scrollView.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
                     if (ww > 0) { websiteBtn.width = ww; githubBtn.width = ww; }
                 }
 

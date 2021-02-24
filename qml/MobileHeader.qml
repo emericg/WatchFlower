@@ -26,7 +26,7 @@ import ThemeEngine 1.0
 Rectangle {
     id: rectangleHeaderBar
     width: parent.width
-    height: screenStatusbarPadding + screenNotchPadding + headerHeight
+    height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
     z: 10
     color: Theme.colorHeader
 
@@ -73,7 +73,7 @@ Rectangle {
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenStatusbarPadding + screenNotchPadding
+        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
 
         MouseArea {
             id: leftArea
@@ -88,8 +88,8 @@ Rectangle {
 
             ImageSvg {
                 id: leftMenuImg
-                width: headerHeight/2
-                height: headerHeight/2
+                width: (headerHeight/2)
+                height: (headerHeight/2)
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -244,8 +244,8 @@ Rectangle {
 
                 ImageSvg {
                     id: rightMenuImg
-                    width: headerHeight/2
-                    height: headerHeight/2
+                    width: (headerHeight/2)
+                    height: (headerHeight/2)
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -271,7 +271,7 @@ Rectangle {
     ActionMenu {
         id: actionMenu
         anchors.top: parent.top
-        anchors.topMargin: screenStatusbarPadding + screenNotchPadding + 8
+        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch + 8
         anchors.right: parent.right
         anchors.rightMargin: 8
 

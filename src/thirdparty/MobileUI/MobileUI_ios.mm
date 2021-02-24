@@ -60,7 +60,7 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 void togglePreferredStatusBarStyle()
 {
     UIStatusBarStyle style = statusBarStyle(MobileUI::Light);
-    if (MobileUIPrivate::statusbarTheme == MobileUI::Dark) {
+    if (MobileUIPrivate::statusbarTheme == MobileUI::Light) {
         style = statusBarStyle(MobileUI::Dark);
     }
 

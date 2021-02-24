@@ -75,11 +75,11 @@ ApplicationWindow {
     // Mobile stuff ////////////////////////////////////////////////////////////
 
     property int screenOrientation: Screen.primaryOrientation
-    property int screenStatusbarPadding: 0
-    property int screenNotchPadding: 0
-    property int screenLeftPadding: 0
-    property int screenRightPadding: 0
-    property int screenBottomPadding: 0
+    property int screenPaddingStatusbar: 0
+    property int screenPaddingNotch: 0
+    property int screenPaddingLeft: 0
+    property int screenPaddingRight: 0
+    property int screenPaddingBottom: 0
 
     Item { // compatibility
         id: tabletMenuDevice

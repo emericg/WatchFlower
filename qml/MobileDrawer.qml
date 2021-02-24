@@ -54,7 +54,7 @@ Drawer {
 
             Connections {
                 target: appWindow
-                onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
+                onScreenPaddingStatusbarChanged: rectangleHeader.updateIOSHeader()
             }
             Connections {
                 target: Theme
@@ -63,8 +63,8 @@ Drawer {
 
             function updateIOSHeader() {
                 if (Qt.platform.os === "ios") {
-                    if (screenStatusbarPadding !== 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
-                        rectangleStatusbar.height = screenStatusbarPadding
+                    if (screenPaddingStatusbar !== 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
+                        rectangleStatusbar.height = screenPaddingStatusbar
                     else
                         rectangleStatusbar.height = 0
                 }
@@ -74,14 +74,14 @@ Drawer {
 
             Rectangle {
                 id: rectangleStatusbar
-                height: screenStatusbarPadding
+                height: screenPaddingStatusbar
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "red" // to hide scrollview content
             }
             Rectangle {
                 id: rectangleNotch
-                height: screenNotchPadding
+                height: screenPaddingNotch
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "yellow" // to hide scrollview content
@@ -156,7 +156,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/logos/watchflower_tray_dark.svg"
@@ -164,7 +164,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Sensors")
@@ -195,7 +195,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -203,7 +203,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Settings")
@@ -232,7 +232,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-info-24px.svg"
@@ -240,7 +240,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("About")
@@ -316,7 +316,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/baseline-sort-24px.svg"
@@ -325,7 +325,7 @@ Drawer {
                     Label {
                         id: textOrderBy
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         function setText() {
@@ -403,7 +403,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
@@ -422,7 +422,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Refresh sensors data")
@@ -457,7 +457,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -475,7 +475,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Search for new devices")
@@ -525,7 +525,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
@@ -533,7 +533,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Exit")

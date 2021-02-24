@@ -43,6 +43,10 @@
 #include <QQuickWindow>
 #include <QSurfaceFormat>
 
+#if defined(Q_OS_ANDROID)
+#include <QtAndroid>
+#endif
+
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
@@ -129,18 +133,6 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 #endif
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    // Mobile statusbar helper
-    qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
-
-    // Keep the StatusBar the same color as the splashscreen until UI starts
-    MobileUI sb;
-    sb.setStatusbarColor("#fff");
-
-    // Set QML material theme
-    //QQuickStyle::setStyle("material");
-#endif
-
 #ifdef DEMO_MODE
     // DEMO mode, with fake data and fixed config
     app.setApplicationName("WatchFlower_demo");
@@ -175,6 +167,9 @@ int main(int argc, char *argv[])
 
     // ThemeEngine
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
+
+    // Mobile UI
+    qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
 
     // Then we start the UI
     QQmlApplicationEngine engine;
@@ -232,6 +227,10 @@ int main(int argc, char *argv[])
 #endif
 
 #endif // desktop section
+
+#if defined(Q_OS_ANDROID)
+    QtAndroid::hideSplashScreen();
+#endif
 
     return app.exec();
 }

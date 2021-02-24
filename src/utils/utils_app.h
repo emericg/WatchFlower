@@ -53,7 +53,8 @@ public:
 
     static Q_INVOKABLE void appExit();
     static Q_INVOKABLE void openWith(const QString &path);
-    static Q_INVOKABLE QUrl getStandardPath(const QString &type);
+    static Q_INVOKABLE QUrl getStandardPath_url(const QString &type);
+    static Q_INVOKABLE QString getStandardPath_string(const QString &type);
 
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
