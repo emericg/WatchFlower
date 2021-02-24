@@ -1304,7 +1304,7 @@ Item {
 
                     visible: (Qt.platform.os !== "ios")
                     fullColor: false
-                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
 
                     text: qsTr("Export file")
@@ -1331,7 +1331,7 @@ Item {
 
                     visible: false
                     fullColor: false
-                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
 
                     text: qsTr("Open folder")
@@ -1346,7 +1346,7 @@ Item {
 
                     visible: isMobile
                     fullColor: false
-                    primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                    primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
 
                     text: qsTr("Open with")

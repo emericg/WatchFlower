@@ -289,13 +289,13 @@ Item {
         id: devicesView
 
         anchors.top: rowbar.bottom
-        anchors.topMargin: singleColumn ? 2 : 8
+        anchors.topMargin: singleColumn ? 2 : 9
         anchors.left: screenDeviceList.left
         anchors.leftMargin: 6
         anchors.right: screenDeviceList.right
         anchors.rightMargin: 6
         anchors.bottom: screenDeviceList.bottom
-        anchors.bottomMargin: 6
+        anchors.bottomMargin: 9
 
         property bool singleColumn: true
         property bool bigWidget: settingsManager.bigWidget || (isTablet && width >= 480)

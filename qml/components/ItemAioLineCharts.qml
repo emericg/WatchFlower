@@ -319,6 +319,7 @@ Item {
 
         onXChanged: {
             if (isPhone) return // verticalIndicator default to middle
+            if (isTablet) return // verticalIndicator default to middle
 
             var direction = "middle"
             if (verticalIndicator.x > dateIndicator.width + 12)
@@ -438,6 +439,7 @@ Item {
 
     MouseArea {
         anchors.fill: indicators
+        anchors.margins: -8
         onClicked: resetIndicator()
     }
 

@@ -213,7 +213,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "monthly")
-                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Month")
@@ -228,7 +228,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "weekly")
-                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Week")
@@ -243,7 +243,7 @@ Item {
                 height: 32
 
                 fullColor: (graphMode === "daily")
-                primaryColor: fullColor ? Theme.colorPrimary : Theme.colorHeaderHighlight
+                primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Day")
