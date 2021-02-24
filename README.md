@@ -11,7 +11,7 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
 
-> Available in Danish, Dutch, English, French, German, Spanish and Russian!
+> Available in Danish, Dutch, English, French, Frysk, German, Spanish and Russian!
 
 > Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
@@ -19,7 +19,7 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 * Support plant sensors and thermometers
 * Name your plants and set your own limits for optimal care
-* Synchronize sensors history (FlowerCare only for now)
+* Synchronize sensors history (FlowerCare ONLY for now)
 * Background updates & notifications (desktop ONLY for now)
 * Configurable update interval
 * Clickable two-week graphs
@@ -34,8 +34,8 @@ TODOs:
 
 ### Supported devices
 
-WatchFlower has been built to be easily extensible, and compatible with as many Bluetooth sensors as possible.  
-Various Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!
+WatchFlower has been built to be compatible with as many Bluetooth sensors as possible.  
+Checkout out this [page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
 
 | Flower Care | RoPot | Parrot Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :-----------------: | :--------: | :----: |
@@ -53,6 +53,9 @@ Various Bluetooth devices and sensors can be added to WatchFlower. If you have o
 | :---------------: | :------------------: |
 | ![Air Monitor](docs/lungs-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
 | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
+
+Various new Bluetooth devices and sensors could be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
+You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
 
 ### Screenshots
 

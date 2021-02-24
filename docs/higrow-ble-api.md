@@ -4,9 +4,9 @@
 ## About HiGrow
 
 * [HiGrow]() sensors are meant to keep your plants alive by monitoring their environment
-* Has sensors to relay temperature, humidity, light intensity, soil moisture and soil fertility (via electrical conductivity)
+* Has sensors to relay temperature, humidity, light intensity, soil moisture and soil fertility
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A lipo battery can be used (charging via USB)
+* A lipo or 18650 battery can be used (charging via USB)
 
 Boards are available from LilyGo or Weemo Chinese manufacturers.
 

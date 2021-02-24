@@ -99,3 +99,5 @@
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 
 * ESP32 based Geiger Counter & Air Quality Monitor. Check out the APIs documentations directly [on their repository](https://github.com/emericg/esp32-environmental-sensors).
+
+* Make your [own sensor](howto-custom-sensor.md)!
