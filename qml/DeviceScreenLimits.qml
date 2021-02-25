@@ -269,6 +269,17 @@ Item {
                         }
                     }
                 }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+
+                    visible: isDesktop
+                    height: 2
+                    opacity: 0.5
+                    color: Theme.colorSeparator
+                }
             }
 
             ////////
@@ -715,6 +726,9 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorForeground
+                    border.width: (insideMode && isDesktop) ? 1 : 0
+                    border.color: Theme.colorSeparator
+
                     opacity: insideMode ? 1 : 0.5
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
 
@@ -752,6 +766,9 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorForeground
+                    border.width: (insideMode && isDesktop) ? 1 : 0
+                    border.color: Theme.colorSeparator
+
                     opacity: outsideMode ? 1 : 0.5
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
 

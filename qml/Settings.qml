@@ -155,6 +155,22 @@ Item {
                     spacing: 10
 
                     Rectangle {
+                        id: rectangleSnow
+                        width: 32
+                        height: 32
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        radius: 2
+                        color: "white"
+                        border.color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : Theme.colorSeparator
+                        border.width: 2
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: settingsManager.appTheme = "snow"
+                        }
+                    }
+                    Rectangle {
                         id: rectangleGreen
                         width: 32
                         height: 32

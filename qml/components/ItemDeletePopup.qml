@@ -81,7 +81,8 @@ Popup {
                     width: buttonConfirm.width
 
                     text: qsTr("Cancel")
-                    primaryColor: Theme.colorHeaderHighlight
+                    primaryColor: Theme.colorSubText
+                    secondaryColor: Theme.colorForeground
                     onClicked: itemDeletePopup.close()
                 }
                 ButtonWireframe {

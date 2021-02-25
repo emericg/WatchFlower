@@ -221,7 +221,7 @@ Item {
 
                     Text {
                         id: textDeviceName
-                        height: 36
+                        height: 32
                         anchors.left: parent.left
 
                         visible: isDesktop
@@ -430,6 +430,17 @@ Item {
                             font.bold: false
                         }
                     }
+                }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+
+                    visible: isDesktop
+                    height: 2
+                    opacity: 0.5
+                    color: Theme.colorSeparator
                 }
             }
 

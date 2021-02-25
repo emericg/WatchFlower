@@ -291,7 +291,7 @@ Item {
         color: deviceWidget.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
 
-        opacity: singleColumn ? (deviceWidget.selected ? 0.66 : 0) : 1
+        opacity: deviceWidget.selected ? 0.5 : (singleColumn ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 

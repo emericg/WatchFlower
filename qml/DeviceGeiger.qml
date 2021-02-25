@@ -11,6 +11,10 @@ Item {
     property var currentDevice: null
     property alias deviceScreenChart: graphLoader.item
 
+    property bool unicolor: (Theme.colorHeader !== Theme.colorBackground)
+    property string cchh: unicolor ? Theme.colorHeader : Theme.colorPrimary
+    property string cccc: unicolor ? Theme.colorHeaderContent : "white"
+
     Connections {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
@@ -291,6 +295,17 @@ Item {
                 source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
                 color: Theme.colorHeaderContent
             }
+        }
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            visible: (isDesktop && singleColumn && !unicolor)
+            height: 2
+            opacity: 0.5
+            color: Theme.colorSeparator
         }
     }
 }

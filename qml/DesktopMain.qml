@@ -54,6 +54,8 @@ ApplicationWindow {
     // Mobile stuff ////////////////////////////////////////////////////////////
 
     property int screenOrientation: Screen.primaryOrientation
+    property int screenOrientationFull: Screen.orientation
+
     property int screenPaddingStatusbar: 0
     property int screenPaddingNotch: 0
     property int screenPaddingLeft: 0
@@ -171,6 +173,9 @@ ApplicationWindow {
                 appContent.state = "DeviceList"
             }
         } else if (appContent.state === "DeviceGeiger") {
+            appContent.previousStates.pop()
+            appContent.state = "DeviceList"
+        } else if (appContent.state === "DeviceEnvironmental") {
             appContent.previousStates.pop()
             appContent.state = "DeviceList"
         } else {
@@ -312,7 +317,7 @@ ApplicationWindow {
         states: [
             State {
                 name: "Tutorial"
-                PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
+                PropertyChanges { target: screenTutorial; enabled: true; visible: true; focus: true; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
@@ -323,7 +328,7 @@ ApplicationWindow {
             State {
                 name: "DeviceList"
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceList; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceList; enabled: true; visible: true; focus: true; }
                 PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
@@ -378,7 +383,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAbout; visible: true; enabled: true; }
+                PropertyChanges { target: screenAbout; visible: true; enabled: true; focus: true; }
             }
         ]
     }

@@ -7,13 +7,12 @@ import MobileUI 0.1
 
 ApplicationWindow {
     id: appWindow
+    minimumWidth: 480
+    minimumHeight: 960
 
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
-
-    minimumWidth: 480
-    minimumHeight: 960
 
     property bool isHdpi: (utilsScreen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
@@ -26,10 +25,11 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation, 4 = inverted portrait, 8 = inverted landscape
-    property int screenPrimaryOrientation: Screen.primaryOrientation
+    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
+    // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
-    onScreenOrientationChanged: handleNotches()
+    property int screenOrientationFull: Screen.orientation
+    onScreenOrientationChanged: handleNotchesTimer.restart()
 
     property int screenPaddingStatusbar: 0
     property int screenPaddingNotch: 0
@@ -154,7 +154,7 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        if (Qt.platform.os === "ios") handleNotchesTimer.restart()
+        handleNotchesTimer.restart()
         mobileUI.isLoading = false
     }
 

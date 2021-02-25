@@ -131,9 +131,9 @@ Item {
 
         if (themeIndex === ThemeEngine.THEME_SNOW) {
 
-            colorGreen = "#07bf97"
-            colorBlue = "#4CA1D5"
-            colorYellow = "#ffba5a"
+            colorGreen = "#85c700"
+            colorBlue = "#4cafe9"
+            colorYellow = "#facb00"
             colorRed = "#ff7657"
 
             themeStatusbar = Material.Dark
@@ -141,41 +141,41 @@ Item {
 
             colorHeader = "white"
             colorHeaderContent = "#444"
-            colorHeaderHighlight = "#80efc3"
+            colorHeaderHighlight = colorMaterialDarkGrey
 
-            colorActionbar = "#f3f3f3"
-            colorActionbarContent = "666666"
-            colorActionbarHighlight = "#ff8b5a"
+            colorActionbar = colorGreen
+            colorActionbarContent = "white"
+            colorActionbarHighlight = "#7ab800"
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"
             colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = "white"
-            colorForeground = "#f8f8f8"
+            colorForeground = colorMaterialLightGrey
 
-            colorPrimary = colorGreen
-            colorSecondary = colorLightGreen
+            colorPrimary = colorYellow
+            colorSecondary = "#ffe800"
             colorSuccess = colorGreen
             colorWarning = colorRed
             colorError = colorRed
 
-            colorText = "#393939"
+            colorText = "#474747"
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
             colorLowContrast = "white"
-            colorHighContrast = "black"
+            colorHighContrast = "#303030"
 
             colorDeviceHeader = "white"
             colorDeviceWidget = "#fdfdfd"
 
-            colorComponent = "#eaeaea"
+            colorComponent = "#EFEFEF"
             colorComponentText = "black"
             colorComponentContent = "black"
             colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#cacaca"
-            colorComponentBackground = "#f8f8f8"
+            colorComponentDown = "#CACACA"
+            colorComponentBackground = "#FAFAFA"
 
         } else if (themeIndex === ThemeEngine.THEME_GREEN) {
 
@@ -256,7 +256,7 @@ Item {
             colorWarning = colorRed
             colorError = colorRed
 
-            colorText = "#4b4747"
+            colorText = "#474747"
             colorSubText = "#666666"
             colorIcon = "#606060"
             colorSeparator = colorMaterialDarkGrey
@@ -266,11 +266,11 @@ Item {
             colorDeviceHeader = colorForeground
             colorDeviceWidget = "#fdfdfd"
 
-            colorComponent = "#efefef"
+            colorComponent = "#EFEFEF"
             colorComponentText = "black"
             colorComponentContent = "black"
             colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#cacaca"
+            colorComponentDown = "#CACACA"
             colorComponentBackground = "#FAFAFA"
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {

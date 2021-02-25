@@ -101,9 +101,7 @@ Item {
         Rectangle {
             id: rectangleStatus
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
 
             color: Theme.colorActionbar
             clip: true

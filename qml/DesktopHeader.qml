@@ -397,12 +397,14 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        height: 2
-        opacity: 0.33
         visible: (Theme.colorHeader !== Theme.colorBackground &&
                   appContent.state !== "DeviceThermo" &&
                   appContent.state !== "DeviceGeiger" &&
+                  appContent.state !== "DeviceEnvironmental" &&
                   appContent.state !== "Tutorial")
+
+        height: 2
+        opacity: 0.33
         color: Theme.colorHeaderHighlight
     }
 }
