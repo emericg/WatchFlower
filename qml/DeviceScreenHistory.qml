@@ -283,6 +283,17 @@ Item {
                 color: Theme.colorIcon
             }
         }
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            visible: isDesktop
+            height: 2
+            opacity: 0.5
+            color: Theme.colorSeparator
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

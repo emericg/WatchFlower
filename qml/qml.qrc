@@ -27,14 +27,13 @@
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemIndicatorsCompact.qml">components/ItemIndicatorsCompact.qml</file>
         <file alias="ItemIndicatorsSolid.qml">components/ItemIndicatorsSolid.qml</file>
+        <file alias="ItemThermometerWidget.qml">components/ItemThermometerWidget.qml</file>
+        <file alias="ItemThermometerWidgetBar.qml">components/ItemThermometerWidgetBar.qml</file>
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
-        <file alias="ItemThermometerWidget.qml">components/ItemThermometerWidget.qml</file>
-        <file alias="ItemThermometerWidgetBar.qml">components/ItemThermometerWidgetBar.qml</file>
 
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
-        <file alias="ItemBadge.qml">components_generic/ItemBadge.qml</file>
         <file alias="ItemDataBarCompact.qml">components_generic/ItemDataBarCompact.qml</file>
         <file alias="ItemDataBarSolid.qml">components_generic/ItemDataBarSolid.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
@@ -49,19 +48,17 @@
         <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
 
         <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
-        <file alias="MiddleSliderThemed.qml">components_themed/MiddleSliderThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="ProgressBarThemed.qml">components_themed/ProgressBarThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
-        <file alias="RangeSliderThemed.qml">components_themed/RangeSliderThemed.qml</file>
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
         <file alias="SliderThemed.qml">components_themed/SliderThemed.qml</file>
         <file alias="SwitchThemedDesktop.qml">components_themed/SwitchThemed_desktop.qml</file>
         <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
-        <file alias="TextFieldThemed.qml">components_themed/TextFieldThemed.qml</file>
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
     </qresource>
+
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
     </qresource>

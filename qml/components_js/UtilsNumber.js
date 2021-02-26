@@ -1,5 +1,5 @@
 // UtilsNumber.js
-// Version 6
+// Version 7
 .pragma library
 
 /* ************************************************************************** */
@@ -31,6 +31,20 @@ function trimNumber(n, p) {
     p = p || 100000;
 
     return (Math.round(n * p)) / p;
+}
+
+/*!
+ * Map a number from one range to another
+ * \param n: number to map
+ * \param a1: start of the range n is from
+ * \param a2: end of the range n is from
+ * \param b1: start of the range to map n to
+ * \param b2: end of the range to map n to
+ *
+ * example: mapNumber(5, 0, 10, 100, 200) => 150
+ */
+function mapNumber(n, a1, a2, b1, b2) {
+    return (b1 + ((n-a1) * (b2-b1)) / (a2-a1))
 }
 
 /*!

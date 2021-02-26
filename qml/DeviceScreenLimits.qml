@@ -748,7 +748,7 @@ Item {
                             id: insideImage
                             width: 48; height: 48;
                             color: Theme.colorText
-                            source: "qrc:/assets/icons_material/inside-24px.svg"
+                            source: "qrc:/assets/icons_custom/inside-24px.svg"
                         }
                         Text {
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -787,7 +787,7 @@ Item {
                         ImageSvg {
                             id: outsideImage
                             width: 48; height: 48;
-                            source: "qrc:/assets/icons_material/outside-24px.svg"
+                            source: "qrc:/assets/icons_custom/outside-24px.svg"
                             color: Theme.colorText
                         }
                         Text {

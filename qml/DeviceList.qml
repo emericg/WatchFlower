@@ -300,9 +300,10 @@ Item {
         property int boxHeight: bigWidget ? 140 : 100
 
         property int cellSizeTarget: bigWidget ? 400 : 300
-        property int cellSize: bigWidget ? 400 : 300
+        property int cellSize: cellSizeTarget
         property int cellMarginTarget: 0
-        property int cellMargin: 0
+        property int cellMargin: cellMarginTarget
+
         cellWidth: cellSizeTarget + cellMarginTarget
         cellHeight: boxHeight + cellMarginTarget
 
@@ -319,10 +320,10 @@ Item {
                     cellSizeTarget = 300
             }
 
-            var cellColumnsTarget = Math.trunc(availableWidth / cellSizeTarget)
+            var cellColumnsTarget = Math.trunc(availableWidth / (cellSizeTarget + cellMarginTarget))
             singleColumn = (cellColumnsTarget === 1)
             // 1 // Adjust only cellSize
-            cellSize = (availableWidth - cellMarginTarget * cellColumnsTarget) / cellColumnsTarget
+            cellSize = (availableWidth - (cellMarginTarget * cellColumnsTarget)) / cellColumnsTarget
             // Recompute
             cellWidth = cellSize + cellMargin
             cellHeight = boxHeight + cellMarginTarget
@@ -340,9 +341,9 @@ Item {
 
         model: deviceManager.devicesList
         delegate: DeviceWidget {
-            width: devicesView.cellSize;
-            singleColumn: devicesView.singleColumn;
-            bigAssMode: devicesView.bigWidget;
+            width: devicesView.cellSize
+            singleColumn: devicesView.singleColumn
+            bigAssMode: devicesView.bigWidget
         }
     }
 
