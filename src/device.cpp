@@ -475,6 +475,11 @@ bool Device::isAvailable() const
 
 /* ************************************************************************** */
 
+int Device::getHistoryUpdatePercent() const
+{
+    return -1;
+}
+
 int Device::getLastUpdateInt() const
 {
     int mins = -1;
@@ -613,7 +618,7 @@ void Device::setOutside(const bool outside)
 void Device::updateRssi(const int rssi)
 {
     m_rssi = rssi;
-    Q_EMIT sensorUpdated();
+    Q_EMIT rssiUpdated();
 
     m_rssiTimer.start();
 }
@@ -621,7 +626,7 @@ void Device::updateRssi(const int rssi)
 void Device::cleanRssi()
 {
     m_rssi = 0;
-    Q_EMIT sensorUpdated();
+    Q_EMIT rssiUpdated();
 }
 
 /* ************************************************************************** */

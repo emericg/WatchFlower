@@ -395,8 +395,10 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         }
         else
         {
-            // Parse entry
             m_history_entry_read++;
+            Q_EMIT statusUpdated();
+
+            // Parse entry
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
             float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)+ (data[6] << 16)) / 10.f;
             int luminosity = data[7] + (data[8] << 8) + (data[9] << 16) + (data[10] << 24);
@@ -516,3 +518,19 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         return;
     }
 }
+
+/* ************************************************************************** */
+
+int DeviceFlowerCare::getHistoryUpdatePercent() const
+{
+    int p = -1;
+
+    if (m_status == ACTION_UPDATE_HISTORY)
+    {
+        p = static_cast<int>((m_history_entry_read / m_history_entry_count) * 100);
+    }
+
+    return p;
+}
+
+/* ************************************************************************** */

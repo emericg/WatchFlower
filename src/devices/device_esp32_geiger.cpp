@@ -223,8 +223,8 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             m_lastUpdate = QDateTime::currentDateTime();
 
             Q_EMIT dataUpdated();
-            //refreshDataFinished(true);
-            //controller->disconnectFromDevice();
+            refreshDataFinished(true);
+            controller->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             //qDebug() << "* DeviceEsp32Geiger update:" << getAddress();

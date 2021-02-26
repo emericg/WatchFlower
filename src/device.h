@@ -66,7 +66,7 @@ class Device: public QObject
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceRssi READ getRssi NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
@@ -75,6 +75,7 @@ class Device: public QObject
     Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
+    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
 
@@ -83,6 +84,7 @@ Q_SIGNALS:
     void disconnected();
     void statusUpdated();
     void sensorUpdated();
+    void rssiUpdated();
     void dataUpdated();
     void historyUpdated();
     void deviceUpdated(Device *d);
@@ -176,6 +178,7 @@ public slots:
     bool isFresh() const;       //!< Has at least >Xh (user set) old data
     bool isAvailable() const;   //!< Has at least >12h old data
 
+    virtual int getHistoryUpdatePercent() const;
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastErrorInt() const;
