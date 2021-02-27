@@ -62,7 +62,7 @@ Item {
         } else {
             if (boxDevice.hasData("soilMoisture")) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                    imageDevice.source = "qrc:/assets/icons_material/pot_flower-24px.svg"
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
                 else
                     imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
             } else {

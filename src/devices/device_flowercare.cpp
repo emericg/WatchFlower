@@ -281,7 +281,6 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QLowEnergyConnectionParameters ble_params;
         if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //
