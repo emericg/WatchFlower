@@ -26,6 +26,8 @@
 #include <QObject>
 #include <QString>
 #include <QDate>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 /* ************************************************************************** */
 
@@ -43,72 +45,100 @@
 
 /* ************************************************************************** */
 
-enum DeviceType {
-    DEVICE_PLANTSENSOR          = 0,
-    DEVICE_THERMOMETER,
-    DEVICE_ENVIRONMENTAL,
+class DeviceUtils: public QObject
+{
+    Q_OBJECT
 
-    DEVICE_LAMP                 = 4,
-    DEVICE_BEACON,
-    DEVICE_PGP,
-};
+public:
+    static void registerQML()
+    {
+        qRegisterMetaType<DeviceUtils::DeviceType>("DeviceUtils::DeviceType");
+        qRegisterMetaType<DeviceUtils::DeviceCapabilities>("DeviceUtils::DeviceCapabilities");
+        qRegisterMetaType<DeviceUtils::DeviceSensors>("DeviceUtils::DeviceSensors");
+        qRegisterMetaType<DeviceUtils::DeviceStatus>("DeviceUtils::DeviceStatus");
+        qRegisterMetaType<DeviceUtils::DeviceActions>("DeviceUtils::DeviceActions");
 
-enum DeviceCapabilities {
-    DEVICE_BATTERY              = (1 <<  0), //!< Can report its battery level
-    DEVICE_CLOCK                = (1 <<  1), //!< Has an onboard clock
-    DEVICE_LED                  = (1 <<  2), //!< Has a blinkable LED
-    DEVICE_HISTORY              = (1 <<  3), //!< Record sensor history
-    DEVICE_LAST_MOVE            = (1 <<  4),
-    DEVICE_WATER_TANK           = (1 <<  5),
-    DEVICE_BUTTONS              = (1 <<  6),
-};
+        qmlRegisterType<DeviceUtils>("DeviceUtils", 1, 0, "DeviceUtils");
+    }
 
-enum DeviceSensors {
-    // plant data
-    DEVICE_SOIL_MOISTURE        = (1 <<  0), //!< Has a soil moisture sensor
-    DEVICE_SOIL_CONDUCTIVITY    = (1 <<  1), //!< Has a soil conductivity/fertility sensor
-    DEVICE_SOIL_TEMPERATURE     = (1 <<  2), //!< Has a soil temperature sensor
-    DEVICE_SOIL_PH              = (1 <<  3), //!< Has a soil PH sensor
-    // hygrometer data
-    DEVICE_TEMPERATURE          = (1 <<  4), //!< Has a temperature sensor
-    DEVICE_HUMIDITY             = (1 <<  5), //!< Has an humidity sensor
-    // environmental data
-    DEVICE_PRESSURE             = (1 <<  6), //!< Has a barometer (pressure sensor)
-    DEVICE_LIGHT                = (1 <<  7), //!< Has a light sensor
-    DEVICE_UV                   = (1 <<  8), //!< Has an UV light sensor
-    DEVICE_SOUND                = (1 <<  9), //!< Has a sound level sensor
-    DEVICE_PM1                  = (1 << 10),
-    DEVICE_PM25                 = (1 << 11),
-    DEVICE_PM10                 = (1 << 12),
-    DEVICE_O2                   = (1 << 13),
-    DEVICE_O3                   = (1 << 14),
-    DEVICE_CO                   = (1 << 15),
-    DEVICE_CO2                  = (1 << 16),
-    DEVICE_NO2                  = (1 << 17),
-    DEVICE_VOC                  = (1 << 18),
-    DEVICE_GEIGER               = (1 << 19),
-};
+    enum DeviceType {
+        DEVICE_PLANTSENSOR          = 0,
+        DEVICE_THERMOMETER,
+        DEVICE_ENVIRONMENTAL,
 
-enum DeviceStatus {
-    DEVICE_OFFLINE              =  0, //!< Not connected
-    DEVICE_QUEUED               =  1, //!< In the update queue, not started
-    DEVICE_CONNECTING           =  2, //!< Update started, trying to connect to the device
-    DEVICE_CONNECTED            =  3, //!< Connected
+        DEVICE_LAMP                 = 8,
+        DEVICE_BEACON,
+        DEVICE_PGP,
+    };
+    Q_ENUMS(DeviceType)
 
-    DEVICE_ACTION               =  8, //!< Connected, doing something
-    DEVICE_UPDATING             =  9, //!< Connected, data update in progress
-    DEVICE_UPDATING_HISTORY     = 10, //!< Connected, history update in progress
-    DEVICE_UPDATING_REALTIME    = 11, //!< Connected, reading realtime data
-};
+    enum DeviceCapabilities {
+        DEVICE_BATTERY              = (1 <<  0), //!< Can report its battery level
+        DEVICE_CLOCK                = (1 <<  1), //!< Has an onboard clock
+        DEVICE_LED_STATUS           = (1 <<  2), //!< Has a status LED
+        DEVICE_HISTORY              = (1 <<  3), //!< Record sensor history
+        DEVICE_LAST_MOVE            = (1 <<  4), //!< Can report the last time it has been physically moved
+        DEVICE_WATER_TANK           = (1 <<  5), //!< Has a water tank / automatic watering capability
+        DEVICE_BUTTONS              = (1 <<  6), //!< Has button(s)
+        DEVICE_LED_RGB              = (1 <<  8), //!< Has an addressable LED
+    };
+    Q_ENUMS(DeviceCapabilities)
 
-enum DeviceActions {
-    ACTION_UPDATE = 0,              //!< Read current sensor data
-    ACTION_UPDATE_REALTIME,         //!< Stay connected and read sensor data
-    ACTION_UPDATE_HISTORY,          //!< Read sensor history
+    enum DeviceSensors {
+        // plant data
+        SENSOR_SOIL_MOISTURE        = (1 <<  0), //!< Has a soil moisture sensor
+        SENSOR_SOIL_CONDUCTIVITY    = (1 <<  1), //!< Has a soil conductivity/fertility sensor
+        SENSOR_SOIL_TEMPERATURE     = (1 <<  2), //!< Has a soil temperature sensor
+        SENSOR_SOIL_PH              = (1 <<  3), //!< Has a soil PH sensor
+        // hygrometer data
+        SENSOR_TEMPERATURE          = (1 <<  6), //!< Has a temperature sensor
+        SENSOR_HUMIDITY             = (1 <<  7), //!< Has an humidity sensor
+        // environmental data (weather station)
+        SENSOR_PRESSURE             = (1 <<  8), //!< Has a barometer (pressure sensor)
+        SENSOR_LUMINOSITY           = (1 <<  9), //!< Has a light sensor
+        SENSOR_UV                   = (1 << 10), //!< Has an UV light sensor
+        SENSOR_SOUND                = (1 << 11), //!< Has a sound level sensor
+        SENSOR_WATER_LEVEL          = (1 << 12), //!< Has a rain gauge (or water tank level)
+        SENSOR_WIND_DIRECTION       = (1 << 13), //!< Has a weather vane
+        SENSOR_WIND_SPEED           = (1 << 14), //!< Has an anemometer
+        // environmental data (air monitoring)
+        SENSOR_PM1                  = (1 << 16),
+        SENSOR_PM25                 = (1 << 17),
+        SENSOR_PM10                 = (1 << 18),
+        SENSOR_O2                   = (1 << 19),
+        SENSOR_O3                   = (1 << 20),
+        SENSOR_CO                   = (1 << 21),
+        SENSOR_CO2                  = (1 << 22),
+        SENSOR_NO2                  = (1 << 23),
+        SENSOR_VOC                  = (1 << 24),
+        // environmental data (geiger counter)
+        SENSOR_GEIGER               = (1 << 31),
+    };
+    Q_ENUMS(DeviceSensors)
 
-    ACTION_LED_BLINK = 8,
-    ACTION_CLEAR_HISTORY,
-    ACTION_WATERING,
+    enum DeviceStatus {
+        DEVICE_OFFLINE              =  0, //!< Not connected
+        DEVICE_QUEUED               =  1, //!< In the update queue, not started
+        DEVICE_CONNECTING           =  2, //!< Trying to connect to the device
+        DEVICE_CONNECTED            =  3, //!< Connected
+
+        DEVICE_ACTION               =  8, //!< Connected, doing something
+        DEVICE_UPDATING             =  9, //!< Connected, data update in progress
+        DEVICE_UPDATING_HISTORY     = 10, //!< Connected, history update in progress
+        DEVICE_UPDATING_REALTIME    = 11, //!< Connected, reading realtime data
+    };
+    Q_ENUMS(DeviceStatus)
+
+    enum DeviceActions {
+        ACTION_UPDATE = 0,              //!< Read current sensor data
+        ACTION_UPDATE_REALTIME,         //!< Stay connected and read sensor data
+        ACTION_UPDATE_HISTORY,          //!< Read sensor history
+
+        ACTION_LED_BLINK = 8,
+        ACTION_CLEAR_HISTORY,
+        ACTION_WATERING,
+    };
+    Q_ENUMS(DeviceActions)
 };
 
 /* ************************************************************************** */

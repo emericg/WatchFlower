@@ -207,34 +207,39 @@ public slots:
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
 
-    bool hasBatteryLevel() const { return (m_deviceCapabilities & DEVICE_BATTERY); }
-    bool hasClock() const { return (m_deviceCapabilities & DEVICE_CLOCK); }
-    bool hasLED() const { return (m_deviceCapabilities & DEVICE_LED); }
-    bool hasHistory() const { return (m_deviceCapabilities & DEVICE_HISTORY); }
-    bool hasLastMove() const { return (m_deviceCapabilities & DEVICE_LAST_MOVE); }
-    bool hasWaterTank() const { return (m_deviceCapabilities & DEVICE_WATER_TANK); }
-    bool hasButtons() const { return (m_deviceCapabilities & DEVICE_BUTTONS); }
+    bool hasBatteryLevel() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BATTERY); }
+    bool hasClock() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CLOCK); }
+    bool hasLED() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LED_STATUS); }
+    bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
+    bool hasLastMove() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LAST_MOVE); }
+    bool hasWaterTank() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_WATER_TANK); }
+    bool hasButtons() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BUTTONS); }
 
-    bool hasSoilMoistureSensor() const { return (m_deviceSensors & DEVICE_SOIL_MOISTURE); }
-    bool hasSoilConductivitySensor() const { return (m_deviceSensors & DEVICE_SOIL_CONDUCTIVITY); }
-    bool hasSoilTemperatureSensor() const { return (m_deviceSensors & DEVICE_SOIL_TEMPERATURE); }
-    bool hasSoilPhSensor() const { return (m_deviceSensors & DEVICE_SOIL_PH); }
+    bool hasSoilMoistureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_MOISTURE); }
+    bool hasSoilConductivitySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_CONDUCTIVITY); }
+    bool hasSoilTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_TEMPERATURE); }
+    bool hasSoilPhSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_PH); }
 
-    bool hasTemperatureSensor() const { return (m_deviceSensors & DEVICE_TEMPERATURE); }
-    bool hasHumiditySensor() const { return (m_deviceSensors & DEVICE_HUMIDITY); }
-    bool hasLuminositySensor() const { return (m_deviceSensors & DEVICE_LIGHT); }
-    bool hasUvSensor() const { return (m_deviceSensors & DEVICE_UV); }
-    bool hasBarometer() const { return (m_deviceSensors & DEVICE_PRESSURE); }
-    bool hasPM1Sensor() const { return (m_deviceSensors & DEVICE_PM1); }
-    bool hasPM25Sensor() const { return (m_deviceSensors & DEVICE_PM25); }
-    bool hasPM10Sensor() const { return (m_deviceSensors & DEVICE_PM10); }
-    bool hasO2Sensor() const { return (m_deviceSensors & DEVICE_O2); }
-    bool hasO3Sensor() const { return (m_deviceSensors & DEVICE_O3); }
-    bool hasCoSensor() const { return (m_deviceSensors & DEVICE_CO); }
-    bool hasCo2Sensor() const { return (m_deviceSensors & DEVICE_CO2); }
-    bool hasNo2Sensor() const { return (m_deviceSensors & DEVICE_NO2); }
-    bool hasVocSensor() const { return (m_deviceSensors & DEVICE_VOC); }
-    bool hasGeigerCounter() const { return (m_deviceSensors & DEVICE_GEIGER); }
+    bool hasTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_TEMPERATURE); }
+    bool hasHumiditySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HUMIDITY); }
+
+    bool hasPressureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PRESSURE); }
+    bool hasLuminositySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_LUMINOSITY); }
+    bool hasUvSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_UV); }
+    bool hasSoundSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOUND); }
+    bool hasWaterLevelSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WATER_LEVEL); }
+    bool hasWindDirectionSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_DIRECTION); }
+    bool hasWindSpeedSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_SPEED); }
+    bool hasPM1Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM1); }
+    bool hasPM25Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM25); }
+    bool hasPM10Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM10); }
+    bool hasO2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O2); }
+    bool hasO3Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O3); }
+    bool hasCoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO); }
+    bool hasCo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO2); }
+    bool hasNo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_NO2); }
+    bool hasVocSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_VOC); }
+    bool hasGeigerCounter() const { return (m_deviceSensors & DeviceUtils::SENSOR_GEIGER); }
 };
 
 /* ************************************************************************** */

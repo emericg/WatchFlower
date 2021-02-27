@@ -40,27 +40,27 @@
 DeviceParrotPot::DeviceParrotPot(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceCapabilities += DEVICE_WATER_TANK;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    m_deviceCapabilities += DeviceUtils::DEVICE_WATER_TANK;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceParrotPot::DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceCapabilities += DEVICE_WATER_TANK;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    m_deviceCapabilities += DeviceUtils::DEVICE_WATER_TANK;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceParrotPot::~DeviceParrotPot()
@@ -155,7 +155,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceInfos;
         serviceInfos = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE &&
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE &&
             (m_firmware.isEmpty() || m_firmware == "UNKN"))
         {
             serviceInfos = controller->createServiceObject(uuid);
@@ -169,7 +169,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceBattery;
         serviceBattery = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             serviceBattery = controller->createServiceObject(uuid);
             if (!serviceBattery)
@@ -184,7 +184,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHistory;
         serviceHistory = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHistory = controller->createServiceObject(uuid);
             if (!serviceHistory)
@@ -197,7 +197,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceClock;
         serviceClock = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             //
         }
@@ -210,7 +210,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceData = controller->createServiceObject(uuid);
             if (!serviceData)
@@ -297,7 +297,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == ACTION_LED_BLINK)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink // handle 0x
             QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
@@ -306,7 +306,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
             //controller->disconnectFromDevice();
         }
 
-        if (serviceData && m_ble_action == ACTION_UPDATE)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;

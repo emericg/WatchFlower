@@ -40,15 +40,15 @@
 DeviceEssGeneric::DeviceEssGeneric(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_ENVIRONMENTAL;
-    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
 }
 
 DeviceEssGeneric::DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_ENVIRONMENTAL;
-    m_deviceCapabilities += DEVICE_BATTERY;
+    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
 }
 
 DeviceEssGeneric::~DeviceEssGeneric()
@@ -177,7 +177,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
         {
             m_pressure = cpres.value().toUInt() / 10.0;
 
-            m_deviceSensors += DEVICE_PRESSURE;
+            m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
             Q_EMIT sensorUpdated();
         }
 
@@ -187,7 +187,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
         {
             m_temperature = ctemp.value().toInt() / 100.0;
 
-            m_deviceSensors += DEVICE_TEMPERATURE;
+            m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
             Q_EMIT sensorUpdated();
         }
 
@@ -197,7 +197,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
         {
             m_humidity = chum.value().toInt() / 100.0;
 
-            m_deviceSensors += DEVICE_TEMPERATURE;
+            m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
             Q_EMIT sensorUpdated();
         }
 
@@ -207,7 +207,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
         {
             m_uv = cuv.value().toUInt();
 
-            m_deviceSensors += DEVICE_UV;
+            m_deviceSensors += DeviceUtils::SENSOR_UV;
             Q_EMIT sensorUpdated();
         }
 

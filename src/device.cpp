@@ -170,7 +170,7 @@ void Device::ledActionStart()
 
     if (!isUpdating())
     {
-        m_ble_action = ACTION_LED_BLINK;
+        m_ble_action = DeviceUtils::ACTION_LED_BLINK;
         refreshDataStarted();
         getBleData();
     }
@@ -178,9 +178,9 @@ void Device::ledActionStart()
 
 void Device::refreshQueue()
 {
-    if (m_status == DEVICE_OFFLINE)
+    if (m_status == DeviceUtils::DEVICE_OFFLINE)
     {
-        m_status = DEVICE_QUEUED;
+        m_status = DeviceUtils::DEVICE_QUEUED;
         Q_EMIT statusUpdated();
     }
 }
@@ -192,7 +192,7 @@ void Device::refreshStart()
     if (!isUpdating())
     {
         m_retries = 1;
-        m_ble_action = ACTION_UPDATE;
+        m_ble_action = DeviceUtils::ACTION_UPDATE;
         refreshDataStarted();
         getBleData();
     }
@@ -204,7 +204,7 @@ void Device::refreshHistoryStart()
 
     if (!isUpdating())
     {
-        m_ble_action = ACTION_UPDATE_HISTORY;
+        m_ble_action = DeviceUtils::ACTION_UPDATE_HISTORY;
         refreshDataStarted();
         getBleData();
     }
@@ -219,10 +219,10 @@ void Device::refreshStop()
         controller->disconnectFromDevice();
     }
 
-    if (m_updating || m_status != DEVICE_OFFLINE)
+    if (m_updating || m_status != DeviceUtils::DEVICE_OFFLINE)
     {
         m_updating = false;
-        m_status = DEVICE_OFFLINE;
+        m_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }
@@ -272,7 +272,7 @@ void Device::refreshDataStarted()
     //qDebug() << "Device::refreshDataStarted()" << getAddress() << getName();
 
     m_updating = true;
-    m_status = DEVICE_CONNECTING;
+    m_status = DeviceUtils::DEVICE_CONNECTING;
     Q_EMIT statusUpdated();
 }
 
@@ -283,7 +283,7 @@ void Device::refreshDataFinished(bool status, bool cached)
     m_timeoutTimer.stop();
 
     m_updating = false;
-    m_status = DEVICE_OFFLINE;
+    m_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
 
     if (status == true)
@@ -639,7 +639,7 @@ void Device::deviceConnected()
     Q_EMIT connected();
 
     m_updating = true;
-    m_status = DEVICE_UPDATING;
+    m_status = DeviceUtils::DEVICE_UPDATING;
     Q_EMIT statusUpdated();
 
     controller->discoverServices();
@@ -651,7 +651,7 @@ void Device::deviceDisconnected()
 
     Q_EMIT disconnected();
 
-    if (m_status == DEVICE_CONNECTING || m_status == DEVICE_UPDATING)
+    if (m_status == DeviceUtils::DEVICE_CONNECTING || m_status == DeviceUtils::DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
         m_lastError = QDateTime::currentDateTime();
@@ -660,7 +660,7 @@ void Device::deviceDisconnected()
     else
     {
         m_updating = false;
-        m_status = DEVICE_OFFLINE;
+        m_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }

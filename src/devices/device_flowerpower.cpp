@@ -41,29 +41,31 @@
 DeviceFlowerPower::DeviceFlowerPower(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceCapabilities += DEVICE_LAST_MOVE;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_SOIL_TEMPERATURE;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LAST_MOVE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceFlowerPower::DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceCapabilities += DEVICE_LAST_MOVE;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_SOIL_TEMPERATURE;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LAST_MOVE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceFlowerPower::~DeviceFlowerPower()
@@ -154,7 +156,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceInfos;
         serviceInfos = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE &&
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE &&
             (m_firmware.isEmpty() || m_firmware == "UNKN"))
         {
             serviceInfos = controller->createServiceObject(uuid);
@@ -168,7 +170,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceBattery;
         serviceBattery = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             serviceBattery = controller->createServiceObject(uuid);
             if (!serviceBattery)
@@ -183,7 +185,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHistory;
         serviceHistory = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHistory = controller->createServiceObject(uuid);
             if (!serviceHistory)
@@ -196,7 +198,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceClock;
         serviceClock = nullptr;
 
-        //if (m_ble_action == ACTION_UPDATE)
+        //if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             serviceClock = controller->createServiceObject(uuid);
             if (!serviceClock)
@@ -211,7 +213,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceData = controller->createServiceObject(uuid);
             if (!serviceData)
@@ -298,7 +300,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == ACTION_LED_BLINK)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
             QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handler 0x3c
@@ -307,7 +309,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             //controller->disconnectFromDevice();
         }
 
-        if (serviceData && m_ble_action == ACTION_UPDATE)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;
@@ -470,7 +472,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::Serv
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //39e1fc01-84a8-11e2-afba-0002a5d5c51b	0x48	read	number of entries
             //39e1fc02-84a8-11e2-afba-0002a5d5c51b	0x4c	read	last entry index
@@ -479,7 +481,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::Serv
             //39e1fc05-84a8-11e2-afba-0002a5d5c51b	0x58	read	current session start index
             //39e1fc06-84a8-11e2-afba-0002a5d5c51b	0x5c	read	current session period
         }
-        if (serviceHistory && m_ble_action == ACTION_CLEAR_HISTORY)
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
             //
         }

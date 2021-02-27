@@ -40,17 +40,17 @@
 DeviceHygrotempLCD::DeviceHygrotempLCD(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_THERMOMETER;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_HUMIDITY;
+    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
 
 DeviceHygrotempLCD::DeviceHygrotempLCD(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_THERMOMETER;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_HUMIDITY;
+    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
 
 DeviceHygrotempLCD::~DeviceHygrotempLCD()

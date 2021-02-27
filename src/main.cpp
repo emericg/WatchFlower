@@ -171,6 +171,8 @@ int main(int argc, char *argv[])
     // Mobile UI
     qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
 
+    DeviceUtils::registerQML();
+
     // Then we start the UI
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();

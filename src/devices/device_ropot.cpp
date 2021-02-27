@@ -42,21 +42,23 @@
 DeviceRopot::DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
 }
 
 DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
 }
 
 DeviceRopot::~DeviceRopot()
@@ -124,7 +126,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceData = controller->createServiceObject(uuid);
             if (!serviceData)
@@ -137,7 +139,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHandshake;
         serviceHandshake = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHandshake = controller->createServiceObject(uuid);
             if (!serviceHandshake)
@@ -150,7 +152,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHistory;
         serviceHistory = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHistory = controller->createServiceObject(uuid);
             if (!serviceHistory)
@@ -167,7 +169,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == ACTION_UPDATE)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
@@ -208,7 +210,7 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHandshake && m_ble_action == ACTION_UPDATE_HISTORY)
+        if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             // Generate token
             QString addr = m_deviceAddress;
@@ -260,7 +262,7 @@ void DeviceRopot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceSta
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //
         }

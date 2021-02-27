@@ -42,25 +42,27 @@
 DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DEVICE_PLANTSENSOR;
-    m_deviceCapabilities += DEVICE_BATTERY;
-    m_deviceCapabilities += DEVICE_LED;
-    m_deviceSensors += DEVICE_SOIL_MOISTURE;
-    m_deviceSensors += DEVICE_SOIL_CONDUCTIVITY;
-    m_deviceSensors += DEVICE_TEMPERATURE;
-    m_deviceSensors += DEVICE_LIGHT;
+    m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
+    m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
 }
 
 DeviceFlowerCare::~DeviceFlowerCare()
@@ -129,7 +131,7 @@ void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != ACTION_UPDATE_HISTORY)
+        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceData = controller->createServiceObject(uuid);
             if (!serviceData)
@@ -142,7 +144,7 @@ void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHandshake;
         serviceHandshake = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHandshake = controller->createServiceObject(uuid);
             if (!serviceHandshake)
@@ -155,7 +157,7 @@ void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHistory;
         serviceHistory = nullptr;
 
-        if (m_ble_action == ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceHistory = controller->createServiceObject(uuid);
             if (!serviceHistory)
@@ -172,7 +174,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == ACTION_UPDATE)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
@@ -209,7 +211,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             serviceData->readCharacteristic(chb);
         }
 
-        if (serviceData && m_ble_action == ACTION_LED_BLINK)
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
             QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
@@ -227,7 +229,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHandshake && m_ble_action == ACTION_UPDATE_HISTORY)
+        if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             // Generate token
             QString addr = m_deviceAddress;
@@ -279,11 +281,12 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHistory && m_ble_action == ACTION_UPDATE_HISTORY)
+        QLowEnergyConnectionParameters ble_params;
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //
         }
-        if (serviceHistory && m_ble_action == ACTION_CLEAR_HISTORY)
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
             //
         }
@@ -525,7 +528,7 @@ int DeviceFlowerCare::getHistoryUpdatePercent() const
 {
     int p = -1;
 
-    if (m_status == ACTION_UPDATE_HISTORY)
+    if (m_status == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
         p = static_cast<int>((m_history_entry_read / m_history_entry_count) * 100);
     }
