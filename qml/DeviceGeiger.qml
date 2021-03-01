@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
+import DeviceUtils 1.0
+import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
     id: deviceGeiger
@@ -108,27 +110,14 @@ Item {
         if (!currentDevice.hasGeigerCounter()) return
         //console.log("DeviceGeiger // updateStatusText() >> " + currentDevice)
 
-        if (currentDevice.status === 1) {
-            textStatus.text = qsTr("Update queued.") + " "
-        } else if (currentDevice.status === 2) {
-            textStatus.text = qsTr("Connecting...") + " "
-        } else if (currentDevice.status === 3) {
-            textStatus.text = qsTr("Connected") + " "
-        } else if (currentDevice.status === 8) {
-            textStatus.text = qsTr("Working...") + " "
-        } else if (currentDevice.status === 9 ||
-                   currentDevice.status === 10 ||
-                   currentDevice.status === 11) {
-            textStatus.text = qsTr("Updating...") + " "
-        } else {
-            if (currentDevice.isFresh() || currentDevice.isAvailable()) {
-                if (currentDevice.getLastUpdateInt() <= 1)
-                    textStatus.text = qsTr("Just synced!")
-                else
-                    textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
-            } else {
-                textStatus.text = qsTr("Offline!") + " "
-            }
+        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
+
+        if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
+            (currentDevice.isFresh() || currentDevice.isAvailable())) {
+            if (currentDevice.getLastUpdateInt() <= 1)
+                textStatus.text = qsTr("Synced")
+            else
+                textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
         }
     }
 

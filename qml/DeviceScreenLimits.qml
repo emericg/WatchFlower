@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
     id: deviceScreenLimits
@@ -12,35 +13,8 @@ Item {
         //console.log("DeviceScreenLimits // updateHeader() >> " + currentDevice)
 
         // Sensor battery level
-        if (currentDevice.hasBatteryLevel()) {
-            imageBattery.visible = true
-            imageBattery.color = Theme.colorIcon
-
-            if (currentDevice.deviceBattery > 95) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (currentDevice.deviceBattery > 85) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (currentDevice.deviceBattery > 75) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (currentDevice.deviceBattery > 55) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (currentDevice.deviceBattery > 45) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (currentDevice.deviceBattery > 25) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (currentDevice.deviceBattery > 15) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (currentDevice.deviceBattery > 1) {
-                if (currentDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
-            } else {
-                if (currentDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            }
-        } else {
-            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            imageBattery.visible = false
-        }
+        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
         // Sensor address
         if (currentDevice.deviceAddress.charAt(0) !== '{')
@@ -137,7 +111,7 @@ Item {
                             anchors.left: textDeviceName.right
                             anchors.leftMargin: 16
 
-                            source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
+                            visible: source
                             color: Theme.colorIcon
                         }
                     }

@@ -1,7 +1,9 @@
 import QtQuick 2.12
 
 import ThemeEngine 1.0
+import DeviceUtils 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
     id: deviceWidget
@@ -48,29 +50,42 @@ Item {
 
     function initBoxData() {
         // Device picture
-        if (boxDevice.deviceName === "MJ_HT_V1" ||
-            boxDevice.deviceName === "ClearGrass Temp & RH" ||
-            boxDevice.deviceName === "Qingping Temp & RH M" ||
-            boxDevice.deviceName === "Qingping Temp & RH H" ||
-            boxDevice.deviceName === "ThermoBeacon") {
-            imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
-        } else if (boxDevice.deviceName === "LYWSD02" ||
-                   boxDevice.deviceName === "MHO-C303") {
-            imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
-        } else if (boxDevice.deviceName === "LYWSD03MMC" ||
-                   boxDevice.deviceName === "MHO-C401") {
-            imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
-        } else if (boxDevice.deviceName === "GeigerCounter") {
-            imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
-        } else {
+        if (boxDevice.isPlantSensor()) {
             if (boxDevice.hasData("soilMoisture")) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
                 else
                     imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
             } else {
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_empty-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+            }
+        } else if (boxDevice.isThermometer()) {
+            if (boxDevice.deviceName === "MJ_HT_V1" ||
+                boxDevice.deviceName === "ClearGrass Temp & RH" ||
+                boxDevice.deviceName === "Qingping Temp & RH M" ||
+                boxDevice.deviceName === "Qingping Temp & RH H" ||
+                boxDevice.deviceName === "ThermoBeacon") {
+                imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
+            } else if (boxDevice.deviceName === "LYWSD02" ||
+                       boxDevice.deviceName === "MHO-C303") {
+                imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
+            } else if (boxDevice.deviceName === "LYWSD03MMC" ||
+                       boxDevice.deviceName === "MHO-C401") {
+                imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
+            } else {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
+        } else if (boxDevice.isEnvironmentalSensor()) {
+            if (boxDevice.deviceName === "GeigerCounter") {
+                imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
+            } else {
+                imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+            }
+        } else {
+            imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
         updateSensorData()
@@ -78,36 +93,7 @@ Item {
     }
 
     function updateSensorBattery() {
-        // Sensor battery level
-        if (boxDevice.hasBatteryLevel()) {
-            imageBattery.visible = true
-            //imageBattery.color = Theme.colorIcon
-
-            if (boxDevice.deviceBattery > 95) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_full-24px.svg";
-            } else if (boxDevice.deviceBattery > 85) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_90-24px.svg";
-            } else if (boxDevice.deviceBattery > 75) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_80-24px.svg";
-            } else if (boxDevice.deviceBattery > 55) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_60-24px.svg";
-            } else if (boxDevice.deviceBattery > 45) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_50-24px.svg";
-            } else if (boxDevice.deviceBattery > 25) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_30-24px.svg";
-            } else if (boxDevice.deviceBattery > 15) {
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_20-24px.svg";
-            } else if (boxDevice.deviceBattery > 1) {
-                //if (boxDevice.deviceBattery <= 10) imageBattery.color = Theme.colorYellow
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_10-24px.svg";
-            } else {
-                //if (boxDevice.deviceBattery === 0) imageBattery.color = Theme.colorRed
-                imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            }
-        } else {
-            imageBattery.source = "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg";
-            imageBattery.visible = false
-        }
+        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
     }
 
     function updateSensorData() {
@@ -142,39 +128,16 @@ Item {
         }
 
         // Status
-        if (boxDevice.status === 1) {
-            textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Queued")
-            opa.stop()
-        } else if (boxDevice.status === 2) {
-            textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Connecting...")
-            opa.start()
-        } else if (boxDevice.status === 3) {
-            textStatus.color = Theme.colorGreen
-            textStatus.text = qsTr("Connected")
-            opa.stop()
-        } else if (boxDevice.status === 8) {
-            textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Working...")
-            opa.start()
-        } else if (boxDevice.status === 9 ||
-                   boxDevice.status === 10 ||
-                   boxDevice.status === 11) {
-            textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Updating...")
-            opa.start()
-        } else {
-            opa.stop()
+        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(boxDevice.status)
+        textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
+
+        if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
             if (boxDevice.isFresh()) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
             } else if (boxDevice.isAvailable()) {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
-            } else {
-                textStatus.color = Theme.colorRed
-                textStatus.text = qsTr("Offline")
             }
         }
 
@@ -226,13 +189,13 @@ Item {
         } else {
             imageStatus.visible = true;
 
-            if (boxDevice.status === 1) {
+            if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
                 refreshAnimation.running = false;
-            } else if (boxDevice.status === 2 || boxDevice.status === 3) {
+            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING || boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
                 refreshAnimation.running = true;
-            } else if (boxDevice.status >= 8) {
+            } else if (boxDevice.status >= DeviceUtils.DEVICE_ACTION) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
                 refreshAnimation.running = true;
             } else {
@@ -243,13 +206,7 @@ Item {
 
         // Has data? always display them
         if (boxDevice.isAvailable()) {
-            if (boxDevice.hasGeigerCounter()) {
-                rectangleHygroTemp.visible = true
-                textTemp.text = ""
-                textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
-                // TODO status color
-            } else if (boxDevice.hasSoilMoistureSensor()) {
+            if (boxDevice.hasSoilMoistureSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
@@ -259,6 +216,12 @@ Item {
                 hygro_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
                 cond_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+            } else if (boxDevice.hasGeigerCounter()) {
+                rectangleHygroTemp.visible = true
+                textTemp.text = ""
+                textHygro.font.pixelSize = bigAssMode ? 24 : 22
+                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
+                // TODO status color
             } else {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
@@ -352,7 +315,21 @@ Item {
                         } else if (boxDevice.isThermometer()) {
                             screenDeviceThermometer.loadDevice(boxDevice)
                             appContent.state = "DeviceThermo"
+                        } else if (boxDevice.isEnvironmentalSensor()) {
+                            //if (boxDevice.hasGeigerCounter()) {
+                            //    screenDeviceGeiger.loadDevice(boxDevice)
+                            //    appContent.state = "DeviceGeiger"
+                            //} else {
+                            screenDeviceEnvironmental.loadDevice(boxDevice)
+                            appContent.state = "DeviceEnvironmental"
                         }
+                    } else { // HACK
+                         if (boxDevice.hasGeigerCounter()) {
+                             //screenDeviceGeiger.loadDevice(boxDevice)
+                             //appContent.state = "DeviceGeiger"
+                             screenDeviceEnvironmental.loadDevice(boxDevice)
+                             appContent.state = "DeviceEnvironmental"
+                         }
                     }
                 }
             }
@@ -438,9 +415,10 @@ Item {
                         height: bigAssMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
+                        visible: source
+
                         color: Theme.colorIcon
                         rotation: 90
-                        source: "qrc:/assets/icons_material/baseline-battery_unknown-24px.svg"
                         fillMode: Image.PreserveAspectCrop
                     }
 
@@ -455,7 +433,9 @@ Item {
                         SequentialAnimation on opacity {
                             id: opa
                             loops: Animation.Infinite
-                            onStopped: textStatus.opacity = 1;
+                            alwaysRunToEnd: true
+                            running: boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
+                                     boxDevice.status !== DeviceUtils.DEVICE_CONNECTED
 
                             PropertyAnimation { to: 0.33; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }
@@ -712,9 +692,9 @@ Item {
                 id: refreshAnimation
                 loops: Animation.Infinite
                 running: false
-                onStopped: imageStatus.opacity = 1
-                OpacityAnimator { from: 0; to: 1; duration: 750 }
+                alwaysRunToEnd: true
                 OpacityAnimator { from: 1; to: 0; duration: 750 }
+                OpacityAnimator { from: 0; to: 1; duration: 750 }
             }
         }
     }

@@ -61,5 +61,6 @@
 
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
+        <file alias="UtilsDeviceBLE.js">components_js/UtilsDeviceBLE.js</file>
     </qresource>
 </RCC>
