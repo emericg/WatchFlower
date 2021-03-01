@@ -72,8 +72,6 @@ private:
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
     // Clock
-    int64_t m_device_time = -1;
-    int64_t m_device_wall_time = -1;
     int64_t m_device_lastmove = -1;
 
     // History control

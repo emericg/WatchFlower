@@ -23,8 +23,8 @@
 #define SETTINGS_MANAGER_H
 /* ************************************************************************** */
 
-#define PLANT_UPDATE_INTERVAL   180 // minutes
-#define THERMO_UPDATE_INTERVAL   60 // minutes
+#define PLANT_UPDATE_INTERVAL   240 // minutes
+#define THERMO_UPDATE_INTERVAL  120 // minutes
 #define ERROR_UPDATE_INTERVAL    60 // minutes
 
 #include <QObject>

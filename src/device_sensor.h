@@ -41,11 +41,11 @@ class DeviceSensor: public Device
     Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
     Q_PROPERTY(float deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
     Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceWaterTank READ getWaterTank NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceWaterTank READ getWaterTank NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceHumidity READ getHumidity NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceHumidity READ getHumidity NOTIFY dataUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
 
     // data min/max
@@ -93,15 +93,17 @@ protected:
     int m_soil_conductivity = -99;
     float m_soil_temperature = -99.f;
     float m_soil_ph = -99.f;
-    int m_water_tank = -99;
     // hygrometer data
     float m_temperature = -99.f;
-    int m_humidity = -99;
+    float m_humidity = -99.f;
     // environmental data
     float m_pressure = -99.f;
     int m_luminosity = -99;
-    int m_uv = -99;
-    float m_sound = -99.f;
+    float m_uv = -99.f;
+    float m_water_level = -99.f;
+    float m_sound_level = -99.f;
+    float m_wind_direction = -99.f;
+    float m_wind_speed = -99.f;
     int m_pm_1 = -99;
     int m_pm_25 = -99;
     int m_pm_10 = -99;
@@ -168,39 +170,26 @@ public slots:
     bool hasData(const QString &dataName) const;
     int countData(const QString &dataName, int days = 31) const;
 
-    // BLE device data
+    // Plant sensor data
     int getSoilMoisture() const { return m_soil_moisture; }
     int getSoilConductivity() const { return m_soil_conductivity; }
     float getSoilTemperature() const { return m_soil_temperature; }
     float getSoilPH() const { return m_soil_ph; }
-    int getWaterTank() const { return m_water_tank; }
-    //
+    // Hygrometer
     float getTemp() const;
     float getTempC() const { return m_temperature; }
     float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
     QString getTempString() const;
     float getHeatIndex() const;
     QString getHeatIndexString() const;
-    int getHumidity() const { return m_humidity; }
+    float getHumidity() const { return m_humidity; }
     //
     int getLuminosity() const { return m_luminosity; }
+    float getWaterTank() const { return m_water_level; }
     //
     float getRH() { return m_rh; }
     float getRM() { return m_rm; }
     float getRS() { return m_rs; }
-
-    int getHygroMin() const { return m_hygroMin; }
-    int getHygroMax() const { return m_hygroMax; }
-    int getConduMin() const { return m_conduMin; }
-    int getConduMax() const { return m_conduMax; }
-    float getTempMin() const { return m_tempMin; }
-    float getTempMax() const { return m_tempMax; }
-    int getHumiMin() const { return m_humiMin; }
-    int getHumiMax() const { return m_humiMax; }
-    int getLuxMin() const { return m_luxMin; }
-    int getLuxMax() const { return m_luxMax; }
-    int getMmolMin() const { return m_mmolMin; }
-    int getMmolMax() const { return m_mmolMax; }
 
     // BLE device limits
     bool setDbLimits();
@@ -228,6 +217,20 @@ public slots:
     void setLimitLuxMax(int limitLuxMax) { if (m_limitLuxMax == limitLuxMax) return; m_limitLuxMax = limitLuxMax; setDbLimits(); }
     void setLimitMmolMin(int limitMmolMin) { if (m_limitMmolMin == limitMmolMin) return; m_limitMmolMin = limitMmolMin; setDbLimits(); }
     void setLimitMmolMax(int limitMmolMax) { if (m_limitMmolMax == limitMmolMax) return; m_limitMmolMax = limitMmolMax; setDbLimits(); }
+
+    // Data min/max
+    int getHygroMin() const { return m_hygroMin; }
+    int getHygroMax() const { return m_hygroMax; }
+    int getConduMin() const { return m_conduMin; }
+    int getConduMax() const { return m_conduMax; }
+    float getTempMin() const { return m_tempMin; }
+    float getTempMax() const { return m_tempMax; }
+    int getHumiMin() const { return m_humiMin; }
+    int getHumiMax() const { return m_humiMax; }
+    int getLuxMin() const { return m_luxMin; }
+    int getLuxMax() const { return m_luxMax; }
+    int getMmolMin() const { return m_mmolMin; }
+    int getMmolMax() const { return m_mmolMax; }
 
     // AIO temperature "min max" graph
     void updateAioMinMaxData(int maxDays);

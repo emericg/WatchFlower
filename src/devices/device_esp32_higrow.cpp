@@ -170,11 +170,11 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {
-                m_firmware = chf.value();
+                m_deviceFirmware = chf.value();
             }
-            if (m_firmware.size() == 3)
+            if (m_deviceFirmware.size() == 3)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ESP32_HIGROW))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ESP32_HIGROW))
                 {
                     m_firmware_uptodate = true;
                 }
@@ -246,7 +246,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":battery", m_battery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
@@ -258,7 +258,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;

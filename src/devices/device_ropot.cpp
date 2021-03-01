@@ -176,13 +176,13 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
             if (chc.value().size() > 0)
             {
                 m_battery = chc.value().at(0);
-                m_firmware = chc.value().remove(0, 2);
+                m_deviceFirmware = chc.value().remove(0, 2);
             }
 
             bool need_firstsend = true;
-            if (m_firmware.size() == 5)
+            if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
                 }
@@ -355,7 +355,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
     if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
     {
         // Device time
-        m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+        m_device_time = static_cast<int32_t>(data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
 #ifndef QT_NO_DEBUG
@@ -400,7 +400,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":battery", m_battery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
@@ -412,7 +412,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;

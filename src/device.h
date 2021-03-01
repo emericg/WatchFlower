@@ -98,14 +98,15 @@ protected:
     QString m_deviceAddress;
     QString m_deviceModel;
     QString m_deviceName;
-    QString m_firmware = "UNKN";
+    QString m_deviceFirmware = "UNKN";
     QString m_locationName;
     QString m_associatedName; // was m_plantName
-    bool m_firmware_uptodate = false;
     int m_battery = -1;
 
     // Device settings
     bool m_isOutside = false;
+    QString m_additionalSettings;
+    bool m_firmware_uptodate = false;
 
     // Status
     int m_status = 0;           //!< See DeviceStatus enum
@@ -118,15 +119,19 @@ protected:
     QTimer m_updateTimer;
     void setUpdateTimer(int updateIntervalMin = 0);
 
-    int m_timeoutInterval = 15;
+    int m_timeoutInterval = 12;
     QTimer m_timeoutTimer;
     void setTimeoutTimer();
 
+    // Device time
+    int64_t m_device_time = -1;
+    int64_t m_device_wall_time = -1;
+
     // BLE
     QBluetoothDeviceInfo m_bleDevice;
+    QLowEnergyController *controller = nullptr;
     QTimer m_rssiTimer;
     int m_rssi = 1;
-    QLowEnergyController *controller = nullptr;
 
     void deviceConnected();
     void deviceDisconnected();
@@ -136,6 +141,7 @@ protected:
     virtual void serviceScanDone();
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
     virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+
     virtual void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
@@ -173,10 +179,10 @@ public slots:
 
     // Status
     int getStatus() const { return m_status; }
-    bool isUpdating() const { return m_updating; } //!< Is currently being updated
-    bool isErrored() const;     //!< Has emitted a BLE error
-    bool isFresh() const;       //!< Has at least >Xh (user set) old data
-    bool isAvailable() const;   //!< Has at least >12h old data
+    bool isUpdating() const { return m_updating; }      //!< Is currently being updated?
+    bool isErrored() const;                             //!< Has emitted a BLE error
+    bool isFresh() const;                               //!< Has at least >Xh (user set) old data
+    bool isAvailable() const;                           //!< Has at least >12h old data
 
     virtual int getHistoryUpdatePercent() const;
     QString getLastUpdateString() const;
@@ -187,8 +193,10 @@ public slots:
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
-    QString getFirmware() const { return m_firmware; }
+    QString getFirmware() const { return m_deviceFirmware; }
     int getBattery() const { return m_battery; }
+
+    // RSSI
     int getRssi() const { return m_rssi; }
     void updateRssi(const int rssi);
     void cleanRssi();
@@ -202,10 +210,14 @@ public slots:
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
 
-    // Capabilities
+    // Device type, capabilities and sensors
     int getDeviceType() const { return m_deviceType; }
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
+
+    bool isPlantSensor() const { if (m_deviceType == DeviceUtils::DEVICE_PLANTSENSOR) { return true; } return false; }
+    bool isThermometer() const { if (m_deviceType == DeviceUtils::DEVICE_THERMOMETER) { return true; } return false; }
+    bool isEnvironmentalSensor() const { if (m_deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL) { return true; } return false; }
 
     bool hasBatteryLevel() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BATTERY); }
     bool hasClock() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CLOCK); }

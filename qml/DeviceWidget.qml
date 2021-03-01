@@ -51,7 +51,8 @@ Item {
         if (boxDevice.deviceName === "MJ_HT_V1" ||
             boxDevice.deviceName === "ClearGrass Temp & RH" ||
             boxDevice.deviceName === "Qingping Temp & RH M" ||
-            boxDevice.deviceName === "Qingping Temp & RH H") {
+            boxDevice.deviceName === "Qingping Temp & RH H" ||
+            boxDevice.deviceName === "ThermoBeacon") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
         } else if (boxDevice.deviceName === "LYWSD02" ||
                    boxDevice.deviceName === "MHO-C303") {
@@ -114,12 +115,16 @@ Item {
         rectangleHygroTemp.visible = false
 
         // Texts
-        if (boxDevice.hasGeigerCounter()) {
-            textTitle.text = qsTr("Geiger Counter")
-        } else if (!boxDevice.hasSoilMoistureSensor()) {
-            textTitle.text = qsTr("Thermometer")
-        } else if (boxDevice.devicePlantName !== "") {
-            textTitle.text = boxDevice.devicePlantName
+        if (boxDevice.isPlantSensor()) {
+            if (boxDevice.devicePlantName !== "")
+                textTitle.text = boxDevice.devicePlantName
+            else
+                textTitle.text = boxDevice.deviceName
+        } else if (boxDevice.isThermometer()) {
+            if (boxDevice.deviceName === "ThermoBeacon")
+                textTitle.text = boxDevice.deviceName
+            else
+                textTitle.text = qsTr("Thermometer")
         } else {
             textTitle.text = boxDevice.deviceName
         }
@@ -340,13 +345,11 @@ Item {
                     // regular click
                     if (boxDevice.hasData()) {
                         selectedDevice = boxDevice
-                        if (boxDevice.hasSoilMoistureSensor()){
+
+                        if (boxDevice.isPlantSensor()) {
                             screenDeviceSensor.loadDevice(boxDevice)
                             appContent.state = "DeviceSensor"
-                        } else if (boxDevice.hasGeigerCounter()) {
-                            screenDeviceGeiger.loadDevice(boxDevice)
-                            appContent.state = "DeviceGeiger"
-                        } else {
+                        } else if (boxDevice.isThermometer()) {
                             screenDeviceThermometer.loadDevice(boxDevice)
                             appContent.state = "DeviceThermo"
                         }

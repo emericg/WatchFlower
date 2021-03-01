@@ -151,11 +151,11 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_data(QLowEnergyService::Service
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {
-                m_firmware = chf.value();
+                m_deviceFirmware = chf.value();
             }
-            if (m_firmware.size() == 3)
+            if (m_deviceFirmware.size() == 3)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ESP32_GEIGER))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ESP32_GEIGER))
                 {
                     m_firmware_uptodate = true;
                 }

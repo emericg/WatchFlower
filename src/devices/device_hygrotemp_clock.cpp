@@ -109,7 +109,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceInfos;
         serviceInfos = nullptr;
 
-        if (m_firmware.isEmpty() || m_firmware == "UNKN")
+        if (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN")
         {
             serviceInfos = controller->createServiceObject(uuid);
             if (!serviceInfos)
@@ -240,12 +240,12 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
             QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
             if (chc.value().size() > 0)
             {
-               m_firmware = chc.value();
+               m_deviceFirmware = chc.value();
             }
 
-            if (m_firmware.size() == 10)
+            if (m_deviceFirmware.size() == 10)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();
@@ -332,7 +332,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":battery", m_battery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
@@ -344,7 +344,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempClock update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_humidity:" << m_humidity;

@@ -900,8 +900,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             else if (info.name() == "GeigerCounter")
                 d = new DeviceEsp32Geiger(info, this);
 
-            if (!d)
-                return;
+            if (!d) return;
 
             connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
 

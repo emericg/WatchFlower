@@ -181,17 +181,17 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             if (chc.value().size() > 0)
             {
                 m_battery = chc.value().at(0);
-                m_firmware = chc.value().remove(0, 2);
+                m_deviceFirmware = chc.value().remove(0, 2);
             }
 
             bool need_firstsend = true;
-            if (m_firmware.size() == 5)
+            if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
                 }
-                if (Version(m_firmware) <= Version("2.6.6"))
+                if (Version(m_deviceFirmware) <= Version("2.6.6"))
                 {
                     need_firstsend = false;
                 }
@@ -497,7 +497,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":battery", m_battery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
@@ -509,7 +509,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowerCare update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;

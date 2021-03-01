@@ -156,7 +156,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         serviceInfos = nullptr;
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE &&
-            (m_firmware.isEmpty() || m_firmware == "UNKN"))
+            (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN"))
         {
             serviceInfos = controller->createServiceObject(uuid);
             if (!serviceInfos)
@@ -233,13 +233,13 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
             if (cfw.value().size() > 0)
             {
-                m_firmware = cfw.value();
-                m_firmware =  m_firmware.split('_')[1].split('-')[1];
+                m_deviceFirmware = cfw.value();
+                m_deviceFirmware =  m_deviceFirmware.split('_')[1].split('-')[1];
             }
 
-            if (m_firmware.size() == 5)
+            if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
                 }
@@ -249,7 +249,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
             {
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_firmware);
+                updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -401,7 +401,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceSt
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceParrotPot update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_firmware;
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_battery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;

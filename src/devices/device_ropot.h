@@ -72,10 +72,6 @@ private:
     QByteArray m_key_challenge;
     QByteArray m_key_finish;
 
-    // Clock
-    int64_t m_device_time = -1;
-    int64_t m_device_wall_time = -1;
-
     // History control
     int m_history_entry_count = -1;
     int m_history_entry_read = -1;

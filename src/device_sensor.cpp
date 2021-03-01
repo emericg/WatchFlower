@@ -148,57 +148,57 @@ bool DeviceSensor::getSqlInfos()
     //qDebug() << "DeviceSensor::getSqlInfos(" << m_deviceAddress << ")";
     bool status = Device::getSqlInfos();
 
-    if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_firmware.size() == 5))
+    if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_deviceFirmware.size() == 5))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName.startsWith("Flower power")) && (m_firmware.size() == 5))
+    else if ((m_deviceName.startsWith("Flower power")) && (m_deviceFirmware.size() == 5))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName == "ropot") && (m_firmware.size() == 5))
+    else if ((m_deviceName == "ropot") && (m_deviceFirmware.size() == 5))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName == "MJ_HT_V1") && (m_firmware.size() == 8))
+    else if ((m_deviceName == "MJ_HT_V1") && (m_deviceFirmware.size() == 8))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName == "ClearGrass Temp & RH") && (m_firmware.size() == 10))
+    else if ((m_deviceName == "ClearGrass Temp & RH") && (m_deviceFirmware.size() == 10))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName == "LYWSD02") && (m_firmware.size() == 10))
+    else if ((m_deviceName == "LYWSD02") && (m_deviceFirmware.size() == 10))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName == "LYWSD03MMC") && (m_firmware.size() == 10))
+    else if ((m_deviceName == "LYWSD03MMC") && (m_deviceFirmware.size() == 10))
     {
-        if (Version(m_firmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -441,7 +441,7 @@ float DeviceSensor::getHeatIndex() const
 {
     float hi = getTemp();
 
-    if (getTempC() >= 27.f && getHumidity() >= 40)
+    if (getTempC() >= 27.f && getHumidity() >= 40.0)
     {
         float T = getTemp();
         float R = getHumidity();

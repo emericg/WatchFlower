@@ -322,7 +322,7 @@ void Device::setUpdateTimer(int updateInterval)
     {
         SettingsManager *sm = SettingsManager::getInstance();
 
-        if (hasSoilMoistureSensor())
+        if (getDeviceType() == DeviceUtils::DEVICE_PLANTSENSOR)
             updateInterval = sm->getUpdateIntervalPlant();
         else
             updateInterval = sm->getUpdateIntervalThermo();
@@ -331,7 +331,7 @@ void Device::setUpdateTimer(int updateInterval)
     // Validate the interval
     if (updateInterval < 5 || updateInterval > 120)
     {
-        if (hasSoilMoistureSensor())
+        if (getDeviceType() == DeviceUtils::DEVICE_PLANTSENSOR)
             updateInterval = PLANT_UPDATE_INTERVAL;
         else
             updateInterval = THERMO_UPDATE_INTERVAL;
@@ -368,7 +368,7 @@ bool Device::getSqlInfos()
         {
             while (getInfos.next())
             {
-                m_firmware = getInfos.value(0).toString();
+                m_deviceFirmware = getInfos.value(0).toString();
                 m_battery = getInfos.value(1).toInt();
                 m_associatedName = getInfos.value(2).toString();
                 m_locationName = getInfos.value(3).toString();
@@ -409,6 +409,7 @@ bool Device::getBleData()
 {
     //qDebug() << "Device::getBleData(" << m_deviceAddress << ")";
 
+    // Create a QLowEnergyController (if needed)
     if (!controller)
     {
         controller = new QLowEnergyController(m_bleDevice);
@@ -443,6 +444,7 @@ bool Device::getBleData()
         //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
     }
 
+    // Start the actual connection process
     if (controller)
     {
         setTimeoutTimer();
@@ -637,6 +639,9 @@ void Device::deviceConnected()
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
     Q_EMIT connected();
+
+    // Restart for an additional 10s+ ?
+    setTimeoutTimer();
 
     m_updating = true;
     m_status = DeviceUtils::DEVICE_UPDATING;
