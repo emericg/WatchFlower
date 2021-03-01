@@ -38,7 +38,7 @@
 | IP Code                           | IPX5                              |
 | BLE API                           | [link](parrotpot-ble-api.md)      |
 
-| HiGrow                            | n/a                               |
+| HiGrow                            | N/A                               |
 | --------------------------------- | --------------------------------- |
 | Battery                           | 1 x 18650 or 1 * LiPo             |
 | Thermometer                       |                                   |
@@ -92,6 +92,23 @@
 | Thermometer                       | 0 ~ 60 °C (± 0.3 °C)              |
 | Hygrometer                        | 0 ~ 99% RH (± 3 %RH)              |
 
+| Hygrometer                        | 2ACD3-WS08                        |
+| Hygrometer (updated?)             | KEU-WA59D                         |
+| --------------------------------- | --------------------------------- |
+| Screen                            | LCD                               |
+| Battery                           | 1 x CR2477                        |
+| Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |
+| Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
+| BLE API                           | [link](thermobeacon-ble-api.md)   |
+
+| Keychain Hygrometer               | 2ACD3-WS07                        |
+| Keychain Hygrometer (square)      | 2ACD3-WS02                        |
+| --------------------------------- | --------------------------------- |
+| Screen                            | N/A                               |
+| Battery                           | 1 x CR2032 or CR2477              |
+| Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |
+| Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
+| BLE API                           | [link](thermobeacon-ble-api.md)   |
 
 
 # Environmental sensors

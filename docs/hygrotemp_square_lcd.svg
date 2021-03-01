@@ -12,7 +12,7 @@
    viewBox="0 0 21.166666 21.166667"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="hygrotemp_square_lcd.svg">
   <defs
      id="defs2">
@@ -31,11 +31,11 @@
      borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.635174"
-     inkscape:cx="53.834916"
-     inkscape:cy="38.998248"
+     inkscape:zoom="14.10288"
+     inkscape:cx="52.340061"
+     inkscape:cy="31.049792"
      inkscape:document-units="mm"
-     inkscape:current-layer="g860"
+     inkscape:current-layer="layer1"
      showgrid="true"
      units="px"
      borderlayer="true"
@@ -96,7 +96,7 @@
      style="display:inline">
     <path
        style="opacity:1;fill:#848e98;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.11235;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3.96875,278.47915 c -0.6271025,0 -1.3229167,0.69582 -1.3229167,1.32292 v 13.22917 c 0,0.62709 0.6958142,1.32291 1.3229167,1.32291 h 13.229167 c 0.627102,0 1.322916,-0.69582 1.322916,-1.32291 v -13.22917 c 0,-0.6271 -0.695814,-1.32292 -1.322916,-1.32292 z m 1.5875,2.38125 h 10.054167 c 0.264583,0 0.529166,0.26449 0.529166,0.52917 v 10.05417 c 0,0.26458 -0.264583,0.52916 -0.529166,0.52916 H 5.55625 c -0.26468,0 -0.5291667,-0.26458 -0.5291667,-0.52916 v -10.05417 c 0,-0.26467 0.2644918,-0.52917 0.5291667,-0.52917 z"
+       d="m 4.2333333,278.47915 c -1.0583333,0 -1.5875,0.79375 -1.5875,1.5875 l 0,12.7 c 0,1.05834 0.5291667,1.5875 1.5875,1.5875 H 16.933333 c 1.058334,0 1.5875,-0.52916 1.5875,-1.5875 v -12.7 c 0,-1.05833 -0.529166,-1.5875 -1.5875,-1.5875 z M 5.55625,280.8604 h 10.054167 c 0.264583,0 0.529166,0.26449 0.529166,0.52917 v 10.05417 c 0,0.26458 -0.264583,0.52916 -0.529166,0.52916 H 5.55625 c -0.26468,0 -0.5291667,-0.26458 -0.5291667,-0.52916 v -10.05417 c 0,-0.26467 0.2644918,-0.52917 0.5291667,-0.52917 z"
        id="rect866"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ssssssssssssssssss" />
