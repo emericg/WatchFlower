@@ -893,9 +893,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempLCD(info, this);
             else if (info.name() == "ClearGrass Temp & RH" || info.name().startsWith("Qingping Temp & RH"))
                 d = new DeviceHygrotempEInk(info, this);
-            else if (info.name() == "LYWSD02" || info.name() == "MHOC303")
+            else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")
                 d = new DeviceHygrotempClock(info, this);
-            else if (info.name() == "LYWSD03MMC" || info.name() == "MHOC401")
+            else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401")
                 d = new DeviceHygrotempSquare(info, this);
             else if (info.name() == "GeigerCounter")
                 d = new DeviceEsp32Geiger(info, this);

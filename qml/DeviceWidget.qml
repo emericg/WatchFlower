@@ -53,9 +53,11 @@ Item {
             boxDevice.deviceName === "Qingping Temp & RH M" ||
             boxDevice.deviceName === "Qingping Temp & RH H") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
-        } else if (boxDevice.deviceName === "LYWSD02") {
+        } else if (boxDevice.deviceName === "LYWSD02" ||
+                   boxDevice.deviceName === "MHO-C303") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
-        } else if (boxDevice.deviceName === "LYWSD03MMC") {
+        } else if (boxDevice.deviceName === "LYWSD03MMC" ||
+                   boxDevice.deviceName === "MHO-C401") {
             imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
         } else if (boxDevice.deviceName === "GeigerCounter") {
             imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
