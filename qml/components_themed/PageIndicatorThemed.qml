@@ -5,7 +5,8 @@ import ThemeEngine 1.0
 
 PageIndicator {
     id: control
-    count: 3
+
+    count: 1
     currentIndex: 1
 
     delegate: Rectangle {

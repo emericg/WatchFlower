@@ -15,28 +15,30 @@ Item {
 
     Rectangle {
         id: leftRect
-        color: "#555555"
-        anchors.right: leftText.right
-        anchors.rightMargin: -6
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: leftText.right
+        anchors.rightMargin: -6
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
+
+        color: "#555555"
     }
 
     Rectangle {
         id: rightRect
-        color: "#97ca00"
-        anchors.left: leftRect.right
-        anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.left: leftRect.right
+        anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+
+        color: "#97ca00"
     }
 
     Text {
@@ -47,20 +49,22 @@ Item {
 
         color: "white"
         text: badge.legend
+        textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
     }
 
     Text {
         id: rightText
-        anchors.right: rightRect.right
-        anchors.rightMargin: 6
         anchors.left: rightRect.left
         anchors.leftMargin: 6
+        anchors.right: rightRect.right
+        anchors.rightMargin: 6
         anchors.verticalCenter: parent.verticalCenter
 
         color: "white"
         text: badge.text
+        textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
         font.bold: true

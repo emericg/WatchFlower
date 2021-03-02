@@ -20,18 +20,19 @@ ScrollBar {
     ////////
 
     contentItem: Rectangle {
-        height: control.height
         implicitWidth: 100
         implicitHeight: 6
+        height: control.height
 
         radius: 0
         color: control.pressed ? Theme.colorPrimary : Theme.colorSecondary
     }
 
     background: Rectangle {
-        height: control.height
         implicitWidth: 100
         implicitHeight: 6
+        height: control.height
+
         color: Theme.colorForeground
     }
 }

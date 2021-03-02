@@ -22,7 +22,7 @@ RadioButton {
         radius: (width / 2)
 
         color: Theme.colorComponentBackground
-        border.width: 1
+        border.width: Theme.componentBorderWidth
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {

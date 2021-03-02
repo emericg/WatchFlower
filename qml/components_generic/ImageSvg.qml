@@ -17,6 +17,7 @@ Item {
 
         source: parent.source
         sourceSize: Qt.size(width, height)
+        asynchronous: false
         fillMode: parent.fillMode
     }
     ColorOverlay {

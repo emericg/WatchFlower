@@ -1,22 +1,31 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 SpinBox {
     id: control
     implicitWidth: 128
     implicitHeight: Theme.componentHeight
 
-    clip: true
     value: 50
     editable: true
     font.pixelSize: Theme.fontSizeComponent
 
-    property string legend: ""
+    property string legend
+
+    background: Rectangle {
+        radius: Theme.componentRadius
+        z: 2
+
+        color: "transparent"
+        border.width: Theme.componentBorderWidth
+        border.color: Theme.colorComponentBorder
+    }
 
     contentItem: TextInput {
-        z: 2
         text: control.textFromValue(control.value, control.locale) + legend
         font: control.font
 
@@ -31,61 +40,74 @@ SpinBox {
         inputMethodHints: Qt.ImhFormattedNumbersOnly
 
         Rectangle {
-            z: -1
             anchors.fill: parent
-            anchors.margins: -8
+            anchors.margins: -32
+            z: -1
+            radius: Theme.componentRadius
             color: Theme.colorComponentBackground
         }
     }
 
     up.indicator: Rectangle {
-        x: control.mirrored ? 0 : parent.width - width
+        width: Theme.componentHeight
         height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? 0 : parent.width - width
+        z: 1
+
         color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
-        //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: Theme.componentRadius
 
-        Text {
-            anchors.fill: parent
+        Item {
+            anchors.centerIn: parent
+            width: UtilsNumber.round2(parent.height * 0.4)
+            height: width
 
-            text: "+"
-            font.pixelSize: 18
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
-            fontSizeMode: Text.Fit
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.width
+                height: 2
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
+            Rectangle {
+                anchors.centerIn: parent
+                width: 2
+                height: parent.width
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
         }
     }
 
     down.indicator: Rectangle {
-        x: control.mirrored ? parent.width - width : 0
+        width: Theme.componentHeight
         height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? parent.width - width : 0
+        z: 1
+
         color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
-        //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: Theme.componentRadius
 
-        Text {
-            anchors.fill: parent
+        Item {
+            anchors.centerIn: parent
+            width: UtilsNumber.round2(parent.height * 0.4)
+            height: width
 
-            text: "-"
-            font.pixelSize: 30
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
-            fontSizeMode: Text.Fit
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.width
+                height: 2
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
         }
     }
 
-    background: Rectangle {
-        radius: Theme.componentRadius
-        z: 3
-
-        color: "transparent"
-        border.color: Theme.colorComponentBorder
-        border.width: 1
+    layer.enabled: true
+    layer.effect: OpacityMask {
+        maskSource: Rectangle {
+            x: control.x
+            y: control.y
+            width: control.width
+            height: control.height
+            radius: Theme.componentRadius
+        }
     }
 }

@@ -11,7 +11,7 @@ CheckBox {
     spacing: 8
 
     checked: false
-    text: "Check Box"
+    text: ""
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
@@ -22,7 +22,7 @@ CheckBox {
         radius: Theme.componentRadius
 
         color: Theme.colorComponentBackground
-        border.width: 1
+        border.width: Theme.componentBorderWidth
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {
@@ -37,10 +37,12 @@ CheckBox {
     }
 
     contentItem: Text {
-        text: control.text
-        font: control.font
         leftPadding: control.indicator.width + control.spacing
         verticalAlignment: Text.AlignVCenter
+
+        text: control.text
+        textFormat: Text.PlainText
+        font: control.font
 
         color: Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33

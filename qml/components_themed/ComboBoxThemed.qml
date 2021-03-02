@@ -14,6 +14,7 @@ ComboBox {
         rightPadding: 8
 
         text: control.displayText
+        textFormat: Text.PlainText
         font: control.font
         color: Theme.colorComponentContent
         verticalAlignment: Text.AlignVCenter
@@ -21,10 +22,10 @@ ComboBox {
     }
 
     background: Rectangle {
-        color: control.down ? Theme.colorComponentDown : Theme.colorComponent
         radius: Theme.componentRadius
-        //border.color: control.pressed ? "#17a81a" : "#21be2b"
-        //border.width: control.visualFocus ? 2 : 1
+        color: control.down ? Theme.colorComponentDown : Theme.colorComponent
+        //border.color: Theme.colorComponentBorder
+        //border.width: control.visualFocus ? 0 : Theme.componentBorderWidth
     }
 
     popup: Popup {
@@ -43,8 +44,8 @@ ComboBox {
         }
 
         background: Rectangle {
+            radius: Theme.componentRadius
             color: "white"
-            //border.color: Theme.colorComponent
         }
     }
 }

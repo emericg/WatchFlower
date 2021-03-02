@@ -42,7 +42,9 @@ Item {
             anchors.verticalCenter: item_bg.verticalCenter
 
             visible: (legend.length)
+
             text: legend
+            textFormat: Text.PlainText
             font.bold: true
             font.pixelSize: 12
             font.capitalization: Font.AllUppercase
@@ -140,7 +142,6 @@ Item {
                     }
                 }
 
-                color: "white"
                 text: {
                     if (value < -20)
                         return " ? ";
@@ -151,7 +152,8 @@ Item {
                             return prefix + value.toFixed(floatprecision) + suffix
                     }
                 }
-
+                textFormat: Text.PlainText
+                color: "white"
                 font.bold: true
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter

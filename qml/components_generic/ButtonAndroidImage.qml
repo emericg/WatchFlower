@@ -8,16 +8,14 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Button {
     id: control
     width: contentRow.width + 16 + (source && !text ? 0 : 16)
-    implicitHeight: 58 // Theme.componentHeight
+    implicitHeight: 58
 
     focusPolicy: Qt.NoFocus
 
     property url source: ""
-    property int imgSize: 26 // UtilsNumber.alignTo(height * 0.666, 2)
-    property bool fullColor: false
-    property string fulltextColor: "white"
+    property int imgSize: 26
+
     property string primaryColor: Theme.colorPrimary
-    property string secondaryColor: Theme.colorBackground
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -50,39 +48,44 @@ Button {
             anchors.fill: parent
             anchors.margins: 0
 
-            clip: true
             enabled: true
             visible: true
             hoverEnabled: false
             acceptedButtons: Qt.LeftButton
             propagateComposedEvents: true
 
+            onClicked: control.clicked()
+
             onPressed: {
-                mouseBackground.width = mmmm.width*3
+                mouseBackground.width = mmmm.width*2
                 mouseBackground.opacity = 0.1
-            }
-            onClicked: {
-                control.clicked()
             }
             onReleased: {
                 mouseBackground.width = 0
                 mouseBackground.opacity = 0
-            }/*
-            onPositionChanged: {
-                console.log("onPositionChanged")
-                mouseBackground.width = 0
-                mouseBackground.opacity = 0
-            }*/
+            }
 
             Rectangle {
                 id: mouseBackground
                 width: 0; height: width; radius: width;
                 x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
                 y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
+
                 color: "#222"
                 opacity: 0
-                Behavior on opacity { NumberAnimation { duration: 200 } }
-                Behavior on width { NumberAnimation { duration: 200 } }
+                Behavior on opacity { NumberAnimation { duration: 333 } }
+                Behavior on width { NumberAnimation { duration: 333 } }
+            }
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    x: background.x
+                    y: background.y
+                    width: background.width
+                    height: background.height
+                    radius: Theme.componentRadius
+                }
             }
         }
     }
@@ -104,21 +107,23 @@ Button {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: source
-                opacity: enabled ? 1.0 : 0.33
                 source: control.source
-                color: fullColor ? fulltextColor : control.primaryColor
+                color: control.primaryColor
+                opacity: enabled ? 1.0 : 0.33
             }
             Text {
                 id: contentText
                 height: parent.height
-                opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
 
                 text: control.text
+                textFormat: Text.PlainText
                 font.bold: true
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeComponent
                 font.family: fontTextMedium.name
 
-                color: fullColor ? fulltextColor : control.primaryColor
+                color: control.primaryColor
+                opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
+
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight

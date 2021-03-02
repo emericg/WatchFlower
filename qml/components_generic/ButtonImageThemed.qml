@@ -49,6 +49,7 @@ Button {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: control.text
+                textFormat: Text.PlainText
                 font: control.font
                 opacity: enabled ? 1.0 : 0.33
                 color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent

@@ -60,6 +60,7 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
+            textFormat: Text.PlainText
             font.pixelSize: 14
             color: colorTxt
         }
@@ -89,6 +90,7 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
             }
+            textFormat: Text.PlainText
             font.pixelSize: 14
             color: colorTxt
         }

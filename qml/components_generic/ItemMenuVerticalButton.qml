@@ -6,9 +6,9 @@ import ThemeEngine 1.0
 
 Item {
     id: itemMenuButton
-
     implicitWidth: 80
     implicitHeight: 48
+
     property int imgSize: 32
 
     signal clicked()

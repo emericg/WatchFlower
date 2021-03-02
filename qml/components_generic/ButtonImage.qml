@@ -33,6 +33,7 @@ Button {
             anchors.horizontalCenterOffset: ((imgSize / 2) + (imgSize / 6))
 
             text: control.text
+            textFormat: Text.PlainText
             font: control.font
             opacity: enabled ? 1.0 : 0.33
             color: control.down ? "black" : "black"

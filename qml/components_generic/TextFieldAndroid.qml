@@ -13,7 +13,7 @@ TextField {
 
     property string colorText: Theme.colorComponentContent
     property string colorBorder: Theme.colorComponentBorder
-    property string colorBackground: Theme.colorBackground // Theme.colorComponentBackground
+    property string colorBackground: Theme.colorBackground
 
     color: colorText
     font.family: fontText.name
@@ -29,7 +29,7 @@ TextField {
             width: textTitle.width + 8
             height: textTitle.height + 8
             x: 12
-            y: (-textTitle.height / 2)
+            y: (-textTitle.height / 2) - 1
             visible: title
             color: Theme.colorBackground
 
@@ -37,6 +37,7 @@ TextField {
                 x: 4
                 id: textTitle
                 text: textFieldThemed.title
+                textFormat: Text.PlainText
                 color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
 
                 font.family: fontText.name

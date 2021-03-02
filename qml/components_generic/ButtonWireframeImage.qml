@@ -28,7 +28,7 @@ Button {
         radius: Theme.componentRadius
         opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
         color: fullColor ? control.primaryColor : control.secondaryColor
-        border.width: 1
+        border.width: Theme.componentBorderWidth
         border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
         clip: hoverAnimation
 
@@ -87,6 +87,7 @@ Button {
                 height: parent.height
 
                 text: control.text
+                textFormat: Text.PlainText
                 font: control.font
                 opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
                 color: fullColor ? fulltextColor : control.primaryColor

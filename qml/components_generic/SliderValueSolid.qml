@@ -34,7 +34,6 @@ Slider {
         opacity: 1
 
         Rectangle {
-            x: 0
             visible: h2.x > 4
             width: (h2.x + (h2.width / 3))
             height: parent.height
@@ -68,6 +67,7 @@ Slider {
                 vvalue = vvalue.toFixed(0)
                 return ((kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
+            textFormat: Text.PlainText
             font.pixelSize: 10
             font.bold: true
             color: colorTxt

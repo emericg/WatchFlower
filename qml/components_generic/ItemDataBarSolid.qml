@@ -42,7 +42,9 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (legend.length)
+
             text: legend
+            textFormat: Text.PlainText
             font.bold: true
             font.pixelSize: 12
             font.capitalization: Font.AllUppercase
@@ -111,6 +113,7 @@ Item {
 
                 //: Short for minimum
                 text: qsTr("min")
+                textFormat: Text.PlainText
 
                 font.pixelSize: 12
                 color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
@@ -167,6 +170,7 @@ Item {
 
                 //: Short for maximum
                 text: qsTr("max")
+                textFormat: Text.PlainText
 
                 font.pixelSize: 12
                 color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
@@ -223,6 +227,8 @@ Item {
                     anchors.verticalCenterOffset: 1
                     anchors.horizontalCenter: parent.horizontalCenter
 
+                    color: (item_data.width > indicator.width) ? "white" : Theme.colorText
+
                     text: {
                         if (value < -20)
                             return " ? ";
@@ -233,9 +239,7 @@ Item {
                                 return prefix + value.toFixed(floatprecision) + suffix
                         }
                     }
-
-                    color: (item_data.width > indicator.width) ? "white" : Theme.colorText
-
+                    textFormat: Text.PlainText
                     font.bold: true
                     font.pixelSize: 12
                     horizontalAlignment: Text.AlignHCenter

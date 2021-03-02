@@ -21,7 +21,7 @@ Item {
     property string colorContentHighlight: Theme.colorComponentContent
 
     property string text: ""
-    property string source: ""
+    property url source: ""
     property int sourceSize: (source.length) ? 32 : 0
 
     ////////////////////////////////////////////////////////////////////////////
@@ -73,9 +73,11 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: parent.text
-        font.pixelSize: 15
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeComponent
+        verticalAlignment: Text.AlignVCenter
+
         color: (parent.selected) ? parent.colorContentHighlight : parent.colorContent
         opacity: (parent.selected) ? 1 : 0.5
-        verticalAlignment: Text.AlignVCenter
     }
 }

@@ -40,7 +40,9 @@ Switch {
         verticalAlignment: Text.AlignVCenter
 
         text: control.text
+        textFormat: Text.PlainText
         font: control.font
+
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.33
     }

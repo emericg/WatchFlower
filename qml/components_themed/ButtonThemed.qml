@@ -14,8 +14,6 @@ Button {
 
     property bool embedded: false
 
-    ////////////////////////////////////////////////////////////////////////////
-
     background: Rectangle {
         radius: embedded ? 0 : Theme.componentRadius
         opacity: enabled ? 1 : 0.33
@@ -31,12 +29,14 @@ Button {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: control.text
+            textFormat: Text.PlainText
             font: control.font
-            opacity: enabled ? 1.0 : 0.33
-            color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
+
+            opacity: enabled ? 1.0 : 0.33
+            color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent
         }
     }
 }

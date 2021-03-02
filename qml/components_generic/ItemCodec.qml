@@ -26,6 +26,7 @@ Item {
             anchors.fill: parent
 
             text: codec.text
+            textFormat: Text.PlainText
             color: codec.colorText
             font.capitalization: Font.AllUppercase
             font.pixelSize: Theme.fontSizeComponent

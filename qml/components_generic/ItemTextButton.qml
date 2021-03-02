@@ -71,6 +71,7 @@ Item {
         anchors.centerIn: bgRect
 
         text: itemTextButton.text
+        textFormat: Text.PlainText
         font.bold: true
         font.pixelSize: itemTextButton.txtSize
         font.capitalization: Font.AllUppercase

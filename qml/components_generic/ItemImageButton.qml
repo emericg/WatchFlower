@@ -59,7 +59,7 @@ Item {
         visible: (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background)
         color: itemImageButton.backgroundColor
 
-        border.width: itemImageButton.border ? 1 : 0
+        border.width: itemImageButton.border ? Theme.componentBorderWidth : 0
         border.color: itemImageButton.borderColor
 
         opacity: itemImageButton.background ? 0.75 : 0

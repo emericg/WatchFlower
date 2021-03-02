@@ -7,6 +7,7 @@ Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
+
     value: 0.5
 
     background: Rectangle {

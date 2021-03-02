@@ -8,6 +8,7 @@ Switch {
 
     leftPadding: 0
     rightPadding: 0
+    spacing: 16
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
@@ -35,11 +36,13 @@ Switch {
     }
 
     contentItem: Text {
-        verticalAlignment: Text.AlignVCenter
         leftPadding: control.indicator.width + control.spacing
+        verticalAlignment: Text.AlignVCenter
 
         text: control.text
+        textFormat: Text.PlainText
         font: control.font
+
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.33
     }
