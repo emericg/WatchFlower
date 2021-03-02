@@ -16,7 +16,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -55,16 +64,7 @@ In general you have to know about services and characteristics to talk to a BLE 
 | 00002aa0-0000-1000-8000-00805f9b34fb | n/a    | read/notify | magnetic flux density 2d      |
 | 00002aa1-0000-1000-8000-00805f9b34fb | n/a    | read/notify | magnetic flux density 3d      |
 
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Battery
+#### Battery
 
 A read request to the battery characteristic will return 4 bytes of data, for example `0x64000000`.
 
@@ -76,33 +76,33 @@ A read request to the battery characteristic will return 4 bytes of data, for ex
 | ----- | ---------- | ----- | ------------------ |
 | all   | ASCII text | 100   | battery level      |
 
-### Environmental Sensing
+#### Environmental Sensing
 
-#### Elevation
+##### Elevation
 
 | Type                         | Value (raw) | Value    | Description | Link |
 | ---------------------------- | ----------- | -------- | ----------- | ---- |
 | sint24 (decimal exponent -2) | 10000       | 100.00 m | Unit is in meters with a resolution of 0.01 m | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.elevation.xml) |
 
-#### Barometric Pressure
+##### Barometric Pressure
 
 | Type                         | Value (raw) | Value    | Description | Link |
 | ---------------------------- | ----------- | -------- | ----------- | ---- |
 | uint32 (decimal exponent -1) | 10130       | 1013.0 Pa| Unit is in pascals with a resolution of 0.1 Pa | [link]() |
 
-#### Temperature
+##### Temperature
 
 | Type                         | Value (raw) | Value    | Description | Link |
 | ---------------------------- | ----------- | -------- | ----------- | ---- |
 | sint24 (decimal exponent -2) | -564        | -5.64 °C | Unit is in degrees Celsius with a resolution of 0.01 degrees Celsius | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature.xml) |
 
-#### Humidity
+##### Humidity
 
 | Type                         | Value (raw) | Value    | Description | Link |
 | ---------------------------- | ----------- | -------- | ----------- | ---- |
 | sint24 (decimal exponent -2) | 5000        | 50.00 %  | Unit is in percent with a resolution of 0.01 percent | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.humidity.xml) |
 
-#### Others (todo)
+##### Others (todo)
 
 - https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.true_wind_speed.xml
 - https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.true_wind_direction.xml
@@ -119,7 +119,7 @@ A read request to the battery characteristic will return 4 bytes of data, for ex
 - https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.barometric_pressure_trend.xml
 - https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.magnetic_declination.xml
 
-### Advertisement data
+## Advertisement data
 
 None
 

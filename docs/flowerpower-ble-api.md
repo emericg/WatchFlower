@@ -32,7 +32,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address)
 
@@ -112,17 +121,7 @@ Firmware versions 1.1.0+ have some new characteristics:
 | ------------------------------------ | ------ | ---------- | ------------------------------ |
 | -                                    | -      | -          | -                              |
 
-
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Name
+#### Device name
 
 A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f77657220706f776572` corresponding to the device name.
 
@@ -134,7 +133,7 @@ A read request to the `0x03` handle will return n bytes of data, for example `0x
 | ----- | ---------- | ------------ | ----------- |
 | all   | ASCII text | Flower power | device name |
 
-### Battery
+#### Battery
 
 A read request to the `0x33` handle will return 1 bytes of data, for example `0x64`.
 
@@ -146,27 +145,39 @@ A read request to the `0x33` handle will return 1 bytes of data, for example `0x
 | ----- | ---------- | ----- | ------------------ |
 | 00    | uint8      | 100   | battery level in % |
 
-### Device time
+#### Last move
 
 TODO
 
-### Last move
-
-TODO
-
-### Real time data
-
-TODO
-
-### Historical data
-
-TODO
-
-### Blink
+#### Blink
 
 Just write `1` to the LED handler `0xaa` to switch it on (it will keep blinking until disconnection) or write `0` to switch it off
 
-### Advertisement data
+#### Real time data
+
+TODO
+
+#### Historical data
+
+TODO
+
+##### Device time
+
+TODO
+
+###### Entry count
+
+TODO
+
+###### Read entry
+
+TODO
+
+###### Clear entries
+
+TODO
+
+## Advertisement data
 
 TODO
 

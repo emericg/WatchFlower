@@ -92,8 +92,7 @@
 | Thermometer                       | 0 ~ 60 °C (± 0.3 °C)              |
 | Hygrometer                        | 0 ~ 99% RH (± 3 %RH)              |
 
-| Hygrometer                        | 2ACD3-WS08                        |
-| Hygrometer (updated?)             | KEU-WA59D                         |
+| Hygrometer                        | 2ACD3-WS08 and KEU-WA59D          |
 | --------------------------------- | --------------------------------- |
 | Screen                            | LCD                               |
 | Battery                           | 1 x CR2477                        |
@@ -101,8 +100,7 @@
 | Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
 | BLE API                           | [link](thermobeacon-ble-api.md)   |
 
-| Keychain Hygrometer               | 2ACD3-WS07                        |
-| Keychain Hygrometer (square)      | 2ACD3-WS02                        |
+| Keychain Hygrometer               | 2ACD3-WS02 and 2ACD3-WS07         |
 | --------------------------------- | --------------------------------- |
 | Screen                            | N/A                               |
 | Battery                           | 1 x CR2032 or CR2477              |

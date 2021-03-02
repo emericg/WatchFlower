@@ -15,6 +15,10 @@ I would not recommend an HiGrow for serious plant monitoring, only for tinkering
 ## Features
 
 * Read real-time sensor values
+* Temperature
+* Light Monitor
+* Soil moisture
+* Soil fertility
 * Features can be extended through available GPIO and an open firmware
 
 ## Protocol
@@ -28,7 +32,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 The name advertised by the device is `HiGrow`
 
@@ -55,17 +68,7 @@ The name advertised by the device is `HiGrow`
 | eeee9a32-a0b0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | Air Monitor realtime data     |
 | eeee9a32-a0c0-4cbd-b00b-6b519bf2780f | 0x0?   | read/notify | Geiger Counter realtime data  |
 
-
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Name
+#### Device name
 
 A read request to the `0x16` handle will return n bytes of data, for example `0x486947726f77` corresponding to the device name.
 
@@ -77,7 +80,7 @@ A read request to the `0x16` handle will return n bytes of data, for example `0x
 | ----- | ---------- | ----------- | ----------- |
 | all   | ASCII text | HiGrow      | device name |
 
-### Firmware
+#### Firmware
 
 A read request to the `0x2c` handle will return 3 bytes of data, for example `0x302e33`.
 
@@ -89,7 +92,7 @@ A read request to the `0x2c` handle will return 3 bytes of data, for example `0x
 | ----- | ---------- | ----- | ------------------ |
 | all   | ASCII text | 0.3   | firmware version   |
 
-### Battery
+#### Battery
 
 A read request to the `0x2e` handle will return 4 bytes of data, for example `0x64000000`.
 
@@ -101,7 +104,7 @@ A read request to the `0x2e` handle will return 4 bytes of data, for example `0x
 | ----- | ---------- | ----- | ------------------ |
 | all   | ASCII text | 100   | battery level      |
 
-### Real-time data
+#### Real-time data
 
 A read request will return 16 bytes of data, for example `0x4001251500006400000000000000000`.  
 You can subscribe to this handle and and receive notifications for new values (once per second) by writing 2 bytes (`0x0100`) to the Client Characteristic Configuration descriptor (`0x2902`).  
@@ -119,7 +122,11 @@ You can subscribe to this handle and and receive notifications for new values (o
 | 06-08 | uint24     | 100   | brightness in lux          |
 | 09-15 | -          | -     | reserved                   |
 
-### Advertisement data
+#### Historical data
+
+None
+
+## Advertisement data
 
 None
 

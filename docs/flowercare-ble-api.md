@@ -9,7 +9,7 @@
 * A CR2032 coin cell battery is used as power source
 
 Xiaomi MiJia **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01)  
-VegTrug **Grow Care Garden** (GCLS002)
+VegTrug **Grow Care Garden** (GCLS002)  
 
 ## Features
 
@@ -34,7 +34,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 The name advertised by the device is `Flower care`
 
@@ -66,17 +75,7 @@ The name advertised by the device is `Flower care`
 | 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read       | historical sensor values           |
 | 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read       | device time                        |
 
-
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Name
+#### Device name
 
 A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f7765722063617265` corresponding to the device name.
 
@@ -88,7 +87,7 @@ A read request to the `0x03` handle will return n bytes of data, for example `0x
 | ----- | ---------- | ----------- | ----------- |
 | all   | ASCII text | Flower Care | device name |
 
-### Firmware and battery
+#### Firmware and battery
 
 A read request to the `0x38` handle will return 7 bytes of data, for example `0x6328332e312e39`.
 
@@ -104,22 +103,11 @@ A read request to the `0x38` handle will return 7 bytes of data, for example `0x
 The second byte (`0x28`) seems to be a separator. In older firmware versions it always read `0x13`.  
 Both are control characters in the ASCII table.
 
-### Device time
+#### Blink
 
-A read request to the `0x41` handle will return 4 bytes of data, for example `0x09ef2000`.
+Writing 2 bytes (`0xfdff`) to the mode change handle (`0x33`) will make the device blink the top LED once.
 
-| Position | 00 | 01 | 02 | 03 |
-| -------- | -- | -- | -- | -- |
-| Value    | 09 | ef | 20 | 00 |
-
-| Bytes | Type       | Value   | Description                       |
-| ----- | ---------- | ------- | --------------------------------- |
-| 00-03 | uint32     | 2158345 | seconds since device epoch (boot) |
-
-Considering the device's epoch as second 0, the value obtained is a delta from now from which we can determine the actual time.  
-We use this method while determining the datetime of historical entries.  
-
-### Real-time data
+#### Real-time data
 
 In order to read the sensor values you need to change its mode.  
 This can be done by writing 2 bytes (`0xa01f`) to the mode change handle (`0x33`).  
@@ -140,10 +128,25 @@ A read request will return 16 bytes of data, for example `0xea0000ab00000015b200
 | 08-09 | uint16     | 178   | conductivity in µS/cm |
 | 10-15 | ?          | ?     | ?                     |
 
-### Historical data
+#### Historical data
 
 The device stores historical data when not connected that can be later synchronized.  
 As with reading real-time sensor information, we need to change the device mode by writing 3 bytes (`0xa00000`) to the history control handle (`0x3e`).  
+
+##### Device time
+
+A read request to the `0x41` handle will return 4 bytes of data, for example `0x09ef2000`.
+
+| Position | 00 | 01 | 02 | 03 |
+| -------- | -- | -- | -- | -- |
+| Value    | 09 | ef | 20 | 00 |
+
+| Bytes | Type       | Value   | Description                       |
+| ----- | ---------- | ------- | --------------------------------- |
+| 00-03 | uint32     | 2158345 | seconds since device epoch (boot) |
+
+Considering the device's epoch as second 0, the value obtained is a delta from now from which we can determine the actual time.  
+We use this method while determining the datetime of historical entries.  
 
 ##### Entry count
 
@@ -189,11 +192,7 @@ This will return 16 bytes of data, for example `0x70e72000eb00005a00000015b30000
 Once all entries have been read, they can be wiped from the device by marking the process as `successful`.  
 This can be achieved by writing 3 bytes (`0xa20000`) to the history control handle (`0x3e`).  
 
-### Blink
-
-Writing 2 bytes (`0xfdff`) to the mode change handle (`0x33`) will make the device blink the top LED once.
-
-### Advertisement data
+## Advertisement data
 
 TODO
 

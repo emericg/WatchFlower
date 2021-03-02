@@ -32,7 +32,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 The name advertised by the device is `Parrot pot AABB` (the last 4 characters are the last characters of the device's MAC address)
 
@@ -91,16 +100,7 @@ The name advertised by the device is `Parrot pot AABB` (the last 4 characters ar
 | 39e1fd01-84a8-11e2-afba-0002a5d5c51b | 0x70   | read       | current time                   |
 | 39e1fd02-84a8-11e2-afba-0002a5d5c51b | 0x70   | read/write | ?                              |
 
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Name
+#### Device name
 
 A read request to the `0x03` handle will return n bytes of data, for example `0x506172726f7420706f74` corresponding to the device name.
 
@@ -112,7 +112,7 @@ A read request to the `0x03` handle will return n bytes of data, for example `0x
 | ----- | ---------- | ------------ | ----------- |
 | all   | ASCII text | Parrot pot   | device name |
 
-### Battery
+#### Battery
 
 A read request to the `0x33` handle will return 1 bytes of data, for example `0x64`.
 
@@ -124,23 +124,35 @@ A read request to the `0x33` handle will return 1 bytes of data, for example `0x
 | ----- | ---------- | ----- | ------------------ |
 | 00    | uint8      | 100   | battery level in % |
 
-### Device time
+#### Last move
 
 TODO
 
-### Last move
+#### Real time data
 
 TODO
 
-### Real time data
+#### Historical data
 
 TODO
 
-### Historical data
+##### Device time
 
 TODO
 
-### Advertisement data
+##### Entry count
+
+TODO
+
+##### Read entry
+
+TODO
+
+##### Clear entries
+
+TODO
+
+## Advertisement data
 
 TODO
 

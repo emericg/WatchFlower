@@ -33,7 +33,16 @@ The basic technologies behind the sensors communication are [Bluetooth Low Energ
 They allow the devices and the app to share data in a defined manner and define the way you can discover the devices and their services.
 In general you have to know about services and characteristics to talk to a BLE device.
 
-### Services, characteristics and handles
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+### Data structure
+
+The data is encoded in little-endian byte order.  
+This means that the data is represented with the least significant byte first.
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
+## Services, characteristics and handles
 
 The name advertised by the device is `ropot`
 
@@ -65,17 +74,7 @@ The name advertised by the device is `ropot`
 | 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read       | historical sensor values           |
 | 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read       | device time                        |
 
-
-<img src="endianness.png" width="400px" alt="Endianness" align="right" />
-
-### Data structure
-
-The data is encoded on bytes in little-endian.  
-This means that the data is represented with the least significant byte first.
-
-To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
-
-### Name
+#### Device name
 
 A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f7765722063617265` corresponding to the device name.  
 The RoPot does identify itself as a Flower care here.
@@ -88,7 +87,7 @@ The RoPot does identify itself as a Flower care here.
 | ----- | ---------- | ----------- | ----------- |
 | all   | ASCII text | Flower care | device name |
 
-### Firmware and battery
+#### Firmware and battery
 
 A read request to the `0x38` handle will return 7 bytes of data, for example `0x6314312e312e35`.
 
@@ -104,7 +103,7 @@ A read request to the `0x38` handle will return 7 bytes of data, for example `0x
 The second byte (`0x14`) seems to be a separator. Flower Care firmware use `0x28` or `0x13`.  
 They are all control characters in the ASCII table.
 
-### Real-time data
+#### Real-time data
 
 In order to read the sensor values you need to change its mode.  
 This can be done by writing 2 bytes (`0xa01f`) to the mode change handle (`0x33`).  
@@ -124,12 +123,12 @@ A read request will return 10 bytes of data, for example `0xea0000ab00000015b200
 | 07    | uint8      | 21    | moisture in %         |
 | 08-09 | uint16     | 178   | conductivity in µS/cm |
 
-### Historical data
+#### Historical data
 
 The device stores historical data when not connected that can be later synchronized.  
 As with reading real-time sensor information, we need to change the device mode by writing 3 bytes (`0xa00000`) to the history control handle (`0x3e`).  
 
-### Device time
+##### Device time
 
 A read request to the `0x3831` handle will return 4 bytes of data, for example `0x09ef2000`.
 
@@ -144,7 +143,7 @@ A read request to the `0x3831` handle will return 4 bytes of data, for example `
 Considering the device's epoch as second 0, the value obtained is a delta from now from which we can determine the actual time.  
 We use this method while determining the datetime of historical entries.  
 
-##### Entry count
+###### Entry count
 
 The next step is to get information about the stored history by reading from the history data handle (`0x3531`).  
 This will return 16 bytes of data, for example `0x2b007b04ba130800c815080000000000`.  
@@ -188,7 +187,7 @@ This will return 16 bytes of data, for example `0x70e72000eb00005a00000015b30000
 Once all entries have been read, they can be wiped from the device by marking the process as `successful`.  
 This can be achieved by writing 3 bytes (`0xa20000`) to the history control handle (`0x3e`).  
 
-### Advertisement data
+## Advertisement data
 
 TODO
 

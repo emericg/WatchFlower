@@ -1,22 +1,41 @@
 
 # Application logo and icons:
-- assets/logos/logo.svg             // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
-- assets/logos/watchflower*.svg     // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
-- assets/menus/menu_logo.svg        // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/logos/logo.svg                 // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/logos/watchflower*.svg         // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/menus/menu_logo.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
 
-# Welcome screns:
-- assets/devices/welcome-*.svg      // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+# Welcome screens:
+- assets/devices/welcome-*.svg          // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
 
-# Others:
-- assets/devices/flowercare.svg     // Emeric Grange // CC BY-SA 4.0
-- assets/devices/hygrotemp.svg      // Emeric Grange // CC BY-SA 4.0
-- assets/devices/hygrotemp-clock.svg// Emeric Grange // CC BY-SA 4.0
-- assets/devices/ropot.svg          // Emeric Grange // CC BY-SA 4.0
-- assets/menus/menu_back.svg        // Emeric Grange // CC BY-SA 4.0
-- assets/menus/menu_close.svg       // Emeric Grange // CC BY-SA 4.0
-- assets/logos/github.svg           // https://github.com/logos // proprietary
-- assets/icons_custom/nuclear_icon.svg      // CC0
-- assets/icons_custom/nuclear_icon_big.svg  // CC0
+# Device icons:
+- docs/flowercare.svg                   // Emeric Grange // CC BY-SA 4.0
+- docs/flowerpower.svg                  // Emeric Grange // CC BY-SA 4.0
+- docs/higrow.svg                       // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_clock.svg              // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_eink.svg               // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_lcd.svg                // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_square_eink.svg        // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_square_lcd.svg         // Emeric Grange // CC BY-SA 4.0
+- docs/parrotpot.svg                    // Emeric Grange // CC BY-SA 4.0
+- docs/ropot.svg                        // Emeric Grange // CC BY-SA 4.0
+- docs/thermobeacon_round.svg           // Emeric Grange // CC BY-SA 4.0
+- docs/thermobeacon_square.svg          // Emeric Grange // CC BY-SA 4.0
 
 # Google Material Design icons:
-- assets/icons_material/*           // Google // CC BY-SA 4.0
+- assets/icons_material/*               // Google // CC BY-SA 4.0
+
+# Based on Google Material Design icons:
+- assets/icons_custom/*-24px.svg        // Emeric Grange // CC BY-SA 4.0
+
+# Font Awesome icons:
+- assets/icons_fontawesome/*            // Font Awesome // CC BY 4.0
+- docs/bluetooth-brands.svg             // Font Awesome // CC BY 4.0
+- docs/lungs-solid.svg                  // Font Awesome // CC BY 4.0
+- docs/radiation-alt-solid.svg          // Font Awesome // CC BY 4.0
+
+# Others:
+- assets/menus/menu_back.svg                // Emeric Grange // CC BY-SA 4.0
+- assets/menus/menu_close.svg               // Emeric Grange // CC BY-SA 4.0
+- assets/icons_custom/nuclear_icon.svg      // CC0
+- assets/icons_custom/nuclear_icon_big.svg  // CC0
+- assets/logos/github.svg                   // https://github.com/logos // proprietary
