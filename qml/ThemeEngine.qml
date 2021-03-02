@@ -71,6 +71,7 @@ Item {
 
     property int componentHeight: 40
     property int componentRadius: 4
+    property int componentBorderWidth: 1
 
     ////////////////
 
@@ -170,11 +171,15 @@ Item {
             colorDeviceHeader = "white"
             colorDeviceWidget = "#fdfdfd"
 
+            componentHeight = 40
+            componentRadius = 20
+            componentBorderWidth = 2
+
             colorComponent = "#EFEFEF"
             colorComponentText = "black"
             colorComponentContent = "black"
-            colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#CACACA"
+            colorComponentBorder = "#EAEAEA"
+            colorComponentDown = "#DADADA"
             colorComponentBackground = "#FAFAFA"
 
         } else if (themeIndex === ThemeEngine.THEME_GREEN) {
@@ -218,12 +223,16 @@ Item {
             colorDeviceHeader = colorForeground
             colorDeviceWidget = "#fdfdfd"
 
-            colorComponent = "#eaeaea"
+            componentHeight = 40
+            componentRadius = 4
+            componentBorderWidth = 2
+
+            colorComponent = "#EAEAEA"
             colorComponentText = "black"
             colorComponentContent = "black"
-            colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#cacaca"
-            colorComponentBackground = "#eaeaea"
+            colorComponentBorder = "#E3E3E3"
+            colorComponentDown = "#D0D0D0"
+            colorComponentBackground = "#EAEAEA"
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
 
@@ -266,11 +275,15 @@ Item {
             colorDeviceHeader = colorForeground
             colorDeviceWidget = "#fdfdfd"
 
+            componentHeight = 40
+            componentRadius = 8
+            componentBorderWidth = 2
+
             colorComponent = "#EFEFEF"
             colorComponentText = "black"
             colorComponentContent = "black"
-            colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#CACACA"
+            colorComponentBorder = "#E8E8E8"
+            colorComponentDown = "#DDDDDD"
             colorComponentBackground = "#FAFAFA"
 
         } else if (themeIndex === ThemeEngine.THEME_NIGHT) {
@@ -304,22 +317,26 @@ Item {
             colorWarning = colorRed
             colorError = colorRed
 
-            colorText = "#EEEEEE"
-            colorSubText = "#AAAAAA"
+            colorText = "#EEE"
+            colorSubText = "#AAA"
             colorIcon = "#b9babe"
             colorSeparator = "#404040"
-            colorLowContrast = "#111111"
+            colorLowContrast = "#111"
             colorHighContrast = "white"
 
             colorDeviceHeader = colorForeground
             colorDeviceWidget = "#333"
 
+            componentHeight = 40
+            componentRadius = 4
+            componentBorderWidth = 2
+
             colorComponent = "#757575"
-            colorComponentText = "#222222"
+            colorComponentText = "#222"
             colorComponentContent = "white"
-            colorComponentBorder = "#757575"
-            colorComponentDown = "#555555"
-            colorComponentBackground = "#dddddd"
+            colorComponentBorder = "#777"
+            colorComponentDown = "#595959"
+            colorComponentBackground = "#DDD"
 
         }
 

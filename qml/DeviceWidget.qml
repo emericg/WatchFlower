@@ -435,6 +435,7 @@ Item {
                             loops: Animation.Infinite
                             alwaysRunToEnd: true
                             running: boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
+                                     boxDevice.status !== DeviceUtils.DEVICE_QUEUED &&
                                      boxDevice.status !== DeviceUtils.DEVICE_CONNECTED
 
                             PropertyAnimation { to: 0.33; duration: 750; }

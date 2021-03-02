@@ -13,9 +13,12 @@ Item {
     property var currentDevice: null
     property alias deviceScreenChart: graphLoader.item
 
-    property bool unicolor: (Theme.colorHeader !== Theme.colorBackground)
-    property string cchh: unicolor ? Theme.colorHeader : Theme.colorPrimary
+    property bool unicolor: (Theme.colorHeader === Theme.colorBackground)
     property string cccc: unicolor ? Theme.colorHeaderContent : "white"
+
+    property bool singleColumn: true
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Connections {
         target: currentDevice

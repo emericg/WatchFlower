@@ -397,11 +397,12 @@ Item {
         Rectangle {
             id: dateIndicator
             width: textTime.width + 16
-            height: textTime.height + 12
+            height: textTime.height + 16
 
             radius: 4
             visible: false
             color: Theme.colorForeground
+            border.width: Theme.componentBorderWidth
             border.color: Theme.colorSeparator
 
             Text {
@@ -417,12 +418,13 @@ Item {
 
         Rectangle {
             id: dataIndicator
-            width: dataIndicatorText.width + 12
-            height: dataIndicatorText.height + 12
+            width: dataIndicatorText.width + 16
+            height: dataIndicatorText.height + 16
 
             radius: 4
             visible: false
             color: Theme.colorForeground
+            border.width: Theme.componentBorderWidth
             border.color: Theme.colorSeparator
 
             Text {

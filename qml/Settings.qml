@@ -542,7 +542,7 @@ Item {
                     anchors.left: text_bluetoothSimUpdate1.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
-                    anchors.rightMargin: text_bluetoothControl
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: isDesktop

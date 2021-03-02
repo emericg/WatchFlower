@@ -27,12 +27,12 @@ Popup {
     background: Rectangle {
         color: Theme.colorBackground
         border.color: Theme.colorSeparator
-        border.width: singleColumn ? 0 : 1
+        border.width: singleColumn ? 0 : Theme.componentBorderWidth
         radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
             width: parent.width
-            height: 1
+            height: Theme.componentBorderWidth
             visible: singleColumn
             color: Theme.colorSeparator
         }

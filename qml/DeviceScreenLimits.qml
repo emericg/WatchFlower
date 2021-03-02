@@ -249,7 +249,7 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: isDesktop
+                    visible: (isDesktop && !unicolor)
                     height: 2
                     opacity: 0.5
                     color: Theme.colorSeparator
@@ -700,7 +700,7 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorForeground
-                    border.width: (insideMode && isDesktop) ? 1 : 0
+                    border.width: (insideMode && isDesktop) ? 2 : 0
                     border.color: Theme.colorSeparator
 
                     opacity: insideMode ? 1 : 0.5
@@ -740,7 +740,7 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorForeground
-                    border.width: (insideMode && isDesktop) ? 1 : 0
+                    border.width: (outsideMode && isDesktop) ? 2 : 0
                     border.color: Theme.colorSeparator
 
                     opacity: outsideMode ? 1 : 0.5

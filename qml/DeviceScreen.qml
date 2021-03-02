@@ -10,6 +10,8 @@ Item {
 
     property var currentDevice: null
 
+    property bool unicolor: (Theme.colorHeader === Theme.colorBackground)
+
     Connections {
         target: currentDevice
         onStatusUpdated: {

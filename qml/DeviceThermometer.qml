@@ -13,9 +13,23 @@ Item {
     property var currentDevice: null
     property alias deviceScreenChart: graphLoader.item
 
-    property bool unicolor: (Theme.colorHeader !== Theme.colorBackground)
-    property string cchh: unicolor ? Theme.colorHeader : Theme.colorPrimary
+    property bool unicolor: (Theme.colorHeader === Theme.colorBackground)
     property string cccc: unicolor ? Theme.colorHeaderContent : "white"
+
+    property bool singleColumn: {
+        if (isMobile) {
+            if (screenOrientation === Qt.PortraitOrientation ||
+                (isTablet && width < 480)) { // can be a 2/3 split screen on tablet
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return (appWindow.width < appWindow.height)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Connections {
         target: currentDevice
@@ -165,27 +179,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property bool singleColumn: {
-        if (isMobile) {
-            if (isPhone) {
-                if (screenOrientation === Qt.PortraitOrientation) {
-                    return true
-                } else {
-                    return false
-                }
-            }
-            if (isTablet) {
-                if (screenOrientation === Qt.PortraitOrientation || width < 480) {
-                    return true
-                } else {
-                    return false
-                }
-            }
-        } else {
-            return (appWindow.width < 720)
-        }
-    }
-
     Flow {
         anchors.fill: parent
 
@@ -197,12 +190,12 @@ Item {
 
             width: singleColumn ? parent.width : dimboxw
             height: singleColumn ? dimboxh: parent.height
-            color: cchh
+            color: Theme.colorHeader
             z: 5
 
             //width: dimboxw - 32
             //height: dimboxh: - 32
-            //color: singleColumn ? Theme.colorPrimary : cchh
+            //color: Theme.colorHeader
             //radius: 16
 
             MouseArea { anchors.fill: parent } // prevent clicks below this area
@@ -369,12 +362,24 @@ Item {
                 }
             }
 
+            ////////
+
+            Rectangle {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+
+                visible: (isDesktop && !singleColumn)
+                width: 2
+                opacity: 0.33
+                color: Theme.colorHeaderHighlight
+            }
             Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (isDesktop && singleColumn && unicolor)
+                visible: (isDesktop && singleColumn)
                 height: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight
