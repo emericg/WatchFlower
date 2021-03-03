@@ -76,7 +76,7 @@ Rectangle {
             index: 1
             button_text: qsTr("Blink LED")
             button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
             onButtonClicked: {
                 deviceLedButtonClicked()
                 menuSelected(index)
@@ -89,7 +89,7 @@ Rectangle {
             index: 0
             button_text: qsTr("Switch graph")
             button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
-            visible: (appContent.state === "DeviceThermo")
+            visible: (appContent.state === "DeviceThermometer")
             onButtonClicked: {
                 if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
                 else settingsManager.graphThermometer = "minmax"

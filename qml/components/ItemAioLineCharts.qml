@@ -231,10 +231,10 @@ Item {
 
                 if (Math.abs(dist) < 1) {
                     // nearest neighbor
-                    if (appContent.state === "DeviceSensor") {
+                    if (appContent.state === "DevicePlantSensor") {
                         dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
                                                       tempData.at(i).y, -99, lumiData.at(i).y)
-                    } else if (appContent.state === "DeviceThermo") {
+                    } else if (appContent.state === "DeviceThermometer") {
                         dataIndicator.visible = true
                         dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
                         dataIndicatorText.text += " " + hygroData.at(i).y.toFixed(0) + "%"
@@ -252,14 +252,14 @@ Item {
 
             if (x1 >= 0 && x2 > x1) {
                 // linear interpolation
-                if (appContent.state === "DeviceSensor") {
+                if (appContent.state === "DevicePlantSensor") {
                     dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
                                                   qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x),
                                                   -99,
                                                   qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
                                                   -99,
                                                   qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x))
-                } else if (appContent.state === "DeviceThermo") {
+                } else if (appContent.state === "DeviceThermometer") {
                     dataIndicator.visible = true
                     var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
                     dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
@@ -455,7 +455,7 @@ Item {
         dataIndicator.visible = false
         verticalIndicator.visible = false
 
-        if (typeof deviceScreenData === "undefined" || !deviceScreenData) return
-        if (appContent.state === "DeviceSensor") dataIndicators.resetDataBars()
+        if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
+        if (appContent.state === "DevicePlantSensor") dataIndicators.resetDataBars()
     }
 }

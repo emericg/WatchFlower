@@ -7,7 +7,7 @@ import DeviceUtils 1.0
 import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
-    id: deviceScreenData
+    id: devicePlantSensorData
     width: 400
     height: 300
 
@@ -17,9 +17,9 @@ Item {
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateHeader() >> " + currentDevice)
+        //console.log("DevicePlantSensorData // updateHeader() >> " + currentDevice)
 
-        // Sensor battery level
+        // Battery level
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
@@ -42,7 +42,7 @@ Item {
     function updateStatusText() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateStatusText() >> " + currentDevice)
+        //console.log("DevicePlantSensorData // updateStatusText() >> " + currentDevice)
 
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
         textStatus.color = Theme.colorHighContrast
@@ -63,7 +63,7 @@ Item {
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // loadData() >> " + currentDevice)
+        //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
         updateHeader()
 
@@ -88,7 +88,7 @@ Item {
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateData() >> " + currentDevice)
+        //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         resetHistoryMode()
         dataIndicators.updateData()
@@ -134,7 +134,7 @@ Item {
             }
         }
         if (isDesktop) {
-            if (deviceScreenData.width < deviceScreenData.height) {
+            if (devicePlantSensorData.width < devicePlantSensorData.height) {
                 contentGrid_lvl2.columns = 1
                 contentGrid_lvl2.rows = 2
                 rectangleHeader.color = Theme.colorForeground

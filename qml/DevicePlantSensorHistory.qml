@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
-    id: deviceScreenHistory
+    id: devicePlantSensorHistory
     width: 400
     height: 300
 
@@ -13,9 +13,9 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("DeviceScreenHistory // updateHeader() >> " + currentDevice)
+        //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
 
-        // Sensor battery level
+        // Battery level
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
     }
@@ -23,7 +23,7 @@ Item {
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
 /*
-        console.log("DeviceScreenHistory // loadData() >> " + currentDevice)
+        console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
 
         console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
         console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor())

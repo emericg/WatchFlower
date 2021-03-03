@@ -310,23 +310,18 @@ Item {
                         selectedDevice = boxDevice
 
                         if (boxDevice.isPlantSensor()) {
-                            screenDeviceSensor.loadDevice(boxDevice)
-                            appContent.state = "DeviceSensor"
+                            screenDevicePlantSensor.loadDevice(boxDevice)
+                            appContent.state = "DevicePlantSensor"
                         } else if (boxDevice.isThermometer()) {
                             screenDeviceThermometer.loadDevice(boxDevice)
-                            appContent.state = "DeviceThermo"
+                            appContent.state = "DeviceThermometer"
                         } else if (boxDevice.isEnvironmentalSensor()) {
-                            //if (boxDevice.hasGeigerCounter()) {
-                            //    screenDeviceGeiger.loadDevice(boxDevice)
-                            //    appContent.state = "DeviceGeiger"
-                            //} else {
                             screenDeviceEnvironmental.loadDevice(boxDevice)
                             appContent.state = "DeviceEnvironmental"
                         }
                     } else { // HACK
-                         if (boxDevice.hasGeigerCounter()) {
-                             //screenDeviceGeiger.loadDevice(boxDevice)
-                             //appContent.state = "DeviceGeiger"
+                         if (boxDevice.isEnvironmentalSensor()) {
+                             selectedDevice = boxDevice
                              screenDeviceEnvironmental.loadDevice(boxDevice)
                              appContent.state = "DeviceEnvironmental"
                          }

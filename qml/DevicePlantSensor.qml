@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Item {
-    id: deviceScreenSensor
+    id: devicePlantSensor
     width: 450
     height: 700
 
@@ -104,7 +104,7 @@ Item {
         if (clickedDevice === currentDevice) return
 
         currentDevice = clickedDevice
-        //console.log("DeviceScreen // loadDevice() >> " + currentDevice)
+        //console.log("DevicePlantSensor // loadDevice() >> " + currentDevice)
 
         sensorPages.currentIndex = 0
         sensorPages.interactive = isPhone
@@ -150,15 +150,15 @@ Item {
                 }
             }
 
-            DeviceScreenData {
+            DevicePlantSensorData {
                 clip: true
                 id: rectangleDeviceData
             }
-            DeviceScreenHistory {
+            DevicePlantSensorHistory {
                 clip: true
                 id: rectangleDeviceHistory
             }
-            DeviceScreenLimits {
+            DevicePlantSensorLimits {
                 clip: true
                 id: rectangleDeviceLimits
             }

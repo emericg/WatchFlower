@@ -6,17 +6,17 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
-    id: deviceScreenLimits
+    id: devicePlantSensorLimits
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("DeviceScreenLimits // updateHeader() >> " + currentDevice)
+        //console.log("DevicePlantSensorLimits // updateHeader() >> " + currentDevice)
 
-        // Sensor battery level
+        // Battery level
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
-        // Sensor address
+        // Address
         if (currentDevice.deviceAddress.charAt(0) !== '{')
             textAddr.text = "[" + currentDevice.deviceAddress + "]"
 
@@ -33,6 +33,7 @@ Item {
 
     function updateLimits() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("DevicePlantSensorLimits // updateLimits() >> " + currentDevice)
 
         rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
         rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
@@ -42,6 +43,7 @@ Item {
 
     function updateLimitsVisibility() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("DevicePlantSensorLimits // updateLimitsVisibility() >> " + currentDevice)
 
         itemTemp.visible = currentDevice.hasTemperatureSensor()
         itemHygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()

@@ -26,7 +26,7 @@ Item {
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor()) return
-        //console.log("DeviceScreenData // updateData() >> " + currentDevice)
+        //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         // Has data? always display them
         if (currentDevice.isAvailable()) {

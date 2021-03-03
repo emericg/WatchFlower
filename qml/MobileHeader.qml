@@ -148,7 +148,7 @@ Rectangle {
                 width: 36; height: 36;
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: (appContent.state === "DeviceThermo")
+                visible: (appContent.state === "DeviceThermometer")
                 source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
                 iconColor: Theme.colorHeaderContent
                 backgroundColor: Theme.colorHeaderHighlight
@@ -165,7 +165,7 @@ Rectangle {
                 width: 36; height: 36;
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
                 source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
                 iconColor: Theme.colorHeaderContent
                 backgroundColor: Theme.colorHeaderHighlight
@@ -178,7 +178,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
-                          ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+                          ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 iconColor: Theme.colorHeaderContent
                 backgroundColor: Theme.colorHeaderHighlight
@@ -189,7 +189,7 @@ Rectangle {
                 width: 36; height: 36;
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+                visible: (deviceManager.bluetooth && ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
                 source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                 iconColor: Theme.colorHeaderContent
                 backgroundColor: Theme.colorHeaderHighlight
@@ -215,7 +215,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (deviceManager.bluetooth && (appContent.state === "DeviceSensor" || appContent.state === "DeviceThermo"))
+                visible: (deviceManager.bluetooth && (appContent.state === "DevicePlantSensor" || appContent.state === "DeviceThermometer"))
                 onClicked: {
                     rightMenuClicked()
                     actionMenu.open()

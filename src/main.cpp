@@ -185,9 +185,9 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     ShareUtils *mShareUtils = new ShareUtils();
     engine_context->setContextProperty("utilsShare", mShareUtils);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileMain.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
 #else
-    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopMain.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));
 #endif
     if (engine.rootObjects().isEmpty())
     {

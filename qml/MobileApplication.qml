@@ -259,15 +259,15 @@ ApplicationWindow {
                     else
                         exitTimer.start()
                 }
-            } else if (appContent.state === "DeviceSensor") {
+            } else if (appContent.state === "DevicePlantSensor") {
                 if (appHeader.rightMenuIsOpen()) {
                     appHeader.rightMenuClose()
-                } else if (screenDeviceSensor.isHistoryMode()) {
-                    screenDeviceSensor.resetHistoryMode()
+                } else if (screenDevicePlantSensor.isHistoryMode()) {
+                    screenDevicePlantSensor.resetHistoryMode()
                 } else {
                     appContent.state = "DeviceList"
                 }
-            } else if (appContent.state === "DeviceThermo") {
+            } else if (appContent.state === "DeviceThermometer") {
                 if (appHeader.rightMenuIsOpen()) {
                     appHeader.rightMenuClose()
                 } else if (screenDeviceThermometer.isHistoryMode()) {
@@ -292,17 +292,17 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceList
         }
-        DeviceScreen {
+        DevicePlantSensor {
             anchors.fill: parent
-            id: screenDeviceSensor
+            id: screenDevicePlantSensor
         }
         DeviceThermometer {
             anchors.fill: parent
             id: screenDeviceThermometer
         }
-        DeviceGeiger {
+        DeviceEnvironmental {
             anchors.fill: parent
-            id: screenDeviceGeiger
+            id: screenDeviceEnvironmental
         }
         Settings {
             anchors.fill: parent
@@ -342,9 +342,9 @@ ApplicationWindow {
                 PropertyChanges { target: appHeader; title: qsTr("Welcome"); }
                 PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDevicePlantSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
@@ -354,45 +354,45 @@ ApplicationWindow {
                 PropertyChanges { target: appHeader; title: "WatchFlower"; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: true; visible: true; }
-                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDevicePlantSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "DeviceSensor"
+                name: "DevicePlantSensor"
                 PropertyChanges { target: appHeader; title: selectedDevice.deviceName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceSensor; enabled: true; visible: true; }
+                PropertyChanges { target: screenDevicePlantSensor; enabled: true; visible: true; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "DeviceThermo"
+                name: "DeviceThermometer"
                 PropertyChanges { target: appHeader; title: qsTr("Thermometer"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDevicePlantSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; enabled: true; visible: true; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "DeviceGeiger"
-                PropertyChanges { target: appHeader; title: qsTr("Geiger Counter"); }
+                name: "DeviceEnvironmental"
+                PropertyChanges { target: appHeader; title: qsTr("Environmental"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceSensor; enabled: false; visible: false }
+                PropertyChanges { target: screenDevicePlantSensor; enabled: false; visible: false }
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: true; visible: true; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: true; visible: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
@@ -402,9 +402,9 @@ ApplicationWindow {
                 PropertyChanges { target: appHeader; title: qsTr("Settings"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
-                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
@@ -414,9 +414,9 @@ ApplicationWindow {
                 PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
-                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: true; enabled: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
@@ -426,9 +426,9 @@ ApplicationWindow {
                 PropertyChanges { target: appHeader; title: qsTr("About"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
-                PropertyChanges { target: screenDeviceSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceThermometer; enabled: false; visible: false; }
-                PropertyChanges { target: screenDeviceGeiger; enabled: false; visible: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
@@ -461,8 +461,8 @@ ApplicationWindow {
         // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermo") ||
-                 (isPhone && appContent.state === "DeviceSensor" && screenOrientation === Qt.PortraitOrientation)
+        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermometer") ||
+                 (isPhone && appContent.state === "DevicePlantSensor" && screenOrientation === Qt.PortraitOrientation)
 
         Row {
             id: tabletMenuScreen
@@ -527,7 +527,7 @@ ApplicationWindow {
             signal deviceHistoryButtonClicked()
             signal deviceSettingsButtonClicked()
 
-            visible: (appContent.state === "DeviceSensor")
+            visible: (appContent.state === "DevicePlantSensor")
 
             function setActiveDeviceData() {
                 menuDeviceData.selected = true
@@ -554,7 +554,7 @@ ApplicationWindow {
                 highlightMode: "text"
 
                 menuText: qsTr("Data")
-                selected: (appContent.state === "DeviceSensor" && appContent.state === "DeviceList")
+                selected: (appContent.state === "DevicePlantSensor" && appContent.state === "DeviceList")
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: tabletMenuDevice.deviceDataButtonClicked()
             }

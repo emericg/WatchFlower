@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/qml">
-        <file>MobileMain.qml</file>
+        <file>MobileApplication.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
-        <file>DesktopMain.qml</file>
+        <file>DesktopApplication.qml</file>
         <file>DesktopHeader.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
@@ -11,20 +11,23 @@
         <file>Tutorial.qml</file>
         <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>
-        <file>DeviceScreen.qml</file>
-        <file>DeviceScreenData.qml</file>
-        <file>DeviceScreenHistory.qml</file>
-        <file>DeviceScreenLimits.qml</file>
+        <file>DevicePlantSensor.qml</file>
+        <file>DevicePlantSensorData.qml</file>
+        <file>DevicePlantSensorHistory.qml</file>
+        <file>DevicePlantSensorLimits.qml</file>
         <file>DeviceThermometer.qml</file>
-        <file>DeviceGeiger.qml</file>
+        <file>DeviceEnvironmental.qml</file>
 
         <file>ThemeEngine.qml</file>
 
         <file alias="ActionButton.qml">components/ActionButton.qml</file>
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
+        <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
+        <file alias="ItemEnvBox.qml">components/ItemEnvBox.qml</file>
+        <file alias="ItemWeatherBox.qml">components/ItemWeatherBox.qml</file>
         <file alias="ItemIndicatorsCompact.qml">components/ItemIndicatorsCompact.qml</file>
         <file alias="ItemIndicatorsSolid.qml">components/ItemIndicatorsSolid.qml</file>
         <file alias="ItemThermometerWidget.qml">components/ItemThermometerWidget.qml</file>
@@ -33,16 +36,17 @@
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
 
+        <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
+        <file alias="ButtonImageThemed.qml">components_generic/ButtonImageThemed.qml</file>
+        <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
+        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemDataBarCompact.qml">components_generic/ItemDataBarCompact.qml</file>
         <file alias="ItemDataBarSolid.qml">components_generic/ItemDataBarSolid.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
         <file alias="ItemImageButtonTooltip.qml">components_generic/ItemImageButtonTooltip.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
-        <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
-        <file alias="ButtonImageThemed.qml">components_generic/ButtonImageThemed.qml</file>
-        <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
-        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
+        <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
         <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
         <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>

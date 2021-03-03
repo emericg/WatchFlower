@@ -124,6 +124,8 @@ Rectangle {
         color: Theme.colorHeaderContent
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Row {
         id: menu
         anchors.top: parent.top
@@ -143,7 +145,7 @@ Rectangle {
             width: 36
             height: 36
             anchors.verticalCenter: parent.verticalCenter
-            visible: (appContent.state === "DeviceThermo")
+            visible: (appContent.state === "DeviceThermometer")
 
             source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
             iconColor: Theme.colorHeaderContent
@@ -163,7 +165,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
-                      ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
+                      ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
             source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -176,7 +178,7 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DeviceSensor")
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
             source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -190,9 +192,9 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
-                      ((appContent.state === "DeviceSensor") ||
-                       (appContent.state === "DeviceThermo") ||
-                       (appContent.state === "DeviceGeiger")))
+                      ((appContent.state === "DevicePlantSensor") ||
+                       (appContent.state === "DeviceThermometer") ||
+                       (appContent.state === "DeviceEnvironmental")))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -206,14 +208,14 @@ Rectangle {
             width: 8
             height: 8
             anchors.verticalCenter: parent.verticalCenter
-            visible: (appContent.state === "DeviceThermo" || appContent.state === "DeviceGeiger")
+            visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
         }
 
         Row {
             id: menuDevice
             spacing: 0
 
-            visible: (appContent.state === "DeviceSensor")
+            visible: (appContent.state === "DevicePlantSensor")
 
             ItemMenuButton {
                 id: menuDeviceData
@@ -392,14 +394,15 @@ Rectangle {
         }
     }
 
+    ////////////
+
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         visible: (Theme.colorHeader !== Theme.colorBackground &&
-                  appContent.state !== "DeviceThermo" &&
-                  appContent.state !== "DeviceGeiger" &&
+                  appContent.state !== "DeviceThermometer" &&
                   appContent.state !== "DeviceEnvironmental" &&
                   appContent.state !== "Tutorial")
 
