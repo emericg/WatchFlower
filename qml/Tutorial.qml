@@ -53,15 +53,16 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 32
 
-                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi / MiJia '<b>Flower Care</b>' and '<b>RoPot</b>' sensors.")
+                    text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi '<b>Flower Care</b>' and '<b>RoPot</b>' or Parrot '<b>Flower Power</b>' sensors.")
                     textFormat: Text.StyledText
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorHeaderContent
                     horizontalAlignment: Text.AlignHCenter
                 }
-                Image {
-                    width: tutorialPages.width * 0.8
+                ImageSvg {
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
+                    height: width*0.229
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-devices.svg"
@@ -77,7 +78,7 @@ Rectangle {
                     text: qsTr("It also works great with a couple of <b>thermometers</b>!")
                     textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 }
@@ -102,15 +103,17 @@ Rectangle {
                     text: qsTr("To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.")
                     textFormat: Text.StyledText
                     color: Theme.colorHeaderContent
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
                 }
-                Image {
-                    height: (tutorialPages.height / 2.5)
+                ImageSvg {
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
+                    height: width*0.777
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-bluetooth-searching.svg"
+                    color: Theme.colorHeaderContent
                     fillMode: Image.PreserveAspectFit
                 }
                 Text {
@@ -121,7 +124,7 @@ Rectangle {
 
                     text: qsTr("You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.")
                     textFormat: Text.StyledText
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
@@ -149,13 +152,15 @@ Rectangle {
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
-                Image {
-                    width: (tutorialPages.width * 0.8)
+                ImageSvg {
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
+                    height: width*0.229
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-app-connected.svg"
+                    color: Theme.colorHeaderContent
                     fillMode: Image.PreserveAspectFit
                 }
                 Text {
@@ -169,7 +174,7 @@ Rectangle {
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
             }
         }
@@ -194,13 +199,15 @@ Rectangle {
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
-                Image {
-                    width: (tutorialPages.width * 0.8)
+                ImageSvg {
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
+                    height: width*0.328
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-limits.svg"
+                    color: Theme.colorHeaderContent
                     fillMode: Image.PreserveAspectFit
                 }
                 Text {
@@ -214,7 +221,7 @@ Rectangle {
                     color: Theme.colorHeaderContent
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
             }
         }
@@ -234,7 +241,7 @@ Rectangle {
         textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: Theme.fontSizeContent
 
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
@@ -257,7 +264,7 @@ Rectangle {
         textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: Theme.fontSizeContent
 
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
