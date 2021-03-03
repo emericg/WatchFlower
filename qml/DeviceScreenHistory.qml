@@ -306,7 +306,7 @@ Item {
                 text: qsTr("Moisture")
                 color: Theme.colorIcon
                 font.bold: true
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
                 font.capitalization: Font.AllUppercase
             }
         }
@@ -325,7 +325,7 @@ Item {
                 text: qsTr("Temperature")
                 color: Theme.colorIcon
                 font.bold: true
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
                 font.capitalization: Font.AllUppercase
             }
         }
@@ -344,7 +344,7 @@ Item {
                 text: qsTr("Luminosity")
                 color: Theme.colorIcon
                 font.bold: true
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
                 font.capitalization: Font.AllUppercase
             }
         }
@@ -363,7 +363,7 @@ Item {
                 text: qsTr("Fertility")
                 color: Theme.colorIcon
                 font.bold: true
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
                 font.capitalization: Font.AllUppercase
             }
         }

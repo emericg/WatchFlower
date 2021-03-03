@@ -203,7 +203,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Update available!")
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.fontSizeContentSmall
                             color: Theme.colorHighContrast
                         }
                     }
@@ -382,7 +382,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Update available!")
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.fontSizeContentSmall
                             color: Theme.colorHighContrast
                         }
                     }
@@ -728,7 +728,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("inside")
                             color: Theme.colorText
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.fontSizeContentSmall
                         }
                     }
                 }
@@ -768,7 +768,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr("outside")
                             color: Theme.colorText
-                            font.pixelSize: 14
+                            font.pixelSize: Theme.fontSizeContentSmall
                         }
                     }
                 }
@@ -805,7 +805,7 @@ Item {
                     text: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     font.capitalization: Font.AllUppercase
                 }
 
@@ -841,9 +841,10 @@ Item {
                 text: qsTr("Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Be careful, too much water over long periods of time can be just as lethal as not enough!") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Water your plants more frequently during their growth period.")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -877,7 +878,7 @@ Item {
                     text: qsTr("Temperature")
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     font.capitalization: Font.AllUppercase
                 }
 
@@ -930,9 +931,10 @@ Item {
                 text: qsTr("Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Having constant temperature is important for indoor plants.") +
                       qsTr("<br><b>Tip: </b>") + qsTr("If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -966,7 +968,7 @@ Item {
                     text: qsTr("Luminosity")
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     font.capitalization: Font.AllUppercase
                 }
 
@@ -1108,9 +1110,10 @@ Item {
                 visible: itemLumi.visible
 
                 text: qsTr("Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don't like direct sunlight: place them away from south oriented windows!")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -1145,7 +1148,7 @@ Item {
                     text: qsTr("Fertility")
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     font.capitalization: Font.AllUppercase
                 }
 
@@ -1179,9 +1182,10 @@ Item {
 
                 text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
                       qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
         }
     }

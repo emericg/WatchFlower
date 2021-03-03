@@ -81,6 +81,7 @@ Item {
         console.log("DeviceGeiger // loadDevice() >> " + currentDevice)
 
         loadGraph()
+
         updateHeader()
         updateData()
     }

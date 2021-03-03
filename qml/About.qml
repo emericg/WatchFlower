@@ -49,7 +49,7 @@ Item {
 
             text: qsTr("What do you want to know?")
             color: Theme.colorSubText
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeContentBig
         }
     }
 
@@ -103,7 +103,7 @@ Item {
 
                     color: Theme.colorSubText
                     text: qsTr("version %1%2").arg(utilsApp.appVersion()).arg(settingsManager.getDemoString())
-                    font.pixelSize: 18
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
 
                 Text {
@@ -200,9 +200,10 @@ Item {
                     anchors.verticalCenter: desc.verticalCenter
 
                     text: qsTr("A plant monitoring application for Xiaomi 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                 }
             }
 
@@ -235,11 +236,12 @@ Item {
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
+                    text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
+                    textFormat: Text.StyledText
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     linkColor: Theme.colorText
-                    font.pixelSize: 16
-                    text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
-                    onLinkActivated: Qt.openUrlExternally(link)
 
                     MouseArea {
                         anchors.fill: parent
@@ -279,12 +281,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Rate the application")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
-                    font.pixelSize: 16
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: {
                             if (Qt.platform.os === "android")
                                 Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
@@ -323,12 +326,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Open the tutorial")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
-                    font.pixelSize: 16
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: screenTutorial.reopen()
                     }
                 }
@@ -364,13 +368,14 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 48
 
-                    color: Theme.colorText
                     text: qsTr("Website")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
                 }
@@ -406,13 +411,14 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
                     text: qsTr("GitHub page")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
                 }
@@ -481,9 +487,10 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
                     text: qsTr("About permissions")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
                 }
 
                 ImageSvg {
@@ -499,7 +506,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: appContent.state = "Permissions"
+                    onClicked: screenPermissions.loadScreen()
                 }
             }
 
@@ -550,9 +557,10 @@ Item {
                     anchors.rightMargin: 0
 
                     text: qsTr("This application is made possible thanks to a couple of third party open source projects:")
-                    wrapMode: Text.WordWrap
+                    textFormat: Text.PlainText
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
+                    wrapMode: Text.WordWrap
                 }
 
                 Column {
@@ -571,8 +579,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Qt (LGPL 3)"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -580,9 +590,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Google Material Icons (MIT)"
-                        wrapMode: Text.WordWrap
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -590,8 +601,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- MobileUI & SingleApplication (MIT)"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -642,9 +655,10 @@ Item {
                     anchors.rightMargin: 0
 
                     text: qsTr("Special thanks to our translators:")
-                    wrapMode: Text.WordWrap
+                    textFormat: Text.PlainText
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
+                    wrapMode: Text.WordWrap
                 }
 
                 Column {
@@ -663,8 +677,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Chris Díaz (Español)"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -672,9 +688,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- FYr76 (Nederlands, Frysk, Dansk)"
-                        wrapMode: Text.WordWrap
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -682,8 +699,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Megachip (Deutsch)"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -691,8 +710,10 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Pavel Markin (Russian)"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                 }
             }

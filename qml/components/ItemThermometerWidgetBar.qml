@@ -79,9 +79,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: mmd.day
-        color: Theme.colorText
-        font.pixelSize: 16
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeContent
         font.bold: mmd.today
+        color: Theme.colorText
     }
 
     ////////////////////////////////////////////////////////////////////////////

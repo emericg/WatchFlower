@@ -134,7 +134,7 @@ Item {
         ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
         ValueAxis { id: axisCondu; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
-                       labelsFont.pixelSize: 14; labelsColor: Theme.colorText;
+                       labelsFont.pixelSize: Theme.fontSizeContentSmall; labelsColor: Theme.colorText;
                        gridLineColor: Theme.colorSeparator; }
 
         LineSeries {

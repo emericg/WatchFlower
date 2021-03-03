@@ -45,7 +45,7 @@ Item {
             anchors.bottomMargin: 14
 
             text: qsTr("Change persistent settings here!")
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeContentBig
             color: Theme.colorSubText
         }
     }
@@ -101,7 +101,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -139,7 +139,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -251,7 +251,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -283,9 +283,10 @@ Item {
                 visible: (element_appThemeAuto.visible)
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -320,7 +321,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Use bigger widgets")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -377,7 +378,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Language")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -469,7 +470,7 @@ Item {
 
                     text: qsTr("Bluetooth control")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -497,9 +498,10 @@ Item {
                 visible: element_bluetoothControl.visible
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -533,7 +535,7 @@ Item {
 
                     text: qsTr("Simultaneous updates") + " (" + settingsManager.bluetoothSimUpdates + ")"
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -569,7 +571,7 @@ Item {
 
                     text: qsTr("Simultaneous updates")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -605,9 +607,10 @@ Item {
                 visible: element_bluetoothSimUpdate.visible
 
                 text: qsTr("How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -652,7 +655,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Start application minimized")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -704,7 +707,7 @@ Item {
 
                     text: qsTr("Enable background updates")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -732,9 +735,10 @@ Item {
                 visible: (element_worker.visible && isMobile)
 
                 text: qsTr("Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
             Text {
                 id: legend_worker_desktop
@@ -748,9 +752,10 @@ Item {
                 visible: (element_worker.visible && isDesktop)
 
                 text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -787,7 +792,7 @@ Item {
 
                     text: qsTr("Enable notifications")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -815,9 +820,10 @@ Item {
                 visible: element_notifications.visible
 
                 text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -847,7 +853,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Plant sensors")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -885,7 +891,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -941,7 +947,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Use bigger indicators")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -987,7 +993,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Dynamic scale for indicators")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -1035,7 +1041,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Show graph dots")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -1080,7 +1086,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Thermometers")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1118,7 +1124,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -1175,7 +1181,7 @@ Item {
 
                     text: qsTr("Temperature unit")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -1258,7 +1264,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Data archiving")
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1284,9 +1290,10 @@ Item {
                     anchors.right: parent.right
 
                     text: qsTr("Export up to 30 days of data into a CSV file.")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     verticalAlignment: Text.AlignBottom
                 }
                 Text {
@@ -1297,9 +1304,10 @@ Item {
                     visible: (Qt.platform.os !== "ios")
 
                     text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
-                    font.pixelSize: 14
+                    font.pixelSize: Theme.fontSizeContentSmall
                     verticalAlignment: Text.AlignBottom
                 }
             }

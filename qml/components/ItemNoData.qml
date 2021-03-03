@@ -27,7 +27,8 @@ Item {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: qsTr("Not enough data")
-            font.pixelSize: 16
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContent
             color: Theme.colorSubText
         }
     }

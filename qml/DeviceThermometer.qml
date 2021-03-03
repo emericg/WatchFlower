@@ -88,7 +88,7 @@ Item {
 
     function loadDevice(clickedDevice) {
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
-        if (clickedDevice.hasSoilMoistureSensor()) return
+        if (!clickedDevice.isThermometer()) return
         if (clickedDevice === currentDevice) return
 
         currentDevice = clickedDevice
@@ -115,7 +115,7 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.isThermometer()) return
         //console.log("DeviceThermometer // updateHeader() >> " + currentDevice)
 
         // Battery level
@@ -129,7 +129,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.isThermometer()) return
         //console.log("DeviceThermometer // updateData() >> " + currentDevice)
 
         if (currentDevice.deviceTempC < -40) {
@@ -162,7 +162,7 @@ Item {
 
     function updateStatusText() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.isThermometer()) return
         //console.log("DeviceThermometer // updateStatusText() >> " + currentDevice)
 
         // Status

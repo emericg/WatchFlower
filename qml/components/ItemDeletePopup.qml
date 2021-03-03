@@ -48,22 +48,19 @@ Popup {
                 width: parent.width
 
                 text: qsTr("Are you sure you want to delete selected device(s)?")
-                font.pixelSize: 20
+                font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
                 wrapMode: Text.WordWrap
-                //verticalAlignment: Text.AlignVCenter
-                //horizontalAlignment: Text.AlignHCenter
             }
 
             Text {
                 width: parent.width
 
                 text: qsTr("Data from the device(s) will be kept for an additional 90 days, if you want to re-add this device later.")
-                font.pixelSize: 16
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                //verticalAlignment: Text.AlignVCenter
-                //horizontalAlignment: Text.AlignHCenter
             }
 
             Grid {

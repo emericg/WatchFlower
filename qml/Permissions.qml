@@ -11,6 +11,17 @@ Item {
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
 
+    function loadScreen() {
+        // Refresh permissions
+        button_gps_test.validperm = utilsApp.checkMobileLocationPermission()
+        button_storage_test.validperm = utilsApp.checkMobileStoragePermissions()
+
+        // Load screen
+        appContent.state = "Permissions"
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+/*
     Rectangle {
         id: rectangleHeader
         color: Theme.colorDeviceHeader
@@ -22,6 +33,9 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+
+        // prevent clicks below this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Text {
             id: textTitle
@@ -45,23 +59,22 @@ Item {
 
             text: qsTr("Why are we using these permissions?")
             color: Theme.colorSubText
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeContentBig
         }
     }
-
+*/
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
         id: scrollView
         contentWidth: -1
 
-        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
+        anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         Column {
-            id: column
             anchors.fill: parent
             anchors.leftMargin: 8
             anchors.rightMargin: 8
@@ -75,8 +88,8 @@ Item {
             Item {
                 id: element_gps
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Text {
                     id: text_gps
@@ -98,9 +111,9 @@ Item {
                     id: button_gps_test
                     width: 32
                     height: 32
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
                     property bool validperm: false
@@ -110,7 +123,6 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
-                    Component.onCompleted: validperm = utilsApp.checkMobileLocationPermission();
                     onClicked: validperm = utilsApp.getMobileLocationPermission();
                 }
             }
@@ -126,9 +138,10 @@ Item {
                 text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>" +
                            "This permission is only needed while scanning for new sensors.<br>" +
                            "WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
             ButtonWireframe {
                 height: 36
@@ -144,14 +157,14 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -159,8 +172,8 @@ Item {
             Item {
                 id: element_storage
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Text {
                     id: text_storage
@@ -172,6 +185,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Storage write")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 17
                     color: Theme.colorText
@@ -194,7 +208,6 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
-                    Component.onCompleted: validperm = utilsApp.checkMobileStoragePermissions();
                     onClicked: validperm = utilsApp.getMobileStoragePermissions();
                 }
             }
@@ -206,23 +219,24 @@ Item {
                 anchors.rightMargin: 4
 
                 text: qsTr("Storage write permission can be needed for exporting sensors data to the SD card.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -230,8 +244,8 @@ Item {
             Item {
                 id: element_bluetooth
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Text {
                     id: text_bluetooth
@@ -243,6 +257,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth control")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 17
                     color: Theme.colorText
@@ -274,9 +289,10 @@ Item {
                 anchors.rightMargin: 4
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////

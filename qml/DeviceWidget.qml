@@ -631,14 +631,10 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    text: "25.0°"
                     color: Theme.colorText
-                    font.wordSpacing: -1.2
                     font.letterSpacing: -1.4
                     font.pixelSize: bigAssMode ? 32 : 30
                     font.family: "Tahoma"
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignLeft
 
                     Connections {
                         target: settingsManager
@@ -651,12 +647,9 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    text: "55%"
                     color: Theme.colorSubText
                     font.pixelSize: bigAssMode ? 26 : 24
                     font.family: "Tahoma"
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignLeft
                 }
             }
 
