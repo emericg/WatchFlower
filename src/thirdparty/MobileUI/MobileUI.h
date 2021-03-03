@@ -46,8 +46,10 @@ Q_SIGNALS:
     void navbarUpdated();
 
 public:
-    explicit MobileUI(QObject *parent = nullptr);
+    explicit MobileUI(QObject *parent = nullptr) : QObject(parent) {}
+
     static bool isAvailable();
+    static void registerQML();
 
     enum Theme {
         Light,  //!< DARK TEXT (assumes LIGHT application theme/background)

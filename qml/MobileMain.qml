@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
-import MobileUI 0.1
+import MobileUI 1.0
 
 ApplicationWindow {
     id: appWindow

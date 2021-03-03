@@ -160,17 +160,13 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-#ifndef DEMO_MODE
-    // Translate the application (demo mode always use english)
+    // Translate the application
     utilsLanguage->loadLanguage(sm->getAppLanguage());
-#endif
 
     // ThemeEngine
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
-    // Mobile UI
-    qmlRegisterType<MobileUI>("MobileUI", 0, 1, "MobileUI");
-
+    MobileUI::registerQML();
     DeviceUtils::registerQML();
 
     // Then we start the UI
