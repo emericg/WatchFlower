@@ -96,8 +96,7 @@ $ make
 * Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
 * StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
 * SingleApplication [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
-* RC4 implementation [website](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
-* Graphical resources: please read [assets/COPYING](assets/COPYING)
+* Graphical resources: [assets/COPYING](assets/COPYING)
 
 
 ## Get involved!
