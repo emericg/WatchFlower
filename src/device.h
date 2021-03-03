@@ -165,6 +165,8 @@ public:
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
+    virtual void parseAdvertisementData(const QByteArray &value);
+
 public slots:
     void deviceConnect();
     void deviceDisconnect();

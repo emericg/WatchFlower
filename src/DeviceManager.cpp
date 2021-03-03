@@ -597,7 +597,7 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
     //qDebug() << "deviceUpdateReceived() device: " << info.address() /*<< info.deviceUuid()*/ << " updatedFields: " << updatedFields;
-
+/*
     if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
     {
         //qDebug() << "RSSI > " << info.rssi();
@@ -605,13 +605,10 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd)
+            if (dd && dd->getAddress() == info.address().toString())
             {
-                if (dd->getAddress() == info.address().toString())
-                {
-                    dd->updateRssi(info.rssi());
-                    break;
-                }
+                dd->updateRssi(info.rssi());
+                break;
             }
         }
     }
@@ -620,18 +617,26 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
         QHash<quint16, QByteArray> dat = info.manufacturerData();
         qDebug() << "device > " << info.address() << " manufacturerData > " << dat;
     }
-/*
-    if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
+*/
+    for (auto d: qAsConst(m_devices_model->m_devices))
     {
-        //updatedFields = QBluetoothDeviceInfo::Field::All;
-        for (const auto id: info.manufacturerIds()) {
-            qDebug() << info.name() << info.address() << Qt::hex
-                     << "ID" << id
-                     << "data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
-                     << "bytes:" << info.manufacturerData(id).toHex();
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd && dd->getAddress() == info.address().toString())
+        {
+            //if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
+            for (const auto id: info.manufacturerIds())
+            {
+                //qDebug() << info.name() << info.address() << Qt::hex
+                //         << "ID" << id
+                //         << "data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
+                //         << "bytes:" << info.manufacturerData(id).toHex();
+
+                dd->parseAdvertisementData(info.manufacturerData(id));
+            }
+            break;
         }
     }
-*/
+
 #endif // Qt 5.12+
 }
 
