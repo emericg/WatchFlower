@@ -256,8 +256,8 @@ Item {
         Text {
             id: ttT
             anchors.topMargin: 16
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: (tooltip.state === "topLeft" || tooltip.state === "bottomLeft") ? 8 : 16
+            anchors.rightMargin: (tooltip.state === "topRight" || tooltip.state === "bottomRight") ? 8 : 16
             anchors.bottomMargin: 16
 
             function checkPosition() {

@@ -28,6 +28,8 @@ Rectangle {
         anchors.topMargin: 16
         anchors.left: parent.left
         anchors.leftMargin: 16
+        anchors.right: parent.right
+        anchors.rightMargin: 8
         spacing: 8
 
         ImageSvg {
@@ -38,7 +40,9 @@ Rectangle {
         }
 
         Text {
+            width: parent.width
             text: itemWeatherBox.title
+            wrapMode: Text.WordWrap
             color: Theme.colorText
             font.bold: false
             font.pixelSize: Theme.fontSizeContentSmall

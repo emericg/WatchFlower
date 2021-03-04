@@ -175,7 +175,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: unicolor ? -(appHeader.height*0.16) : 4
+                anchors.verticalCenterOffset: unicolor ? -(appHeader.height/2) : 4
                 spacing: 48
 
                 ImageSvg {
@@ -193,6 +193,8 @@ Item {
                     id: indicatorAirQuality
                     width: isMobile ? 128 : 180
                     height: isMobile ? 128 : 180
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: unicolor ? -(appHeader.height*0.16) : 4
                     color: cccc
                 }
 */

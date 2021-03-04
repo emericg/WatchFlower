@@ -445,6 +445,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
 
         property int hhh: (isPhone ? 40 : 48)
+        property int hhi: (hhh / 2)
 
         height: hhh + screenPaddingBottom
         color: isTablet ? Theme.colorTabletmenu : "transparent"
@@ -477,7 +478,7 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuPlants
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -490,7 +491,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuSettings
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -503,7 +504,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuAbout
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -547,7 +548,7 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuDeviceData
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -560,7 +561,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuDeviceHistory
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -573,7 +574,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuDeviceSettings
-                imgSize: isPhone ? 20 : 24
+                imgSize: hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
