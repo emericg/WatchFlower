@@ -65,11 +65,11 @@ Item {
         MouseArea {
             anchors.fill: parent
 
-            enabled: isDesktop
-            hoverEnabled: enabled
-            onClicked: buttonClicked()
+            hoverEnabled: isDesktop
             onEntered: viewButtonHovered()
             onExited: viewButtonExited()
+            
+            onClicked: buttonClicked()
         }
 
         states: [

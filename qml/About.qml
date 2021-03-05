@@ -287,7 +287,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -12
+                        anchors.margins: -16
                         onClicked: {
                             if (Qt.platform.os === "android")
                                 Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
@@ -332,7 +332,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -12
+                        anchors.margins: -16
                         onClicked: screenTutorial.reopen()
                     }
                 }
@@ -375,7 +375,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -12
+                        anchors.margins: -16
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
                 }

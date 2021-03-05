@@ -66,6 +66,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/devices/welcome-devices.svg"
+                    color: Theme.colorHeaderContent
                     fillMode: Image.PreserveAspectFit
                 }
 

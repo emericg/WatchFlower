@@ -150,7 +150,7 @@ Item {
             colorActionbarContent = "white"
             colorActionbarHighlight = "#7ab800"
 
-            colorTabletmenu = "#f3f3f3"
+            colorTabletmenu = "#ffffff"
             colorTabletmenuContent = "#9d9d9d"
             colorTabletmenuHighlight = "#0079fe"
 
