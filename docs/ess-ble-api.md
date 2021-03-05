@@ -27,6 +27,8 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
+The name advertised will be dependent on the device used.
+
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
 | Characteristic UUID                  | Handle | Access      | Description                   |

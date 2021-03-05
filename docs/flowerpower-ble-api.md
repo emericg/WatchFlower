@@ -43,7 +43,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
-The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address)
+The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address).
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -94,32 +94,32 @@ Firmware versions 1.1.0+ have some new characteristics:
 
 ##### Upload service (UUID 39e1fb00-84a8-11e2-afba-0002a5d5c51b)
 
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| -                                    | -      | -          | -                              |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| -                                    | -      | -           | -                             |
 
 ##### History service (UUID 39e1fc00-84a8-11e2-afba-0002a5d5c51b)
 
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | 0x48   | read       | number of entries              |
-| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | 0x4c   | read       | last entry index               |
-| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | 0x50   | read/write | start transfert index          |
-| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | 0x54   | read       | current session id             |
-| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | 0x58   | read       | current session start index    |
-| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x5c   | read       | current session period         |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | 0x48   | read        | number of entries             |
+| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | 0x4c   | read        | last entry index              |
+| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | 0x50   | read/write  | start transfert index         |
+| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | 0x54   | read        | current session id            |
+| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | 0x58   | read        | current session start index   |
+| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x5c   | read        | current session period        |
 
 ##### Clock service (UUID 39e1fd00-84a8-11e2-afba-0002a5d5c51b)
 
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| 39e1fd01-84a8-11e2-afba-0002a5d5c51b | 0x70   | read       | current time                   |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| 39e1fd01-84a8-11e2-afba-0002a5d5c51b | 0x70   | read        | current time                  |
 
 ##### Calibration service (UUID 39e1fe00-84a8-11e2-afba-0002a5d5c51b)
 
-| Characteristic UUID                  | Handle | Access     | Description                    |
-| ------------------------------------ | ------ | ---------- | ------------------------------ |
-| -                                    | -      | -          | -                              |
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| -                                    | -      | -           | -                             |
 
 #### Device name
 
@@ -151,7 +151,7 @@ TODO
 
 #### Blink
 
-Just write `1` to the LED handler `0xaa` to switch it on (it will keep blinking until disconnection) or write `0` to switch it off
+Just write `1` to the LED handler `0xaa` to switch it on (it will keep blinking until disconnection) or write `0` to switch it off.
 
 #### Real time data
 
