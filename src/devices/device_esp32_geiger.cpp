@@ -117,7 +117,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         //qDebug() << "DeviceEsp32Geiger::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
         // Characteristic "Battery Level"
-        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x44
+        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handle 0x?
         QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
 
         if (cbat.value().size() > 0)
@@ -147,7 +147,7 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
+            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x? // firmware version
             QLowEnergyCharacteristic chf = serviceData->characteristic(f);
             if (chf.value().size() > 0)
             {

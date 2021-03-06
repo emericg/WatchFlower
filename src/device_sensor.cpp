@@ -196,6 +196,14 @@ bool DeviceSensor::getSqlInfos()
             Q_EMIT sensorUpdated();
         }
     }
+    else if ((m_deviceName.startsWith("Qingping Temp & RH")) && (m_deviceFirmware.size() == 10))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
     else if ((m_deviceName == "LYWSD02") && (m_deviceFirmware.size() == 10))
     {
         if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
@@ -207,6 +215,22 @@ bool DeviceSensor::getSqlInfos()
     else if ((m_deviceName == "LYWSD03MMC") && (m_deviceFirmware.size() == 10))
     {
         if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
+    else if ((m_deviceName == "MHO-C401") && (m_deviceFirmware.size() == 10))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK2))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
+    else if ((m_deviceName == "MHO-303") && (m_deviceFirmware.size() == 10))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_ALARM))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();

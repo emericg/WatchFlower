@@ -136,7 +136,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
         // Characteristic "Battery Level"
-        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x44
+        QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb"));
         QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
 
         if (cbat.value().size() > 0)

@@ -171,7 +171,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
         if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handler 0x38
+            QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
@@ -192,12 +192,12 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
             if (need_firstsend) // always?
             {
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handler 0x33
+                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
-            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handler 0x35
+            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             serviceData->readCharacteristic(chb);
         }
@@ -281,7 +281,7 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
         {
 /*
             // enable notification for 0x12 handle
-            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handler 0x13
+            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x13
             QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
             m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
@@ -332,7 +332,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 */
     if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
     {
-        QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handler 0x3c
+        QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3c
         QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
 
         if (m_history_entry_count < 0)
@@ -365,7 +365,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {
-        // MiFlora data // handler 0x35
+        // MiFlora data // handle 0x35
 
         if (value.size() > 0)
         {

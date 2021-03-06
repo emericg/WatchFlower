@@ -154,7 +154,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
         //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
         // Characteristic "Firmware Revision String"
-        QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x19
+        QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x19
         QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
         if (chc.value().size() > 0)
         {
@@ -181,7 +181,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::Ser
         if (serviceBattery)
         {
             // Characteristic "?"
-            QBluetoothUuid b(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x??
+            QBluetoothUuid b(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handle 0x??
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             if (chb.value().size() == 1)
             {
@@ -202,13 +202,13 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_data(QLowEnergyService::Servic
         if (serviceData)
         {
             // Characteristic "Temp&Humi"
-            QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handler 0x??
+            QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d")); // handle 0x??
             QLowEnergyCharacteristic cha = serviceData->characteristic(a);
             m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
 
             // Characteristic "Message"
-            //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handler 0x??
+            //QBluetoothUuid b(QString("226cbb55-6476-4566-7562-66734470666d")); // handle 0x??
         }
     }
 }
@@ -249,7 +249,7 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 */
     if (c.uuid().toString() == "{226caa55-6476-4566-7562-66734470666d}")
     {
-        // BLE temperature & humidity sensor data // handler 0x??
+        // BLE temperature & humidity sensor data // handle 0x??
 
         if (value.size() > 0)
         {

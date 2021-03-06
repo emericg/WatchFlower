@@ -132,7 +132,7 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::Servi
         {
             //
             {
-                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb")); // handler 0x??
+                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb")); // handle 0x??
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -150,7 +150,7 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::Serv
         if (serviceInfos)
         {
             // Characteristic "Firmware Revision String"
-            QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x0b
+            QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x0b
             QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
             if (chc.value().size() > 0)
             {
@@ -199,7 +199,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
 */
     if (c.uuid().toString().toUpper() == "{00000100-0000-1000-8000-00805F9B34FB}")
     {
-        // sensor data // handler 0x??
+        // sensor data // handle 0x??
 
         if (value.size() == 6)
         {
