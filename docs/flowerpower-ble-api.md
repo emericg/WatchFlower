@@ -121,6 +121,8 @@ Firmware versions 1.1.0+ have some new characteristics:
 | ------------------------------------ | ------ | ----------- | ----------------------------- |
 | -                                    | -      | -           | -                             |
 
+##### OTA download service (UUID f000ffc0-0451-4000-b0000-000000000000)
+
 #### Device name
 
 A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f77657220706f776572` corresponding to the device name.

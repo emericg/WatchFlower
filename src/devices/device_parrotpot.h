@@ -54,22 +54,21 @@ private:
     void addLowEnergyService(const QBluetoothUuid &uuid);
     void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_watering(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyService *serviceBattery = nullptr;
-    QLowEnergyService *serviceData = nullptr;
     QLowEnergyService *serviceClock = nullptr;
     QLowEnergyService *serviceHistory = nullptr;
+    QLowEnergyService *serviceWatering = nullptr;
+    QLowEnergyService *serviceLive = nullptr;
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
-
-    // Clock
-    int64_t m_device_lastmove = -1;
 
     // History control
     int m_history_entry_count = -1;

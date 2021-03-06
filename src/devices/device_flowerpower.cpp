@@ -70,9 +70,9 @@ DeviceFlowerPower::DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *par
 
 DeviceFlowerPower::~DeviceFlowerPower()
 {
+    delete serviceLive;
     delete serviceHistory;
     delete serviceClock;
-    delete serviceData;
     delete serviceBattery;
     delete serviceInfos;
 }
@@ -130,14 +130,14 @@ void DeviceFlowerPower::serviceScanDone()
         }
     }
 
-    if (serviceData)
+    if (serviceLive)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceLive->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_data);
+            connect(serviceLive, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_live);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceLive->discoverDetails(); });
         }
     }
 }
@@ -198,7 +198,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceClock;
         serviceClock = nullptr;
 
-        //if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             serviceClock = controller->createServiceObject(uuid);
             if (!serviceClock)
@@ -210,13 +210,13 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
     if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // Live service
     {
-        delete serviceData;
-        serviceData = nullptr;
+        delete serviceLive;
+        serviceLive = nullptr;
 
         if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceData = controller->createServiceObject(uuid);
-            if (!serviceData)
+            serviceLive = controller->createServiceObject(uuid);
+            if (!serviceLive)
                 qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
         }
     }
@@ -232,7 +232,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
         if (serviceInfos)
         {
-            QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handler 0x17
+            QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x17
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
             if (cfw.value().size() > 0)
             {
@@ -272,7 +272,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         if (serviceBattery)
         {
             // Characteristic "Battery Level"
-            QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handler 0x44
+            QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handle 0x44
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
             if (cbat.value().size() > 0)
             {
@@ -294,22 +294,22 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
     }
 }
 
-void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
+void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+        if (serviceLive && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
-            QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handler 0x3c
-            QLowEnergyCharacteristic cled = serviceData->characteristic(led);
-            serviceData->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
+            QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
+            QLowEnergyCharacteristic cled = serviceLive->characteristic(led);
+            serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
             //controller->disconnectFromDevice();
         }
 
-        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (serviceLive && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;
@@ -331,8 +331,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             {
                 /////////
 
-                QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b")); // handler 0x25
-                QLowEnergyCharacteristic chlx = serviceData->characteristic(lx);
+                QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x25
+                QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
 
                 rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -340,8 +340,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid sf(QString("39e1fa02-84a8-11e2-afba-0002a5d5c51b")); // handler 0x29
-                QLowEnergyCharacteristic chsf = serviceData->characteristic(sf);
+                QBluetoothUuid sf(QString("39e1fa02-84a8-11e2-afba-0002a5d5c51b")); // handle 0x29
+                QLowEnergyCharacteristic chsf = serviceLive->characteristic(sf);
 
                 rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -352,8 +352,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid st(QString("39e1fa03-84a8-11e2-afba-0002a5d5c51b")); // handler 0x2d
-                QLowEnergyCharacteristic chst = serviceData->characteristic(st);
+                QBluetoothUuid st(QString("39e1fa03-84a8-11e2-afba-0002a5d5c51b")); // handle 0x2d
+                QLowEnergyCharacteristic chst = serviceLive->characteristic(st);
 
                 rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -361,8 +361,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid t(QString("39e1fa04-84a8-11e2-afba-0002a5d5c51b")); // handler 0x31
-                QLowEnergyCharacteristic cht = serviceData->characteristic(t);
+                QBluetoothUuid t(QString("39e1fa04-84a8-11e2-afba-0002a5d5c51b")); // handle 0x31
+                QLowEnergyCharacteristic cht = serviceLive->characteristic(t);
 
                 rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -372,8 +372,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b")); // handler 0x35
-                QLowEnergyCharacteristic chsm = serviceData->characteristic(sm);
+                QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b")); // handle 0x35
+                QLowEnergyCharacteristic chsm = serviceLive->characteristic(sm);
 
                 rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -387,13 +387,13 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
             /////////
 
             // TODO
-            //QBluetoothUuid live_mesure_period(QString("39e1fa06-84a8-11e2-afba-0002a5d5c51b")); // handler 0x39
-            //QBluetoothUuid led_status(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handler 0x3c
+            //QBluetoothUuid live_mesure_period(QString("39e1fa06-84a8-11e2-afba-0002a5d5c51b")); // handle 0x39
+            //QBluetoothUuid led_status(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
 
             /////////
 
-            QBluetoothUuid lm(QString("39e1fa08-84a8-11e2-afba-0002a5d5c51b")); // handler 0x3f
-            QLowEnergyCharacteristic chlm = serviceData->characteristic(lm);
+            QBluetoothUuid lm(QString("39e1fa08-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3f
+            QLowEnergyCharacteristic chlm = serviceLive->characteristic(lm);
 
             rawData = reinterpret_cast<const quint8 *>(chlm.value().constData());
             rawValue = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
@@ -403,25 +403,32 @@ void DeviceFlowerPower::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            if (m_dbInternal || m_dbExternal)
+            if (m_soil_temperature > -10.f && m_temperature > -10.f )
             {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                if (m_dbInternal || m_dbExternal)
+                {
+                    // SQL date format YYYY-MM-DD HH:MM:SS
+                    QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
+                    QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :temp, :lumi)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":hygro", m_soil_moisture);
-                addData.bindValue(":condu", m_soil_conductivity);
-                addData.bindValue(":stemp", m_soil_temperature);
-                addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":lumi", m_luminosity);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                    QSqlQuery addData;
+                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity)"
+                                    " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :atemp, :lumi)");
+                    addData.bindValue(":deviceAddr", getAddress());
+                    addData.bindValue(":ts", tsStr);
+                    addData.bindValue(":ts_full", tsFullStr);
+                    addData.bindValue(":hygro", m_soil_moisture);
+                    addData.bindValue(":condu", m_soil_conductivity);
+                    addData.bindValue(":stemp", m_soil_temperature);
+                    addData.bindValue(":atemp", m_temperature);
+                    addData.bindValue(":lumi", m_luminosity);
+                    if (addData.exec() == false)
+                        qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                }
+            }
+            else
+            {
+                qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_live() values reported are wrong and won't be saved";
             }
 
             refreshDataFinished(true);
@@ -450,7 +457,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::Servic
 
         if (serviceClock)
         {
-            QBluetoothUuid clk(QString("39e1fd01-84a8-11e2-afba-0002a5d5c51b")); // handler 0x70
+            QBluetoothUuid clk(QString("39e1fd01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x70
             QLowEnergyCharacteristic cclk = serviceClock->characteristic(clk);
             if (cclk.value().size() > 0)
             {
@@ -481,6 +488,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::Serv
             //39e1fc05-84a8-11e2-afba-0002a5d5c51b	0x58	read	current session start index
             //39e1fc06-84a8-11e2-afba-0002a5d5c51b	0x5c	read	current session period
         }
+
         if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
             //
@@ -493,49 +501,43 @@ void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::Serv
 void DeviceFlowerPower::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     //qDebug() << "DeviceFlowerPower::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     if (c.uuid().toString() == "{x}")
     {
-        Q_UNUSED(value)
+        if (value.size() > 0)
+        {
+            //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+        }
     }
 }
 
 void DeviceFlowerPower::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceFlowerPower::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+    //qDebug() << "DeviceFlowerPower::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     if (c.uuid().toString() == "{x}")
     {
         if (value.size() > 0)
         {
-            Q_UNUSED(data)
+            //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
         }
     }
 }
 
 void DeviceFlowerPower::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceFlowerPower::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+    //qDebug() << "DeviceFlowerPower::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     if (c.uuid().toString() == "{x}")
     {
         if (value.size() > 0)
         {
-            Q_UNUSED(data)
+            //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
         }
     }
 }
+
+/* ************************************************************************** */

@@ -55,50 +55,92 @@ The name advertised by the device is `Parrot pot AABB` (the last 4 characters ar
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 00002a23-0000-1000-8000-00805f9b34fb | 0x12   | read        | system ID                     |
-| 00002a25-0000-1000-8000-00805f9b34fb | 0x16   | read        | serial number string          |
-| 00002a26-0000-1000-8000-00805f9b34fb | 0x17   | read        | firmware revision string      |
-| 00002a27-0000-1000-8000-00805f9b34fb | 0x1a   | read        | hardware revision string      |
+| 00002a23-0000-1000-8000-00805f9b34fb | 0x?    | read        | system ID                     |
+| 00002a25-0000-1000-8000-00805f9b34fb | 0x?    | read        | serial number string          |
+| 00002a26-0000-1000-8000-00805f9b34fb | 0x?    | read        | firmware revision string      |
+| 00002a27-0000-1000-8000-00805f9b34fb | 0x?    | read        | hardware revision string      |
 | 00002a28-0000-1000-8000-00805f9b34fb | 0x?    | read        | software revision string      |
-| 00002a29-0000-1000-8000-00805f9b34fb | 0x1e   | read        | manufacturer name string      |
+| 00002a29-0000-1000-8000-00805f9b34fb | 0x?    | read        | manufacturer name string      |
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 00002a19-0000-1000-8000-00805f9b34fb | 0x44   | read        | battery level                 |
+| 00002a19-0000-1000-8000-00805f9b34fb | 0x?    | read        | battery level                 |
 
 ##### Live service (UUID 39e1fa00-84a8-11e2-afba-0002a5d5c51b)
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 39e1fa01-84a8-11e2-afba-0002a5d5c51b | 0x25   | read/notify | sunlight                      |
-| 39e1fa02-84a8-11e2-afba-0002a5d5c51b | 0x29   | read/notify | soil conductivity             |
-| 39e1fa03-84a8-11e2-afba-0002a5d5c51b | 0x2d   | read/notify | soil temp                     |
-| 39e1fa04-84a8-11e2-afba-0002a5d5c51b | 0x31   | read/notify | air temperature               |
-| 39e1fa05-84a8-11e2-afba-0002a5d5c51b | 0x35   | read/notify | soil moisture                 |
-| 39e1fa06-84a8-11e2-afba-0002a5d5c51b | 0x39   | read/write  | live measure period           |
-| 39e1fa07-84a8-11e2-afba-0002a5d5c51b | 0x3c   | read/write  | LED status                    |
-| 39e1fa08-84a8-11e2-afba-0002a5d5c51b | 0x3f   | read/notify | last move date                |
+| 39e1fa01-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | sunlight                      |
+| 39e1fa02-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil conductivity             |
+| 39e1fa03-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil temp                     |
+| 39e1fa04-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | air temperature               |
+| 39e1fa05-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil moisture                 |
+| 39e1fa06-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/write  | live measure period           |
+| 39e1fa07-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/write  | LED status                    |
+| 39e1fa09-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil moisture (calibrated)    |
+| 39e1fa10-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ?                             |
+| 39e1fa11-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ?                             |
+| 39e1fa0a-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | air temperature (calibrated)  |
+| 39e1fa0b-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | sunlight (calibrated)         |
+| 39e1fa0f-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ?                             |
+
+##### Upload service (UUID 39e1fb00-84a8-11e2-afba-0002a5d5c51b)
+
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| -                                    | -      | -           | -                             |
 
 ##### History service (UUID 39e1fc00-84a8-11e2-afba-0002a5d5c51b)
 
 | Characteristic UUID                  | Handle | Access     | Description                    |
 | ------------------------------------ | ------ | ---------- | ------------------------------ |
-| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
-| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
-| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/write | ?                              |
-| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
-| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
-| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
-| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | 0x?    | read       | ?                              |
+| 39e1fc01-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
+| 39e1fc02-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
+| 39e1fc03-84a8-11e2-afba-0002a5d5c51b | -      | read/write | ?                              |
+| 39e1fc04-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
+| 39e1fc05-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
+| 39e1fc06-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
+| 39e1fc07-84a8-11e2-afba-0002a5d5c51b | -      | read       | ?                              |
 
 ##### Clock service (UUID 39e1fd00-84a8-11e2-afba-0002a5d5c51b)
 
 | Characteristic UUID                  | Handle | Access     | Description                    |
 | ------------------------------------ | ------ | ---------- | ------------------------------ |
-| 39e1fd01-84a8-11e2-afba-0002a5d5c51b | 0x70   | read       | current time                   |
-| 39e1fd02-84a8-11e2-afba-0002a5d5c51b | 0x70   | read/write | ?                              |
+| 39e1fd01-84a8-11e2-afba-0002a5d5c51b | -      | read       | current time                   |
+| 39e1fd02-84a8-11e2-afba-0002a5d5c51b | -      | read/write | ?                              |
+
+##### Calibration service (UUID 39e1fe00-84a8-11e2-afba-0002a5d5c51b)
+
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| -                                    | -      | -           | -                             |
+
+##### Watering service (UUID 39e1f900-84a8-11e2-afba-0002a5d5c51b)
+
+| Characteristic UUID                  | Handle | Access      | Description                   |
+| ------------------------------------ | ------ | ----------- | ----------------------------- |
+| 39e1f901-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f902-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f903-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f904-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f905-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f906-84a8-11e2-afba-0002a5d5c51b | -      | write       | manual watering trigger       |
+| 39e1f907-84a8-11e2-afba-0002a5d5c51b | -      | read/notify | water tank level (%)          |
+| 39e1f908-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f910-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f911-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f912-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | watering status               |
+| 39e1f913-84a8-11e2-afba-0002a5d5c51b | -      | read/notify | -                             |
+| 39e1f90a-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f90b-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f90c-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f90d-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | watering mode                 |
+| 39e1f90e-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+| 39e1f90f-84a8-11e2-afba-0002a5d5c51b | -      | read/write  | -                             |
+
+##### OTA download service (UUID f000ffc0-0451-4000-b0000-000000000000)
 
 #### Device name
 
@@ -124,9 +166,9 @@ A read request to the `0x33` handle will return 1 bytes of data, for example `0x
 | ----- | ---------- | ----- | ------------------ |
 | 00    | uint8      | 100   | battery level in % |
 
-#### Last move
+#### Blink
 
-TODO
+Just write `1` to the LED handler `0xaa` to switch it on (it will keep blinking until disconnection) or write `0` to switch it off.
 
 #### Real time data
 
@@ -159,6 +201,7 @@ TODO
 ## Reference
 
 [1] https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf  
+[2] https://github.com/grover/homebridge-flower-sensor  
 
 ## License
 

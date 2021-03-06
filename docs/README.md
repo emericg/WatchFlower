@@ -19,7 +19,7 @@
 | IP Code                           | IPX6                              |
 | BLE API                           | [link](ropot-ble-api.md)          |
 
-| Parrot Flower Power               | ?                                 |
+| Parrot Flower Power               | RKXHAWAII                         |
 | --------------------------------- | --------------------------------- |
 | Battery                           | 1 x AAA                           |
 | Thermometer                       | -10 → 55 °C                       |
@@ -28,7 +28,7 @@
 | IP Code                           | IPX5                              |
 | BLE API                           | [link](flowerpower-ble-api.md)    |
 
-| Parrot Pot                        | ?                                 |
+| Parrot Pot                        | 2AG61POT                          |
 | --------------------------------- | --------------------------------- |
 | Battery                           | 4 x AA                            |
 | Water tank                        | 2.2 l                             |

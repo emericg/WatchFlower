@@ -25,10 +25,10 @@ Item {
     property bool animated: true
 
     property real value: 0
-    property int valueMin: 0
-    property int valueMax: 100
-    property int limitMin: -1
-    property int limitMax: -1
+    property real valueMin: 0
+    property real valueMax: 100
+    property real limitMin: -1
+    property real limitMax: -1
 
     ////////////////////////////////////////////////////////////////////////////
 

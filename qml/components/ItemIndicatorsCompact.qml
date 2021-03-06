@@ -10,7 +10,7 @@ Item {
     height: columnData.height + 16
     z: 5
 
-    property int legendWidth: isPhone ? 80 : 96
+    property int legendWidth: 92
     Component.onCompleted: updateSize()
 
     function updateSize() {
@@ -21,6 +21,7 @@ Item {
         if (legendWidth < temp.legendContentWidth) legendWidth = temp.legendContentWidth
         if (legendWidth < humi.legendContentWidth) legendWidth = humi.legendContentWidth
         if (legendWidth < lumi.legendContentWidth) legendWidth = lumi.legendContentWidth
+        if (legendWidth < water_tank.legendContentWidth) legendWidth = water_tank.legendContentWidth
     }
 
     function updateData() {
@@ -36,6 +37,7 @@ Item {
             temp.visible = currentDevice.hasTemperatureSensor()
             humi.visible = currentDevice.hasHumiditySensor()
             lumi.visible = currentDevice.hasLuminositySensor()
+            water_tank.visible = currentDevice.hasWaterLevelSensor()
         } else {
             soil_moisture.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
             soil_conductivity.visible = currentDevice.hasSoilConductivitySensor()
@@ -43,6 +45,7 @@ Item {
             temp.visible = currentDevice.hasTemperatureSensor()
             humi.visible = currentDevice.hasHumiditySensor()
             lumi.visible = currentDevice.hasLuminositySensor()
+            water_tank.visible = currentDevice.hasWaterLevelSensor()
         }
 
         resetDataBars()
@@ -51,13 +54,15 @@ Item {
     function updateDataBars(soilM, soilC, soilT, tempD, humiD, lumiD) {
         soil_moisture.value = soilM
         soil_conductivity.value = soilC
-        soil_temperature.value = soilT // -99
+        soil_temperature.value = soilT
         temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
-        humi.value = humiD // -99
+        humi.value = humiD
         lumi.value = lumiD
+        water_tank.value =  -99
 
         soil_moisture.warning = false
         temp.warning = false
+        water_tank.warning = false
     }
 
     function resetDataBars() {
@@ -67,9 +72,11 @@ Item {
         temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
         humi.value = currentDevice.deviceHumidity
         lumi.value = currentDevice.deviceLuminosity
+        water_tank.value = currentDevice.waterTankLevel
 
         soil_moisture.warning = true
         temp.warning = true
+        water_tank.warning = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -113,7 +120,6 @@ Item {
 
             legend: qsTr("Temperature")
             legendWidth: indicatorsCompact.legendWidth
-            floatprecision: 1
             warning: true
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
@@ -124,6 +130,7 @@ Item {
             }
 
             value: tempHelper(currentDevice.deviceTemp)
+            floatprecision: 1
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
             valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: tempHelper(currentDevice.limitTempMin)
@@ -204,6 +211,26 @@ Item {
             valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: 0
             limitMax: 0
+        }
+
+        ////////
+
+        ItemDataBarCompact {
+            id: water_tank
+            width: parent.width
+
+            legend: qsTr("Water tank")
+            legendWidth: indicatorsCompact.legendWidth
+            suffix: "L"
+            colorForeground: Theme.colorBlue
+            //colorBackground: Theme.colorBackground
+
+            value: currentDevice.waterTankLevel
+            floatprecision: 1
+            valueMin: 0
+            valueMax: currentDevice.waterTankCapacity
+            limitMin: currentDevice.waterTankCapacity * 0.15
+            limitMax: currentDevice.waterTankCapacity
         }
     }
 }

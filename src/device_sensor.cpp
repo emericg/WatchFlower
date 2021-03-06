@@ -164,6 +164,14 @@ bool DeviceSensor::getSqlInfos()
             Q_EMIT sensorUpdated();
         }
     }
+    else if ((m_deviceName.startsWith("Parrot pot")) && (m_deviceFirmware.size() == 6))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
     else if ((m_deviceName == "ropot") && (m_deviceFirmware.size() == 5))
     {
         if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
