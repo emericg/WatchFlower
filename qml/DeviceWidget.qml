@@ -195,7 +195,7 @@ Item {
             } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING || boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
                 refreshAnimation.running = true;
-            } else if (boxDevice.status >= DeviceUtils.DEVICE_ACTION) {
+            } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
                 refreshAnimation.running = true;
             } else {

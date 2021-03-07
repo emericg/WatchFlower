@@ -124,25 +124,27 @@ void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::Servi
     {
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        // Characteristic "Battery Level"
-        QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
-
-        if (cbat.value().size() > 0)
+        if (serviceBattery)
         {
-            m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
+            // Characteristic "Battery Level"
+            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (m_dbInternal || m_dbExternal)
+            if (cbat.value().size() == 1)
             {
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":battery", m_battery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-            }
+                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
+                Q_EMIT sensorUpdated();
 
-            Q_EMIT sensorUpdated();
+                if (m_dbInternal || m_dbExternal)
+                {
+                    QSqlQuery updateDevice;
+                    updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                    updateDevice.bindValue(":battery", m_deviceBattery);
+                    updateDevice.bindValue(":deviceAddr", getAddress());
+                    if (updateDevice.exec() == false)
+                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+                }
+            }
         }
     }
 }

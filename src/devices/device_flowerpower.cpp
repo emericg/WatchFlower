@@ -272,23 +272,23 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         if (serviceBattery)
         {
             // Characteristic "Battery Level"
-            QBluetoothUuid bat(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handle 0x44
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(bat);
-            if (cbat.value().size() > 0)
+            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+
+            if (cbat.value().size() == 1)
             {
-                m_battery = static_cast<uint8_t>(cbat.value().constData()[0]);
+                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
+                Q_EMIT sensorUpdated();
 
                 if (m_dbInternal || m_dbExternal)
                 {
                     QSqlQuery updateDevice;
                     updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                    updateDevice.bindValue(":battery", m_battery);
+                    updateDevice.bindValue(":battery", m_deviceBattery);
                     updateDevice.bindValue(":deviceAddr", getAddress());
                     if (updateDevice.exec() == false)
                         qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
                 }
-
-                Q_EMIT sensorUpdated();
             }
         }
     }
@@ -437,7 +437,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowerPower update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_device_lastmove : " << QDateTime::fromSecsSinceEpoch(m_device_lastmove);
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;

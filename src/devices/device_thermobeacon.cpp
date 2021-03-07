@@ -94,7 +94,7 @@ void DeviceThermoBeacon::serviceScanDone()
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceThermoBeacon::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceThermoBeacon::bleReadNotify);
             //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceThermoBeacon::bleReadDone);
-            connect(serviceData, &QLowEnergyService::characteristicWritten, this, &DeviceThermoBeacon::bleWriteDone);
+            //connect(serviceData, &QLowEnergyService::characteristicWritten, this, &DeviceThermoBeacon::bleWriteDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
@@ -216,8 +216,8 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
 
 void DeviceThermoBeacon::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceThermoBeacon::bleWriteDone(" << m_deviceAddress << ")";
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceThermoBeacon::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -225,8 +225,8 @@ void DeviceThermoBeacon::bleWriteDone(const QLowEnergyCharacteristic &c, const Q
 
 void DeviceThermoBeacon::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceThermoBeacon::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceThermoBeacon::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -234,8 +234,8 @@ void DeviceThermoBeacon::bleReadDone(const QLowEnergyCharacteristic &c, const QB
 
 void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceThermoBeacon::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceThermoBeacon::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     QBluetoothUuid uuid_rx(QString("0000FFF3-0000-1000-8000-00805F9B34FB"));
     QBluetoothUuid uuid_tx(QString("0000FFF5-0000-1000-8000-00805F9B34FB"));
@@ -417,13 +417,13 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         if (m_dbInternal || m_dbExternal)
         {
             // Battery
-            if (battlvl != m_battery)
+            if (battlvl != m_deviceBattery)
             {
-                m_battery = battlvl;
+                m_deviceBattery = battlvl;
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -455,7 +455,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
 #ifndef QT_NO_DEBUG
         qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
-        qDebug() << "- battery:" << m_battery;
+        qDebug() << "- battery:" << m_deviceBattery;
         qDebug() << "- temperature:" << m_temperature;
         qDebug() << "- humidity:" << m_humidity;
         qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";

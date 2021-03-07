@@ -123,10 +123,10 @@ public:
         DEVICE_CONNECTING           =  2, //!< Trying to connect to the device
         DEVICE_CONNECTED            =  3, //!< Connected
 
-        DEVICE_ACTION               =  8, //!< Connected, doing something
-        DEVICE_UPDATING             =  9, //!< Connected, data update in progress
-        DEVICE_UPDATING_HISTORY     = 10, //!< Connected, history update in progress
-        DEVICE_UPDATING_REALTIME    = 11, //!< Connected, reading realtime data
+        DEVICE_WORKING              =  8, //!< Connected, doing something
+        DEVICE_UPDATING             =  9, //!< Connected, reading latest data
+        DEVICE_UPDATING_REALTIME    = 10, //!< Connected, reading realtime data
+        DEVICE_UPDATING_HISTORY     = 11, //!< Connected, reading data history
     };
     Q_ENUMS(DeviceStatus)
 

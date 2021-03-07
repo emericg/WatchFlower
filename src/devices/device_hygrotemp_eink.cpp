@@ -197,7 +197,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
     qDebug() << "WE HAVE DATA: 0x" \
                << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4] << hex << data[5];
 */
-    if (c.uuid().toString().toUpper() == "{00000100-0000-1000-8000-00805F9B34FB}")
+    if (c.uuid().toString() == "{00000100-0000-1000-8000-00805f9b34fb}")
     {
         // sensor data // handle 0x??
 
@@ -228,7 +228,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -240,7 +240,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempEInk update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_humidity:" << m_humidity;
 #endif

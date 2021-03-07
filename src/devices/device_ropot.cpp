@@ -175,7 +175,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
-                m_battery = chc.value().at(0);
+                m_deviceBattery = chc.value().at(0);
                 m_deviceFirmware = chc.value().remove(0, 2);
             }
 
@@ -401,7 +401,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -413,7 +413,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
             qDebug() << "- m_temperature:" << m_temperature;

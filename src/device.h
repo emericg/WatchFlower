@@ -59,14 +59,17 @@ class Device: public QObject
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceBattery READ getBattery NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY sensorUpdated)
+
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
+
+    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated) // TODO settingsUpdated
+    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
@@ -84,12 +87,13 @@ class Device: public QObject
 Q_SIGNALS:
     void connected();
     void disconnected();
-    void statusUpdated();
+    void deviceUpdated(Device *d);
     void sensorUpdated();
+    void settingsUpdated();
+    void statusUpdated();
     void rssiUpdated();
     void dataUpdated();
     void historyUpdated();
-    void deviceUpdated(Device *d);
 
 protected:
     int m_deviceType = 0;           //!< See DeviceType enum
@@ -101,15 +105,14 @@ protected:
     QString m_deviceModel;
     QString m_deviceName;
     QString m_deviceFirmware = "UNKN";
-    QString m_locationName;
-    QString m_associatedName; // was m_plantName
-    int m_battery = -1;
+    int m_deviceBattery = -1;
 
     // Device settings
+    QString m_associatedName; // was m_plantName
+    QString m_locationName;
     int m_manualOrderIndex = -1;
     bool m_isOutside = false;
     QString m_additionalSettings;
-    bool m_firmware_uptodate = false;
 
     // Status
     int m_status = 0;           //!< See DeviceStatus enum
@@ -119,6 +122,7 @@ protected:
     QDateTime m_lastSync;
     QDateTime m_lastError;
     int m_retries = 1;
+    bool m_firmware_uptodate = false;
 
     QTimer m_updateTimer;
     void setUpdateTimer(int updateIntervalMin = 0);
@@ -198,11 +202,12 @@ public slots:
     virtual int getHistoryUpdatePercent() const;
 
     // Device infos
+    QString getModel() const { return m_deviceModel; }
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
-    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     QString getFirmware() const { return m_deviceFirmware; }
-    int getBattery() const { return m_battery; }
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
+    int getBatteryLevel() const { return m_deviceBattery; }
 
     // RSSI
     int getRssi() const { return m_rssi; }

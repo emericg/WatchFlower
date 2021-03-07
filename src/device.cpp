@@ -369,7 +369,7 @@ bool Device::getSqlInfos()
             while (getInfos.next())
             {
                 m_deviceFirmware = getInfos.value(0).toString();
-                m_battery = getInfos.value(1).toInt();
+                m_deviceBattery = getInfos.value(1).toInt();
                 m_associatedName = getInfos.value(2).toString();
                 m_locationName = getInfos.value(3).toString();
                 m_isOutside = getInfos.value(4).toBool();
@@ -645,13 +645,41 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
-    Q_EMIT connected();
-
-    // Restart for an additional 10s+ ?
-    setTimeoutTimer();
-
     m_updating = true;
-    m_status = DeviceUtils::DEVICE_UPDATING;
+    m_status = DeviceUtils::DEVICE_CONNECTED;
+
+    if (m_ble_action == DeviceUtils::DEVICE_UPDATING_REALTIME ||
+        m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+    {
+        // Stop timeout timer, we'll be long...
+        m_timeoutTimer.stop();
+    }
+    else
+    {
+        // Restart for an additional 10s+?
+        setTimeoutTimer();
+    }
+
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+    {
+        m_status = DeviceUtils::DEVICE_UPDATING;
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+    {
+        m_status = DeviceUtils::DEVICE_UPDATING_REALTIME;
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+    {
+        m_status = DeviceUtils::DEVICE_UPDATING_HISTORY;
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_LED_BLINK ||
+             m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY||
+             m_ble_action == DeviceUtils::ACTION_WATERING)
+    {
+        m_status = DeviceUtils::DEVICE_WORKING;
+    }
+
+    Q_EMIT connected();
     Q_EMIT statusUpdated();
 
     controller->discoverServices();

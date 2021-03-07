@@ -180,7 +180,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
-                m_battery = chc.value().at(0);
+                m_deviceBattery = chc.value().at(0);
                 m_deviceFirmware = chc.value().remove(0, 2);
             }
 
@@ -410,14 +410,14 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
-                QDateTime tmcd_qt = QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
+                QDateTime tmcd_qdt = QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
 
                 QSqlQuery addData;
                 addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature, luminosity)"
                                 " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp, :lumi)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tmcd_qt.toString("yyyy-MM-dd hh:00:00"));
-                addData.bindValue(":ts_full", tmcd_qt.toString("yyyy-MM-dd hh:mm:ss"));
+                addData.bindValue(":ts", tmcd_qdt.toString("yyyy-MM-dd hh:00:00"));
+                addData.bindValue(":ts_full", tmcd_qdt.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":hygro", soil_moisture);
                 addData.bindValue(":condu", soil_conductivity);
                 addData.bindValue(":temp", temperature);
@@ -498,7 +498,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -510,7 +510,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowerCare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_soil_moisture:" << m_soil_moisture;
             qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
             qDebug() << "- m_temperature:" << m_temperature;

@@ -17,7 +17,7 @@ function getDeviceStatusText(deviceStatus) {
         txt = qsTr("Connecting...")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_CONNECTED) {
         txt = qsTr("Connected")
-    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_ACTION) {
+    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_WORKING) {
         txt = qsTr("Working...")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING ||
                deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_HISTORY ||
@@ -39,7 +39,7 @@ function getDeviceStatusColor(deviceStatus) {
         clr = ThemeEngine.Theme.colorYellow
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_CONNECTED) {
         clr = ThemeEngine.Theme.colorGreen
-    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_ACTION) {
+    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_WORKING) {
         clr = ThemeEngine.Theme.colorYellow
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING ||
                deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_HISTORY ||

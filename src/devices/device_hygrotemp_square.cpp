@@ -234,13 +234,12 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_battery(QLowEnergyService::
         if (serviceBattery)
         {
             // Characteristic "Battery level"
-            QBluetoothUuid b(QString("00002a19-0000-1000-8000-00805f9b34fb")); // handle 0x03
-            QLowEnergyCharacteristic chb = serviceBattery->characteristic(b);
+            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (chb.value().size() == 1)
+            if (cbat.value().size() == 1)
             {
-                const quint8 *data = reinterpret_cast<const quint8 *>(chb.value().constData());
-                m_battery = static_cast<int>(data[0]);
+                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
                 Q_EMIT sensorUpdated();
             }
         }
@@ -273,7 +272,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
     qDebug() << "WE HAVE DATA: 0x" \
              << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
 */
-    if (c.uuid().toString().toUpper() == "{EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6}")
+    if (c.uuid().toString() == "{ebe0ccc1-7a0a-4b0c-8a1a-6ff2997da3a6}")
     {
         // sensor data // handle 0x??
 
@@ -288,7 +287,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
             int battery = static_cast<int>((voltage - 2.1f) * 100.f);
             if (battery < 0) battery = 0;
             if (battery > 100) battery = 100;
-            m_battery = battery;
+            m_deviceBattery = battery;
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -312,7 +311,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -324,7 +323,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempSquare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_humidity:" << m_humidity;
 #endif

@@ -220,7 +220,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 
                 const quint8 *data = reinterpret_cast<const quint8 *>(chb.value().constData());
                 //qDebug() << "Battery > " << chb.value();
-                m_battery = static_cast<int>(data[0]);
+                m_deviceBattery = static_cast<int>(data[0]);
                 Q_EMIT sensorUpdated();
             }
         }
@@ -333,7 +333,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_battery);
+                updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -345,7 +345,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempClock update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_battery;
+            qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_humidity:" << m_humidity;
 #endif

@@ -190,10 +190,10 @@ public slots:
     float getHeatIndex() const;
     QString getHeatIndexString() const;
     float getHumidity() const { return m_humidity; }
-    //
+    // Environmental
     int getLuminosity() const { return m_luminosity; }
     float getWaterLevel() const { return m_water_level; }
-    //
+    // Geiger Counter
     float getRH() { return m_rh; }
     float getRM() { return m_rm; }
     float getRS() { return m_rs; }
