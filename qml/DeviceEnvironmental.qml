@@ -331,12 +331,24 @@ Item {
                 }
             }
 
+            ////////
+
+            Rectangle {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+
+                visible: ((isDesktop || unicolor) && !singleColumn)
+                width: 2
+                opacity: 0.33
+                color: Theme.colorHeaderHighlight
+            }
             Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (isDesktop && singleColumn)
+                visible: ((isDesktop || unicolor) && singleColumn)
                 height: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight
@@ -345,47 +357,10 @@ Item {
 
         ////////////////////////////////////////////////////////////////////////
 
-        Rectangle {
-            id: statusBox
-            width: parent.width
-            height: syncing ? 48 : 0
-            Behavior on height { NumberAnimation { duration: 133 } }
-
-            color: Theme.colorActionbar
-            clip: true
-
-            // prevent clicks below this area
-            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-            //property bool syncing: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
-            //                        currentDevice.status === DeviceUtils.DEVICE_UPDATING_REALTIME)
-
-            property bool syncing: true//currentDevice.status !== DeviceUtils.DEVICE_OFFLINE
-
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
-
-                ImageSvg {
-                    id: buttonBle
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-                    color: Theme.colorActionbarContent
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Syncing with the device")
-                    color: Theme.colorActionbarContent
-                    font.pixelSize: Theme.fontSizeContent
-                }
-            }
+        ItemBannerSync {
+            id: bannersync
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
 
         ////////////////////////////////////////////////////////////////////////

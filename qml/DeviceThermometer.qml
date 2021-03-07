@@ -369,7 +369,7 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (isDesktop && !singleColumn)
+                visible: ((isDesktop || unicolor) && !singleColumn)
                 width: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight
@@ -379,7 +379,7 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (isDesktop && singleColumn)
+                visible: ((isDesktop || unicolor) && singleColumn)
                 height: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight

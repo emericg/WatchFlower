@@ -220,7 +220,7 @@ Item {
             width: parent.width
 
             legend: qsTr("Water tank")
-            legendWidth: indicatorsCompact.legendWidth
+            legendWidth: indicatorsSolid.legendWidth
             suffix: "L"
             colorForeground: Theme.colorBlue
             //colorBackground: Theme.colorBackground

@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: actionMenu
-    width: isPhone ? 190 : 256
+    width: 220
     height: menuHolder.height
     visible: isOpen
     focus: isOpen && !isMobile
@@ -29,7 +29,7 @@ Rectangle {
             if (actionHistory.visible && menuWidth < actionHistory.contentWidth) menuWidth = actionHistory.contentWidth
             if (actionLed.visible && menuWidth < actionLed.contentWidth) menuWidth = actionLed.contentWidth
             if (actionGraphMode.visible && menuWidth < actionGraphMode.contentWidth) menuWidth = actionGraphMode.contentWidth
-            menuWidth += 80
+            menuWidth += 96
             actionMenu.width = menuWidth
         }
     }
@@ -41,8 +41,8 @@ Rectangle {
         width: parent.width
         height: children.height * children.length
 
-        topPadding: 4
-        bottomPadding: 4
+        topPadding: 8
+        bottomPadding: 8
         spacing: 4
 
         ActionButton {

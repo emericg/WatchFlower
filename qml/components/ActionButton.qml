@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 Item {
     id: actionButtonItem
-    height: 36
+    height: isPhone ? 36 : 40
     width: parent.width
 
     property string button_text
@@ -41,7 +41,7 @@ Item {
             id: tButton
             width: parent.width
             anchors.left: parent.left
-            anchors.leftMargin: 12
+            anchors.leftMargin: isPhone ? 12 : 16
             anchors.verticalCenter: parent.verticalCenter
 
             text: button_text
@@ -55,7 +55,7 @@ Item {
             width: parent.height * 0.6
             height: parent.height * 0.6
             anchors.right: parent.right
-            anchors.rightMargin: 12
+            anchors.rightMargin: isPhone ? 12 : 16
             anchors.verticalCenter: parent.verticalCenter
 
             source: button_source

@@ -156,7 +156,7 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::Servic
             {
                 QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
 
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0300000000"), QLowEnergyService::WriteWithoutResponse);
+                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0300000000"), QLowEnergyService::WriteWithResponse);
                 //DATA: 0x "0300000000036101000000000504000000000000"
                 // return 1 pair of data // almost same as 07 ?
 
@@ -180,18 +180,18 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::Servic
                     m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
                 {
                     // Ask the device for entry count
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0100000000"), QLowEnergyService::WriteWithoutResponse);
+                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0100000000"));
                 }
 
                 if (m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
                 {
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0200000000"), QLowEnergyService::WriteWithoutResponse);
+                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0200000000"));
                     // no resp on RX, 3 slow blinks
                 }
 
                 if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
                 {
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0400000000"), QLowEnergyService::WriteWithoutResponse);
+                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0400000000"));
                     // no resp on RX, many fast blinks
                 }
             }
@@ -283,7 +283,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             cmd.push_back(QByteArray::fromHex("00"));
 
             QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
-            serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
+            serviceData->writeCharacteristic(ctx, cmd);
         }
 
         // Parse entries
@@ -320,7 +320,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                     cmd.push_back(QByteArray::fromHex("00"));
 
                     QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
-                    serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
+                    serviceData->writeCharacteristic(ctx, cmd);
                 }
                 else
                 {
