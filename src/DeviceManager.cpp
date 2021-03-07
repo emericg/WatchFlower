@@ -67,6 +67,7 @@ DeviceManager::DeviceManager()
     m_devices_filter->setSourceModel(m_devices_model);
     SettingsManager *sm = SettingsManager::getInstance();
     if (sm) {
+        //if (sm->getOrderBy() == "manual") orderby_manual();
         if (sm->getOrderBy() == "location") orderby_location();
         if (sm->getOrderBy() == "plant") orderby_plant();
         if (sm->getOrderBy() == "waterlevel") orderby_waterlevel();
@@ -702,9 +703,8 @@ void DeviceManager::refreshDevices_start()
     // Already refreshing?
     if (isRefreshing())
     {
-        // Here we can do:
-
-        // nothing, and queue another refresh
+        // Here we can:
+        // do nothing, and queue another refresh
         //refreshDevices_stop(); // or cancel current refresh
         return; // or bail
     }
@@ -1208,6 +1208,13 @@ void DeviceManager::invalidate()
     m_devices_filter->invalidate();
 }
 
+void DeviceManager::orderby_manual()
+{
+    m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
 void DeviceManager::orderby_model()
 {
     m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);
@@ -1224,7 +1231,7 @@ void DeviceManager::orderby_name()
 
 void DeviceManager::orderby_location()
 {
-    m_devices_filter->setSortRole(DeviceModel::DeviceLocationRole);
+    m_devices_filter->setSortRole(DeviceModel::AssociatedLocationRole);
     m_devices_filter->sort(0, Qt::AscendingOrder);
     m_devices_filter->invalidate();
 }

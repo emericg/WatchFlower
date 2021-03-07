@@ -124,6 +124,7 @@ public slots:
     void activeScanningStart();
     void activeScanningStop();
 
+    void orderby_manual();
     void orderby_model();
     void orderby_name();
     void orderby_location();

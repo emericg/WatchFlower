@@ -104,6 +104,7 @@ protected:
     int m_battery = -1;
 
     // Device settings
+    int m_manualOrderIndex = -1;
     bool m_isOutside = false;
     QString m_additionalSettings;
     bool m_firmware_uptodate = false;
@@ -208,6 +209,7 @@ public slots:
     void setLocationName(const QString &name);
     QString getAssociatedName() { return m_associatedName; }
     void setAssociatedName(const QString &name);
+    int getManualIndex() const { return m_manualOrderIndex; }
     bool isInside() const { return !m_isOutside; }
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);

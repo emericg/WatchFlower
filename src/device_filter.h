@@ -59,8 +59,8 @@ public:
     DeviceModel(const DeviceModel &other, QObject *parent = nullptr);
     ~DeviceModel();
 
-    int rowCount(const QModelIndex & parent = QModelIndex()) const;
-    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
     bool hasDevices() const { return !m_devices.empty(); }
     void getDevices(QList<Device *> &device);
@@ -69,12 +69,15 @@ public:
     QList<Device *> m_devices;
 
     enum DeviceRoles {
+        // hw device
         DeviceModelRole = Qt::UserRole+1,
         DeviceNameRole,
-        DeviceLocationRole,
-        RssiRole,
-
+        DeviceRssiRole,
+        // user set
+        AssociatedLocationRole,
         AssociatedNameRole,
+        ManualIndexRole,
+        // plant sensors
         PlantNameRole,
         SoilMoistureRole,
 
