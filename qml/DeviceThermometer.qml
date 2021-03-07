@@ -386,11 +386,27 @@ Item {
             }
         }
 
-        Loader {
-            id: graphLoader
+        ////////////////
+
+        Item {
             width: singleColumn ? parent.width : (parent.width - tempBox.width)
             height: singleColumn ? (parent.height - tempBox.height) : parent.height
-            asynchronous: false
+
+            ItemBannerSync {
+                id: bannersync
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
+
+            Loader {
+                id: graphLoader
+                anchors.top: bannersync.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                asynchronous: false
+            }
         }
     }
 }

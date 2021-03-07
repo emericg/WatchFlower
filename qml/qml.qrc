@@ -24,6 +24,7 @@
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
         <file alias="ItemAioLineCharts.qml">components/ItemAioLineCharts.qml</file>
+        <file alias="ItemBannerSync.qml">components/ItemBannerSync.qml</file>
         <file alias="ItemDataChart.qml">components/ItemDataChart.qml</file>
         <file alias="ItemDeletePopup.qml">components/ItemDeletePopup.qml</file>
         <file alias="ItemEnvBox.qml">components/ItemEnvBox.qml</file>
