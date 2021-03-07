@@ -49,6 +49,12 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 | LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
+| ThermoBeacon (keychain) | ThermoBeacon (LCD) |
+| :---------------------: | :----------------: |
+| ![ThermoBeacon](docs/thermobeacon_round.svg) |![ThermoBeacon](docs/thermobeacon_square.svg) |
+ 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
+| [shop]() | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
+
 | ESP32 Air Monitor | ESP32 Geiger Counter |
 | :---------------: | :------------------: |
 | ![Air Monitor](docs/lungs-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
