@@ -284,13 +284,13 @@ bool DeviceSensor::getSqlData(int minutes)
     QSqlQuery cachedData;
     if (m_dbInternal) // sqlite
     {
-        cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+        cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
                            "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
     }
     else if (m_dbExternal) // mysql
     {
-        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
                            "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW());");
     }
@@ -313,9 +313,11 @@ bool DeviceSensor::getSqlData(int minutes)
         m_soil_moisture =  cachedData.value(1).toInt();
         m_soil_conductivity = cachedData.value(2).toInt();
         m_soil_temperature = cachedData.value(3).toFloat();
-        m_temperature = cachedData.value(4).toFloat();
-        m_humidity =  cachedData.value(5).toInt();
-        m_luminosity = cachedData.value(6).toInt();
+        m_soil_ph = cachedData.value(4).toFloat();
+        m_temperature = cachedData.value(5).toFloat();
+        m_humidity =  cachedData.value(6).toFloat();
+        m_luminosity = cachedData.value(7).toInt();
+        m_watertank_level = cachedData.value(8).toFloat();
 
         QString datetime = cachedData.value(0).toString();
         m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
@@ -324,9 +326,11 @@ bool DeviceSensor::getSqlData(int minutes)
         qDebug() << "- m_soil_moisture:" << m_soil_moisture;
         qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
         qDebug() << "- m_soil_temperature:" << m_soil_temperature;
+        qDebug() << "- m_soil_ph:" << m_soil_ph;
         qDebug() << "- m_temperature:" << m_temperature;
         qDebug() << "- m_humidity:" << m_humidity;
         qDebug() << "- m_luminosity:" << m_luminosity;
+        qDebug() << "- m_watertank_level:" << m_watertank_level;
 */
         status = true;
     }

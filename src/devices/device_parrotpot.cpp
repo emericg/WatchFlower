@@ -431,8 +431,8 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                     QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                     QSqlQuery addData;
-                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity)"
-                                    " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :atemp, :lumi)");
+                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity, watertank)"
+                                    " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :atemp, :lumi, :tank)");
                     addData.bindValue(":deviceAddr", getAddress());
                     addData.bindValue(":ts", tsStr);
                     addData.bindValue(":ts_full", tsFullStr);
@@ -441,6 +441,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                     addData.bindValue(":stemp", m_soil_temperature);
                     addData.bindValue(":atemp", m_temperature);
                     addData.bindValue(":lumi", m_luminosity);
+                    addData.bindValue(":tank", m_watertank_level);
                     if (addData.exec() == false)
                         qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
                 }

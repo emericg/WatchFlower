@@ -362,18 +362,23 @@ bool Device::getSqlInfos()
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery getInfos;
-        getInfos.prepare("SELECT deviceFirmware, deviceBattery, associatedName, locationName, isOutside, settings FROM devices WHERE deviceAddr = :deviceAddr");
+        getInfos.prepare("SELECT deviceModel, deviceFirmware, deviceBattery, associatedName, locationName, isOutside, settings" \
+                         " FROM devices WHERE deviceAddr = :deviceAddr");
         getInfos.bindValue(":deviceAddr", getAddress());
         if (getInfos.exec())
         {
             while (getInfos.next())
             {
-                m_deviceFirmware = getInfos.value(0).toString();
-                m_deviceBattery = getInfos.value(1).toInt();
-                m_associatedName = getInfos.value(2).toString();
-                m_locationName = getInfos.value(3).toString();
-                m_isOutside = getInfos.value(4).toBool();
-                // TODO handle settings field
+                m_deviceModel = getInfos.value(0).toString();
+                m_deviceFirmware = getInfos.value(1).toString();
+                m_deviceBattery = getInfos.value(2).toInt();
+                m_associatedName = getInfos.value(3).toString();
+                m_locationName = getInfos.value(4).toString();
+                //m_lastSync = ;
+                //m_manualOrderIndex = ;
+                m_isOutside = getInfos.value(5).toBool();
+
+                // TODO // handle 'settings' field
 
                 status = true;
                 Q_EMIT sensorUpdated();

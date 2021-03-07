@@ -346,13 +346,14 @@ void DatabaseManager::createDatabase()
         QSqlQuery createDevices;
         createDevices.prepare("CREATE TABLE devices (" \
                               "deviceAddr CHAR(17) PRIMARY KEY," \
-                              "deviceAddrMAC CHAR(17)," \
                               "deviceModel VARCHAR(255)," \
                               "deviceName VARCHAR(255)," \
                               "deviceFirmware VARCHAR(255)," \
                               "deviceBattery INT," \
                               "associatedName VARCHAR(255)," \
                               "locationName VARCHAR(255)," \
+                              "lastSync DATETIME," \
+                              "manualOrderIndex INT," \
                               "isOutside BOOLEAN," \
                               "settings VARCHAR(255)" \
                               ");");
@@ -377,6 +378,7 @@ void DatabaseManager::createDatabase()
                              "temperature FLOAT," \
                              "humidity FLOAT," \
                              "luminosity INT," \
+                             "watertank FLOAT," \
                            " PRIMARY KEY(deviceAddr, ts), " \
                            " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                            ");");
@@ -419,11 +421,12 @@ void DatabaseManager::createDatabase()
         QSqlQuery createSensorData;
         createSensorData.prepare("CREATE TABLE sensorData (" \
                                  "deviceAddr CHAR(17)," \
+                                   "timestamp DATETIME," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
                                    "pressure FLOAT," \
                                    "luminosity INT," \
-                                   "uv INT," \
+                                   "uv FLOAT," \
                                    "sound FLOAT," \
                                    "pm1 INT," \
                                    "pm25 INT," \
@@ -488,13 +491,16 @@ bool DatabaseManager::migrate_v1v2()
     // FIELD add deviceAddrMAC
     // FIELD add deviceModel
     // FIELD plantName > associatedName
+    // FIELD add (DATETIME) lastSync
     // FIELD add (bool) isOutside
+    // FIELD add (int) manualOrderIndex
     // FIELD add (str) settings
-    QSqlQuery qmDev1("ALTER TABLE devices ADD deviceAddrMAC VARCHAR(17)");
-    QSqlQuery qmDev2("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
-    QSqlQuery qmDev3("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
-    QSqlQuery qmDev4("ALTER TABLE devices ADD isOutside BOOLEAN");
-    QSqlQuery qmDev5("ALTER TABLE devices ADD settings VARCHAR(255)");
+    QSqlQuery qmDev1("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
+    QSqlQuery qmDev2("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
+    QSqlQuery qmDev3("ALTER TABLE devices ADD lastSync DATETIME");
+    QSqlQuery qmDev4("ALTER TABLE devices ADD manualOrderIndex INT");
+    QSqlQuery qmDev5("ALTER TABLE devices ADD isOutside BOOLEAN");
+    QSqlQuery qmDev6("ALTER TABLE devices ADD settings VARCHAR(255)");
 
     // TABLE datas > plantData
     // FIELD hygro > soilMoisture (change type??)
@@ -503,6 +509,7 @@ bool DatabaseManager::migrate_v1v2()
     // FIELD add soilTemperature
     // FIELD add soilPH
     // FIELD add humidity
+    // FIELD add watertank
     QSqlQuery qmDat1("ALTER TABLE datas RENAME TO plantData");
     QSqlQuery qmDat2("ALTER TABLE plantData RENAME COLUMN hygro TO soilMoisture");
     QSqlQuery qmDat3("ALTER TABLE plantData RENAME COLUMN conductivity TO soilConductivity");
@@ -510,6 +517,7 @@ bool DatabaseManager::migrate_v1v2()
     QSqlQuery qmDat5("ALTER TABLE plantData ADD soilTemperature FLOAT");
     QSqlQuery qmDat6("ALTER TABLE plantData ADD soilPH FLOAT");
     QSqlQuery qmDat7("ALTER TABLE plantData ADD humidity FLOAT");
+    QSqlQuery qmDat8("ALTER TABLE plantData ADD watertank FLOAT");
 
     // TABLE limits > plantLimits
     // FIELD lumiMin > luxMin
