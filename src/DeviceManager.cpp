@@ -29,6 +29,7 @@
 #include "devices/device_hygrotemp_eink.h"
 #include "devices/device_hygrotemp_clock.h"
 #include "devices/device_hygrotemp_square.h"
+#include "devices/device_thermobeacon.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geiger.h"
 
@@ -116,6 +117,8 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
+            else if (deviceName == "ThermoBeacon")
+                d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
                 d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
@@ -506,6 +509,8 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
                 else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401")
                     d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
+                else if (deviceName == "ThermoBeacon")
+                    d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
                 else if (deviceName == "GeigerCounter")
                     d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
@@ -865,6 +870,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "ClearGrass Temp & RH" || info.name().startsWith("Qingping Temp & RH") ||
             info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
             info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
+            info.name() == "ThermoBeacon" ||
             info.name() == "GeigerCounter" || info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
@@ -902,6 +908,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempClock(info, this);
             else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401")
                 d = new DeviceHygrotempSquare(info, this);
+            else if (info.name() == "ThermoBeacon")
+                d = new DeviceThermoBeacon(info, this);
             else if (info.name() == "GeigerCounter")
                 d = new DeviceEsp32Geiger(info, this);
 

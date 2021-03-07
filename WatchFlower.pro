@@ -55,6 +55,7 @@ SOURCES  += src/main.cpp \
             src/devices/device_hygrotemp_eink.cpp \
             src/devices/device_hygrotemp_clock.cpp \
             src/devices/device_hygrotemp_square.cpp \
+            src/devices/device_thermobeacon.cpp \
             src/devices/device_ropot.cpp \
             src/devices/device_parrotpot.cpp \
             src/devices/device_esp32_higrow.cpp \
@@ -81,6 +82,7 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_hygrotemp_eink.h \
             src/devices/device_hygrotemp_clock.h \
             src/devices/device_hygrotemp_square.h \
+            src/devices/device_thermobeacon.h \
             src/devices/device_ropot.h \
             src/devices/device_parrotpot.h \
             src/devices/device_esp32_geiger.h \
