@@ -1289,7 +1289,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    text: qsTr("Export up to 30 days of data into a CSV file.")
+                    text: qsTr("Export up to 90 days of data into a CSV file.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText

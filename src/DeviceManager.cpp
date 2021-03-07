@@ -1155,13 +1155,13 @@ bool DeviceManager::exportData(const QString &path)
                 {
                     data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
                                  "FROM plantData " \
-                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(31) + " days');");
+                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(90) + " days');");
                 }
                 else if (m_dbExternal) // mysql
                 {
                     data.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
                                  "FROM plantData " \
-                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= DATE_SUB(NOW(), INTERVAL " + QString::number(31) + " DAY);");
+                                 "WHERE deviceAddr = :deviceAddr AND ts_full >= DATE_SUB(NOW(), INTERVAL " + QString::number(90) + " DAY);");
                 }
                 data.bindValue(":deviceAddr", dd->getAddress());
 
