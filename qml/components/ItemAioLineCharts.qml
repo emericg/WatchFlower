@@ -34,7 +34,7 @@ Item {
         var days = 14
         var count = currentDevice.countData("temperature", days)
 
-        showGraphDots = (settingsManager.graphShowDots && count <= 21)
+        showGraphDots = (settingsManager.graphShowDots && count < 16)
 
         if (count > 1) {
             aioGraph.visible = true

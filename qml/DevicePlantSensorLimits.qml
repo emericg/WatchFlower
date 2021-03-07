@@ -17,8 +17,10 @@ Item {
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
         // Address
-        if (currentDevice.deviceAddress.charAt(0) !== '{')
-            textAddr.text = "[" + currentDevice.deviceAddress + "]"
+        if (currentDevice.deviceAddress.charAt(0) === '{')
+            textAddr.text = currentDevice.deviceAddress.toUpperCase()
+        else
+            textAddr.text = "[" + currentDevice.deviceAddress.toUpperCase() + "]"
 
         // Firmware
         textFirmware.text = currentDevice.deviceFirmware
@@ -144,7 +146,6 @@ Item {
                             anchors.leftMargin: 10
                             anchors.verticalCenter: parent.verticalCenter
 
-                            text: currentDevice.deviceAddress
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
                         }
@@ -175,7 +176,6 @@ Item {
                             anchors.leftMargin: 10
                             anchors.verticalCenter: parent.verticalCenter
 
-                            text: "1"
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
                         }

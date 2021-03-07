@@ -120,10 +120,10 @@ Item {
             textLocation.text = boxDevice.deviceLocationName
         } else {
             if (Qt.platform.os === "osx" || Qt.platform.os === "ios") {
-                textLocation.text = boxDevice.deviceAddress
+                textLocation.text = boxDevice.deviceAddress.toUpperCase()
                 textLocation.font.pixelSize = 14
             } else {
-                textLocation.text = boxDevice.deviceAddress
+                textLocation.text = boxDevice.deviceAddress.toUpperCase()
             }
         }
 
@@ -225,7 +225,7 @@ Item {
             } else {
                 rectangleHygroTemp.visible = true
                 textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
-                textHygro.text = boxDevice.deviceHumidity + "%"
+                textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
             }
         }
     }
@@ -379,7 +379,6 @@ Item {
                     anchors.rightMargin: bigAssMode ? 0 : 8
 
                     color: Theme.colorText
-                    text: boxDevice.deviceLocationName
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: bigAssMode ? 22 : 20
@@ -392,7 +391,6 @@ Item {
                     anchors.rightMargin: bigAssMode ? 0 : 8
 
                     color: Theme.colorSubText
-                    text: boxDevice.deviceAddress
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: bigAssMode ? 20 : 18
