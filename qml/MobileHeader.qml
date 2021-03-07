@@ -215,7 +215,10 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (deviceManager.bluetooth && (appContent.state === "DevicePlantSensor" || appContent.state === "DeviceThermometer"))
+                visible: (deviceManager.bluetooth &&
+                          (appContent.state === "DevicePlantSensor" ||
+                           appContent.state === "DeviceThermometer" ||
+                           appContent.state === "DeviceEnvironmental"))
                 onClicked: {
                     rightMenuClicked()
                     actionMenu.open()

@@ -76,7 +76,7 @@ Rectangle {
             index: 1
             button_text: qsTr("Blink LED")
             button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
             onButtonClicked: {
                 deviceLedButtonClicked()
                 menuSelected(index)

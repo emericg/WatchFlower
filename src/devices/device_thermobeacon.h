@@ -52,6 +52,9 @@ public:
 
     void parseAdvertisementData(const QByteArray &value);
 
+public slots:
+    int getHistoryUpdatePercent() const;
+
 private:
     // QLowEnergyController related
     void serviceScanDone();

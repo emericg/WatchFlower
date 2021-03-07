@@ -164,8 +164,11 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
-                      ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasHistory) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
             source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -178,7 +181,11 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasLED) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
             source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -192,9 +199,9 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
-                      ((appContent.state === "DevicePlantSensor") ||
-                       (appContent.state === "DeviceThermometer") ||
-                       (appContent.state === "DeviceEnvironmental")))
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight

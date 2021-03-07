@@ -338,7 +338,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         if (m_history_entry_count < 0)
         {
             // Entry count
-            m_history_entry_count = static_cast<int>(data[0] + (data[1] << 8));
+            m_history_entry_count = static_cast<int16_t>(data[0] + (data[1] << 8));
             //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
 
             // Read first entry

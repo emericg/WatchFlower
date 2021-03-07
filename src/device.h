@@ -75,9 +75,11 @@ class Device: public QObject
     Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
-    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
+
+    Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
+    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -114,6 +116,7 @@ protected:
     bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
     int m_ble_action = 0;       //!< See DeviceActions enum
     QDateTime m_lastUpdate;
+    QDateTime m_lastSync;
     QDateTime m_lastError;
     int m_retries = 1;
 
@@ -187,10 +190,12 @@ public slots:
     bool isFresh() const;                               //!< Has at least >Xh (user set) old data
     bool isAvailable() const;                           //!< Has at least >12h old data
 
-    virtual int getHistoryUpdatePercent() const;
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastErrorInt() const;
+
+    QDateTime getLastSync() const;
+    virtual int getHistoryUpdatePercent() const;
 
     // Device infos
     QString getName() const { return m_deviceName; }

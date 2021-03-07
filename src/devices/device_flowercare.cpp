@@ -388,7 +388,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         if (m_history_entry_count < 0)
         {
             // Entry count
-            m_history_entry_count = static_cast<int>(data[0] + (data[1] << 8));
+            m_history_entry_count = static_cast<int16_t>(data[0] + (data[1] << 8));
             //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
 
             // Read first entry
@@ -398,11 +398,11 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         else
         {
             m_history_entry_read++;
-            Q_EMIT statusUpdated();
+            Q_EMIT historyUpdated();
 
             // Parse entry
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
-            float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)+ (data[6] << 16)) / 10.f;
+            float temperature = static_cast<int32_t>(data[4]  + (data[5] << 8) + (data[6] << 16)) / 10.f;
             int luminosity = data[7] + (data[8] << 8) + (data[9] << 16) + (data[10] << 24);
             int soil_moisture = data[11];
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
@@ -525,11 +525,15 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
 int DeviceFlowerCare::getHistoryUpdatePercent() const
 {
-    int p = -1;
+    //qDebug() << "DeviceFlowerCare::getHistoryUpdatePercent(" << m_history_entry_read << "/" <<  m_history_entry_count << ")";
+    int p = 0;
 
-    if (m_status == DeviceUtils::ACTION_UPDATE_HISTORY)
+    if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
-        p = static_cast<int>((m_history_entry_read / m_history_entry_count) * 100);
+        if (m_history_entry_count > 0)
+        {
+            p = static_cast<int>((m_history_entry_read / static_cast<float>(m_history_entry_count)) * 100.0);
+        }
     }
 
     return p;

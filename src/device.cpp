@@ -477,10 +477,17 @@ bool Device::isAvailable() const
 
 /* ************************************************************************** */
 
+QDateTime Device::getLastSync() const
+{
+    return m_lastSync;
+}
+
 int Device::getHistoryUpdatePercent() const
 {
     return -1;
 }
+
+/* ************************************************************************** */
 
 int Device::getLastUpdateInt() const
 {
