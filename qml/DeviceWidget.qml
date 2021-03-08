@@ -93,6 +93,7 @@ Item {
     }
 
     function updateSensorBattery() {
+        imageBattery.visible = boxDevice.hasBattery
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
     }
 

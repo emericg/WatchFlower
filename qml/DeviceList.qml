@@ -211,70 +211,40 @@ Item {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
-                property bool useBigButtons: (!isPhone && rectangleActions.width >= 560)
-
-                ItemImageButton {
-                    id: buttonRefresh1
-                    width: 36
-                    height: 36
+                ItemButtonCompactable {
+                    id: buttonRefresh
+                    height: !wideMode ? 36 : 34
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: deviceManager.bluetooth
 
-                    visible: !parent.useBigButtons && deviceManager.bluetooth
+                    compact: !wideMode
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenDeviceList.updateSelectedDevice()
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
 
-                    NumberAnimation on rotation {
-                        id: refreshAnimation
-                        duration: 2000
-                        from: 0
-                        to: 360
-                        loops: Animation.Infinite
-                        running: deviceManager.refreshing
-                        alwaysRunToEnd: true
-                        easing.type: Easing.Linear
-                    }
-                }
-                ItemImageButton {
-                    id: buttonDelete1
-                    width: 36
-                    height: 36
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: !parent.useBigButtons
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: confirmDeleteDevice.open()
-                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
-                }
-
-                ButtonWireframeImage {
-                    id: buttonRefresh2
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: parent.useBigButtons && deviceManager.bluetooth
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Refresh")
-                    onClicked: screenDeviceList.updateSelectedDevice()
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                }
-                ButtonWireframeImage {
-                    id: buttonDelete2
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
 
-                    visible: parent.useBigButtons
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
-                    text: qsTr("Delete")
+                    animation: "rotate"
+                    animationRunning: deviceManager.refreshing
+                }
+
+                ItemButtonCompactable {
+                    id: buttonDelete
+                    height: compact ? 36 : 34
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: deviceManager.bluetooth
+
+                    compact: !wideMode
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
                     onClicked: confirmDeleteDevice.open()
+
+                    text: qsTr("Delete")
                     source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                 }
             }

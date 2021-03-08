@@ -156,15 +156,23 @@ Item {
 
                     Rectangle {
                         id: rectangleSnow
-                        width: 32
+                        width: wideWideMode ? 80 : 32
                         height: 32
                         anchors.verticalCenter: parent.verticalCenter
 
                         radius: 2
                         color: "white"
-                        border.color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : Theme.colorSeparator
+                        border.color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : "#ccc"
                         border.width: 2
 
+                        Text {
+                            anchors.centerIn: parent
+                            visible: wideWideMode
+                            text: qsTr("snow")
+                            color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : "#ccc"
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: settingsManager.appTheme = "snow"
@@ -172,7 +180,7 @@ Item {
                     }
                     Rectangle {
                         id: rectangleGreen
-                        width: 32
+                        width: wideWideMode ? 80 : 32
                         height: 32
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -181,6 +189,14 @@ Item {
                         border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "green") ? 2 : 0
 
+                        Text {
+                            anchors.centerIn: parent
+                            visible: wideWideMode
+                            text: qsTr("green")
+                            color: "white"
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: settingsManager.appTheme = "green"
@@ -188,7 +204,7 @@ Item {
                     }
                     Rectangle {
                         id: rectangleDay
-                        width: 32
+                        width: wideWideMode ? 80 : 32
                         height: 32
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -197,6 +213,14 @@ Item {
                         border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "day") ? 2 : 0
 
+                        Text {
+                            anchors.centerIn: parent
+                            visible: wideWideMode
+                            text: qsTr("day")
+                            color: "white"
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: settingsManager.appTheme = "day"
@@ -204,7 +228,7 @@ Item {
                     }
                     Rectangle {
                         id: rectangleNight
-                        width: 32
+                        width: wideWideMode ? 80 : 32
                         height: 32
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -213,6 +237,14 @@ Item {
                         border.color: Theme.colorPrimary
                         border.width: (settingsManager.appTheme === "night") ? 2 : 0
 
+                        Text {
+                            anchors.centerIn: parent
+                            visible: wideWideMode
+                            text: qsTr("night")
+                            color: (settingsManager.appTheme === "night") ? Theme.colorPrimary : "#ececec"
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: settingsManager.appTheme = "night"

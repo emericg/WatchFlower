@@ -11,14 +11,12 @@ Popup {
     implicitWidth: 560
     implicitHeight: 320
     width: singleColumn ? parent.width : implicitWidth
-    height: columnContent.height + gridcontContent.height + 24
-    padding: 24
+    height: columnContent.height + gridcontContent.height + padding
+    padding: singleColumn ? 24 : 32
 
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-
-    property bool singleColumn: (isPhone || appWindow.width < implicitWidth)
 
     signal confirmed()
 

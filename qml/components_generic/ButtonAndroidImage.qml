@@ -20,7 +20,6 @@ Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        id: background
 
         Rectangle {
             id: rect
@@ -46,7 +45,6 @@ Button {
         MouseArea {
             id: mmmm
             anchors.fill: parent
-            anchors.margins: 0
 
             enabled: true
             visible: true

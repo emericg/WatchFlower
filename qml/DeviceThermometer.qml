@@ -13,21 +13,7 @@ Item {
     property var currentDevice: null
     property alias deviceScreenChart: graphLoader.item
 
-    property bool unicolor: (Theme.colorHeader === Theme.colorBackground)
-    property string cccc: unicolor ? Theme.colorHeaderContent : "white"
-
-    property bool singleColumn: {
-        if (isMobile) {
-            if (screenOrientation === Qt.PortraitOrientation ||
-                (isTablet && width < 480)) { // can be a 2/3 split screen on tablet
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return (appWindow.width < appWindow.height)
-        }
-    }
+    property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -119,9 +105,8 @@ Item {
         //console.log("DeviceThermometer // updateHeader() >> " + currentDevice)
 
         // Battery level
+        imageBattery.visible = currentDevice.hasBattery
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        if (currentDevice.deviceBattery <= 0) imageBattery.color = Theme.colorRed
-        else imageBattery.color = cccc
 
         // Status
         updateStatusText()
@@ -185,18 +170,13 @@ Item {
         Rectangle {
             id: tempBox
 
-            property int dimboxw: Math.max(deviceThermometer.width * 0.333, isPhone ? 192 : 384)
+            property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 192 : 600)
             property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 160 : 256)
 
             width: singleColumn ? parent.width : dimboxw
             height: singleColumn ? dimboxh: parent.height
             color: Theme.colorHeader
             z: 5
-
-            //width: dimboxw - 32
-            //height: dimboxh: - 32
-            //color: Theme.colorHeader
-            //radius: 16
 
             MouseArea { anchors.fill: parent } // prevent clicks below this area
 
@@ -369,7 +349,7 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: ((isDesktop || unicolor) && !singleColumn)
+                visible: ((isDesktop || headerUnicolor) && !singleColumn)
                 width: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight
@@ -379,7 +359,7 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: ((isDesktop || unicolor) && singleColumn)
+                visible: ((isDesktop || headerUnicolor) && singleColumn)
                 height: 2
                 opacity: 0.33
                 color: Theme.colorHeaderHighlight

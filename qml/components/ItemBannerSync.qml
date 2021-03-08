@@ -16,12 +16,12 @@ Rectangle {
     property bool syncing: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
                             currentDevice.status === DeviceUtils.DEVICE_UPDATING_REALTIME)
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-    ////////
+    ////////////////
 
     Row {
         anchors.left: parent.left
@@ -57,7 +57,7 @@ Rectangle {
         }
     }
 
-    ////////
+    ////////////////
 
     Row {
         anchors.right: parent.right
@@ -92,7 +92,7 @@ Rectangle {
         }
     }
 
-    ////////
+    ////////////////
 
     Rectangle {
         anchors.left: parent.left

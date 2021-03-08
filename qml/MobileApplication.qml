@@ -236,6 +236,26 @@ ApplicationWindow {
         onRunningChanged: exitWarning.opacity = running
     }
 
+    // UI sizes ////////////////////////////////////////////////////////////////
+
+    property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
+
+    property bool singleColumn: {
+        if (isMobile) {
+            if (screenOrientation === Qt.PortraitOrientation ||
+                (isTablet && width < 480)) { // can be a 2/3 split screen on tablet
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return (appWindow.width < appWindow.height)
+        }
+    }
+
+    property bool wideMode: (isDesktop && width >= 560) || (isTablet && width >= 480)
+    property bool wideWideMode: (width >= 640)
+
     // QML /////////////////////////////////////////////////////////////////////
 
     FocusScope {
@@ -470,7 +490,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (appWindow.width >= 480) ? 24 : 0
+            spacing: wideMode ? 24 : 0
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||

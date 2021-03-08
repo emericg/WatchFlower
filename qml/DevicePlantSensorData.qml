@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
 import DeviceUtils 1.0
@@ -102,6 +101,8 @@ Item {
         dataCharts.resetIndicator()
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Connections {
         target: settingsManager
         onTempUnitChanged: {
@@ -134,7 +135,7 @@ Item {
             }
         }
         if (isDesktop) {
-            if (devicePlantSensorData.width < devicePlantSensorData.height) {
+            if (singleColumn) {
                 contentGrid_lvl2.columns = 1
                 contentGrid_lvl2.rows = 2
                 rectangleHeader.color = Theme.colorForeground
@@ -142,6 +143,9 @@ Item {
                 contentGrid_lvl2.columns = 2
                 contentGrid_lvl2.rows = 1
                 rectangleHeader.color = "transparent"
+                rectangleHeader.width = (contentGrid_lvl2.width / 3)
+                rectangleHeader2.color = "transparent"
+                rectangleHeader2.width = (contentGrid_lvl2.width / 3)*2
             }
         }
     }
@@ -400,7 +404,7 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: (isDesktop && !unicolor)
+                    visible: (isDesktop && !headerUnicolor)
                     height: 2
                     opacity: 0.5
                     color: Theme.colorSeparator
@@ -409,10 +413,16 @@ Item {
 
             ////////
 
+            ItemBannerSync {
+                id: bannersync
+                width: parent.width / parent.columns
+            }
+
+            ////////
+
             Loader {
                 id: indicatorsLoader
                 width: parent.width / parent.columns
-                //height: columnData.height + 16
             }
         }
 
@@ -421,7 +431,7 @@ Item {
         Loader {
             id: graphLoader
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
-            height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - rectangleHeader.height - indicatorsLoader.height - (contentGrid_lvl1.rows > 1 ? contentGrid_lvl1.spacing : 0)) : contentGrid_lvl1.height
+            height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height) : contentGrid_lvl1.height
         }
     }
 }

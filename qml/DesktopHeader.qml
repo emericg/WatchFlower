@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
 
@@ -50,12 +49,12 @@ Rectangle {
     function setActiveMenu() {
         if (appContent.state === "Tutorial") {
             title.text = qsTr("Welcome")
-            menu.visible = false
+            menus.visible = false
 
             buttonBack.source = "qrc:/assets/menus/menu_close.svg"
         } else {
             title.text = "WatchFlower"
-            menu.visible = true
+            menus.visible = true
 
             if (appContent.state === "DeviceList") {
                 buttonBack.source = "qrc:/assets/menus/menu_logo_large.svg"
@@ -105,7 +104,7 @@ Rectangle {
             height: width
             anchors.centerIn: parent
 
-            visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || rectangleHeaderBar.width >= 580)
+            visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || wideMode)
             source: "qrc:/assets/menus/menu_logo_large.svg"
             color: Theme.colorHeaderContent
         }
@@ -117,7 +116,7 @@ Rectangle {
         anchors.leftMargin: 64
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: (rectangleHeaderBar.width >= 580)
+        visible: wideMode
         text: "WatchFlower"
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader
@@ -127,7 +126,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     Row {
-        id: menu
+        id: menus
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
@@ -140,11 +139,11 @@ Rectangle {
 
         ////////////
 
-        ItemImageButtonTooltip {
+        ItemButtonCompactable {
             id: buttonThermoChart
-            width: 36
-            height: 36
+            height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
+
             visible: (appContent.state === "DeviceThermometer")
 
             source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
@@ -158,27 +157,9 @@ Rectangle {
             }
             tooltipText: qsTr("Switch graph")
         }
-        ItemImageButtonTooltip {
-            id: buttonRefreshHistory
-            width: 36
-            height: 36
-            anchors.verticalCenter: parent.verticalCenter
-
-            visible: (deviceManager.bluetooth &&
-                      (selectedDevice && selectedDevice.hasHistory) &&
-                      (appContent.state === "DevicePlantSensor" ||
-                       appContent.state === "DeviceThermometer" ||
-                       appContent.state === "DeviceEnvironmental"))
-            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceRefreshHistoryButtonClicked()
-            tooltipText: qsTr("Sync history")
-        }
-        ItemImageButtonTooltip {
+        ItemButtonCompactable {
             id: buttonLed
-            width: 36
-            height: 36
+            height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
@@ -186,22 +167,40 @@ Rectangle {
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
                        appContent.state === "DeviceEnvironmental"))
+
             source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceLedButtonClicked()
             tooltipText: qsTr("Blink LED")
         }
-        ItemImageButtonTooltip {
+        ItemButtonCompactable {
+            id: buttonRefreshHistory
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasHistory) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
+
+            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceRefreshHistoryButtonClicked()
+            tooltipText: qsTr("Sync history")
+        }
+        ItemButtonCompactable {
             id: buttonRefreshData
-            width: 36
-            height: 36
+            height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
                        appContent.state === "DeviceEnvironmental"))
+
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -258,10 +257,9 @@ Rectangle {
 
         ////////////
 
-        ItemImageButtonTooltip {
+        ItemButtonCompactable {
             id: buttonSort
-            width: 36
-            height: 36
+            height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
             visible: menuMain.visible
@@ -321,28 +319,9 @@ Rectangle {
                 }
             }
         }
-        ItemImageButtonTooltip {
-            id: buttonRefreshAll
-            width: 36
-            height: 36
-            anchors.verticalCenter: parent.verticalCenter
-
-            visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: !deviceManager.scanning
-
-            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: refreshButtonClicked()
-            tooltipText: qsTr("Refresh devices")
-
-            animation: "rotate"
-            animationRunning: deviceManager.refreshing
-        }
-        ItemImageButtonTooltip {
-            id: buttonRescan
-            width: 36
-            height: 36
+        ItemButtonCompactable {
+            id: buttonScan
+            height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
@@ -352,11 +331,32 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: rescanButtonClicked()
-            tooltipText: qsTr("Scan for devices")
+            text: qsTr("Scan for devices")
+            tooltipText: text
 
             animation: "fade"
             animationRunning: deviceManager.scanning
         }
+        ItemButtonCompactable {
+            id: buttonRefreshAll
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth && menuMain.visible)
+            enabled: !deviceManager.scanning
+
+            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: refreshButtonClicked()
+            text: qsTr("Refresh devices")
+            tooltipText: text
+
+            animation: "rotate"
+            animationRunning: deviceManager.refreshing
+        }
+
+        ////////////
 
         Row {
             id: menuMain
@@ -408,7 +408,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        visible: (Theme.colorHeader !== Theme.colorBackground &&
+        visible: (!headerUnicolor &&
                   appContent.state !== "DeviceThermometer" &&
                   appContent.state !== "DeviceEnvironmental" &&
                   appContent.state !== "Tutorial")

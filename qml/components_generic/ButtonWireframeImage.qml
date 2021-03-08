@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -30,7 +31,6 @@ Button {
         color: fullColor ? control.primaryColor : control.secondaryColor
         border.width: Theme.componentBorderWidth
         border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
-        clip: hoverAnimation
 
         MouseArea {
             id: mmmm
@@ -41,6 +41,9 @@ Button {
             visible: hoverAnimation
             hoverEnabled: hoverAnimation
 
+            onPressed: {
+                mouseBackground.width = background.width*2
+            }
             onEntered: {
                 mouseBackground.width = 80
                 mouseBackground.opacity = 0.16
@@ -53,15 +56,29 @@ Button {
             Rectangle {
                 id: mouseBackground
                 width: 0; height: width; radius: width;
-                x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
-                y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
+                x: mmmm.mouseX - (mouseBackground.width / 2)
+                y: mmmm.mouseY - (mouseBackground.width / 2)
+
                 color: "#fff"
                 opacity: 0
                 Behavior on opacity { NumberAnimation { duration: 133 } }
                 Behavior on width { NumberAnimation { duration: 133 } }
             }
         }
+
+        layer.enabled: hoverAnimation
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                x: background.x
+                y: background.y
+                width: background.width
+                height: background.height
+                radius: background.radius
+            }
+        }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Item {
         Row {

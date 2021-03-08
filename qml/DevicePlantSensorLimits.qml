@@ -251,7 +251,7 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: (isDesktop && !unicolor)
+                    visible: (isDesktop && !headerUnicolor)
                     height: 2
                     opacity: 0.5
                     color: Theme.colorSeparator
