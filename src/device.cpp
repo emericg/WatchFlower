@@ -362,7 +362,7 @@ bool Device::getSqlInfos()
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery getInfos;
-        getInfos.prepare("SELECT deviceModel, deviceFirmware, deviceBattery, associatedName, locationName, isOutside, settings" \
+        getInfos.prepare("SELECT deviceModel, deviceFirmware, deviceBattery, associatedName, locationName, lastSync, isOutside, settings" \
                          " FROM devices WHERE deviceAddr = :deviceAddr");
         getInfos.bindValue(":deviceAddr", getAddress());
         if (getInfos.exec())
@@ -374,9 +374,9 @@ bool Device::getSqlInfos()
                 m_deviceBattery = getInfos.value(2).toInt();
                 m_associatedName = getInfos.value(3).toString();
                 m_locationName = getInfos.value(4).toString();
-                //m_lastSync = ;
+                m_lastSync = getInfos.value(5).toDateTime();
                 //m_manualOrderIndex = ;
-                m_isOutside = getInfos.value(5).toBool();
+                m_isOutside = getInfos.value(6).toBool();
 
                 // TODO // handle 'settings' field
 

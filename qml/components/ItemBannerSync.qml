@@ -49,9 +49,9 @@ Rectangle {
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
+            visible: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
 
             text: " (" + currentDevice.historyUpdatePercent + "%)"
-            visible: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
             color: Theme.colorActionbarContent
             font.pixelSize: Theme.fontSizeContent
         }
@@ -59,37 +59,20 @@ Rectangle {
 
     ////////////////
 
-    Row {
+    ItemButtonCompactable {
+        id: buttonCancel
+        height: compact ? 36 : 34
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        ItemImageButton {
-            id: buttonCancel1
-            width: 36
-            height: 36
-            anchors.verticalCenter: parent.verticalCenter
+        compact: !wideMode
+        iconColor: Theme.colorActionbarContent
+        backgroundColor: Theme.colorActionbarHighlight
+        text: qsTr("Cancel")
+        source: "qrc:/assets/icons_material/baseline-close-24px.svg"
 
-            //visible: !parent.useBigButtons
-            iconColor: Theme.colorActionbarContent
-            backgroundColor: Theme.colorActionbarHighlight
-            source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-
-            onClicked: currentDevice.deviceDisconnect()
-        }
-
-        ButtonWireframeImage {
-            id: buttonCancel2
-            height: 32
-            anchors.verticalCenter: parent.verticalCenter
-
-            //visible: parent.useBigButtons
-            fullColor: true
-            primaryColor: Theme.colorActionbarHighlight
-            text: qsTr("Cancel")
-            source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-            onClicked: currentDevice.deviceDisconnect()
-        }
+        onClicked: currentDevice.deviceDisconnect()
     }
 
     ////////////////

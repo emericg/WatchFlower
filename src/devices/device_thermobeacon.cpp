@@ -46,7 +46,7 @@ DeviceThermoBeacon::DeviceThermoBeacon(QString &deviceAddr, QString &deviceName,
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
@@ -57,7 +57,7 @@ DeviceThermoBeacon::DeviceThermoBeacon(const QBluetoothDeviceInfo &d, QObject *p
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
@@ -262,6 +262,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             qDebug() << "- entry_count:" << m_history_entry_count;
             qDebug() << "- entry_read:" << m_history_entry_read;
             qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
+            qDebug() << "- last_sync:" << m_lastSync;
 #endif
 
             QByteArray cmd(QByteArray::fromHex("07"));
@@ -274,6 +275,21 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             }
             else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
+                if (m_lastSync.isValid())
+                {
+                    // restart sync
+                    int64_t timediff = m_lastSync.toSecsSinceEpoch() - m_device_wall_time;
+                    int alreadyread = std::floor(timediff / 10 / 60);
+                    if (alreadyread > m_history_entry_read) m_history_entry_read = alreadyread;
+                }
+                if (m_history_entry_read < 0) m_history_entry_read = 0;
+                if (m_history_entry_read >= m_history_entry_count)
+                {
+                    // abort sync
+                    m_history_entry_read = m_history_entry_count;
+                    controller->disconnectFromDevice();
+                }
+
                 // Ask the first 3 values (or restart sync at m_history_entry_read)
                 int idx = m_history_entry_read;
                 cmd.push_back(idx%256);
@@ -326,6 +342,14 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 {
                     // Write last sync
                     int64_t lastSync = m_device_wall_time + (m_history_entry_count * 10 * 60);
+                    m_lastSync.setSecsSinceEpoch(lastSync);
+
+                    QSqlQuery updateDevice;
+                    updateDevice.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
+                    updateDevice.bindValue(":sync", m_lastSync.toString("yyyy-MM-dd hh:mm:ss"));
+                    updateDevice.bindValue(":deviceAddr", getAddress());
+                    if (updateDevice.exec() == false)
+                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
 
                     // Finish it
                     refreshDataFinished(true);
@@ -366,13 +390,7 @@ bool DeviceThermoBeacon::addDatabaseRecord(const int64_t tmcd, const float t, co
     {
         // SQL date format YYYY-MM-DD HH:MM:SS
         QDateTime tmcd_qdt = QDateTime::fromSecsSinceEpoch(tmcd);
-/*
-#ifndef QT_NO_DEBUG
-        qDebug() << "* DeviceThermoBeacon addDatabaseRecord() @ " << tmcd_qdt.toString("yyyy-MM-dd hh:mm:ss");
-        qDebug() << "- temperature:" << m_temperature;
-        qDebug() << "- humidity:" << m_humidity;
-#endif
-*/
+
         QSqlQuery addData;
         addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
                         " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
@@ -454,11 +472,11 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         Q_EMIT dataUpdated();
 
 #ifndef QT_NO_DEBUG
-        qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
-        qDebug() << "- battery:" << m_deviceBattery;
-        qDebug() << "- temperature:" << m_temperature;
-        qDebug() << "- humidity:" << m_humidity;
-        qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
+        //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
+        //qDebug() << "- battery:" << m_deviceBattery;
+        //qDebug() << "- temperature:" << m_temperature;
+        //qDebug() << "- humidity:" << m_humidity;
+        //qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
 #endif
     }
 }
