@@ -105,7 +105,7 @@ Item {
         //console.log("DeviceThermometer // updateHeader() >> " + currentDevice)
 
         // Battery level
-        imageBattery.visible = currentDevice.hasBattery
+        imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
 
         // Status
@@ -131,7 +131,7 @@ Item {
                 sensorTemp.visible = true
             }
             if (currentDevice.deviceHumidity >= 0) {
-                sensorHygro.text = currentDevice.deviceHumidity + "% " + qsTr("humidity")
+                sensorHygro.text = currentDevice.deviceHumidity.toFixed(0) + "% " + qsTr("humidity")
                 sensorHygro.visible = true
             }
             if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {

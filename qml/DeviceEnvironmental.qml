@@ -127,7 +127,7 @@ Item {
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
         // Battery level
-        //imageBattery.visible = currentDevice.hasBattery
+        //imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
         //imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
         //imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 

@@ -354,7 +354,8 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 int64_t tmcd = m_device_wall_time + (m_history_entry_count * 10 * 60);
 
                 // Save this pair (if it's more recent than advertising data)
-                if (QDateTime::fromSecsSinceEpoch(tmcd) > m_lastUpdate)
+                if (!m_lastUpdate.isValid() ||
+                     m_lastUpdate < QDateTime::fromSecsSinceEpoch(tmcd))
                 {
                     m_temperature = temp3;
                     m_humidity = hygro3;
@@ -399,14 +400,11 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         if (m_dbInternal || m_dbExternal)
         {
-            // Battery
             if (battlvl != m_deviceBattery)
             {
-                m_deviceBattery = battlvl;
-
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":battery", m_deviceBattery);
+                updateDevice.bindValue(":battery", battlvl);
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
@@ -418,6 +416,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
             }
         }
 
+        m_deviceBattery = battlvl;
         m_lastUpdate = QDateTime::currentDateTime();
         Q_EMIT deviceUpdated(this);
         Q_EMIT statusUpdated();

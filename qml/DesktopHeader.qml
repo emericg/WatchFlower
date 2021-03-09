@@ -88,6 +88,9 @@ Rectangle {
         onReleased: buttonBack.width = 24
         onClicked: backButtonClicked()
 
+        enabled: (buttonBack.source != "qrc:/assets/menus/menu_logo_large.svg" || wideMode)
+        visible: enabled
+
         Rectangle {
             id: buttonBackBg
             anchors.fill: parent
@@ -104,7 +107,6 @@ Rectangle {
             height: width
             anchors.centerIn: parent
 
-            visible: (source != "qrc:/assets/menus/menu_logo_large.svg" || wideMode)
             source: "qrc:/assets/menus/menu_logo_large.svg"
             color: Theme.colorHeaderContent
         }
