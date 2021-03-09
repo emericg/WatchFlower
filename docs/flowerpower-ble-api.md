@@ -24,7 +24,7 @@
 
 The device uses BLE GATT for communication.  
 Sensor values are immediately available for reading, but usually require elaborate conversions.  
-In order to limit connection time, the Flower Power device may disconnect from the application after a certain amount of time (around 1s) without incoming BLE request.
+In order to limit connection time, the Flower Power device may disconnect from the application after a certain amount of time (around 1s) without incoming BLE request.  
 
 ### BLE & GATT
 

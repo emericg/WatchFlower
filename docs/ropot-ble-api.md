@@ -25,7 +25,7 @@ Xiaomi MiJia **RoPot** / VegTrug **Grow Care Home** (HHCCPOT002)
 
 The device uses BLE GATT for communication, but the sensor values are not immediately available.  
 When the official application connects to the device, it performs an elaborate initialization, required only to keep the connection opened for more than a few seconds.  
-Sensor values are available for reading only after sending a *change mode* request detailed below.
+Sensor values are available for reading only after sending a *change mode* request detailed below.  
 
 ### BLE & GATT
 

@@ -35,10 +35,10 @@
 
 /*!
  * Xiaomi MiJia "Digital Hygrometer Clock"
- * LYWSD02 device / Rectangular body, E-Ink
+ * LYWSD02 device / rectangular body / E-Ink
  *
  * Protocol infos:
- * - TODO
+ * - WatchFlower/docs/lywsd02-ble-api.md
  */
 class DeviceHygrotempClock: public DeviceSensor
 {

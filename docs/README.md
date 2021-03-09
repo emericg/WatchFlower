@@ -2,8 +2,10 @@
 
 # Plant sensors
 
-| Flower Care                       | HHCCJCY01                         |
+| Flower Care                       | Xiaomi / VegTrug / WANFEI         |
 | ----------------------------------| ----------------------------------|
+| FCC ID                            | HHCCJCY01 / GCLS002               |
+| <img src="flowercare.svg" width="256">                               ||
 | Battery                           | 1 x AAA                           |
 | Thermometer                       | -15 → 50 °C (± 0.5 °C)            |
 | Soil moisture                     | 0 → 100%                          |
@@ -11,16 +13,20 @@
 | IP Code                           | IPX5                              |
 | BLE API                           | [link](flowercare-ble-api.md)     |
 
-| RoPot                             | HHCCPOT002                        |
+| RoPot                             | Xiaomi / VegTrug                  |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | HHCCPOT002                        |
+| <img src="ropot.svg" width="256">                                    ||
 | Battery                           | LiPo (embeded)                    |
 | Thermometer                       | -15 → 50 °C (± 0.5 °C)            |
 | Soil moisture                     | 0 → 100%                          |
 | IP Code                           | IPX6                              |
 | BLE API                           | [link](ropot-ble-api.md)          |
 
-| Parrot Flower Power               | RKXHAWAII                         |
+| Flower Power                      | Parrot                            |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | RKXHAWAII                         |
+| <img src="flowerpower.svg" width="256">                              ||
 | Battery                           | 1 x AAA                           |
 | Thermometer                       | -10 → 55 °C                       |
 | Soil moisture                     | 0 → 50%                           |
@@ -28,8 +34,10 @@
 | IP Code                           | IPX5                              |
 | BLE API                           | [link](flowerpower-ble-api.md)    |
 
-| Parrot Pot                        | 2AG61POT                          |
+| Parrot Pot                        | Parrot                            |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | 2AG61POT                          |
+| <img src="parrotpot.svg" width="256">                                ||
 | Battery                           | 4 x AA                            |
 | Water tank                        | 2.2 l                             |
 | Thermometer                       | -10 → 55 °C                       |
@@ -40,6 +48,8 @@
 
 | HiGrow                            | N/A                               |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | N/A                               |
+| <img src="higrow.svg" width="256">                                   ||
 | Battery                           | 1 x 18650 or 1 * LiPo             |
 | Thermometer                       |                                   |
 | Hygrometer                        |                                   |
@@ -50,58 +60,74 @@
 
 # Thermometers
 
-| Digital Hygrometer LCD            | LYWSDCGQ/01ZM                     |
+| Digital Hygrometer                | Xiaomi / ClearGrass               |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | LYWSDCGQ/01ZM                     |
+| <img src="hygrotemp_lcd.svg" width="256">                            ||
 | Screen                            | LCD                               |
 | Battery                           | 1 x AAA                           |
 | Thermometer                       | -9.9 ~ 60 °C                      |
 | Hygrometer                        | 0 ~ 99.9% RH                      |
 
-| Digital Hygrometer EInk           | LYWSD02                           |
+| Digital Hygrometer                | ClearGrass / QingPing             |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | CGG1                              |
+| <img src="hygrotemp_eink.svg" width="256">                           ||
 | Screen                            | EInk                              |
 | Battery                           | 1 x CR2430                        |
 | Thermometer                       | 0 ~ 50 °C                         |
 | Hygrometer                        | 0 ~ 99.9% RH                      |
 
-| Digital Hygrometer Clock          | LYWSD02MMC                        |
+| Digital Hygrometer Clock          | Xiaomi                            |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | LYWSD02                           |
+| <img src="hygrotemp_clock.svg" width="256">                          ||
 | Screen                            | EInk                              |
 | Battery                           | 2 x CR2032                        |
 | Thermometer                       | 0 ~ 60 °C                         |
 | Hygrometer                        | 0 ~ 99% RH                        |
 
-| Digital Hygrometer 2 LCD          | LYWSD03MMC                        |
+| Digital Hygrometer Alarm          | ?                                 |
 | --------------------------------- | --------------------------------- |
-| Screen                            | LCD                               |
-| Battery                           | 1 x CR2032                        |
-| Thermometer                       | -9.9 ~ 60 °C (± 0.1 °C)           |
-| Hygrometer                        | 0 ~ 99% RH (± 1% RH)              |
-
-| Digital Hygrometer Alarm          | MHO-C303                          |
-| --------------------------------- | --------------------------------- |
+| FCC ID                            | MHO-C303                          |
+| <img src="hygrotemp_alarm.svg" width="256">                          ||
 | Screen                            | EInk                              |
 | Battery                           | 2 x AAA                           |
 | Thermometer                       | 0 ~ 60 °C                         |
 | Hygrometer                        | 0 ~ 99% RH                        |
 
-| Digital Hygrometer 2 EInk         | MHO-C401                          |
+| Digital Hygrometer 2 LCD          | Xiaomi                            |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | LYWSD03MMC                        |
+| <img src="hygrotemp_square_lcd.svg" width="256">                     ||
+| Screen                            | LCD                               |
+| Battery                           | 1 x CR2032                        |
+| Thermometer                       | -9.9 ~ 60 °C (± 0.1 °C)           |
+| Hygrometer                        | 0 ~ 99% RH (± 1% RH)              |
+
+| Digital Hygrometer 2 EInk         | MMC                               |
+| --------------------------------- | --------------------------------- |
+| FCC ID                            | MHO-C401                          |
+| <img src="hygrotemp_square_eink.svg" width="256">                    ||
 | Screen                            | EInk                              |
 | Battery                           | 1 x CR2032                        |
 | Thermometer                       | 0 ~ 60 °C (± 0.3 °C)              |
 | Hygrometer                        | 0 ~ 99% RH (± 3 %RH)              |
 
-| Hygrometer                        | 2ACD3-WS08 and KEU-WA59D          |
+| Hygrometer                        | SensorBlue / Brifit / ORIA        |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | 2ACD3-WS08 / KEU-WA59D            |
+| <img src="thermobeacon_square.svg" width="256">                      ||
 | Screen                            | LCD                               |
 | Battery                           | 1 x CR2477                        |
 | Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |
 | Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
 | BLE API                           | [link](thermobeacon-ble-api.md)   |
 
-| Keychain Hygrometer               | 2ACD3-WS02 and 2ACD3-WS07         |
+| Keychain Hygrometer               | SensorBlue / Brifit / ORIA        |
 | --------------------------------- | --------------------------------- |
+| FCC ID                            | 2ACD3-WS02 / 2ACD3-WS07           |
+| <img src="thermobeacon_round.svg" width="256">                       ||
 | Screen                            | N/A                               |
 | Battery                           | 1 x CR2032 or CR2477              |
 | Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |

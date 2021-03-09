@@ -37,10 +37,11 @@ TODOs:
 WatchFlower has been built to be compatible with as many Bluetooth sensors as possible.  
 Checkout out this [page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
 
-| Flower Care | RoPot | Parrot Flower Power | Parrot Pot | HiGrow |
-| :---------: | :---: | :-----------------: | :--------: | :----: |
+| Flower Care | RoPot | Flower Power | Parrot Pot | HiGrow |
+| :---------: | :---: | :----------: | :--------: | :----: |
 | ![FlowerCare](docs/flowercare.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) | ![HiGrow](docs/higrow.svg) |
-| HHCCJCY01<br>Xiaomi and VegTrug variants<br>(International and Chinese versions) | HHCCPOT002<br>Xiaomi and VegTrug variants | RKXHAWAII | 2AG61POT<br>(monitoring only) | (with custom firmware) |
+| HHCCJCY01<br>GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT | |
+| Xiaomi / VegTrug / WANFEI<br>(International and Chinese versions) | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |

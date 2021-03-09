@@ -36,10 +36,10 @@
 /*!
  * Xiaomi MiJia "bluetooth Temperature and Humidity sensor with LCD"
  * ClearGrass "Digital Bluetooth Thermometer and Hygrometer"
- * LYWSDCGQ device / Round body, segment LCD
+ * LYWSDCGQ device / round body / LCD
  *
  * Protocol infos:
- * - https://github.com/sputnikdev/eclipse-smarthome-bluetooth-binding/issues/18
+ * - WatchFlower/docs/lywsdcgq-ble-api.md
  */
 class DeviceHygrotempLCD: public DeviceSensor
 {

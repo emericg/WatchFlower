@@ -34,12 +34,11 @@
 /* ************************************************************************** */
 
 /*!
- * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
- * QingPing "Digital bluetooth Thermometer and Hygrometer"
- * CGG1 device / Round body, E-Ink
+ * ClearGrass / QingPing "Digital bluetooth Thermometer and Hygrometer"
+ * CGG1 device / round body / E-Ink
  *
  * Protocol infos:
- * - TODO
+ * - WatchFlower/docs/cgg1-ble-api.md
  */
 class DeviceHygrotempEInk: public DeviceSensor
 {

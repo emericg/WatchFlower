@@ -35,10 +35,10 @@
 
 /*!
  * Xiaomi MiJia "Digital Hygrometer"
- * LYWSD03MMC device / Square body, LCD
+ * LYWSD03MMC device / square body / LCD
  *
  * Protocol infos:
- * - TODO
+ * - WatchFlower/docs/lywsd03mmc-ble-api.md
  */
 class DeviceHygrotempSquare: public DeviceSensor
 {
