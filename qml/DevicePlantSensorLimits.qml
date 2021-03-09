@@ -17,10 +17,13 @@ Item {
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
         // Address
-        if (currentDevice.deviceAddress.charAt(0) === '{')
+        if (currentDevice.deviceAddress.charAt(0) === '{') {
             textAddr.text = currentDevice.deviceAddress.toUpperCase()
-        else
+            textAddr.font.pixelSize = 15
+        } else {
             textAddr.text = "[" + currentDevice.deviceAddress.toUpperCase() + "]"
+            textAddr.font.pixelSize = 17
+        }
 
         // Firmware
         textFirmware.text = currentDevice.deviceFirmware
@@ -144,7 +147,7 @@ Item {
                             id: textAddr
                             anchors.left: labelAddress.right
                             anchors.leftMargin: 10
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.baseline: labelAddress.baseline
 
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
@@ -170,11 +173,12 @@ Item {
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
                         }
+
                         Text {
                             id: textFirmware
                             anchors.left: labelFirmware.right
                             anchors.leftMargin: 10
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.baseline: labelFirmware.baseline
 
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
@@ -182,29 +186,23 @@ Item {
 
                         ImageSvg {
                             id: imageFwUpdate
-                            width: 24
-                            height: 24
+                            width: 20
+                            height: 20
                             anchors.left: textFirmware.right
-                            anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.leftMargin: 10
+                            anchors.verticalCenter: textFirmware.verticalCenter
 
                             source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
                             color: Theme.colorIcon
-
-                            MouseArea {
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onEntered: textFwUpdate.text = qsTr("Use official app to upgrade")
-                                onExited: textFwUpdate.text = qsTr("Update available!")
-                            }
+                            opacity: 0.8
                         }
                         Text {
                             id: textFwUpdate
                             anchors.left: imageFwUpdate.right
-                            anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.leftMargin: 6
+                            anchors.verticalCenter: imageFwUpdate.verticalCenter
 
-                            text: qsTr("Update available!")
+                            text: qsTr("Update %1 available with official application").arg("")
                             font.pixelSize: Theme.fontSizeContentSmall
                             color: Theme.colorHighContrast
                         }
@@ -219,17 +217,6 @@ Item {
                         anchors.rightMargin: 0
 
                         Text {
-                            id: textBattery
-                            anchors.left: labelBattery.right
-                            anchors.leftMargin: 10
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            text: currentDevice.deviceBattery + "%"
-                            font.pixelSize: 17
-                            color: Theme.colorHighContrast
-                        }
-
-                        Text {
                             id: labelBattery
                             width: isPhone ? 80 : 96
                             anchors.left: parent.left
@@ -242,6 +229,17 @@ Item {
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            id: textBattery
+                            anchors.left: labelBattery.right
+                            anchors.leftMargin: 10
+                            anchors.baseline: labelBattery.baseline
+
+                            text: currentDevice.deviceBattery + "%"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
                         }
                     }
                 }

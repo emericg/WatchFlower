@@ -236,10 +236,9 @@ Item {
                             id: textInputPlant
                             anchors.left: labelPlant.right
                             anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.verticalCenterOffset: 0
-
+                            anchors.baseline: labelPlant.baseline
                             padding: 4
+
                             font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
@@ -278,7 +277,7 @@ Item {
                             height: 20
                             anchors.left: textInputPlant.right
                             anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenter: textInputPlant.verticalCenter
 
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                             color: Theme.colorSubText
@@ -312,10 +311,9 @@ Item {
                             id: textInputLocation
                             anchors.left: labelLocation.right
                             anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.verticalCenterOffset: 0
-
+                            anchors.baseline: labelLocation.baseline
                             padding: 4
+
                             font.pixelSize: 17
                             font.bold: false
                             color: Theme.colorHighContrast
@@ -354,7 +352,7 @@ Item {
                             height: 20
                             anchors.left: textInputLocation.right
                             anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenter: textInputLocation.verticalCenter
 
                             source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
                             color: Theme.colorSubText
@@ -383,12 +381,12 @@ Item {
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
                         }
+
                         Text {
                             id: textStatus
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.verticalCenterOffset: 0
+                            anchors.baseline: labelStatus.baseline
                             padding: 4
 
                             text: qsTr("Loading...")

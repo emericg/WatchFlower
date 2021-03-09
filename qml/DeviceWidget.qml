@@ -117,15 +117,22 @@ Item {
         }
 
         textLocation.font.pixelSize = bigAssMode ? 20 : 18
-        if (boxDevice.deviceLocationName !== "") {
+        if (boxDevice.deviceLocationName) {
             textLocation.text = boxDevice.deviceLocationName
         } else {
-            if (Qt.platform.os === "osx" || Qt.platform.os === "ios") {
-                textLocation.text = boxDevice.deviceAddress.toUpperCase()
-                textLocation.font.pixelSize = 14
-            } else {
-                textLocation.text = boxDevice.deviceAddress.toUpperCase()
+            var addr = boxDevice.deviceAddress.toUpperCase()
+            if (Qt.platform.os === "ios") {
+                addr = addr.slice(1, -1)
+                if (isPhone || (isTablet && singleColumn)) {
+                    addr = addr.substr(0, addr.lastIndexOf('-'))
+                    addr += "-..."
+                }
+                textLocation.font.pixelSize = 12
+            } else if (Qt.platform.os === "osx") {
+                addr = addr.slice(1, -1)
+                textLocation.font.pixelSize = 13
             }
+            textLocation.text = addr
         }
 
         // Status
