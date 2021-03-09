@@ -120,19 +120,16 @@ bool DatabaseManager::openDatabase_sqlite()
                             // DATETIME: YYY-MM-JJ HH:MM:SS
 
                             // Delete everything 90+ days old
-                            QSqlQuery sanitizeDataPast;
-                            sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts < DATE('now', '-90 days')");
-
-                            if (sanitizeDataPast.exec() == false)
-                                qWarning() << "> sanitizeDataPast.exec() ERROR" << sanitizeDataPast.lastError().type() << ":" << sanitizeDataPast.lastError().text();
+                            QSqlQuery sanitizePlantDataPast;
+                            sanitizePlantDataPast.prepare("DELETE FROM plantData WHERE ts < DATE('now', '-90 days')");
+                            if (sanitizePlantDataPast.exec() == false)
+                                qWarning() << "> sanitizeDataPast.exec() ERROR" << sanitizePlantDataPast.lastError().type() << ":" << sanitizePlantDataPast.lastError().text();
 
                             // Delete everything that's in the future
-
-                            QSqlQuery sanitizeDataFuture;
-                            sanitizeDataFuture.prepare("DELETE FROM plantData WHERE ts > DATE('now', '+1 days')");
-
-                            if (sanitizeDataFuture.exec() == false)
-                                qWarning() << "> sanitizeDataFuture.exec() ERROR" << sanitizeDataFuture.lastError().type() << ":" << sanitizeDataFuture.lastError().text();
+                            QSqlQuery sanitizePlantDataFuture;
+                            sanitizePlantDataFuture.prepare("DELETE FROM plantData WHERE ts > DATE('now', '+1 days')");
+                            if (sanitizePlantDataFuture.exec() == false)
+                                qWarning() << "> sanitizeDataFuture.exec() ERROR" << sanitizePlantDataFuture.lastError().type() << ":" << sanitizePlantDataFuture.lastError().text();
                         }
                     }
                     else
@@ -159,6 +156,7 @@ bool DatabaseManager::openDatabase_sqlite()
 
     return m_dbInternalOpen;
 }
+
 /* ************************************************************************** */
 
 bool DatabaseManager::openDatabase_mysql()
@@ -206,27 +204,9 @@ bool DatabaseManager::openDatabase_mysql()
 
                 // TODO
 
-                // Sanitize database ///////////////////////////////////
+                // Sanitize database ///////////////////////////////////////////
 
-                if (QDate::currentDate().year() >= 2021)
-                {
-                    // DATETIME: YYY-MM-JJ HH:MM:SS
-
-                    // Delete everything 90+ days old
-                    QSqlQuery sanitizeDataPast;
-                    sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts < DATE_SUB(NOW(), INTERVAL 90 DAY)");
-
-                    if (sanitizeDataPast.exec() == false)
-                        qWarning() << "> sanitizeDataPast.exec() ERROR" << sanitizeDataPast.lastError().type() << ":" << sanitizeDataPast.lastError().text();
-
-                    // Delete everything that's in the future
-
-                    QSqlQuery sanitizeDataFuture;
-                    sanitizeDataPast.prepare("DELETE FROM plantData WHERE ts > DATE_ADD(NOW(), 1 DAY)");
-
-                    if (sanitizeDataFuture.exec() == false)
-                        qWarning() << "> sanitizeDataFuture.exec() ERROR" << sanitizeDataFuture.lastError().type() << ":" << sanitizeDataFuture.lastError().text();
-                }
+                // We don't sanetize MySQL databases
             }
             else
             {
@@ -345,7 +325,7 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createDevices;
         createDevices.prepare("CREATE TABLE devices (" \
-                              "deviceAddr CHAR(17) PRIMARY KEY," \
+                              "deviceAddr CHAR(38) PRIMARY KEY," \
                               "deviceModel VARCHAR(255)," \
                               "deviceName VARCHAR(255)," \
                               "deviceFirmware VARCHAR(255)," \
@@ -368,7 +348,7 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createData;
         createData.prepare("CREATE TABLE plantData (" \
-                           "deviceAddr CHAR(17)," \
+                           "deviceAddr CHAR(38)," \
                            "ts DATETIME," \
                            "ts_full DATETIME," \
                              "soilMoisture INT," \
@@ -392,7 +372,7 @@ void DatabaseManager::createDatabase()
         qDebug() << "+ Adding 'plantLimits' table to local database";
         QSqlQuery createLimits;
         createLimits.prepare("CREATE TABLE plantLimits (" \
-                             "deviceAddr CHAR(17)," \
+                             "deviceAddr CHAR(38)," \
                                "hygroMin INT," \
                                "hygroMax INT," \
                                "conduMin INT," \
@@ -420,7 +400,8 @@ void DatabaseManager::createDatabase()
         qDebug() << "+ Adding 'sensorData' table to local database";
         QSqlQuery createSensorData;
         createSensorData.prepare("CREATE TABLE sensorData (" \
-                                 "deviceAddr CHAR(17)," \
+                                 "deviceID INT," \
+                                 "deviceAddr CHAR(38)," \
                                    "timestamp DATETIME," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
@@ -438,7 +419,6 @@ void DatabaseManager::createDatabase()
                                    "no2 INT," \
                                    "voc INT," \
                                    "geiger FLOAT," \
-                                 " PRIMARY KEY(deviceAddr), " \
                                  " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                                  ");");
 
@@ -535,6 +515,15 @@ bool DatabaseManager::migrate_v1v2()
     // TABLE sensorData
 
     return true;
+}
+
+/* ************************************************************************** */
+
+bool DatabaseManager::migrate_v2v3()
+{
+    qWarning() << "DatabaseManager::migrate_v2v3()";
+
+    //
 }
 
 /* ************************************************************************** */
