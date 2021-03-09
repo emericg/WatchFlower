@@ -27,7 +27,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
@@ -314,12 +313,13 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
-                // Save these 3 values
                 int64_t tmcd = m_device_wall_time + (m_history_entry_read * 10 * 60);
+                m_lastSync.setSecsSinceEpoch(tmcd);
 
+                // Save these values?
                 addDatabaseRecord(tmcd + 0, temp1, hygro1);
-                addDatabaseRecord(tmcd + 600, temp2, hygro2);
-                addDatabaseRecord(tmcd + 1200, temp3, hygro3);
+                //addDatabaseRecord(tmcd + 600, temp2, hygro2);
+                //addDatabaseRecord(tmcd + 1200, temp3, hygro3);
 
                 // Update progress
                 m_history_entry_read += 3;
@@ -340,19 +340,12 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 }
                 else
                 {
-                    // Write last sync
+                    // Update last sync
                     int64_t lastSync = m_device_wall_time + (m_history_entry_count * 10 * 60);
                     m_lastSync.setSecsSinceEpoch(lastSync);
 
-                    QSqlQuery updateDevice;
-                    updateDevice.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
-                    updateDevice.bindValue(":sync", m_lastSync.toString("yyyy-MM-dd hh:mm:ss"));
-                    updateDevice.bindValue(":deviceAddr", getAddress());
-                    if (updateDevice.exec() == false)
-                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-
                     // Finish it
-                    refreshDataFinished(true);
+                    refreshHistoryFinished(true);
                     controller->disconnectFromDevice();
                 }
             }
@@ -378,34 +371,6 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             }
         }
     }
-}
-
-bool DeviceThermoBeacon::addDatabaseRecord(const int64_t tmcd, const float t, const float h)
-{
-    bool status = false;
-
-    if (t == 0.f && h == 0.f) return status;
-
-    if (m_dbInternal || m_dbExternal)
-    {
-        // SQL date format YYYY-MM-DD HH:MM:SS
-        QDateTime tmcd_qdt = QDateTime::fromSecsSinceEpoch(tmcd);
-
-        QSqlQuery addData;
-        addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                        " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
-        addData.bindValue(":deviceAddr", getAddress());
-        addData.bindValue(":ts", tmcd_qdt.toString("yyyy-MM-dd hh:00:00"));
-        addData.bindValue(":ts_full", tmcd_qdt.toString("yyyy-MM-dd hh:mm:ss"));
-        addData.bindValue(":temp", t);
-        addData.bindValue(":hygro", h);
-        status = addData.exec();
-
-        if (status == false)
-            qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-    }
-
-    return status;
 }
 
 /* ************************************************************************** */
@@ -449,20 +414,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
             if (getLastUpdateInt() < 0 || getLastUpdateInt() > 30)
             {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":humi", m_humidity);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                addDatabaseRecord(QDateTime::currentSecsSinceEpoch(), m_temperature, m_humidity);
             }
         }
 
@@ -483,20 +435,34 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
 /* ************************************************************************** */
 
-int DeviceThermoBeacon::getHistoryUpdatePercent() const
+bool DeviceThermoBeacon::addDatabaseRecord(const int64_t timestamp, const float t, const float h)
 {
-    //qDebug() << "DeviceThermoBeacon::getHistoryUpdatePercent(" << m_history_entry_read << "/" <<  m_history_entry_count << ")";
-    int p = 0;
+    bool status = false;
 
-    if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    if (t == 0.f && h == 0.f) return status;
+
+    if (m_dbInternal || m_dbExternal)
     {
-        if (m_history_entry_count > 0)
-        {
-            p = static_cast<int>((m_history_entry_read / static_cast<float>(m_history_entry_count)) * 100.0);
-        }
+        // SQL date format YYYY-MM-DD HH:MM:SS
+
+        QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+        QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (600 - timestamp % 600) - 600);
+
+        QSqlQuery addData;
+        addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
+                        " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
+        addData.bindValue(":deviceAddr", getAddress());
+        addData.bindValue(":ts", tmcd_rounded.toString("yyyy-MM-dd hh:mm:00"));
+        addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
+        addData.bindValue(":temp", t);
+        addData.bindValue(":hygro", h);
+        status = addData.exec();
+
+        if (status == false)
+            qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
     }
 
-    return p;
+    return status;
 }
 
 /* ************************************************************************** */

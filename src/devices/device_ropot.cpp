@@ -27,7 +27,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
@@ -265,6 +264,13 @@ void DeviceRopot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceSta
         if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //
+        }
+
+        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
+        {
+            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A20000"), QLowEnergyService::WriteWithResponse);
         }
     }
 }

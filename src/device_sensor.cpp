@@ -141,6 +141,26 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
     }
 }
 
+void DeviceSensor::refreshHistoryFinished(bool status)
+{
+    //qDebug() << "DeviceSensor::refreshHistoryFinished()" << getAddress() << getName();
+
+    Device::refreshHistoryFinished(status);
+
+    if (m_lastSync.isValid())
+    {
+        qDebug() << "DeviceSensor::deviceDisconnected() Write last sync";
+
+        // Write last sync
+        QSqlQuery updateDeviceLastSync;
+        updateDeviceLastSync.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
+        updateDeviceLastSync.bindValue(":sync", m_lastSync.toString("yyyy-MM-dd hh:mm:ss"));
+        updateDeviceLastSync.bindValue(":deviceAddr", getAddress());
+        if (updateDeviceLastSync.exec() == false)
+            qWarning() << "> updateDeviceLastSync.exec() ERROR" << updateDeviceLastSync.lastError().type() << ":" << updateDeviceLastSync.lastError().text();
+    }
+}
+
 /* ************************************************************************** */
 
 bool DeviceSensor::getSqlInfos()
@@ -1036,6 +1056,25 @@ void DeviceSensor::getAioLinesData(int maxDays,
         m_mmolMax = 10000;
         Q_EMIT minmaxUpdated();
     }
+}
+
+/* ************************************************************************** */
+
+int DeviceSensor::getHistoryUpdatePercent() const
+{
+    int p = 0;
+
+    if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    {
+        if (m_history_entry_count > 0)
+        {
+            p = static_cast<int>((m_history_entry_read / static_cast<float>(m_history_entry_count)) * 100.f);
+        }
+    }
+
+    //qDebug() << "DeviceSensor::getHistoryUpdatePercent(" << m_history_entry_read << "/" <<  m_history_entry_count << ")";
+
+    return p;
 }
 
 /* ************************************************************************** */

@@ -227,6 +227,20 @@ void Device::refreshStop()
     }
 }
 
+void Device::refreshDataCanceled()
+{
+    //qDebug() << "Device::refreshDataCanceled()" << getAddress() << getName();
+
+    if (controller)
+    {
+        controller->disconnectFromDevice();
+
+        m_lastError = QDateTime::currentDateTime();
+    }
+
+    refreshDataFinished(false);
+}
+
 void Device::refreshRetry()
 {
     //qDebug() << "Device::refreshRetry()" << getAddress() << getName();
@@ -249,20 +263,6 @@ void Device::refreshRetry()
         }
     }
 */
-}
-
-void Device::refreshDataCanceled()
-{
-    //qDebug() << "Device::refreshDataCanceled()" << getAddress() << getName();
-
-    if (controller)
-    {
-        controller->disconnectFromDevice();
-
-        m_lastError = QDateTime::currentDateTime();
-    }
-
-    refreshDataFinished(false);
 }
 
 /* ************************************************************************** */
@@ -306,6 +306,20 @@ void Device::refreshDataFinished(bool status, bool cached)
     // Inform device manager
     if (!cached)
         Q_EMIT deviceUpdated(this);
+}
+
+void Device::refreshHistoryFinished(bool status)
+{
+    //qDebug() << "Device::refreshHistoryFinished()" << getAddress() << getName();
+
+    m_timeoutTimer.stop();
+
+    m_updating = false;
+    m_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
+
+    // Even if the status is false, we probably have some new data
+    Q_EMIT dataUpdated();
 }
 
 /* ************************************************************************** */
@@ -399,12 +413,14 @@ bool Device::getSqlLimits()
     return false;
 }
 
-bool Device::getSqlData(int minutes)
+bool Device::getSqlData(int)
 {
     //qDebug() << "Device::getSqlData(" << m_deviceAddress << ")";
-    Q_UNUSED(minutes)
     return false;
 }
+
+/* ************************************************************************** */
+/* ************************************************************************** */
 
 /*!
  * \brief Device::getBleData
@@ -702,6 +718,11 @@ void Device::deviceDisconnected()
         m_lastError = QDateTime::currentDateTime();
         refreshDataFinished(false);
     }
+    else if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    {
+        // This means we got forcibly disconnected by the device before completing the history sync
+        refreshHistoryFinished(false);
+    }
     else
     {
         m_updating = false;
@@ -718,11 +739,12 @@ void Device::errorReceived(QLowEnergyController::Error error)
     refreshDataFinished(false);
 }
 
-void Device::stateChanged(QLowEnergyController::ControllerState state)
+void Device::stateChanged(QLowEnergyController::ControllerState)
 {
     //qDebug() << "Device::stateChanged(" << m_deviceAddress << ") state:" << state;
-    Q_UNUSED(state)
 }
+
+/* ************************************************************************** */
 
 void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState)
 {
@@ -739,6 +761,8 @@ void Device::addLowEnergyService(const QBluetoothUuid &)
     //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
 }
 
+/* ************************************************************************** */
+
 void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
@@ -753,6 +777,8 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ")";
 }
+
+/* ************************************************************************** */
 
 void Device::parseAdvertisementData(const QByteArray &)
 {

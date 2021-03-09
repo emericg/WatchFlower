@@ -73,10 +73,6 @@ private:
 
     // Clock
     int64_t m_device_lastmove = -1;
-
-    // History control
-    int m_history_entry_count = -1;
-    int m_history_entry_read = -1;
 };
 
 /* ************************************************************************** */

@@ -27,7 +27,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
@@ -285,9 +284,12 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
         {
             //
         }
+
         if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
-            //
+            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A20000"), QLowEnergyService::WriteWithResponse);
         }
     }
 }
@@ -519,24 +521,6 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         }
         return;
     }
-}
-
-/* ************************************************************************** */
-
-int DeviceFlowerCare::getHistoryUpdatePercent() const
-{
-    //qDebug() << "DeviceFlowerCare::getHistoryUpdatePercent(" << m_history_entry_read << "/" <<  m_history_entry_count << ")";
-    int p = 0;
-
-    if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
-    {
-        if (m_history_entry_count > 0)
-        {
-            p = static_cast<int>((m_history_entry_read / static_cast<float>(m_history_entry_count)) * 100.0);
-        }
-    }
-
-    return p;
 }
 
 /* ************************************************************************** */

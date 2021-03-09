@@ -69,12 +69,9 @@ private:
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
     // Handshake
+    QString m_deviceMacAddress;
     QByteArray m_key_challenge;
     QByteArray m_key_finish;
-
-    // History control
-    int m_history_entry_count = -1;
-    int m_history_entry_read = -1;
 };
 
 /* ************************************************************************** */

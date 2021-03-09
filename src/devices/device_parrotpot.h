@@ -69,10 +69,6 @@ private:
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
-
-    // History control
-    int m_history_entry_count = -1;
-    int m_history_entry_read = -1;
 };
 
 /* ************************************************************************** */

@@ -46,8 +46,8 @@ class Device: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int deviceType READ getDeviceType NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceType READ getDeviceType CONSTANT)
+    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated) // TODO capabilitiesUpdated
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
 
     Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY sensorUpdated)
@@ -69,7 +69,6 @@ class Device: public QObject
 
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated) // TODO settingsUpdated
     Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
@@ -80,9 +79,7 @@ class Device: public QObject
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-
     Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
-    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -108,7 +105,7 @@ protected:
     int m_deviceBattery = -1;
 
     // Device settings
-    QString m_associatedName; // was m_plantName
+    QString m_associatedName;
     QString m_locationName;
     int m_manualOrderIndex = -1;
     bool m_isOutside = false;
@@ -141,10 +138,10 @@ protected:
     QTimer m_rssiTimer;
     int m_rssi = 1;
 
-    void deviceConnected();
-    void deviceDisconnected();
-    void errorReceived(QLowEnergyController::Error);
-    void stateChanged(QLowEnergyController::ControllerState state);
+    virtual void deviceConnected();
+    virtual void deviceDisconnected();
+    virtual void errorReceived(QLowEnergyController::Error);
+    virtual void stateChanged(QLowEnergyController::ControllerState state);
 
     virtual void serviceScanDone();
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -157,8 +154,9 @@ protected:
     virtual void refreshDataStarted();
     virtual void refreshDataCanceled();
     virtual void refreshDataFinished(bool status, bool cached = false);
+    virtual void refreshHistoryFinished(bool status);
 
-    // Get data
+    // Start a BLE connection
     bool getBleData();
 
     virtual bool getSqlInfos();

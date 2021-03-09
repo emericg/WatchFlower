@@ -52,9 +52,6 @@ public:
 
     void parseAdvertisementData(const QByteArray &value);
 
-public slots:
-    int getHistoryUpdatePercent() const;
-
 private:
     // QLowEnergyController related
     void serviceScanDone();
@@ -70,11 +67,7 @@ private:
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    bool addDatabaseRecord(const int64_t tmcd, const float t, const float h);
-
-    // History control
-    int m_history_entry_count = -1;
-    int m_history_entry_read = -1;
+    bool addDatabaseRecord(const int64_t timestamp, const float t, const float h);
 };
 
 /* ************************************************************************** */

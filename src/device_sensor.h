@@ -36,51 +36,58 @@ class DeviceSensor: public Device
 {
     Q_OBJECT
 
-    // data
+    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
+
+    // plant data
     Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
     Q_PROPERTY(float deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
     Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
-
     Q_PROPERTY(float waterTankLevel READ getWaterTankLevel NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankCapacity READ getWaterTankCapacity NOTIFY dataUpdated)
-
+    // hygrometer data
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(float deviceHumidity READ getHumidity NOTIFY dataUpdated)
+    // environmental data
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceRadioactivityH READ getRH NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceRadioactivityM READ getRM NOTIFY dataUpdated)
+    Q_PROPERTY(float deviceRadioactivityS READ getRS NOTIFY dataUpdated)
 
-    // data min/max
+    // plant data (min/max)
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMin READ getConduMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int conduMax READ getConduMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(int mmolMin READ getMmolMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(int mmolMax READ getMmolMax NOTIFY minmaxUpdated)
+    // hygrometer data (min/max)
     Q_PROPERTY(float tempMin READ getTempMin NOTIFY minmaxUpdated)
     Q_PROPERTY(float tempMax READ getTempMax NOTIFY minmaxUpdated)
     Q_PROPERTY(int humiMin READ getHumiMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int humiMax READ getHumiMax NOTIFY minmaxUpdated)
+    // environmental data (min/max)
     Q_PROPERTY(int luxMin READ getLuxMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int luxMax READ getLuxMax NOTIFY minmaxUpdated)
-    Q_PROPERTY(int mmolMin READ getMmolMin NOTIFY minmaxUpdated)
-    Q_PROPERTY(int mmolMax READ getMmolMax NOTIFY minmaxUpdated)
 
     // plant limits
     Q_PROPERTY(int limitHygroMin READ getLimitHygroMin WRITE setLimitHygroMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitHygroMax READ getLimitHygroMax WRITE setLimitHygroMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMin READ getLimitConduMin WRITE setLimitConduMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitConduMax READ getLimitConduMax WRITE setLimitConduMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitLuxMin READ getLimitLuxMin WRITE setLimitLuxMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitLuxMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
     Q_PROPERTY(int limitMmolMin READ getLimitMmolMin WRITE setLimitMmolMin NOTIFY limitsUpdated)
     Q_PROPERTY(int limitMmolMax READ getLimitMmolMax WRITE setLimitMmolMax NOTIFY limitsUpdated)
+    // hygrometer limits
+    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
+    // environmental limits
+    Q_PROPERTY(int limitLuxMin READ getLimitLuxMin WRITE setLimitLuxMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int limitLuxMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
 
-    // other sensors
-    Q_PROPERTY(float deviceRadioactivityH READ getRH NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceRadioactivityM READ getRM NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceRadioactivityS READ getRS NOTIFY dataUpdated)
+    // sensor history
+    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
 
     // graphs
     Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
@@ -122,7 +129,7 @@ protected:
     float m_rm = -99.f;
     float m_rs = -99.f;
 
-    // plant limits
+    // limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
     int m_limitConduMin = 100;
@@ -138,7 +145,7 @@ protected:
     int m_limitMmolMin = 0;
     int m_limitMmolMax = 0;
 
-    // data min/max data (x days period)
+    // min/max data (x days period)
     int m_hygroMin = 999999;
     int m_hygroMax = -99;
     int m_conduMin = 999999;
@@ -156,10 +163,16 @@ protected:
     int m_mmolMin = 999999;
     int m_mmolMax = -99;
 
+    // history control
+    int m_history_entry_count = -1;
+    int m_history_entry_read = -1;
+
     //
     QList <QObject *> m_aio_minmax_data;
 
+protected:
     virtual void refreshDataFinished(bool status, bool cached = false);
+    virtual void refreshHistoryFinished(bool status);
 
     virtual bool getSqlInfos();
     virtual bool getSqlLimits();
@@ -238,6 +251,9 @@ public slots:
     int getLuxMax() const { return m_luxMax; }
     int getMmolMin() const { return m_mmolMin; }
     int getMmolMax() const { return m_mmolMax; }
+
+    // History sync
+    int getHistoryUpdatePercent() const;
 
     // AIO temperature "min max" graph
     void updateAioMinMaxData(int maxDays);

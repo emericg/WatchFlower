@@ -26,7 +26,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
