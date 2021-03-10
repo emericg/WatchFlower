@@ -12,12 +12,14 @@
         <file>menus/menu_close.svg</file>
         <file>menus/menu_infos.svg</file>
 
+        <file>icons_fontawesome/lungs-solid.svg</file>
         <file>icons_custom/nuclear_icon.svg</file>
         <file>icons_custom/nuclear_icon_big.svg</file>
         <file>icons_custom/inside-24px.svg</file>
         <file>icons_custom/outside-24px.svg</file>
         <file>icons_custom/pot_empty-24px.svg</file>
         <file>icons_custom/pot_flower-24px.svg</file>
+        <file>icons_custom/thermometer-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>

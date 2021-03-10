@@ -28,7 +28,7 @@
 | FCC ID                            | RKXHAWAII                         |
 | <img src="flowerpower.svg" width="256">                              ||
 | Battery                           | 1 x AAA                           |
-| Thermometer                       | -10 → 55 °C                       |
+| Thermometer                       | -5 → 55 °C                        |
 | Soil moisture                     | 0 → 50%                           |
 | Light sensor                      | 0 → 1000 μmole.m-2.s-1            |
 | IP Code                           | IPX5                              |
@@ -40,7 +40,7 @@
 | <img src="parrotpot.svg" width="256">                                ||
 | Battery                           | 4 x AA                            |
 | Water tank                        | 2.2 l                             |
-| Thermometer                       | -10 → 55 °C                       |
+| Thermometer                       | -5 → 55 °C                        |
 | Soil moisture                     | 0 → 50%                           |
 | Light sensor                      | 0 → 1000 μmole.m-2.s-1            |
 | IP Code                           | IPX5                              |

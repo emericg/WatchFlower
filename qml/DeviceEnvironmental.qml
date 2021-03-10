@@ -627,7 +627,7 @@ Item {
 
                             title: "Temperature"
                             legend: "°C"
-                            icon: "qrc:/assets/icons_material/device_thermostat-24px.svg"
+                            icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
                             value: 27.1
                             precision: 1
                         }
