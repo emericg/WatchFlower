@@ -523,7 +523,7 @@ bool DatabaseManager::migrate_v2v3()
 {
     qWarning() << "DatabaseManager::migrate_v2v3()";
 
-    //
+    return false;
 }
 
 /* ************************************************************************** */

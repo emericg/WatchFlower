@@ -349,7 +349,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
             // Read first entry
             serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
-            m_history_entry_read = 0;
+            m_history_entry_index = 0;
         }
         else
         {

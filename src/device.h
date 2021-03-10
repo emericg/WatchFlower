@@ -63,8 +63,8 @@ class Device: public QObject
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY sensorUpdated)
 
+    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY sensorUpdated) // TODO batteryUpdated
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
 
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated) // TODO settingsUpdated
@@ -82,13 +82,15 @@ class Device: public QObject
     Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
 
 Q_SIGNALS:
+    void statusUpdated();
     void connected();
     void disconnected();
     void deviceUpdated(Device *d);
+
     void sensorUpdated();
-    void settingsUpdated();
-    void statusUpdated();
+    void batteryUpdated();
     void rssiUpdated();
+    void settingsUpdated();
     void dataUpdated();
     void historyUpdated();
 

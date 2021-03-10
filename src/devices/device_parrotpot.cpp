@@ -106,7 +106,7 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_battery);
-            connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            //connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
@@ -155,7 +155,7 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceLive->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceLive, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_live);
-            //connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            //connect(serviceLive, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceLive->discoverDetails(); });
@@ -345,11 +345,10 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             /////////
 /*
             QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chlx = serviceData->characteristic(lx);
+            QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
 
             rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_luminosity = std::round(1000.0 * 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619)));
 */
             /////////
 
@@ -358,7 +357,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            // sensor output ? - ?
+            // sensor output (no soil: 2036) - (max observed: ?) wich maps to 0 - 10 (mS/cm)
             m_soil_conductivity = std::round(rawValue / 1.0);
 
             /////////
@@ -384,7 +383,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             /////////
 /*
             QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chsm = serviceData->characteristic(sm);
+            QLowEnergyCharacteristic chsm = serviceLive->characteristic(sm);
 
             rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
@@ -404,7 +403,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             m_soil_moisture = std::round(*((float*)&rawValueCal));
 /*
             QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
-            QLowEnergyCharacteristic chatc = serviceData->characteristic(at_calibrated);
+            QLowEnergyCharacteristic chatc = serviceLive->characteristic(at_calibrated);
 
             rawData = reinterpret_cast<const quint8 *>(chatc.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
@@ -415,7 +414,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_luminosity = std::round(*((float*)&rawValueCal));
+            m_luminosity = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93;
 
             /////////
 
@@ -539,6 +538,8 @@ void DeviceParrotPot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByt
 {
     //qDebug() << "DeviceParrotPot::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
     Q_UNUSED(value)
 }
 
@@ -546,6 +547,8 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
 {
     //qDebug() << "DeviceParrotPot::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
     Q_UNUSED(value)
 }
 
@@ -553,6 +556,8 @@ void DeviceParrotPot::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
 {
     //qDebug() << "DeviceParrotPot::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
     Q_UNUSED(value)
 }
 

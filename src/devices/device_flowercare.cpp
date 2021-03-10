@@ -341,10 +341,13 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
             m_notificationHistory = chn.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
 */
-            // Read device time
-            QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
-            QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
-            serviceHistory->readCharacteristic(chh);
+            if (m_device_time < 0)
+            {
+                // Read device time
+                QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
+                QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
+                serviceHistory->readCharacteristic(chh);
+            }
 
             // Change the device mode
             QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
@@ -357,6 +360,8 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
     if (c.uuid().toString() == "{00001a10-0000-1000-8000-00805f9b34fb}")
     {
         // Device mode has been changed to 'history'
+
+        m_history_session_count = -1;
 
         // Read history entry count
         QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handle 0x3c
@@ -389,21 +394,66 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
         if (m_history_entry_count < 0)
         {
-            // Entry count
+            // Parse entry count
             m_history_entry_count = static_cast<int16_t>(data[0] + (data[1] << 8));
-            //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
 
-            // Read first entry
-            serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
-            m_history_entry_read = 0;
+#ifndef QT_NO_DEBUG
+            qDebug() << "* DeviceFlowerCare history sync  > " << getAddress();
+            qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
+            qDebug() << "- last_sync    :" << m_lastSync;
+            qDebug() << "- entry_count  :" << m_history_entry_count;
+#endif
+
+            // We read entry from older to newer (entry_count to 0)
+            int entries_to_read = m_history_entry_count;
+
+            // Is m_lastSync valid AND inside the range of stored history entries
+            if (m_lastSync.isValid())
+            {
+                int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastSync.toSecsSinceEpoch();
+                int64_t entries_count_sec = (m_history_entry_count * 10 * 60);
+
+                if (lastSync_sec < entries_count_sec)
+                {
+                    // how many entries are we missing since last sync?
+                    entries_to_read = (lastSync_sec / 10 / 60);
+                }
+            }
+
+            // Is the restart point to old, outside the range of stored history entries?
+            if (entries_to_read > m_history_entry_count)
+            {
+                entries_to_read = m_history_entry_count;
+            }
+
+            // Now we can set our first index to read!
+            m_history_entry_index = entries_to_read;
+
+            // Sanetize, just to be sure
+            if (m_history_entry_index > m_history_entry_count) m_history_entry_index = 0;
+            if (m_history_entry_index < 0)
+            {
+                // abort sync?
+                controller->disconnectFromDevice();
+                return;
+            }
+
+            // Set the progressbar infos
+            m_history_session_count = m_history_entry_index;
+            m_history_session_read = 0;
+
+            // (re)start sync
+            QByteArray nextentry(QByteArray::fromHex("A1"));
+            nextentry.push_back(m_history_entry_index%256);
+            nextentry.push_back(m_history_entry_index/256);
+
+            serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
         }
         else
         {
-            m_history_entry_read++;
-            Q_EMIT historyUpdated();
-
             // Parse entry
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
+            m_lastSync.setSecsSinceEpoch(m_device_wall_time + tmcd);
             float temperature = static_cast<int32_t>(data[4]  + (data[5] << 8) + (data[6] << 16)) / 10.f;
             int luminosity = data[7] + (data[8] << 8) + (data[9] << 16) + (data[10] << 24);
             int soil_moisture = data[11];
@@ -412,14 +462,14 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
-                QDateTime tmcd_qdt = QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
+                // We only save one value every hour
 
                 QSqlQuery addData;
                 addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature, luminosity)"
                                 " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp, :lumi)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tmcd_qdt.toString("yyyy-MM-dd hh:00:00"));
-                addData.bindValue(":ts_full", tmcd_qdt.toString("yyyy-MM-dd hh:mm:ss"));
+                addData.bindValue(":ts", m_lastSync.toString("yyyy-MM-dd hh:00:00"));
+                addData.bindValue(":ts_full", m_lastSync.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":hygro", soil_moisture);
                 addData.bindValue(":condu", soil_conductivity);
                 addData.bindValue(":temp", temperature);
@@ -427,22 +477,34 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
-/*
+
 #ifndef QT_NO_DEBUG
-            qDebug() << "* History entry" << m_history_entry_read-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
-            qDebug() << "- soil_moisture:" << soil_moisture;
-            qDebug() << "- soil_conductivity:" << soil_conductivity;
-            qDebug() << "- temperature:" << temperature;
-            qDebug() << "- luminosity:" << luminosity;
+            qDebug() << "* History entry" << m_history_entry_index-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
+            //qDebug() << "- soil_moisture:" << soil_moisture;
+            //qDebug() << "- soil_conductivity:" << soil_conductivity;
+            //qDebug() << "- temperature:" << temperature;
+            //qDebug() << "- luminosity:" << luminosity;
 #endif
-*/
-            // Read next entry (format: 0xA1 + entry / 16b little endian)
-            if (m_history_entry_read < m_history_entry_count)
+
+            // Update progress
+            m_history_entry_index--;
+            m_history_session_read ++;
+            Q_EMIT historyUpdated();
+
+            if (m_history_entry_index > 0)
             {
+                // Read next entry (format: 0xA1 + entry / 16b little endian)
                 QByteArray nextentry(QByteArray::fromHex("A1"));
-                nextentry.push_back(m_history_entry_read%256);
-                nextentry.push_back(m_history_entry_read/256);
+                nextentry.push_back(m_history_entry_index%256);
+                nextentry.push_back(m_history_entry_index/256);
                 serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
+            }
+            else
+            {
+                // Finish it
+                refreshHistoryFinished(true);
+                controller->disconnectFromDevice();
+                return;
             }
         }
         return;

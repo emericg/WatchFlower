@@ -344,7 +344,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-                // sensor output 0 - 1771 wich maps to 0 - 10 (mS/cm)
+                // sensor output (no soil: 0) - (max observed: 1771) wich maps to 0 - 10 (mS/cm)
                 // divide by 177,1 to 10 (mS/cm)
                 // divide by 1,771 to 1 (uS/cm)
                 m_soil_conductivity = std::round(rawValue / 1.771);

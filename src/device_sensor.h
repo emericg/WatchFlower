@@ -165,7 +165,9 @@ protected:
 
     // history control
     int m_history_entry_count = -1;
-    int m_history_entry_read = -1;
+    int m_history_entry_index = -1;
+    int m_history_session_count = -1;
+    int m_history_session_read = -1;
 
     //
     QList <QObject *> m_aio_minmax_data;

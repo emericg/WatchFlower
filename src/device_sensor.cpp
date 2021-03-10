@@ -147,10 +147,13 @@ void DeviceSensor::refreshHistoryFinished(bool status)
 
     Device::refreshHistoryFinished(status);
 
+    m_history_entry_count = -1;
+    m_history_entry_index = -1;
+    m_history_session_count = -1;
+    m_history_session_read = -1;
+
     if (m_lastSync.isValid())
     {
-        qDebug() << "DeviceSensor::deviceDisconnected() Write last sync";
-
         // Write last sync
         QSqlQuery updateDeviceLastSync;
         updateDeviceLastSync.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
@@ -1066,9 +1069,9 @@ int DeviceSensor::getHistoryUpdatePercent() const
 
     if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
-        if (m_history_entry_count > 0)
+        if (m_history_session_count > 0)
         {
-            p = static_cast<int>((m_history_entry_read / static_cast<float>(m_history_entry_count)) * 100.f);
+            p = static_cast<int>((m_history_session_read / static_cast<float>(m_history_session_count)) * 100.f);
         }
     }
 
