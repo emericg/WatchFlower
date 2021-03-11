@@ -38,10 +38,13 @@ RadioButton {
     }
 
     contentItem: Text {
-        text: control.text
-        font: control.font
         leftPadding: control.indicator.width + control.spacing
         verticalAlignment: Text.AlignVCenter
+
+        text: control.text
+        textFormat: Text.PlainText
+        font: control.font
+        wrapMode: Text.WordWrap
 
         color: Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33
