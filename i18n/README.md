@@ -36,7 +36,7 @@ Translate by editing the .ts file using Qt Linguist.
 
 ##### Step 4: (optional) Update the binary translation
 
-To create (or update) the binary translation, run the following command  from the project root directory:
+To create (or update) the binary translation, run the following command from the project root directory:
 
 ```
 lrelease WatchFlower.pro
@@ -69,6 +69,9 @@ Special thanks
 
 **German**
 - Megachip https://github.com/Megachip
+
+**Norwegian Nynorsk**
+- Guttorm Flatabø https://github.com/dittaeva
 
 **Russian**
 - Pavel Markin
