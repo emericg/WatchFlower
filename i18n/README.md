@@ -5,13 +5,13 @@ You can work on translations using one of two ways:
 - [Using GitHub](https://github.com/firstcontributions/first-contributions/blob/master/README.md) by forking, branching, translating and creating a pull request.
 - Directly, by downloading, translating and emailing the translation files back. It's a way more straightforward workflow, don't bother with GitHub if you don't know how to use it.
 
-##### Step 1: Add the langage to the project (if its a new langage)
+##### Step 1: Add the language to the project (if its a new language)
 
-Edit the Qt project file (_WatchFlower.pro_) and add a new langage file entry to the TRANSLATIONS section, using project name and an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) two letter code (ex: _i18n/watchflower_fr.ts_).
+Edit the Qt project file (_WatchFlower.pro_) and add a new language file entry to the TRANSLATIONS section, using project name and an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) two letter code (ex: _i18n/watchflower_fr.ts_).
 
-Edit the _i18n/i18n.qrc_ file and your langage next to the others.
+Edit the _i18n/i18n.qrc_ file and your language next to the others.
 
-##### Step 2: Update the langage file
+##### Step 2: Update the language file
 
 To create (or update) the actual translation file, from the project root directory, run the following command:
 
@@ -27,7 +27,7 @@ If you are not able to run that command, you can simply ask me for a clean trans
 Translate by editing the .ts file using Qt Linguist.
 
 - Remember to match upper/lower case letters, punctuation and trailing spaces!
-- You don't have to translate everything, missing word or sentence will fall back to english.
+- You don't have to translate everything, missing words or sentences will fall back to English.
 - If you're not sure about a word or sentence, leave the "unfinished" tag, so other people can have a second look at it.
 
 > Qt Linguist manual: https://doc.qt.io/qt-5/linguist-translators.html
@@ -36,7 +36,7 @@ Translate by editing the .ts file using Qt Linguist.
 
 ##### Step 4: (optional) Update the binary translation
 
-To create (or update) the binary translation, from the project root directory, run the following command:
+To create (or update) the binary translation, run the following command  from the project root directory:
 
 ```
 lrelease WatchFlower.pro
@@ -62,7 +62,7 @@ Special thanks
 - FYr76 https://github.com/FYr76
 
 **French**
-- Emerig Grange <emeric.grange@gmail.com>
+- Emeric Grange <emeric.grange@gmail.com>
 
 **Frisian**
 - FYr76 https://github.com/FYr76
