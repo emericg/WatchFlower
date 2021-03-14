@@ -110,7 +110,9 @@ TRANSLATIONS = i18n/watchflower_da.ts \
                i18n/watchflower_en.ts \
                i18n/watchflower_es.ts \
                i18n/watchflower_fr.ts \
-               i18n/watchflower_nl.ts i18n/watchflower_fy.ts \
+               i18n/watchflower_fy.ts \
+               i18n/watchflower_nl.ts \
+               i18n/watchflower_nn.ts \
                i18n/watchflower_ru.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
@@ -179,7 +181,7 @@ android {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
 
-    # 
+    #
     OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java \
                    assets/android/src/com/emeric/utils/QShareUtils.java \
                    assets/android/src/com/emeric/utils/QSharePathResolver.java
