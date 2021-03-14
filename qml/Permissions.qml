@@ -135,7 +135,7 @@ Item {
                 topPadding: 0
                 bottomPadding: 0
 
-                text: qsTr("Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>" +
+                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.<br>" +
                            "This permission is only needed while scanning for new sensors.<br>" +
                            "WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
                 textFormat: Text.PlainText

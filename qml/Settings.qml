@@ -767,7 +767,7 @@ Item {
 
                 visible: (element_worker.visible && isMobile)
 
-                text: qsTr("Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
+                text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -784,7 +784,7 @@ Item {
 
                 visible: (element_worker.visible && isDesktop)
 
-                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.")
+                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
