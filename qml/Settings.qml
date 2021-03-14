@@ -438,6 +438,7 @@ Item {
                         ListElement { text: "Français"; }
                         ListElement { text: "Frysk"; }
                         ListElement { text: "Nederlands"; }
+                        ListElement { text: "Norsk (nynorsk)"; }
                         ListElement { text: "Pусский"; }
                     }
 

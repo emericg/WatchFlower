@@ -101,6 +101,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     else if (m_appLanguage == "Français") localefull = "fr_FR";
     else if (m_appLanguage == "Frysk") localefull = "fy_NL";
     else if (m_appLanguage == "Nederlands") localefull = "nl_NL";
+    else if (m_appLanguage == "Norsk (nynorsk)") localefull = "nn_NO";
     else if (m_appLanguage == "Pусский") localefull = "ru_RU";
     else
     {

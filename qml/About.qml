@@ -715,6 +715,17 @@ Item {
                         font.pixelSize: Theme.fontSizeContent
                         wrapMode: Text.WordWrap
                     }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
+                        text: "- Guttorm Flatabø (Norwegian Nynorsk)"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
+                    }
                 }
             }
         }
