@@ -405,7 +405,7 @@ Item {
 
             Loader {
                 id: indicatorsLoader
-                width: parent.columns === 1 ? parent.width : (parent.width * 0.64)
+                width: (parent.columns === 1) ? parent.width : (parent.width * 0.64)
             }
         }
 

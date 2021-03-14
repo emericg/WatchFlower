@@ -60,6 +60,7 @@ Item {
             width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             anchors.bottom: parent.bottom
 
+            clip: true
             radius: 4
             color: itemDataBar.colorBackground
 

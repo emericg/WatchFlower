@@ -7,7 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: indicatorsSolid
     width: parent.width
-    height: columnData.height + 16
+    height: columnData.height + 24
     z: 5
 
     property string colorBackground: (uiMode === 2) ? Theme.colorBackground : Theme.colorForeground
@@ -35,8 +35,11 @@ Item {
 
         // Has data? always display them
         if (currentDevice.isAvailable()) {
-            soil_moisture.visible = (currentDevice.deviceSoilConductivity > 0 || currentDevice.deviceSoilMoisture > 0)
-            soil_conductivity.visible = (currentDevice.deviceSoilConductivity > 0 || currentDevice.deviceSoilMoisture > 0)
+            var hasHygro_short = (currentDevice.deviceSoilMoisture > 0 || currentDevice.deviceSoilConductivity > 0)
+            var hasHygro_long = (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
+
+            soil_moisture.visible = hasHygro_long
+            soil_conductivity.visible = hasHygro_long
             soil_temperature.visible = currentDevice.hasSoilTemperatureSensor()
             temp.visible = currentDevice.hasTemperatureSensor()
             humi.visible = currentDevice.hasHumiditySensor()
@@ -92,7 +95,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: 2
+        anchors.verticalCenterOffset: 0
 
         spacing: 14
 
