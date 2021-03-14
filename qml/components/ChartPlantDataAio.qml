@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemAioLineCharts
+    id: chartPlantDataAio
     width: parent.width
     height: parent.height
 
@@ -13,8 +13,10 @@ Item {
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("itemAioLineCharts // loadGraph() >> " + currentDevice)
+        //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
 
+        //hygroData.visible = (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")) ||
+        //                    (currentDevice.hasHumiditySensor() && currentDevice.hasData("humidity"))
         hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
         conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")
         tempData.visible = currentDevice.hasTemperatureSensor()
@@ -28,7 +30,7 @@ Item {
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("itemAioLineCharts // updateGraph() >> " + currentDevice)
+        //console.log("chartPlantDataAio // updateGraph() >> " + currentDevice)
 
         if (dateIndicator.visible) resetIndicator()
 
@@ -335,7 +337,7 @@ Item {
             var direction = "middle"
             if (verticalIndicator.x > dateIndicator.width + 12)
                 direction = "right"
-            else if (itemAioLineCharts.width - verticalIndicator.x > dateIndicator.width + 12)
+            else if (chartPlantDataAio.width - verticalIndicator.x > dateIndicator.width + 12)
                 direction = "left"
 
             if (direction === "middle") {

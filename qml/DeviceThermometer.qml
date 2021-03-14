@@ -92,9 +92,9 @@ Item {
 
     function loadGraph() {
         if (settingsManager.graphThermometer === "lines") {
-            graphLoader.source = "ItemAioLineCharts.qml"
+            graphLoader.source = "ChartPlantDataAio.qml"
         } else {
-            graphLoader.source = "ItemThermometerWidget.qml"
+            graphLoader.source = "ChartThermometerMinMax.qml"
         }
         deviceScreenChart.loadGraph()
         deviceScreenChart.updateGraph()

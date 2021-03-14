@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemButtonCompactable
+    id: buttonCompactable
     implicitWidth: 40
     implicitHeight: 40
 
@@ -51,7 +51,7 @@ Item {
             id: mmmm
             anchors.fill: parent
 
-            onClicked: itemButtonCompactable.clicked()
+            onClicked: buttonCompactable.clicked()
             onPressed: mouseBackground.width = bgRect.width*2
 
             hoverEnabled: isDesktop
@@ -107,10 +107,10 @@ Item {
             width: iconSize
             height: iconSize
 
-            opacity: itemButtonCompactable.enabled ? 1.0 : 0.4
+            opacity: buttonCompactable.enabled ? 1.0 : 0.4
             Behavior on opacity { NumberAnimation { duration: 333 } }
 
-            source: itemButtonCompactable.source
+            source: buttonCompactable.source
             color: iconColor
 
             SequentialAnimation on opacity {
@@ -139,7 +139,7 @@ Item {
             visible: !compact
 
             textFormat: Text.PlainText
-            color: itemButtonCompactable.iconColor
+            color: buttonCompactable.iconColor
             font.pixelSize: Theme.fontSizeComponent
             font.bold: true
             elide: Text.ElideRight
@@ -155,13 +155,13 @@ Item {
         visible: tooltipText
         enabled: tooltipText
 
-        property bool tooltipVisible: (itemButtonCompactable.compact && itemButtonCompactable.hovered)
+        property bool tooltipVisible: (buttonCompactable.compact && buttonCompactable.hovered)
         onTooltipVisibleChanged: ttT.checkPosition()
 
         opacity: tooltipVisible ? 1 : 0
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
-        state: itemButtonCompactable.tooltipPosition
+        state: buttonCompactable.tooltipPosition
         states: [
             State {
                 name: "top"

@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Item {
-    id: thermoWidget
+    id: chartThermometerMinMax
     anchors.fill: parent
     anchors.margins: 0
 
@@ -15,25 +15,25 @@ Item {
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("thermoWidget // loadGraph() >> " + currentDevice)
+        //console.log("chartThermometerMinMax // loadGraph() >> " + currentDevice)
     }
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("thermoWidget // updateGraph() >> " + currentDevice)
+        //console.log("chartThermometerMinMax // updateGraph() >> " + currentDevice)
 
-        var days = Math.floor(width / widgetWidthTarget)
-        widgetWidth = (width / days)
-        currentDevice.updateAioMinMaxData(days)
+        var daysVisible = Math.floor(width / widgetWidthTarget)
+        var daysMax = daysVisible
+        widgetWidth = (width / daysVisible)
+        currentDevice.updateAioMinMaxData(daysMax)
 
-        if (currentDevice.countData("temperature", days) > 1) {
+        if (currentDevice.countData("temperature", daysMax) > 1) {
             mmGraph.visible = true
             noDataIndicator.visible = false
         } else {
             mmGraph.visible = false
             noDataIndicator.visible = true
         }
-
     }
 
     onWidthChanged: updateGraph()
@@ -68,7 +68,7 @@ Item {
 
             Repeater {
                 model: currentDevice.aioMinMaxData
-                ItemThermometerWidgetBar { width: widgetWidth; mmd: modelData; }
+                ChartThermometerMinMaxBar { width: widgetWidth; mmd: modelData; }
             }
         }
     //}

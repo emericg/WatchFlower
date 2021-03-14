@@ -4,7 +4,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemDataBar
+    id: dataBarCompact
     height: 32
     implicitWidth: 128
 
@@ -57,12 +57,12 @@ Item {
         Rectangle {
             id: item_bg
             height: hhh
-            width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
+            width: dataBarCompact.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             anchors.bottom: parent.bottom
 
             clip: true
             radius: 4
-            color: itemDataBar.colorBackground
+            color: dataBarCompact.colorBackground
 
             Rectangle {
                 id: item_data
@@ -84,7 +84,7 @@ Item {
                 anchors.bottom: parent.bottom
 
                 radius: 3
-                color: itemDataBar.colorForeground
+                color: dataBarCompact.colorForeground
 
                 Behavior on width { NumberAnimation { duration: 333 } }
             }
@@ -169,7 +169,7 @@ Item {
 
                     z: -1
                     radius: 1
-                    color: itemDataBar.colorForeground
+                    color: dataBarCompact.colorForeground
 
                     Rectangle {
                         id: item_indicator_triangle
@@ -182,7 +182,7 @@ Item {
 
                         radius: 1
                         rotation: 45
-                        color: itemDataBar.colorForeground
+                        color: dataBarCompact.colorForeground
                     }
                 }
             }

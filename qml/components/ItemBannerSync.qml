@@ -59,7 +59,7 @@ Rectangle {
 
     ////////////////
 
-    ItemButtonCompactable {
+    ButtonCompactable {
         id: buttonCancel
         height: compact ? 36 : 34
         anchors.right: parent.right

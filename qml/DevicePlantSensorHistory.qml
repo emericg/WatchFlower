@@ -292,7 +292,7 @@ Item {
         onWidthChanged: updateSize()
         onHeightChanged: updateSize()
 
-        ItemDataChart {
+        ChartHistory {
             id: hygroGraph
             height: graphHeight
             width: graphWidth
@@ -311,7 +311,7 @@ Item {
             }
         }
 
-        ItemDataChart {
+        ChartHistory {
             id: tempGraph
             height: graphHeight
             width: graphWidth
@@ -330,7 +330,7 @@ Item {
             }
         }
 
-        ItemDataChart {
+        ChartHistory {
             id: lumiGraph
             height: graphHeight
             width: graphWidth
@@ -349,7 +349,7 @@ Item {
             }
         }
 
-        ItemDataChart {
+        ChartHistory {
             id: conduGraph
             height: graphHeight
             width: graphWidth

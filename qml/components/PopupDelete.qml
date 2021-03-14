@@ -4,9 +4,9 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Popup {
-    id: itemDeletePopup
-    x: (appWindow.width / 2) - (itemDeletePopup.width / 2)
-    y: singleColumn ? (appWindow.height - itemDeletePopup.height) : ((appWindow.height / 2) - (itemDeletePopup.height / 2) - appHeader.height)
+    id: popupDelete
+    x: (appWindow.width / 2) - (popupDelete.width / 2)
+    y: singleColumn ? (appWindow.height - popupDelete.height) : ((appWindow.height / 2) - (popupDelete.height / 2) - appHeader.height)
 
     implicitWidth: 560
     implicitHeight: 320
@@ -78,7 +78,7 @@ Popup {
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
-                    onClicked: itemDeletePopup.close()
+                    onClicked: popupDelete.close()
                 }
                 ButtonWireframe {
                     id: buttonConfirm
@@ -88,8 +88,8 @@ Popup {
                     primaryColor: Theme.colorRed
                     fullColor: true
                     onClicked: {
-                        itemDeletePopup.confirmed()
-                        itemDeletePopup.close()
+                        popupDelete.confirmed()
+                        popupDelete.close()
                     }
                 }
             }

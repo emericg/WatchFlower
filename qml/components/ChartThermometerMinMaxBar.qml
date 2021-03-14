@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: thermoWidgetBar
+    id: chartThermometerMinMaxBar
     width: 64
     height: parent.height
 

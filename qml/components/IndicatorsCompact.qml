@@ -5,9 +5,9 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: indicatorsSolid
+    id: indicatorsCompact
     width: parent.width
-    height: columnData.height + 24
+    height: columnData.height + 16
     z: 5
 
     property string colorBackground: (uiMode === 2) ? Theme.colorBackground : Theme.colorForeground
@@ -97,20 +97,20 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 0
 
-        spacing: 14
+        spacing: 4
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: soil_moisture
             width: parent.width
 
             legend: qsTr("Moisture")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "%"
             warning: true
             colorForeground: Theme.colorBlue
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.deviceSoilMoisture
             valueMin: 0
@@ -121,16 +121,16 @@ Item {
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: temp
             width: parent.width
 
             legend: qsTr("Temperature")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             warning: true
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             function tempHelper(tempDeg) {
                 return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
@@ -139,22 +139,22 @@ Item {
             value: tempHelper(currentDevice.deviceTemp)
             floatprecision: 1
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
+            valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: tempHelper(currentDevice.limitTempMin)
             limitMax: tempHelper(currentDevice.limitTempMax)
         }
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: humi
             width: parent.width
 
             legend: qsTr("Humidity")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "%"
             colorForeground: Theme.colorBlue
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.deviceHumidity
             valueMin: 0
@@ -165,15 +165,15 @@ Item {
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: lumi
             width: parent.width
 
             legend: qsTr("Luminosity")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: " " + qsTr("lux")
             colorForeground: Theme.colorYellow
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.deviceLuminosity
             valueMin: 0
@@ -184,15 +184,15 @@ Item {
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: soil_conductivity
             width: parent.width
 
             legend: qsTr("Fertility")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: " " + qsTr("µS/cm")
             colorForeground: Theme.colorRed
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.deviceSoilConductivity
             valueMin: 0
@@ -203,15 +203,15 @@ Item {
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: soil_temperature
             width: parent.width
 
             legend: qsTr("Soil temp.")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.deviceSoilTemperature
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
@@ -222,15 +222,15 @@ Item {
 
         ////////
 
-        ItemDataBarSolid {
+        DataBarCompact {
             id: water_tank
             width: parent.width
 
             legend: qsTr("Water tank")
-            legendWidth: indicatorsSolid.legendWidth
+            legendWidth: indicatorsCompact.legendWidth
             suffix: "L"
             colorForeground: Theme.colorBlue
-            colorBackground: indicatorsSolid.colorBackground
+            colorBackground: indicatorsCompact.colorBackground
 
             value: currentDevice.waterTankLevel
             floatprecision: 1

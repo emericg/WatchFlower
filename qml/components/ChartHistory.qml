@@ -4,7 +4,7 @@ import QtCharts 2.3
 import ThemeEngine 1.0
 
 Item {
-    id: itemDataCharts
+    id: chartHistory
     width: parent.width
 
     property string graphViewSelected
@@ -12,7 +12,7 @@ Item {
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("itemDataCharts // loadGraph() >> " + currentDevice)
+        //console.log("chartHistory // loadGraph() >> " + currentDevice)
 
         axisY0.min = 0;
         if (graphDataSelected === "soilMoisture") {
@@ -76,7 +76,7 @@ Item {
 
     function updateColors() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("itemDataCharts // updateColors() >> " + currentDevice)
+        //console.log("chartHistory // updateColors() >> " + currentDevice)
 
         // Bars
         if (graphDataSelected === "soilMoisture") {
@@ -110,7 +110,7 @@ Item {
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("itemDataCharts // updateGraph() >> " + currentDevice)
+        //console.log("chartHistory // updateGraph() >> " + currentDevice)
 
         loadAxis()
 

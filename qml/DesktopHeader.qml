@@ -141,7 +141,7 @@ Rectangle {
 
         ////////////
 
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonThermoChart
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -159,7 +159,7 @@ Rectangle {
             }
             tooltipText: qsTr("Switch graph")
         }
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonLed
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +176,7 @@ Rectangle {
             onClicked: deviceLedButtonClicked()
             tooltipText: qsTr("Blink LED")
         }
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonRefreshHistory
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -193,7 +193,7 @@ Rectangle {
             onClicked: deviceRefreshHistoryButtonClicked()
             tooltipText: qsTr("Sync history")
         }
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonRefreshData
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -259,7 +259,7 @@ Rectangle {
 
         ////////////
 
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonSort
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -321,7 +321,7 @@ Rectangle {
                 }
             }
         }
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonScan
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -339,7 +339,7 @@ Rectangle {
             animation: "fade"
             animationRunning: deviceManager.scanning
         }
-        ItemButtonCompactable {
+        ButtonCompactable {
             id: buttonRefreshAll
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter

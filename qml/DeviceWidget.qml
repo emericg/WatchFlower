@@ -21,7 +21,7 @@ Item {
 
     Connections {
         target: boxDevice
-        onStatusUpdated: { initBoxData() }
+        onStatusUpdated: { updateSensorStatus() }
         onSensorUpdated: { initBoxData() }
         onBatteryUpdated: { updateSensorBattery() }
         onDataUpdated: { updateSensorData() }
@@ -52,8 +52,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function initBoxData() {
-        //console.log("DeviceWidget::initBoxData()")
-
         // Set icon
         if (boxDevice.isPlantSensor()) {
             hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
@@ -96,8 +94,9 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
-        updateSensorData()
+        updateSensorStatus()
         updateSensorBattery()
+        updateSensorData()
     }
 
     function updateSensorIcon() {
@@ -196,7 +195,6 @@ Item {
     }
 
     function updateSensorData() {
-        console.log("DeviceWidget::updateSensorData()")
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
 

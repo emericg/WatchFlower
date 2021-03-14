@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Item {
-    id: actionButtonItem
+    id: actionButton
     height: isPhone ? 36 : 40
     width: parent.width
 

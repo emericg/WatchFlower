@@ -80,11 +80,12 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ItemDeletePopup {
+    PopupDelete {
         id: confirmDeleteDevice
-
         onConfirmed: screenDeviceList.removeSelectedDevice()
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: rowbar
@@ -215,7 +216,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
-                ItemButtonCompactable {
+                ButtonCompactable {
                     id: buttonRefresh
                     height: !wideMode ? 36 : 34
                     anchors.verticalCenter: parent.verticalCenter
@@ -233,7 +234,7 @@ Item {
                     animationRunning: deviceManager.refreshing
                 }
 
-                ItemButtonCompactable {
+                ButtonCompactable {
                     id: buttonDelete
                     height: compact ? 36 : 34
                     anchors.verticalCenter: parent.verticalCenter

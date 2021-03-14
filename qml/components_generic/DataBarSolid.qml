@@ -4,7 +4,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemDataBar
+    id: dataBarSolid
     height: 16
     implicitWidth: 128
 
@@ -56,13 +56,13 @@ Item {
 
         Rectangle {
             id: item_bg
-            width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
+            width: dataBarSolid.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             height: hhh
             anchors.verticalCenter: parent.verticalCenter
 
             clip: true
             radius: hhh
-            color: itemDataBar.colorBackground
+            color: dataBarSolid.colorBackground
 
             Rectangle {
                 id: item_data
@@ -76,7 +76,7 @@ Item {
                 anchors.left: parent.left
 
                 radius: hhh
-                color: itemDataBar.colorForeground
+                color: dataBarSolid.colorForeground
 
                 Behavior on width { NumberAnimation { duration: animated ? 333 : 0 } }
             }
@@ -209,9 +209,9 @@ Item {
                     if (value <= 0)
                         return "transparent"
                      else if (item_data.width > indicator.width)
-                        return itemDataBar.colorForeground
+                        return dataBarSolid.colorForeground
                     else
-                        return itemDataBar.colorBackground
+                        return dataBarSolid.colorBackground
                 }
 
                 x: {
@@ -270,7 +270,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                         z: -1
-                        color: itemDataBar.colorBackground
+                        color: dataBarSolid.colorBackground
                         visible: (parent.opacity === 1)
                     }
                 }

@@ -68,15 +68,15 @@ Item {
 
         if (indicatorsLoader.status != Loader.Ready) {
             if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "ItemIndicatorsSolid.qml"
+                indicatorsLoader.source = "IndicatorsSolid.qml"
             else
-                indicatorsLoader.source = "ItemIndicatorsCompact.qml"
+                indicatorsLoader.source = "IndicatorsCompact.qml"
             dataIndicators = indicatorsLoader.item
         }
         dataIndicators.updateSize()
 
         if (graphLoader.status != Loader.Ready) {
-            graphLoader.source = "ItemAioLineCharts.qml"
+            graphLoader.source = "ChartPlantDataAio.qml"
             dataCharts = graphLoader.item
         }
         dataCharts.loadGraph()
