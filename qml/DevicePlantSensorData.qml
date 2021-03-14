@@ -121,60 +121,55 @@ Item {
             dataIndicators.updateSize()
         }
     }
-/*
-    onWidthChanged: {
-        if (isPhone) {
-            if (screenOrientation === Qt.PortraitOrientation) {
-                contentGrid_lvl1.columns = 1
-                contentGrid_lvl1.rows = 2
-                rectangleHeader.color = Theme.colorForeground
-            } else {
-                contentGrid_lvl1.columns = 2
-                contentGrid_lvl1.rows = 1
-                rectangleHeader.color = "transparent"
-            }
-        }
-        if (isDesktop) {
-            if (singleColumn) {
-                contentGrid_lvl2.columns = 1
-                contentGrid_lvl2.rows = 2
-                rectangleHeader.color = Theme.colorForeground
-            } else {
-                contentGrid_lvl2.columns = 2
-                contentGrid_lvl2.rows = 1
-                rectangleHeader.color = "transparent"
-                rectangleHeader.width = (contentGrid_lvl2.width / 3)
-                rectangleHeader2.color = "transparent"
-                rectangleHeader2.width = (contentGrid_lvl2.width / 3)*2
-            }
+
+    // 1: single column
+    // 2: wide mode (two main rows)
+    // 3: wide mode for phones (two main columns)
+    property int uiMode: singleColumn ? 1 : (isPhone ? 3 : 2)
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: rectangleHeaderBackground
+        color: Theme.colorDeviceHeader
+        width: parent.width
+        height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
+        visible: (uiMode !== 3)
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            visible: (isDesktop && !headerUnicolor)
+            height: 2
+            opacity: 0.5
+            color: Theme.colorSeparator
         }
     }
-*/
-    ////////////////////////////////////////////////////////////////////////////
+
+    ////////
 
     Grid {
         id: contentGrid_lvl1
-        columns: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? 2 : 1
-        rows: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? 1 : 2
-        spacing: (rows > 1) ? 12 : 0
-
         anchors.fill: parent
+        columns: (uiMode === 3) ? 2 : 1
+        rows: (uiMode === 3) ? 1 : 2
+        spacing: 0
 
         Grid {
             id: contentGrid_lvl2
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
-            columns: 1
-            rows: 2
-            spacing: 6
+            columns: (uiMode === 2) ? 3 : 1
+            rows: (uiMode === 2) ? 1 : 3
+            spacing: 0
 
             ////////
 
-            Rectangle {
-                id: rectangleHeader
-                color: (isPhone && screenOrientation === Qt.LandscapeOrientation) ? "transparent" : Theme.colorDeviceHeader
-                width: (parent.width / parent.columns)
+            Item {
+                id: itemHeader
+                width: parent.columns === 1 ? parent.width : (parent.width * 0.36)
                 height: columnHeader.height + 12
-                z: 5
 
                 Column {
                     id: columnHeader
@@ -396,40 +391,47 @@ Item {
                         }
                     }
                 }
-
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-
-                    visible: (isDesktop && !headerUnicolor)
-                    height: 2
-                    opacity: 0.5
-                    color: Theme.colorSeparator
-                }
             }
 
             ////////
 
             ItemBannerSync {
                 id: bannersync
-                width: parent.width / parent.columns
+                visible: (contentGrid_lvl2.columns === 1)
+                width: parent.width
             }
 
             ////////
 
             Loader {
                 id: indicatorsLoader
-                width: parent.width / parent.columns
+                width: parent.columns === 1 ? parent.width : (parent.width * 0.64)
             }
         }
 
         ////////////////////////////////////////////////////////////////////////
 
-        Loader {
-            id: graphLoader
+        Item {
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
             height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height) : contentGrid_lvl1.height
+
+            ItemBannerSync {
+                id: bannersync2
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                visible: !bannersync.visible
+            }
+
+            Loader {
+                id: graphLoader
+                anchors.top: bannersync2.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+
+                asynchronous: false
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 Item {
     id: deviceWidget
     implicitWidth: 640
-    implicitHeight: bigAssMode ? 140 : 100
+    implicitHeight: 128
 
     property var boxDevice: pointer
 

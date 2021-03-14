@@ -12,6 +12,8 @@ Item {
     width: compact ? height : (contentRow.width + 12 + ((source && !text) ? 0 : 16))
 
     signal clicked()
+    signal pressed()
+    signal longPressed()
 
     property bool compact: true
 

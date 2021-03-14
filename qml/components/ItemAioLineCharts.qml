@@ -7,6 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: itemAioLineCharts
     width: parent.width
+    height: parent.height
 
     property bool showGraphDots: settingsManager.graphShowDots
 
@@ -122,6 +123,7 @@ Item {
         id: aioGraph
         anchors.fill: parent
         anchors.margins: -20
+        anchors.topMargin: -24
 
         antialiasing: true
         legend.visible: false
@@ -165,6 +167,8 @@ Item {
         MouseArea {
             id: clickableGraphArea
             anchors.fill: aioGraph
+
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
 /*
             onPositionChanged: {
                 moveIndicator(mouse, true)
@@ -172,8 +176,13 @@ Item {
             }
 */
             onClicked: {
-                aioGraph.moveIndicator(mouse, false)
-                mouse.accepted = true
+                if (mouse.button === Qt.LeftButton) {
+                    aioGraph.moveIndicator(mouse, false)
+                    mouse.accepted = true
+                }
+                else if (mouse.button === Qt.RightButton) {
+                    resetIndicator()
+                }
             }
         }
 
@@ -278,12 +287,14 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
+    ////////
+
     Rectangle {
         id: verticalIndicator
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 28
+        anchors.bottomMargin: 30
 
         width: 2
         visible: false
@@ -347,6 +358,8 @@ Item {
             }
         }
     }
+
+    ////////
 
     Grid {
         id: indicators

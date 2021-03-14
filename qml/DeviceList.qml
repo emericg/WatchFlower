@@ -312,6 +312,7 @@ Item {
         model: deviceManager.devicesList
         delegate: DeviceWidget {
             width: devicesView.cellSize
+            height: devicesView.boxHeight
             singleColumn: devicesView.singleColumn
             bigAssMode: devicesView.bigWidget
         }

@@ -10,6 +10,8 @@ Item {
     height: columnData.height + 16
     z: 5
 
+    property string colorBackground: (uiMode === 2) ? Theme.colorBackground : Theme.colorForeground
+
     property int legendWidth: 92
     Component.onCompleted: updateSize()
 
@@ -23,6 +25,8 @@ Item {
         if (legendWidth < lumi.legendContentWidth) legendWidth = lumi.legendContentWidth
         if (legendWidth < water_tank.legendContentWidth) legendWidth = water_tank.legendContentWidth
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -88,9 +92,9 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 2
 
         spacing: 14
-        visible: (currentDevice.available || currentDevice.hasData())
 
         ////////
 
@@ -103,7 +107,7 @@ Item {
             suffix: "%"
             warning: true
             colorForeground: Theme.colorBlue
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.deviceSoilMoisture
             valueMin: 0
@@ -123,7 +127,7 @@ Item {
             warning: true
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             function tempHelper(tempDeg) {
                 return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
@@ -147,7 +151,7 @@ Item {
             legendWidth: indicatorsSolid.legendWidth
             suffix: "%"
             colorForeground: Theme.colorBlue
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.deviceHumidity
             valueMin: 0
@@ -166,7 +170,7 @@ Item {
             legendWidth: indicatorsSolid.legendWidth
             suffix: " " + qsTr("lux")
             colorForeground: Theme.colorYellow
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.deviceLuminosity
             valueMin: 0
@@ -185,7 +189,7 @@ Item {
             legendWidth: indicatorsSolid.legendWidth
             suffix: " " + qsTr("µS/cm")
             colorForeground: Theme.colorRed
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.deviceSoilConductivity
             valueMin: 0
@@ -204,7 +208,7 @@ Item {
             legendWidth: indicatorsSolid.legendWidth
             suffix: "°" + settingsManager.tempUnit
             colorForeground: Theme.colorGreen
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.deviceSoilTemperature
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
@@ -223,7 +227,7 @@ Item {
             legendWidth: indicatorsSolid.legendWidth
             suffix: "L"
             colorForeground: Theme.colorBlue
-            //colorBackground: Theme.colorBackground
+            colorBackground: indicatorsSolid.colorBackground
 
             value: currentDevice.waterTankLevel
             floatprecision: 1
