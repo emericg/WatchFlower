@@ -142,18 +142,8 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
 
             if (cbat.value().size() == 1)
             {
-                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
-                Q_EMIT sensorUpdated();
-
-                if (m_dbInternal || m_dbExternal)
-                {
-                    QSqlQuery updateDevice;
-                    updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                    updateDevice.bindValue(":battery", m_deviceBattery);
-                    updateDevice.bindValue(":deviceAddr", getAddress());
-                    if (updateDevice.exec() == false)
-                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-                }
+                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+                updateBattery(lvl);
             }
         }
     }
@@ -180,15 +170,15 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
                     m_firmware_uptodate = true;
                 }
             }
+            Q_EMIT sensorUpdated();
 
             QBluetoothUuid b(QString("eeee9a32-a003-4cbd-b00b-6b519bf2780f")); // handle 0x2e // battery level
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             if (chb.value().size() > 0)
             {
                 m_deviceBattery = chb.value().toInt();
+                Q_EMIT batteryUpdated();
             }
-
-            Q_EMIT sensorUpdated();
 
             QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);

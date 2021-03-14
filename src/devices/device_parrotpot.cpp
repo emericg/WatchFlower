@@ -305,18 +305,8 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
 
             if (cbat.value().size() == 1)
             {
-                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
-                Q_EMIT sensorUpdated();
-
-                if (m_dbInternal || m_dbExternal)
-                {
-                    QSqlQuery updateDevice;
-                    updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                    updateDevice.bindValue(":battery", m_deviceBattery);
-                    updateDevice.bindValue(":deviceAddr", getAddress());
-                    if (updateDevice.exec() == false)
-                        qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-                }
+                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+                updateBattery(lvl);
             }
         }
     }

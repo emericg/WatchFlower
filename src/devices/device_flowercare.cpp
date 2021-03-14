@@ -197,6 +197,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             }
 
             Q_EMIT sensorUpdated();
+            Q_EMIT batteryUpdated();
 
             if (need_firstsend) // if firmware > 2.6.6
             {

@@ -19,6 +19,10 @@ Item {
             rectangleDeviceData.updateHeader()
             rectangleDeviceLimits.updateHeader()
         }
+        onBatteryUpdated: {
+            rectangleDeviceData.updateHeader()
+            rectangleDeviceLimits.updateHeader()
+        }
         onDataUpdated: {
             rectangleDeviceData.updateData()
             rectangleDeviceHistory.updateData()

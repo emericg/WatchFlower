@@ -11,17 +11,19 @@ Item {
     implicitHeight: 128
 
     property var boxDevice: pointer
+    property bool isSelected: false
+    property bool hasHygro_short: false
+    property bool hasHygro_long: false
 
     property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
     property bool bigAssMode: false
     property bool singleColumn: true
 
-    property bool selected: false
-
     Connections {
         target: boxDevice
-        onStatusUpdated: { updateSensorData() }
-        onSensorUpdated: { updateSensorBattery() }
+        onStatusUpdated: { initBoxData() }
+        onSensorUpdated: { initBoxData() }
+        onBatteryUpdated: { updateSensorBattery() }
         onDataUpdated: { updateSensorData() }
         onLimitsUpdated: { updateSensorData() }
     }
@@ -35,7 +37,6 @@ Item {
     Connections {
         target: devicesView
         onBigWidgetChanged: {
-            updateSensorBattery()
             updateSensorData()
         }
     }
@@ -48,10 +49,17 @@ Item {
 
     Component.onCompleted: initBoxData()
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function initBoxData() {
-        // Device picture
+        //console.log("DeviceWidget::initBoxData()")
+
+        // Set icon
         if (boxDevice.isPlantSensor()) {
-            if (boxDevice.hasData("soilMoisture")) {
+            hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+            hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+
+            if (hasHygro_long) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
                 else
@@ -92,16 +100,67 @@ Item {
         updateSensorBattery()
     }
 
+    function updateSensorIcon() {
+        if (boxDevice.isPlantSensor()) {
+            if (boxDevice.hasData("soilMoisture")) {
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+            } else {
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_empty-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+            }
+        }
+    }
+
     function updateSensorBattery() {
         imageBattery.visible = (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
     }
 
-    function updateSensorData() {
-        rectangleSensors.visible = false
-        rectangleHygroTemp.visible = false
+    function updateSensorStatus() {
+        // Text
+        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(boxDevice.status)
+        textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
 
-        // Texts
+        if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
+            if (boxDevice.isFresh()) {
+                textStatus.color = Theme.colorGreen
+                textStatus.text = qsTr("Synced")
+            } else if (boxDevice.isAvailable()) {
+                textStatus.color = Theme.colorYellow
+                textStatus.text = qsTr("Synced")
+            }
+        }
+        // Image
+        if (boxDevice.isAvailable()) {
+            // if we have data cached, no indicator
+            imageStatus.visible = false
+            refreshAnimation.running = false
+        } else {
+            imageStatus.visible = true
+
+            if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
+                imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                refreshAnimation.running = false
+            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING || boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                refreshAnimation.running = true
+            } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                refreshAnimation.running = true
+            } else {
+                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                refreshAnimation.running = false
+            }
+        }
+    }
+
+    function updateSensorSettings() {
+        // Title
         if (boxDevice.isPlantSensor()) {
             if (boxDevice.devicePlantName !== "")
                 textTitle.text = boxDevice.devicePlantName
@@ -115,7 +174,7 @@ Item {
         } else {
             textTitle.text = boxDevice.deviceName
         }
-
+        // Location
         textLocation.font.pixelSize = bigAssMode ? 20 : 18
         if (boxDevice.deviceLocationName) {
             textLocation.text = boxDevice.deviceLocationName
@@ -134,20 +193,15 @@ Item {
             }
             textLocation.text = addr
         }
+    }
 
-        // Status
-        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(boxDevice.status)
-        textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
+    function updateSensorData() {
+        console.log("DeviceWidget::updateSensorData()")
+        rectangleSensors.visible = false
+        rectangleHygroTemp.visible = false
 
-        if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isFresh()) {
-                textStatus.color = Theme.colorGreen
-                textStatus.text = qsTr("Synced")
-            } else if (boxDevice.isAvailable()) {
-                textStatus.color = Theme.colorYellow
-                textStatus.text = qsTr("Synced")
-            }
-        }
+        updateSensorIcon()
+        updateSensorSettings()
 
         lilIcons.visible = false
         water.visible = false
@@ -157,7 +211,7 @@ Item {
         if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
 
             // Water me notif
-            if (boxDevice.deviceSoilMoisture > 0 && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
+            if (hasHygro_long && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
                 lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
@@ -189,29 +243,6 @@ Item {
             }
         }
 
-        // Update notif
-        if (boxDevice.isAvailable()) {
-            // if we have data cached, no indicator
-            imageStatus.visible = false;
-            refreshAnimation.running = false;
-        } else {
-            imageStatus.visible = true;
-
-            if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg";
-                refreshAnimation.running = false;
-            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING || boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg";
-                refreshAnimation.running = true;
-            } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg";
-                refreshAnimation.running = true;
-            } else {
-                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg";
-                refreshAnimation.running = false;
-            }
-        }
-
         // Has data? always display them
         if (boxDevice.isAvailable()) {
             if (boxDevice.hasSoilMoistureSensor()) {
@@ -221,9 +252,9 @@ Item {
                 lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
-                hygro_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+                hygro_bg.visible = hasHygro_long
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
-                cond_bg.visible = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+                cond_bg.visible = hasHygro_long
             } else if (boxDevice.hasGeigerCounter()) {
                 rectangleHygroTemp.visible = true
                 textTemp.text = ""
@@ -266,10 +297,10 @@ Item {
         border.width: 2
         border.color: singleColumn ? "transparent" : Theme.colorSeparator
 
-        color: deviceWidget.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
+        color: isSelected ? Theme.colorSeparator : Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
 
-        opacity: deviceWidget.selected ? 0.5 : (singleColumn ? 0 : 1)
+        opacity: isSelected ? 0.5 : (singleColumn ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
@@ -289,12 +320,12 @@ Item {
 
                 // multi selection
                 if (mouse.button === Qt.MiddleButton) {
-                    if (!selected) {
-                        selected = true;
-                        screenDeviceList.selectDevice(index);
+                    if (!isSelected) {
+                        isSelected = true
+                        screenDeviceList.selectDevice(index)
                     } else {
-                        selected = false;
-                        screenDeviceList.deselectDevice(index);
+                        isSelected = false
+                        screenDeviceList.deselectDevice(index)
                     }
                     return;
                 }
@@ -303,12 +334,12 @@ Item {
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
                         (screenDeviceList.selectionMode)) {
-                        if (!selected) {
-                            selected = true;
-                            screenDeviceList.selectDevice(index);
+                        if (!isSelected) {
+                            isSelected = true
+                            screenDeviceList.selectDevice(index)
                         } else {
-                            selected = false;
-                            screenDeviceList.deselectDevice(index);
+                            isSelected = false
+                            screenDeviceList.deselectDevice(index)
                         }
                         return;
                     }
@@ -339,12 +370,12 @@ Item {
 
             onPressAndHold: {
                 // multi selection
-                if (!selected) {
-                    selected = true;
-                    screenDeviceList.selectDevice(index);
+                if (!isSelected) {
+                    isSelected = true
+                    screenDeviceList.selectDevice(index)
                 } else {
-                    selected = false;
-                    screenDeviceList.deselectDevice(index);
+                    isSelected = false
+                    screenDeviceList.deselectDevice(index)
                 }
             }
         }

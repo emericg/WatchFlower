@@ -217,10 +217,8 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
                 QBluetoothUuid b(QString("EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handle 0x17
                 QLowEnergyCharacteristic chb = serviceData->characteristic(b);
 
-                const quint8 *data = reinterpret_cast<const quint8 *>(chb.value().constData());
-                //qDebug() << "Battery > " << chb.value();
-                m_deviceBattery = static_cast<int>(data[0]);
-                Q_EMIT sensorUpdated();
+                int lvl = static_cast<uint8_t>(chb.value().constData()[0]);
+                updateBattery(lvl);
             }
         }
     }

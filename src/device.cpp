@@ -389,13 +389,15 @@ bool Device::getSqlInfos()
                 m_associatedName = getInfos.value(3).toString();
                 m_locationName = getInfos.value(4).toString();
                 m_lastSync = getInfos.value(5).toDateTime();
-                //m_manualOrderIndex = ;
+                //m_manualOrderIndex = 0; // TODO
                 m_isOutside = getInfos.value(6).toBool();
 
                 // TODO // handle 'settings' field
 
                 status = true;
                 Q_EMIT sensorUpdated();
+                Q_EMIT batteryUpdated();
+                Q_EMIT settingsUpdated();
             }
         }
         else
@@ -576,6 +578,8 @@ QString Device::getLastUpdateString() const
     return lastUpdate;
 }
 
+/* ************************************************************************** */
+
 void Device::setLocationName(const QString &name)
 {
     if (m_locationName != name)
@@ -645,11 +649,61 @@ void Device::setOutside(const bool outside)
     }
 }
 
+/* ************************************************************************** */
+
+void Device::updateFirmware(const QString &firmware)
+{
+    if (!firmware.isEmpty() && m_deviceFirmware != firmware)
+    {
+        m_deviceFirmware = firmware;
+
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery updateFirmware;
+            updateFirmware.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
+            updateFirmware.bindValue(":firmware", m_deviceFirmware);
+            updateFirmware.bindValue(":deviceAddr", getAddress());
+            if (updateFirmware.exec() == false)
+                qWarning() << "> updateFirmware.exec() ERROR" << updateFirmware.lastError().type() << ":" << updateFirmware.lastError().text();
+        }
+
+        Q_EMIT sensorUpdated();
+    }
+}
+
+void Device::updateBattery(const int battery)
+{
+    if (battery > 0 && battery <= 100)
+    {
+        if (m_deviceBattery != battery)
+        {
+            m_deviceBattery = battery;
+
+            if (m_dbInternal || m_dbExternal)
+            {
+                QSqlQuery updateBattery;
+                updateBattery.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                updateBattery.bindValue(":battery", m_deviceBattery);
+                updateBattery.bindValue(":deviceAddr", getAddress());
+                if (updateBattery.exec() == false)
+                    qWarning() << "> updateBattery.exec() ERROR" << updateBattery.lastError().type() << ":" << updateBattery.lastError().text();
+            }
+
+            Q_EMIT batteryUpdated();
+        }
+    }
+}
+
+/* ************************************************************************** */
+
 void Device::updateRssi(const int rssi)
 {
-    m_rssi = rssi;
-    Q_EMIT rssiUpdated();
+    if (m_rssi != rssi)
+    {
+        m_rssi = rssi;
+    }
 
+    Q_EMIT rssiUpdated();
     m_rssiTimer.start();
 }
 

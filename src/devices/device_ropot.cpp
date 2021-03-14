@@ -187,6 +187,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
                 }
             }
 
+            Q_EMIT batteryUpdated();
             Q_EMIT sensorUpdated();
 
             if (need_firstsend) // always?

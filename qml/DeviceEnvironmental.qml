@@ -24,6 +24,7 @@ Item {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
+        onBatteryUpdated: { updateHeader() }
         onDataUpdated: { updateData() }
     }
 

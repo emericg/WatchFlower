@@ -430,30 +430,17 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         if (battv > 3100) battv = 3100;
         if (battv < 2300) battv = 2300;
         int battlvl = (0 + ((battv-2300) * (100-0)) / (3100-2300));
+        updateBattery(battlvl);
 
-        if (m_dbInternal || m_dbExternal)
+        if (getLastUpdateInt() < 0 || getLastUpdateInt() > 30)
         {
-            if (battlvl != m_deviceBattery)
-            {
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":battery", battlvl);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-            }
-
-            if (getLastUpdateInt() < 0 || getLastUpdateInt() > 30)
-            {
-                addDatabaseRecord(QDateTime::currentSecsSinceEpoch(), m_temperature, m_humidity);
-            }
+            addDatabaseRecord(QDateTime::currentSecsSinceEpoch(), m_temperature, m_humidity);
         }
+        Q_EMIT dataUpdated();
 
-        m_deviceBattery = battlvl;
         m_lastUpdate = QDateTime::currentDateTime();
         Q_EMIT deviceUpdated(this);
         Q_EMIT statusUpdated();
-        Q_EMIT dataUpdated();
 
 #ifndef QT_NO_DEBUG
         //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();

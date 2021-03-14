@@ -64,7 +64,7 @@ class Device: public QObject
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
 
-    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY sensorUpdated) // TODO batteryUpdated
+    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
 
     Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated) // TODO settingsUpdated
@@ -88,9 +88,9 @@ Q_SIGNALS:
     void deviceUpdated(Device *d);
 
     void sensorUpdated();
+    void settingsUpdated();
     void batteryUpdated();
     void rssiUpdated();
-    void settingsUpdated();
     void dataUpdated();
     void historyUpdated();
 
@@ -208,6 +208,10 @@ public slots:
     QString getFirmware() const { return m_deviceFirmware; }
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     int getBatteryLevel() const { return m_deviceBattery; }
+
+    // helpers
+    void updateFirmware(const QString &firmware);
+    void updateBattery(const int battery);
 
     // RSSI
     int getRssi() const { return m_rssi; }

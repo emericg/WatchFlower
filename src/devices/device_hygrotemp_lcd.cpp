@@ -185,8 +185,8 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::Ser
 
             if (cbat.value().size() == 1)
             {
-                m_deviceBattery = static_cast<uint8_t>(cbat.value().constData()[0]);
-                Q_EMIT sensorUpdated();
+                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+                updateBattery(lvl);
             }
         }
     }

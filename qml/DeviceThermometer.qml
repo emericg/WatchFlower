@@ -21,6 +21,7 @@ Item {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
+        onBatteryUpdated: { updateHeader() }
         onDataUpdated: { updateData() }
     }
 
@@ -385,6 +386,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
+
                 asynchronous: false
             }
         }
