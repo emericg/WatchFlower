@@ -41,7 +41,7 @@ Item {
 
             visible: (Qt.platform.os === "android")
 
-            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.")
+            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContentSmall
             color: Theme.colorSubText
