@@ -35,11 +35,11 @@ Item {
 
         // Has data? always display them
         if (currentDevice.isAvailable()) {
-            var hasHygro_short = (currentDevice.deviceSoilMoisture > 0 || currentDevice.deviceSoilConductivity > 0)
-            var hasHygro_long = (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
+            var hasHygro = (currentDevice.deviceSoilMoisture > 0 || currentDevice.deviceSoilConductivity > 0) ||
+                           (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
 
-            soil_moisture.visible = hasHygro_long
-            soil_conductivity.visible = hasHygro_long
+            soil_moisture.visible = hasHygro
+            soil_conductivity.visible = hasHygro
             soil_temperature.visible = currentDevice.hasSoilTemperatureSensor()
             temp.visible = currentDevice.hasTemperatureSensor()
             humi.visible = currentDevice.hasHumiditySensor()

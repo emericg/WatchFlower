@@ -12,8 +12,7 @@ Item {
 
     property var boxDevice: pointer
     property bool isSelected: false
-    property bool hasHygro_short: false
-    property bool hasHygro_long: false
+    property bool hasHygro: false
 
     property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
     property bool bigAssMode: false
@@ -54,10 +53,11 @@ Item {
     function initBoxData() {
         // Set icon
         if (boxDevice.isPlantSensor()) {
-            hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
-            hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            hasHygro = hasHygro_short || hasHygro_long
 
-            if (hasHygro_long) {
+            if (hasHygro) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
                 else
@@ -69,10 +69,8 @@ Item {
                     imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
         } else if (boxDevice.isThermometer()) {
-            if (boxDevice.deviceName === "MJ_HT_V1" ||
-                boxDevice.deviceName === "ClearGrass Temp & RH" ||
-                boxDevice.deviceName === "Qingping Temp & RH M" ||
-                boxDevice.deviceName === "Qingping Temp & RH H" ||
+            if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "ClearGrass Temp & RH" ||
+                boxDevice.deviceName === "Qingping Temp & RH M" || boxDevice.deviceName === "Qingping Temp & RH H" ||
                 boxDevice.deviceName === "ThermoBeacon") {
                 imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
             } else if (boxDevice.deviceName === "LYWSD02" ||
@@ -101,7 +99,7 @@ Item {
 
     function updateSensorIcon() {
         if (boxDevice.isPlantSensor()) {
-            if (boxDevice.hasData("soilMoisture")) {
+            if (hasHygro) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
                 else
@@ -195,12 +193,18 @@ Item {
     }
 
     function updateSensorData() {
-        rectangleSensors.visible = false
-        rectangleHygroTemp.visible = false
+
+        if (boxDevice.isPlantSensor()) {
+            var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            hasHygro = hasHygro_short || hasHygro_long
+        }
 
         updateSensorIcon()
         updateSensorSettings()
 
+        rectangleSensors.visible = false
+        rectangleHygroTemp.visible = false
         lilIcons.visible = false
         water.visible = false
         temp.visible = false
@@ -209,7 +213,7 @@ Item {
         if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
 
             // Water me notif
-            if (hasHygro_long && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
+            if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
                 lilIcons.visible = true
                 water.visible = true
                 water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
@@ -250,9 +254,9 @@ Item {
                 lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
-                hygro_bg.visible = hasHygro_long
+                hygro_bg.visible = hasHygro
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
-                cond_bg.visible = hasHygro_long
+                cond_bg.visible = hasHygro
             } else if (boxDevice.hasGeigerCounter()) {
                 rectangleHygroTemp.visible = true
                 textTemp.text = ""
