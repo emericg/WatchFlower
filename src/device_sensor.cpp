@@ -1075,7 +1075,7 @@ int DeviceSensor::getHistoryUpdatePercent() const
         }
     }
 
-    //qDebug() << "DeviceSensor::getHistoryUpdatePercent(" << m_history_entry_read << "/" <<  m_history_entry_count << ")";
+    //qDebug() << "DeviceSensor::getHistoryUpdatePercent(" << m_history_session_read << "/" <<  m_history_session_count << ")";
 
     return p;
 }

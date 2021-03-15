@@ -212,10 +212,13 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
 
         if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            // Generate token
             QString addr = m_deviceAddress;
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+            addr = getSetting("mac").toString();
+#endif
             QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
 
+            // Generate token
             uint8_t pid[2] = {0x01, 0x5d};
             uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
             uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
@@ -286,14 +289,7 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
     {
         if (m_key_finish.size())
         {
-/*
-            // enable notification for 0x12 handle
-            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x13
-            QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
-            m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
-*/
-            // send challenge key
+            // Send challenge key
             QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
             serviceHandshake->writeCharacteristic(chk, m_key_challenge, QLowEnergyService::WriteWithResponse);
@@ -305,18 +301,38 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
     {
         if (m_key_finish.size())
         {
-            // send finish key
+            // Send finish key
             QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
             serviceHandshake->writeCharacteristic(chk, m_key_finish, QLowEnergyService::WriteWithResponse);
             m_key_finish.clear();
-
-            // disabled notification for 0x12 handle?
         }
         else
         {
-            // start reading history?
+            if (m_device_time < 0)
+            {
+                // Read device time
+                QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
+                QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
+                serviceHistory->readCharacteristic(chh);
+            }
+
+            // Change the device mode
+            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
         }
+        return;
+    }
+
+    if (c.uuid().toString() == "{00001a10-0000-1000-8000-00805f9b34fb}")
+    {
+        // Device mode has been changed to 'history'
+
+        // Read history entry count or entries
+        QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handle 0x3c
+        QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
+        serviceHistory->readCharacteristic(chi);
         return;
     }
 }
@@ -344,17 +360,65 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
         if (m_history_entry_count < 0)
         {
-            // Entry count
+            // Parse entry count
             m_history_entry_count = static_cast<int16_t>(data[0] + (data[1] << 8));
-            //qDebug() << "> History has" << m_history_entry_count << "m_history_entry_count";
 
-            // Read first entry
-            serviceHistory->writeCharacteristic(chi, QByteArray::fromHex("A10000"), QLowEnergyService::WriteWithResponse);
-            m_history_entry_index = 0;
+#ifndef QT_NO_DEBUG
+            qDebug() << "* DeviceRopot history sync  > " << getAddress();
+            qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
+            qDebug() << "- last_sync    :" << m_lastSync;
+            qDebug() << "- entry_count  :" << m_history_entry_count;
+#endif
+
+            // We read entry from older to newer (entry_count to 0)
+            int entries_to_read = m_history_entry_count;
+
+            // Is m_lastSync valid AND inside the range of stored history entries
+            if (m_lastSync.isValid())
+            {
+                int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastSync.toSecsSinceEpoch();
+                int64_t entries_count_sec = (m_history_entry_count * 3600);
+
+                if (lastSync_sec < entries_count_sec)
+                {
+                    // how many entries are we missing since last sync?
+                    entries_to_read = (lastSync_sec / 3600);
+                }
+            }
+
+            // Is the restart point to old, outside the range of stored history entries?
+            if (entries_to_read > m_history_entry_count)
+            {
+                entries_to_read = m_history_entry_count;
+            }
+
+            // Now we can set our first index to read!
+            m_history_entry_index = entries_to_read;
+
+            // Sanetize, just to be sure
+            if (m_history_entry_index > m_history_entry_count) m_history_entry_index = 0;
+            if (m_history_entry_index < 0)
+            {
+                // abort sync?
+                controller->disconnectFromDevice();
+                return;
+            }
+
+            // Set the progressbar infos
+            m_history_session_count = entries_to_read;
+            m_history_session_read = 0;
+            Q_EMIT historyUpdated();
+
+            // (re)start sync
+            QByteArray nextentry(QByteArray::fromHex("A1"));
+            nextentry.push_back(m_history_entry_index%256);
+            nextentry.push_back(m_history_entry_index/256);
+
+            serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
         }
         else
         {
-            // Parse entry
+            // Parse entry // TODO
         }
         return;
     }
@@ -368,7 +432,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 #ifndef QT_NO_DEBUG
         qDebug() << "* DeviceRopot clock:" << m_device_time;
 #endif
-        return;    }
+        return;
+    }
 
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {

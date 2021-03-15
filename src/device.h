@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <QDate>
 #include <QDateTime>
+#include <QJsonObject>
 
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
@@ -111,7 +112,7 @@ protected:
     QString m_locationName;
     int m_manualOrderIndex = -1;
     bool m_isOutside = false;
-    QString m_additionalSettings;
+    QJsonObject m_additionalSettings;
 
     // Status
     int m_status = 0;           //!< See DeviceStatus enum
@@ -206,10 +207,10 @@ public slots:
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
     QString getFirmware() const { return m_deviceFirmware; }
-    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     int getBatteryLevel() const { return m_deviceBattery; }
 
     // helpers
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     void updateFirmware(const QString &firmware);
     void updateBattery(const int battery);
 
@@ -227,6 +228,9 @@ public slots:
     bool isInside() const { return !m_isOutside; }
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
+    // Settings
+    QVariant getSetting(const QString &key);
+    bool setSetting(const QString &key, QVariant value);
 
     // Device type, capabilities and sensors
     int getDeviceType() const { return m_deviceType; }

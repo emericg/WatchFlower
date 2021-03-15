@@ -25,6 +25,20 @@ Item {
             textAddr.font.pixelSize = 17
         }
 
+        // MAC Address
+        if ((Qt.platform.os === "macos" || Qt.platform.os === "ios") &&
+            (currentDevice.deviceName === "Flower care" || currentDevice.deviceName === "ropot")) {
+            itemMacAddr.visible = true
+            if (currentDevice.getSetting("mac")) {
+                textInputMacAddr.text = currentDevice.getSetting("mac")
+            } else {
+                textInputMacAddr.text = ""
+            }
+        } else {
+            itemMacAddr.visible = false
+            textInputMacAddr.text = ""
+        }
+
         // Firmware
         textFirmware.text = currentDevice.deviceFirmware
         if (isDesktop && !currentDevice.deviceFirmwareUpToDate) {
@@ -131,8 +145,8 @@ Item {
                         Text {
                             id: labelAddress
                             width: isPhone ? 80 : 96
-                            anchors.leftMargin: 12
                             anchors.left: parent.left
+                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Address")
@@ -151,6 +165,85 @@ Item {
 
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: itemMacAddr
+                        height: 28
+                        width: parent.width
+
+                        visible: false
+                        enabled: visible
+
+                        Text {
+                            id: labelMacAddr
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("MAC Addr")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        TextInput {
+                            id: textInputMacAddr
+                            anchors.left: labelMacAddr.right
+                            anchors.leftMargin: 6
+                            anchors.baseline: labelMacAddr.baseline
+                            padding: 4
+
+                            font.pixelSize: 17
+                            font.bold: false
+                            color: Theme.colorHighContrast
+
+                            inputMask: "HH:HH:HH:HH:HH:HH"
+                            onEditingFinished: {
+                                if (text) currentDevice.setSetting("mac", text)
+                                focus = false
+                            }
+
+                            MouseArea {
+                                id: textInputMacAddrArea
+                                anchors.fill: parent
+                                anchors.topMargin: -4
+                                anchors.leftMargin: -4
+                                anchors.rightMargin: -24
+                                anchors.bottomMargin: -4
+
+                                hoverEnabled: true
+                                propagateComposedEvents: true
+
+                                onClicked: {
+                                    textInputMacAddr.forceActiveFocus()
+                                    mouse.accepted = false
+                                }
+                                onPressed: {
+                                    textInputMacAddr.forceActiveFocus()
+                                    mouse.accepted = false
+                                }
+                            }
+                        }
+
+                        ImageSvg {
+                            id: imageEditMacAddr
+                            width: 20
+                            height: 20
+                            anchors.left: textInputMacAddr.right
+                            anchors.leftMargin: 8
+                            anchors.verticalCenter: textInputMacAddr.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            color: Theme.colorSubText
+
+                            //visible: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputArea.containsMouse)
+                            opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
+                            Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }
 

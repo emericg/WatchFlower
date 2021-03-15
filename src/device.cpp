@@ -35,6 +35,7 @@
 
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QJsonDocument>
 
 #include <QDateTime>
 #include <QTimer>
@@ -392,7 +393,16 @@ bool Device::getSqlInfos()
                 //m_manualOrderIndex = 0; // TODO
                 m_isOutside = getInfos.value(6).toBool();
 
-                // TODO // handle 'settings' field
+                QString settings = getInfos.value(7).toString();
+                QJsonDocument doc = QJsonDocument::fromJson(settings.toUtf8());
+                if (!doc.isNull() && doc.isObject())
+                {
+                    m_additionalSettings = doc.object();
+                }
+                else
+                {
+                    qDebug() << "Invalid JSON settings...";
+                }
 
                 status = true;
                 Q_EMIT sensorUpdated();
@@ -647,6 +657,38 @@ void Device::setOutside(const bool outside)
 
         Q_EMIT sensorUpdated();
     }
+}
+
+/* ************************************************************************** */
+
+QVariant Device::getSetting(const QString &key)
+{
+    //qDebug() << "Device::getSetting(" << key << ")";
+
+    return m_additionalSettings.value(key);
+}
+
+bool Device::setSetting(const QString &key, QVariant value)
+{
+    //qDebug() << "Device::setSetting(" << key << value << ")";
+    bool status = false;
+
+    m_additionalSettings.insert(key, value.toString());
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QJsonDocument json(m_additionalSettings);
+        QString json_str = QString(json.toJson());
+
+        QSqlQuery updateSettings;
+        updateSettings.prepare("UPDATE devices SET settings = :settings WHERE deviceAddr = :deviceAddr");
+        updateSettings.bindValue(":settings", json_str);
+        updateSettings.bindValue(":deviceAddr", getAddress());
+        if (updateSettings.exec() == false)
+            qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
+    }
+
+    return status;
 }
 
 /* ************************************************************************** */

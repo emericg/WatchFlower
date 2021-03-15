@@ -289,7 +289,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 
                 // Is the restart point more than max_days ago?
                 // We only care if the data will show up in our graphs...
-                int max_days = 7;
+                int max_days = 14;
                 if (entries_to_read > (max_days * 24 * 6))
                 {
                     entries_to_read = max_days * 24 * 6;

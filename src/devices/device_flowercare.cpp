@@ -44,7 +44,7 @@ DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QOb
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
@@ -57,7 +57,7 @@ DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *paren
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
+    m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
@@ -231,10 +231,13 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
 
         if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            // Generate token
             QString addr = m_deviceAddress;
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+            addr = getSetting("mac").toString();
+#endif
             QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
 
+            // Generate token
             uint8_t pid[2] = {0x98, 0x00};
             uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
             uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
@@ -362,9 +365,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
     {
         // Device mode has been changed to 'history'
 
-        m_history_session_count = -1;
-
-        // Read history entry count
+        // Read history entry count or entries
         QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handle 0x3c
         QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
         serviceHistory->readCharacteristic(chi);
@@ -412,12 +413,12 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (m_lastSync.isValid())
             {
                 int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastSync.toSecsSinceEpoch();
-                int64_t entries_count_sec = (m_history_entry_count * 10 * 60);
+                int64_t entries_count_sec = (m_history_entry_count * 3600);
 
                 if (lastSync_sec < entries_count_sec)
                 {
                     // how many entries are we missing since last sync?
-                    entries_to_read = (lastSync_sec / 10 / 60);
+                    entries_to_read = (lastSync_sec / 3600);
                 }
             }
 
@@ -440,8 +441,9 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             }
 
             // Set the progressbar infos
-            m_history_session_count = m_history_entry_index;
+            m_history_session_count = entries_to_read;
             m_history_session_read = 0;
+            Q_EMIT historyUpdated();
 
             // (re)start sync
             QByteArray nextentry(QByteArray::fromHex("A1"));
@@ -489,7 +491,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
             // Update progress
             m_history_entry_index--;
-            m_history_session_read ++;
+            m_history_session_read++;
             Q_EMIT historyUpdated();
 
             if (m_history_entry_index > 0)
@@ -514,7 +516,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
     if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
     {
         // Device time
-        m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+        m_device_time = static_cast<int32_t>(data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
 #ifndef QT_NO_DEBUG
