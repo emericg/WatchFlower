@@ -95,7 +95,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: 0
+        anchors.verticalCenterOffset: -2
 
         spacing: 4
 

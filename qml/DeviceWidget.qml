@@ -29,6 +29,7 @@ Item {
     Connections {
         target: Theme
         onCurrentThemeChanged: {
+            updateSensorStatus()
             updateSensorBattery()
             updateSensorData()
         }

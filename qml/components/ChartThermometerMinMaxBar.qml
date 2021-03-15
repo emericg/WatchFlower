@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -100,13 +99,12 @@ Item {
             width: hhh
             height: 0
             radius: 16
-            //anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorGreen
-            opacity: 0.85
+            opacity: 0.9
 
-            border.color: "#6db300" //"#70b700"
+            border.color: "#77eeeeee"
             border.width: 1
 
             Rectangle {
@@ -114,7 +112,7 @@ Item {
                 width: UtilsNumber.alignTo(hhh*0.666, 2); height: width; radius: width;
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "white"
-                opacity: 0.85
+                opacity: 0.9
             }
 
             Text {
@@ -154,14 +152,13 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorBlue
-            opacity: 0.85
+            opacity: 0.9
 
             border.color: "#2695c5"
-            border.width: 1
+            border.width: 2
 
             Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.centerIn: parent
 
                 Text {
                     id: element_water_high
@@ -189,14 +186,13 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorBlue
-            opacity: 0.85
+            opacity: 0.9
 
             border.color: "#2695c5"
-            border.width: 1
+            border.width: 2
 
             Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.centerIn: parent
 
                 Text {
                     id: text_water_low
