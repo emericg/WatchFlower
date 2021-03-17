@@ -80,15 +80,15 @@
         </activity>
 
         <!-- Handle outgoing urls -->
-    ￼   <provider 
+        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.emeric.watchflower.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-    ￼       <meta-data
+            <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"/>
-    ￼   </provider>
+        </provider>
 
         <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
