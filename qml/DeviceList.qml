@@ -47,8 +47,8 @@ Item {
         if (selectionList.length === 0) return;
 
         for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].selected) {
-                devicesView.contentItem.children[child].selected = false;
+            if (devicesView.contentItem.children[child].isSelected) {
+                devicesView.contentItem.children[child].isSelected = false;
             }
         }
 
@@ -59,7 +59,7 @@ Item {
 
     function updateSelectedDevice() {
         for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].selected) {
+            if (devicesView.contentItem.children[child].isSelected) {
                 deviceManager.updateDevice(devicesView.contentItem.children[child].boxDevice.deviceAddress)
             }
         }
@@ -68,7 +68,7 @@ Item {
     function removeSelectedDevice() {
         var devicesAddr = [];
         for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].selected) {
+            if (devicesView.contentItem.children[child].isSelected) {
                 devicesAddr.push(devicesView.contentItem.children[child].boxDevice.deviceAddress)
             }
         }
