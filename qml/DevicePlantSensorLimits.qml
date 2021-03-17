@@ -26,7 +26,7 @@ Item {
         }
 
         // MAC Address
-        if ((Qt.platform.os === "macos" || Qt.platform.os === "ios") &&
+        if ((Qt.platform.os === "osx" || Qt.platform.os === "ios") &&
             (currentDevice.deviceName === "Flower care" || currentDevice.deviceName === "ropot")) {
             itemMacAddr.visible = true
             if (currentDevice.getSetting("mac")) {

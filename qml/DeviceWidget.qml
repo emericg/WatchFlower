@@ -175,21 +175,28 @@ Item {
         // Location
         textLocation.font.pixelSize = bigAssMode ? 20 : 18
         if (boxDevice.deviceLocationName) {
+            textLocation.visible = true
             textLocation.text = boxDevice.deviceLocationName
         } else {
-            var addr = boxDevice.deviceAddress.toUpperCase()
-            if (Qt.platform.os === "ios") {
-                addr = addr.slice(1, -1)
-                if (isPhone || (isTablet && singleColumn)) {
-                    addr = addr.substr(0, addr.lastIndexOf('-'))
-                    addr += "-..."
-                }
-                textLocation.font.pixelSize = 12
-            } else if (Qt.platform.os === "osx") {
-                addr = addr.slice(1, -1)
-                textLocation.font.pixelSize = 13
+            if (Qt.platform.os === "osx" || Qt.platform.os === "ios") {
+                textLocation.visible = false
+                textLocation.text = ""
+                //var addr = boxDevice.deviceAddress.toUpperCase()
+                //if (Qt.platform.os === "ios") {
+                //    addr = addr.slice(1, -1)
+                //    if (isPhone || (isTablet && singleColumn)) {
+                //        addr = addr.substr(0, addr.lastIndexOf('-'))
+                //        addr += "-..."
+                //    }
+                //    textLocation.font.pixelSize = 12
+                //} else if (Qt.platform.os === "osx") {
+                //    addr = addr.slice(1, -1)
+                //    textLocation.font.pixelSize = 13
+                //}
+            } else {
+                textLocation.visible = true
+                textLocation.text = boxDevice.deviceAddress
             }
-            textLocation.text = addr
         }
     }
 
