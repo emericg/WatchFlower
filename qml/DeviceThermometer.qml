@@ -171,8 +171,8 @@ Item {
         Rectangle {
             id: tempBox
 
-            property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 192 : 600)
-            property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 160 : 256)
+            property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 320 : 600)
+            property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 180 : 256)
 
             width: singleColumn ? parent.width : dimboxw
             height: singleColumn ? dimboxh: parent.height

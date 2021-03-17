@@ -375,6 +375,7 @@ Item {
             onPressAndHold: {
                 // multi selection
                 if (!isSelected) {
+                    utilsApp.vibrate(25)
                     isSelected = true
                     screenDeviceList.selectDevice(index)
                 } else {

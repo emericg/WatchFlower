@@ -95,6 +95,18 @@ Item {
                 }
 
                 Text {
+                    id: textName
+                    anchors.top: parent.top
+                    anchors.topMargin: 18
+                    anchors.left: imageLogo.right
+                    anchors.leftMargin: 16
+
+                    text: "WatchFlower"
+                    color: Theme.colorText
+                    font.pixelSize: 28
+                }
+
+                Text {
                     id: textVersion
                     anchors.left: imageLogo.right
                     anchors.leftMargin: 18
@@ -107,15 +119,15 @@ Item {
                 }
 
                 Text {
-                    id: textName
-                    anchors.top: parent.top
-                    anchors.topMargin: 18
-                    anchors.left: imageLogo.right
-                    anchors.leftMargin: 16
+                    id: textDebug
+                    anchors.left: textVersion.right
+                    anchors.leftMargin: 8
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 8
 
-                    text: "WatchFlower"
-                    color: Theme.colorText
-                    font.pixelSize: 28
+                    color: Theme.colorSubText
+                    text: utilsApp.appBuildMode()
+                    font.pixelSize: Theme.fontSizeContentBig
                 }
             }
 

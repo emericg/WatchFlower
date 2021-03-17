@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
 #endif // desktop section
 
 #if defined(Q_OS_ANDROID)
-    QtAndroid::hideSplashScreen();
+    QtAndroid::hideSplashScreen(333);
 #endif
 
     return app.exec();

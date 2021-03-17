@@ -83,7 +83,7 @@ QString UtilsApp::appBuildDateTime()
 
 QString UtilsApp::appBuildMode()
 {
-#ifdef DEBUG
+#ifndef QT_NO_DEBUG
     return "DEBUG";
 #endif
 

@@ -418,7 +418,7 @@ Item {
 
                 ComboBoxThemed {
                     id: combobox_language
-                    width: 160
+                    width: wideMode ? 200 : 160
                     height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 16 + screenPaddingRight
