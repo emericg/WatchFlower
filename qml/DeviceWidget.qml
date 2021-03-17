@@ -368,12 +368,6 @@ Item {
                             screenDeviceEnvironmental.loadDevice(boxDevice)
                             appContent.state = "DeviceEnvironmental"
                         }
-                    } else { // HACK
-                         if (boxDevice.isEnvironmentalSensor()) {
-                             selectedDevice = boxDevice
-                             screenDeviceEnvironmental.loadDevice(boxDevice)
-                             appContent.state = "DeviceEnvironmental"
-                         }
                     }
                 }
             }

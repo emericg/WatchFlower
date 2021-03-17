@@ -19,7 +19,7 @@ Item {
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
     ////////////////////////////////////////////////////////////////////////////
-
+/*
     Connections {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
@@ -63,7 +63,7 @@ Item {
             appWindow.backAction()
         }
     }
-
+*/
     ////////
 
     function isHistoryMode() {
@@ -106,7 +106,7 @@ Item {
         //isAirMonitor = true
         //isGeigerCounter = true
         //isWeatherStation = true
-
+/*
         indicatorDisconnected.visible = (currentDevice.status < DeviceUtils.DEVICE_CONNECTED)
         indicatorAirQuality.visible = isAirMonitor
         indicatorRadioactivity.visible = isGeigerCounter
@@ -116,6 +116,7 @@ Item {
         //
         updateHeader()
         updateData()
+*/
     }
 
     function loadGraph() {
@@ -173,7 +174,7 @@ Item {
     // 301-500 (Hazardous)
 
     ////////////////////////////////////////////////////////////////////////////
-
+/*
     Flow {
         anchors.fill: parent
 
@@ -734,4 +735,5 @@ Item {
             }
         }
     }
+*/
 }

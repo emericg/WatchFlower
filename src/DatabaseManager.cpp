@@ -394,7 +394,7 @@ void DatabaseManager::createDatabase()
         if (createLimits.exec() == false)
             qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
     }
-
+/*
     if (!tableExists("sensorData"))
     {
         qDebug() << "+ Adding 'sensorData' table to local database";
@@ -425,6 +425,7 @@ void DatabaseManager::createDatabase()
         if (createSensorData.exec() == false)
             qWarning() << "> createSensorData.exec() ERROR" << createSensorData.lastError().type() << ":" << createSensorData.lastError().text();
     }
+*/
 }
 
 /* ************************************************************************** */
