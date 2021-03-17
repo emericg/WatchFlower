@@ -183,7 +183,7 @@ Item {
                             anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
-                            text: qsTr("MAC Addr")
+                            text: qsTr("MAC Address")
                             font.bold: true
                             font.pixelSize: 12
                             font.capitalization: Font.AllUppercase

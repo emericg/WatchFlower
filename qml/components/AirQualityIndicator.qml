@@ -110,7 +110,7 @@ Item {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: qsTr("AQI")
+            text: "AQI"
             font.pixelSize: 24
             font.bold: false
             color: indicatorAirQuality.color

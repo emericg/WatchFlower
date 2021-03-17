@@ -42,7 +42,7 @@ Rectangle {
         Text {
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("Syncing with the device")
+            text: qsTr("Syncing with the sensor")
             color: Theme.colorActionbarContent
             font.pixelSize: Theme.fontSizeContent
         }

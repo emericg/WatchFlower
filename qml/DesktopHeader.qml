@@ -208,7 +208,7 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshButtonClicked()
 
-            tooltipText: qsTr("Refresh device")
+            tooltipText: qsTr("Refresh sensor")
             animation: "rotate"
             animationRunning: selectedDevice.updating
         }
@@ -333,7 +333,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: rescanButtonClicked()
-            text: qsTr("Scan for devices")
+            text: qsTr("Scan for sensors")
             tooltipText: text
 
             animation: "fade"
@@ -351,7 +351,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: refreshButtonClicked()
-            text: qsTr("Refresh devices")
+            text: qsTr("Refresh sensors")
             tooltipText: text
 
             animation: "rotate"
