@@ -96,24 +96,23 @@ Item {
             Rectangle {
                 id: rectangleHeader
                 color: Theme.colorDeviceHeader
+                width: parent.width
                 height: devicePanel.height + 12
-
-                anchors.left: parent.left
-                anchors.right: parent.right
 
                 Column {
                     id: devicePanel
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: 2
                     spacing: 2
 
                     Text {
                         id: textDeviceName
-                        height: 36
+                        height: 32
                         anchors.left: parent.left
-                        anchors.leftMargin: 12
 
                         visible: isDesktop
 
@@ -146,7 +145,6 @@ Item {
                             id: labelAddress
                             width: isPhone ? 80 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Address")
@@ -180,7 +178,6 @@ Item {
                             id: labelMacAddr
                             width: isPhone ? 80 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("MAC Address")
@@ -256,7 +253,6 @@ Item {
                             id: labelFirmware
                             width: isPhone ? 80 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Firmware")
@@ -313,7 +309,6 @@ Item {
                             id: labelBattery
                             width: isPhone ? 80 : 96
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Battery")

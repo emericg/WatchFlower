@@ -403,9 +403,16 @@ Item {
 
             ////////
 
-            Loader {
-                id: indicatorsLoader
+            Item {
+                id: itemIndicators
+                height: Math.max(itemHeader.height, indicatorsLoader.height)
                 width: (parent.columns === 1) ? parent.width : (parent.width * 0.64)
+
+                Loader {
+                    id: indicatorsLoader
+                    width: parent.width
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
         }
 

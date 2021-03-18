@@ -124,8 +124,10 @@ Item {
     ChartView {
         id: aioGraph
         anchors.fill: parent
-        anchors.margins: -20
         anchors.topMargin: -24
+        anchors.leftMargin: -20
+        anchors.rightMargin: -20
+        anchors.bottomMargin: -24
 
         antialiasing: true
         legend.visible: false
@@ -231,7 +233,7 @@ Item {
             var date_string = date.toLocaleDateString()
             //: "at" is used for DATE at HOUR
             var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
-            textTime.text = date_string + " " + time_string
+            dateIndicator.text = date_string + " " + time_string
 
             // search index corresponding to the timestamp
             var x1 = -1
@@ -247,8 +249,8 @@ Item {
                                                       tempData.at(i).y, -99, lumiData.at(i).y)
                     } else if (appContent.state === "DeviceThermometer") {
                         dataIndicator.visible = true
-                        dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
-                        dataIndicatorText.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                        dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
+                        dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
                     }
                     break;
                 } else {
@@ -273,8 +275,8 @@ Item {
                 } else if (appContent.state === "DeviceThermometer") {
                     dataIndicator.visible = true
                     var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
-                    dataIndicatorText.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                    dataIndicatorText.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
+                    dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                    dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
                 }
             }
         }
@@ -296,7 +298,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+        anchors.bottomMargin: 26
 
         width: 2
         visible: false
@@ -335,9 +337,9 @@ Item {
             if (isTablet) return // verticalIndicator default to middle
 
             var direction = "middle"
-            if (verticalIndicator.x > dateIndicator.width + 12)
+            if (verticalIndicator.x > dateIndicator.width + 48)
                 direction = "right"
-            else if (chartPlantDataAio.width - verticalIndicator.x > dateIndicator.width + 12)
+            else if (chartPlantDataAio.width - verticalIndicator.x > dateIndicator.width + 48)
                 direction = "left"
 
             if (direction === "middle") {
@@ -366,12 +368,12 @@ Item {
     Grid {
         id: indicators
         anchors.top: parent.top
-        anchors.topMargin: 12
-        anchors.leftMargin: 12
-        anchors.rightMargin: 12
+        anchors.topMargin: 20
+        anchors.leftMargin: 24
+        anchors.rightMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
 
-        spacing: 12
+        spacing: 24
         layoutDirection: "LeftToRight"
         columns: 2
         rows: 1
@@ -409,47 +411,47 @@ Item {
             }
         ]
 
-        Rectangle {
+        Text {
             id: dateIndicator
-            width: textTime.width + 16
-            height: textTime.height + 16
 
-            radius: 4
             visible: false
-            color: Theme.colorForeground
-            border.width: Theme.componentBorderWidth
-            border.color: Theme.colorSeparator
+            font.pixelSize: (settingsManager.bigWidget || isMobile) ? 15 : 14
+            font.bold: true
+            color: Theme.colorSubText
 
-            Text {
-                id: textTime
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-
-                font.pixelSize: (settingsManager.bigWidget && isMobile) ? 15 : 14
-                font.bold: true
-                color: Theme.colorSubText
+            Rectangle {
+                anchors.fill: parent
+                anchors.topMargin: -8
+                anchors.leftMargin: -12
+                anchors.rightMargin: -12
+                anchors.bottomMargin: -8
+                z: -1
+                radius: 4
+                color: Theme.colorForeground
+                border.width: Theme.componentBorderWidth
+                border.color: Theme.colorSeparator
             }
         }
 
-        Rectangle {
+        Text {
             id: dataIndicator
-            width: dataIndicatorText.width + 16
-            height: dataIndicatorText.height + 16
 
-            radius: 4
             visible: false
-            color: Theme.colorForeground
-            border.width: Theme.componentBorderWidth
-            border.color: Theme.colorSeparator
+            font.pixelSize: (settingsManager.bigWidget || isMobile) ? 15 : 14
+            font.bold: true
+            color: Theme.colorSubText
 
-            Text {
-                id: dataIndicatorText
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-
-                font.pixelSize: (settingsManager.bigWidget && isMobile) ? 15 : 14
-                font.bold: true
-                color: Theme.colorSubText
+            Rectangle {
+                anchors.fill: parent
+                anchors.topMargin: -8
+                anchors.leftMargin: -12
+                anchors.rightMargin: -12
+                anchors.bottomMargin: -8
+                z: -1
+                radius: 4
+                color: Theme.colorForeground
+                border.width: Theme.componentBorderWidth
+                border.color: Theme.colorSeparator
             }
         }
     }

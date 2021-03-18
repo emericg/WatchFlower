@@ -7,7 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: indicatorsCompact
     width: parent.width
-    height: columnData.height + 16
+    height: columnData.height + 20
     z: 5
 
     property string colorBackground: (uiMode === 2) ? Theme.colorBackground : Theme.colorForeground

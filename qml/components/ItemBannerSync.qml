@@ -7,7 +7,7 @@ Rectangle {
     id: statusBox
     width: parent.width
 
-    height: syncing ? 48 : 0
+    height: (syncing && visible) ? 48 : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
     color: Theme.colorActionbar
