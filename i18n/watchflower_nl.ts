@@ -104,7 +104,7 @@
 <context>
     <name>ChartPlantDataAio</name>
     <message>
-        <location filename="../qml/components/ChartPlantDataAio.qml" line="233"/>
+        <location filename="../qml/components/ChartPlantDataAio.qml" line="235"/>
         <source>at</source>
         <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation type="unfinished">om</translation>
@@ -389,138 +389,138 @@
 <context>
     <name>DevicePlantSensorLimits</name>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="152"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="150"/>
         <source>Address</source>
         <translation type="unfinished">Adres</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="186"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="183"/>
         <source>MAC Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="262"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="258"/>
         <source>Firmware</source>
         <translation type="unfinished">Firmware</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="298"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="294"/>
         <source>Update %1 available with official application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="319"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="314"/>
         <source>Battery</source>
         <translation type="unfinished">Batterij</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="822"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="817"/>
         <source>inside</source>
         <translation type="unfinished">binnen</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="862"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="857"/>
         <source>outside</source>
         <translation type="unfinished">buiten</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="898"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="893"/>
         <source>Moisture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="898"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="893"/>
         <source>Humidity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="934"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="929"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
         <translation type="unfinished">Het ideale vochtgehalte van potgrond voor kamerplanten is 15 tot 50%. Tropische planten staan graag natter, terwijl cactussen en vetplanten het goed doen als de grond opdroogt (tot 7%) na elke watergift.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="935"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="936"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1025"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1026"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1277"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="930"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="931"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1020"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1021"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1272"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
         <translation type="unfinished">&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="935"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="930"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
         <translation type="unfinished">Pas op! Lange tijd te veel water kan even slecht zijn als te weinig.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="936"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="931"/>
         <source>Water your plants more frequently during their growth period.</source>
         <translation type="unfinished">Geef je planten tijdens de groeiperiode vaker water.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="971"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="966"/>
         <source>Temperature</source>
         <translation type="unfinished">Temperatuur</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1024"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1019"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
         <translation type="unfinished">Kamerplanten gedijen doorgaans goed tussen 15 en 25°C (59 tot 77°F). Weinig planten kunnen tegen kou of vorst van -2°C (28°F) en lager.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1025"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1020"/>
         <source>Having constant temperature is important for indoor plants.</source>
         <translation type="unfinished">Kamerplanten houden van een constante temperatuur. Vermijd tocht!</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1026"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1021"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
         <translation type="unfinished">Met een hygrometer kun je de luchtvochtigheid bewaken, zodat deze tussen de 40 en 60% blijft (hoger voor tropische planten).</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1061"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1056"/>
         <source>Luminosity</source>
         <translation type="unfinished">Lichtsterkte</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1122"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1117"/>
         <source>low</source>
         <translation type="unfinished">laag</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1135"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1175"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1130"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1170"/>
         <source>indirect</source>
         <translation type="unfinished">indirect</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1148"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1143"/>
         <source>direct light (indoor)</source>
         <translation type="unfinished">direct licht (binnenshuis)</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1161"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1188"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1156"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1183"/>
         <source>sunlight</source>
         <translation type="unfinished">zonlicht</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1205"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1200"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation type="unfinished">Kamerplanten hebben voldoende licht nodig, maar verdragen meestal géén direct zonlicht. Zet ze daarom in een lichte kamer met indirect licht en niet voor een venster op het zuiden.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1241"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1236"/>
         <source>Fertility</source>
         <translation type="unfinished">Voeding</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1276"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1271"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
         <translation type="unfinished">De voedingswaarde van de grond is een indicatie voor de beschikbaarheid van voedingsstoffen voor de plant. Gebruik afgestemde hoeveelheden meststoffen, passend bij het jaargetijde, om die waarde op peil te houden.</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1277"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1272"/>
         <source>Be sure to use the right soil composition for your plants.</source>
         <translation type="unfinished">Stem de grondsamenstelling af op het soort plant.</translation>
     </message>
@@ -1550,38 +1550,52 @@
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="926"/>
-        <location filename="../qml/Settings.qml" line="1159"/>
+        <location filename="../qml/Settings.qml" line="1172"/>
         <source>Update interval</source>
         <translation>Update-interval</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="942"/>
-        <location filename="../qml/Settings.qml" line="1175"/>
+        <location filename="../qml/Settings.qml" line="1188"/>
         <source> h.</source>
         <translation> u.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="982"/>
-        <source>Use bigger indicators</source>
-        <translation>Gebruik grotere datalabels</translation>
+        <source>Data indicators</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1028"/>
+        <location filename="../qml/Settings.qml" line="997"/>
+        <source>thin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="1004"/>
+        <source>solid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use bigger indicators</source>
+        <translation type="vanished">Gebruik grotere datalabels</translation>
+    </message>
+    <message>
+        <location filename="../qml/Settings.qml" line="1041"/>
         <source>Dynamic scale for indicators</source>
         <translation>Dynamische schaalverdeling</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1076"/>
+        <location filename="../qml/Settings.qml" line="1089"/>
         <source>Show graph dots</source>
         <translation>Toon grafiekpunten</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1299"/>
+        <location filename="../qml/Settings.qml" line="1312"/>
         <source>Data archiving</source>
         <translation>Data-archivering</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1325"/>
+        <location filename="../qml/Settings.qml" line="1338"/>
         <source>Export up to 90 days of data into a CSV file.</source>
         <translation type="unfinished">Exporteer tot 30 dagen aan data in een CSV-bestand. {90 ?}</translation>
     </message>
@@ -1590,28 +1604,28 @@
         <translation type="vanished">Exporteer tot 30 dagen aan data in een CSV-bestand.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1339"/>
+        <location filename="../qml/Settings.qml" line="1352"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
         <translation>Opgeslagen in je documenten, onder de map &apos;WatchFlower&apos;.</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1367"/>
-        <location filename="../qml/Settings.qml" line="1377"/>
+        <location filename="../qml/Settings.qml" line="1380"/>
+        <location filename="../qml/Settings.qml" line="1390"/>
         <source>Export file</source>
         <translation>Exporteer bestand</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1372"/>
+        <location filename="../qml/Settings.qml" line="1385"/>
         <source>Exported</source>
         <translation>Geëxporteerd</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1394"/>
+        <location filename="../qml/Settings.qml" line="1407"/>
         <source>Open folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1409"/>
+        <location filename="../qml/Settings.qml" line="1422"/>
         <source>Open with</source>
         <translation>Open met</translation>
     </message>
@@ -1628,22 +1642,22 @@
         <translation type="vanished">Week</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1121"/>
+        <location filename="../qml/Settings.qml" line="1134"/>
         <source>Thermometers</source>
         <translation>Thermometers</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1215"/>
+        <location filename="../qml/Settings.qml" line="1228"/>
         <source>Temperature unit</source>
         <translation>Temperatuureenheid</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1231"/>
+        <location filename="../qml/Settings.qml" line="1244"/>
         <source>°C</source>
         <translation>°C</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1250"/>
+        <location filename="../qml/Settings.qml" line="1263"/>
         <source>°F</source>
         <translation>°F</translation>
     </message>
@@ -1756,8 +1770,8 @@
     </message>
     <message>
         <location filename="../qml/components_js/UtilsDeviceBLE.js" line="15"/>
-        <source>Update queued</source>
-        <translation type="unfinished"></translation>
+        <source>Queued</source>
+        <translation type="unfinished">In de wachtrij</translation>
     </message>
     <message>
         <location filename="../qml/components_js/UtilsDeviceBLE.js" line="17"/>
