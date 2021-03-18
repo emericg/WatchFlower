@@ -295,7 +295,7 @@ Item {
                     height: 20
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                     color: cccc
 
                     opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0

@@ -274,7 +274,7 @@ Item {
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputPlant.verticalCenter
 
-                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                             color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse)
@@ -349,7 +349,7 @@ Item {
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputLocation.verticalCenter
 
-                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                             color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputArea.containsMouse)

@@ -235,7 +235,7 @@ Item {
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputMacAddr.verticalCenter
 
-                            source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                             color: Theme.colorSubText
 
                             //visible: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputArea.containsMouse)

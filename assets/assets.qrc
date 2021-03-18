@@ -20,6 +20,7 @@
         <file>icons_custom/pot_empty-24px.svg</file>
         <file>icons_custom/pot_flower-24px.svg</file>
         <file>icons_custom/thermometer-24px.svg</file>
+        <file>icons_custom/indicators-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
@@ -42,7 +43,6 @@
         <file>icons_material/baseline-close-24px.svg</file>
         <file>icons_material/baseline-date_range-24px.svg</file>
         <file>icons_material/baseline-delete-24px.svg</file>
-        <file>icons_material/baseline-edit-24px.svg</file>
         <file>icons_material/baseline-filter_list-24px.svg</file>
         <file>icons_material/baseline-flaky-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg</file>
@@ -75,6 +75,7 @@
         <file>icons_material/duotone-bluetooth_connected-24px.svg</file>
         <file>icons_material/duotone-bluetooth_searching-24px.svg</file>
         <file>icons_material/duotone-brightness_4-24px.svg</file>
+        <file>icons_material/duotone-edit-24px.svg</file>
         <file>icons_material/duotone-emoji_objects-24px.svg</file>
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
         <file>icons_material/duotone-format_size-24px.svg</file>

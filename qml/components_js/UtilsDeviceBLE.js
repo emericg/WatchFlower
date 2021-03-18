@@ -12,7 +12,7 @@ function getDeviceStatusText(deviceStatus) {
     if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_OFFLINE) {
         txt = qsTr("Offline")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_QUEUED) {
-        txt = qsTr("Update queued")
+        txt = qsTr("Queued")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_CONNECTING) {
         txt = qsTr("Connecting...")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_CONNECTED) {

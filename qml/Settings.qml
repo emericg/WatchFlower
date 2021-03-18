@@ -967,7 +967,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
+                    source: "qrc:/assets/icons_custom/indicators-24px.svg"
                 }
 
                 Text {
@@ -979,24 +979,37 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Use bigger indicators")
+                    text: qsTr("Data indicators")
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
-                    id: switch_bigindicators
+                Row {
+                    id: row_bigindicators
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
+                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.verticalCenter: text_bigindicators.verticalCenter
+                    spacing: 16
 
-                    Component.onCompleted: checked = settingsManager.bigIndicator
-                    onCheckedChanged: settingsManager.bigIndicator = checked
+                    RadioButtonThemed {
+                        text: qsTr("thin")
+
+                        checked: !settingsManager.bigIndicator
+                        onClicked: settingsManager.bigIndicator = false
+                    }
+
+                    RadioButtonThemed {
+                        text: qsTr("solid")
+
+                        checked: settingsManager.bigIndicator
+                        onClicked: settingsManager.bigIndicator = true
+                    }
                 }
             }
+
+            ////////
 
             Item {
                 id: element_dynascale
