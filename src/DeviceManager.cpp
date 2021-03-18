@@ -557,7 +557,7 @@ void DeviceManager::scanDevices()
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                        this, &DeviceManager::bleDiscoveryFinished);
 
-            m_discoveryAgent->setLowEnergyDiscoveryTimeout(8000);
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(10*1000); // 10s
             m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
             if (m_discoveryAgent->isActive())
@@ -588,7 +588,7 @@ void DeviceManager::listenDevices()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::bleDiscoveryFinished);
 
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(60*1000); // 1m
+        m_discoveryAgent->setLowEnergyDiscoveryTimeout(20*1000); // 20s
 
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
         if (m_discoveryAgent->isActive())
