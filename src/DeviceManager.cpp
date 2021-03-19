@@ -627,7 +627,12 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
     for (auto d: qAsConst(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
-        if (dd && dd->getAddress() == info.address().toString())
+
+#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
+        if (dd && dd->getAddress() == info.deviceUuid().toString())
+#else
+        if (dd && dd->getAddress() == info.get().toString())
+#endif
         {
             //if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
             for (const auto id: info.manufacturerIds())

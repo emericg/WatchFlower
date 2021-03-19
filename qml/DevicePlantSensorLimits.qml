@@ -41,7 +41,7 @@ Item {
 
         // Firmware
         textFirmware.text = currentDevice.deviceFirmware
-        if (isDesktop && !currentDevice.deviceFirmwareUpToDate) {
+        if (isDesktop && wideMode && !currentDevice.deviceFirmwareUpToDate) {
             imageFwUpdate.visible = true
             textFwUpdate.visible = true
         } else {
