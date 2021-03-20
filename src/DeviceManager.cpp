@@ -575,25 +575,28 @@ void DeviceManager::scanDevices()
 void DeviceManager::listenDevices()
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-    if (m_discoveryAgent && !m_discoveryAgent->isActive())
+    if (hasBluetooth())
     {
-        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                this, &DeviceManager::deviceUpdateReceived,
-                Qt::UniqueConnection);
-
-        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                   this, &DeviceManager::addBleDevice);
-        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                   this, &DeviceManager::deviceDiscoveryFinished);
-        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                   this, &DeviceManager::bleDiscoveryFinished);
-
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(20*1000); // 20s
-
-        m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-        if (m_discoveryAgent->isActive())
+        if (m_discoveryAgent && !m_discoveryAgent->isActive())
         {
-            qDebug() << "Listening for BLE advertisement devices...";
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                    this, &DeviceManager::deviceUpdateReceived,
+                    Qt::UniqueConnection);
+
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                       this, &DeviceManager::addBleDevice);
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                       this, &DeviceManager::deviceDiscoveryFinished);
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                       this, &DeviceManager::bleDiscoveryFinished);
+
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(20*1000); // 20s
+
+            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+            if (m_discoveryAgent->isActive())
+            {
+                qDebug() << "Listening for BLE advertisement devices...";
+            }
         }
     }
 #endif // Qt 5.12+
@@ -631,7 +634,7 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
 #if defined(Q_OS_OSX) || defined(Q_OS_IOS)
         if (dd && dd->getAddress() == info.deviceUuid().toString())
 #else
-        if (dd && dd->getAddress() == info.get().toString())
+        if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
             //if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))

@@ -116,39 +116,34 @@ void Device::deviceConnect()
         controller = new QLowEnergyController(m_bleDevice);
         if (controller)
         {
-            if (controller->role() != QLowEnergyController::CentralRole)
+            if (controller->role() == QLowEnergyController::CentralRole)
+            {
+                controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
+
+                // Connecting signals and slots for connecting to LE services.
+                connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
+                connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
+                connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
+                connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
+                connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
+                connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
+            }
+            else
             {
                 qWarning() << "BLE controller doesn't have the QLowEnergyController::CentralRole";
-                //refreshDataFinished(false, false);
-                //return false;
+                refreshDataFinished(false, false);
             }
-
-            controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
-
-            // Connecting signals and slots for connecting to LE services.
-            connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
-            connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
-            connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
-            connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
-            connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
         }
         else
         {
             qWarning() << "Unable to create BLE controller";
-            //refreshDataFinished(false, false);
-            //return false;
+            refreshDataFinished(false, false);
         }
-    }
-    else
-    {
-        //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
     }
 
     if (controller)
     {
         setTimeoutTimer();
-
         controller->connectToDevice();
     }
 }

@@ -83,11 +83,11 @@ class Device: public QObject
     Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
 
 Q_SIGNALS:
-    void statusUpdated();
     void connected();
     void disconnected();
-    void deviceUpdated(Device *d);
 
+    void statusUpdated();
+    void deviceUpdated(Device *d);
     void sensorUpdated();
     void settingsUpdated();
     void batteryUpdated();

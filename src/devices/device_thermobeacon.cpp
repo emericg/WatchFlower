@@ -427,6 +427,8 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
+        m_lastUpdate = QDateTime::currentDateTime();
+
         if (battv > 3100) battv = 3100;
         if (battv < 2300) battv = 2300;
         int battlvl = (0 + ((battv-2300) * (100-0)) / (3100-2300));
@@ -434,11 +436,10 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         if (getLastUpdateInt() < 0 || getLastUpdateInt() > 30)
         {
-            addDatabaseRecord(QDateTime::currentSecsSinceEpoch(), m_temperature, m_humidity);
+            addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
         }
-        Q_EMIT dataUpdated();
 
-        m_lastUpdate = QDateTime::currentDateTime();
+        Q_EMIT dataUpdated();
         Q_EMIT deviceUpdated(this);
         Q_EMIT statusUpdated();
 
