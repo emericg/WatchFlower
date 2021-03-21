@@ -732,7 +732,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: "- Guttorm Flatabø (Norwegian Nynorsk)"
+                        text: "- Guttorm Flatabø (Norwegian)"
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent

@@ -70,7 +70,7 @@ Special thanks
 **German**
 - Megachip https://github.com/Megachip
 
-**Norwegian Nynorsk**
+**Norwegian Bokmål and Nynorsk**
 - Guttorm Flatabø https://github.com/dittaeva
 
 **Russian**
