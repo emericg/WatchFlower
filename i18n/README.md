@@ -5,7 +5,7 @@ You can work on translations using one of two ways:
 - [Using GitHub](https://github.com/firstcontributions/first-contributions/blob/master/README.md) by forking, branching, translating and creating a pull request.
 - Directly, by downloading, translating and emailing the translation files back. It's a way more straightforward workflow, don't bother with GitHub if you don't know how to use it.
 
-##### Step 1: Add the language to the project (if its a new language)
+##### Step 1: Add the language to the project (if it's a new language)
 
 Edit the Qt project file (_WatchFlower.pro_) and add a new language file entry to the TRANSLATIONS section, using project name and an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) two letter code (ex: _i18n/watchflower_fr.ts_).
 
