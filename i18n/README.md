@@ -19,7 +19,7 @@ To create (or update) the actual translation file, from the project root directo
 lupdate WatchFlower.pro
 ```
 
-This will scrape the source code and add/update the strings that need to be translated into the language files.
+This will scrape the source code and add/update the strings that need to be translated into the language files.  
 If you are not able to run that command, you can simply ask me for a clean translation file.
 
 ##### Step 3: Translating
@@ -48,7 +48,7 @@ This step is optional, as it is only needed if you want to try the translation b
 ##### Step 5: Publish it!
 
 Send the file(s) back to the project, using email or a GitHub pull request.  
-If you want to be credited in the application (and in this file) please be sure to mention it, and provide a name/pseudo, and eventually an email/GitHub page.
+If you want to be credited in the application (and in this file) please be sure to mention it, and provide a name/pseudo, and wished an email/GitHub page.  
 It's useful in case a person wants to contact you about the translation, or if you want to be contacted when a new version of the project will be released and a translation update is needed.
 
 
