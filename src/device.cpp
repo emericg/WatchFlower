@@ -656,14 +656,14 @@ void Device::setOutside(const bool outside)
 
 /* ************************************************************************** */
 
-bool Device::hasSetting(const QString &key)
+bool Device::hasSetting(const QString &key) const
 {
     //qDebug() << "Device::hasSetting(" << key << ")";
 
     return !m_additionalSettings.value(key).isUndefined();
 }
 
-QVariant Device::getSetting(const QString &key)
+QVariant Device::getSetting(const QString &key) const
 {
     //qDebug() << "Device::getSetting(" << key << ")";
 
@@ -689,6 +689,8 @@ bool Device::setSetting(const QString &key, QVariant value)
         if (updateSettings.exec() == false)
             qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
     }
+
+    Q_EMIT sensorUpdated();
 
     return status;
 }

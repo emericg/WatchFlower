@@ -229,8 +229,8 @@ public slots:
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
     // Settings
-    bool hasSetting(const QString &key);
-    QVariant getSetting(const QString &key);
+    bool hasSetting(const QString &key) const;
+    QVariant getSetting(const QString &key) const;
     bool setSetting(const QString &key, QVariant value);
 
     // Device type, capabilities and sensors
