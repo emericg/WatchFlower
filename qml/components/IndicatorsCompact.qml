@@ -10,7 +10,11 @@ Item {
     height: columnData.height + 20
     z: 5
 
-    property string colorBackground: (uiMode === 2) ? Theme.colorBackground : Theme.colorForeground
+    property string colorBackground: {
+        if (headerUnicolor) return Theme.colorHeaderHighlight
+        if  (uiMode === 2) return Theme.colorBackground
+        return Theme.colorForeground
+    }
 
     property int legendWidth: 92
     Component.onCompleted: updateSize()
