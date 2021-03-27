@@ -51,6 +51,9 @@ public:
     DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowerCare();
 
+public slots:
+    virtual bool hasHistory() const;
+
 private:
     // QLowEnergyController related
     void serviceScanDone();

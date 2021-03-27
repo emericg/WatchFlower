@@ -229,6 +229,7 @@ public slots:
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
     // Settings
+    bool hasSetting(const QString &key);
     QVariant getSetting(const QString &key);
     bool setSetting(const QString &key, QVariant value);
 
@@ -244,7 +245,7 @@ public slots:
     bool hasBatteryLevel() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BATTERY); }
     bool hasClock() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CLOCK); }
     bool hasLED() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LED_STATUS); }
-    bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
+    virtual bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
     bool hasLastMove() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LAST_MOVE); }
     bool hasWaterTank() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_WATER_TANK); }
     bool hasButtons() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BUTTONS); }

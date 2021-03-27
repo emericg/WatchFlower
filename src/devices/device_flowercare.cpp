@@ -74,6 +74,17 @@ DeviceFlowerCare::~DeviceFlowerCare()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DeviceFlowerCare::hasHistory() const
+{
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+    if (!hasSetting("mac")) return false;
+#endif
+
+    return true;
+}
+
+/* ************************************************************************** */
+
 void DeviceFlowerCare::serviceScanDone()
 {
     //qDebug() << "DeviceFlowerCare::serviceScanDone(" << m_deviceAddress << ")";

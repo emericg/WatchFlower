@@ -656,6 +656,13 @@ void Device::setOutside(const bool outside)
 
 /* ************************************************************************** */
 
+bool Device::hasSetting(const QString &key)
+{
+    //qDebug() << "Device::hasSetting(" << key << ")";
+
+    return !m_additionalSettings.value(key).isUndefined();
+}
+
 QVariant Device::getSetting(const QString &key)
 {
     //qDebug() << "Device::getSetting(" << key << ")";
