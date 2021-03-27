@@ -1566,7 +1566,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="982"/>
         <source>Data indicators</source>
-        <translation>Datalabels</translation>
+        <translation type="unfinished">Diagramstaven</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="997"/>
@@ -1576,8 +1576,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1004"/>
         <source>solid</source>
-        <translatorcomment>vast?</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vet</translation>
     </message>
     <message>
         <source>Use bigger indicators</source>
@@ -1610,7 +1609,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1352"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation>Opgeslagen in je documenten, onder de &apos;WatchFlower&apos;-map.</translation>
+        <translation type="unfinished">Opgeslagen in je document in de &apos;WatchFlower&apos;-map.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1380"/>

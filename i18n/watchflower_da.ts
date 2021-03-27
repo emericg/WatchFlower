@@ -1493,7 +1493,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="982"/>
         <source>Data indicators</source>
-        <translation>Dataetiketter</translation>
+        <translation type="unfinished">Diagramsøjler</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="997"/>
@@ -1503,8 +1503,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1004"/>
         <source>solid</source>
-        <translatorcomment>fast?</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fed</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1338"/>
@@ -1605,7 +1604,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1352"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation>Gemt i dine dokumenter under &apos;WatchFlower&apos;-mappen.</translation>
+        <translation type="unfinished">Gemt i dine dokumenter i &apos;WatchFlower&apos;-mappen.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1380"/>

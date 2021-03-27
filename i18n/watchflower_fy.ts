@@ -1564,7 +1564,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="982"/>
         <source>Data indicators</source>
-        <translation>Datalabels</translation>
+        <translation type="unfinished">Diagramstêven</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="997"/>
@@ -1574,8 +1574,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1004"/>
         <source>solid</source>
-        <translatorcomment>fêst?</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fet</translation>
     </message>
     <message>
         <source>Use bigger indicators</source>
@@ -1608,7 +1607,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="1352"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation>Opslein yn dyn dokuminten, ûnder de &apos;WatchFlower&apos;-map.</translation>
+        <translation type="unfinished">Opslein yn dyn dokuminten yn de &apos;WatchFlower&apos;-map.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1380"/>
@@ -1713,7 +1712,7 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="126"/>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
-        <translation>Do kinst altyd &lt;b&gt;op &apos;e nij skenne&lt;/b&gt; nei nije apparaten, of apparaten &lt;b&gt;wiskje&lt;/b&gt; dy&apos;tst net mear wolst.</translation>
+        <translation type="unfinished">Do kinst altyd &lt;b&gt;op &apos;e nij scanne&lt;/b&gt; nei nije apparaten, of apparaten &lt;b&gt;wiskje&lt;/b&gt; dy&apos;tst net mear wolst.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="151"/>
