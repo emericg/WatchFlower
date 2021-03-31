@@ -56,10 +56,10 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
  2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
 | [shop]() | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
-| ESP32 Air Monitor | ESP32 Geiger Counter |
-| :---------------: | :------------------: |
-| ![Air Monitor](docs/lungs-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
-| [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
+| ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
+| :-----------------------: | :-------------------: | :------------------: |
+| ![Air Monitor](docs/lungs-solid.svg) | ![Weather Station](docs/cloud-sun-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
+| [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirQualityMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/WeatherStation) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
 
 Various new Bluetooth devices and sensors could be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
 You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
