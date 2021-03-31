@@ -468,7 +468,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             // Parse entry
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
             m_lastSync.setSecsSinceEpoch(m_device_wall_time + tmcd);
-            float temperature = static_cast<int32_t>(data[4]  + (data[5] << 8) + (data[6] << 16)) / 10.f;
+            float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)) / 10.f;
             int luminosity = data[7] + (data[8] << 8) + (data[9] << 16) + (data[10] << 24);
             int soil_moisture = data[11];
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
