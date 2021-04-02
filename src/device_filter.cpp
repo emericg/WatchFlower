@@ -136,18 +136,21 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "d";
             } else if (device->getName() == "HiGrow") {
                 return "e";
-            } else if (device->getName() == "MJ_HT_V1") {
+            } else if (device->getName() == "ThermoBeacon") {
                 return "f";
-            } else if (device->getName() == "ClearGrass Temp & RH" || device->getName().startsWith("Qingping Temp & RH")) {
+            } else if (device->getName() == "MJ_HT_V1") {
                 return "g";
-            } else if (device->getName() == "LYWSD02") {
+            } else if (device->getName() == "ClearGrass Temp & RH" ||
+                       device->getName().startsWith("Qingping Temp & RH")) {
                 return "h";
-            } else if (device->getName() == "MHOC-303") {
+            } else if (device->getName() == "LYWSD02") {
                 return "i";
-            } else if (device->getName() == "LYWSD03MMC") {
-                return "j";
-            } else if (device->getName() == "MHOC-401") {
+            } else if (device->getName() == "MHOC-303") {
                 return "k";
+            } else if (device->getName() == "LYWSD03MMC") {
+                return "k";
+            } else if (device->getName() == "MHOC-401") {
+                return "l";
             } else {
                 return "zzz";
             }

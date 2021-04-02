@@ -97,13 +97,13 @@ bool SettingsManager::readSettings()
         {
 #if defined(Q_OS_ANDROID)
             // too many weak devices on Android...
-            m_bluetoothSimUpdates = 1;
+            m_bluetoothSimUpdates = 2;
 #elif defined(Q_OS_IOS)
             // iOS is better
-            m_bluetoothSimUpdates = 2;
+            m_bluetoothSimUpdates = 3;
 #else
             // desktops are usually good with simultaneous updates
-            m_bluetoothSimUpdates = 6;
+            m_bluetoothSimUpdates = 4;
 #endif
         }
 
@@ -244,7 +244,7 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
-    m_bluetoothSimUpdates = 1;
+    m_bluetoothSimUpdates = 2;
     Q_EMIT bluetoothSimUpdatesChanged();
 
     QLocale lo;
@@ -265,6 +265,8 @@ void SettingsManager::resetSettings()
     Q_EMIT bigIndicatorChanged();
     m_dynaScale = false;
     Q_EMIT dynaScaleChanged();
+    m_orderBy = "model";
+    Q_EMIT orderByChanged();
 }
 
 /* ************************************************************************** */

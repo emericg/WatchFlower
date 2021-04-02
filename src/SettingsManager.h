@@ -89,7 +89,7 @@ class SettingsManager: public QObject
     bool m_notificationsEnabled = true;
 
     bool m_bluetoothControl = false;
-    unsigned m_bluetoothSimUpdates = 1;
+    unsigned m_bluetoothSimUpdates = 2;
 
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
     unsigned m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
@@ -100,7 +100,7 @@ class SettingsManager: public QObject
     bool m_bigWidget = false;
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
-    QString m_orderBy = "location";
+    QString m_orderBy = "model";
 
     QString m_externalDb;
 
