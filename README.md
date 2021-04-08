@@ -54,7 +54,7 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 | :---------------------: | :----------------: |
 | ![ThermoBeacon](docs/thermobeacon_round.svg) |![ThermoBeacon](docs/thermobeacon_square.svg) |
  2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
-| [shop]() | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
+| | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
 | :-----------------------: | :-------------------: | :------------------: |
@@ -96,7 +96,7 @@ $ make
 
 * Chris Díaz <christiandiaz.design@gmail.com> for his extensive work on the application design and logo!
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
-* Everyone who gave time to [help translate](i18n/README.md) this application!
+* Everyone who gave time to [help translate](i18n/README.md#special-thanks) this application!
 
 ### Third party projects used by WatchFlower
 
