@@ -601,3 +601,44 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 }
 
 /* ************************************************************************** */
+
+void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
+{
+    qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    qDebug() << "DATA: 0x" << value.toHex();
+
+    // 12-18 bytes messages
+    if (value.size() >= 12)
+    {
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+        QString mac;
+        int batt = -99;
+        float temp = -99;
+        float hygro = -99;
+        int moist = -99;
+        int lumi = -99;
+        int fert = -99;
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        // get mac address
+        if (!hasSetting("mac"))
+        {
+            QByteArray mac_array = value.mid(10,1);
+            mac_array += value.mid(9,1);
+            mac_array += value.mid(8,1);
+            mac_array += value.mid(7,1);
+            mac_array += value.mid(6,1);
+            mac_array += value.mid(5,1);
+            mac = mac_array.toHex().toUpper();
+            mac.insert(10, ':');
+            mac.insert(8, ':');
+            mac.insert(6, ':');
+            mac.insert(4, ':');
+            mac.insert(2, ':');
+        }
+#endif
+    }
+}
+
+/* ************************************************************************** */

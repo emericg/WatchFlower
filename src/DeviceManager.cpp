@@ -637,7 +637,6 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
         if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
-            //if (updatedFields.testFlag(QBluetoothDeviceInfo::Field::ManufacturerData))
             for (const auto id: info.manufacturerIds())
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
@@ -647,6 +646,18 @@ void DeviceManager::deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBlue
 
                 dd->parseAdvertisementData(info.manufacturerData(id));
             }
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
+            for (const auto id: info.serviceIds())
+            {
+                //qDebug() << info.name() << info.address() << Qt::hex
+                //         << "ID" << id
+                //         << "data" << Qt::dec << info.serviceData(id).count() << Qt::hex
+                //         << "bytes:" << info.serviceData(id).toHex();
+
+                dd->parseAdvertisementData(info.serviceData(id));
+            }
+#endif // Qt 6.2+
+
             break;
         }
     }

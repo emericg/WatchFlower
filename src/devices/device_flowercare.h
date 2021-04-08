@@ -51,6 +51,8 @@ public:
     DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowerCare();
 
+    void parseAdvertisementData(const QByteArray &value);
+
 public slots:
     virtual bool hasHistory() const;
 
