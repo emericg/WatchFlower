@@ -81,6 +81,9 @@ void DeviceEssGeneric::serviceScanDone()
         if (serviceEnvironmentalSensing->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceEnvironmentalSensing, &QLowEnergyService::stateChanged, this, &DeviceEssGeneric::serviceDetailsDiscovered_ess);
+            //connect(serviceEnvironmentalSensing, &QLowEnergyService::characteristicChanged, this, &DeviceEssGeneric::bleReadNotify);
+            //connect(serviceEnvironmentalSensing, &QLowEnergyService::characteristicRead, this, &DeviceEssGeneric::bleReadDone);
+            //connect(serviceEnvironmentalSensing, &QLowEnergyService::characteristicWritten, this, &DeviceEssGeneric::bleWriteDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceEnvironmentalSensing->discoverDetails(); });
@@ -144,65 +147,68 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
     {
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_ess(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid uuid_elevation(QString("00002a6c-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_pressure(QString("00002a6d-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_temperature(QString("00002a6e-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_humidity(QString("00002a6f-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_truewindwpeed(QString("00002a70-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_truewinddirection(QString("00002a71-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_apparentwindwpeed(QString("00002a72-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_apparentwinddirection(QString("00002a73-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_gustfactor(QString("00002a74-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_pollen(QString("00002a75-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_uvindex(QString("00002a76-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_irradiance(QString("00002a77-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_rainfall(QString("00002a78-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_windchill(QString("00002a79-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_heatindex(QString("00002a7a-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_dewpoint(QString("00002a7b-0000-1000-8000-00805f9b34fb"));
-        QBluetoothUuid uuid_barometricpressuretrend(QString("00002aa3-0000-1000-8000-00805f9b34fb"));
-
-        // Characteristic "pressure"
-        QLowEnergyCharacteristic cpres = serviceEnvironmentalSensing->characteristic(uuid_pressure);
-        if (cpres.isValid())
+        if (serviceEnvironmentalSensing)
         {
-            m_pressure = cpres.value().toUInt() / 10.0;
+            QBluetoothUuid uuid_elevation(QString("00002a6c-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_pressure(QString("00002a6d-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_temperature(QString("00002a6e-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_humidity(QString("00002a6f-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_truewindwpeed(QString("00002a70-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_truewinddirection(QString("00002a71-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_apparentwindwpeed(QString("00002a72-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_apparentwinddirection(QString("00002a73-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_gustfactor(QString("00002a74-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_pollen(QString("00002a75-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_uvindex(QString("00002a76-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_irradiance(QString("00002a77-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_rainfall(QString("00002a78-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_windchill(QString("00002a79-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_heatindex(QString("00002a7a-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_dewpoint(QString("00002a7b-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_barometricpressuretrend(QString("00002aa3-0000-1000-8000-00805f9b34fb"));
 
-            m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
-            Q_EMIT sensorUpdated();
+            // Characteristic "pressure"
+            QLowEnergyCharacteristic cpres = serviceEnvironmentalSensing->characteristic(uuid_pressure);
+            if (cpres.isValid())
+            {
+                m_pressure = cpres.value().toUInt() / 10.0;
+
+                m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
+                Q_EMIT sensorUpdated();
+            }
+
+            // Characteristic "temperature"
+            QLowEnergyCharacteristic ctemp = serviceEnvironmentalSensing->characteristic(uuid_temperature);
+            if (ctemp.isValid())
+            {
+                m_temperature = ctemp.value().toInt() / 100.0;
+
+                m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+                Q_EMIT sensorUpdated();
+            }
+
+            // Characteristic "humidity"
+            QLowEnergyCharacteristic chum = serviceEnvironmentalSensing->characteristic(uuid_humidity);
+            if (chum.isValid())
+            {
+                m_humidity = chum.value().toInt() / 100.0;
+
+                m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+                Q_EMIT sensorUpdated();
+            }
+
+            // Characteristic "UV index"
+            QLowEnergyCharacteristic cuv = serviceEnvironmentalSensing->characteristic(uuid_uvindex);
+            if (cuv.isValid())
+            {
+                m_uv = cuv.value().toUInt();
+
+                m_deviceSensors += DeviceUtils::SENSOR_UV;
+                Q_EMIT sensorUpdated();
+            }
+
+            // TODO
         }
-
-        // Characteristic "temperature"
-        QLowEnergyCharacteristic ctemp = serviceEnvironmentalSensing->characteristic(uuid_temperature);
-        if (ctemp.isValid())
-        {
-            m_temperature = ctemp.value().toInt() / 100.0;
-
-            m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
-            Q_EMIT sensorUpdated();
-        }
-
-        // Characteristic "humidity"
-        QLowEnergyCharacteristic chum = serviceEnvironmentalSensing->characteristic(uuid_humidity);
-        if (chum.isValid())
-        {
-            m_humidity = chum.value().toInt() / 100.0;
-
-            m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
-            Q_EMIT sensorUpdated();
-        }
-
-        // Characteristic "UV index"
-        QLowEnergyCharacteristic cuv = serviceEnvironmentalSensing->characteristic(uuid_uvindex);
-        if (cuv.isValid())
-        {
-            m_uv = cuv.value().toUInt();
-
-            m_deviceSensors += DeviceUtils::SENSOR_UV;
-            Q_EMIT sensorUpdated();
-        }
-
-        // TODO
     }
 }
 

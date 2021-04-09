@@ -61,9 +61,10 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
 
-    // Parrot hack // Remove MAC address from device name
+    // Device name hack // Remove MAC address from device name
     if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
     else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+    else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
 
     if (m_bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
@@ -85,9 +86,10 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     m_bleDevice = d;
     m_deviceName = m_bleDevice.name();
 
-    // Parrot hack // Remove MAC address from device name
+    // Device name hack // Remove MAC address from device name
     if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
     else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+    else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
 
 #if defined(Q_OS_OSX) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();
@@ -393,10 +395,6 @@ bool Device::getSqlInfos()
                 if (!doc.isNull() && doc.isObject())
                 {
                     m_additionalSettings = doc.object();
-                }
-                else
-                {
-                    qDebug() << "Invalid JSON settings...";
                 }
 
                 status = true;

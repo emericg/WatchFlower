@@ -133,6 +133,19 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
+void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceInfos)
+        {
+            //
+        }
+    }
+}
+
 void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
@@ -198,19 +211,6 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::Servic
     }
 }
 
-void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::ServiceDiscovered)
-    {
-        //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
-
-        if (serviceInfos)
-        {
-            //
-        }
-    }
-}
-
 /* ************************************************************************** */
 
 void DeviceThermoBeacon::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -239,10 +239,10 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
     QBluetoothUuid uuid_rx(QString("0000FFF3-0000-1000-8000-00805F9B34FB"));
     QBluetoothUuid uuid_tx(QString("0000FFF5-0000-1000-8000-00805F9B34FB"));
 
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
     if (c.uuid() == uuid_rx)
     {
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
         // Parse entry count ///////////////////////////////////////////////////
         if (data[0] == 01)
         {
@@ -421,9 +421,10 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
     if (value.size() == 18)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
         int battv = static_cast<uint16_t>(data[8] + (data[9] << 8));
-        m_temperature = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.0;
-        m_humidity = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.0);
+        m_temperature = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;
+        m_humidity = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
         m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 

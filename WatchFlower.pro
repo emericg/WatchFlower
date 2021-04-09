@@ -61,6 +61,7 @@ SOURCES  += src/main.cpp \
             src/devices/device_esp32_higrow.cpp \
             src/devices/device_esp32_geiger.cpp \
             src/devices/device_ess_generic.cpp \
+            src/devices/device_wp6003.cpp \
             src/utils/utils_app.cpp \
             src/utils/utils_android.cpp \
             src/utils/utils_language.cpp \
@@ -88,6 +89,7 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_esp32_geiger.h \
             src/devices/device_esp32_higrow.h \
             src/devices/device_ess_generic.h \
+            src/devices/device_wp6003.h \
             src/utils/utils_app.h \
             src/utils/utils_android.h \
             src/utils/utils_language.h \

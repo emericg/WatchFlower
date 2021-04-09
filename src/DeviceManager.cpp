@@ -32,6 +32,8 @@
 #include "devices/device_thermobeacon.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geiger.h"
+#include "devices/device_ess_generic.h"
+#include "devices/device_wp6003.h"
 
 #include "utils/utils_app.h"
 
@@ -120,6 +122,8 @@ DeviceManager::DeviceManager()
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
             else if (deviceName == "ThermoBeacon")
                 d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("WP6003"))
+                d = new DeviceWP6003(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
                 d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
@@ -512,6 +516,8 @@ void DeviceManager::deviceDiscoveryFinished()
                     d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
                 else if (deviceName == "ThermoBeacon")
                     d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
+                else if (deviceName.startsWith("6003#"))
+                    d = new DeviceWP6003(deviceAddr, deviceName, this);
                 else if (deviceName == "GeigerCounter")
                     d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
 
@@ -890,6 +896,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
             info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
             info.name() == "ThermoBeacon" ||
+            info.name().startsWith("6003#") ||
             info.name() == "GeigerCounter" || info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
@@ -929,6 +936,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceHygrotempSquare(info, this);
             else if (info.name() == "ThermoBeacon")
                 d = new DeviceThermoBeacon(info, this);
+            else if (info.name().startsWith("6003#"))
+                d = new DeviceWP6003(info, this);
             else if (info.name() == "GeigerCounter")
                 d = new DeviceEsp32Geiger(info, this);
 
