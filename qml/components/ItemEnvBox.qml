@@ -11,8 +11,19 @@ Item {
     property string legend: ""
 
     property real value
+    property real limit_mid
+    property real limit_high
     property int precision: 1
-    property string color: Theme.colorGreen
+
+    property string color: {
+        if (limit_mid && limit_high) {
+            if (value > limit_high)
+                return Theme.colorRed
+            else if (value > limit_mid)
+                return Theme.colorOrange
+        }
+        return Theme.colorGreen
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 

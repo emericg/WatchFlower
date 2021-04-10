@@ -41,20 +41,20 @@ DeviceWP6003::DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *pa
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
-    m_deviceCapabilities += DeviceUtils::SENSOR_TEMPERATURE;
-    m_deviceCapabilities += DeviceUtils::SENSOR_VOC;
-    //m_deviceCapabilities += DeviceUtils::SENSOR_HCHO;
-    m_deviceCapabilities += DeviceUtils::SENSOR_CO2;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_VOC;
+    m_deviceSensors += DeviceUtils::SENSOR_HCHO;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
 DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
-    m_deviceCapabilities += DeviceUtils::SENSOR_TEMPERATURE;
-    m_deviceCapabilities += DeviceUtils::SENSOR_VOC;
-    //m_deviceCapabilities += DeviceUtils::SENSOR_HCHO;
-    m_deviceCapabilities += DeviceUtils::SENSOR_CO2;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_VOC;
+    m_deviceSensors += DeviceUtils::SENSOR_HCHO;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
 DeviceWP6003::~DeviceWP6003()
@@ -182,24 +182,34 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-        if (data[0] == 10) // 0x0a
+        if (data[0] == 170) // 0xaa
+        {
+            qDebug() << "* DeviceWP6003 update:" << getAddress();
+            qDebug() << "- data?" << data[6];
+        }
+        else if (data[0] == 10) // 0x0a
         {
             QDate d(2000 + data[1], data[2], data[3]);
             QTime t(data[4], data[5]);
             QDateTime tmcd(d, t);
 
             m_temperature = static_cast<int16_t>((data[6] << 8) + data[7]) / 10.f;
-            float voc = static_cast<int16_t>((data[10] << 8) + data[11]) / 1000.f;
-            float hcho = static_cast<int16_t>((data[12] << 8) + data[13]) / 1000.f;
-            float co= static_cast<int16_t>((data[16] << 8) + data[17]);
+            m_voc = static_cast<int16_t>((data[10] << 8) + data[11]) / 1000.f;
+            m_hcho = static_cast<int16_t>((data[12] << 8) + data[13]) / 1000.f;
+            m_co2 = static_cast<int16_t>((data[16] << 8) + data[17]);
+
+            m_lastUpdate = QDateTime::currentDateTime();
+
+            refreshDataFinished(true);
+            controller->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceWP6003 update:" << getAddress();
             qDebug() << "- timecode:" << tmcd;
             qDebug() << "- temperature:" << m_temperature;
-            qDebug() << "- TVOC:" << voc;
-            qDebug() << "- HCHO:" << hcho;
-            qDebug() << "- eCO2:" << co;
+            qDebug() << "- TVOC:" << m_voc;
+            qDebug() << "- HCHO:" << m_hcho;
+            qDebug() << "- eCO2:" << m_co2;
 #endif
         }
     }

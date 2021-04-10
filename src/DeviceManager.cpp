@@ -782,7 +782,6 @@ void DeviceManager::refreshDevices_check()
 
             if (dd)
             {
-
                 if (dd->getLastUpdateInt() < 0 ||
                     dd->getLastUpdateInt() > (dd->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
                 {

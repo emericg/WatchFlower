@@ -238,9 +238,9 @@ public slots:
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
 
-    bool isPlantSensor() const { if (m_deviceType == DeviceUtils::DEVICE_PLANTSENSOR) { return true; } return false; }
-    bool isThermometer() const { if (m_deviceType == DeviceUtils::DEVICE_THERMOMETER) { return true; } return false; }
-    bool isEnvironmentalSensor() const { if (m_deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL) { return true; } return false; }
+    bool isPlantSensor() const { return (m_deviceType == DeviceUtils::DEVICE_PLANTSENSOR); }
+    bool isThermometer() const { return (m_deviceType == DeviceUtils::DEVICE_THERMOMETER); }
+    bool isEnvironmentalSensor() const { return (m_deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL); }
 
     bool hasBatteryLevel() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BATTERY); }
     bool hasClock() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CLOCK); }
@@ -271,9 +271,12 @@ public slots:
     bool hasO2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O2); }
     bool hasO3Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O3); }
     bool hasCoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO); }
-    bool hasCo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO2); }
+    bool hasCo2Sensor() const { return ((m_deviceSensors & DeviceUtils::SENSOR_CO2) || (m_deviceSensors & DeviceUtils::SENSOR_eCO2)); }
+    bool haseCo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_eCO2); }
     bool hasNo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_NO2); }
+    bool hasSo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SO2); }
     bool hasVocSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_VOC); }
+    bool hasHchoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HCHO); }
     bool hasGeigerCounter() const { return (m_deviceSensors & DeviceUtils::SENSOR_GEIGER); }
 };
 

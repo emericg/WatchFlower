@@ -112,8 +112,9 @@ public:
         SENSOR_CO2                  = (1 << 22),
         SENSOR_eCO2                 = (1 << 23),
         SENSOR_NO2                  = (1 << 24),
-        SENSOR_VOC                  = (1 << 25),
-        SENSOR_HCHO                 = (1 << 26),
+        SENSOR_SO2                  = (1 << 25),
+        SENSOR_VOC                  = (1 << 26),
+        SENSOR_HCHO                 = (1 << 27),
         // environmental data (geiger counter)
         SENSOR_GEIGER               = (1 << 31),
     };

@@ -55,6 +55,17 @@ class DeviceSensor: public Device
     Q_PROPERTY(float deviceRadioactivityH READ getRH NOTIFY dataUpdated)
     Q_PROPERTY(float deviceRadioactivityM READ getRM NOTIFY dataUpdated)
     Q_PROPERTY(float deviceRadioactivityS READ getRS NOTIFY dataUpdated)
+    Q_PROPERTY(float pm1 READ getPM1 NOTIFY dataUpdated)
+    Q_PROPERTY(float pm25 READ getPM25 NOTIFY dataUpdated)
+    Q_PROPERTY(float pm10 READ getPM10 NOTIFY dataUpdated)
+    Q_PROPERTY(float o2 READ getO2 NOTIFY dataUpdated)
+    Q_PROPERTY(float o3 READ getO3 NOTIFY dataUpdated)
+    Q_PROPERTY(float co READ getCO NOTIFY dataUpdated)
+    Q_PROPERTY(float co2 READ getCO2 NOTIFY dataUpdated)
+    Q_PROPERTY(float no2 READ getNO2 NOTIFY dataUpdated)
+    Q_PROPERTY(float so2 READ getSO2 NOTIFY dataUpdated)
+    Q_PROPERTY(float voc READ getVOC NOTIFY dataUpdated)
+    Q_PROPERTY(float hcho READ getHCHO NOTIFY dataUpdated)
 
     // plant data (min/max)
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
@@ -116,15 +127,17 @@ protected:
     float m_sound_level = -99.f;
     float m_wind_direction = -99.f;
     float m_wind_speed = -99.f;
-    int m_pm_1 = -99;
-    int m_pm_25 = -99;
-    int m_pm_10 = -99;
-    int m_o2 = -99;
-    int m_o3 = -99;
-    int m_co = -99;
-    int m_co2 = -99;
-    int m_no2 = -99;
-    int m_voc = -99;
+    float m_pm_1 = -99.f;
+    float m_pm_25 = -99.f;
+    float m_pm_10 = -99.f;
+    float m_o2 = -99.f;
+    float m_o3 = -99.f;
+    float m_co = -99.f;
+    float m_co2 = -99.f;
+    float m_no2 = -99.f;
+    float m_so2 = -99.f;
+    float m_voc = -99.f;
+    float m_hcho = -99.f;
     float m_rh = 999.f;
     float m_rm = -99.f;
     float m_rs = -99.f;
@@ -208,6 +221,17 @@ public slots:
     // Environmental
     int getLuminosity() const { return m_luminosity; }
     float getWaterLevel() const { return m_water_level; }
+    float getPM1() { return m_pm_1; }
+    float getPM25() { return m_pm_25; }
+    float getPM10() { return m_pm_10; }
+    float getO2() { return m_o2; }
+    float getO3() { return m_o3; }
+    float getCO() { return m_co; }
+    float getCO2() { return m_co2; }
+    float getSO2() { return m_so2; }
+    float getNO2() { return m_no2; }
+    float getVOC() { return m_voc; }
+    float getHCHO() { return m_hcho; }
     // Geiger Counter
     float getRH() { return m_rh; }
     float getRM() { return m_rm; }

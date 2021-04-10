@@ -218,7 +218,7 @@ Item {
         temp.visible = false
 
         // Warnings are only for plants (with available data)
-        if (boxDevice.hasSoilMoistureSensor() && boxDevice.isAvailable()) {
+        if (boxDevice.isAvailable() && boxDevice.isPlantSensor()) {
 
             // Water me notif
             if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
@@ -255,7 +255,7 @@ Item {
 
         // Has data? always display them
         if (boxDevice.isAvailable()) {
-            if (boxDevice.hasSoilMoistureSensor()) {
+            if (boxDevice.isPlantSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
@@ -265,16 +265,23 @@ Item {
                 hygro_bg.visible = hasHygro
                 lumi_bg.visible = boxDevice.hasLuminositySensor()
                 cond_bg.visible = hasHygro
-            } else if (boxDevice.hasGeigerCounter()) {
-                rectangleHygroTemp.visible = true
-                textTemp.text = ""
-                textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " µSv/h"
-                // TODO status color
             } else {
-                rectangleHygroTemp.visible = true
-                textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
-                textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
+                if (boxDevice.hasGeigerCounter()) {
+                    rectangleHygroTemp.visible = true
+                    textTemp.text = ""
+                    textHygro.font.pixelSize = bigAssMode ? 24 : 22
+                    textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " " + "µSv/h"
+                    // TODO status color? warning?
+                } else if (boxDevice.hasVocSensor()) {
+                    rectangleHygroTemp.visible = true
+                    textTemp.font.pixelSize = bigAssMode ? 28 : 26
+                    textTemp.text = (boxDevice.voc*1000).toFixed(0) + " " + "µg/m"
+                    textHygro.text = boxDevice.deviceTemp.toFixed(1) + "°"
+                } else {
+                    rectangleHygroTemp.visible = true
+                    textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
+                    textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
+                }
             }
         }
     }
