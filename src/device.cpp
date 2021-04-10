@@ -162,9 +162,21 @@ void Device::deviceDisconnect()
 
 /* ************************************************************************** */
 
-void Device::ledActionStart()
+void Device::actionClearHistory()
 {
-    //qDebug() << "Device::ledActionStart()" << getAddress() << getName();
+    //qDebug() << "Device::actionClearHistory()" << getAddress() << getName();
+
+    if (!isUpdating())
+    {
+        m_ble_action = DeviceUtils::ACTION_CLEAR_HISTORY;
+        refreshDataStarted();
+        getBleData();
+    }
+}
+
+void Device::actionLedBlink()
+{
+    //qDebug() << "Device::actionLedBlink()" << getAddress() << getName();
 
     if (!isUpdating())
     {
@@ -173,6 +185,20 @@ void Device::ledActionStart()
         getBleData();
     }
 }
+
+void Device::actionWatering()
+{
+    //qDebug() << "Device::actionWatering()" << getAddress() << getName();
+
+    if (!isUpdating())
+    {
+        m_ble_action = DeviceUtils::ACTION_WATERING;
+        refreshDataStarted();
+        getBleData();
+    }
+}
+
+/* ************************************************************************** */
 
 void Device::refreshQueue()
 {

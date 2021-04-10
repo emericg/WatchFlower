@@ -8,11 +8,11 @@ Popup {
     x: (appWindow.width / 2) - (popupDelete.width / 2)
     y: singleColumn ? (appWindow.height - popupDelete.height) : ((appWindow.height / 2) - (popupDelete.height / 2) - appHeader.height)
 
-    implicitWidth: 560
+    implicitWidth: 640
     implicitHeight: 320
     width: singleColumn ? parent.width : implicitWidth
-    height: columnContent.height + gridcontContent.height + padding
-    padding: singleColumn ? 24 : 32
+    height: columnContent.height + padding*2
+    padding: singleColumn ? 20 : 24
 
     modal: true
     focus: true
@@ -40,12 +40,12 @@ Popup {
         Column {
             id: columnContent
             width: parent.width
-            spacing: 24
+            spacing: 20
 
             Text {
                 width: parent.width
 
-                text: qsTr("Are you sure you want to delete selected sensor(s)?")
+                text: qsTr("Are you sure you want to delete data for this sensor?")
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
                 wrapMode: Text.WordWrap
@@ -54,26 +54,25 @@ Popup {
             Text {
                 width: parent.width
 
-                text: qsTr("Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.")
+                text: qsTr("You can either delete data from the application, or from both the sensor and application.")
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
             }
 
-            Grid {
-                id: gridcontContent
+            Flow {
+                id: flowContent
                 width: parent.width
-                height: singleColumn ? 80+16 : 32
+                height: singleColumn ? 120+32 : 40
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                columns: singleColumn ? 1 : 2
-                rows: singleColumn ? 2 : 1
-                spacing: 24
+                property var btnSize: singleColumn ? width : ((width-spacing*2) / 3)
+                spacing: 16
 
                 ButtonWireframe {
                     id: buttonCancel
-                    width: buttonConfirm.width
+                    width: parent.btnSize
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
@@ -81,13 +80,32 @@ Popup {
                     onClicked: popupDelete.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm
-                    width: singleColumn ? parent.width : ((parent.width / 2) - (parent.spacing / 2))
+                    id: buttonConfirm1
+                    width: parent.btnSize
 
-                    text: qsTr("Delete")
+                    text: qsTr("Delete local data")
+                    primaryColor: Theme.colorYellow
+                    fullColor: true
+                    onClicked: {
+                        if (selectedDevice) {
+                             // TODO
+                        }
+
+                        popupDelete.confirmed()
+                        popupDelete.close()
+                    }
+                }
+                ButtonWireframe {
+                    id: buttonConfirm2
+                    width: parent.btnSize
+
+                    text: qsTr("Delete sensor data")
                     primaryColor: Theme.colorRed
                     fullColor: true
                     onClicked: {
+                        if (selectedDevice) {
+                             //selectedDevice.actionClearHistory()
+                        }
                         popupDelete.confirmed()
                         popupDelete.close()
                     }

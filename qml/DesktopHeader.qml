@@ -16,7 +16,9 @@ Rectangle {
     signal backButtonClicked()
     signal rightMenuClicked() // compatibility
 
+    signal deviceWateringButtonClicked()
     signal deviceLedButtonClicked()
+    signal deviceClearButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceDataButtonClicked()
@@ -28,7 +30,6 @@ Rectangle {
     signal plantsButtonClicked()
     signal settingsButtonClicked()
     signal aboutButtonClicked()
-    signal exitButtonClicked()
 
     function setActiveDeviceData() {
         menuDeviceData.selected = true
@@ -160,6 +161,21 @@ Rectangle {
             tooltipText: qsTr("Switch graph")
         }
         ButtonCompactable {
+            id: buttonWatering
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasWaterTank) &&
+                      (appContent.state === "DevicePlantSensor"))
+
+            source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceWateringButtonClicked()
+            tooltipText: qsTr("Watering")
+        }
+        ButtonCompactable {
             id: buttonLed
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -177,6 +193,23 @@ Rectangle {
             tooltipText: qsTr("Blink LED")
         }
         ButtonCompactable {
+            id: buttonClearHistory
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasHistory) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
+
+            source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceClearButtonClicked()
+            tooltipText: qsTr("Clear history")
+        }
+        ButtonCompactable {
             id: buttonRefreshHistory
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -192,6 +225,25 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshHistoryButtonClicked()
             tooltipText: qsTr("Sync history")
+        }
+        ButtonCompactable {
+            id: buttonRefreshRealtime
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
+
+            source: "qrc:/assets/icons_material/duotone-update-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceRefreshRealtimeButtonClicked()
+
+            tooltipText: qsTr("Real time data")
+            animation: "rotate"
+            animationRunning: selectedDevice.updating
         }
         ButtonCompactable {
             id: buttonRefreshData
@@ -218,6 +270,8 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
         }
+
+        ////////////
 
         Row {
             id: menuDevice

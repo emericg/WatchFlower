@@ -6,7 +6,6 @@
         <file>logos/watchflower_tray_light.svg</file>
         <file>logos/watchflower_tray_dark.svg</file>
 
-        <file>menus/menu_logo.svg</file>
         <file>menus/menu_logo_large.svg</file>
         <file>menus/menu_back.svg</file>
         <file>menus/menu_close.svg</file>
@@ -80,13 +79,16 @@
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
         <file>icons_material/duotone-format_size-24px.svg</file>
         <file>icons_material/duotone-date_range-24px.svg</file>
+        <file>icons_material/duotone-date_clear-24px.svg</file>
         <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
+        <file>icons_material/duotone-local_drink-24px.svg</file>
         <file>icons_material/duotone-minimize-24px.svg</file>
         <file>icons_material/duotone-pin_drop-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
         <file>icons_material/duotone-timer-24px.svg</file>
         <file>icons_material/duotone-translate-24px.svg</file>
+        <file>icons_material/duotone-update-24px.svg</file>
         <file>icons_material/duotone-water_full-24px.svg</file>
         <file>icons_material/duotone-water_mid-24px.svg</file>
         <file>icons_material/duotone-wb_sunny-24px.svg</file>

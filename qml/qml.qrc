@@ -36,7 +36,8 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
-        <file alias="PopupDelete.qml">components/PopupDelete.qml</file>
+        <file alias="PopupDeleteData.qml">components/PopupDeleteData.qml</file>
+        <file alias="PopupDeleteDevice.qml">components/PopupDeleteDevice.qml</file>
 
         <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
         <file alias="ButtonImageThemed.qml">components_generic/ButtonImageThemed.qml</file>

@@ -479,10 +479,9 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
 
         if (serviceWatering && m_ble_action == DeviceUtils::ACTION_WATERING)
         {
-            // TODO
-            //QBluetoothUuid uuid_wt_trigger(QString("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
-            //QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_trigger);
-            //serviceWatering->writeCharacteristic(cwt, QByteArray::fromHex("0800"));
+            QBluetoothUuid uuid_wt_trigger(QString("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
+            QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_trigger);
+            serviceWatering->writeCharacteristic(cwt, QByteArray::fromHex("0800"));
         }
     }
 }

@@ -80,7 +80,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    PopupDelete {
+    PopupDeleteDevice {
         id: confirmDeleteDevice
         onConfirmed: screenDeviceList.removeSelectedDevice()
     }

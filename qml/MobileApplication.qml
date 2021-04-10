@@ -174,7 +174,7 @@ ApplicationWindow {
         }
         onDeviceLedButtonClicked: {
             if (selectedDevice) {
-                selectedDevice.ledActionStart()
+                selectedDevice.actionLedBlink()
             }
         }
         onDeviceRefreshHistoryButtonClicked: {

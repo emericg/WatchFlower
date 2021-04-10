@@ -180,7 +180,9 @@ public slots:
     void deviceConnect();
     void deviceDisconnect();
 
-    void ledActionStart();
+    void actionLedBlink();
+    void actionWatering();
+    void actionClearHistory();
 
     void refreshQueue();
     void refreshStart();

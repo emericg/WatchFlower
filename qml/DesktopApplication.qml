@@ -86,7 +86,18 @@ ApplicationWindow {
 
         onDeviceLedButtonClicked: {
             if (selectedDevice) {
-                selectedDevice.ledActionStart()
+                selectedDevice.actionLedBlink()
+            }
+        }
+        onDeviceWateringButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.actionWatering()
+            }
+        }
+
+        onDeviceClearButtonClicked: {
+            if (selectedDevice) {
+                popupDeleteData.open()
             }
         }
         onDeviceRefreshHistoryButtonClicked: {
@@ -281,6 +292,11 @@ ApplicationWindow {
         id: appHeader
         width: parent.width
         anchors.top: parent.top
+    }
+
+    PopupDeleteData {
+        id: popupDeleteData
+        //onConfirmed: selectedDevice.actionClearHistory()
     }
 
     Item {
