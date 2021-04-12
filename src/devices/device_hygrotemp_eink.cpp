@@ -173,29 +173,22 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::Serv
 void DeviceHygrotempEInk::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceHygrotempEInk::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
-void DeviceHygrotempEInk::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceHygrotempEInk::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    Q_UNUSED(c)
-    Q_UNUSED(value)
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "DeviceHygrotempEInk::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-               << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4] << hex << data[5];
-*/
+    //qDebug() << "DeviceHygrotempEInk::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
 void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceHygrotempEInk::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceHygrotempEInk::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-               << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4] << hex << data[5];
-*/
+
     if (c.uuid().toString() == "{00000100-0000-1000-8000-00805f9b34fb}")
     {
         // sensor data // handle 0x??

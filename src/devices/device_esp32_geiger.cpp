@@ -53,8 +53,10 @@ DeviceEsp32Geiger::DeviceEsp32Geiger(const QBluetoothDeviceInfo &d, QObject *par
 DeviceEsp32Geiger::~DeviceEsp32Geiger()
 {
     if (controller) controller->disconnectFromDevice();
-    delete serviceData;
+
+    delete serviceInfos;
     delete serviceBattery;
+    delete serviceData;
 }
 
 /* ************************************************************************** */
@@ -63,6 +65,17 @@ DeviceEsp32Geiger::~DeviceEsp32Geiger()
 void DeviceEsp32Geiger::serviceScanDone()
 {
     //qDebug() << "DeviceEsp32Geiger::serviceScanDone(" << m_deviceAddress << ")";
+
+    if (serviceInfos)
+    {
+        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32Geiger::serviceDetailsDiscovered_infos);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
+        }
+    }
 
     if (serviceBattery)
     {
@@ -94,6 +107,8 @@ void DeviceEsp32Geiger::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32Geiger::addLowEnergyService(" << uuid.toString() << ")";
 
+    //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Infos service
+
     //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
 
     if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
@@ -108,6 +123,19 @@ void DeviceEsp32Geiger::addLowEnergyService(const QBluetoothUuid &uuid)
 }
 
 /* ************************************************************************** */
+
+void DeviceEsp32Geiger::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceEsp32Geiger::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceInfos)
+        {
+            // TODO
+        }
+    }
+}
 
 void DeviceEsp32Geiger::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
@@ -174,15 +202,11 @@ void DeviceEsp32Geiger::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
 void DeviceEsp32Geiger::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceEsp32Geiger::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceEsp32Geiger::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+
     if (c.uuid().toString() == "{x}")
     {
         Q_UNUSED(data);
@@ -191,15 +215,11 @@ void DeviceEsp32Geiger::bleReadDone(const QLowEnergyCharacteristic &c, const QBy
 
 void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceEsp32Geiger::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceEsp32Geiger::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+
     if (c.uuid().toString() == "{eeee9a32-a0c0-4cbd-b00b-6b519bf2780f}")
     {
         // Geiger Counter realtime data // handle 0x?
@@ -213,16 +233,18 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            Q_EMIT dataUpdated();
             refreshDataFinished(true);
             controller->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             //qDebug() << "* DeviceEsp32Geiger update:" << getAddress();
-            //qDebug() << "- m_firmware:" << m_firmware;
+            //qDebug() << "- m_firmware:" << m_deviceFirmware;
+            //qDebug() << "- m_battery:" << m_deviceBattery;
             //qDebug() << "- radioactivity min:" << m_rm;
             //qDebug() << "- radioactivity sec:" << m_rs;
 #endif
         }
     }
 }
+
+/* ************************************************************************** */

@@ -250,6 +250,7 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_battery(QLowEnergyService::
 void DeviceHygrotempSquare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     //qDebug() << "DeviceHygrotempSquare::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -258,6 +259,7 @@ void DeviceHygrotempSquare::bleWriteDone(const QLowEnergyCharacteristic &c, cons
 void DeviceHygrotempSquare::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     //qDebug() << "DeviceHygrotempSquare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -265,12 +267,11 @@ void DeviceHygrotempSquare::bleReadDone(const QLowEnergyCharacteristic &c, const
 
 void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceHygrotempSquare::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceHygrotempSquare::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
-*/
+
     if (c.uuid().toString() == "{ebe0ccc1-7a0a-4b0c-8a1a-6ff2997da3a6}")
     {
         // sensor data // handle 0x??

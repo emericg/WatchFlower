@@ -257,31 +257,27 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 void DeviceHygrotempClock::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceHygrotempClock::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
 void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    Q_UNUSED(c)
-    Q_UNUSED(value)
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+    //qDebug() << "DeviceHygrotempClock::bleReadDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 
-    qDebug() << "DeviceHygrotempClock::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
-*/
     if (c.uuid().toString().toUpper() == "{EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
         // timedate // handle 0x??
 
         if (value.size() == 5)
         {
-            const qint8 *timedata = reinterpret_cast<const qint8 *>(value.constData());
-            qint8 timezone_read = timedata[4];
-            int32_t epoch_read = timedata[0];
-            epoch_read += (timedata[1] << 8);
-            epoch_read += (timedata[2] << 16);
-            epoch_read += (timedata[3] << 24);
+            const qint8 *data = reinterpret_cast<const qint8 *>(value.constData());
+
+            qint8 timezone_read = data[4];
+            int32_t epoch_read = data[0];
+            epoch_read += (data[1] << 8);
+            epoch_read += (data[2] << 16);
+            epoch_read += (data[3] << 24);
 
             QDateTime time_read;
             time_read.setSecsSinceEpoch(epoch_read);
@@ -293,18 +289,17 @@ void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const 
 
 void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceHygrotempClock::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0] << hex << data[1] << hex << data[2] << hex << data[3] << hex << data[4];
-*/
+    //qDebug() << "DeviceHygrotempClock::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     if (c.uuid().toString().toUpper() == "{EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
         // sensor data // handle 0x??
 
         if (value.size() == 3)
         {
+            const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
             m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 100.f;
             m_humidity = data[2];
 
@@ -364,3 +359,5 @@ void DeviceHygrotempClock::confirmedDescriptorWrite(const QLowEnergyDescriptor &
         //m_service = nullptr;
     }
 }
+
+/* ************************************************************************** */

@@ -314,6 +314,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
     //qDebug() << "DeviceFlowerCare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {
@@ -391,15 +392,11 @@ void DeviceFlowerCare::bleReadNotify(const QLowEnergyCharacteristic &, const QBy
 
 void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceFlowerCare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceFlowerCare::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << Qt::hex << data[ 0] << Qt::hex << data[ 1] << Qt::hex << data[ 2] << Qt::hex << data[ 3] \
-             << Qt::hex << data[ 4] << Qt::hex << data[ 5] << Qt::hex << data[ 6] << Qt::hex << data[ 7] \
-             << Qt::hex << data[ 8] << Qt::hex << data[ 9] << Qt::hex << data[10] << Qt::hex << data[11] \
-             << Qt::hex << data[12] << Qt::hex << data[13] << Qt::hex << data[14] << Qt::hex << data[15];
-*/
+
     if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
     {
         QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3c

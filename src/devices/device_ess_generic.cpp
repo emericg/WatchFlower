@@ -53,6 +53,7 @@ DeviceEssGeneric::DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *paren
 DeviceEssGeneric::~DeviceEssGeneric()
 {
     if (controller) controller->disconnectFromDevice();
+
     delete serviceInfos;
     delete serviceBattery;
     delete serviceEnvironmentalSensing;

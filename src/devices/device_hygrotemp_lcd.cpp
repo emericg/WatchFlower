@@ -217,35 +217,22 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_data(QLowEnergyService::Servic
 void DeviceHygrotempLCD::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceHygrotempLCD::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
-void DeviceHygrotempLCD::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceHygrotempLCD::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    Q_UNUSED(c)
-    Q_UNUSED(value)
-/*
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    qDebug() << "DeviceHygrotempLCD::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-             << hex << data[12] << hex << data[13] << hex << data[14] << hex << data[15];
-*/
+    //qDebug() << "DeviceHygrotempLCD::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
 void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceHygrotempLCD::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceHygrotempLCD::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[11] \
-             << hex << data[12] << hex << data[13];
-*/
+
     if (c.uuid().toString() == "{226caa55-6476-4566-7562-66734470666d}")
     {
         // BLE temperature & humidity sensor data // handle 0x??
@@ -257,7 +244,7 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 return;
 
             m_temperature = value.mid(2, 4).toFloat();
-            m_humidity = static_cast<int>(value.mid(9, 4).toFloat());
+            m_humidity = value.mid(9, 4).toFloat();
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -315,3 +302,5 @@ void DeviceHygrotempLCD::confirmedDescriptorWrite(const QLowEnergyDescriptor &d,
         //m_service = nullptr;
     }
 }
+
+/* ************************************************************************** */

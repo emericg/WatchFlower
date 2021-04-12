@@ -63,8 +63,10 @@ DeviceEsp32HiGrow::DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *par
 DeviceEsp32HiGrow::~DeviceEsp32HiGrow()
 {
     if (controller) controller->disconnectFromDevice();
-    delete serviceData;
+
+    delete serviceInfos;
     delete serviceBattery;
+    delete serviceData;
 }
 
 /* ************************************************************************** */
@@ -73,6 +75,17 @@ DeviceEsp32HiGrow::~DeviceEsp32HiGrow()
 void DeviceEsp32HiGrow::serviceScanDone()
 {
     //qDebug() << "DeviceEsp32HiGrow::serviceScanDone(" << m_deviceAddress << ")";
+
+    if (serviceInfos)
+    {
+        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered_infos);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
+        }
+    }
 
     if (serviceBattery)
     {
@@ -105,6 +118,8 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32HiGrow::addLowEnergyService(" << uuid.toString() << ")";
 
+    //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Infos service
+
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
     {
         delete serviceBattery;
@@ -127,6 +142,19 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 }
 
 /* ************************************************************************** */
+
+void DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceInfos)
+        {
+            // TODO
+        }
+    }
+}
 
 void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
@@ -192,15 +220,11 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
 void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
+    //qDebug() << "DeviceEsp32HiGrow::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-/*
-    qDebug() << "DeviceEsp32HiGrow::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "WE HAVE DATA: 0x" \
-             << hex << data[0]  << hex << data[1]  << hex << data[2] << hex << data[3] \
-             << hex << data[4]  << hex << data[5]  << hex << data[6] << hex << data[7] \
-             << hex << data[8]  << hex << data[9]  << hex << data[10] << hex << data[10] \
-             << hex << data[12]  << hex << data[13]  << hex << data[14] << hex << data[15];
-*/
+
     if (c.uuid().toString() == "{eeee9a32-a0a0-4cbd-b00b-6b519bf2780f}")
     {
         // HiGrow realtime data // handle 0x3431
@@ -260,3 +284,5 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
         }
     }
 }
+
+/* ************************************************************************** */
