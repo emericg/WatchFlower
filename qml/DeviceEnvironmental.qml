@@ -19,7 +19,7 @@ Item {
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
     ////////////////////////////////////////////////////////////////////////////
-/*
+
     Connections {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
@@ -63,7 +63,7 @@ Item {
             appWindow.backAction()
         }
     }
-*/
+
     ////////
 
     function isHistoryMode() {
@@ -90,6 +90,8 @@ Item {
             currentDevice.hasNo2Sensor() || currentDevice.hasSo2Sensor() ||
             currentDevice.hasVocSensor() || currentDevice.hasHchoSensor()) {
             isAirMonitor = true
+        } else {
+            isAirMonitor = false
         }
         //
         isGeigerCounter = currentDevice.hasGeigerCounter()
@@ -101,13 +103,15 @@ Item {
             currentDevice.hasWaterLevelSensor() ||
             currentDevice.hasWindDirectionSensor() || currentDevice.hasWindSpeedSensor()) {
             isWeatherStation = true
+        } else {
+            isWeatherStation = false
         }
 
         // demo?
         //isAirMonitor = true
         //isGeigerCounter = true
         //isWeatherStation = true
-/*
+
         indicatorDisconnected.visible = !currentDevice.isAvailable()
         indicatorAirQuality.visible = isAirMonitor
         indicatorRadioactivity.visible = isGeigerCounter
@@ -117,7 +121,7 @@ Item {
         //
         updateHeader()
         updateData()
-*/
+
     }
 
     function loadGraph() {
@@ -175,7 +179,7 @@ Item {
     // 301-500 (Hazardous)
 
     ////////////////////////////////////////////////////////////////////////////
-/*
+
     Flow {
         anchors.fill: parent
 
@@ -605,8 +609,10 @@ Item {
 
                             title: ("RADIATION")
                             legend: ("µSv/m")
-                            value: 0.24
+                            value: currentDevice.radioactivityM
                             precision: 2
+                            limit_mid: 1
+                            limit_high: 10
                         }
 
                         ItemEnvBox {
@@ -615,8 +621,10 @@ Item {
 
                             title: ("RADIATION")
                             legend: ("µSv/s")
-                            value: 0.10
+                            value: currentDevice.radioactivityS
                             precision: 2
+                            limit_mid: 1
+                            limit_high: 10
                         }
                     }
 
@@ -793,5 +801,4 @@ Item {
             }
         }
     }
-*/
 }

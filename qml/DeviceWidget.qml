@@ -270,7 +270,7 @@ Item {
                     rectangleHygroTemp.visible = true
                     textTemp.text = ""
                     textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                    textHygro.text = boxDevice.deviceRadioactivityH.toFixed(2) + " " + "µSv/h"
+                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
                     // TODO status color? warning?
                 } else if (boxDevice.hasVocSensor()) {
                     rectangleHygroTemp.visible = true

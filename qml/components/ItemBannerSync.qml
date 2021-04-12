@@ -69,7 +69,7 @@ Rectangle {
         compact: !wideMode
         iconColor: Theme.colorActionbarContent
         backgroundColor: Theme.colorActionbarHighlight
-        text: qsTr("Cancel")
+        text: qsTr("Stop")
         source: "qrc:/assets/icons_material/baseline-close-24px.svg"
 
         onClicked: currentDevice.deviceDisconnect()

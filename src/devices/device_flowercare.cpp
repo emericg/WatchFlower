@@ -154,7 +154,8 @@ void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHandshake;
         serviceHandshake = nullptr;
 
-        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY ||
+            m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
         {
             serviceHandshake = controller->createServiceObject(uuid);
             if (!serviceHandshake)
@@ -194,7 +195,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
                 m_deviceFirmware = chc.value().remove(0, 2);
             }
 
-            bool need_firstsend = true;
+            bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
                 if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
@@ -203,20 +204,22 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
                 }
                 if (Version(m_deviceFirmware) <= Version("2.6.6"))
                 {
-                    need_firstsend = false;
+                    need_modechange = false;
                 }
             }
 
             Q_EMIT sensorUpdated();
             Q_EMIT batteryUpdated();
 
-            if (need_firstsend) // if firmware > 2.6.6
+            if (need_modechange) // if firmware > 2.6.6
             {
+                // Change device mode
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
+            // Ask for a reading
             QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             serviceData->readCharacteristic(chb);
@@ -240,7 +243,9 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (serviceHandshake &&
+            (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY ||
+             m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME))
         {
             QString addr = m_deviceAddress;
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
@@ -349,26 +354,41 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
         }
         else
         {
-            // Start reading history?
-/*
-            // Enable notification for 0x3e handle
-            QBluetoothUuid n(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x3f
-            QLowEnergyCharacteristic chn = serviceHistory->characteristic(n);
-            m_notificationHistory = chn.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-            serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
-*/
-            if (m_device_time < 0)
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
-                // Read device time
-                QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
-                QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
-                serviceHistory->readCharacteristic(chh);
-            }
+                // Start reading history?
+/*
+                // Enable notification for 0x3e handle
+                QBluetoothUuid n(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x3f
+                QLowEnergyCharacteristic chn = serviceHistory->characteristic(n);
+                m_notificationHistory = chn.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
+*/
+                if (m_device_time < 0)
+                {
+                    // Read device time
+                    QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
+                    QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
+                    serviceHistory->readCharacteristic(chh);
+                }
 
-            // Change the device mode
-            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
-            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
-            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
+                // Change device mode
+                QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+                QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+                serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
+            }
+            else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                // Change device mode
+                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
+
+                // Ask for a reading
+                QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
+                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+                serviceData->readCharacteristic(chb);
+            }
         }
         return;
     }
@@ -580,8 +600,18 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+
+                 // ask for a new reading
+                serviceData->readCharacteristic(c);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                controller->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowerCare update:" << getAddress();

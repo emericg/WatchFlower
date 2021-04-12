@@ -20,6 +20,7 @@ Rectangle {
     signal deviceLedButtonClicked()
     signal deviceClearButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
+    signal deviceRefreshRealtimeButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
@@ -242,8 +243,8 @@ Rectangle {
             onClicked: deviceRefreshRealtimeButtonClicked()
 
             tooltipText: qsTr("Real time data")
-            animation: "rotate"
-            animationRunning: selectedDevice.updating
+            //animation: "fade"
+            //nimationRunning: selectedDevice.updating
         }
         ButtonCompactable {
             id: buttonRefreshData

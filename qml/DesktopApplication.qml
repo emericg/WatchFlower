@@ -106,6 +106,11 @@ ApplicationWindow {
             }
         }
 
+        onDeviceRefreshRealtimeButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.refreshRealtimeStart()
+            }
+        }
         onDeviceRefreshButtonClicked: {
             if (selectedDevice) {
                 deviceManager.updateDevice(selectedDevice.deviceAddress)

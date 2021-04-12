@@ -234,6 +234,18 @@ void Device::refreshHistoryStart()
     }
 }
 
+void Device::refreshRealtimeStart()
+{
+    //qDebug() << "Device::refreshRealtimeStart()" << getAddress() << getName();
+
+    if (!isUpdating())
+    {
+        m_ble_action = DeviceUtils::ACTION_UPDATE_REALTIME;
+        refreshDataStarted();
+        getBleData();
+    }
+}
+
 void Device::refreshStop()
 {
     //qDebug() << "Device::refreshStop()" << getAddress() << getName();
@@ -343,6 +355,13 @@ void Device::refreshHistoryFinished(bool status)
     Q_EMIT statusUpdated();
 
     // Even if the status is false, we probably have some new data
+    Q_EMIT dataUpdated();
+}
+
+void Device::refreshDataRealtime(bool status)
+{
+    //qDebug() << "Device::refreshDataRealtime()" << getAddress() << getName();
+
     Q_EMIT dataUpdated();
 }
 

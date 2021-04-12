@@ -158,6 +158,7 @@ protected:
     virtual void refreshDataCanceled();
     virtual void refreshDataFinished(bool status, bool cached = false);
     virtual void refreshHistoryFinished(bool status);
+    virtual void refreshDataRealtime(bool status);
 
     // Start a BLE connection
     bool getBleData();
@@ -188,6 +189,7 @@ public slots:
     void refreshStart();
     void refreshRetry();
     void refreshHistoryStart();
+    void refreshRealtimeStart();
     void refreshStop();
 
     // Status

@@ -52,9 +52,6 @@ class DeviceSensor: public Device
     Q_PROPERTY(float deviceHumidity READ getHumidity NOTIFY dataUpdated)
     // environmental data
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceRadioactivityH READ getRH NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceRadioactivityM READ getRM NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceRadioactivityS READ getRS NOTIFY dataUpdated)
     Q_PROPERTY(float pm1 READ getPM1 NOTIFY dataUpdated)
     Q_PROPERTY(float pm25 READ getPM25 NOTIFY dataUpdated)
     Q_PROPERTY(float pm10 READ getPM10 NOTIFY dataUpdated)
@@ -66,6 +63,9 @@ class DeviceSensor: public Device
     Q_PROPERTY(float so2 READ getSO2 NOTIFY dataUpdated)
     Q_PROPERTY(float voc READ getVOC NOTIFY dataUpdated)
     Q_PROPERTY(float hcho READ getHCHO NOTIFY dataUpdated)
+    Q_PROPERTY(float radioactivityH READ getRH NOTIFY dataUpdated)
+    Q_PROPERTY(float radioactivityM READ getRM NOTIFY dataUpdated)
+    Q_PROPERTY(float radioactivityS READ getRS NOTIFY dataUpdated)
 
     // plant data (min/max)
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY minmaxUpdated)
