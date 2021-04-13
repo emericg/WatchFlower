@@ -110,7 +110,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN")
         {
-            serviceInfos = controller->createServiceObject(uuid);
+            serviceInfos = m_bleController->createServiceObject(uuid);
             if (!serviceInfos)
                 qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
         }
@@ -121,7 +121,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
+        serviceData = m_bleController->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
@@ -332,7 +332,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
             }
 
             refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempClock update:" << getAddress();

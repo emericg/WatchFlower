@@ -74,10 +74,11 @@ class Device: public QObject
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
-    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
-    Q_PROPERTY(bool fresh READ isFresh NOTIFY statusUpdated)
-    Q_PROPERTY(bool available READ isAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool updating READ isBusy NOTIFY statusUpdated)
+    Q_PROPERTY(bool fresh READ isDataFresh NOTIFY statusUpdated)
+    Q_PROPERTY(bool available READ isDataAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
+
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
@@ -115,13 +116,12 @@ protected:
     QJsonObject m_additionalSettings;
 
     // Status
-    int m_status = 0;           //!< See DeviceStatus enum
-    bool m_updating = false;    //!< Shortcut, if m_status == 2 or 3
-    int m_ble_action = 0;       //!< See DeviceActions enum
+    int m_ble_status = 0;           //!< See DeviceStatus enum
+    int m_ble_action = 0;           //!< See DeviceActions enum
     QDateTime m_lastUpdate;
-    QDateTime m_lastSync;
+    QDateTime m_lastUpdateDatabase;
+    QDateTime m_lastHistorySync;
     QDateTime m_lastError;
-    int m_retries = 1;
     bool m_firmware_uptodate = false;
 
     QTimer m_updateTimer;
@@ -137,7 +137,7 @@ protected:
 
     // BLE
     QBluetoothDeviceInfo m_bleDevice;
-    QLowEnergyController *controller = nullptr;
+    QLowEnergyController *m_bleController = nullptr;
     QTimer m_rssiTimer;
     int m_rssi = 1;
 
@@ -160,8 +160,7 @@ protected:
     virtual void refreshHistoryFinished(bool status);
     virtual void refreshDataRealtime(bool status);
 
-    // Start a BLE connection
-    bool getBleData();
+    bool getBleData();              //!< Initiate a BLE connection with a device
 
     virtual bool getSqlInfos();
     virtual bool getSqlData(int minutes);
@@ -185,22 +184,29 @@ public slots:
     void actionWatering();
     void actionClearHistory();
 
+    void refreshHistoryStart();
+    void refreshRealtimeStart();
+
     void refreshQueue();
     void refreshStart();
     void refreshRetry();
-    void refreshHistoryStart();
-    void refreshRealtimeStart();
     void refreshStop();
 
     // Status
-    int getStatus() const { return m_status; }
-    bool isUpdating() const { return m_updating; }      //!< Is currently being updated?
-    bool isErrored() const;                             //!< Has emitted a BLE error
-    bool isFresh() const;                               //!< Has at least >Xh (user set) old data
-    bool isAvailable() const;                           //!< Has at least >12h old data
+    int getStatus() const { return m_ble_status; }
+    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
+    bool isDataAvailable() const;       //!< Has at least >12h old data
+    bool isBusy() const;                //!< Is currently doing something?
+    bool isWorking() const;             //!< Is currently working?
+    bool isUpdating() const;            //!< Is currently being updated?
+    bool isErrored() const;             //!< Has emitted a BLE error
+
+    bool needsUpdateRt() const;
+    bool needsUpdateDb() const;
 
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
+    int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
 
     QDateTime getLastSync() const;
@@ -232,7 +238,7 @@ public slots:
     bool isInside() const { return !m_isOutside; }
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
-    // Settings
+    // Device additional settings
     bool hasSetting(const QString &key) const;
     QVariant getSetting(const QString &key) const;
     bool setSetting(const QString &key, QVariant value);

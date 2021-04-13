@@ -4,13 +4,11 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Popup {
-    id: popupDelete
-    x: (appWindow.width / 2) - (popupDelete.width / 2)
-    y: singleColumn ? (appWindow.height - popupDelete.height) : ((appWindow.height / 2) - (popupDelete.height / 2) - appHeader.height)
+    id: popupDeleteData
+    x: (appWindow.width / 2) - (width / 2)
+    y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (height / 2) /*- (appHeader.height)*/)
 
-    implicitWidth: 640
-    implicitHeight: 320
-    width: singleColumn ? parent.width : implicitWidth
+    width: singleColumn ? parent.width : 640
     height: columnContent.height + padding*2
     padding: singleColumn ? 20 : 24
 
@@ -65,7 +63,6 @@ Popup {
                 id: flowContent
                 width: parent.width
                 height: singleColumn ? 120+32 : 40
-                anchors.horizontalCenter: parent.horizontalCenter
 
                 property var btnSize: singleColumn ? width : ((width-spacing*2) / 3)
                 spacing: 16
@@ -77,7 +74,7 @@ Popup {
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
-                    onClicked: popupDelete.close()
+                    onClicked: popupDeleteData.close()
                 }
                 ButtonWireframe {
                     id: buttonConfirm1
@@ -91,8 +88,8 @@ Popup {
                              // TODO
                         }
 
-                        popupDelete.confirmed()
-                        popupDelete.close()
+                        popupDeleteData.confirmed()
+                        popupDeleteData.close()
                     }
                 }
                 ButtonWireframe {
@@ -106,8 +103,8 @@ Popup {
                         if (selectedDevice) {
                              //selectedDevice.actionClearHistory()
                         }
-                        popupDelete.confirmed()
-                        popupDelete.close()
+                        popupDeleteData.confirmed()
+                        popupDeleteData.close()
                     }
                 }
             }

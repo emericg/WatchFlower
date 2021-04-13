@@ -63,7 +63,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 8
 
-        text: itemEnvBox.value.toFixed(itemEnvBox.precision)
+        text: (itemEnvBox.value > -99) ? itemEnvBox.value.toFixed(itemEnvBox.precision) : "?"
         color: Theme.colorSubText
         font.bold: false
         font.pixelSize: 26

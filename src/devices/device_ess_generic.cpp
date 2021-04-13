@@ -52,7 +52,7 @@ DeviceEssGeneric::DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *paren
 
 DeviceEssGeneric::~DeviceEssGeneric()
 {
-    if (controller) controller->disconnectFromDevice();
+    if (m_bleController) m_bleController->disconnectFromDevice();
 
     delete serviceInfos;
     delete serviceBattery;
@@ -103,7 +103,7 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceBattery;
         serviceBattery = nullptr;
 
-        serviceBattery = controller->createServiceObject(uuid);
+        serviceBattery = m_bleController->createServiceObject(uuid);
         if (!serviceBattery)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
@@ -113,7 +113,7 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceEnvironmentalSensing;
         serviceEnvironmentalSensing = nullptr;
 
-        serviceEnvironmentalSensing = controller->createServiceObject(uuid);
+        serviceEnvironmentalSensing = m_bleController->createServiceObject(uuid);
         if (!serviceEnvironmentalSensing)
             qWarning() << "Cannot create service (environmental sensing) for uuid:" << uuid.toString();
     }

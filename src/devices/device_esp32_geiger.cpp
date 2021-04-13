@@ -52,7 +52,7 @@ DeviceEsp32Geiger::DeviceEsp32Geiger(const QBluetoothDeviceInfo &d, QObject *par
 
 DeviceEsp32Geiger::~DeviceEsp32Geiger()
 {
-    if (controller) controller->disconnectFromDevice();
+    if (m_bleController) m_bleController->disconnectFromDevice();
 
     delete serviceInfos;
     delete serviceBattery;
@@ -116,7 +116,7 @@ void DeviceEsp32Geiger::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
+        serviceData = m_bleController->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
@@ -240,7 +240,7 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             else
             {
                 refreshDataFinished(true);
-                controller->disconnectFromDevice();
+                m_bleController->disconnectFromDevice();
             }
 
 #ifndef QT_NO_DEBUG

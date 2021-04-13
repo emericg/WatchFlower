@@ -125,7 +125,7 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
+        serviceData = m_bleController->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
@@ -258,7 +258,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceThermoBeacon history sync  > " << getAddress();
             qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
-            qDebug() << "- last_sync is :" << m_lastSync;
+            qDebug() << "- last_sync is :" << m_lastHistorySync;
             qDebug() << "- entry_count  :" << m_history_entry_count;
 #endif
 */
@@ -273,17 +273,17 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 // We read entry from older to newer (0 to entry_count)
                 int entries_to_read = m_history_entry_count;
 
-                // Is m_lastSync valid AND inside the range of stored history entries
-                if (m_lastSync.isValid())
+                // Is m_lastHistorySync valid AND inside the range of stored history entries
+                if (m_lastHistorySync.isValid())
                 {
-                    int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastSync.toSecsSinceEpoch();
+                    int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
                     int64_t entries_count_sec = (m_history_entry_count * 10 * 60);
 
                     if (lastSync_sec < entries_count_sec)
                     {
                         // how many entries are we missing since last sync?
                         entries_to_read = (lastSync_sec / 10 / 60);
-                        qDebug() << "- entries_to_read (m_lastSync):" << entries_to_read;
+                        qDebug() << "- entries_to_read (m_lastHistorySync):" << entries_to_read;
                     }
                 }
 
@@ -309,7 +309,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 if (m_history_entry_index >= m_history_entry_count)
                 {
                     // abort sync?
-                    controller->disconnectFromDevice();
+                    m_bleController->disconnectFromDevice();
                     return;
                 }
 
@@ -344,7 +344,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
                 int64_t tmcd = QDateTime::currentSecsSinceEpoch() - ((m_history_entry_count - m_history_entry_index) * 10 * 60);
-                m_lastSync.setSecsSinceEpoch(tmcd);
+                m_lastHistorySync.setSecsSinceEpoch(tmcd);
 
                 // Save these values in db?
                 addDatabaseRecord(tmcd + 0, temp1, hygro1);
@@ -373,11 +373,11 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 {
                     // Update last sync
                     int64_t lastSync = m_device_wall_time + (m_history_entry_count * 10 * 60);
-                    m_lastSync.setSecsSinceEpoch(lastSync);
+                    m_lastHistorySync.setSecsSinceEpoch(lastSync);
 
                     // Finish it
                     refreshHistoryFinished(true);
-                    controller->disconnectFromDevice();
+                    m_bleController->disconnectFromDevice();
                     return;
                 }
             }
@@ -400,7 +400,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 }
 
                 refreshDataFinished(true);
-                controller->disconnectFromDevice();
+                m_bleController->disconnectFromDevice();
                 return;
             }
         }

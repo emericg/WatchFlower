@@ -125,16 +125,16 @@ Item {
         textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isFresh()) {
+            if (boxDevice.isDataFresh()) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
-            } else if (boxDevice.isAvailable()) {
+            } else if (boxDevice.isDataAvailable()) {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
             }
         }
         // Image
-        if (boxDevice.isAvailable()) {
+        if (boxDevice.isDataAvailable()) {
             // if we have data cached, no indicator
             imageStatus.visible = false
             refreshAnimation.running = false
@@ -218,7 +218,7 @@ Item {
         temp.visible = false
 
         // Warnings are only for plants (with available data)
-        if (boxDevice.isAvailable() && boxDevice.isPlantSensor()) {
+        if (boxDevice.isDataAvailable() && boxDevice.isPlantSensor()) {
 
             // Water me notif
             if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
@@ -254,7 +254,7 @@ Item {
         }
 
         // Has data? always display them
-        if (boxDevice.isAvailable()) {
+        if (boxDevice.isDataAvailable()) {
             if (boxDevice.isPlantSensor()) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height

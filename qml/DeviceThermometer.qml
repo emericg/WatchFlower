@@ -155,7 +155,7 @@ Item {
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-            (currentDevice.isFresh() || currentDevice.isAvailable())) {
+            (currentDevice.isDataFresh() || currentDevice.isDataAvailable())) {
             if (currentDevice.getLastUpdateInt() <= 1)
                 textStatus.text = qsTr("Synced")
             else

@@ -68,7 +68,8 @@ DeviceManager::DeviceManager()
     m_devices_filter = new DeviceFilter(this);
     m_devices_filter->setSourceModel(m_devices_model);
     SettingsManager *sm = SettingsManager::getInstance();
-    if (sm) {
+    if (sm)
+    {
         //if (sm->getOrderBy() == "manual") orderby_manual();
         if (sm->getOrderBy() == "location") orderby_location();
         if (sm->getOrderBy() == "plant") orderby_plant();
@@ -83,7 +84,8 @@ DeviceManager::DeviceManager()
 
     // Database
     DatabaseManager *db = DatabaseManager::getInstance();
-    if (db) {
+    if (db)
+    {
         m_dbInternal = db->hasDatabaseInternal();
         m_dbExternal = db->hasDatabaseExternal();
     }
@@ -146,7 +148,6 @@ DeviceManager::~DeviceManager()
 {
     delete m_bluetoothAdapter;
     delete m_discoveryAgent;
-    delete m_ble_controller;
     delete m_ble_params;
 
     delete m_devices_filter;
@@ -586,8 +587,7 @@ void DeviceManager::listenDevices()
         if (m_discoveryAgent && !m_discoveryAgent->isActive())
         {
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                    this, &DeviceManager::deviceUpdateReceived,
-                    Qt::UniqueConnection);
+                    this, &DeviceManager::deviceUpdateReceived, Qt::UniqueConnection);
 
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                        this, &DeviceManager::addBleDevice);
@@ -714,6 +714,8 @@ void DeviceManager::activeScanningStop()
             qDebug() << "DeviceManager::activeScanningStop()";
 
             m_discoveryAgent->stop();
+            m_scanning = false;
+            Q_EMIT scanningChanged();
         }
     }
 }

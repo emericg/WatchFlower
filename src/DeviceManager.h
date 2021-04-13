@@ -66,7 +66,6 @@ class DeviceManager: public QObject
 
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
-    QLowEnergyController *m_ble_controller = nullptr;
     QLowEnergyConnectionParameters *m_ble_params = nullptr;
 
     DeviceModel *m_devices_model = nullptr;

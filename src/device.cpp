@@ -103,7 +103,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 
 Device::~Device()
 {
-    delete controller;
+    delete m_bleController;
 }
 
 /* ************************************************************************** */
@@ -113,22 +113,22 @@ void Device::deviceConnect()
 {
     qDebug() << "Device::deviceConnect()" << getAddress() << getName();
 
-    if (!controller)
+    if (!m_bleController)
     {
-        controller = new QLowEnergyController(m_bleDevice);
-        if (controller)
+        m_bleController = new QLowEnergyController(m_bleDevice);
+        if (m_bleController)
         {
-            if (controller->role() == QLowEnergyController::CentralRole)
+            if (m_bleController->role() == QLowEnergyController::CentralRole)
             {
-                controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
+                m_bleController->setRemoteAddressType(QLowEnergyController::PublicAddress);
 
                 // Connecting signals and slots for connecting to LE services.
-                connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
-                connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
-                connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
-                connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-                connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
-                connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
+                connect(m_bleController, &QLowEnergyController::connected, this, &Device::deviceConnected);
+                connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
+                connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
+                connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
+                connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
+                connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
             }
             else
             {
@@ -143,10 +143,10 @@ void Device::deviceConnect()
         }
     }
 
-    if (controller)
+    if (m_bleController)
     {
         setTimeoutTimer();
-        controller->connectToDevice();
+        m_bleController->connectToDevice();
     }
 }
 
@@ -154,9 +154,9 @@ void Device::deviceDisconnect()
 {
     qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
 
-    if (controller)
+    if (m_bleController)
     {
-        controller->disconnectFromDevice();
+        m_bleController->disconnectFromDevice();
     }
 }
 
@@ -202,9 +202,9 @@ void Device::actionWatering()
 
 void Device::refreshQueue()
 {
-    if (m_status == DeviceUtils::DEVICE_OFFLINE)
+    if (m_ble_status == DeviceUtils::DEVICE_OFFLINE)
     {
-        m_status = DeviceUtils::DEVICE_QUEUED;
+        m_ble_status = DeviceUtils::DEVICE_QUEUED;
         Q_EMIT statusUpdated();
     }
 }
@@ -215,7 +215,6 @@ void Device::refreshStart()
 
     if (!isUpdating())
     {
-        m_retries = 1;
         m_ble_action = DeviceUtils::ACTION_UPDATE;
         refreshDataStarted();
         getBleData();
@@ -250,15 +249,14 @@ void Device::refreshStop()
 {
     //qDebug() << "Device::refreshStop()" << getAddress() << getName();
 
-    if (controller && controller->state() != QLowEnergyController::UnconnectedState)
+    if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
     {
-        controller->disconnectFromDevice();
+        m_bleController->disconnectFromDevice();
     }
 
-    if (m_updating || m_status != DeviceUtils::DEVICE_OFFLINE)
+    if (m_ble_status != DeviceUtils::DEVICE_OFFLINE)
     {
-        m_updating = false;
-        m_status = DeviceUtils::DEVICE_OFFLINE;
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }
@@ -267,9 +265,9 @@ void Device::refreshDataCanceled()
 {
     //qDebug() << "Device::refreshDataCanceled()" << getAddress() << getName();
 
-    if (controller)
+    if (m_bleController)
     {
-        controller->disconnectFromDevice();
+        m_bleController->disconnectFromDevice();
 
         m_lastError = QDateTime::currentDateTime();
     }
@@ -307,8 +305,7 @@ void Device::refreshDataStarted()
 {
     //qDebug() << "Device::refreshDataStarted()" << getAddress() << getName();
 
-    m_updating = true;
-    m_status = DeviceUtils::DEVICE_CONNECTING;
+    m_ble_status = DeviceUtils::DEVICE_CONNECTING;
     Q_EMIT statusUpdated();
 }
 
@@ -318,8 +315,7 @@ void Device::refreshDataFinished(bool status, bool cached)
 
     m_timeoutTimer.stop();
 
-    m_updating = false;
-    m_status = DeviceUtils::DEVICE_OFFLINE;
+    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
 
     if (status == true)
@@ -350,8 +346,7 @@ void Device::refreshHistoryFinished(bool status)
 
     m_timeoutTimer.stop();
 
-    m_updating = false;
-    m_status = DeviceUtils::DEVICE_OFFLINE;
+    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
 
     // Even if the status is false, we probably have some new data
@@ -431,7 +426,7 @@ bool Device::getSqlInfos()
                 m_deviceBattery = getInfos.value(2).toInt();
                 m_associatedName = getInfos.value(3).toString();
                 m_locationName = getInfos.value(4).toString();
-                m_lastSync = getInfos.value(5).toDateTime();
+                m_lastHistorySync = getInfos.value(5).toDateTime();
                 //m_manualOrderIndex = 0; // TODO
                 m_isOutside = getInfos.value(6).toBool();
 
@@ -481,27 +476,27 @@ bool Device::getBleData()
     //qDebug() << "Device::getBleData(" << m_deviceAddress << ")";
 
     // Create a QLowEnergyController (if needed)
-    if (!controller)
+    if (!m_bleController)
     {
-        controller = new QLowEnergyController(m_bleDevice);
-        if (controller)
+        m_bleController = new QLowEnergyController(m_bleDevice);
+        if (m_bleController)
         {
-            if (controller->role() != QLowEnergyController::CentralRole)
+            if (m_bleController->role() != QLowEnergyController::CentralRole)
             {
                 qWarning() << "BLE controller doesn't have the QLowEnergyController::CentralRole";
                 refreshDataFinished(false, false);
                 return false;
             }
 
-            controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
+            m_bleController->setRemoteAddressType(QLowEnergyController::PublicAddress);
 
             // Connecting signals and slots for connecting to LE services.
-            connect(controller, &QLowEnergyController::connected, this, &Device::deviceConnected);
-            connect(controller, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
-            connect(controller, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
-            connect(controller, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            connect(controller, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
-            connect(controller, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
+            connect(m_bleController, &QLowEnergyController::connected, this, &Device::deviceConnected);
+            connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
+            connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
+            connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
+            connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
         }
         else
         {
@@ -516,11 +511,11 @@ bool Device::getBleData()
     }
 
     // Start the actual connection process
-    if (controller)
+    if (m_bleController)
     {
         setTimeoutTimer();
 
-        controller->connectToDevice();
+        m_bleController->connectToDevice();
     }
 
     return true;
@@ -534,28 +529,55 @@ bool Device::isErrored() const
     return (getLastErrorInt() >= 0 && getLastErrorInt() <= 12*60);
 }
 
-bool Device::isFresh() const
+bool Device::isDataFresh() const
 {
     SettingsManager *sm = SettingsManager::getInstance();
     return (getLastUpdateInt() >= 0 &&
             getLastUpdateInt() <= (hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()));
 }
 
-bool Device::isAvailable() const
+bool Device::isDataAvailable() const
 {
     return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
+}
+
+bool Device::isBusy() const
+{
+    return (m_ble_status >= DeviceUtils::DEVICE_CONNECTING);
+}
+
+bool Device::isUpdating() const
+{
+    return (m_ble_status >= DeviceUtils::DEVICE_UPDATING);
+}
+
+bool Device::isWorking() const
+{
+    return (m_ble_status == DeviceUtils::DEVICE_WORKING);
 }
 
 /* ************************************************************************** */
 
 QDateTime Device::getLastSync() const
 {
-    return m_lastSync;
+    return m_lastHistorySync;
 }
 
 int Device::getHistoryUpdatePercent() const
 {
     return -1;
+}
+
+/* ************************************************************************** */
+
+bool Device::needsUpdateRt() const
+{
+    return !isDataFresh();
+}
+
+bool Device::needsUpdateDb() const
+{
+    return (getLastUpdateDbInt() < 0 || getLastUpdateDbInt() > 60);
 }
 
 /* ************************************************************************** */
@@ -572,6 +594,27 @@ int Device::getLastUpdateInt() const
         {
             // this can happen if the computer clock is changed between two updates...
             qWarning() << "getLastUpdateInt() has a negative value (" << mins << "). Clock mismatch?";
+
+            // TODO start by a modulo 60?
+            mins = std::abs(mins);
+        }
+    }
+
+    return mins;
+}
+
+int Device::getLastUpdateDbInt() const
+{
+    int mins = -1;
+
+    if (m_lastUpdateDatabase.isValid())
+    {
+        mins = static_cast<int>(std::floor(m_lastUpdateDatabase.secsTo(QDateTime::currentDateTime()) / 60.0));
+
+        if (mins < 0)
+        {
+            // this can happen if the computer clock is changed between two updates...
+            qWarning() << "getLastUpdateDbInt() has a negative value (" << mins << "). Clock mismatch?";
 
             // TODO start by a modulo 60?
             mins = std::abs(mins);
@@ -809,8 +852,7 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << m_deviceAddress << ")";
 
-    m_updating = true;
-    m_status = DeviceUtils::DEVICE_CONNECTED;
+    m_ble_status = DeviceUtils::DEVICE_CONNECTED;
 
     if (m_ble_action == DeviceUtils::DEVICE_UPDATING_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
@@ -826,27 +868,27 @@ void Device::deviceConnected()
 
     if (m_ble_action == DeviceUtils::ACTION_UPDATE)
     {
-        m_status = DeviceUtils::DEVICE_UPDATING;
+        m_ble_status = DeviceUtils::DEVICE_UPDATING;
     }
     else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
     {
-        m_status = DeviceUtils::DEVICE_UPDATING_REALTIME;
+        m_ble_status = DeviceUtils::DEVICE_UPDATING_REALTIME;
     }
     else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
-        m_status = DeviceUtils::DEVICE_UPDATING_HISTORY;
+        m_ble_status = DeviceUtils::DEVICE_UPDATING_HISTORY;
     }
     else if (m_ble_action == DeviceUtils::ACTION_LED_BLINK ||
              m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY||
              m_ble_action == DeviceUtils::ACTION_WATERING)
     {
-        m_status = DeviceUtils::DEVICE_WORKING;
+        m_ble_status = DeviceUtils::DEVICE_WORKING;
     }
 
     Q_EMIT connected();
     Q_EMIT statusUpdated();
 
-    controller->discoverServices();
+    m_bleController->discoverServices();
 }
 
 void Device::deviceDisconnected()
@@ -855,21 +897,20 @@ void Device::deviceDisconnected()
 
     Q_EMIT disconnected();
 
-    if (m_status == DeviceUtils::DEVICE_CONNECTING || m_status == DeviceUtils::DEVICE_UPDATING)
+    if (m_ble_status == DeviceUtils::DEVICE_CONNECTING || m_ble_status == DeviceUtils::DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
         m_lastError = QDateTime::currentDateTime();
         refreshDataFinished(false);
     }
-    else if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
         // This means we got forcibly disconnected by the device before completing the history sync
         refreshHistoryFinished(false);
     }
     else
     {
-        m_updating = false;
-        m_status = DeviceUtils::DEVICE_OFFLINE;
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }

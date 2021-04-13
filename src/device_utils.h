@@ -134,7 +134,7 @@ public:
     Q_ENUMS(DeviceStatus)
 
     enum DeviceActions {
-        ACTION_UPDATE = 0,              //!< Read current sensor data
+        ACTION_UPDATE = 0,              //!< Read sensor latest data
         ACTION_UPDATE_REALTIME,         //!< Stay connected and read sensor data
         ACTION_UPDATE_HISTORY,          //!< Read sensor history
 

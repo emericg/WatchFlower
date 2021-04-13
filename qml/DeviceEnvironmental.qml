@@ -112,7 +112,7 @@ Item {
         //isGeigerCounter = true
         //isWeatherStation = true
 
-        indicatorDisconnected.visible = !currentDevice.isAvailable()
+        indicatorDisconnected.visible = !currentDevice.isDataAvailable()
         indicatorAirQuality.visible = isAirMonitor
         indicatorRadioactivity.visible = isGeigerCounter
 
@@ -160,7 +160,7 @@ Item {
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-            (currentDevice.isFresh() || currentDevice.isAvailable())) {
+            (currentDevice.isDataFresh() || currentDevice.isDataAvailable())) {
             if (currentDevice.getLastUpdateInt() <= 1)
                 textStatus.text = qsTr("Synced")
             else

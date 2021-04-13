@@ -59,7 +59,7 @@ DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
 
 DeviceWP6003::~DeviceWP6003()
 {
-    if (controller) controller->disconnectFromDevice();
+    if (m_bleController) m_bleController->disconnectFromDevice();
     delete serviceData;
 }
 
@@ -96,7 +96,7 @@ void DeviceWP6003::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
+        serviceData = m_bleController->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
@@ -201,7 +201,7 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             m_lastUpdate = QDateTime::currentDateTime();
 
             refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceWP6003 update:" << getAddress();

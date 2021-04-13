@@ -127,7 +127,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceData = controller->createServiceObject(uuid);
+            serviceData = m_bleController->createServiceObject(uuid);
             if (!serviceData)
                 qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
         }
@@ -140,7 +140,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceHandshake = controller->createServiceObject(uuid);
+            serviceHandshake = m_bleController->createServiceObject(uuid);
             if (!serviceHandshake)
                 qWarning() << "Cannot create service (handshake) for uuid:" << uuid.toString();
         }
@@ -153,7 +153,7 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceHistory = controller->createServiceObject(uuid);
+            serviceHistory = m_bleController->createServiceObject(uuid);
             if (!serviceHistory)
                 qWarning() << "Cannot create service (history) for uuid:" << uuid.toString();
         }
@@ -364,17 +364,17 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot history sync  > " << getAddress();
             qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
-            qDebug() << "- last_sync    :" << m_lastSync;
+            qDebug() << "- last_sync    :" << m_lastHistorySync;
             qDebug() << "- entry_count  :" << m_history_entry_count;
 #endif
 
             // We read entry from older to newer (entry_count to 0)
             int entries_to_read = m_history_entry_count;
 
-            // Is m_lastSync valid AND inside the range of stored history entries
-            if (m_lastSync.isValid())
+            // Is m_lastHistorySync valid AND inside the range of stored history entries
+            if (m_lastHistorySync.isValid())
             {
-                int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastSync.toSecsSinceEpoch();
+                int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
                 int64_t entries_count_sec = (m_history_entry_count * 3600);
 
                 if (lastSync_sec < entries_count_sec)
@@ -398,7 +398,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (m_history_entry_index < 0)
             {
                 // abort sync?
-                controller->disconnectFromDevice();
+                m_bleController->disconnectFromDevice();
                 return;
             }
 
@@ -478,7 +478,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
 
             refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot update:" << getAddress();

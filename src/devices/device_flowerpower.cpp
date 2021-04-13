@@ -158,7 +158,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
         if (m_ble_action == DeviceUtils::ACTION_UPDATE &&
             (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN"))
         {
-            serviceInfos = controller->createServiceObject(uuid);
+            serviceInfos = m_bleController->createServiceObject(uuid);
             if (!serviceInfos)
                 qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
         }
@@ -171,7 +171,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            serviceBattery = controller->createServiceObject(uuid);
+            serviceBattery = m_bleController->createServiceObject(uuid);
             if (!serviceBattery)
                 qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
         }
@@ -186,7 +186,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceHistory = controller->createServiceObject(uuid);
+            serviceHistory = m_bleController->createServiceObject(uuid);
             if (!serviceHistory)
                 qWarning() << "Cannot create service (history) for uuid:" << uuid.toString();
         }
@@ -199,7 +199,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceClock = controller->createServiceObject(uuid);
+            serviceClock = m_bleController->createServiceObject(uuid);
             if (!serviceClock)
                 qWarning() << "Cannot create service (clock) for uuid:" << uuid.toString();
         }
@@ -214,7 +214,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
         if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            serviceLive = controller->createServiceObject(uuid);
+            serviceLive = m_bleController->createServiceObject(uuid);
             if (!serviceLive)
                 qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
         }
@@ -421,7 +421,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             }
 
             refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceFlowerPower update:" << getAddress();

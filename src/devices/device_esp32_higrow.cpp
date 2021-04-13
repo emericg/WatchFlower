@@ -62,7 +62,7 @@ DeviceEsp32HiGrow::DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *par
 
 DeviceEsp32HiGrow::~DeviceEsp32HiGrow()
 {
-    if (controller) controller->disconnectFromDevice();
+    if (m_bleController) m_bleController->disconnectFromDevice();
 
     delete serviceInfos;
     delete serviceBattery;
@@ -125,7 +125,7 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceBattery;
         serviceBattery = nullptr;
 
-        serviceBattery = controller->createServiceObject(uuid);
+        serviceBattery = m_bleController->createServiceObject(uuid);
         if (!serviceBattery)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
@@ -135,7 +135,7 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        serviceData = controller->createServiceObject(uuid);
+        serviceData = m_bleController->createServiceObject(uuid);
         if (!serviceData)
             qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
@@ -269,7 +269,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             }
 
             refreshDataFinished(true);
-            controller->disconnectFromDevice();
+            m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();

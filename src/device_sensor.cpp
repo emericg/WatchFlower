@@ -152,12 +152,12 @@ void DeviceSensor::refreshHistoryFinished(bool status)
     m_history_session_count = -1;
     m_history_session_read = -1;
 
-    if (m_lastSync.isValid())
+    if (m_lastHistorySync.isValid())
     {
         // Write last sync
         QSqlQuery updateDeviceLastSync;
         updateDeviceLastSync.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
-        updateDeviceLastSync.bindValue(":sync", m_lastSync.toString("yyyy-MM-dd hh:mm:ss"));
+        updateDeviceLastSync.bindValue(":sync", m_lastHistorySync.toString("yyyy-MM-dd hh:mm:ss"));
         updateDeviceLastSync.bindValue(":deviceAddr", getAddress());
         if (updateDeviceLastSync.exec() == false)
             qWarning() << "> updateDeviceLastSync.exec() ERROR" << updateDeviceLastSync.lastError().type() << ":" << updateDeviceLastSync.lastError().text();
@@ -343,7 +343,7 @@ bool DeviceSensor::getSqlData(int minutes)
         m_watertank_level = cachedData.value(8).toFloat();
 
         QString datetime = cachedData.value(0).toString();
-        m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
+        m_lastUpdateDatabase = m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 /*
         qDebug() << ">> timestamp" << m_lastUpdate;
         qDebug() << "- m_soil_moisture:" << m_soil_moisture;
@@ -1067,7 +1067,7 @@ int DeviceSensor::getHistoryUpdatePercent() const
 {
     int p = 0;
 
-    if (m_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    if (m_ble_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
         if (m_history_session_count > 0)
         {

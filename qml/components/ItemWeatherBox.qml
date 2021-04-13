@@ -51,7 +51,7 @@ Rectangle {
         Row {
             spacing: 2
             Text {
-                text: itemWeatherBox.value.toFixed(itemWeatherBox.precision)
+                text: (itemWeatherBox.value > -99) ? itemWeatherBox.value.toFixed(itemWeatherBox.precision) : "?"
                 color: Theme.colorText
                 font.bold: false
                 font.pixelSize: {
