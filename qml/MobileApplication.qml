@@ -20,7 +20,6 @@ ApplicationWindow {
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
 
-    property var lastUpdate
     property var selectedDevice: null
 
     // Mobile stuff ////////////////////////////////////////////////////////////
@@ -213,16 +212,9 @@ ApplicationWindow {
                 // Check if we need an 'automatic' theme change
                 Theme.loadTheme(settingsManager.appTheme);
 
-                // Refresh
-                deviceManager.refreshDevices_check();
-/*
                 // Needs to check if a refresh could be usefull
-                var rightnow = new Date()
-                if (!lastUpdate || (rightnow - lastUpdate) > 1*60*1000) {
-                    deviceManager.refreshDevices_check();
-                    lastUpdate = rightnow
-                }
-*/
+                deviceManager.refreshDevices_check();
+
                 break;
             }
         }

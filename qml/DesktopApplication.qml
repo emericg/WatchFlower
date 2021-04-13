@@ -16,7 +16,6 @@ ApplicationWindow {
     property bool isTablet: false
     property bool isHdpi: (utilsScreen.screenDpi > 128)
 
-    property var lastUpdate
     property var selectedDevice: null
 
     // Desktop stuff ///////////////////////////////////////////////////////////
@@ -73,7 +72,7 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        deviceManager.refreshDevices_check();
+        //deviceManager.refreshDevices_check();
     }
 
     Connections {
@@ -147,15 +146,12 @@ ApplicationWindow {
                 // Check if we need an 'automatic' theme change
                 Theme.loadTheme(settingsManager.appTheme);
 
+                // Check Bluetooth anyway (on macOS)
+                //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
+
                 // Needs to check if a refresh could be usefull
-                var rightnow = new Date()
-                if (!lastUpdate || (rightnow - lastUpdate) > 5*60*1000) {
-                    deviceManager.refreshDevices_check();
-                    lastUpdate = rightnow;
-                } else {
-                    // Check Bluetooth anyway (on macOS)
-                    if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
-                }
+                deviceManager.refreshDevices_check();
+
                 break;
             }
         }

@@ -73,35 +73,33 @@ int main(int argc, char *argv[])
 
     // Background service application //////////////////////////////////////////
 
-    if (background_service || refresh_only)
+    // Refresh data in the background, without starting the UI, then exit
+    if (refresh_only)
     {
+        QCoreApplication app(argc, argv);
+
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
         SystrayManager *st = SystrayManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
         DeviceManager *dm = new DeviceManager;
+        if (!sm || !db || !st || !nm || !dm) return EXIT_FAILURE;
 
-        if (!sm || !db || !st || !nm || !dm)
-            return EXIT_FAILURE;
-
-        // Refresh data in the background, without starting the UI, then exit
-        if (refresh_only)
+        if (dm->areDevicesAvailable())
         {
-            //QCoreApplication
-            if (dm->areDevicesAvailable())
-            {
-                dm->refreshDevices_check();
-                return EXIT_SUCCESS;
-            }
-        }
-        if (background_service)
-        {
-            //QAndroidService app(argc, argv);
-            // TODO
-            //return app.exec();
+            dm->refreshDevices_check();
         }
 
-        return EXIT_SUCCESS;
+        return app.exec();
+    }
+
+    if (background_service)
+    {
+#if defined(Q_OS_ANDROID)
+        //QAndroidService app(argc, argv);
+        // TODO
+        //return app.exec();
+#endif
     }
 
     // GUI application /////////////////////////////////////////////////////////

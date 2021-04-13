@@ -119,9 +119,6 @@ public slots:
 
     void scanDevices();
     void listenDevices();
-    void deviceUpdateReceived(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
-    void activeScanningStart();
-    void activeScanningStop();
 
     void orderby_manual();
     void orderby_model();
@@ -136,10 +133,11 @@ private slots:
     void bluetoothStatusChanged();
 
     // QBluetoothDeviceDiscoveryAgent related
-    void addBleDevice(const QBluetoothDeviceInfo &);
-    void deviceDiscoveryFinished();
+    void bluetoothModeChangedIos();
+    void addBleDevice(const QBluetoothDeviceInfo &info);
+    void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
-    void bleDiscoveryFinished();
+    void deviceDiscoveryFinished();
 
 Q_SIGNALS:
     void devicesListUpdated();
