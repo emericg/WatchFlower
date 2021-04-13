@@ -315,7 +315,7 @@ Item {
         border.color: singleColumn ? "transparent" : Theme.colorSeparator
 
         color: isSelected ? Theme.colorSeparator : Theme.colorDeviceWidget
-        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
+        Behavior on color { ColorAnimation { duration: 133 } }
 
         opacity: isSelected ? 0.5 : (singleColumn ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
