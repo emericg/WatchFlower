@@ -598,6 +598,8 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+
+                m_lastUpdateDatabase = m_lastUpdate;
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
@@ -665,6 +667,76 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
             mac.insert(2, ':');
         }
 #endif
+
+        if (value.size() >= 16)
+        {
+            // get data
+            if (data[12] == 4 && value.size() >= 17)
+            {
+                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_temperature = temp;
+            }
+            else if (data[12] == 6 && value.size() >= 17)
+            {
+                hygro = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_humidity = hygro;
+            }
+            else if (data[12] == 7 && value.size() >= 18)
+            {
+                lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
+                m_luminosity = lumi;
+            }
+            else if (data[12] == 8 && value.size() >= 17)
+            {
+                moist = static_cast<int16_t>(data[15] + (data[16] << 8));
+                m_soil_moisture = moist;
+            }
+            else if (data[12] == 9 && value.size() >= 17)
+            {
+                fert = static_cast<int16_t>(data[15] + (data[16] << 8));
+                m_soil_conductivity = fert;
+            }
+            else if (data[12] == 10 && value.size() >= 16)
+            {
+                batt = static_cast<int8_t>(data[15]);
+                if (m_deviceBattery != batt)
+                {
+                    m_deviceBattery = batt;
+                    // TODO // UPDATE DB
+                }
+            }
+            else if (data[12] == 11 && value.size() >= 19)
+            {
+                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_temperature = temp;
+                hygro = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
+                m_humidity = hygro;
+            }
+
+            m_lastUpdate = QDateTime::currentDateTime();
+
+            if (needsUpdateDb())
+            {
+                if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
+                {
+                    // TODO // UPDATE DB
+                }
+            }
+
+            Q_EMIT dataUpdated();
+            Q_EMIT statusUpdated();
+
+#ifndef QT_NO_DEBUG
+            qDebug() << "* DeviceFlowerCare service data:" << getAddress();
+            qDebug() << "- MAC:" << mac;
+            qDebug() << "- battery:" << batt;
+            qDebug() << "- temperature:" << temp;
+            qDebug() << "- humidity:" << hygro;
+            qDebug() << "- luminosity:" << lumi;
+            qDebug() << "- moisture:" << moist;
+            qDebug() << "- fertility:" << fert;
+#endif
+        }
     }
 }
 

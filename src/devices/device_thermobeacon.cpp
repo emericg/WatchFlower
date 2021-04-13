@@ -428,20 +428,19 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
+        m_lastUpdate = QDateTime::currentDateTime();
+
         if (battv > 3100) battv = 3100;
         if (battv < 2300) battv = 2300;
         int battlvl = (0 + ((battv-2300) * (100-0)) / (3100-2300));
         updateBattery(battlvl);
 
-        if (getLastUpdateInt() < 0 || getLastUpdateInt() > 30)
+        if (needsUpdateDb())
         {
             addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
         }
 
-        m_lastUpdate = QDateTime::currentDateTime();
-
         Q_EMIT dataUpdated();
-        Q_EMIT deviceUpdated(this);
         Q_EMIT statusUpdated();
 
 #ifndef QT_NO_DEBUG
@@ -480,8 +479,14 @@ bool DeviceThermoBeacon::addDatabaseRecord(const int64_t timestamp, const float 
         addData.bindValue(":hygro", h);
         status = addData.exec();
 
-        if (status == false)
+        if (status)
+        {
+            m_lastUpdateDatabase = tmcd;
+        }
+        else
+        {
             qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+        }
     }
 
     return status;
