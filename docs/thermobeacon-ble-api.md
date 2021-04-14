@@ -1,6 +1,6 @@
 
-<img src="thermobeacon_square.svg" width="256px" alt="ThermoBeacon" align="right" />
-<img src="thermobeacon_round.svg" width="256px" alt="ThermoBeacon" align="right" />
+<img src="thermobeacon_square.svg" width="256px" alt="ThermoBeacon (LCD)" align="right" />
+<img src="thermobeacon_round.svg" width="256px" alt="ThermoBeacon (Keychain)" align="right" />
 
 ## About SensorBlue ThermoBeacon
 
@@ -19,7 +19,7 @@
 ## Protocol
 
 The device uses BLE GATT for communication.  
-Sensor values are immediately available for reading.  
+Sensor values are broadcasted, history values are available for reading.  
 
 ### BLE & GATT
 
@@ -61,7 +61,42 @@ The name advertised by the devices is `ThermoBeacon`, for both keychain and LCD 
 
 #### Communication with the device
 
-TODO
+##### Blink
+
+Writing 5 bytes (`0x0400000000`) to the TX handle will make the device blink the onboard LED for a couple of seconds, so you can visualize where it is.
+
+#### Historical data
+
+##### Entry count
+
+Writing 5 bytes (`0x0100000000`) to the TX handle will make the device send back the entry count on RX (Int16).  
+The entries (temperature + humidity) are saved every 10 minutes by the sensors. 
+
+##### Device time
+
+The device uptime can be found in the advertisement data. However even without it, it can be approximated at ±10m, because we now know the number of entries and that they are saved each 10m, so device time (in s) = entry count * 600.
+
+##### Read entries
+
+Writing 5 bytes (`0x07XXXX0000`) to the TX handle will make the device send back 3 pair of entries (starting at index XXXX) on RX.  
+The index in an 2 bytes integer, little-endian, from 0 to entry count, 0 being the oldest record, entry count the most recent.
+
+The response is as follow:
+
+| Bytes | Type      | Raw value         | Value             | Description           |
+| ----- | --------- | ----------------- | ----------------- | --------------------- |
+| 00-05 | bytes     | 0x07XXXX0000      |                   | command + idx         |
+| 06-07 | Int16     | 360               | 360/16 = 22.5°    | temperature °C (1)    |
+| 08-09 | Int16     |                   |                   | temperature (2)       |
+| 10-11 | Int16     |                   |                   | temperature (3)       |
+| 12-13 | Int16     | 652               | 652/16 = 40.75%   | humidity %RH (1)      |
+| 14-15 | Int16     |                   |                   | humidity (2)          |
+| 16-17 | Int16     |                   |                   | humidity (3)          |
+
+##### Clear entries
+
+Writing 5 bytes (`0x0200000000`) to the TX handle will clear sensor history and reboot the device.
+The onboard LED will also slowly blink three time.
 
 ## Advertisement data
 

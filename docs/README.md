@@ -87,7 +87,7 @@
 | Thermometer                       | 0 ~ 60 °C                         |
 | Hygrometer                        | 0 ~ 99% RH                        |
 
-| Digital Hygrometer Alarm          | ?                                 |
+| Digital Hygrometer Alarm          | Miaomiaoce                        |
 | --------------------------------- | --------------------------------- |
 | FCC ID                            | MHO-C303                          |
 | <img src="hygrotemp_alarm.svg" width="256">                          ||
@@ -136,6 +136,18 @@
 
 
 # Environmental sensors
+
+| Air Box WP6003                    | VSON technology                   |
+| --------------------------------- | --------------------------------- |
+| FCC ID                            | ?                                 |
+| <img src="wp6003.svg" width="256">                                   ||
+| Screen                            | N/A                               |
+| Battery                           | N/A                               |
+| Thermometer                       | -10 ~ 50 °C                       |
+| TVOC                              | 0 ~ 9.999 mg/m3                   |
+| HCHO                              | 0 ~ 1.999 mg/m3                   |
+| CO2 (estimated)                   | 400 ~ 2000 ppm                    |
+| BLE API                           | [link](wp6003-ble-api.md)         |
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 

@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * VSON technology "air box WP6003"
+ * VSON technology "Air Box WP6003"
  *
  * Protocol infos:
  * - WatchFlower/docs/wp6003.md

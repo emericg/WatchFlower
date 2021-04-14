@@ -11,6 +11,7 @@
 Boards are available from LilyGo or Weemo Chinese manufacturers.
 
 I would not recommend an HiGrow for serious plant monitoring, only for tinkering with an esp32 board with onboard sensors.
+The API described below is only available with a [custom firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow).
 
 ## Features
 
@@ -44,6 +45,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 ## Services, characteristics and handles
 
 The name advertised by the device is `HiGrow`
+The API described below is only available with a [custom firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow).
 
 ##### Generic Access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 

@@ -37,6 +37,9 @@
  * Xiaomi MiJia "Digital Hygrometer"
  * LYWSD03MMC device / square body / LCD
  *
+ * MMC "Digital Hygrometer"
+ * MHO-C401 device / square body / E-Ink
+ *
  * Protocol infos:
  * - WatchFlower/docs/lywsd03mmc-ble-api.md
  */

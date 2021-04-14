@@ -37,6 +37,9 @@
  * Xiaomi MiJia "Digital Hygrometer Clock"
  * LYWSD02 device / rectangular body / E-Ink
  *
+ * Miaomiaoce "Smart Hygrometer Alarm Clock"
+ * MHO-C303 device / rectangular body / E-Ink
+ *
  * Protocol infos:
  * - WatchFlower/docs/lywsd02-ble-api.md
  */
