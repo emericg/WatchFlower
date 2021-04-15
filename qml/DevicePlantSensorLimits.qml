@@ -169,7 +169,8 @@ Item {
                     Item {
                         id: itemFirmware
                         height: 28
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         Text {
                             id: labelFirmware
@@ -223,9 +224,7 @@ Item {
                         id: battery
                         height: 28
                         anchors.left: parent.left
-                        anchors.leftMargin: 0
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
 
                         Text {
                             id: labelBattery
@@ -256,7 +255,8 @@ Item {
                     Item {
                         id: itemMacAddr
                         height: 28
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         visible: false
                         enabled: visible

@@ -137,6 +137,7 @@ Item {
             colorGreen = "#85c700"
             colorBlue = "#4cafe9"
             colorYellow = "#facb00"
+            colorOrange = "#ffa635"
             colorRed = "#ff7657"
 
             themeStatusbar = Material.Dark
@@ -160,7 +161,7 @@ Item {
             colorPrimary = colorYellow
             colorSecondary = "#ffe800"
             colorSuccess = colorGreen
-            colorWarning = colorRed
+            colorWarning = colorOrange
             colorError = colorRed
 
             colorText = "#474747"
@@ -189,6 +190,7 @@ Item {
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
             colorYellow = "#ffba5a"
+            colorOrange = "#ffa635"
             colorRed = "#ff7657"
 
             themeStatusbar = Material.Dark
@@ -212,7 +214,7 @@ Item {
             colorPrimary = colorGreen
             colorSecondary = colorLightGreen
             colorSuccess = colorGreen
-            colorWarning = colorRed
+            colorWarning = colorOrange
             colorError = colorRed
 
             colorText = "#333333"
@@ -241,6 +243,7 @@ Item {
             colorGreen = "#8cd200"
             colorBlue = "#4cafe9"
             colorYellow = "#ffcf00"
+            colorOrange = "#ffa635"
             colorRed = "#ff7657"
 
             themeStatusbar = Material.Dark
@@ -264,7 +267,7 @@ Item {
             colorPrimary = colorYellow
             colorSecondary = "#ffe800"
             colorSuccess = colorGreen
-            colorWarning = colorRed
+            colorWarning = colorOrange
             colorError = colorRed
 
             colorText = "#474747"
@@ -293,6 +296,7 @@ Item {
             colorGreen = "#58CF77"
             colorBlue = "#4dceeb"
             colorYellow = "#fcc632"
+            colorOrange = "#ff8f35"
             colorRed = "#e8635a"
 
             themeStatusbar = Material.Dark
@@ -316,7 +320,7 @@ Item {
             colorPrimary = "#bb86fc"
             colorSecondary = "#b16bee"
             colorSuccess = colorGreen
-            colorWarning = colorRed
+            colorWarning = colorOrange
             colorError = colorRed
 
             colorText = "#EEE"

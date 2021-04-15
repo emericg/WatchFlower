@@ -18,9 +18,9 @@ Item {
     property string color: {
         if (limit_mid && limit_high) {
             if (value > limit_high)
-                return Theme.colorRed
+                return Theme.colorError
             else if (value > limit_mid)
-                return Theme.colorOrange
+                return Theme.colorWarning
         }
         return Theme.colorGreen
     }

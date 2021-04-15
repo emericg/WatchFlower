@@ -81,7 +81,7 @@ Popup {
                     width: parent.btnSize
 
                     text: qsTr("Delete local data")
-                    primaryColor: Theme.colorYellow
+                    primaryColor: Theme.colorOrange
                     fullColor: true
                     onClicked: {
                         if (selectedDevice) {
