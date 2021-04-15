@@ -116,7 +116,9 @@ TRANSLATIONS = i18n/watchflower_da.ts \
                i18n/watchflower_nb.ts \
                i18n/watchflower_nl.ts \
                i18n/watchflower_nn.ts \
-               i18n/watchflower_ru.ts
+               i18n/watchflower_ru.ts \
+               i18n/watchflower_zh_CN.ts \
+               i18n/watchflower_zh_TW.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
 

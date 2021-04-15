@@ -1,17 +1,4 @@
 <RCC>
-  <qresource prefix="/i18n">
-    <file>watchflower_da.qm</file>
-    <file>watchflower_de.qm</file>
-    <file>watchflower_en.qm</file>
-    <file>watchflower_es.qm</file>
-    <file>watchflower_fr.qm</file>
-    <file>watchflower_fy.qm</file>
-    <file>watchflower_nb.qm</file>
-    <file>watchflower_nl.qm</file>
-    <file>watchflower_nn.qm</file>
-    <file>watchflower_ru.qm</file>
-  </qresource>
-
   <qresource prefix="/i18n" lang="da">
     <file alias="watchflower.qm">watchflower_da.qm</file>
   </qresource>
@@ -41,5 +28,11 @@
   </qresource>
   <qresource prefix="/i18n" lang="ru">
     <file alias="watchflower.qm">watchflower_ru.qm</file>
+  </qresource>
+  <qresource prefix="/i18n" lang="zh_CN">
+    <file alias="watchflower.qm">watchflower_zh_CN.qm</file>
+  </qresource>
+  <qresource prefix="/i18n" lang="zh_TW">
+    <file alias="watchflower.qm">watchflower_zh_TW.qm</file>
   </qresource>
 </RCC>
