@@ -45,7 +45,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankLevel READ getWaterTankLevel NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankCapacity READ getWaterTankCapacity NOTIFY dataUpdated)
-    Q_PROPERTY(QDateTime lastMoove READ getLastMoove NOTIFY dataUpdated)
+    Q_PROPERTY(QDateTime lastMove READ getLastMove NOTIFY dataUpdated)
     // hygrometer data
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
@@ -193,9 +193,11 @@ protected:
     virtual void refreshDataFinished(bool status, bool cached = false);
     virtual void refreshHistoryFinished(bool status);
 
-    virtual bool getSqlInfos();
-    virtual bool getSqlLimits();
-    virtual bool getSqlData(int minutes);
+    virtual bool getSqlDeviceInfos();
+    virtual bool getSqlPlantLimits();
+    virtual bool getSqlPlantData(int minutes);
+    virtual bool getSqlSensorLimits();
+    virtual bool getSqlSensorData(int minutes);
 
 public:
     DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
@@ -214,7 +216,7 @@ public slots:
     float getSoilPH() const { return m_soil_ph; }
     float getWaterTankLevel() const { return m_watertank_level; }
     float getWaterTankCapacity() const { return m_watertank_capacity; }
-    QDateTime getLastMoove() const;
+    QDateTime getLastMove() const;
     // Hygrometer
     float getTemp() const;
     float getTempC() const { return m_temperature; }

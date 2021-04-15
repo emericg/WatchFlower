@@ -394,7 +394,6 @@ void DatabaseManager::createDatabase()
         if (createLimits.exec() == false)
             qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
     }
-/*
     if (!tableExists("sensorData"))
     {
         qDebug() << "+ Adding 'sensorData' table to local database";
@@ -409,15 +408,20 @@ void DatabaseManager::createDatabase()
                                    "luminosity INT," \
                                    "uv FLOAT," \
                                    "sound FLOAT," \
-                                   "pm1 INT," \
-                                   "pm25 INT," \
-                                   "pm10 INT," \
-                                   "o2 INT," \
-                                   "o3 INT," \
-                                   "co INT," \
-                                   "co2 INT," \
-                                   "no2 INT," \
-                                   "voc INT," \
+                                   "water FLOAT," \
+                                   "windDirection FLOAT," \
+                                   "windSpeed FLOAT," \
+                                   "pm1 FLOAT," \
+                                   "pm25 FLOAT," \
+                                   "pm10 FLOAT," \
+                                   "o2 FLOAT," \
+                                   "o3 FLOAT," \
+                                   "co FLOAT," \
+                                   "co2 FLOAT," \
+                                   "no2 FLOAT," \
+                                   "so2 FLOAT," \
+                                   "voc FLOAT," \
+                                   "hcho FLOAT," \
                                    "geiger FLOAT," \
                                  " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
                                  ");");
@@ -425,7 +429,6 @@ void DatabaseManager::createDatabase()
         if (createSensorData.exec() == false)
             qWarning() << "> createSensorData.exec() ERROR" << createSensorData.lastError().type() << ":" << createSensorData.lastError().text();
     }
-*/
 }
 
 /* ************************************************************************** */

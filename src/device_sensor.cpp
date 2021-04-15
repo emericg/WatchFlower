@@ -48,10 +48,11 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
     // Load device infos and limits
     if (m_dbInternal || m_dbExternal)
     {
-        getSqlInfos();
-        getSqlLimits();
+        getSqlDeviceInfos();
+        getSqlPlantLimits();
         // Load initial data into the GUI (if they are no more than 12h old)
-        getSqlData(12*60);
+        getSqlPlantData(12*60);
+        getSqlSensorData(12*60);
     }
 
     // Configure timeout timer
@@ -75,10 +76,12 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     // Load device infos and limits
     if (m_dbInternal || m_dbExternal)
     {
-        getSqlInfos();
-        getSqlLimits();
+        getSqlDeviceInfos();
+        getSqlPlantLimits();
         // Load initial data into the GUI (if they are no more than 12h old)
-        getSqlData(12*60);
+        bool data = false;
+        if (!data) data = getSqlPlantData(12*60);
+        if (!data) data = getSqlSensorData(12*60);
     }
 
     // Configure timeout timer
@@ -166,10 +169,10 @@ void DeviceSensor::refreshHistoryFinished(bool status)
 
 /* ************************************************************************** */
 
-bool DeviceSensor::getSqlInfos()
+bool DeviceSensor::getSqlDeviceInfos()
 {
-    //qDebug() << "DeviceSensor::getSqlInfos(" << m_deviceAddress << ")";
-    bool status = Device::getSqlInfos();
+    //qDebug() << "DeviceSensor::getSqlDeviceInfos(" << m_deviceAddress << ")";
+    bool status = Device::getSqlDeviceInfos();
 
     if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_deviceFirmware.size() == 5))
     {
@@ -263,9 +266,9 @@ bool DeviceSensor::getSqlInfos()
     return status;
 }
 
-bool DeviceSensor::getSqlLimits()
+bool DeviceSensor::getSqlPlantLimits()
 {
-    //qDebug() << "DeviceSensor::getSqlLimits(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceSensor::getSqlPlantLimits(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery getLimits;
@@ -299,9 +302,9 @@ bool DeviceSensor::getSqlLimits()
     return status;
 }
 
-bool DeviceSensor::getSqlData(int minutes)
+bool DeviceSensor::getSqlPlantData(int minutes)
 {
-    //qDebug() << "DeviceSensor::getSqlData(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceSensor::getSqlPlantData(" << m_deviceAddress << ")";
     bool status = false;
 
     QSqlQuery cachedData;
@@ -354,6 +357,110 @@ bool DeviceSensor::getSqlData(int minutes)
         qDebug() << "- m_humidity:" << m_humidity;
         qDebug() << "- m_luminosity:" << m_luminosity;
         qDebug() << "- m_watertank_level:" << m_watertank_level;
+*/
+        status = true;
+    }
+
+    refreshDataFinished(status, true);
+    return status;
+}
+
+/* ************************************************************************** */
+
+bool DeviceSensor::getSqlSensorLimits()
+{
+    //qDebug() << "DeviceSensor::getSqlSensorLimits(" << m_deviceAddress << ")";
+    bool status = false;
+
+    return status;
+}
+
+bool DeviceSensor::getSqlSensorData(int minutes)
+{
+    //qDebug() << "DeviceSensor::getSqlSensorData(" << m_deviceAddress << ")";
+    bool status = false;
+
+    QSqlQuery cachedData;
+    if (m_dbInternal) // sqlite
+    {
+        cachedData.prepare("SELECT timestamp, temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
+                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
+                           "FROM sensorData " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s'), temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
+                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
+                           "FROM sensorData " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW());");
+    }
+    cachedData.bindValue(":deviceAddr", getAddress());
+
+    if (cachedData.exec() == false)
+    {
+        qWarning() << "> cachedData.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
+    }
+    else
+    {
+#ifndef QT_NO_DEBUG
+        qDebug() << "* Device update:" << getAddress();
+        qDebug() << "> SQL data available...";
+#endif
+    }
+
+    while (cachedData.next())
+    {
+        // hygrometer data
+        m_temperature = cachedData.value(1).toFloat();
+        m_humidity = cachedData.value(2).toFloat();
+        // environmental data
+        m_pressure = cachedData.value(3).toFloat();
+        m_luminosity = cachedData.value(4).toInt();
+        m_uv = cachedData.value(5).toFloat();
+        m_water_level = cachedData.value(6).toFloat();
+        m_sound_level = cachedData.value(7).toFloat();
+        m_wind_direction = cachedData.value(8).toFloat();
+        m_wind_speed = cachedData.value(9).toFloat();
+        m_pm_1 = cachedData.value(10).toFloat();
+        m_pm_25 = cachedData.value(11).toFloat();
+        m_pm_10 = cachedData.value(12).toFloat();
+        m_o2 = cachedData.value(13).toFloat();
+        m_o3 = cachedData.value(14).toFloat();
+        m_co = cachedData.value(15).toFloat();
+        m_co2 = cachedData.value(16).toFloat();
+        m_no2 = cachedData.value(17).toFloat();
+        m_so2 = cachedData.value(18).toFloat();
+        m_voc = cachedData.value(19).toFloat();
+        m_hcho = cachedData.value(20).toFloat();
+        m_rh = m_rm = m_rs = cachedData.value(21).toFloat();
+
+        QString datetime = cachedData.value(0).toString();
+        m_lastUpdateDatabase = m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
+/*
+        qDebug() << ">> timestamp" << m_lastUpdate;
+        qDebug() << "- m_temperature:" << m_temperature;
+        qDebug() << "- m_humidity:" << m_humidity;
+        qDebug() << "- m_pressure:" << m_pressure;
+        qDebug() << "- m_luminosity:" << m_luminosity;
+        qDebug() << "- m_uv:" << m_uv;
+        qDebug() << "- m_luminosity:" << m_luminosity;
+        qDebug() << "- m_water_level:" << m_water_level;
+        qDebug() << "- m_sound_level:" << m_sound_level;
+        qDebug() << "- m_wind_direction:" << m_wind_direction;
+        qDebug() << "- m_wind_speed:" << m_wind_speed;
+        qDebug() << "- m_pm_1:" << m_pm_1;
+        qDebug() << "- m_pm_25:" << m_pm_25;
+        qDebug() << "- m_pm_10:" << m_pm_10;
+        qDebug() << "- m_o2:" << m_o2;
+        qDebug() << "- m_o3:" << m_o3;
+        qDebug() << "- m_co:" << m_co;
+        qDebug() << "- m_co2:" << m_co2;
+        qDebug() << "- m_no2:" << m_no2;
+        qDebug() << "- m_so2:" << m_so2;
+        qDebug() << "- m_voc:" << m_voc;
+        qDebug() << "- m_hcho:" << m_hcho;
+        qDebug() << "- m_rm:" << m_rm;
 */
         status = true;
     }
@@ -1080,7 +1187,7 @@ int DeviceSensor::getHistoryUpdatePercent() const
     return p;
 }
 
-QDateTime DeviceSensor::getLastMoove() const
+QDateTime DeviceSensor::getLastMove() const
 {
     if (m_device_lastmove > 0)
         return QDateTime::fromSecsSinceEpoch(m_device_lastmove);

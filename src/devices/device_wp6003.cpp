@@ -42,9 +42,9 @@ DeviceWP6003::DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *pa
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
     m_deviceSensors += DeviceUtils::SENSOR_HCHO;
-    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
 DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -52,9 +52,9 @@ DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
     m_deviceSensors += DeviceUtils::SENSOR_HCHO;
-    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
 DeviceWP6003::~DeviceWP6003()
@@ -154,8 +154,8 @@ void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState
 
 void DeviceWP6003::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceWP6003::bleWriteDone(" << m_deviceAddress << ")";
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceWP6003::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -163,8 +163,8 @@ void DeviceWP6003::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteAr
 
 void DeviceWP6003::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceWP6003::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceWP6003::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     Q_UNUSED(c)
     Q_UNUSED(value)
@@ -172,8 +172,8 @@ void DeviceWP6003::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArr
 
 void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    qDebug() << "DeviceWP6003::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceWP6003::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     QBluetoothUuid uuid_tx(QString("0000FFF1-0000-1000-8000-00805F9B34FB"));
     QBluetoothUuid uuid_rx(QString("0000FFF4-0000-1000-8000-00805F9B34FB"));
@@ -199,6 +199,26 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             m_co2 = static_cast<int16_t>((data[16] << 8) + data[17]);
 
             m_lastUpdate = QDateTime::currentDateTime();
+
+            if (m_dbInternal || m_dbExternal)
+            {
+                // SQL date format YYYY-MM-DD HH:MM:SS
+                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, co2, voc, hcho)"
+                                " VALUES (:deviceAddr, :ts, :temp, :co2, :voc, :hcho)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":co2", m_co2);
+                addData.bindValue(":voc", m_voc);
+                addData.bindValue(":hcho", m_hcho);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                m_lastUpdateDatabase = m_lastUpdate;
+            }
 
             refreshDataFinished(true);
             m_bleController->disconnectFromDevice();

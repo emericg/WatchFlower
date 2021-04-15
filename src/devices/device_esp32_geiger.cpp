@@ -233,6 +233,11 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
             m_lastUpdate = QDateTime::currentDateTime();
 
+            if (m_dbInternal || m_dbExternal)
+            {
+                //
+            }
+
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshDataRealtime(true);

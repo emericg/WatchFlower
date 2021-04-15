@@ -166,7 +166,7 @@ void Device::actionClearHistory()
 {
     //qDebug() << "Device::actionClearHistory()" << getAddress() << getName();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_CLEAR_HISTORY;
         refreshDataStarted();
@@ -178,7 +178,7 @@ void Device::actionLedBlink()
 {
     //qDebug() << "Device::actionLedBlink()" << getAddress() << getName();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_LED_BLINK;
         refreshDataStarted();
@@ -190,7 +190,7 @@ void Device::actionWatering()
 {
     //qDebug() << "Device::actionWatering()" << getAddress() << getName();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_WATERING;
         refreshDataStarted();
@@ -213,7 +213,7 @@ void Device::refreshStart()
 {
     //qDebug() << "Device::refreshStart()" << getAddress() << getName() << "/ last update: " << getLastUpdateInt();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE;
         refreshDataStarted();
@@ -225,7 +225,7 @@ void Device::refreshHistoryStart()
 {
     //qDebug() << "Device::refreshHistoryStart()" << getAddress() << getName();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE_HISTORY;
         refreshDataStarted();
@@ -237,7 +237,7 @@ void Device::refreshRealtimeStart()
 {
     //qDebug() << "Device::refreshRealtimeStart()" << getAddress() << getName();
 
-    if (!isUpdating())
+    if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE_REALTIME;
         refreshDataStarted();
@@ -406,9 +406,9 @@ void Device::setTimeoutTimer()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool Device::getSqlInfos()
+bool Device::getSqlDeviceInfos()
 {
-    //qDebug() << "Device::getSqlInfos(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlDeviceInfos(" << m_deviceAddress << ")";
     bool status = false;
 
     if (m_dbInternal || m_dbExternal)
@@ -450,18 +450,6 @@ bool Device::getSqlInfos()
     }
 
     return status;
-}
-
-bool Device::getSqlLimits()
-{
-    //qDebug() << "Device::getSqlLimits(" << m_deviceAddress << ")";
-    return false;
-}
-
-bool Device::getSqlData(int)
-{
-    //qDebug() << "Device::getSqlData(" << m_deviceAddress << ")";
-    return false;
 }
 
 /* ************************************************************************** */

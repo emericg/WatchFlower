@@ -74,15 +74,16 @@ class Device: public QObject
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
 
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
-    Q_PROPERTY(bool updating READ isBusy NOTIFY statusUpdated)
-    Q_PROPERTY(bool fresh READ isDataFresh NOTIFY statusUpdated)
-    Q_PROPERTY(bool available READ isDataAvailable NOTIFY statusUpdated)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
+    Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
+    Q_PROPERTY(bool dataFresh READ isDataFresh NOTIFY statusUpdated)
+    Q_PROPERTY(bool dataAvailable READ isDataAvailable NOTIFY statusUpdated)
 
     Q_PROPERTY(QDateTime deviceTime READ getDeviceTime NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime lastSync READ getLastHistorySync NOTIFY historyUpdated)
+    Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY historyUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -163,9 +164,7 @@ protected:
 
     bool getBleData();              //!< Initiate a BLE connection with a device
 
-    virtual bool getSqlInfos();
-    virtual bool getSqlData(int minutes);
-    virtual bool getSqlLimits();
+    virtual bool getSqlDeviceInfos();
 
     bool m_dbInternal = false;
     bool m_dbExternal = false;

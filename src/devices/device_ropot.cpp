@@ -482,31 +482,32 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
             if (m_dbInternal || m_dbExternal)
             {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                if (needsUpdateDb())
+                {
+                    // SQL date format YYYY-MM-DD HH:MM:SS
+                    QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
+                    QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":hygro", m_soil_moisture);
-                addData.bindValue(":condu", m_soil_conductivity);
-                addData.bindValue(":temp", m_temperature);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                    QSqlQuery addData;
+                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
+                                    " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
+                    addData.bindValue(":deviceAddr", getAddress());
+                    addData.bindValue(":ts", tsStr);
+                    addData.bindValue(":ts_full", tsFullStr);
+                    addData.bindValue(":hygro", m_soil_moisture);
+                    addData.bindValue(":condu", m_soil_conductivity);
+                    addData.bindValue(":temp", m_temperature);
+                    if (addData.exec() == false)
+                        qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
-                m_lastUpdateDatabase = m_lastUpdate;
+                    m_lastUpdateDatabase = m_lastUpdate;
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshDataRealtime(true);
-
-                 // ask for a new reading
-                serviceData->readCharacteristic(c);
+                serviceData->readCharacteristic(c); // ask for a new reading
             }
             else
             {
