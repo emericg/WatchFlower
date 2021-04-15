@@ -60,7 +60,40 @@ The name advertised by the devices is `WP6003#XXXXXXXXXXXX`, WP6003# followed by
 
 #### Communication with the device
 
-TODO
+First of all you need to register to get notification on the RX characteristic.
+
+##### Set device time
+
+Writing 7 bytes (`0xaaYYMMDDhhmmss`) to the TX handle will set the device time.  
+
+| Bytes | Type      | Value             | Description           |
+| ----- | --------- | ----------------- | --------------------- |
+| 00    | bytes     | 0xaa              | command               |
+| 01    | bytes     | 20                | year % 100            |
+| 02    | bytes     | 01                | month                 |
+| 03    | bytes     | 01                | day                   |
+| 04    | bytes     | 12                | hour                  |
+| 05    | bytes     | 30                | minute                |
+| 06    | bytes     | 00                | second                |
+
+##### Read entries
+
+Writing 1 byte (`0xab`) to the TX handle will make the device send back a data packet on RX.  
+
+The response is as follow:
+
+| Bytes | Type      | Value             | Description           |
+| ----- | --------- | ----------------- | --------------------- |
+| 00    | bytes     | 0x0a              | command               |
+| 01    | bytes     | 20                | year % 100            |
+| 02    | bytes     | 01                | month                 |
+| 03    | bytes     | 01                | day                   |
+| 04    | bytes     | 12                | hour                  |
+| 05    | bytes     | 30                | minute                |
+| 06-07 | int16_be  | 221 (221/10=22.1°)| temperature (°C)      |
+| 06-07 | int16_be  |                   | VOC (mg/m3)           |
+| 06-07 | int16_be  |                   | HCHO (mg/m3)          |
+| 06-07 | int16_be  | 560               | eCO2 (PPM)            |
 
 ## Advertisement data
 

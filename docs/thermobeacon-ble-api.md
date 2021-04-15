@@ -67,6 +67,8 @@ Writing 5 bytes (`0x0400000000`) to the TX handle will make the device blink the
 
 #### Historical data
 
+First of all you need to register to get notification on the RX characteristic.
+
 ##### Entry count
 
 Writing 5 bytes (`0x0100000000`) to the TX handle will make the device send back the entry count on RX (Int16).  
