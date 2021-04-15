@@ -1080,4 +1080,12 @@ int DeviceSensor::getHistoryUpdatePercent() const
     return p;
 }
 
+QDateTime DeviceSensor::getLastMoove() const
+{
+    if (m_device_lastmove > 0)
+        return QDateTime::fromSecsSinceEpoch(m_device_lastmove);
+
+    return QDateTime();
+}
+
 /* ************************************************************************** */

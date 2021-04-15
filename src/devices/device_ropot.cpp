@@ -91,7 +91,6 @@ void DeviceRopot::serviceScanDone()
         if (serviceHandshake->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceHandshake, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_handshake);
-            connect(serviceHandshake, &QLowEnergyService::characteristicChanged, this, &DeviceRopot::bleReadNotify);
             connect(serviceHandshake, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
             connect(serviceHandshake, &QLowEnergyService::characteristicWritten, this, &DeviceRopot::bleWriteDone);
 
@@ -138,7 +137,8 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceHandshake;
         serviceHandshake = nullptr;
 
-        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY ||
+            m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
         {
             serviceHandshake = m_bleController->createServiceObject(uuid);
             if (!serviceHandshake)
@@ -170,36 +170,47 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
         if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
+            int batt = -1;
+            QString fw;
+
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
-                m_deviceBattery = chc.value().at(0);
-                m_deviceFirmware = chc.value().remove(0, 2);
+                batt = chc.value().at(0);
+                fw = chc.value().remove(0, 2);
             }
 
-            bool need_firstsend = true;
+            updateBatteryFirmware(batt, fw);
+
+            bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
                 if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
             }
 
-            Q_EMIT batteryUpdated();
-            Q_EMIT sensorUpdated();
-
-            if (need_firstsend) // always?
+            if (need_modechange) // always?
             {
+                // Change device mode
                 QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
+            // Ask for a reading
             QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
             QLowEnergyCharacteristic chb = serviceData->characteristic(b);
             serviceData->readCharacteristic(chb);
+        }
+
+        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+        {
+            // Make LED blink
+            // TODO
         }
     }
 }
@@ -210,7 +221,9 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHandshake && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (serviceHandshake &&
+            (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY ||
+             m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME))
         {
             QString addr = m_deviceAddress;
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
@@ -246,7 +259,7 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
             /// start session command (write [0x90, 0xca, 0x85, 0xde] on 0x1b)
             /// wait reply and
             /// enable notification for 0x12 handle
-            /// send key on 0x12 handle
+            /// send challenge key on 0x12 handle
             /// wait reply and
             /// send finish key
             /// disable notification for 0x12 handle
@@ -288,7 +301,7 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {
-        if (m_key_finish.size())
+        if (m_key_challenge.size())
         {
             // Send challenge key
             QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
@@ -310,18 +323,35 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
         }
         else
         {
-            if (m_device_time < 0)
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
-                // Read device time
-                QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
-                QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
-                serviceHistory->readCharacteristic(chh);
-            }
+                // Start reading history?
 
-            // Change the device mode
-            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
-            QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
-            serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
+                if (m_device_time < 0)
+                {
+                    // Read device time
+                    QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
+                    QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
+                    serviceHistory->readCharacteristic(chh);
+                }
+
+                // Change device mode
+                QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+                QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
+                serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
+            }
+            else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                // Change device mode
+                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
+
+                // Ask for a reading
+                QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
+                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+                serviceData->readCharacteristic(chb);
+            }
         }
         return;
     }
@@ -468,17 +498,21 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_deviceBattery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+                m_lastUpdateDatabase = m_lastUpdate;
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+
+                 // ask for a new reading
+                serviceData->readCharacteristic(c);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot update:" << getAddress();
@@ -492,3 +526,112 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         return;
     }
 }
+
+/* ************************************************************************** */
+
+void DeviceRopot::parseAdvertisementData(const QByteArray &value)
+{
+    //qDebug() << "DeviceRopot::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
+    // 12-18 bytes messages
+    if (value.size() >= 12)
+    {
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+        QString mac;
+        int batt = -99;
+        float temp = -99;
+        float hygro = -99;
+        int moist = -99;
+        int lumi = -99;
+        int fert = -99;
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        // get mac address
+        if (!hasSetting("mac"))
+        {
+            QByteArray mac_array = value.mid(10,1);
+            mac_array += value.mid(9,1);
+            mac_array += value.mid(8,1);
+            mac_array += value.mid(7,1);
+            mac_array += value.mid(6,1);
+            mac_array += value.mid(5,1);
+            mac = mac_array.toHex().toUpper();
+            mac.insert(10, ':');
+            mac.insert(8, ':');
+            mac.insert(6, ':');
+            mac.insert(4, ':');
+            mac.insert(2, ':');
+        }
+#endif
+
+        if (value.size() >= 16)
+        {
+            // get data
+            if (data[12] == 4 && value.size() >= 17)
+            {
+                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_temperature = temp;
+            }
+            else if (data[12] == 6 && value.size() >= 17)
+            {
+                hygro = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_humidity = hygro;
+            }
+            else if (data[12] == 7 && value.size() >= 18)
+            {
+                lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
+                m_luminosity = lumi;
+            }
+            else if (data[12] == 8 && value.size() >= 17)
+            {
+                moist = static_cast<int16_t>(data[15] + (data[16] << 8));
+                m_soil_moisture = moist;
+            }
+            else if (data[12] == 9 && value.size() >= 17)
+            {
+                fert = static_cast<int16_t>(data[15] + (data[16] << 8));
+                m_soil_conductivity = fert;
+            }
+            else if (data[12] == 10 && value.size() >= 16)
+            {
+                batt = static_cast<int8_t>(data[15]);
+                updateBattery(batt);
+            }
+            else if (data[12] == 11 && value.size() >= 19)
+            {
+                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                m_temperature = temp;
+                hygro = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
+                m_humidity = hygro;
+            }
+
+            if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
+            {
+                m_lastUpdate = QDateTime::currentDateTime();
+
+                if (needsUpdateDb())
+                {
+                    // TODO // UPDATE DB
+                }
+            }
+
+            Q_EMIT dataUpdated();
+            Q_EMIT statusUpdated();
+
+#ifndef QT_NO_DEBUG
+            //qDebug() << "* DeviceRopot service data:" << getAddress();
+            //qDebug() << "- MAC:" << mac;
+            //qDebug() << "- battery:" << batt;
+            //qDebug() << "- temperature:" << temp;
+            //qDebug() << "- humidity:" << hygro;
+            //qDebug() << "- luminosity:" << lumi;
+            //qDebug() << "- moisture:" << moist;
+            //qDebug() << "- fertility:" << fert;
+#endif
+        }
+    }
+}
+
+/* ************************************************************************** */

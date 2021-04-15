@@ -106,7 +106,6 @@ void DeviceFlowerCare::serviceScanDone()
         if (serviceHandshake->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceHandshake, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_handshake);
-            connect(serviceHandshake, &QLowEnergyService::characteristicChanged, this, &DeviceFlowerCare::bleReadNotify);
             connect(serviceHandshake, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
             connect(serviceHandshake, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
 
@@ -120,7 +119,6 @@ void DeviceFlowerCare::serviceScanDone()
         if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_history);
-            connect(serviceHistory, &QLowEnergyService::characteristicChanged, this, &DeviceFlowerCare::bleReadNotify);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
             connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceFlowerCare::bleWriteDone);
 
@@ -187,13 +185,18 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 
         if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
+            int batt = -1;
+            QString fw;
+
             QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
-                m_deviceBattery = chc.value().at(0);
-                m_deviceFirmware = chc.value().remove(0, 2);
+                batt = chc.value().at(0);
+                fw = chc.value().remove(0, 2);
             }
+
+            updateBatteryFirmware(batt, fw);
 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
@@ -201,15 +204,13 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
                 if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
                 if (Version(m_deviceFirmware) <= Version("2.6.6"))
                 {
                     need_modechange = false;
                 }
             }
-
-            Q_EMIT sensorUpdated();
-            Q_EMIT batteryUpdated();
 
             if (need_modechange) // if firmware > 2.6.6
             {
@@ -408,6 +409,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
 void DeviceFlowerCare::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceFlowerCare::bleReadNotify(" << m_deviceAddress << ")";
+    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
 void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -591,14 +593,6 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_deviceBattery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-
                 m_lastUpdateDatabase = m_lastUpdate;
             }
 
@@ -633,8 +627,8 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
 void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
 {
-    qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
-    qDebug() << "DATA: 0x" << value.toHex();
+    //qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
 
     // 12-18 bytes messages
     if (value.size() >= 12)
@@ -699,11 +693,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
             else if (data[12] == 10 && value.size() >= 16)
             {
                 batt = static_cast<int8_t>(data[15]);
-                if (m_deviceBattery != batt)
-                {
-                    m_deviceBattery = batt;
-                    // TODO // UPDATE DB
-                }
+                updateBattery(batt);
             }
             else if (data[12] == 11 && value.size() >= 19)
             {
@@ -713,11 +703,11 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 m_humidity = hygro;
             }
 
-            m_lastUpdate = QDateTime::currentDateTime();
-
-            if (needsUpdateDb())
+            if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
             {
-                if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
+                m_lastUpdate = QDateTime::currentDateTime();
+
+                if (needsUpdateDb())
                 {
                     // TODO // UPDATE DB
                 }
@@ -727,14 +717,14 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
             Q_EMIT statusUpdated();
 
 #ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceFlowerCare service data:" << getAddress();
-            qDebug() << "- MAC:" << mac;
-            qDebug() << "- battery:" << batt;
-            qDebug() << "- temperature:" << temp;
-            qDebug() << "- humidity:" << hygro;
-            qDebug() << "- luminosity:" << lumi;
-            qDebug() << "- moisture:" << moist;
-            qDebug() << "- fertility:" << fert;
+            //qDebug() << "* DeviceFlowerCare service data:" << getAddress();
+            //qDebug() << "- MAC:" << mac;
+            //qDebug() << "- battery:" << batt;
+            //qDebug() << "- temperature:" << temp;
+            //qDebug() << "- humidity:" << hygro;
+            //qDebug() << "- luminosity:" << lumi;
+            //qDebug() << "- moisture:" << moist;
+            //qDebug() << "- fertility:" << fert;
 #endif
         }
     }

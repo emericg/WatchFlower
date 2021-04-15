@@ -45,6 +45,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankLevel READ getWaterTankLevel NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankCapacity READ getWaterTankCapacity NOTIFY dataUpdated)
+    Q_PROPERTY(QDateTime lastMoove READ getLastMoove NOTIFY dataUpdated)
     // hygrometer data
     Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
     Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
@@ -182,6 +183,9 @@ protected:
     int m_history_session_count = -1;
     int m_history_session_read = -1;
 
+    // clock
+    int64_t m_device_lastmove = -1;
+
     //
     QList <QObject *> m_aio_minmax_data;
 
@@ -210,6 +214,7 @@ public slots:
     float getSoilPH() const { return m_soil_ph; }
     float getWaterTankLevel() const { return m_watertank_level; }
     float getWaterTankCapacity() const { return m_watertank_capacity; }
+    QDateTime getLastMoove() const;
     // Hygrometer
     float getTemp() const;
     float getTempC() const { return m_temperature; }
@@ -221,6 +226,9 @@ public slots:
     // Environmental
     int getLuminosity() const { return m_luminosity; }
     float getWaterLevel() const { return m_water_level; }
+    float getSoundLevel() const { return m_sound_level; }
+    float getWindDirection() const { return m_wind_direction; }
+    float getWindSpeed() const { return m_wind_speed; }
     float getPM1() { return m_pm_1; }
     float getPM25() { return m_pm_25; }
     float getPM10() { return m_pm_10; }

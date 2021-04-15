@@ -79,9 +79,10 @@ class Device: public QObject
     Q_PROPERTY(bool available READ isDataAvailable NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
+    Q_PROPERTY(QDateTime deviceTime READ getDeviceTime NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime lastSync READ getLastSync NOTIFY historyUpdated)
+    Q_PROPERTY(QDateTime lastSync READ getLastHistorySync NOTIFY historyUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -209,7 +210,8 @@ public slots:
     int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
 
-    QDateTime getLastSync() const;
+    QDateTime getDeviceTime() const;
+    QDateTime getLastHistorySync() const;
     virtual int getHistoryUpdatePercent() const;
 
     // Device infos
@@ -223,6 +225,7 @@ public slots:
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
     void updateFirmware(const QString &firmware);
     void updateBattery(const int battery);
+    void updateBatteryFirmware(const int battery, const QString &firmware);
 
     // RSSI
     int getRssi() const { return m_rssi; }

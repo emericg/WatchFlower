@@ -35,7 +35,7 @@
 
 /*!
  * Xiaomi MiJia "RoPot" or "FlowerPot" (HHCCPOT002)
- * WANFEI "RoPot"
+ * WANFEI "RoPot" (?)
  * VegTrug "Grow Care Home"
  *
  * Protocol infos:
@@ -49,6 +49,8 @@ public:
     DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
     DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceRopot();
+
+    void parseAdvertisementData(const QByteArray &value);
 
 private:
     // QLowEnergyController related

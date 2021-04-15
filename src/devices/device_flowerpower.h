@@ -25,8 +25,6 @@
 
 #include "device_sensor.h"
 
-#include <cstdint>
-
 #include <QObject>
 #include <QList>
 
@@ -70,9 +68,6 @@ private:
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
-
-    // Clock
-    int64_t m_device_lastmove = -1;
 };
 
 /* ************************************************************************** */

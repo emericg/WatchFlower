@@ -558,7 +558,15 @@ bool Device::isWorking() const
 
 /* ************************************************************************** */
 
-QDateTime Device::getLastSync() const
+QDateTime Device::getDeviceTime() const
+{
+    if (m_device_time > 0 && m_device_wall_time > 0)
+        return QDateTime::fromSecsSinceEpoch(m_device_time - m_device_wall_time);
+
+    return QDateTime();
+}
+
+QDateTime Device::getLastHistorySync() const
 {
     return m_lastHistorySync;
 }
@@ -823,6 +831,35 @@ void Device::updateBattery(const int battery)
 
             Q_EMIT batteryUpdated();
         }
+    }
+}
+
+void Device::updateBatteryFirmware(const int battery, const QString &firmware)
+{
+    bool changes = false;
+
+    if (battery > 0 && battery <= 100 && m_deviceBattery != battery)
+    {
+        m_deviceBattery = battery;
+        Q_EMIT batteryUpdated();
+        changes = true;
+    }
+    if (!firmware.isEmpty() && m_deviceFirmware != firmware)
+    {
+        m_deviceFirmware = firmware;
+        Q_EMIT sensorUpdated();
+        changes = true;
+    }
+
+    if ((m_dbInternal || m_dbExternal) && changes)
+    {
+        QSqlQuery updateBF;
+        updateBF.prepare("UPDATE devices SET deviceBattery = :battery, deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
+        updateBF.bindValue(":battery", m_deviceBattery);
+        updateBF.bindValue(":firmware", m_deviceFirmware);
+        updateBF.bindValue(":deviceAddr", getAddress());
+        if (updateBF.exec() == false)
+            qWarning() << "> updateBatteryFirmware.exec() ERROR" << updateBF.lastError().type() << ":" << updateBF.lastError().text();
     }
 }
 
