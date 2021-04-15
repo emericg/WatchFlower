@@ -22,6 +22,7 @@
         <file>icons_custom/indicators-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
+        <file>icons_material/baseline-air-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
         <file>icons_material/baseline-battery_alert-24px.svg</file>
@@ -50,6 +51,7 @@
         <file>icons_material/baseline-iso-24px.svg</file>
         <file>icons_material/baseline-menu-24px.svg</file>
         <file>icons_material/baseline-more_vert-24px.svg</file>
+        <file>icons_material/baseline-near_me-24px.svg</file>
         <file>icons_material/baseline-new_releases-24px.svg</file>
         <file>icons_material/baseline-notifications_none-24px.svg</file>
         <file>icons_material/baseline-refresh-24px.svg</file>
@@ -82,9 +84,11 @@
         <file>icons_material/duotone-date_clear-24px.svg</file>
         <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
         <file>icons_material/duotone-local_drink-24px.svg</file>
+        <file>icons_material/duotone-mic-24px.svg</file>
         <file>icons_material/duotone-minimize-24px.svg</file>
         <file>icons_material/duotone-pin_drop-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
+        <file>icons_material/duotone_speed-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
         <file>icons_material/duotone-timer-24px.svg</file>
         <file>icons_material/duotone-translate-24px.svg</file>

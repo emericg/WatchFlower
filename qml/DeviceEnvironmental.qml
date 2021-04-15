@@ -723,7 +723,7 @@ Item {
 
                             title: "Sound level"
                             legend: "db"
-                            icon: "qrc:/assets/icons_material/mic-24px.svg"
+                            icon: "qrc:/assets/icons_material/duotone-mic-24px.svg"
                             value: 47
                             precision: 0
                         }
@@ -759,7 +759,7 @@ Item {
 
                             title: "Wind direction"
                             legend: "north"
-                            icon: "qrc:/assets/icons_material/near_me-24px.svg"
+                            icon: "qrc:/assets/icons_material/baseline-near_me-24px.svg"
                             value: 0
                             precision: 0
                         }
