@@ -532,7 +532,7 @@ Item {
 
                             title: "VOC"
                             legend: "µg/m³"
-                            value: currentDevice.voc * 1000
+                            value: currentDevice.voc
                             limit_mid: 300
                             limit_high: 500
                             precision: 0
@@ -545,7 +545,7 @@ Item {
 
                             title: "HCHO"
                             legend: "µg/m³"
-                            value: currentDevice.hcho * 1000
+                            value: currentDevice.hcho
                             limit_mid: 1000
                             limit_high: 10000
                             precision: 0

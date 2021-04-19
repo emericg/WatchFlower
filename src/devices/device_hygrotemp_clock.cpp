@@ -331,8 +331,15 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempClock update:" << getAddress();

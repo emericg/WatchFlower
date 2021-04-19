@@ -193,10 +193,18 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             QTime t(data[4], data[5]);
             QDateTime tmcd(d, t);
 
-            m_temperature = static_cast<int16_t>((data[6] << 8) + data[7]) / 10.f;
-            m_voc = static_cast<int16_t>((data[10] << 8) + data[11]) / 1000.f;
-            m_hcho = static_cast<int16_t>((data[12] << 8) + data[13]) / 1000.f;
-            m_co2 = static_cast<int16_t>((data[16] << 8) + data[17]);
+            int16_t temp = static_cast<int16_t>((data[6] << 8) + data[7]);
+            uint16_t voc = static_cast<uint16_t>((data[10] << 8) + data[11]);
+            uint16_t hcho = static_cast<uint16_t>((data[12] << 8) + data[13]);
+            uint16_t co2 = static_cast<uint16_t>((data[16] << 8) + data[17]);
+
+            m_temperature = temp / 10.f;
+            if (voc < 0xffff && hcho < 0xffff)
+            {
+                m_voc = voc;
+                m_hcho = hcho;
+            }
+            m_co2 = co2;
 
             m_lastUpdate = QDateTime::currentDateTime();
 

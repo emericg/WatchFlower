@@ -392,7 +392,9 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            if (m_soil_temperature > -10.f && m_temperature > -10.f )
+            // Sometimes, Parrot devices send obviously wrong data over ble
+            if (m_soil_temperature > -10.f && m_temperature > -10.f &&
+                m_soil_temperature < 100.f && m_temperature < 100.f)
             {
                 if (m_dbInternal || m_dbExternal)
                 {

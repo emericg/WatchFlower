@@ -91,9 +91,9 @@ The response is as follow:
 | 04    | bytes     | 12                | hour                  |
 | 05    | bytes     | 30                | minute                |
 | 06-07 | int16_be  | 221 (221/10=22.1°)| temperature (°C)      |
-| 06-07 | int16_be  |                   | VOC (mg/m3)           |
-| 06-07 | int16_be  |                   | HCHO (mg/m3)          |
-| 06-07 | int16_be  | 560               | eCO2 (PPM)            |
+| 06-07 | uint16_be |                   | VOC (µg/m3)           |
+| 06-07 | uint16_be |                   | HCHO (µg/m3)          |
+| 06-07 | uint16_be | 560               | eCO2 (PPM)            |
 
 ## Advertisement data
 

@@ -213,43 +213,69 @@ Item {
 
         rectangleSensors.visible = false
         rectangleHygroTemp.visible = false
-        lilIcons.visible = false
         water.visible = false
         temp.visible = false
+        warning.visible = false
+        nuclear.visible = false
 
-        // Warnings are only for plants (with available data)
-        if (boxDevice.isDataAvailable() && boxDevice.isPlantSensor()) {
+        // Warnings icons (for sensors with available data)
+        if (boxDevice.isDataAvailable()) {
 
-            // Water me notif
-            if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
-                lilIcons.visible = true
-                water.visible = true
-                water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                temp.color = Theme.colorBlue
-            } else if (boxDevice.deviceSoilMoisture > boxDevice.limitHygroMax) {
-                lilIcons.visible = true
-                water.visible = true
-                water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                temp.color = Theme.colorYellow
-            }
+            if (boxDevice.isPlantSensor()) {
 
-            // Extreme temperature notif
-            if (boxDevice.deviceTempC > 40) {
-                lilIcons.visible = true
-                temp.visible = true
-                temp.color = Theme.colorYellow
-                temp.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-            } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
-                lilIcons.visible = true
-                temp.visible = true
-                temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-
-                if (boxDevice.deviceTempC <= -4)
-                    temp.color = Theme.colorRed
-                else if (boxDevice.deviceTempC <= -2)
-                    temp.color = Theme.colorYellow
-                else
+                // Water me notif
+                if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
+                    water.visible = true
+                    water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                     temp.color = Theme.colorBlue
+                } else if (boxDevice.deviceSoilMoisture > boxDevice.limitHygroMax) {
+                    water.visible = true
+                    water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
+                    temp.color = Theme.colorYellow
+                }
+
+                // Extreme temperature notif
+                if (boxDevice.deviceTempC > 40) {
+                    temp.visible = true
+                    temp.color = Theme.colorYellow
+                    temp.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
+                    temp.visible = true
+                    temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+
+                    if (boxDevice.deviceTempC <= -4)
+                        temp.color = Theme.colorRed
+                    else if (boxDevice.deviceTempC <= -2)
+                        temp.color = Theme.colorYellow
+                    else
+                        temp.color = Theme.colorBlue
+                }
+
+            } else if (boxDevice.isEnvironmentalSensor()) {
+
+                // Air warning
+                if (boxDevice.hasVocSensor()) {
+                    if (boxDevice.voc > 300) {
+                        warning.visible = true
+
+                        if (boxDevice.voc > 500)
+                            warning.color = Theme.colorRed
+                        else
+                            warning.color = Theme.colorYellow
+                    }
+                }
+
+                // Radiation warning
+                if (boxDevice.hasGeigerCounter()) {
+                    if (boxDevice.radioactivityM > 1) {
+                        nuclear.visible = true
+
+                        if (boxDevice.radioactivityM > 10)
+                            nuclear.color = Theme.colorRed
+                        else
+                            nuclear.color = Theme.colorYellow
+                    }
+                }
             }
         }
 
@@ -275,7 +301,7 @@ Item {
                 } else if (boxDevice.hasVocSensor()) {
                     rectangleHygroTemp.visible = true
                     textTemp.font.pixelSize = bigAssMode ? 28 : 26
-                    textTemp.text = (boxDevice.voc*1000).toFixed(0) + " " + "µg/m"
+                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
                     textHygro.text = boxDevice.deviceTemp.toFixed(1) + "°"
                 } else {
                     rectangleHygroTemp.visible = true
@@ -507,9 +533,10 @@ Item {
             Row {
                 id: lilIcons
                 height: 24
+                spacing: 8
                 anchors.verticalCenter: parent.verticalCenter
                 layoutDirection: Qt.RightToLeft
-                spacing: 8
+                visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
 
                 ImageSvg {
                     id: water
@@ -527,6 +554,24 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    color: Theme.colorYellow
+                }
+                ImageSvg {
+                    id: warning
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    color: Theme.colorYellow
+                }
+                ImageSvg {
+                    id: nuclear
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                     color: Theme.colorYellow
                 }
             }

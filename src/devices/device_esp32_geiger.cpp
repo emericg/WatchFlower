@@ -235,7 +235,19 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
             if (m_dbInternal || m_dbExternal)
             {
-                //
+                // SQL date format YYYY-MM-DD HH:MM:SS
+                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+
+                QSqlQuery addData;
+                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, geiger)"
+                                " VALUES (:deviceAddr, :ts, :geiger)");
+                addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":geiger", m_rm);
+                if (addData.exec() == false)
+                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                m_lastUpdateDatabase = m_lastUpdate;
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
