@@ -101,13 +101,13 @@ ApplicationWindow {
         }
         onDeviceRefreshHistoryButtonClicked: {
             if (selectedDevice) {
-                selectedDevice.refreshHistoryStart()
+                selectedDevice.refreshStartHistory()
             }
         }
 
         onDeviceRefreshRealtimeButtonClicked: {
             if (selectedDevice) {
-                selectedDevice.refreshRealtimeStart()
+                selectedDevice.refreshStartRealtime()
             }
         }
         onDeviceRefreshButtonClicked: {

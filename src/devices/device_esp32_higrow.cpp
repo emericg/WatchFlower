@@ -171,7 +171,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
             if (cbat.value().size() == 1)
             {
                 int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                updateBattery(lvl);
+                setBattery(lvl);
             }
         }
     }

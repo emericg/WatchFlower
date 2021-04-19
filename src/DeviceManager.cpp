@@ -200,7 +200,6 @@ bool DeviceManager::checkBluetooth()
         {
             m_btE = true;
             status = true;
-            qDebug() << "> Bluetooth adapter available";
         }
         else
         {
@@ -215,7 +214,10 @@ bool DeviceManager::checkBluetooth()
     }
 
     if (btA_was != m_btA || btE_was != m_btE)
-        Q_EMIT bluetoothChanged(); // this function did changed the Bluetooth status
+    {
+        // this function did changed the Bluetooth adapter status
+        Q_EMIT bluetoothChanged();
+    }
 
     return status;
 }
@@ -311,7 +313,10 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     }
 
     if (btA_was != m_btA || btE_was != m_btE)
-        Q_EMIT bluetoothChanged(); // this function did changed the Bluetooth status
+    {
+        // this function did changed the Bluetooth adapter status
+        Q_EMIT bluetoothChanged();
+    }
 }
 
 /* ************************************************************************** */
@@ -576,7 +581,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == info.address().toString())
             {
-                dd->updateRssi(info.rssi());
+                dd->setRssi(info.rssi());
                 break;
             }
         }

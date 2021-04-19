@@ -196,7 +196,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
                 fw = chc.value().remove(0, 2);
             }
 
-            updateBatteryFirmware(batt, fw);
+            setBatteryFirmware(batt, fw);
 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
@@ -694,7 +694,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
             else if (data[12] == 10 && value.size() >= 16)
             {
                 batt = static_cast<int8_t>(data[15]);
-                updateBattery(batt);
+                setBattery(batt);
             }
             else if (data[12] == 11 && value.size() >= 19)
             {

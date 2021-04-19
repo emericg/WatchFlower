@@ -433,7 +433,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         if (battv > 3100) battv = 3100;
         if (battv < 2300) battv = 2300;
         int battlvl = (0 + ((battv-2300) * (100-0)) / (3100-2300));
-        updateBattery(battlvl);
+        setBattery(battlvl);
 
         if (needsUpdateDb())
         {

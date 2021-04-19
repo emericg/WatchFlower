@@ -71,7 +71,7 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
 
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
@@ -109,9 +109,13 @@ Device::~Device()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+/*!
+ * \brief Device::deviceConnect
+ * \return false means immediate error, true means connection process started
+ */
 void Device::deviceConnect()
 {
-    qDebug() << "Device::deviceConnect()" << getAddress() << getName();
+    //qDebug() << "Device::deviceConnect()" << getAddress() << getName();
 
     if (!m_bleController)
     {
@@ -127,8 +131,8 @@ void Device::deviceConnect()
                 connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
                 connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
                 connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-                connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
-                connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
+                connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::deviceErrored);
+                connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::deviceStateChanged);
             }
             else
             {
@@ -143,6 +147,7 @@ void Device::deviceConnect()
         }
     }
 
+    // Start the actual connection process
     if (m_bleController)
     {
         setTimeoutTimer();
@@ -152,14 +157,15 @@ void Device::deviceConnect()
 
 void Device::deviceDisconnect()
 {
-    qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
+    //qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
 
-    if (m_bleController)
+    if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
     {
         m_bleController->disconnectFromDevice();
     }
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void Device::actionClearHistory()
@@ -169,8 +175,8 @@ void Device::actionClearHistory()
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_CLEAR_HISTORY;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
@@ -181,8 +187,8 @@ void Device::actionLedBlink()
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_LED_BLINK;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
@@ -193,8 +199,8 @@ void Device::actionWatering()
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_WATERING;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
@@ -216,32 +222,32 @@ void Device::refreshStart()
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
-void Device::refreshHistoryStart()
+void Device::refreshStartHistory()
 {
-    //qDebug() << "Device::refreshHistoryStart()" << getAddress() << getName();
+    //qDebug() << "Device::refreshStartHistory()" << getAddress() << getName();
 
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE_HISTORY;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
-void Device::refreshRealtimeStart()
+void Device::refreshStartRealtime()
 {
-    //qDebug() << "Device::refreshRealtimeStart()" << getAddress() << getName();
+    //qDebug() << "Device::refreshStartRealtime()" << getAddress() << getName();
 
     if (!isBusy())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE_REALTIME;
-        refreshDataStarted();
-        getBleData();
+        actionStarted();
+        deviceConnect();
     }
 }
 
@@ -261,9 +267,23 @@ void Device::refreshStop()
     }
 }
 
-void Device::refreshDataCanceled()
+void Device::actionCanceled()
 {
-    //qDebug() << "Device::refreshDataCanceled()" << getAddress() << getName();
+    //qDebug() << "Device::actionCanceled()" << getAddress() << getName();
+
+    if (m_bleController)
+    {
+        m_bleController->disconnectFromDevice();
+
+        m_lastError = QDateTime::currentDateTime();
+    }
+
+    refreshDataFinished(false);
+}
+
+void Device::actionTimedout()
+{
+    //qDebug() << "Device::actionTimedout()" << getAddress() << getName();
 
     if (m_bleController)
     {
@@ -286,7 +306,7 @@ void Device::refreshRetry()
         {
             controller->disconnectFromDevice();
 
-            //connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::refreshDataCanceled);
+            //connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
 
             m_timeoutTimer.start();
             controller->connectToDevice();
@@ -301,9 +321,9 @@ void Device::refreshRetry()
 
 /* ************************************************************************** */
 
-void Device::refreshDataStarted()
+void Device::actionStarted()
 {
-    //qDebug() << "Device::refreshDataStarted()" << getAddress() << getName();
+    //qDebug() << "Device::actionStarted()" << getAddress() << getName();
 
     m_ble_status = DeviceUtils::DEVICE_CONNECTING;
     Q_EMIT statusUpdated();
@@ -450,63 +470,6 @@ bool Device::getSqlDeviceInfos()
     }
 
     return status;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-/*!
- * \brief Device::getBleData
- * \return false means immediate error, true means update process started
- */
-bool Device::getBleData()
-{
-    //qDebug() << "Device::getBleData(" << m_deviceAddress << ")";
-
-    // Create a QLowEnergyController (if needed)
-    if (!m_bleController)
-    {
-        m_bleController = new QLowEnergyController(m_bleDevice);
-        if (m_bleController)
-        {
-            if (m_bleController->role() != QLowEnergyController::CentralRole)
-            {
-                qWarning() << "BLE controller doesn't have the QLowEnergyController::CentralRole";
-                refreshDataFinished(false, false);
-                return false;
-            }
-
-            m_bleController->setRemoteAddressType(QLowEnergyController::PublicAddress);
-
-            // Connecting signals and slots for connecting to LE services.
-            connect(m_bleController, &QLowEnergyController::connected, this, &Device::deviceConnected);
-            connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
-            connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService);
-            connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::errorReceived);
-            connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::stateChanged);
-        }
-        else
-        {
-            qWarning() << "Unable to create BLE controller";
-            refreshDataFinished(false, false);
-            return false;
-        }
-    }
-    else
-    {
-        //if (controller) qDebug() << "Current BLE controller state:" << controller->state();
-    }
-
-    // Start the actual connection process
-    if (m_bleController)
-    {
-        setTimeoutTimer();
-
-        m_bleController->connectToDevice();
-    }
-
-    return true;
 }
 
 /* ************************************************************************** */
@@ -779,7 +742,7 @@ bool Device::setSetting(const QString &key, QVariant value)
 
 /* ************************************************************************** */
 
-void Device::updateFirmware(const QString &firmware)
+void Device::setFirmware(const QString &firmware)
 {
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
@@ -787,19 +750,19 @@ void Device::updateFirmware(const QString &firmware)
 
         if (m_dbInternal || m_dbExternal)
         {
-            QSqlQuery updateFirmware;
-            updateFirmware.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
-            updateFirmware.bindValue(":firmware", m_deviceFirmware);
-            updateFirmware.bindValue(":deviceAddr", getAddress());
-            if (updateFirmware.exec() == false)
-                qWarning() << "> updateFirmware.exec() ERROR" << updateFirmware.lastError().type() << ":" << updateFirmware.lastError().text();
+            QSqlQuery setFirmware;
+            setFirmware.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
+            setFirmware.bindValue(":firmware", m_deviceFirmware);
+            setFirmware.bindValue(":deviceAddr", getAddress());
+            if (setFirmware.exec() == false)
+                qWarning() << "> setFirmware.exec() ERROR" << setFirmware.lastError().type() << ":" << setFirmware.lastError().text();
         }
 
         Q_EMIT sensorUpdated();
     }
 }
 
-void Device::updateBattery(const int battery)
+void Device::setBattery(const int battery)
 {
     if (battery > 0 && battery <= 100)
     {
@@ -809,12 +772,12 @@ void Device::updateBattery(const int battery)
 
             if (m_dbInternal || m_dbExternal)
             {
-                QSqlQuery updateBattery;
-                updateBattery.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateBattery.bindValue(":battery", m_deviceBattery);
-                updateBattery.bindValue(":deviceAddr", getAddress());
-                if (updateBattery.exec() == false)
-                    qWarning() << "> updateBattery.exec() ERROR" << updateBattery.lastError().type() << ":" << updateBattery.lastError().text();
+                QSqlQuery setBattery;
+                setBattery.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
+                setBattery.bindValue(":battery", m_deviceBattery);
+                setBattery.bindValue(":deviceAddr", getAddress());
+                if (setBattery.exec() == false)
+                    qWarning() << "> setBattery.exec() ERROR" << setBattery.lastError().type() << ":" << setBattery.lastError().text();
             }
 
             Q_EMIT batteryUpdated();
@@ -822,7 +785,7 @@ void Device::updateBattery(const int battery)
     }
 }
 
-void Device::updateBatteryFirmware(const int battery, const QString &firmware)
+void Device::setBatteryFirmware(const int battery, const QString &firmware)
 {
     bool changes = false;
 
@@ -841,19 +804,19 @@ void Device::updateBatteryFirmware(const int battery, const QString &firmware)
 
     if ((m_dbInternal || m_dbExternal) && changes)
     {
-        QSqlQuery updateBF;
-        updateBF.prepare("UPDATE devices SET deviceBattery = :battery, deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
-        updateBF.bindValue(":battery", m_deviceBattery);
-        updateBF.bindValue(":firmware", m_deviceFirmware);
-        updateBF.bindValue(":deviceAddr", getAddress());
-        if (updateBF.exec() == false)
-            qWarning() << "> updateBatteryFirmware.exec() ERROR" << updateBF.lastError().type() << ":" << updateBF.lastError().text();
+        QSqlQuery setBatteryFirmware;
+        setBatteryFirmware.prepare("UPDATE devices SET deviceBattery = :battery, deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
+        setBatteryFirmware.bindValue(":battery", m_deviceBattery);
+        setBatteryFirmware.bindValue(":firmware", m_deviceFirmware);
+        setBatteryFirmware.bindValue(":deviceAddr", getAddress());
+        if (setBatteryFirmware.exec() == false)
+            qWarning() << "> setBatteryFirmware.exec() ERROR" << setBatteryFirmware.lastError().type() << ":" << setBatteryFirmware.lastError().text();
     }
 }
 
 /* ************************************************************************** */
 
-void Device::updateRssi(const int rssi)
+void Device::setRssi(const int rssi)
 {
     if (m_rssi != rssi)
     {
@@ -879,7 +842,7 @@ void Device::deviceConnected()
 
     m_ble_status = DeviceUtils::DEVICE_CONNECTED;
 
-    if (m_ble_action == DeviceUtils::DEVICE_UPDATING_REALTIME ||
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
         // Stop timeout timer, we'll be long...
@@ -940,20 +903,25 @@ void Device::deviceDisconnected()
     }
 }
 
-void Device::errorReceived(QLowEnergyController::Error error)
+void Device::deviceErrored(QLowEnergyController::Error error)
 {
-    qWarning() << "Device::errorReceived(" << m_deviceAddress << ") error:" << error;
+    qWarning() << "Device::deviceErrored(" << m_deviceAddress << ") error:" << error;
 
     m_lastError = QDateTime::currentDateTime();
     refreshDataFinished(false);
 }
 
-void Device::stateChanged(QLowEnergyController::ControllerState)
+void Device::deviceStateChanged(QLowEnergyController::ControllerState)
 {
-    //qDebug() << "Device::stateChanged(" << m_deviceAddress << ") state:" << state;
+    //qDebug() << "Device::deviceStateChanged(" << m_deviceAddress << ") state:" << state;
 }
 
 /* ************************************************************************** */
+
+void Device::addLowEnergyService(const QBluetoothUuid &)
+{
+    //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
+}
 
 void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState)
 {
@@ -963,11 +931,6 @@ void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState)
 void Device::serviceScanDone()
 {
     //qDebug() << "Device::serviceScanDone(" << m_deviceAddress << ")";
-}
-
-void Device::addLowEnergyService(const QBluetoothUuid &)
-{
-    //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
 }
 
 /* ************************************************************************** */

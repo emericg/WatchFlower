@@ -40,7 +40,8 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
 {
     // Database
     DatabaseManager *db = DatabaseManager::getInstance();
-    if (db) {
+    if (db)
+    {
         m_dbInternal = db->hasDatabaseInternal();
         m_dbExternal = db->hasDatabaseExternal();
     }
@@ -57,7 +58,7 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::refreshDataCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
 
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
@@ -68,7 +69,8 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
 {
     // Database
     DatabaseManager *db = DatabaseManager::getInstance();
-    if (db) {
+    if (db)
+    {
         m_dbInternal = db->hasDatabaseInternal();
         m_dbExternal = db->hasDatabaseExternal();
     }
@@ -86,7 +88,7 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::refreshDataCanceled);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
 
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
@@ -329,8 +331,7 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     else
     {
 #ifndef QT_NO_DEBUG
-        qDebug() << "* Device update:" << getAddress();
-        qDebug() << "> SQL data available...";
+        qDebug() << "* Device loaded:" << getAddress();
 #endif
     }
 
@@ -404,8 +405,7 @@ bool DeviceSensor::getSqlSensorData(int minutes)
     else
     {
 #ifndef QT_NO_DEBUG
-        qDebug() << "* Device update:" << getAddress();
-        qDebug() << "> SQL data available...";
+        qDebug() << "* Device loaded:" << getAddress();
 #endif
     }
 

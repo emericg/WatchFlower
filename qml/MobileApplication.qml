@@ -178,7 +178,7 @@ ApplicationWindow {
         }
         onDeviceRefreshHistoryButtonClicked: {
             if (selectedDevice) {
-                selectedDevice.refreshHistoryStart()
+                selectedDevice.refreshStartHistory()
             }
         }
         onDeviceRefreshButtonClicked: {

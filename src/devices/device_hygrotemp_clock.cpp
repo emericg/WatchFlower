@@ -218,7 +218,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
                 QLowEnergyCharacteristic chb = serviceData->characteristic(b);
 
                 int lvl = static_cast<uint8_t>(chb.value().constData()[0]);
-                updateBattery(lvl);
+                setBattery(lvl);
             }
         }
     }

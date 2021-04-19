@@ -306,7 +306,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
             if (cbat.value().size() == 1)
             {
                 int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                updateBattery(lvl);
+                setBattery(lvl);
             }
         }
     }

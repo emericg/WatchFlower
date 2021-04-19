@@ -145,24 +145,23 @@ protected:
 
     virtual void deviceConnected();
     virtual void deviceDisconnected();
-    virtual void errorReceived(QLowEnergyController::Error);
-    virtual void stateChanged(QLowEnergyController::ControllerState state);
+    virtual void deviceErrored(QLowEnergyController::Error);
+    virtual void deviceStateChanged(QLowEnergyController::ControllerState state);
 
-    virtual void serviceScanDone();
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
     virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
+    virtual void serviceScanDone();
 
     virtual void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    virtual void refreshDataStarted();
-    virtual void refreshDataCanceled();
+    virtual void actionStarted();
+    virtual void actionCanceled();
+    virtual void actionTimedout();
     virtual void refreshDataFinished(bool status, bool cached = false);
-    virtual void refreshHistoryFinished(bool status);
     virtual void refreshDataRealtime(bool status);
-
-    bool getBleData();              //!< Initiate a BLE connection with a device
+    virtual void refreshHistoryFinished(bool status);
 
     virtual bool getSqlDeviceInfos();
 
@@ -177,18 +176,17 @@ public:
     virtual void parseAdvertisementData(const QByteArray &value);
 
 public slots:
-    void deviceConnect();
+    void deviceConnect();           //!< Initiate a BLE connection with a device
     void deviceDisconnect();
 
     void actionLedBlink();
     void actionWatering();
     void actionClearHistory();
 
-    void refreshHistoryStart();
-    void refreshRealtimeStart();
-
     void refreshQueue();
     void refreshStart();
+    void refreshStartHistory();
+    void refreshStartRealtime();
     void refreshRetry();
     void refreshStop();
 
@@ -222,13 +220,13 @@ public slots:
 
     // helpers
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
-    void updateFirmware(const QString &firmware);
-    void updateBattery(const int battery);
-    void updateBatteryFirmware(const int battery, const QString &firmware);
+    void setFirmware(const QString &firmware);
+    void setBattery(const int battery);
+    void setBatteryFirmware(const int battery, const QString &firmware);
 
     // RSSI
     int getRssi() const { return m_rssi; }
-    void updateRssi(const int rssi);
+    void setRssi(const int rssi);
     void cleanRssi();
 
     // Device associated data
