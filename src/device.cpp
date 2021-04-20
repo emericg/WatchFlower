@@ -168,6 +168,30 @@ void Device::deviceDisconnect()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void Device::actionClearData()
+{
+    //qDebug() << "Device::actionClearData()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        QSqlQuery deleteData;
+        if (isEnvironmentalSensor()) deleteData.prepare("DELETE FROM sensorData WHERE deviceAddr = :deviceAddr");
+        else deleteData.prepare("DELETE FROM plantData WHERE deviceAddr = :deviceAddr");
+        deleteData.bindValue(":deviceAddr", getAddress());
+        if (deleteData.exec())
+        {
+            Q_EMIT dataUpdated();
+
+            m_lastHistorySync = QDateTime();
+            Q_EMIT historyUpdated();
+        }
+        else
+        {
+            qWarning() << "> deleteData.exec() ERROR" << deleteData.lastError().type() << ":" << deleteData.lastError().text();
+        }
+    }
+}
+
 void Device::actionClearHistory()
 {
     //qDebug() << "Device::actionClearHistory()" << getAddress() << getName();
@@ -509,17 +533,37 @@ bool Device::isWorking() const
 
 /* ************************************************************************** */
 
-QDateTime Device::getDeviceTime() const
+QDateTime Device::getDeviceUptime() const
 {
-    if (m_device_time > 0 && m_device_wall_time > 0)
-        return QDateTime::fromSecsSinceEpoch(m_device_time - m_device_wall_time);
+    if (m_device_time > 0)
+    {
+        return QDateTime::fromSecsSinceEpoch(QDateTime::currentDateTime().toSecsSinceEpoch() - m_device_time);
+    }
 
     return QDateTime();
+}
+
+float Device::getDeviceUptime_days() const
+{
+    float days = (m_device_time / 3600.f / 24.f);
+    if (days < 0.f) days = 0.f;
+
+    return days;
 }
 
 QDateTime Device::getLastHistorySync() const
 {
     return m_lastHistorySync;
+}
+
+float Device::getLastHistorySync_days() const
+{
+    int64_t sec = QDateTime::currentDateTime().toSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
+
+    float days = (sec / 3600.f / 24.f);
+    if (days < 0.f) days = 0.f;
+
+    return days;
 }
 
 int Device::getHistoryUpdatePercent() const

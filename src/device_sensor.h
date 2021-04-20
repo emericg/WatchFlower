@@ -217,6 +217,7 @@ public slots:
     float getWaterTankLevel() const { return m_watertank_level; }
     float getWaterTankCapacity() const { return m_watertank_capacity; }
     QDateTime getLastMove() const;
+    float getLastMove_days() const;
     // Hygrometer
     float getTemp() const;
     float getTempC() const { return m_temperature; }

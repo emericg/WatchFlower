@@ -111,10 +111,10 @@ class Device: public QObject
     Q_PROPERTY(bool dataFresh READ isDataFresh NOTIFY statusUpdated)
     Q_PROPERTY(bool dataAvailable READ isDataAvailable NOTIFY statusUpdated)
 
-    Q_PROPERTY(QDateTime deviceTime READ getDeviceTime NOTIFY statusUpdated)
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY historyUpdated)
+    Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
 
 Q_SIGNALS:
     void connected();
@@ -212,6 +212,7 @@ public slots:
 
     void actionLedBlink();
     void actionWatering();
+    void actionClearData();
     void actionClearHistory();
 
     void refreshQueue();
@@ -238,8 +239,10 @@ public slots:
     int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
 
-    QDateTime getDeviceTime() const;
+    QDateTime getDeviceUptime() const;
+    float getDeviceUptime_days() const;
     QDateTime getLastHistorySync() const;
+    float getLastHistorySync_days() const;
     virtual int getHistoryUpdatePercent() const;
 
     // Device infos

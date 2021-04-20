@@ -1190,9 +1190,19 @@ int DeviceSensor::getHistoryUpdatePercent() const
 QDateTime DeviceSensor::getLastMove() const
 {
     if (m_device_lastmove > 0)
-        return QDateTime::fromSecsSinceEpoch(m_device_lastmove);
+    {
+        return QDateTime::fromSecsSinceEpoch(QDateTime::currentDateTime().toSecsSinceEpoch() - m_device_lastmove);
+    }
 
     return QDateTime();
+}
+
+float DeviceSensor::getLastMove_days() const
+{
+    float days = (m_device_lastmove / 3600.f / 24.f);
+    if (days < 0.f) days = 0.f;
+
+    return days;
 }
 
 /* ************************************************************************** */

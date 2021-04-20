@@ -212,7 +212,7 @@ Item {
                             id: textFwUpdate
                             anchors.left: imageFwUpdate.right
                             anchors.leftMargin: 6
-                            anchors.verticalCenter: imageFwUpdate.verticalCenter
+                            anchors.baseline: labelFirmware.baseline
 
                             text: qsTr("Update %1 available with official application").arg("")
                             font.pixelSize: Theme.fontSizeContentSmall
@@ -247,6 +247,108 @@ Item {
                             anchors.baseline: labelBattery.baseline
 
                             text: currentDevice.deviceBattery + "%"
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: time
+                        height: 28
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        visible: textTime.text
+
+                        Text {
+                            id: labelTime
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Uptime")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            id: textTime
+                            anchors.left: labelTime.right
+                            anchors.leftMargin: 10
+                            anchors.baseline: labelTime.baseline
+
+                            text: currentDevice.deviceTime.toLocaleString()
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: lastSync
+                        height: 28
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        visible: textLastSync.text
+
+                        Text {
+                            id: labelLastSync
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Last sync")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            id: textLastSync
+                            anchors.left: labelLastSync.right
+                            anchors.leftMargin: 10
+                            anchors.baseline: labelLastSync.baseline
+
+                            text: currentDevice.lastHistorySync.toLocaleString()
+                            font.pixelSize: 17
+                            color: Theme.colorHighContrast
+                        }
+                    }
+
+                    Item {
+                        id: lastMove
+                        height: 28
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        visible: textLastMove.text
+
+                        Text {
+                            id: labelLastMove
+                            width: isPhone ? 80 : 96
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Last move")
+                            font.bold: true
+                            font.pixelSize: 12
+                            font.capitalization: Font.AllUppercase
+                            color: Theme.colorSubText
+                            horizontalAlignment: Text.AlignRight
+                        }
+
+                        Text {
+                            id: textLastMove
+                            anchors.left: labelLastMove.right
+                            anchors.leftMargin: 10
+                            anchors.baseline: labelLastMove.baseline
+
+                            text: currentDevice.lastMove.toLocaleString()
                             font.pixelSize: 17
                             color: Theme.colorHighContrast
                         }

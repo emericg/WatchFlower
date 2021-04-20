@@ -85,9 +85,8 @@ Popup {
                     fullColor: true
                     onClicked: {
                         if (selectedDevice) {
-                             // TODO
+                            selectedDevice.actionClearData()
                         }
-
                         popupDeleteData.confirmed()
                         popupDeleteData.close()
                     }
@@ -101,7 +100,7 @@ Popup {
                     fullColor: true
                     onClicked: {
                         if (selectedDevice) {
-                             //selectedDevice.actionClearHistory()
+                             selectedDevice.actionClearHistory()
                         }
                         popupDeleteData.confirmed()
                         popupDeleteData.close()
