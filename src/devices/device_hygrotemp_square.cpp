@@ -209,7 +209,8 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_infos(QLowEnergyService::Se
             QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
             if (chf.value().size() > 0)
             {
-               m_deviceFirmware = chf.value();
+               QString fw = chf.value();
+               setFirmware(fw);
             }
 
             if (m_deviceFirmware.size() == 10)
@@ -287,7 +288,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
             int battery = static_cast<int>((voltage - 2.1f) * 100.f);
             if (battery < 0) battery = 0;
             if (battery > 100) battery = 100;
-            m_deviceBattery = battery;
+            setBattery(battery);
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -307,18 +308,17 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
                 addData.bindValue(":humi", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_deviceBattery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempSquare update:" << getAddress();

@@ -152,20 +152,24 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
     {
         //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        // Characteristic "Firmware Revision String"
-        QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x19
-        QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
-        if (chc.value().size() > 0)
+        if (serviceInfos)
         {
-           m_deviceFirmware = chc.value();
-        }
-
-        if (m_deviceFirmware.size() == 8)
-        {
-            if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+            // Characteristic "Firmware Revision String"
+            QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x19
+            QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
+            if (chc.value().size() > 0)
             {
-                m_firmware_uptodate = true;
-                Q_EMIT sensorUpdated();
+                QString fw = chc.value();
+                setFirmware(fw);
+            }
+
+            if (m_deviceFirmware.size() == 8)
+            {
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+                {
+                    m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
+                }
             }
         }
     }
@@ -264,18 +268,17 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 addData.bindValue(":humi", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_deviceBattery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceHygrotempLCD update:" << getAddress();

@@ -237,7 +237,8 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
             QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
             if (chc.value().size() > 0)
             {
-               m_deviceFirmware = chc.value();
+               QString fw = chc.value();
+               setFirmware(fw);
             }
 
             if (m_deviceFirmware.size() == 10)
@@ -321,14 +322,6 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                 addData.bindValue(":humi", m_humidity);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":battery", m_deviceBattery);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
