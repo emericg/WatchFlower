@@ -40,6 +40,7 @@ DeviceEsp32HiGrow::DeviceEsp32HiGrow(QString &deviceAddr, QString &deviceName, Q
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
@@ -52,6 +53,7 @@ DeviceEsp32HiGrow::DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *par
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;

@@ -55,10 +55,11 @@ class Device: public QObject
     Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
     Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
 
+    Q_PROPERTY(bool hasRealTime READ hasRealTime NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasClock READ hasClock NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasLED READ hasLED NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
@@ -287,10 +288,11 @@ public:
     bool isThermometer() const { return (m_deviceType == DeviceUtils::DEVICE_THERMOMETER); }
     bool isEnvironmentalSensor() const { return (m_deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL); }
 
+    bool hasRealTime() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REALTIME); }
+    virtual bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
     bool hasBatteryLevel() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BATTERY); }
     bool hasClock() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CLOCK); }
     bool hasLED() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LED_STATUS); }
-    virtual bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
     bool hasLastMove() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LAST_MOVE); }
     bool hasWaterTank() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_WATER_TANK); }
     bool hasButtons() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BUTTONS); }

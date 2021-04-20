@@ -208,7 +208,7 @@ Item {
             Flow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : -(appHeader.height/3)
+                anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : -(appHeader.height/4)
                 spacing: 48
 
                 ImageSvg {
@@ -223,8 +223,8 @@ Item {
 
                 AirQualityIndicator {
                     id: indicatorAirQuality
-                    width: isMobile ? 128 : 200
-                    height: isMobile ? 128 : 200
+                    width: singleColumn ? headerBox.height * 0.666 : headerBox.width * 0.5
+                    height: width
                     color: cccc
                 }
 
@@ -664,12 +664,12 @@ Item {
                     Flow {
                         id: weatherFlow
                         anchors.top: parent.top
-                        anchors.topMargin: 24
+                        anchors.topMargin: isDesktop ? 24 : 16
                         anchors.left: parent.left
-                        anchors.leftMargin: 24
+                        anchors.leftMargin: isDesktop ? 24 : 16
                         anchors.right: parent.right
                         anchors.rightMargin: 8
-                        spacing: 16
+                        spacing: isDesktop ? 16 : 12
 
                         onWidthChanged: {
                             var itemcount = 9
@@ -684,7 +684,7 @@ Item {
                             //console.log("--- wwww: " + www)
                         }
 
-                        property int wwwTarget: 128
+                        property int wwwTarget: isDesktop ? 128 : 112
                         property int wwwMax: 128
                         property int www: wwwTarget
 

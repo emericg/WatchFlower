@@ -34,9 +34,12 @@ Rectangle {
     function rightMenuIsOpen() { return actionMenu.visible; }
     function rightMenuClose() { actionMenu.close(); }
 
+    signal deviceWateringButtonClicked()
     signal deviceLedButtonClicked()
-    signal deviceRefreshHistoryButtonClicked()
     signal deviceRefreshButtonClicked()
+    signal deviceRefreshRealtimeButtonClicked()
+    signal deviceRefreshHistoryButtonClicked()
+    signal deviceClearButtonClicked()
     signal deviceDataButtonClicked() // compatibility
     signal deviceHistoryButtonClicked() // compatibility
     signal deviceSettingsButtonClicked() // compatibility

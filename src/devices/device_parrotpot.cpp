@@ -40,9 +40,10 @@ DeviceParrotPot::DeviceParrotPot(QString &deviceAddr, QString &deviceName, QObje
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_WATER_TANK;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
@@ -58,9 +59,10 @@ DeviceParrotPot::DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent)
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
+    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
-    //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_WATER_TANK;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_MOISTURE;
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;

@@ -26,8 +26,11 @@ Rectangle {
         if (isOpen) {
             menuWidth = 0
             if (actionUpdate.visible && menuWidth < actionUpdate.contentWidth) menuWidth = actionUpdate.contentWidth
-            if (actionHistory.visible && menuWidth < actionHistory.contentWidth) menuWidth = actionHistory.contentWidth
+            if (actionRealtime.visible && menuWidth < actionRealtime.contentWidth) menuWidth = actionRealtime.contentWidth
+            if (actionHistoryRefresh.visible && menuWidth < actionHistoryRefresh.contentWidth) menuWidth = actionHistoryRefresh.contentWidth
+            if (actionHistoryClear.visible && menuWidth < actionHistoryClear.contentWidth) menuWidth = actionHistoryClear.contentWidth
             if (actionLed.visible && menuWidth < actionLed.contentWidth) menuWidth = actionLed.contentWidth
+            if (actionWatering.visible && menuWidth < actionWatering.contentWidth) menuWidth = actionWatering.contentWidth
             if (actionGraphMode.visible && menuWidth < actionGraphMode.contentWidth) menuWidth = actionGraphMode.contentWidth
             menuWidth += 96
             actionMenu.width = menuWidth
@@ -59,13 +62,39 @@ Rectangle {
         }
 
         ActionButton {
-            id: actionHistory
+            id: actionRealtime
+            index: 2
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
+            button_text: qsTr("Real time data")
+            button_source: "qrc:/assets/icons_material/duotone-update-24px.svg"
+            onButtonClicked: {
+                deviceRefreshRealtimeButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionHistoryRefresh
             index: 3
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
             button_text: qsTr("Update history")
             button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
             onButtonClicked: {
                 deviceRefreshHistoryButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionHistoryClear
+            index: 3
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+            button_text: qsTr("Clear history")
+            button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            onButtonClicked: {
+                deviceClearButtonClicked()
                 menuSelected(index)
                 close()
             }
@@ -79,6 +108,19 @@ Rectangle {
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
             onButtonClicked: {
                 deviceLedButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionWatering
+            index: 1
+            button_text: qsTr("Watering")
+            button_source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
+            onButtonClicked: {
+                deviceWateringButtonClicked()
                 menuSelected(index)
                 close()
             }

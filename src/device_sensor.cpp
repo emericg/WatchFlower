@@ -418,8 +418,8 @@ bool DeviceSensor::getSqlSensorData(int minutes)
         m_pressure = cachedData.value(3).toFloat();
         m_luminosity = cachedData.value(4).toInt();
         m_uv = cachedData.value(5).toFloat();
-        m_water_level = cachedData.value(6).toFloat();
-        m_sound_level = cachedData.value(7).toFloat();
+        m_sound_level = cachedData.value(6).toFloat();
+        m_water_level = cachedData.value(7).toFloat();
         m_wind_direction = cachedData.value(8).toFloat();
         m_wind_speed = cachedData.value(9).toFloat();
         m_pm_1 = cachedData.value(10).toFloat();

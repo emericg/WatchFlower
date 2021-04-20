@@ -18,10 +18,10 @@ Rectangle {
 
     signal deviceWateringButtonClicked()
     signal deviceLedButtonClicked()
-    signal deviceClearButtonClicked()
-    signal deviceRefreshHistoryButtonClicked()
-    signal deviceRefreshRealtimeButtonClicked()
     signal deviceRefreshButtonClicked()
+    signal deviceRefreshRealtimeButtonClicked()
+    signal deviceRefreshHistoryButtonClicked()
+    signal deviceClearButtonClicked()
     signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
     signal deviceSettingsButtonClicked()
@@ -233,6 +233,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasRealTime) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
                        appContent.state === "DeviceEnvironmental"))

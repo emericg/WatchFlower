@@ -57,13 +57,13 @@ Item {
 
     ProgressCircle { // background
         anchors.fill: parent
-        lineWidth: 20
+        lineWidth: isMobile ? 16 : 20
         colorCircle: indicatorAirQuality.color
         opacity: 0.75
     }
     ProgressCircle { // value
         anchors.fill: parent
-        lineWidth: 20
+        lineWidth: isMobile ? 16 : 20
         colorCircle: indicatorAirQuality.color
         arcEnd: UtilsNumber.mapNumber(indicatorAirQuality.value,
                                       indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
@@ -74,8 +74,8 @@ Item {
 
     ImageSvg {
         id: lungsIcon
-        width: 110
-        height: 110
+        width: parent.width * 0.6
+        height: parent.height * 0.6
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -12
