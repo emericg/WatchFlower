@@ -42,7 +42,7 @@ DeviceWP6003::DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *pa
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
-    m_deviceSensors += DeviceUtils::SENSOR_CO2;
+    m_deviceSensors += DeviceUtils::SENSOR_eCO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
     m_deviceSensors += DeviceUtils::SENSOR_HCHO;
 }
@@ -52,7 +52,7 @@ DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
-    m_deviceSensors += DeviceUtils::SENSOR_CO2;
+    m_deviceSensors += DeviceUtils::SENSOR_eCO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
     m_deviceSensors += DeviceUtils::SENSOR_HCHO;
 }

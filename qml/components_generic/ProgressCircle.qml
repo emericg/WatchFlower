@@ -16,13 +16,15 @@ Item {
     property real arcOffset: -90 -135   // rotation
 
     property bool background: false     // a full circle as a background of the arc
-    property real lineWidth: 18         // width of the line
+    property real lineWidth: 16         // width of the line
     property string colorCircle: "#CC3333"
     property string colorBackground: "#779933"
 
-    property alias beginAnimation: animationArcBegin.enabled
-    property alias endAnimation: animationArcEnd.enabled
+    property alias animationBegin: animationArcBegin.enabled
+    property alias animationEnd: animationArcEnd.enabled
     property int animationDuration: 233
+
+    ////////////////////////////////////////////////////////////////////////////
 
     onIsPieChanged: canvas.requestPaint()
     onArcBeginChanged: canvas.requestPaint()
@@ -50,6 +52,8 @@ Item {
            easing.type: Easing.InOutCubic
        }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Canvas {
         id: canvas

@@ -3,7 +3,6 @@ import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 import DeviceUtils 1.0
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
 import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
@@ -121,7 +120,6 @@ Item {
         //
         updateHeader()
         updateData()
-
     }
 
     function loadGraph() {
@@ -132,6 +130,16 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
+
+        // Indicators
+        if (isAirMonitor) {
+            if (currentDevice.deviceName === "WP6003") {
+                indicatorAirQuality.legend = qsTr("VOC")
+                indicatorAirQuality.value = currentDevice.voc
+                indicatorAirQuality.valueMin = 0
+                indicatorAirQuality.valueMax = 1500
+            }
+        }
 
         // Battery level
         //imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
@@ -200,7 +208,7 @@ Item {
             Flow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : 4
+                anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : -(appHeader.height/3)
                 spacing: 48
 
                 ImageSvg {
@@ -215,8 +223,8 @@ Item {
 
                 AirQualityIndicator {
                     id: indicatorAirQuality
-                    width: isMobile ? 128 : 180
-                    height: isMobile ? 128 : 180
+                    width: isMobile ? 128 : 200
+                    height: isMobile ? 128 : 200
                     color: cccc
                 }
 
@@ -533,8 +541,8 @@ Item {
                             title: "VOC"
                             legend: "µg/m³"
                             value: currentDevice.voc
-                            limit_mid: 300
-                            limit_high: 500
+                            limit_mid: 500
+                            limit_high: 1000
                             precision: 0
                         }
 
@@ -546,8 +554,8 @@ Item {
                             title: "HCHO"
                             legend: "µg/m³"
                             value: currentDevice.hcho
-                            limit_mid: 1000
-                            limit_high: 10000
+                            limit_mid: 500
+                            limit_high: 1000
                             precision: 0
                         }
                     }

@@ -1,70 +1,76 @@
 import QtQuick 2.12
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: indicatorAirQuality
     width: 128
     height: 128
 
-    property real aqi: 25
+    property real value: 25
+    property real valueMin: 0
+    property real valueMax: 500
+    property string legend: "AQI"
     property string color: Theme.colorIcon
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ProgressCircle {
-        width: parent.width * 1.22
+    Item {
+        id: legendSimple
+        width: parent.width * 1.20
+        height: parent.height * 1.20
         anchors.centerIn: parent
 
-        lineWidth: 10
-        arcBegin: 0
-        arcEnd: 30
-        colorCircle: Theme.colorRed//"#a17cb8" // Theme.colorRed
-        //colorCircle: Theme.colorRed
-        opacity: 1
-    }
-    ProgressCircle {
-        width: parent.width * 1.22
-        anchors.centerIn: parent
+        visible: true
 
-        lineWidth: 10
-        arcBegin: 34
-        arcEnd: 95
-        colorCircle: "#f0805f" // Theme.color
-        //colorCircle: Theme.colorRed
-        opacity: 1
-    }
-    ProgressCircle {
-        width: parent.width * 1.22
-        anchors.centerIn: parent
+        ProgressCircle {
+            anchors.fill: parent
 
-        lineWidth: 10
-        arcBegin: 100
-        arcEnd: 185
-        colorCircle: "#f0805f" // Theme.color
-        opacity: 0.70
-    }
-    ProgressCircle {
-        width: parent.width * 1.22
-        anchors.centerIn: parent
+            lineWidth: 10
+            arcBegin: 0
+            arcEnd: 95
+            colorCircle: Theme.colorGreen
+            opacity: 0.8
+        }
+        ProgressCircle {
+            anchors.fill: parent
 
-        lineWidth: 10
-        arcBegin: 190
-        arcEnd: 270
-        colorCircle: Theme.colorGreen
-        opacity: 0.8
+            lineWidth: 10
+            arcBegin: 100
+            arcEnd: 185
+            colorCircle: Theme.colorOrange
+            opacity: 0.9
+        }
+        ProgressCircle {
+            anchors.fill: parent
+
+            lineWidth: 10
+            arcBegin: 190
+            arcEnd: 270
+            colorCircle: Theme.colorRed
+            opacity: 0.75
+        }
     }
+
+    ////////////////
 
     ProgressCircle { // background
         anchors.fill: parent
+        lineWidth: 20
         colorCircle: indicatorAirQuality.color
-        opacity: 0.8
+        opacity: 0.75
     }
     ProgressCircle { // value
         anchors.fill: parent
+        lineWidth: 20
         colorCircle: indicatorAirQuality.color
-        arcEnd: UtilsNumber.mapNumber(indicatorAirQuality.aqi, 0, 500, 0, 270)
+        arcEnd: UtilsNumber.mapNumber(indicatorAirQuality.value,
+                                      indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
+                                      0, 270)
     }
+
+    ////////////////
 
     ImageSvg {
         id: lungsIcon
@@ -82,7 +88,9 @@ Item {
         property real maxOpacity: 0.8
         property int minDuration: 500
         property int maxDuration: 2500
-        property int duration: 2000
+        property int duration: UtilsNumber.mapNumber(indicatorAirQuality.value,
+                                                     indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
+                                                     maxDuration, minDuration)
 
         SequentialAnimation on opacity {
             id: lungsAnimation
@@ -102,7 +110,7 @@ Item {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: indicatorAirQuality.aqi
+            text: indicatorAirQuality.value
             font.pixelSize: 24
             font.bold: true
             color: indicatorAirQuality.color
@@ -110,7 +118,7 @@ Item {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: "AQI"
+            text: indicatorAirQuality.legend
             font.pixelSize: 24
             font.bold: false
             color: indicatorAirQuality.color
