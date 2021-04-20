@@ -74,14 +74,15 @@ public:
     Q_ENUMS(DeviceType)
 
     enum DeviceCapabilities {
-        DEVICE_BATTERY              = (1 <<  0), //!< Can report its battery level
-        DEVICE_CLOCK                = (1 <<  1), //!< Has an onboard clock
-        DEVICE_LED_STATUS           = (1 <<  2), //!< Has a status LED
-        DEVICE_HISTORY              = (1 <<  3), //!< Record sensor history
-        DEVICE_LAST_MOVE            = (1 <<  4), //!< Can report the last time it has been physically moved
-        DEVICE_WATER_TANK           = (1 <<  5), //!< Has a water tank / automatic watering capability
+        DEVICE_REALTIME             = (1 <<  0), //!< Can report realtime data
+        DEVICE_HISTORY              = (1 <<  1), //!< Can report sensor history
+        DEVICE_BATTERY              = (1 <<  2), //!< Can report its battery level
+        DEVICE_CLOCK                = (1 <<  3), //!< Has an onboard clock
+        DEVICE_LED_STATUS           = (1 <<  4), //!< Has a status LED
+        DEVICE_LED_RGB              = (1 <<  5), //!< Has an addressable LED
         DEVICE_BUTTONS              = (1 <<  6), //!< Has button(s)
-        DEVICE_LED_RGB              = (1 <<  8), //!< Has an addressable LED
+        DEVICE_LAST_MOVE            = (1 <<  7), //!< Can report the last time it has been physically moved
+        DEVICE_WATER_TANK           = (1 <<  8), //!< Has a water tank / automatic watering capability
     };
     Q_ENUMS(DeviceCapabilities)
 

@@ -102,7 +102,7 @@ Item {
 
     function loadDevice(clickedDevice) {
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
-        if (!clickedDevice.hasSoilMoistureSensor()) return
+        if (!clickedDevice.hasSoilMoistureSensor) return
         if (clickedDevice === currentDevice) return
 
         currentDevice = clickedDevice

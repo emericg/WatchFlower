@@ -51,6 +51,10 @@ class Device: public QObject
     Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated) // TODO capabilitiesUpdated
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
 
+    Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
+
     Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasClock READ hasClock NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasLED READ hasLED NOTIFY sensorUpdated)
@@ -58,6 +62,33 @@ class Device: public QObject
     Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
+
+    Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSoilTemperatureSensor READ hasSoilTemperatureSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSoilPhSensor READ hasSoilPhSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasTemperatureSensor READ hasTemperatureSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasHumiditySensor READ hasHumiditySensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasPressureSensor READ hasPressureSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasLuminositySensor READ hasLuminositySensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasUvSensor READ hasUvSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSoundSensor READ hasSoundSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasWaterLevelSensor READ hasWaterLevelSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasWindDirectionSensor READ hasWindDirectionSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasWindSpeedSensor READ hasWindSpeedSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasPM1Sensor READ hasPM1Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasPM25Sensor READ hasPM25Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasPM10Sensor READ hasPM10Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasO2Sensor READ hasO2Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasO3Sensor READ hasO3Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasCoSensor READ hasCoSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasCo2Sensor READ hasCo2Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool haseCo2Sensor READ haseCo2Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasNo2Sensor READ hasNo2Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSo2Sensor READ hasSo2Sensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasVocSensor READ hasVocSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasHchoSensor READ hasHchoSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasGeigerCounter READ hasGeigerCounter NOTIFY sensorUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
@@ -243,6 +274,7 @@ public slots:
     QVariant getSetting(const QString &key) const;
     bool setSetting(const QString &key, QVariant value);
 
+public:
     // Device type, capabilities and sensors
     int getDeviceType() const { return m_deviceType; }
     int getDeviceCapabilities() const { return m_deviceCapabilities; }

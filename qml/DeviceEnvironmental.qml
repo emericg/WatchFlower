@@ -77,31 +77,31 @@ Item {
 
     function loadDevice(clickedDevice) {
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
-        if (!clickedDevice.isEnvironmentalSensor()) return
+        if (!clickedDevice.isEnvironmentalSensor) return
         if (clickedDevice === currentDevice) return
 
         currentDevice = clickedDevice
         console.log("DeviceEnvironmental // loadDevice() >> " + currentDevice)
 
         //
-        if (currentDevice.hasPM1Sensor() || currentDevice.hasPM25Sensor() || currentDevice.hasPM10Sensor() ||
-            currentDevice.hasO2Sensor() || currentDevice.hasO3Sensor() ||
-            currentDevice.hasCoSensor() || currentDevice.hasCo2Sensor() ||
-            currentDevice.hasNo2Sensor() || currentDevice.hasSo2Sensor() ||
-            currentDevice.hasVocSensor() || currentDevice.hasHchoSensor()) {
+        if (currentDevice.hasPM1Sensor || currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
+            currentDevice.hasO2Sensor || currentDevice.hasO3Sensor ||
+            currentDevice.hasCoSensor || currentDevice.hasCo2Sensor ||
+            currentDevice.hasNo2Sensor || currentDevice.hasSo2Sensor ||
+            currentDevice.hasVocSensor || currentDevice.hasHchoSensor) {
             isAirMonitor = true
         } else {
             isAirMonitor = false
         }
         //
-        isGeigerCounter = currentDevice.hasGeigerCounter()
+        isGeigerCounter = currentDevice.hasGeigerCounter
         //
-        if (currentDevice.hasTemperatureSensor() || currentDevice.hasHumiditySensor() ||
-            currentDevice.hasPressureSensor() ||
-            currentDevice.hasLuminositySensor() || currentDevice.hasUvSensor() ||
-            currentDevice.hasSoundSensor() ||
-            currentDevice.hasWaterLevelSensor() ||
-            currentDevice.hasWindDirectionSensor() || currentDevice.hasWindSpeedSensor()) {
+        if (currentDevice.hasTemperatureSensor || currentDevice.hasHumiditySensor ||
+            currentDevice.hasPressureSensor ||
+            currentDevice.hasLuminositySensor || currentDevice.hasUvSensor ||
+            currentDevice.hasSoundSensor ||
+            currentDevice.hasWaterLevelSensor ||
+            currentDevice.hasWindDirectionSensor || currentDevice.hasWindSpeedSensor) {
             isWeatherStation = true
         } else {
             isWeatherStation = false
@@ -130,7 +130,7 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.isEnvironmentalSensor()) return
+        if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
         // Battery level
@@ -144,7 +144,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.isEnvironmentalSensor()) return
+        if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateData() >> " + currentDevice)
 
         // DATA
@@ -154,7 +154,7 @@ Item {
 
     function updateStatusText() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.isEnvironmentalSensor()) return
+        if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateStatusText() >> " + currentDevice)
 
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
@@ -438,7 +438,7 @@ Item {
                         ItemEnvBox {
                             id: pm1
                             width: airFlow.www
-                            visible: currentDevice.hasPM1Sensor()
+                            visible: currentDevice.hasPM1Sensor
 
                             title: "PM1"
                             legend: "µg/m³"
@@ -449,7 +449,7 @@ Item {
                         ItemEnvBox {
                             id: pm25
                             width: airFlow.www
-                            visible: currentDevice.hasPM25Sensor()
+                            visible: currentDevice.hasPM25Sensor
 
                             title: "PM2.5"
                             legend: "µg/m³"
@@ -460,7 +460,7 @@ Item {
                         ItemEnvBox {
                             id: pm100
                             width: airFlow.www
-                            visible: currentDevice.hasPM10Sensor()
+                            visible: currentDevice.hasPM10Sensor
 
                             title: "PM10"
                             legend: "µg/m³"
@@ -471,7 +471,7 @@ Item {
                         ItemEnvBox {
                             id: o3
                             width: airFlow.www
-                            visible: currentDevice.hasO3Sensor()
+                            visible: currentDevice.hasO3Sensor
 
                             title: "O3"
                             legend: "µg/m³"
@@ -482,7 +482,7 @@ Item {
                         ItemEnvBox {
                             id: so2
                             width: airFlow.www
-                            visible: currentDevice.hasSo2Sensor()
+                            visible: currentDevice.hasSo2Sensor
 
                             title: "SO2"
                             legend: "µg/m³"
@@ -493,7 +493,7 @@ Item {
                         ItemEnvBox {
                             id: no2
                             width: airFlow.www
-                            visible: currentDevice.hasNo2Sensor()
+                            visible: currentDevice.hasNo2Sensor
 
                             title: "NO2"
                             legend: "µg/m³"
@@ -504,7 +504,7 @@ Item {
                         ItemEnvBox {
                             id: co
                             width: airFlow.www
-                            visible: currentDevice.hasCoSensor()
+                            visible: currentDevice.hasCoSensor
 
                             title: "CO"
                             legend: "PPM"
@@ -515,9 +515,9 @@ Item {
                         ItemEnvBox {
                             id: co2
                             width: airFlow.www
-                            visible: currentDevice.hasCo2Sensor()
+                            visible: currentDevice.hasCo2Sensor
 
-                            title: (currentDevice.haseCo2Sensor() ? "e" : "") + "CO2"
+                            title: (currentDevice.haseCo2Sensor ? "e" : "") + "CO2"
                             legend: "PPM"
                             value: currentDevice.co2
                             precision: 0
@@ -528,7 +528,7 @@ Item {
                         ItemEnvBox {
                             id: voc
                             width: airFlow.www
-                            visible: currentDevice.hasVocSensor()
+                            visible: currentDevice.hasVocSensor
 
                             title: "VOC"
                             legend: "µg/m³"
@@ -541,7 +541,7 @@ Item {
                         ItemEnvBox {
                             id: hcho
                             width: airFlow.www
-                            visible: currentDevice.hasHchoSensor()
+                            visible: currentDevice.hasHchoSensor
 
                             title: "HCHO"
                             legend: "µg/m³"
@@ -683,7 +683,7 @@ Item {
                         ItemWeatherBox {
                             id: temp
                             height: weatherFlow.www
-                            visible: currentDevice.hasTemperatureSensor()
+                            visible: currentDevice.hasTemperatureSensor
 
                             title: "Temperature"
                             legend: "°" + settingsManager.tempUnit
@@ -695,7 +695,7 @@ Item {
                         ItemWeatherBox {
                             id: hum
                             height: weatherFlow.www
-                            visible: currentDevice.hasHumiditySensor()
+                            visible: currentDevice.hasHumiditySensor
 
                             title: "Humidity"
                             legend: "°RH"
@@ -707,7 +707,7 @@ Item {
                         ItemWeatherBox {
                             id: press
                             height: weatherFlow.www
-                            visible: currentDevice.hasPressureSensor()
+                            visible: currentDevice.hasPressureSensor
 
                             title: "Pressure"
                             legend: "Hpa"
@@ -719,7 +719,7 @@ Item {
                         ItemWeatherBox {
                             id: sound
                             height: weatherFlow.www
-                            visible: currentDevice.hasSoundSensor()
+                            visible: currentDevice.hasSoundSensor
 
                             title: "Sound level"
                             legend: "db"
@@ -731,7 +731,7 @@ Item {
                         ItemWeatherBox {
                             id: light
                             height: weatherFlow.www
-                            visible: currentDevice.hasLuminositySensor()
+                            visible: currentDevice.hasLuminositySensor
 
                             title: "Luminosity"
                             legend: "lux"
@@ -743,7 +743,7 @@ Item {
                         ItemWeatherBox {
                             id: uv
                             height: weatherFlow.www
-                            visible: currentDevice.hasUvSensor()
+                            visible: currentDevice.hasUvSensor
 
                             title: "UV index"
                             legend: ""
@@ -755,7 +755,7 @@ Item {
                         ItemWeatherBox {
                             id: windd
                             height: weatherFlow.www
-                            visible: currentDevice.hasWindDirectionSensor()
+                            visible: currentDevice.hasWindDirectionSensor
 
                             title: "Wind direction"
                             legend: "north"
@@ -766,7 +766,7 @@ Item {
                         ItemWeatherBox {
                             id: winds
                             height: weatherFlow.www
-                            visible: currentDevice.hasWindSpeedSensor()
+                            visible: currentDevice.hasWindSpeedSensor
 
                             title: "Wind speed"
                             legend: "km/h"
@@ -777,7 +777,7 @@ Item {
                         ItemWeatherBox {
                             id: rain
                             height: weatherFlow.www
-                            visible: currentDevice.hasWaterLevelSensor()
+                            visible: currentDevice.hasWaterLevelSensor
 
                             title: "Rain"
                             legend: "mm"

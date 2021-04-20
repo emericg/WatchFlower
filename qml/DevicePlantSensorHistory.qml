@@ -25,12 +25,12 @@ Item {
 /*
         console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
 
-        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor())
-        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor())
-        console.log("hasSoilTemperatureSensor(): " + currentDevice.hasSoilTemperatureSensor())
-        console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor())
-        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor())
-        console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor())
+        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor)
+        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor)
+        console.log("hasSoilTemperatureSensor(): " + currentDevice.hasSoilTemperatureSensor)
+        console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor)
+        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor)
+        console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor)
 
         console.log("hasData(soilMoisture): " + currentDevice.hasData("soilMoisture"))
         console.log("hasData(soilConductivity): " + currentDevice.hasData("soilConductivity"))
@@ -41,14 +41,14 @@ Item {
 */
         graphCount = 0
 
-        if (currentDevice.hasTemperatureSensor()) {
+        if (currentDevice.hasTemperatureSensor) {
             tempGraph.visible = true
             tempGraph.loadGraph()
             graphCount += 1
         } else {
             tempGraph.visible = false
         }
-        if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) {
+        if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) {
             if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
                 hygroGraph.visible = true
                 hygroGraph.loadGraph()
@@ -59,14 +59,14 @@ Item {
         } else {
             hygroGraph.visible = false
         }
-        if (currentDevice.hasLuminositySensor()) {
+        if (currentDevice.hasLuminositySensor) {
             lumiGraph.visible = true
             lumiGraph.loadGraph()
             graphCount += 1
         } else {
             lumiGraph.visible = false
         }
-        if (currentDevice.hasSoilConductivitySensor()) {
+        if (currentDevice.hasSoilConductivitySensor) {
             if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
                 conduGraph.visible = true
                 conduGraph.loadGraph()
@@ -137,10 +137,10 @@ Item {
         graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
 
         if (graphCount === 3 && graphGrid.columns === 2) {
-            if (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")) {
+            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
                 hygroGraph.width = (graphWidth*2)
                 lumiGraph.width = graphWidth
-            } else if (currentDevice.hasLuminositySensor() && currentDevice.hasData("luminosity")) {
+            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
                 hygroGraph.width = graphWidth
                 lumiGraph.width = (graphWidth*2)
             }
@@ -154,10 +154,10 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
-        if (currentDevice.hasTemperatureSensor()) { tempGraph.updateGraph() }
-        if (currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()) { hygroGraph.updateGraph() }
-        if (currentDevice.hasLuminositySensor()) { lumiGraph.updateGraph() }
-        if (currentDevice.hasSoilConductivitySensor()) { conduGraph.updateGraph() }
+        if (currentDevice.hasTemperatureSensor) { tempGraph.updateGraph() }
+        if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) { hygroGraph.updateGraph() }
+        if (currentDevice.hasLuminositySensor) { lumiGraph.updateGraph() }
+        if (currentDevice.hasSoilConductivitySensor) { conduGraph.updateGraph() }
     }
 
     ////////////////////////////////////////////////////////////////////////////

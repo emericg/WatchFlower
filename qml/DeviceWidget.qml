@@ -53,7 +53,7 @@ Item {
 
     function initBoxData() {
         // Set icon
-        if (boxDevice.isPlantSensor()) {
+        if (boxDevice.isPlantSensor) {
             var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
             var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
             hasHygro = hasHygro_short || hasHygro_long
@@ -69,7 +69,7 @@ Item {
                 else
                     imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
-        } else if (boxDevice.isThermometer()) {
+        } else if (boxDevice.isThermometer) {
             if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "ClearGrass Temp & RH" ||
                 boxDevice.deviceName === "Qingping Temp & RH M" || boxDevice.deviceName === "Qingping Temp & RH H" ||
                 boxDevice.deviceName === "ThermoBeacon") {
@@ -83,7 +83,7 @@ Item {
             } else {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
-        } else if (boxDevice.isEnvironmentalSensor()) {
+        } else if (boxDevice.isEnvironmentalSensor) {
             if (boxDevice.deviceName === "GeigerCounter") {
                 imageDevice.source = "qrc:/assets/icons_custom/nuclear_icon.svg"
             } else {
@@ -99,7 +99,7 @@ Item {
     }
 
     function updateSensorIcon() {
-        if (boxDevice.isPlantSensor()) {
+        if (boxDevice.isPlantSensor) {
             if (hasHygro) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
@@ -159,12 +159,12 @@ Item {
 
     function updateSensorSettings() {
         // Title
-        if (boxDevice.isPlantSensor()) {
+        if (boxDevice.isPlantSensor) {
             if (boxDevice.devicePlantName !== "")
                 textTitle.text = boxDevice.devicePlantName
             else
                 textTitle.text = boxDevice.deviceName
-        } else if (boxDevice.isThermometer()) {
+        } else if (boxDevice.isThermometer) {
             if (boxDevice.deviceName === "ThermoBeacon")
                 textTitle.text = boxDevice.deviceName
             else
@@ -202,7 +202,7 @@ Item {
 
     function updateSensorData() {
 
-        if (boxDevice.isPlantSensor()) {
+        if (boxDevice.isPlantSensor) {
             var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
             var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
             hasHygro = hasHygro_short || hasHygro_long
@@ -221,7 +221,7 @@ Item {
         // Warnings icons (for sensors with available data)
         if (boxDevice.isDataAvailable()) {
 
-            if (boxDevice.isPlantSensor()) {
+            if (boxDevice.isPlantSensor) {
 
                 // Water me notif
                 if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
@@ -251,10 +251,10 @@ Item {
                         temp.color = Theme.colorBlue
                 }
 
-            } else if (boxDevice.isEnvironmentalSensor()) {
+            } else if (boxDevice.isEnvironmentalSensor) {
 
                 // Air warning
-                if (boxDevice.hasVocSensor()) {
+                if (boxDevice.hasVocSensor) {
                     if (boxDevice.voc > 300) {
                         warning.visible = true
 
@@ -266,7 +266,7 @@ Item {
                 }
 
                 // Radiation warning
-                if (boxDevice.hasGeigerCounter()) {
+                if (boxDevice.hasGeigerCounter) {
                     if (boxDevice.radioactivityM > 1) {
                         nuclear.visible = true
 
@@ -281,7 +281,7 @@ Item {
 
         // Has data? always display them
         if (boxDevice.isDataAvailable()) {
-            if (boxDevice.isPlantSensor()) {
+            if (boxDevice.isPlantSensor) {
                 rectangleSensors.visible = true
                 hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
@@ -289,16 +289,16 @@ Item {
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
                 hygro_bg.visible = hasHygro
-                lumi_bg.visible = boxDevice.hasLuminositySensor()
+                lumi_bg.visible = boxDevice.hasLuminositySensor
                 cond_bg.visible = hasHygro
             } else {
-                if (boxDevice.hasGeigerCounter()) {
+                if (boxDevice.hasGeigerCounter) {
                     rectangleHygroTemp.visible = true
                     textTemp.text = ""
                     textHygro.font.pixelSize = bigAssMode ? 24 : 22
                     textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
                     // TODO status color? warning?
-                } else if (boxDevice.hasVocSensor()) {
+                } else if (boxDevice.hasVocSensor) {
                     rectangleHygroTemp.visible = true
                     textTemp.font.pixelSize = bigAssMode ? 28 : 26
                     textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
@@ -391,13 +391,13 @@ Item {
                     if (boxDevice.hasData()) {
                         selectedDevice = boxDevice
 
-                        if (boxDevice.isPlantSensor()) {
+                        if (boxDevice.isPlantSensor) {
                             screenDevicePlantSensor.loadDevice(boxDevice)
                             appContent.state = "DevicePlantSensor"
-                        } else if (boxDevice.isThermometer()) {
+                        } else if (boxDevice.isThermometer) {
                             screenDeviceThermometer.loadDevice(boxDevice)
                             appContent.state = "DeviceThermometer"
-                        } else if (boxDevice.isEnvironmentalSensor()) {
+                        } else if (boxDevice.isEnvironmentalSensor) {
                             screenDeviceEnvironmental.loadDevice(boxDevice)
                             appContent.state = "DeviceEnvironmental"
                         }

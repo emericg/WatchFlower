@@ -15,7 +15,7 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateHeader() >> " + currentDevice)
 
         // Battery level
@@ -23,7 +23,7 @@ Item {
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
         // Plant
-        if (currentDevice.hasSoilMoistureSensor()) {
+        if (currentDevice.hasSoilMoistureSensor) {
             itemPlant.visible = true
         } else {
             itemPlant.visible = false
@@ -40,7 +40,7 @@ Item {
 
     function updateStatusText() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateStatusText() >> " + currentDevice)
 
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
@@ -61,7 +61,7 @@ Item {
 
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
         updateHeader()
@@ -86,7 +86,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         resetHistoryMode()

@@ -15,13 +15,13 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
 
-        //hygroData.visible = (currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")) ||
-        //                    (currentDevice.hasHumiditySensor() && currentDevice.hasData("humidity"))
-        hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
-        conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")
-        tempData.visible = currentDevice.hasTemperatureSensor()
-        hygroData.visible |= currentDevice.hasHumiditySensor() && currentDevice.hasData("humidity")
-        lumiData.visible = currentDevice.hasLuminositySensor()
+        //hygroData.visible = (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) ||
+        //                    (currentDevice.hasHumiditySensor && currentDevice.hasData("humidity"))
+        hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
+        conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
+        tempData.visible = currentDevice.hasTemperatureSensor
+        hygroData.visible |= currentDevice.hasHumiditySensor && currentDevice.hasData("humidity")
+        lumiData.visible = currentDevice.hasLuminositySensor
 
         dateIndicator.visible = false
         dataIndicator.visible = false
@@ -81,7 +81,7 @@ Item {
         axisLumi.max = currentDevice.luxMax*3.0;
 
         // Min axis computation, only for thermometers
-        if (!currentDevice.hasSoilMoistureSensor()) {
+        if (!currentDevice.hasSoilMoistureSensor) {
             axisHygro.min = currentDevice.hygroMin*0.85;
             axisTemp.min = currentDevice.tempMin*0.85;
         }
@@ -94,14 +94,14 @@ Item {
             hygroData.width = 3 // Humidity is primary
         }
 
-        if (!currentDevice.hasSoilMoistureSensor()) {
+        if (!currentDevice.hasSoilMoistureSensor) {
             tempData.width = 3 // Temperature is primary
         }
 
         if (currentDevice.deviceName === "Flower care" || currentDevice.deviceName === "Flower power") {
             // not planted? don't show hygro and condu
-            hygroData.visible = currentDevice.hasSoilMoistureSensor() && currentDevice.hasData("soilMoisture")
-            conduData.visible = currentDevice.hasSoilConductivitySensor() && currentDevice.hasData("soilConductivity")
+            hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
+            conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {

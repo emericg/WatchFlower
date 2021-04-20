@@ -64,10 +64,10 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("DevicePlantSensorLimits // updateLimitsVisibility() >> " + currentDevice)
 
-        itemTemp.visible = currentDevice.hasTemperatureSensor()
-        itemHygro.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
-        itemLumi.visible = currentDevice.hasLuminositySensor()
-        itemCondu.visible = currentDevice.hasSoilConductivitySensor()
+        itemTemp.visible = currentDevice.hasTemperatureSensor
+        itemHygro.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
+        itemLumi.visible = currentDevice.hasLuminositySensor
+        itemCondu.visible = currentDevice.hasSoilConductivitySensor
     }
 
     property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
@@ -528,7 +528,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasSoilMoistureSensor()
+                            visible: currentDevice.hasSoilMoistureSensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -555,7 +555,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasSoilConductivitySensor()
+                            visible: currentDevice.hasSoilConductivitySensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -583,7 +583,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasSoilTemperatureSensor()
+                            visible: currentDevice.hasSoilTemperatureSensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -610,7 +610,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasTemperatureSensor()
+                            visible: currentDevice.hasTemperatureSensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -637,7 +637,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasHumiditySensor()
+                            visible: currentDevice.hasHumiditySensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -664,7 +664,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasLuminositySensor()
+                            visible: currentDevice.hasLuminositySensor
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -691,7 +691,7 @@ Item {
 
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasLED()
+                            visible: currentDevice.hasLED
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -710,7 +710,7 @@ Item {
                         }
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasHistory()
+                            visible: currentDevice.hasHistory
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -729,7 +729,7 @@ Item {
                         }
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasClock()
+                            visible: currentDevice.hasClock
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -748,7 +748,7 @@ Item {
                         }
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasWaterTank()
+                            visible: currentDevice.hasWaterTank
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -767,7 +767,7 @@ Item {
                         }
                         Row {
                             spacing: 12
-                            visible: currentDevice.hasButtons()
+                            visible: currentDevice.hasButtons
 
                             ItemImageButton {
                                 width: 40; height: 40;
@@ -1029,7 +1029,7 @@ Item {
                     anchors.verticalCenter: imageHygro.verticalCenter
                     anchors.verticalCenterOffset: 2
 
-                    text: currentDevice.hasSoilMoistureSensor() ? qsTr("Moisture") : qsTr("Humidity")
+                    text: currentDevice.hasSoilMoistureSensor ? qsTr("Moisture") : qsTr("Humidity")
                     color: Theme.colorText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall

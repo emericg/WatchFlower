@@ -34,7 +34,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor()) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         // Has data? always display them
@@ -44,19 +44,19 @@ Item {
 
             soil_moisture.visible = hasHygro
             soil_conductivity.visible = hasHygro
-            soil_temperature.visible = currentDevice.hasSoilTemperatureSensor()
-            temp.visible = currentDevice.hasTemperatureSensor()
-            humi.visible = currentDevice.hasHumiditySensor()
-            lumi.visible = currentDevice.hasLuminositySensor()
-            water_tank.visible = currentDevice.hasWaterLevelSensor()
+            soil_temperature.visible = currentDevice.hasSoilTemperatureSensor
+            temp.visible = currentDevice.hasTemperatureSensor
+            humi.visible = currentDevice.hasHumiditySensor
+            lumi.visible = currentDevice.hasLuminositySensor
+            water_tank.visible = currentDevice.hasWaterLevelSensor
         } else {
-            soil_moisture.visible = currentDevice.hasHumiditySensor() || currentDevice.hasSoilMoistureSensor()
-            soil_conductivity.visible = currentDevice.hasSoilConductivitySensor()
-            soil_temperature.visible = currentDevice.hasSoilTemperatureSensor()
-            temp.visible = currentDevice.hasTemperatureSensor()
-            humi.visible = currentDevice.hasHumiditySensor()
-            lumi.visible = currentDevice.hasLuminositySensor()
-            water_tank.visible = currentDevice.hasWaterLevelSensor()
+            soil_moisture.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
+            soil_conductivity.visible = currentDevice.hasSoilConductivitySensor
+            soil_temperature.visible = currentDevice.hasSoilTemperatureSensor
+            temp.visible = currentDevice.hasTemperatureSensor
+            humi.visible = currentDevice.hasHumiditySensor
+            lumi.visible = currentDevice.hasLuminositySensor
+            water_tank.visible = currentDevice.hasWaterLevelSensor
         }
 
         resetDataBars()
