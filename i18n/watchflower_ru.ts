@@ -103,7 +103,7 @@
         <location filename="../qml/components/ChartPlantDataAio.qml" line="235"/>
         <source>at</source>
         <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
-        <translation type="unfinished">в</translation>
+        <translation>в</translation>
     </message>
 </context>
 <context>
@@ -112,13 +112,13 @@
         <location filename="../qml/components_generic/DataBarSolid.qml" line="115"/>
         <source>min</source>
         <extracomment>Short for minimum</extracomment>
-        <translation type="unfinished">мин</translation>
+        <translation>мин</translation>
     </message>
     <message>
         <location filename="../qml/components_generic/DataBarSolid.qml" line="172"/>
         <source>max</source>
         <extracomment>Short for maximum</extracomment>
-        <translation type="unfinished">макс</translation>
+        <translation>макс</translation>
     </message>
 </context>
 <context>
@@ -131,57 +131,57 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="160"/>
         <source>Switch graph</source>
-        <translation type="unfinished">Переключить график</translation>
+        <translation>Переключить график</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="177"/>
         <source>Blink LED</source>
-        <translation type="unfinished">Помигать светодиодом</translation>
+        <translation>Помигать светодиодом</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="194"/>
         <source>Sync history</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="211"/>
         <source>Refresh sensor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="273"/>
         <source>Order by:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="275"/>
         <source>water level</source>
-        <translation type="unfinished">уровню воды</translation>
+        <translation>уровню воды</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="277"/>
         <source>plant name</source>
-        <translation type="unfinished">названию растения</translation>
+        <translation>названию растения</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="279"/>
         <source>device model</source>
-        <translation type="unfinished">модели устройства</translation>
+        <translation>модели устройства</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="281"/>
         <source>location</source>
-        <translation type="unfinished">расположению</translation>
+        <translation>расположению</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="336"/>
         <source>Scan for sensors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="354"/>
         <source>Refresh sensors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -218,12 +218,12 @@
     <message>
         <location filename="../qml/DeviceEnvironmental.qml" line="160"/>
         <source>Synced</source>
-        <translation type="unfinished">Синхронизовано</translation>
+        <translation>Синхронизовано</translation>
     </message>
     <message>
         <location filename="../qml/DeviceEnvironmental.qml" line="162"/>
         <source>Synced %1 ago</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../qml/DevicePlantSensorData.qml" line="53"/>
         <source>Synced</source>
-        <translation type="unfinished">Синхронизовано</translation>
+        <translation>Синхронизовано</translation>
     </message>
     <message>
         <location filename="../qml/DevicePlantSensorData.qml" line="55"/>
@@ -1201,7 +1201,7 @@
     <message>
         <location filename="../qml/MobileDrawer.qml" line="311"/>
         <source>Order by:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сортировать по:</translation>
     </message>
     <message>
         <location filename="../qml/MobileDrawer.qml" line="313"/>
