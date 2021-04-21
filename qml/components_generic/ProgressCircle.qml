@@ -29,6 +29,8 @@ Item {
     onIsPieChanged: canvas.requestPaint()
     onArcBeginChanged: canvas.requestPaint()
     onArcEndChanged: canvas.requestPaint()
+    onColorCircleChanged: canvas.requestPaint()
+    onColorBackgroundChanged: canvas.requestPaint()
 
     Connections {
         target: ThemeEngine

@@ -85,9 +85,9 @@ Item {
         source: "qrc:/assets/icons_fontawesome/lungs-solid.svg"
 
         property real minOpacity: 0.4
-        property real maxOpacity: 0.8
-        property int minDuration: 500
-        property int maxDuration: 2500
+        property real maxOpacity: 0.85
+        property int minDuration: 250
+        property int maxDuration: 2000
         property int duration: UtilsNumber.mapNumber(indicatorAirQuality.value,
                                                      indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
                                                      maxDuration, minDuration)

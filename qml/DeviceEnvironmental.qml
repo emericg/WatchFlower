@@ -112,8 +112,8 @@ Item {
         //isWeatherStation = true
 
         indicatorDisconnected.visible = !currentDevice.isDataAvailable()
-        indicatorAirQuality.visible = isAirMonitor
-        indicatorRadioactivity.visible = isGeigerCounter
+        indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
+        indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
 
         //
         loadGraph()

@@ -252,10 +252,9 @@ Item {
 
                 // Air warning
                 if (boxDevice.hasVocSensor) {
-                    if (boxDevice.voc > 300) {
+                    if (boxDevice.voc > 500) {
                         warning.visible = true
-
-                        if (boxDevice.voc > 500)
+                        if (boxDevice.voc > 1000)
                             warning.color = Theme.colorRed
                         else
                             warning.color = Theme.colorYellow
@@ -284,8 +283,13 @@ Item {
             } else if (boxDevice.isThermometer) {
                 if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentThermometer
                 loaderIndicators.item.updateData()
-            } else {
-                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentEnvironmentalGauge
+            } else if (boxDevice.isEnvironmentalSensor) {
+                if (!loaderIndicators.sourceComponent) {
+                    if (boxDevice.deviceName === "GeigerCounter")
+                        loaderIndicators.sourceComponent = componentThermometer
+                    else
+                        loaderIndicators.sourceComponent = componentEnvironmentalGauge
+                }
                 loaderIndicators.item.updateData()
             }
         }
@@ -509,7 +513,7 @@ Item {
                 spacing: 8
                 anchors.verticalCenter: parent.verticalCenter
                 layoutDirection: Qt.RightToLeft
-                visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
+                //visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
 
                 ImageSvg {
                     id: water
@@ -764,7 +768,6 @@ Item {
                     textTemp.text = ""
                     textHygro.font.pixelSize = bigAssMode ? 24 : 22
                     textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
-                    // TODO status color? warning?
                 } else if (boxDevice.hasVocSensor) {
                     textTemp.font.pixelSize = bigAssMode ? 28 : 26
                     textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
@@ -812,34 +815,39 @@ Item {
             width: rowRight.height
             height: width
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 6
+            anchors.verticalCenterOffset: 4
 
             function updateData() {
                 var clr = Theme.colorGreen
-                if (boxDevice.voc > 1000) clr = Theme.colorRed
-                if (boxDevice.voc > 500) clr = Theme.colorOrange
 
-                gaugeBg.colorCircle = clr
-                gaugeValue.colorCircle = clr
-                gaugeValue.arcEnd = UtilsNumber.mapNumber(boxDevice.voc, 0, 1500, 0, 270)
+                if (boxDevice.deviceName === "WP6003") {
+                    if (boxDevice.voc > 1000) clr = Theme.colorRed
+                    else if (boxDevice.voc > 500) clr = Theme.colorOrange
+
+                    gaugeLegend.text = qsTr("VOC")
+                    gaugeBg.colorCircle = clr
+                    gaugeValue.colorCircle = clr
+                    gaugeValue.arcEnd = UtilsNumber.mapNumber(boxDevice.voc, 0, 1500, 0, 270)
+                }
             }
 
             Text {
+                id: gaugeLegend
                 anchors.centerIn: parent
-                text: "VOC"
+                font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorSubText
             }
 
             ProgressCircle {
                 id: gaugeBg
                 anchors.fill: parent
-                lineWidth: 12
+                lineWidth: isMobile ? 10 : 12
                 opacity: 0.33
             }
             ProgressCircle {
                 id: gaugeValue
                 anchors.fill: parent
-                lineWidth: 12
+                lineWidth: isMobile ? 10 : 12
             }
         }
     }
