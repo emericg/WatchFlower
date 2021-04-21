@@ -171,9 +171,24 @@ ApplicationWindow {
                     appContent.state = "DeviceList"
             }
         }
+        onRightMenuClicked: {
+            //
+        }
+
         onDeviceLedButtonClicked: {
             if (selectedDevice) {
                 selectedDevice.actionLedBlink()
+            }
+        }
+        onDeviceWateringButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.actionWatering()
+            }
+        }
+
+        onDeviceClearButtonClicked: {
+            if (selectedDevice) {
+                popupDeleteData.open()
             }
         }
         onDeviceRefreshHistoryButtonClicked: {
@@ -181,13 +196,16 @@ ApplicationWindow {
                 selectedDevice.refreshStartHistory()
             }
         }
+
+        onDeviceRefreshRealtimeButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.refreshStartRealtime()
+            }
+        }
         onDeviceRefreshButtonClicked: {
             if (selectedDevice) {
                 deviceManager.updateDevice(selectedDevice.deviceAddress)
             }
-        }
-        onRightMenuClicked: {
-            //
         }
     }
 
@@ -249,6 +267,10 @@ ApplicationWindow {
     property bool wideWideMode: (width >= 640)
 
     // QML /////////////////////////////////////////////////////////////////////
+
+    PopupDeleteData {
+        id: popupDeleteData
+    }
 
     FocusScope {
         id: appContent

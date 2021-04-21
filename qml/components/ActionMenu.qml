@@ -13,6 +13,7 @@ Rectangle {
     color: Theme.colorBackground
     radius: Theme.componentRadius
     border.color: Theme.colorSeparator
+    border.width: Theme.componentBorderWidth
 
     signal menuSelected(var index)
     property int menuWidth: 0
@@ -74,6 +75,14 @@ Rectangle {
             }
         }
 
+        ////////
+
+        Rectangle {
+            width: parent.width; height: 1;
+            color: Theme.colorSeparator;
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+        }
+
         ActionButton {
             id: actionHistoryRefresh
             index: 3
@@ -98,6 +107,14 @@ Rectangle {
                 menuSelected(index)
                 close()
             }
+        }
+
+        ////////
+
+        Rectangle {
+            width: parent.width; height: 1;
+            color: Theme.colorSeparator;
+            visible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible)
         }
 
         ActionButton {

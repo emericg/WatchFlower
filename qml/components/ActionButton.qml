@@ -41,12 +41,12 @@ Item {
             id: tButton
             width: parent.width
             anchors.left: parent.left
-            anchors.leftMargin: isPhone ? 12 : 16
+            anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             text: button_text
             font.bold: false
-            font.pixelSize: Theme.fontSizeContentBig
+            font.pixelSize: Theme.fontSizeContent
             color: Theme.colorText
         }
 
@@ -55,7 +55,7 @@ Item {
             width: parent.height * 0.6
             height: parent.height * 0.6
             anchors.right: parent.right
-            anchors.rightMargin: isPhone ? 12 : 16
+            anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             source: button_source
@@ -68,7 +68,7 @@ Item {
             hoverEnabled: isDesktop
             onEntered: viewButtonHovered()
             onExited: viewButtonExited()
-            
+
             onClicked: buttonClicked()
         }
 

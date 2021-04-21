@@ -297,7 +297,6 @@ ApplicationWindow {
 
     PopupDeleteData {
         id: popupDeleteData
-        //onConfirmed: selectedDevice.actionClearHistory()
     }
 
     Item {
