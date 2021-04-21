@@ -210,8 +210,6 @@ Item {
         updateSensorIcon()
         updateSensorSettings()
 
-        rectangleSensors.visible = false
-        rectangleHygroTemp.visible = false
         water.visible = false
         temp.visible = false
         warning.visible = false
@@ -281,32 +279,14 @@ Item {
         // Has data? always display them
         if (boxDevice.isDataAvailable()) {
             if (boxDevice.isPlantSensor) {
-                rectangleSensors.visible = true
-                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
-                temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
-                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
-                cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
-
-                hygro_bg.visible = hasHygro
-                lumi_bg.visible = boxDevice.hasLuminositySensor
-                cond_bg.visible = hasHygro
+                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentPlantSensor
+                loaderIndicators.item.updateData()
+            } else if (boxDevice.isThermometer) {
+                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentThermometer
+                loaderIndicators.item.updateData()
             } else {
-                if (boxDevice.hasGeigerCounter) {
-                    rectangleHygroTemp.visible = true
-                    textTemp.text = ""
-                    textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
-                    // TODO status color? warning?
-                } else if (boxDevice.hasVocSensor) {
-                    rectangleHygroTemp.visible = true
-                    textTemp.font.pixelSize = bigAssMode ? 28 : 26
-                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
-                    textHygro.text = boxDevice.deviceTemp.toFixed(1) + "°"
-                } else {
-                    rectangleHygroTemp.visible = true
-                    textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
-                    textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
-                }
+                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentEnvironmentalGauge
+                loaderIndicators.item.updateData()
             }
         }
     }
@@ -569,171 +549,16 @@ Item {
                 }
             }
 
-            Row {
-                id: rectangleSensors
-                anchors.bottom: parent.bottom
-                anchors.top: parent.top
+            ////
 
-                visible: true
-                clip: true
-                spacing: 8
-                property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
-                property int sensorRadius: bigAssMode ? 3 : 2
-
-                Item {
-                    id: hygro_bg
-                    width: rectangleSensors.sensorWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-
-                    Rectangle {
-                        id: bg1
-                        anchors.fill: parent
-                        color: Theme.colorBlue
-                        opacity: 0.33
-                        radius: rectangleSensors.sensorRadius
-                    }
-                    Rectangle {
-                        id: hygro_data
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        color: Theme.colorBlue
-                        radius: rectangleSensors.sensorRadius
-                        Behavior on height { NumberAnimation { duration: 333 } }
-                    }
-                }
-
-                Item {
-                    id: temp_bg
-                    width: rectangleSensors.sensorWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-
-                    Rectangle {
-                        id: bg2
-                        anchors.fill: parent
-                        color: Theme.colorGreen
-                        opacity: 0.33
-                        radius: rectangleSensors.sensorRadius
-                    }
-                    Rectangle {
-                        id: temp_data
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        visible: true
-                        color: Theme.colorGreen
-                        radius: rectangleSensors.sensorRadius
-                        Behavior on height { NumberAnimation { duration: 333 } }
-                    }
-                }
-
-                Item {
-                    id: lumi_bg
-                    width: rectangleSensors.sensorWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-
-                    Rectangle {
-                        id: bg3
-                        anchors.fill: parent
-
-                        color: Theme.colorYellow
-                        opacity: 0.33
-                        radius: rectangleSensors.sensorRadius
-                    }
-                    Rectangle {
-                        id: lumi_data
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 0
-
-                        color: Theme.colorYellow
-                        radius: rectangleSensors.sensorRadius
-                        Behavior on height { NumberAnimation { duration: 333 } }
-                    }
-                }
-
-                Item {
-                    id: cond_bg
-                    width: rectangleSensors.sensorWidth
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
-
-                    Rectangle {
-                        id: bg4
-                        anchors.fill: parent
-
-                        color: Theme.colorRed
-                        opacity: 0.33
-                        radius: rectangleSensors.sensorRadius
-                    }
-                    Rectangle {
-                        id: cond_data
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.bottom: parent.bottom
-
-                        color: Theme.colorRed
-                        radius: rectangleSensors.sensorRadius
-                        Behavior on height { NumberAnimation { duration: 333 } }
-                    }
-                }
-            }
-
-            Column {
-                id: rectangleHygroTemp
+            Loader {
+                id: loaderIndicators
                 anchors.verticalCenter: parent.verticalCenter
 
-                Text {
-                    id: textTemp
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    color: Theme.colorText
-                    font.letterSpacing: -1.4
-                    font.pixelSize: bigAssMode ? 32 : 30
-                    font.family: "Tahoma"
-
-                    Connections {
-                        target: settingsManager
-                        onTempUnitChanged: { textTemp.text = boxDevice.getTemp().toFixed(1) + "°"; }
-                    }
-                }
-
-                Text {
-                    id: textHygro
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    color: Theme.colorSubText
-                    font.pixelSize: bigAssMode ? 26 : 24
-                    font.family: "Tahoma"
-                }
+                sourceComponent: null
             }
+
+            ////
 
             ImageSvg {
                 id: imageForward
@@ -771,6 +596,250 @@ Item {
                 alwaysRunToEnd: true
                 OpacityAnimator { from: 1; to: 0; duration: 750 }
                 OpacityAnimator { from: 0; to: 1; duration: 750 }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Component {
+        id: componentPlantSensor
+
+        Row {
+            id: rectangleSensors
+            height: rowRight.height
+
+            clip: true
+            spacing: 8
+            property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
+            property int sensorRadius: bigAssMode ? 3 : 2
+
+            function updateData() {
+                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+                temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
+                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
+                cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
+
+                hygro_bg.visible = hasHygro
+                lumi_bg.visible = boxDevice.hasLuminositySensor
+                cond_bg.visible = hasHygro
+            }
+
+            Item {
+                id: hygro_bg
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                Rectangle {
+                    id: bg1
+                    anchors.fill: parent
+                    color: Theme.colorBlue
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: hygro_data
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+
+                    color: Theme.colorBlue
+                    radius: rectangleSensors.sensorRadius
+                    Behavior on height { NumberAnimation { duration: 333 } }
+                }
+            }
+
+            Item {
+                id: temp_bg
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                Rectangle {
+                    id: bg2
+                    anchors.fill: parent
+                    color: Theme.colorGreen
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: temp_data
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+
+                    visible: true
+                    color: Theme.colorGreen
+                    radius: rectangleSensors.sensorRadius
+                    Behavior on height { NumberAnimation { duration: 333 } }
+                }
+            }
+
+            Item {
+                id: lumi_bg
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                Rectangle {
+                    id: bg3
+                    anchors.fill: parent
+
+                    color: Theme.colorYellow
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: lumi_data
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+
+                    color: Theme.colorYellow
+                    radius: rectangleSensors.sensorRadius
+                    Behavior on height { NumberAnimation { duration: 333 } }
+                }
+            }
+
+            Item {
+                id: cond_bg
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                Rectangle {
+                    id: bg4
+                    anchors.fill: parent
+
+                    color: Theme.colorRed
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: cond_data
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.bottom: parent.bottom
+
+                    color: Theme.colorRed
+                    radius: rectangleSensors.sensorRadius
+                    Behavior on height { NumberAnimation { duration: 333 } }
+                }
+            }
+        }
+    }
+
+    ////////////////
+
+    Component {
+        id: componentThermometer
+
+        Column {
+            id: rectangleHygroTemp
+            anchors.verticalCenter: parent.verticalCenter
+
+            function updateData() {
+                if (boxDevice.hasGeigerCounter) {
+                    textTemp.text = ""
+                    textHygro.font.pixelSize = bigAssMode ? 24 : 22
+                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
+                    // TODO status color? warning?
+                } else if (boxDevice.hasVocSensor) {
+                    textTemp.font.pixelSize = bigAssMode ? 28 : 26
+                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
+                    textHygro.text = boxDevice.deviceTemp.toFixed(1) + "°"
+                } else {
+                    textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
+                    textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
+                }
+            }
+
+            Text {
+                id: textTemp
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                color: Theme.colorText
+                font.letterSpacing: -1.4
+                font.pixelSize: bigAssMode ? 32 : 30
+                font.family: "Tahoma"
+
+                Connections {
+                    target: settingsManager
+                    onTempUnitChanged: { textTemp.text = boxDevice.getTemp().toFixed(1) + "°"; }
+                }
+            }
+
+            Text {
+                id: textHygro
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                color: Theme.colorSubText
+                font.pixelSize: bigAssMode ? 26 : 24
+                font.family: "Tahoma"
+            }
+        }
+    }
+
+    ////////////////
+
+    Component {
+        id: componentEnvironmentalGauge
+
+        Item {
+            width: rowRight.height
+            height: width
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: 6
+
+            function updateData() {
+                var clr = Theme.colorGreen
+                if (boxDevice.voc > 1000) clr = Theme.colorRed
+                if (boxDevice.voc > 500) clr = Theme.colorOrange
+
+                gaugeBg.colorCircle = clr
+                gaugeValue.colorCircle = clr
+                gaugeValue.arcEnd = UtilsNumber.mapNumber(boxDevice.voc, 0, 1500, 0, 270)
+            }
+
+            Text {
+                anchors.centerIn: parent
+                text: "VOC"
+                color: Theme.colorSubText
+            }
+
+            ProgressCircle {
+                id: gaugeBg
+                anchors.fill: parent
+                lineWidth: 12
+                opacity: 0.33
+            }
+            ProgressCircle {
+                id: gaugeValue
+                anchors.fill: parent
+                lineWidth: 12
             }
         }
     }
