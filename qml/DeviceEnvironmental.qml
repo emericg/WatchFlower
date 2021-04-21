@@ -448,8 +448,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasPM1Sensor
 
-                            title: "PM1"
-                            legend: "µg/m³"
+                            title: qsTr("PM1")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.pm1
                             precision: 1
                         }
@@ -459,8 +459,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasPM25Sensor
 
-                            title: "PM2.5"
-                            legend: "µg/m³"
+                            title: qsTr("PM2.5")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.pm25
                             precision: 1
                         }
@@ -470,8 +470,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasPM10Sensor
 
-                            title: "PM10"
-                            legend: "µg/m³"
+                            title: qsTr("PM10")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.pm10
                             precision: 1
                         }
@@ -481,8 +481,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasO3Sensor
 
-                            title: "O3"
-                            legend: "µg/m³"
+                            title: qsTr("O3")
+                            legend: qsTr("µg/m³")
                             value: 8.0
                             precision: 0
                         }
@@ -492,8 +492,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasSo2Sensor
 
-                            title: "SO2"
-                            legend: "µg/m³"
+                            title: qsTr("SO2")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.so2
                             precision: 0
                         }
@@ -503,8 +503,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasNo2Sensor
 
-                            title: "NO2"
-                            legend: "µg/m³"
+                            title: qsTr("NO2")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.no2
                             precision: 0
                         }
@@ -514,8 +514,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasCoSensor
 
-                            title: "CO"
-                            legend: "PPM"
+                            title: qsTr("CO")
+                            legend: qsTr("PPM")
                             value: currentDevice.co
                             precision: 0
                         }
@@ -525,8 +525,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasCo2Sensor
 
-                            title: (currentDevice.haseCo2Sensor ? "e" : "") + "CO2"
-                            legend: "PPM"
+                            title: (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+                            legend: qsTr("PPM")
                             value: currentDevice.co2
                             precision: 0
                             limit_mid: 850
@@ -538,8 +538,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasVocSensor
 
-                            title: "VOC"
-                            legend: "µg/m³"
+                            title: qsTr("VOC")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.voc
                             limit_mid: 500
                             limit_high: 1000
@@ -551,8 +551,8 @@ Item {
                             width: airFlow.www
                             visible: currentDevice.hasHchoSensor
 
-                            title: "HCHO"
-                            legend: "µg/m³"
+                            title: qsTr("HCHO")
+                            legend: qsTr("µg/m³")
                             value: currentDevice.hcho
                             limit_mid: 500
                             limit_high: 1000
@@ -615,9 +615,9 @@ Item {
                             id: radm
                             width: radFlow.www
 
-                            title: ("RADIATION")
-                            legend: ("µSv/m")
-                            value: currentDevice.radioactivityM
+                            title: qsTr("RADIATION")
+                            legend: qsTr("µSv/h")
+                            value: currentDevice.radioactivityH
                             precision: 2
                             limit_mid: 1
                             limit_high: 10
@@ -627,9 +627,9 @@ Item {
                             id: rads
                             width: radFlow.www
 
-                            title: ("RADIATION")
-                            legend: ("µSv/s")
-                            value: currentDevice.radioactivityS
+                            title: qsTr("RADIATION")
+                            legend: qsTr("µSv/m")
+                            value: currentDevice.radioactivityM
                             precision: 2
                             limit_mid: 1
                             limit_high: 10
@@ -693,7 +693,7 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasTemperatureSensor
 
-                            title: "Temperature"
+                            title: qsTr("Temperature")
                             legend: "°" + settingsManager.tempUnit
                             icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
                             value: currentDevice.deviceTemp
@@ -705,8 +705,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasHumiditySensor
 
-                            title: "Humidity"
-                            legend: "°RH"
+                            title: qsTr("Humidity")
+                            legend: qsTr("°RH")
                             icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                             value: 55
                             precision: 0
@@ -717,8 +717,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasPressureSensor
 
-                            title: "Pressure"
-                            legend: "Hpa"
+                            title: qsTr("Pressure")
+                            legend: qsTr("Hpa")
                             icon: "qrc:/assets/icons_material/duotone_speed-24px.svg"
                             value: 1028
                             precision: 0
@@ -729,8 +729,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasSoundSensor
 
-                            title: "Sound level"
-                            legend: "db"
+                            title: qsTr("Sound level")
+                            legend: qsTr("db")
                             icon: "qrc:/assets/icons_material/duotone-mic-24px.svg"
                             value: 47
                             precision: 0
@@ -741,8 +741,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasLuminositySensor
 
-                            title: "Luminosity"
-                            legend: "lux"
+                            title: qsTr("Luminosity")
+                            legend: qsTr("lux")
                             icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
                             value: 892
                             precision: 0
@@ -753,7 +753,7 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasUvSensor
 
-                            title: "UV index"
+                            title: qsTr("UV index")
                             legend: ""
                             icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
                             value: 3
@@ -765,7 +765,7 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasWindDirectionSensor
 
-                            title: "Wind direction"
+                            title: qsTr("Wind direction")
                             legend: "north"
                             icon: "qrc:/assets/icons_material/baseline-near_me-24px.svg"
                             value: 0
@@ -776,8 +776,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasWindSpeedSensor
 
-                            title: "Wind speed"
-                            legend: "km/h"
+                            title: qsTr("Wind speed")
+                            legend: qsTr("km/h")
                             icon: "qrc:/assets/icons_material/baseline-air-24px.svg"
                             value: 16
                             precision: 0
@@ -787,8 +787,8 @@ Item {
                             height: weatherFlow.www
                             visible: currentDevice.hasWaterLevelSensor
 
-                            title: "Rain"
-                            legend: "mm"
+                            title: qsTr("Rain")
+                            legend: qsTr("mm")
                             icon: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
                             value: 7
                             precision: 0

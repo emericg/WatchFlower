@@ -50,6 +50,9 @@ public:
     DeviceEsp32Geiger(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceEsp32Geiger();
 
+public slots:
+    virtual bool hasData() const;
+
 private:
     // QLowEnergyController related
     void serviceScanDone();

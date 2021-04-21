@@ -139,7 +139,7 @@ protected:
     float m_so2 = -99.f;
     float m_voc = -99.f;
     float m_hcho = -99.f;
-    float m_rh = 999.f;
+    float m_rh = -99.f;
     float m_rm = -99.f;
     float m_rs = -99.f;
 
@@ -205,7 +205,7 @@ public:
     virtual ~DeviceSensor();
 
 public slots:
-    bool hasData() const;
+    virtual bool hasData() const;
     bool hasData(const QString &dataName) const;
     int countData(const QString &dataName, int days = 31) const;
 

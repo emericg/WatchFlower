@@ -184,8 +184,8 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
 
         if (data[0] == 170) // 0xaa
         {
-            qDebug() << "* DeviceWP6003 update:" << getAddress();
-            qDebug() << "- data?" << data[6];
+            //qDebug() << "* DeviceWP6003 update:" << getAddress();
+            //qDebug() << "- data?" << data[6];
         }
         else if (data[0] == 10) // 0x0a
         {
@@ -232,12 +232,12 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceWP6003 update:" << getAddress();
-            qDebug() << "- timecode:" << tmcd;
-            qDebug() << "- temperature:" << m_temperature;
-            qDebug() << "- TVOC:" << m_voc;
-            qDebug() << "- HCHO:" << m_hcho;
-            qDebug() << "- eCO2:" << m_co2;
+            //qDebug() << "* DeviceWP6003 update:" << getAddress();
+            //qDebug() << "- timecode:" << tmcd;
+            //qDebug() << "- temperature:" << m_temperature;
+            //qDebug() << "- TVOC:" << m_voc;
+            //qDebug() << "- HCHO:" << m_hcho;
+            //qDebug() << "- eCO2:" << m_co2;
 #endif
         }
     }

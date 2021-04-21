@@ -274,3 +274,31 @@ void DeviceEsp32Geiger::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 }
 
 /* ************************************************************************** */
+
+bool DeviceEsp32Geiger::hasData() const
+{
+    // If we have immediate data (<12h old)
+    if (m_rh > 0 || m_rm > 0 || m_rs > 0)
+        return true;
+
+    // Otherwise, check if we have stored data
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery hasData;
+        hasData.prepare("SELECT COUNT(*) FROM sensorData WHERE deviceAddr = :deviceAddr;");
+        hasData.bindValue(":deviceAddr", getAddress());
+
+        if (hasData.exec() == false)
+            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+
+        while (hasData.next())
+        {
+            if (hasData.value(0).toInt() > 0) // data count
+                return true;
+        }
+    }
+
+    return false;
+}
+
+/* ************************************************************************** */
