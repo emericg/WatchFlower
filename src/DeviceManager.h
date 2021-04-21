@@ -101,6 +101,12 @@ public:
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 
+    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index) const
+    {
+        QModelIndex proxyIndex = m_devices_filter->index(index, 0);
+        return QVariant::fromValue(m_devices_filter->data(proxyIndex, DeviceModel::PointerRole));
+    }
+
     void invalidate();
 
 public slots:

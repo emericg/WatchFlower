@@ -34,42 +34,48 @@ Item {
     property var selectionCount: 0
 
     function selectDevice(index) {
+        // make sure it's not already selected
+        if (deviceManager.getDeviceByProxyIndex(index).selected) return;
+
+        // then add
         selectionMode = true;
         selectionList.push(index);
         selectionCount++;
+
+        deviceManager.getDeviceByProxyIndex(index).selected = true;
     }
     function deselectDevice(index) {
         var i = selectionList.indexOf(index);
         if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
-        if (selectionList.length === 0) selectionMode = false;
+        if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
+
+        deviceManager.getDeviceByProxyIndex(index).selected = false;
     }
     function exitSelectionMode() {
         if (selectionList.length === 0) return;
 
-        for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].isSelected) {
-                devicesView.contentItem.children[child].isSelected = false;
-            }
-        }
-
         selectionMode = false;
         selectionList = [];
         selectionCount = 0;
+
+        for (var i = 0; i < devicesView.count; i++) {
+            deviceManager.getDeviceByProxyIndex(i).selected = false;
+        }
     }
 
     function updateSelectedDevice() {
-        for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].isSelected) {
-                deviceManager.updateDevice(devicesView.contentItem.children[child].boxDevice.deviceAddress)
+        for (var i = 0; i < devicesView.count; i++) {
+            if (deviceManager.getDeviceByProxyIndex(i).selected) {
+                deviceManager.updateDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
         }
         exitSelectionMode()
     }
     function removeSelectedDevice() {
         var devicesAddr = [];
-        for (var child in devicesView.contentItem.children) {
-            if (devicesView.contentItem.children[child].isSelected) {
-                devicesAddr.push(devicesView.contentItem.children[child].boxDevice.deviceAddress)
+        for (var i = 0; i < devicesView.count; i++) {
+            if (deviceManager.getDeviceByProxyIndex(i).selected) {
+                devicesAddr.push(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
         }
         for (var count = 0; count < devicesAddr.length; count++) {

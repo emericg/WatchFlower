@@ -11,7 +11,6 @@ Item {
     implicitHeight: 128
 
     property var boxDevice: pointer
-    property bool isSelected: false
     property bool hasHygro: false
 
     property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
@@ -340,10 +339,10 @@ Item {
         border.width: 2
         border.color: singleColumn ? "transparent" : Theme.colorSeparator
 
-        color: isSelected ? Theme.colorSeparator : Theme.colorDeviceWidget
+        color: boxDevice.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: 133 } }
 
-        opacity: isSelected ? 0.5 : (singleColumn ? 0 : 1)
+        opacity: boxDevice.selected ? 0.5 : (singleColumn ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
@@ -363,11 +362,9 @@ Item {
 
                 // multi selection
                 if (mouse.button === Qt.MiddleButton) {
-                    if (!isSelected) {
-                        isSelected = true
+                    if (!boxDevice.selected) {
                         screenDeviceList.selectDevice(index)
                     } else {
-                        isSelected = false
                         screenDeviceList.deselectDevice(index)
                     }
                     return;
@@ -377,11 +374,9 @@ Item {
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
                         (screenDeviceList.selectionMode)) {
-                        if (!isSelected) {
-                            isSelected = true
+                        if (!boxDevice.selected) {
                             screenDeviceList.selectDevice(index)
                         } else {
-                            isSelected = false
                             screenDeviceList.deselectDevice(index)
                         }
                         return;
@@ -407,12 +402,10 @@ Item {
 
             onPressAndHold: {
                 // multi selection
-                if (!isSelected) {
+                if (!boxDevice.selected) {
                     utilsApp.vibrate(25)
-                    isSelected = true
                     screenDeviceList.selectDevice(index)
                 } else {
-                    isSelected = false
                     screenDeviceList.deselectDevice(index)
                 }
             }

@@ -117,6 +117,11 @@ class Device: public QObject
     Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY historyUpdated)
     Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
 
+    Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
+    bool selected = false;
+    bool isSelected() const { return selected; }
+    void setSelected(bool value) { selected = value; Q_EMIT selectionUpdated(); }
+
 Q_SIGNALS:
     void connected();
     void disconnected();
@@ -129,6 +134,7 @@ Q_SIGNALS:
     void rssiUpdated();
     void dataUpdated();
     void historyUpdated();
+    void selectionUpdated();
 
 protected:
     int m_deviceType = 0;           //!< See DeviceType enum
