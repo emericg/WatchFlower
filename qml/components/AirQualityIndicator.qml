@@ -18,8 +18,8 @@ Item {
 
     Item {
         id: legendSimple
-        width: parent.width * 1.20
-        height: parent.height * 1.20
+        width: parent.width + 40
+        height: parent.height + 40
         anchors.centerIn: parent
 
         visible: true
@@ -29,7 +29,7 @@ Item {
 
             lineWidth: 10
             arcBegin: 0
-            arcEnd: 95
+            arcEnd: 86
             colorCircle: Theme.colorGreen
             opacity: 0.8
         }
@@ -37,8 +37,8 @@ Item {
             anchors.fill: parent
 
             lineWidth: 10
-            arcBegin: 100
-            arcEnd: 185
+            arcBegin: 94
+            arcEnd: 176
             colorCircle: Theme.colorOrange
             opacity: 0.9
         }
@@ -46,7 +46,7 @@ Item {
             anchors.fill: parent
 
             lineWidth: 10
-            arcBegin: 190
+            arcBegin: 184
             arcEnd: 270
             colorCircle: Theme.colorRed
             opacity: 0.75

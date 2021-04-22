@@ -212,8 +212,9 @@ Item {
 
         water.visible = false
         temp.visible = false
-        warning.visible = false
+        ventilate.visible = false
         nuclear.visible = false
+        warning.visible = false
 
         // Warnings icons (for sensors with available data)
         if (boxDevice.isDataAvailable()) {
@@ -253,11 +254,11 @@ Item {
                 // Air warning
                 if (boxDevice.hasVocSensor) {
                     if (boxDevice.voc > 500) {
-                        warning.visible = true
+                        ventilate.visible = true
                         if (boxDevice.voc > 1000)
-                            warning.color = Theme.colorRed
+                            ventilate.color = Theme.colorRed
                         else
-                            warning.color = Theme.colorYellow
+                            ventilate.color = Theme.colorYellow
                     }
                 }
 
@@ -496,6 +497,66 @@ Item {
         ////////////////
 
         Row {
+            id: lilIcons
+            height: 24
+            spacing: 8
+            anchors.right: rowRight.left
+            anchors.rightMargin: 12
+            anchors.verticalCenter: rowRight.verticalCenter
+            layoutDirection: Qt.RightToLeft
+            //visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
+
+            ImageSvg {
+                id: water
+                width: bigAssMode ? 28 : 24
+                height: bigAssMode ? 28 : 24
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                color: Theme.colorBlue
+            }
+
+            ImageSvg {
+                id: temp
+                width: bigAssMode ? 28 : 24
+                height: bigAssMode ? 28 : 24
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                color: Theme.colorYellow
+            }
+            ImageSvg {
+                id: ventilate
+                width: bigAssMode ? 28 : 24
+                height: bigAssMode ? 28 : 24
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-air-24px.svg"
+                color: Theme.colorYellow
+            }
+            ImageSvg {
+                id: nuclear
+                width: bigAssMode ? 28 : 24
+                height: bigAssMode ? 28 : 24
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_custom/nuclear_icon.svg"
+                color: Theme.colorYellow
+            }
+            ImageSvg {
+                id: warning
+                width: bigAssMode ? 28 : 24
+                height: bigAssMode ? 28 : 24
+                anchors.verticalCenter: parent.verticalCenter
+
+                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                color: Theme.colorYellow
+            }
+        }
+
+        ////////////////
+
+        Row {
             id: rowRight
             anchors.top: parent.top
             anchors.topMargin: bigAssMode ? 16 : 8
@@ -506,52 +567,6 @@ Item {
 
             z: 1
             spacing: 8
-
-            Row {
-                id: lilIcons
-                height: 24
-                spacing: 8
-                anchors.verticalCenter: parent.verticalCenter
-                layoutDirection: Qt.RightToLeft
-                //visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
-
-                ImageSvg {
-                    id: water
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                    color: Theme.colorBlue
-                }
-                ImageSvg {
-                    id: temp
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-                    color: Theme.colorYellow
-                }
-                ImageSvg {
-                    id: warning
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                    color: Theme.colorYellow
-                }
-                ImageSvg {
-                    id: nuclear
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_custom/nuclear_icon.svg"
-                    color: Theme.colorYellow
-                }
-            }
 
             ////
 
