@@ -53,7 +53,7 @@ Item {
         tempData.clear()
         lumiData.clear()
 
-        currentDevice.getAioLinesData(days, axisTime, hygroData, conduData, tempData, lumiData);
+        currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData);
 
         //// AXIS
         axisHygro.min = 0

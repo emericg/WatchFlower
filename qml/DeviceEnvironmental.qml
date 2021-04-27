@@ -123,7 +123,13 @@ Item {
     }
 
     function loadGraph() {
-        //
+        chartEnvironmental.visible = false
+
+        if (isAirMonitor) {
+            if (currentDevice.deviceName === "WP6003") {
+                chartEnvironmental.visible = true
+            }
+        }
     }
 
     function updateHeader() {
@@ -158,6 +164,11 @@ Item {
         // DATA
 
         // GRAPH
+        if (isAirMonitor) {
+            if (currentDevice.deviceName === "WP6003") {
+                currentDevice.updateChartData_environmentalVoc(14)
+            }
+        }
     }
 
     function updateStatusText() {
@@ -398,7 +409,7 @@ Item {
                 anchors.right: parent.right
             }
 
-            ////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             Flow {
                 anchors.top: bannersync.bottom
@@ -572,7 +583,7 @@ Item {
                     }
                 }
 
-                ////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////
 
                 Rectangle {
                     id: radBox
@@ -699,7 +710,6 @@ Item {
                             value: currentDevice.deviceTemp
                             precision: 1
                         }
-
                         ItemWeatherBox {
                             id: hum
                             height: weatherFlow.www
@@ -711,7 +721,6 @@ Item {
                             value: 55
                             precision: 0
                         }
-
                         ItemWeatherBox {
                             id: press
                             height: weatherFlow.www
@@ -747,7 +756,6 @@ Item {
                             value: 892
                             precision: 0
                         }
-
                         ItemWeatherBox {
                             id: uv
                             height: weatherFlow.www
@@ -782,6 +790,7 @@ Item {
                             value: 16
                             precision: 0
                         }
+
                         ItemWeatherBox {
                             id: rain
                             height: weatherFlow.www
@@ -794,18 +803,25 @@ Item {
                             precision: 0
                         }
                     }
-
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-
-                        visible: (isDesktop && singleColumn && !headerUnicolor)
-                        height: 2
-                        opacity: 0.5
-                        color: Theme.colorSeparator
-                    }
                 }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    visible: (isDesktop && singleColumn && !headerUnicolor)
+                    height: 2
+                    opacity: 0.5
+                    color: Theme.colorSeparator
+                }
+
+                ////////////////////////////////////////////////////////////////
+
+                ChartEnvironmentalVoc {
+                    id: chartEnvironmental
+                }
+
+                ////////////////////////////////////////////////////////////////
             }
         }
     }

@@ -25,7 +25,7 @@ Item {
         var daysVisible = Math.floor(width / widgetWidthTarget)
         var daysMax = daysVisible
         widgetWidth = (width / daysVisible)
-        currentDevice.updateAioMinMaxData(daysMax)
+        currentDevice.updateChartData_thermometerMinMax(daysMax)
 
         if (currentDevice.countData("temperature", daysMax) > 1) {
             mmGraph.visible = true

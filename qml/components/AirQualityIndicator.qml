@@ -18,8 +18,8 @@ Item {
 
     Item {
         id: legendSimple
-        width: parent.width + 40
-        height: parent.height + 40
+        width: parent.width + (isMobile ? 32 : 40)
+        height: parent.height + (isMobile ? 32 : 40)
         anchors.centerIn: parent
 
         visible: true
@@ -29,7 +29,7 @@ Item {
 
             lineWidth: 10
             arcBegin: 0
-            arcEnd: 86
+            arcEnd: 87
             colorCircle: Theme.colorGreen
             opacity: 0.8
         }
@@ -37,19 +37,19 @@ Item {
             anchors.fill: parent
 
             lineWidth: 10
-            arcBegin: 94
-            arcEnd: 176
+            arcBegin: 93
+            arcEnd: 177
             colorCircle: Theme.colorOrange
-            opacity: 0.9
+            opacity: 0.95
         }
         ProgressCircle {
             anchors.fill: parent
 
             lineWidth: 10
-            arcBegin: 184
+            arcBegin: 183
             arcEnd: 270
             colorCircle: Theme.colorRed
-            opacity: 0.75
+            opacity: 0.8
         }
     }
 

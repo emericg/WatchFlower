@@ -148,7 +148,7 @@ public:
 
 /* ************************************************************************** */
 
-class AioMinMax: public QObject
+class ChartDataMinMax: public QObject
 {
     Q_OBJECT
 
@@ -165,7 +165,7 @@ class AioMinMax: public QObject
     QDate date;
     int dayNb = -1;
     float tempMin;
-    float tempMean = -99;
+    float tempMean = -99.f;
     float tempMax;
     int hygroMin;
     int hygroMax;
@@ -174,8 +174,10 @@ signals:
     void updated();
 
 public:
-    AioMinMax(const QDate &dt, float tmin, float t, float tmax, int hmin, int hmax,
-              QObject *parent) : QObject(parent)
+    ChartDataMinMax(const QDate &dt,
+                    float tmin, float t, float tmax,
+                    int hmin, int hmax,
+                    QObject *parent) : QObject(parent)
     {
         date = dt;
         dayNb = dt.day();
@@ -192,6 +194,78 @@ public slots:
     float getTempMax() { return tempMax; }
     int getHygroMin() { return hygroMin; }
     int getHygroMax() { return hygroMax; }
+};
+
+/* ************************************************************************** */
+
+class ChartDataVoc: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QDate date READ getDate NOTIFY updated)
+    Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(bool today READ isToday NOTIFY updated)
+
+    Q_PROPERTY(float vocMin READ getVocMin NOTIFY updated)
+    Q_PROPERTY(float vocMean READ getVocMean NOTIFY updated)
+    Q_PROPERTY(float vocMax READ getVocMax NOTIFY updated)
+
+    Q_PROPERTY(float hchoMin READ getHchoMin NOTIFY updated)
+    Q_PROPERTY(float hchoMean READ getHchoMean NOTIFY updated)
+    Q_PROPERTY(float hchoMax READ getHchoMax NOTIFY updated)
+
+    Q_PROPERTY(float co2Min READ getCo2Min NOTIFY updated)
+    Q_PROPERTY(float co2Mean READ getCo2Mean NOTIFY updated)
+    Q_PROPERTY(float co2Max READ getCo2Max NOTIFY updated)
+
+    QDate date;
+    int dayNb = -1;
+
+    float vocMin;
+    float vocMean = -99.f;
+    float vocMax;
+
+    float hchoMin;
+    float hchoMean = -99.f;
+    float hchoMax;
+
+    float co2Min;
+    float co2Mean = -99.f;
+    float co2Max;
+
+signals:
+    void updated();
+
+public:
+    ChartDataVoc(const QDate &dt,
+                 float vmin, float v, float vmax,
+                 float hmin, float h, float hmax,
+                 float cmin, float c, float cmax,
+                 QObject *parent) : QObject(parent)
+    {
+        date = dt;
+        dayNb = dt.day();
+        vocMin = vmin; vocMean = v; vocMax = vmax;
+        hchoMin = hmin; hchoMean = h; hchoMax = hmax;
+        co2Min = cmin; co2Mean = c; co2Max = cmax;
+    }
+
+public slots:
+    QDate getDate() { return date; }
+    int getDay() { return dayNb; }
+    bool isToday() { return (date == QDate::currentDate()); }
+
+    float getVocMin() { return  vocMin; }
+    float getVocMean() { return vocMean; }
+    float getVocMax() { return  vocMax; }
+
+    float getHchoMin() { return  hchoMin; }
+    float getHchoMean() { return hchoMean; }
+    float getHchoMax() { return  hchoMax; }
+
+    float getCo2Min() { return  co2Min; }
+    float getCo2Mean() { return co2Mean; }
+    float getCo2Max() { return  co2Max; }
 };
 
 /* ************************************************************************** */

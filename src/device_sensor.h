@@ -102,12 +102,14 @@ class DeviceSensor: public Device
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
 
     // graphs
-    Q_PROPERTY(QVariant aioMinMaxData READ getAioMinMaxData NOTIFY aioMinMaxDataUpdated)
+    Q_PROPERTY(QVariant aioMinMaxData READ getChartData_minmax NOTIFY chartDataMinMaxUpdated)
+    Q_PROPERTY(QVariant aioEnvData READ getChartData_env NOTIFY chartDataEnvUpdated)
 
 Q_SIGNALS:
     void minmaxUpdated();
     void limitsUpdated();
-    void aioMinMaxDataUpdated();
+    void chartDataMinMaxUpdated();
+    void chartDataEnvUpdated();
 
 protected:
     // plant data
@@ -187,7 +189,9 @@ protected:
     int64_t m_device_lastmove = -1;
 
     //
-    QList <QObject *> m_aio_minmax_data;
+    QList <QObject *> m_chartData_minmax;
+    //
+    QList <QObject *> m_chartData_env;
 
 protected:
     virtual void refreshDataFinished(bool status, bool cached = false);
@@ -292,14 +296,18 @@ public slots:
     // History sync
     int getHistoryUpdatePercent() const;
 
-    // AIO temperature "min max" graph
-    void updateAioMinMaxData(int maxDays);
-    QVariant getAioMinMaxData() const { return QVariant::fromValue(m_aio_minmax_data); }
+    // Chart environmental histogram
+    void updateChartData_environmentalVoc(int maxDays);
+    QVariant getChartData_env() const { return QVariant::fromValue(m_chartData_env); }
 
-    // AIO line graph
-    void getAioLinesData(int maxDays, QtCharts::QDateTimeAxis *axis,
-                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
-                         QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
+    // Chart temperature "min max"
+    void updateChartData_thermometerMinMax(int maxDays);
+    QVariant getChartData_minmax() const { return QVariant::fromValue(m_chartData_minmax); }
+
+    // Chart plant AIO
+    void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
+                               QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                               QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
 
     // Histograms (days)
     QVariantList getDataDays(const QString &dataName, int maxDays);
