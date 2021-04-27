@@ -52,8 +52,6 @@ Item {
         deviceManager.getDeviceByProxyIndex(index).selected = false;
     }
     function exitSelectionMode() {
-        if (selectionList.length === 0) return;
-
         selectionMode = false;
         selectionList = [];
         selectionCount = 0;

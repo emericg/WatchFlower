@@ -133,13 +133,7 @@ Item {
             }
         }
         // Image
-        if (boxDevice.isDataAvailable()) {
-            // if we have data cached, no indicator
-            imageStatus.visible = false
-            refreshAnimation.running = false
-        } else {
-            imageStatus.visible = true
-
+        if (!boxDevice.isDataAvailable()) {
             if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 refreshAnimation.running = false
@@ -280,10 +274,8 @@ Item {
         if (boxDevice.isDataAvailable()) {
             if (boxDevice.isPlantSensor) {
                 if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentPlantSensor
-                loaderIndicators.item.updateData()
             } else if (boxDevice.isThermometer) {
                 if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentThermometer
-                loaderIndicators.item.updateData()
             } else if (boxDevice.isEnvironmentalSensor) {
                 if (!loaderIndicators.sourceComponent) {
                     if (boxDevice.deviceName === "GeigerCounter")
@@ -291,8 +283,8 @@ Item {
                     else
                         loaderIndicators.sourceComponent = componentEnvironmentalGauge
                 }
-                loaderIndicators.item.updateData()
             }
+            loaderIndicators.item.updateData()
         }
     }
 
@@ -463,8 +455,6 @@ Item {
                         height: bigAssMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
-                        visible: source
-
                         color: Theme.colorIcon
                         rotation: 90
                         fillMode: Image.PreserveAspectCrop
@@ -472,19 +462,18 @@ Item {
 
                     Text {
                         id: textStatus
-                        anchors.verticalCenterOffset: 0
                         anchors.verticalCenter: parent.verticalCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.pixelSize: bigAssMode ? 16 : 15
+
                         color: Theme.colorGreen
+                        font.pixelSize: bigAssMode ? 16 : 15
 
                         SequentialAnimation on opacity {
                             id: opa
                             loops: Animation.Infinite
                             alwaysRunToEnd: true
-                            running: boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
-                                     boxDevice.status !== DeviceUtils.DEVICE_QUEUED &&
-                                     boxDevice.status !== DeviceUtils.DEVICE_CONNECTED
+                            running: (boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
+                                      boxDevice.status !== DeviceUtils.DEVICE_QUEUED &&
+                                      boxDevice.status !== DeviceUtils.DEVICE_CONNECTED)
 
                             PropertyAnimation { to: 0.33; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }
@@ -504,7 +493,7 @@ Item {
             anchors.rightMargin: 12
             anchors.verticalCenter: rowRight.verticalCenter
             layoutDirection: Qt.RightToLeft
-            //visible: (water.visible || temp.visible || warning.visible || nuclear.visible)
+            //visible: (water.visible || temp.visible || ventilate.visible || nuclear.visible || warning.visible)
 
             ImageSvg {
                 id: water
@@ -589,7 +578,6 @@ Item {
                 z: 1
                 visible: singleColumn
                 color: boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
-
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             }
         }
@@ -604,14 +592,13 @@ Item {
             anchors.rightMargin: singleColumn ? 56 : 36
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-            visible: false
+            visible: !boxDevice.dataAvailable
             color: Theme.colorIcon
 
             SequentialAnimation on opacity {
                 id: refreshAnimation
                 loops: Animation.Infinite
-                running: false
+                running: parent.visible
                 alwaysRunToEnd: true
                 OpacityAnimator { from: 1; to: 0; duration: 750 }
                 OpacityAnimator { from: 0; to: 1; duration: 750 }
@@ -630,6 +617,8 @@ Item {
 
             clip: true
             spacing: 8
+            visible: boxDevice.dataAvailable
+
             property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
             property int sensorRadius: bigAssMode ? 3 : 2
 
@@ -778,6 +767,8 @@ Item {
             id: rectangleHygroTemp
             anchors.verticalCenter: parent.verticalCenter
 
+            visible: boxDevice.dataAvailable
+
             function updateData() {
                 if (boxDevice.hasGeigerCounter) {
                     textTemp.text = ""
@@ -831,6 +822,8 @@ Item {
             height: width
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 4
+
+            visible: boxDevice.dataAvailable
 
             function updateData() {
                 var clr = Theme.colorGreen

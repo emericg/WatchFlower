@@ -65,11 +65,9 @@ Item {
         axisLumi.min = 1
         axisLumi.max = 100000
 
-        // Max axis for hygrometry
-        if (currentDevice.hygroMax*1.15 > 100.0)
-            axisHygro.max = 100.0; // no need to go higher than 100% soil moisture
-        else
-            axisHygro.max = currentDevice.hygroMax*1.15;
+        // Max axis for hygrometry (no need to go higher than 100%)
+        if (currentDevice.hygroMax*1.15 > 100.0) axisHygro.max = 100.0;
+        else axisHygro.max = currentDevice.hygroMax*1.15;
 
         // Max axis for temperature
         axisTemp.max = currentDevice.tempMax*1.15;
@@ -82,7 +80,8 @@ Item {
 
         // Min axis computation, only for thermometers
         if (!currentDevice.hasSoilMoistureSensor) {
-            axisHygro.min = currentDevice.hygroMin*0.85;
+            if (currentDevice.hygroMin*0.85 < 0.0) axisHygro.min = 0.0;
+            else axisHygro.min = currentDevice.hygroMin*0.85;
             axisTemp.min = currentDevice.tempMin*0.85;
         }
 
