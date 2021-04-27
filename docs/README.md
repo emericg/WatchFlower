@@ -69,7 +69,7 @@
 | Thermometer                       | -9.9 ~ 60 °C                      |
 | Hygrometer                        | 0 ~ 99.9% RH                      |
 
-| Digital Hygrometer                | ClearGrass / QingPing             |
+| Digital Hygrometer                | ClearGrass                        |
 | --------------------------------- | --------------------------------- |
 | FCC ID                            | CGG1                              |
 | <img src="hygrotemp_eink.svg" width="256">                           ||

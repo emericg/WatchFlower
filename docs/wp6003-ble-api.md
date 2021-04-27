@@ -95,6 +95,8 @@ The response is as follow:
 | 06-07 | uint16_be |                   | HCHO (µg/m3)          |
 | 06-07 | uint16_be | 560               | eCO2 (PPM)            |
 
+The sensor needs a couple of minutes to warm up and send valid data (VOC and HCHO will read 16383 in the mean time) and about an hour to provide accurate and stable readings.
+
 ## Advertisement data
 
 There seems to be no advertisement message broadcasted.  

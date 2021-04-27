@@ -52,9 +52,15 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 
 | ThermoBeacon (keychain) | ThermoBeacon (LCD) |
 | :---------------------: | :----------------: |
-| ![ThermoBeacon](docs/thermobeacon_round.svg) |![ThermoBeacon](docs/thermobeacon_square.svg) |
- 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
+| ![ThermoBeacon](docs/thermobeacon_round.svg) | ![ThermoBeacon](docs/thermobeacon_square.svg) |
+| 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
 | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
+
+| WP6003 |
+| :----: |
+| ![WP6003](docs/wp6003.svg) |
+| ? |
+| [shop](https://www.banggood.com/custlink/mK3yOI9teA) |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
 | :-----------------------: | :-------------------: | :------------------: |
