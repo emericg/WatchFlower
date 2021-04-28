@@ -806,8 +806,7 @@ Item {
                 }
 
                 Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    width: parent.width
 
                     visible: (isDesktop && singleColumn && !headerUnicolor)
                     height: 2
@@ -819,6 +818,7 @@ Item {
 
                 ChartEnvironmentalVoc {
                     id: chartEnvironmental
+                    width: parent.width
                 }
 
                 ////////////////////////////////////////////////////////////////

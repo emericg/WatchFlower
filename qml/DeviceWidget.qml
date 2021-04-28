@@ -493,6 +493,8 @@ Item {
             anchors.rightMargin: 12
             anchors.verticalCenter: rowRight.verticalCenter
             layoutDirection: Qt.RightToLeft
+
+            visible: boxDevice.dataAvailable
             //visible: (water.visible || temp.visible || ventilate.visible || nuclear.visible || warning.visible)
 
             ImageSvg {
