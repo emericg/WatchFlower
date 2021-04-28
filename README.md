@@ -11,7 +11,7 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
 
-> Available in Danish, Dutch, English, French, Frysk, German, Norwegian (both Bokmål and Nynorsk), Russian and Spanish!
+> Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frysk, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
 
 > Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
@@ -35,7 +35,12 @@ TODOs:
 ### Supported devices
 
 WatchFlower has been built to be compatible with as many Bluetooth sensors as possible.  
+Various new Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
+
 Checkout out this [page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
+You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
+
+Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
 
 | Flower Care | RoPot | Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :----------: | :--------: | :----: |
@@ -44,8 +49,8 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 | Xiaomi / VegTrug / WANFEI<br>(International and Chinese versions) | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
-| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | MMC Digital Hygrometer 2 (EInk) |
-| :-----------------------------: | :----------------------------------: | :---------------------------: | :------------------------: | :------------------------------------: |
+| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | Miaomiaoce Digital Hygrometer 2 (EInk) |
+| :-----------------------------: | :----------------------------------: | :---------------------------: | :-------------------------------: | :------------------------------------: |
 | ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_eink.svg) | ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
 | LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
@@ -56,8 +61,8 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 | 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
 | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
-| WP6003 |
-| :----: |
+| Air Box WP6003 |
+| :------------: |
 | ![WP6003](docs/wp6003.svg) |
 | ? |
 | [shop](https://www.banggood.com/custlink/mK3yOI9teA) |
@@ -66,9 +71,6 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 | :-----------------------: | :-------------------: | :------------------: |
 | ![Air Monitor](docs/lungs-solid.svg) | ![Weather Station](docs/cloud-sun-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
 | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirQualityMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/WeatherStation) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
-
-Various new Bluetooth devices and sensors could be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
-You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
 
 ### Screenshots
 

@@ -87,7 +87,7 @@
 | Thermometer                       | 0 ~ 60 °C                         |
 | Hygrometer                        | 0 ~ 99% RH                        |
 
-| Digital Hygrometer Alarm          | Miaomiaoce                        |
+| Digital Hygrometer Alarm          | Miaomiaoce (MMC)                  |
 | --------------------------------- | --------------------------------- |
 | FCC ID                            | MHO-C303                          |
 | <img src="hygrotemp_alarm.svg" width="256">                          ||
@@ -105,7 +105,7 @@
 | Thermometer                       | -9.9 ~ 60 °C (± 0.1 °C)           |
 | Hygrometer                        | 0 ~ 99% RH (± 1% RH)              |
 
-| Digital Hygrometer 2 EInk         | MMC                               |
+| Digital Hygrometer 2 EInk         | Miaomiaoce (MMC)                  |
 | --------------------------------- | --------------------------------- |
 | FCC ID                            | MHO-C401                          |
 | <img src="hygrotemp_square_eink.svg" width="256">                    ||

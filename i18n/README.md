@@ -55,6 +55,9 @@ It's useful in case a person wants to contact you about the translation, or if y
 Special thanks
 --------------
 
+**Chinese (traditional and simplified)**
+- Vic L. https://github.com/vicklau
+
 **Danish**
 - FYr76 https://github.com/FYr76
 
@@ -70,7 +73,7 @@ Special thanks
 **German**
 - Megachip https://github.com/Megachip
 
-**Norwegian Bokmål and Nynorsk**
+**Norwegian (Bokmål and Nynorsk)**
 - Guttorm Flatabø https://github.com/dittaeva
 
 **Russian**
