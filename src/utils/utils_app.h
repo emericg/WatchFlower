@@ -51,6 +51,8 @@ public:
     static Q_INVOKABLE QString appBuildDateTime();
     static Q_INVOKABLE QString appBuildMode();
 
+    static Q_INVOKABLE bool isDebugBuild();
+
     static Q_INVOKABLE void appExit();
     static Q_INVOKABLE void openWith(const QString &path);
     static Q_INVOKABLE QUrl getStandardPath_url(const QString &type);

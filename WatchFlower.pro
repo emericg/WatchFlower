@@ -135,7 +135,7 @@ unix {
 DEFINES += QT_DEPRECATED_WARNINGS
 QT_LOGGING_RULES="qt.qml.connections=false"
 
-CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
+CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 

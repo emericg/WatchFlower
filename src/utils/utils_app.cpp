@@ -83,11 +83,20 @@ QString UtilsApp::appBuildDateTime()
 
 QString UtilsApp::appBuildMode()
 {
-#ifndef QT_NO_DEBUG
-    return "DEBUG";
+#if defined(QT_NO_DEBUG) || defined(NDEBUG)
+    return "";
 #endif
 
-    return "";
+    return "DEBUG";
+}
+
+bool UtilsApp::isDebugBuild()
+{
+#if defined(QT_NO_DEBUG) || defined(NDEBUG)
+    return false;
+#endif
+
+    return true;
 }
 
 /* ************************************************************************** */
