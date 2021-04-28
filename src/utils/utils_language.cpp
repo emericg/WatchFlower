@@ -94,15 +94,17 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     QString localefull;
     m_appLanguage = lng;
 
-    if (m_appLanguage == "Dansk") localefull = "da_DK";
+    if (m_appLanguage == "Chinese (traditional)") localefull = "zh_TW";
+    else if (m_appLanguage == "Chinese (simplified)") localefull = "zh_CN";
+    else if (m_appLanguage == "Dansk") localefull = "da_DK";
     else if (m_appLanguage == "Deutsch") localefull = "de_DE";
     else if (m_appLanguage == "English") localefull = "en_EN";
     else if (m_appLanguage == "Español") localefull = "es_ES";
     else if (m_appLanguage == "Français") localefull = "fr_FR";
     else if (m_appLanguage == "Frysk") localefull = "fy_NL";
     else if (m_appLanguage == "Nederlands") localefull = "nl_NL";
-    else if (m_appLanguage == "Norsk (bokmål)") localefull = "nb_NO";
-    else if (m_appLanguage == "Norsk (nynorsk)") localefull = "nn_NO";
+    else if (m_appLanguage == "Norsk (Bokmål)") localefull = "nb_NO";
+    else if (m_appLanguage == "Norsk (Nynorsk)") localefull = "nn_NO";
     else if (m_appLanguage == "Pусский") localefull = "ru_RU";
     else
     {
@@ -114,9 +116,10 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     localeshort.truncate(localefull.lastIndexOf('_'));
 
     m_qtTranslator = new QTranslator;
-    m_qtTranslator->load("qt_" + localeshort, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    m_qtTranslator->load("qt_" + localefull, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+
     m_appTranslator = new QTranslator;
-    m_appTranslator->load(":/i18n/" + m_appName + "_" + localeshort + ".qm");
+    m_appTranslator->load(":/i18n/" + m_appName + "_" + localefull + ".qm");
 
     // Install new language
     if (m_qtTranslator) m_qt_app->installTranslator(m_qtTranslator);

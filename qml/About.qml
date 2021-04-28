@@ -738,6 +738,17 @@ Item {
                         font.pixelSize: Theme.fontSizeContent
                         wrapMode: Text.WordWrap
                     }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
+                        text: "- Vic L. (Chinese)"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
+                    }
                 }
             }
         }

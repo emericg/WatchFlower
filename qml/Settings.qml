@@ -418,7 +418,7 @@ Item {
 
                 ComboBoxThemed {
                     id: combobox_language
-                    width: wideMode ? 200 : 160
+                    width: wideMode ? 256 : 160
                     height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 16 + screenPaddingRight
@@ -431,6 +431,8 @@ Item {
                             //: Short for automatic
                             text: qsTr("auto");
                         }
+                        ListElement { text: "Chinese (traditional)"; }
+                        ListElement { text: "Chinese (simplified)"; }
                         ListElement { text: "Dansk"; }
                         ListElement { text: "Deutsch"; }
                         ListElement { text: "English"; }
@@ -438,8 +440,8 @@ Item {
                         ListElement { text: "Français"; }
                         ListElement { text: "Frysk"; }
                         ListElement { text: "Nederlands"; }
-                        ListElement { text: "Norsk (bokmål)"; }
-                        ListElement { text: "Norsk (nynorsk)"; }
+                        ListElement { text: "Norsk (Bokmål)"; }
+                        ListElement { text: "Norsk (Nynorsk)"; }
                         ListElement { text: "Pусский"; }
                     }
 
