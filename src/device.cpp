@@ -482,8 +482,8 @@ bool Device::getSqlDeviceInfos()
                 }
 
                 status = true;
-                Q_EMIT sensorUpdated();
                 Q_EMIT batteryUpdated();
+                Q_EMIT sensorUpdated();
                 Q_EMIT settingsUpdated();
             }
         }
@@ -810,6 +810,12 @@ void Device::setBattery(const int battery)
 {
     if (battery > 0 && battery <= 100)
     {
+        if (!hasBatteryLevel())
+        {
+            m_deviceCapabilities |= DeviceUtils::DEVICE_BATTERY;
+            Q_EMIT sensorUpdated();
+        }
+
         if (m_deviceBattery != battery)
         {
             m_deviceBattery = battery;

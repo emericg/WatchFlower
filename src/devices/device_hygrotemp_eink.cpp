@@ -42,6 +42,11 @@ DeviceHygrotempEInk::DeviceHygrotempEInk(QString &deviceAddr, QString &deviceNam
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+
+    if (!hasBatteryLevel() && m_deviceBattery > 0)
+    {
+        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    }
 }
 
 DeviceHygrotempEInk::DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -50,6 +55,11 @@ DeviceHygrotempEInk::DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject 
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+
+    if (!hasBatteryLevel() && m_deviceBattery > 0)
+    {
+        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    }
 }
 
 DeviceHygrotempEInk::~DeviceHygrotempEInk()
@@ -66,18 +76,6 @@ void DeviceHygrotempEInk::serviceScanDone()
 {
     //qDebug() << "DeviceHygrotempEInk::serviceScanDone(" << m_deviceAddress << ")";
 
-    if (serviceData)
-    {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
-        {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_data);
-            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempEInk::bleReadNotify);
-
-            // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
-        }
-    }
-
     if (serviceInfos)
     {
         if (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN")
@@ -91,6 +89,29 @@ void DeviceHygrotempEInk::serviceScanDone()
             }
         }
     }
+
+    if (serviceBattery)
+    {
+        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_battery);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
+        }
+    }
+
+    if (serviceData)
+    {
+        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        {
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_data);
+            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempEInk::bleReadNotify);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
+        }
+    }
 }
 
 /* ************************************************************************** */
@@ -99,7 +120,7 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceHygrotempEInk::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -109,7 +130,17 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
     }
 
-    if (uuid.toString() == "{22210000-554a-4546-5542-46534450464d}") // (unknown service) // data
+    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
+    {
+        delete serviceBattery;
+        serviceBattery = nullptr;
+
+        serviceBattery = m_bleController->createServiceObject(uuid);
+        if (!serviceBattery)
+            qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
+    }
+
+    if (uuid.toString() == "{22210000-554a-4546-5542-46534450464d}") // (custom) data service
     {
         delete serviceData;
         serviceData = nullptr;
@@ -121,25 +152,6 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
 }
 
 /* ************************************************************************** */
-
-void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::ServiceDiscovered)
-    {
-        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
-
-        if (serviceData)
-        {
-            //
-            {
-                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb")); // handle 0x??
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
-                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
-            }
-        }
-    }
-}
 
 void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
@@ -170,6 +182,45 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::Serv
     }
 }
 
+void DeviceHygrotempEInk::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceBattery)
+        {
+            // Characteristic "Battery Level"
+            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+
+            if (cbat.value().size() == 1)
+            {
+                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+                setBattery(lvl);
+            }
+        }
+    }
+}
+
+void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::ServiceDiscovered)
+    {
+        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceData)
+        {
+            // hygrotemp readings
+            {
+                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb")); // handle 0x??
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+            }
+        }
+    }
+}
 /* ************************************************************************** */
 
 void DeviceHygrotempEInk::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
@@ -243,7 +294,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
 
 void DeviceHygrotempEInk::confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value)
 {
-    qDebug() << "DeviceHygrotempEInk::confirmedDescriptorWrite!";
+    //qDebug() << "DeviceHygrotempEInk::confirmedDescriptorWrite!";
 
     if (d.isValid() && d == m_notificationDesc && value == QByteArray::fromHex("0000"))
     {

@@ -122,9 +122,6 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
 /*
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
     {
-        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-        Q_EMIT statusUpdated();
-
         delete serviceBattery;
         serviceBattery = nullptr;
 

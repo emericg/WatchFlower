@@ -44,22 +44,30 @@ DeviceThermoBeacon::DeviceThermoBeacon(QString &deviceAddr, QString &deviceName,
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+
+    if (!hasBatteryLevel() && m_deviceBattery > 0)
+    {
+        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    }
 }
 
 DeviceThermoBeacon::DeviceThermoBeacon(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_LED_STATUS;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+
+    if (!hasBatteryLevel() && m_deviceBattery > 0)
+    {
+        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
+    }
 }
 
 DeviceThermoBeacon::~DeviceThermoBeacon()
