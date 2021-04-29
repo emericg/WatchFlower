@@ -52,8 +52,9 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
         getSqlDeviceInfos();
         getSqlPlantLimits();
         // Load initial data into the GUI (if they are no more than 12h old)
-        getSqlPlantData(12*60);
-        getSqlSensorData(12*60);
+        bool data = false;
+        if (!data) data = getSqlPlantData(12*60);
+        if (!data) data = getSqlSensorData(12*60);
     }
 
     // Configure timeout timer
@@ -373,6 +374,8 @@ bool DeviceSensor::getSqlSensorLimits()
     //qDebug() << "DeviceSensor::getSqlSensorLimits(" << m_deviceAddress << ")";
     bool status = false;
 
+    // TODO
+
     return status;
 }
 
@@ -474,16 +477,32 @@ bool DeviceSensor::getSqlSensorData(int minutes)
 
 bool DeviceSensor::hasData() const
 {
-    // If we have immediate data (<12h old)
-    if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
-        m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
-        return true;
+    QString tableName;
+
+    if (isPlantSensor() || isThermometer())
+    {
+        // If we have immediate data (<12h old)
+        if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
+            m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+            return true;
+
+        tableName = "plantData";
+    }
+    else if (isEnvironmentalSensor())
+    {
+        // If we have immediate data (<12h old)
+        if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
+            m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
+            return true;
+
+        tableName = "sensorData";
+    }
 
     // Otherwise, check if we have stored data
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery hasData;
-        hasData.prepare("SELECT COUNT(*) FROM plantData WHERE deviceAddr = :deviceAddr;");
+        hasData.prepare("SELECT COUNT(*) FROM " + tableName + " WHERE deviceAddr = :deviceAddr;");
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
@@ -501,25 +520,42 @@ bool DeviceSensor::hasData() const
 
 bool DeviceSensor::hasData(const QString &dataName) const
 {
-    // If we have immediate data (<12h old)
-    if (dataName == "soilMoisture" && m_soil_moisture > 0)
-        return true;
-    if (dataName == "soilConductivity" && m_soil_conductivity > 0)
-        return true;
-    if (dataName == "soilTemperature" && m_soil_temperature > 0)
-        return true;
-    if (dataName == "temperature" && m_temperature > -20.f)
-        return true;
-    if (dataName == "humidity" && m_humidity > 0)
-        return true;
-    if (dataName == "luminosity" && m_luminosity > 0)
-        return true;
+    QString tableName;
+
+    if (isPlantSensor() || isThermometer())
+    {
+        // If we have immediate data (<12h old)
+        if (dataName == "soilMoisture" && m_soil_moisture > 0)
+            return true;
+        else if (dataName == "soilConductivity" && m_soil_conductivity > 0)
+            return true;
+        else if (dataName == "soilTemperature" && m_soil_temperature > 0)
+            return true;
+        else if (dataName == "temperature" && m_temperature > -20.f)
+            return true;
+        else if (dataName == "humidity" && m_humidity > 0)
+            return true;
+        else if (dataName == "luminosity" && m_luminosity > 0)
+            return true;
+
+        tableName = "plantData";
+    }
+    else if (isEnvironmentalSensor())
+    {
+        // If we have immediate data (<12h old)
+        if (dataName == "temperature" && m_temperature > -20.f)
+            return true;
+        else if (dataName == "humidity" && m_humidity > 0)
+            return true;
+
+        tableName = "sensorData";
+    }
 
     // Otherwise, check if we have stored data
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery hasData;
-        hasData.prepare("SELECT COUNT(" + dataName + ") FROM plantData WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
+        hasData.prepare("SELECT COUNT(" + dataName + ") FROM " + tableName + " WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
@@ -540,18 +576,21 @@ int DeviceSensor::countData(const QString &dataName, int days) const
     // Count stored data
     if (m_dbInternal || m_dbExternal)
     {
+        QString tableName = "plantData";
+        if (isEnvironmentalSensor()) tableName = "sensorData";
+
         QSqlQuery dataCount;
         if (m_dbInternal) // sqlite
         {
             dataCount.prepare("SELECT COUNT(" + dataName + ")" \
-                              "FROM plantData " \
+                              "FROM " + tableName + " " \
                               "WHERE deviceAddr = :deviceAddr " \
                                 "AND " + dataName + " > -20 AND ts >= datetime('now','-" + QString::number(days) + " day');");
         }
         else if (m_dbExternal) // mysql
         {
             dataCount.prepare("SELECT COUNT(" + dataName + ")" \
-                              "FROM plantData " \
+                              "FROM " + tableName + " " \
                               "WHERE deviceAddr = :deviceAddr " \
                                 "AND " + dataName + " > -20 AND ts >= DATE_SUB(NOW(), INTERVAL " + QString::number(days) + " DAY);");
         }
