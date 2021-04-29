@@ -42,6 +42,7 @@ Item {
     Connections {
         target: settingsManager
         onAppLanguageChanged: {
+            updateSensorStatus()
             updateSensorData()
         }
     }
