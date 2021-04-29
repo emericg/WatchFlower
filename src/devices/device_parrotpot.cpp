@@ -171,7 +171,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceParrotPot::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -198,7 +198,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fc00-84a8-11e2-afba-0002a5d5c51b}") // History service
+    if (uuid.toString() == "{39e1fc00-84a8-11e2-afba-0002a5d5c51b}") // (custom) History service
     {
         delete serviceHistory;
         serviceHistory = nullptr;
@@ -211,7 +211,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fd00-84a8-11e2-afba-0002a5d5c51b}") // Clock service
+    if (uuid.toString() == "{39e1fd00-84a8-11e2-afba-0002a5d5c51b}") // (custom) Clock service
     {
         delete serviceClock;
         serviceClock = nullptr;
@@ -224,7 +224,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // Watering service
+    if (uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // (custom) Watering service
     {
         delete serviceWatering;
         serviceWatering = nullptr;
@@ -238,7 +238,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // Live service
+    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // (custom) Live service
     {
         delete serviceLive;
         serviceLive = nullptr;

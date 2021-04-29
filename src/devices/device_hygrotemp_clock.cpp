@@ -103,7 +103,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceHygrotempClock::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -116,7 +116,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6}") // (unknown service) // data
+    if (uuid.toString() == "{ebe0ccb0-7a0a-4b0c-8a1a-6ff2997da3a6}") // (custom) data service
     {
         delete serviceData;
         serviceData = nullptr;

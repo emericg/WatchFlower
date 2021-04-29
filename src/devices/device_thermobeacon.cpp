@@ -107,7 +107,7 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceThermoBeacon::addLowEnergyService(" << uuid.toString() << ")";
 /*
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -120,7 +120,7 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 */
-    if (uuid.toString() == "{0000ffe0-0000-1000-8000-00805f9b34fb}") // (unknown service) // data
+    if (uuid.toString() == "{0000ffe0-0000-1000-8000-00805f9b34fb}") // (custom) data service
     {
         delete serviceData;
         serviceData = nullptr;

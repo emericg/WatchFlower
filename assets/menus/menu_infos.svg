@@ -13,7 +13,7 @@
    version="1.1"
    id="svg6"
    sodipodi:docname="menu_infos.svg"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)">
   <metadata
      id="metadata12">
     <rdf:RDF>
@@ -36,17 +36,18 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1755"
-     inkscape:window-height="1034"
+     inkscape:window-width="1645"
+     inkscape:window-height="1154"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="55.625733"
-     inkscape:cx="8.831997"
-     inkscape:cy="11.984788"
+     inkscape:zoom="53.915926"
+     inkscape:cx="9.5368673"
+     inkscape:cy="11.744321"
      inkscape:window-x="1203"
-     inkscape:window-y="205"
+     inkscape:window-y="85"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg6" />
+     inkscape:current-layer="svg6"
+     inkscape:document-rotation="0" />
   <path
      fill="none"
      d="M0 0h24v24H0V0z"
@@ -55,5 +56,6 @@
      d="m 10.8,6.8 h 2.4 v 2.4 h -2.4 z m 0.1,4.2 h 2.3 l 0,6.4 H 10.9 Z M 12,2 C 6.48,2 2,6.48 2,12 2,17.52 6.48,22 12,22 17.52,22 22,17.52 22,12 22,6.48 17.52,2 12,2 Z m 0,17.5 C 7.59,19.5 4.5,16.41 4.5,12 4.5,7.59 7.59,4.5 12,4.5 c 4.41,0 7.5,3.09 7.5,7.5 0,4.41 -3.09,7.5 -7.5,7.5 z"
      id="path4"
      inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ccccccccccssssssssss" />
+     sodipodi:nodetypes="ccccccccccssssssssss"
+     style="fill:#e6e6e6;fill-opacity:1" />
 </svg>

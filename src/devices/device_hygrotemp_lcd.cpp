@@ -107,7 +107,7 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceHygrotempLCD::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // infos
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Infos service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -120,20 +120,20 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 /*
-    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // (unknown service) // battery
+    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
     {
-        m_capabilities += DEVICE_BATTERY;
+        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
         Q_EMIT statusUpdated();
 
         delete serviceBattery;
         serviceBattery = nullptr;
 
-        serviceBattery = controller->createServiceObject(uuid);
+        serviceBattery = m_bleController->createServiceObject(uuid);
         if (!serviceBattery)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
 */
-    if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (unknown service) // data
+    if (uuid.toString() == "{226c0000-6476-4566-7562-66734470666d}") // (custom) data
     {
         delete serviceData;
         serviceData = nullptr;

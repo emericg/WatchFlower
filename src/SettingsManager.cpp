@@ -107,6 +107,9 @@ bool SettingsManager::readSettings()
 #endif
         }
 
+        if (settings.contains("settings/startMinimized"))
+            m_startMinimized = settings.value("settings/startMinimized").toBool();
+
         if (settings.contains("settings/trayEnabled"))
             m_systrayEnabled = settings.value("settings/trayEnabled").toBool();
 
@@ -118,9 +121,6 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/updateIntervalThermo"))
             m_updateIntervalThermo = settings.value("settings/updateIntervalThermo").toInt();
-
-        if (settings.contains("settings/startMinimized"))
-            m_startMinimized = settings.value("settings/startMinimized").toBool();
 
         if (settings.contains("settings/tempUnit"))
             m_tempUnit = settings.value("settings/tempUnit").toString();
@@ -184,11 +184,11 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/appLanguage", m_appLanguage);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothSimUpdates", m_bluetoothSimUpdates);
+        settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
         settings.setValue("settings/updateIntervalPlant", m_updateIntervalPlant);
         settings.setValue("settings/updateIntervalThermo", m_updateIntervalThermo);
-        settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/graphHistory", m_graphHistogram);
         settings.setValue("settings/graphThermometer", m_graphThermometer);
         settings.setValue("settings/graphShowDots", m_graphShowDots);
@@ -267,6 +267,8 @@ void SettingsManager::resetSettings()
     Q_EMIT dynaScaleChanged();
     m_orderBy = "model";
     Q_EMIT orderByChanged();
+    m_externalDb = "";
+    Q_EMIT externalDbChanged();
 }
 
 /* ************************************************************************** */

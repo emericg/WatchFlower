@@ -109,11 +109,11 @@ void DeviceEsp32Geiger::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32Geiger::addLowEnergyService(" << uuid.toString() << ")";
 
-    //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Infos service
+    //if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
 
     //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
 
-    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
+    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // (custom) data service
     {
         delete serviceData;
         serviceData = nullptr;

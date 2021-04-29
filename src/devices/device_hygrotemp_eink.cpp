@@ -54,8 +54,9 @@ DeviceHygrotempEInk::DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject 
 
 DeviceHygrotempEInk::~DeviceHygrotempEInk()
 {
-    delete serviceData;
     delete serviceInfos;
+    delete serviceBattery;
+    delete serviceData;
 }
 
 /* ************************************************************************** */

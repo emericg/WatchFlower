@@ -61,6 +61,7 @@ private:
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceData = nullptr;
+
     QLowEnergyDescriptor m_notificationDesc;
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
 

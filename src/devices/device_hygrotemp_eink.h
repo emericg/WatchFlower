@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * ClearGrass / QingPing "Digital bluetooth Thermometer and Hygrometer"
+ * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
  * CGG1 device / round body / E-Ink
  *
  * Protocol infos:
@@ -53,11 +53,14 @@ private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
+    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
 
-    QLowEnergyService *serviceData = nullptr;
     QLowEnergyService *serviceInfos = nullptr;
+    QLowEnergyService *serviceBattery = nullptr;
+    QLowEnergyService *serviceData = nullptr;
+
     QLowEnergyDescriptor m_notificationDesc;
     void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
 

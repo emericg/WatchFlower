@@ -152,7 +152,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
     // GAP service (UUID 0x1800)
     // ? (UUID 0x1801)
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
