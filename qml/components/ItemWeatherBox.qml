@@ -25,9 +25,9 @@ Rectangle {
 
     Column {
         anchors.top: parent.top
-        anchors.topMargin: 16
+        anchors.topMargin: isDesktop ? 16 : 12
         anchors.left: parent.left
-        anchors.leftMargin: 16
+        anchors.leftMargin: isDesktop ? 16 : 12
         anchors.right: parent.right
         anchors.rightMargin: 8
         spacing: 8
@@ -50,6 +50,7 @@ Rectangle {
 
         Row {
             spacing: 2
+
             Text {
                 text: (itemWeatherBox.value > -99) ? itemWeatherBox.value.toFixed(itemWeatherBox.precision) : "?"
                 color: Theme.colorText
@@ -65,6 +66,7 @@ Rectangle {
                         return 28
                 }
             }
+
             Text {
                 text: itemWeatherBox.legend
                 textFormat: Text.PlainText

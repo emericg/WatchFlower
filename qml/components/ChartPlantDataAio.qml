@@ -15,8 +15,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
 
-        //hygroData.visible = (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) ||
-        //                    (currentDevice.hasHumiditySensor && currentDevice.hasData("humidity"))
         hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
         conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
         tempData.visible = currentDevice.hasTemperatureSensor
@@ -92,12 +90,11 @@ Item {
         if (currentDevice.deviceName === "ropot" || currentDevice.deviceName === "Parrot pot") {
             hygroData.width = 3 // Humidity is primary
         }
-
         if (!currentDevice.hasSoilMoistureSensor) {
             tempData.width = 3 // Temperature is primary
         }
 
-        if (currentDevice.deviceName === "Flower care" || currentDevice.deviceName === "Flower power") {
+        if (currentDevice.isPlantSensor) {
             // not planted? don't show hygro and condu
             hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
             conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
