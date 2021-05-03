@@ -52,7 +52,9 @@ class DeviceSensor: public Device
     Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(float deviceHumidity READ getHumidity NOTIFY dataUpdated)
     // environmental data
+    Q_PROPERTY(int pressure READ getPressure NOTIFY dataUpdated)
     Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
+    Q_PROPERTY(int uv READ getUV NOTIFY dataUpdated)
     Q_PROPERTY(float pm1 READ getPM1 NOTIFY dataUpdated)
     Q_PROPERTY(float pm25 READ getPM25 NOTIFY dataUpdated)
     Q_PROPERTY(float pm10 READ getPM10 NOTIFY dataUpdated)
@@ -231,7 +233,9 @@ public slots:
     QString getHeatIndexString() const;
     float getHumidity() const { return m_humidity; }
     // Environmental
+    int getPressure() const { return m_pressure; }
     int getLuminosity() const { return m_luminosity; }
+    int getUV() const { return m_uv; }
     float getWaterLevel() const { return m_water_level; }
     float getSoundLevel() const { return m_sound_level; }
     float getWindDirection() const { return m_wind_direction; }

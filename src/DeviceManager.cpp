@@ -30,6 +30,7 @@
 #include "devices/device_hygrotemp_clock.h"
 #include "devices/device_hygrotemp_square.h"
 #include "devices/device_thermobeacon.h"
+#include "devices/device_esp32_airqualitymonitor.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geiger.h"
 #include "devices/device_ess_generic.h"
@@ -127,8 +128,10 @@ DeviceManager::DeviceManager()
                 d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
+            else if (deviceName == "AirQualityMonitor")
+                d = new DeviceEsp32AirQualityMonitor(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
-                d = new DeviceEsp32Geiger(deviceAddr, deviceName, this);
+                d = new DeviceEsp32GeigerCounter(deviceAddr, deviceName, this);
 
             if (d)
             {
@@ -818,7 +821,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
             info.name() == "ThermoBeacon" ||
             info.name().startsWith("6003#") ||
-            info.name() == "GeigerCounter" || info.name() == "HiGrow")
+            info.name() == "AirQualityMonitor" ||
+            info.name() == "GeigerCounter" ||
+            info.name() == "HiGrow")
         {
             // Check if it's not already in the UI
             for (auto ed: qAsConst(m_devices_model->m_devices))
@@ -859,8 +864,10 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 d = new DeviceThermoBeacon(info, this);
             else if (info.name().startsWith("6003#"))
                 d = new DeviceWP6003(info, this);
+            else if (info.name() == "AirQualityMonitor")
+                d = new DeviceEsp32AirQualityMonitor(info, this);
             else if (info.name() == "GeigerCounter")
-                d = new DeviceEsp32Geiger(info, this);
+                d = new DeviceEsp32GeigerCounter(info, this);
 
             if (!d) return;
 

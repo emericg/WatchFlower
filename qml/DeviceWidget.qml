@@ -831,7 +831,7 @@ Item {
             function updateData() {
                 var clr = Theme.colorGreen
 
-                if (boxDevice.deviceName === "WP6003") {
+                if (boxDevice.hasVocSensor) {
                     if (boxDevice.voc > 1000) clr = Theme.colorRed
                     else if (boxDevice.voc > 500) clr = Theme.colorOrange
 

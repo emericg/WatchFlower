@@ -45,7 +45,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address).
 
-##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
+##### Generic Access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |

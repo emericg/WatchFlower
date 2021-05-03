@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2020
+ * \date      2021
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_ESP32_GEIGER_H
-#define DEVICE_ESP32_GEIGER_H
+#ifndef DEVICE_ESP32_AIRQUALITYMONITOR_H
+#define DEVICE_ESP32_AIRQUALITYMONITOR_H
 /* ************************************************************************** */
 
 #include "device_sensor.h"
@@ -34,23 +34,20 @@
 /* ************************************************************************** */
 
 /*!
- * Homemade ESP32 Geiger Counter.
- * - https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter
+ * Homemade ESP32 Air Quality Monitoring platform.
+ * - https://github.com/emericg/esp32-environmental-sensors/tree/master/AirQualityMonitor
  *
  * Protocol infos:
- * - https://github.com/emericg/esp32-environmental-sensors/blob/master/GeigerCounter/doc/geigercounter-ble-api.md
+ * - https://github.com/emericg/esp32-environmental-sensors/blob/master/AirQualityMonitor/doc/airqualitymonitor-ble-api.md
  */
-class DeviceEsp32GeigerCounter: public DeviceSensor
+class DeviceEsp32AirQualityMonitor: public DeviceSensor
 {
     Q_OBJECT
 
 public:
-    DeviceEsp32GeigerCounter(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceEsp32GeigerCounter();
-
-public slots:
-    virtual bool hasData() const;
+    DeviceEsp32AirQualityMonitor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEsp32AirQualityMonitor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceEsp32AirQualityMonitor();
 
 private:
     // QLowEnergyController related
@@ -65,9 +62,8 @@ private:
     QLowEnergyService *serviceData = nullptr;
     QLowEnergyDescriptor m_notificationDesc;
 
-    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_ESP32_GEIGER_H
+#endif // DEVICE_ESP32_AIRQUALITYMONITOR_H

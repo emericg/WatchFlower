@@ -126,7 +126,7 @@ Item {
         chartEnvironmentalLoader.visible = false
 
         if (isAirMonitor) {
-            if (currentDevice.deviceName === "WP6003") {
+            if (currentDevice.hasVocSensor) {
                 chartEnvironmentalLoader.source = "ChartEnvironmentalVoc.qml"
                 chartEnvironmentalLoader.visible = true
             }
@@ -140,7 +140,7 @@ Item {
 
         // Indicators
         if (isAirMonitor) {
-            if (currentDevice.deviceName === "WP6003") {
+            if (currentDevice.hasVocSensor) {
                 indicatorAirQuality.legend = qsTr("VOC")
                 indicatorAirQuality.value = currentDevice.voc
                 indicatorAirQuality.valueMin = 0
@@ -166,7 +166,7 @@ Item {
 
         // GRAPH
         if (isAirMonitor) {
-            if (currentDevice.deviceName === "WP6003") {
+            if (currentDevice.hasVocSensor) {
                 currentDevice.updateChartData_environmentalVoc(14)
             }
         }
@@ -506,7 +506,7 @@ Item {
 
                                 title: qsTr("O3")
                                 legend: qsTr("µg/m³")
-                                value: 8.0
+                                value: currentDevice.o3
                                 precision: 0
                             }
 
@@ -729,7 +729,7 @@ Item {
                                 title: qsTr("Humidity")
                                 legend: qsTr("°RH")
                                 icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                                value: 55
+                                value: currentDevice.deviceHumidity
                                 precision: 0
                             }
                             ItemWeatherBox {
@@ -740,7 +740,7 @@ Item {
                                 title: qsTr("Pressure")
                                 legend: qsTr("Hpa")
                                 icon: "qrc:/assets/icons_material/duotone_speed-24px.svg"
-                                value: 1028
+                                value: currentDevice.pressure
                                 precision: 0
                             }
 
@@ -764,7 +764,7 @@ Item {
                                 title: qsTr("Luminosity")
                                 legend: qsTr("lux")
                                 icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                value: 892
+                                value: currentDevice.deviceLuminosity
                                 precision: 0
                             }
                             ItemWeatherBox {
@@ -775,7 +775,7 @@ Item {
                                 title: qsTr("UV index")
                                 legend: ""
                                 icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                value: 3
+                                value: currentDevice.uv
                                 precision: 0
                             }
 

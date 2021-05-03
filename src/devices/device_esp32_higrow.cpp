@@ -120,7 +120,15 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEsp32HiGrow::addLowEnergyService(" << uuid.toString() << ")";
 
-    //if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Infos service
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
+    {
+        delete serviceInfos;
+        serviceInfos = nullptr;
+
+        serviceInfos = m_bleController->createServiceObject(uuid);
+        if (!serviceInfos)
+            qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+    }
 
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
     {
@@ -132,7 +140,7 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
 
-    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // custom data service
+    if (uuid.toString() == "{eeee9a32-a000-4cbd-b00b-6b519bf2780f}") // (custom) data service
     {
         delete serviceData;
         serviceData = nullptr;
@@ -153,7 +161,14 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
         if (serviceInfos)
         {
-            // TODO
+            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
+            QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
+
+            if (chf.value().size() > 0)
+            {
+                QString fw = chf.value();
+                setFirmware(fw);
+            }
         }
     }
 }
@@ -187,30 +202,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
         if (serviceData)
         {
-            QBluetoothUuid f(QString("eeee9a32-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
-            QLowEnergyCharacteristic chf = serviceData->characteristic(f);
-            if (chf.value().size() > 0)
-            {
-                m_deviceFirmware = chf.value();
-            }
-            if (m_deviceFirmware.size() == 3)
-            {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ESP32_HIGROW))
-                {
-                    m_firmware_uptodate = true;
-                }
-            }
-            Q_EMIT sensorUpdated();
-
-            QBluetoothUuid b(QString("eeee9a32-a003-4cbd-b00b-6b519bf2780f")); // handle 0x2e // battery level
-            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-            if (chb.value().size() > 0)
-            {
-                m_deviceBattery = chb.value().toInt();
-                Q_EMIT batteryUpdated();
-            }
-
-            QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -227,7 +219,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-    if (c.uuid().toString() == "{eeee9a32-a0a0-4cbd-b00b-6b519bf2780f}")
+    if (c.uuid().toString() == "{eeee9a32-a0c0-4cbd-b00b-6b519bf2780f}")
     {
         // HiGrow realtime data // handle 0x3431
 
@@ -268,10 +260,19 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
                 updateDevice.bindValue(":deviceAddr", getAddress());
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+
+                m_lastUpdateDatabase = m_lastUpdate;
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();

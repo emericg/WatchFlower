@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2020
+ * \date      2021
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "device_esp32_geiger.h"
+#include "device_esp32_airqualitymonitor.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>
@@ -36,23 +36,35 @@
 
 /* ************************************************************************** */
 
-DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
-    m_deviceSensors += DeviceUtils::SENSOR_GEIGER;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+    m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
+    //m_deviceSensors += DeviceUtils::SENSOR_PM25;
+    //m_deviceSensors += DeviceUtils::SENSOR_PM10;
+    m_deviceSensors += DeviceUtils::SENSOR_VOC;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
-DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d, QObject *parent):
+DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
-    m_deviceSensors += DeviceUtils::SENSOR_GEIGER;
+    m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+    m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
+    m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
+    //m_deviceSensors += DeviceUtils::SENSOR_PM25;
+    //m_deviceSensors += DeviceUtils::SENSOR_PM10;
+    m_deviceSensors += DeviceUtils::SENSOR_VOC;
+    m_deviceSensors += DeviceUtils::SENSOR_CO2;
 }
 
-DeviceEsp32GeigerCounter::~DeviceEsp32GeigerCounter()
+DeviceEsp32AirQualityMonitor::~DeviceEsp32AirQualityMonitor()
 {
     if (m_bleController) m_bleController->disconnectFromDevice();
 
@@ -64,15 +76,15 @@ DeviceEsp32GeigerCounter::~DeviceEsp32GeigerCounter()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceEsp32GeigerCounter::serviceScanDone()
+void DeviceEsp32AirQualityMonitor::serviceScanDone()
 {
-    //qDebug() << "DeviceEsp32GeigerCounter::serviceScanDone(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceEsp32AirQualityMonitor::serviceScanDone(" << m_deviceAddress << ")";
 
     if (serviceInfos)
     {
         if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos);
+            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
@@ -83,7 +95,7 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
     {
         if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery);
+            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_battery);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
@@ -94,8 +106,9 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
     {
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data);
-            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32GeigerCounter::bleReadNotify);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data);
+            connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceEsp32AirQualityMonitor::bleReadDone);
+            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32AirQualityMonitor::bleReadNotify);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
@@ -105,9 +118,9 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
 
 /* ************************************************************************** */
 
-void DeviceEsp32GeigerCounter::addLowEnergyService(const QBluetoothUuid &uuid)
+void DeviceEsp32AirQualityMonitor::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    //qDebug() << "DeviceEsp32GeigerCounter::addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceEsp32AirQualityMonitor::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
@@ -134,11 +147,11 @@ void DeviceEsp32GeigerCounter::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
-void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceInfos)
         {
@@ -154,15 +167,15 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(QLowEnergyService:
     }
 }
 
-void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceBattery)
         {
-            // Characteristic "Battery Level"
+            // Characteristic "Battery level"
             QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
@@ -175,24 +188,15 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(QLowEnergyServic
     }
 }
 
-void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
+void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceData)
         {
-/*
-            QBluetoothUuid d(QString("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // handle 0x? // recap data
-            QLowEnergyCharacteristic chd = serviceData->characteristic(d);
-
-            m_rh = chd.value().toFloat();
-            m_rm = chd.value().toFloat();
-            m_rs = chd.value().toFloat();
-            Q_EMIT dataUpdated();
-*/
-            QBluetoothUuid rt(QString("eeee9a32-a0d0-4cbd-b00b-6b519bf2780f")); // handle 0x? // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -202,50 +206,43 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::
 
 /* ************************************************************************** */
 
-void DeviceEsp32GeigerCounter::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    //qDebug() << "DeviceEsp32GeigerCounter::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DeviceEsp32AirQualityMonitor::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-    if (c.uuid().toString() == "{x}")
+    if (c.uuid().toString() == "{eeee9a32-a0a0-4cbd-b00b-6b519bf2780f}")
     {
-        Q_UNUSED(data);
-    }
-}
+        // Air Quality Monitor realtime data // handle 0x?
 
-void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
-{
-    //qDebug() << "DeviceEsp32GeigerCounter::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
-
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    if (c.uuid().toString() == "{eeee9a32-a0d0-4cbd-b00b-6b519bf2780f}")
-    {
-        // Geiger Counter realtime data // handle 0x?
-
-        if (value.size() > 0)
+        if (value.size() == 16)
         {
-            Q_UNUSED(data);
-            m_rh = value.toFloat();
-            m_rm = value.toFloat();
-            m_rs = value.toFloat();
+            m_temperature = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
+            m_humidity = data[2];
+
+            m_pressure = static_cast<uint16_t>(data[3] + (data[4] << 8));
+            m_voc = static_cast<uint16_t>(data[5] + (data[6] << 8));
+            m_co2 = static_cast<uint16_t>(data[7] + (data[8] << 8));
 
             m_lastUpdate = QDateTime::currentDateTime();
 
             if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, geiger)"
-                                " VALUES (:deviceAddr, :ts, :geiger)");
+                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, pressure, voc, co2)"
+                                " VALUES (:deviceAddr, :ts, :temp, :humi, :pres, :voc, :co2)");
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
-                addData.bindValue(":geiger", m_rm);
+                addData.bindValue(":temp", m_temperature);
+                addData.bindValue(":humi", m_humidity);
+                addData.bindValue(":pres", m_pressure);
+                addData.bindValue(":voc", m_voc);
+                addData.bindValue(":co2", m_co2);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
@@ -263,42 +260,16 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
             }
 
 #ifndef QT_NO_DEBUG
-            //qDebug() << "* DeviceEsp32GeigerCounter update:" << getAddress();
-            //qDebug() << "- m_firmware:" << m_deviceFirmware;
-            //qDebug() << "- m_battery:" << m_deviceBattery;
-            //qDebug() << "- radioactivity min:" << m_rm;
-            //qDebug() << "- radioactivity sec:" << m_rs;
+            qDebug() << "* DeviceEsp32AirQualityMonitor update:" << getAddress();
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
+            qDebug() << "- m_temperature:" << m_temperature;
+            qDebug() << "- m_humidity:" << m_humidity;
+            qDebug() << "- m_pressure:" << m_pressure;
+            qDebug() << "- m_voc:" << m_voc;
+            qDebug() << "- m_co2:" << m_co2;
 #endif
         }
     }
-}
-
-/* ************************************************************************** */
-
-bool DeviceEsp32GeigerCounter::hasData() const
-{
-    // If we have immediate data (<12h old)
-    if (m_rh > 0 || m_rm > 0 || m_rs > 0)
-        return true;
-
-    // Otherwise, check if we have stored data
-    if (m_dbInternal || m_dbExternal)
-    {
-        QSqlQuery hasData;
-        hasData.prepare("SELECT COUNT(*) FROM sensorData WHERE deviceAddr = :deviceAddr;");
-        hasData.bindValue(":deviceAddr", getAddress());
-
-        if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
-
-        while (hasData.next())
-        {
-            if (hasData.value(0).toInt() > 0) // data count
-                return true;
-        }
-    }
-
-    return false;
 }
 
 /* ************************************************************************** */
