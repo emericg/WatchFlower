@@ -19,7 +19,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "device_esp32_geiger.h"
+#include "device_esp32_geigercounter.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>
