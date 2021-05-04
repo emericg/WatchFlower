@@ -738,7 +738,7 @@ Item {
                                 visible: currentDevice.hasPressureSensor
 
                                 title: qsTr("Pressure")
-                                legend: qsTr("Hpa")
+                                legend: qsTr("hPa")
                                 icon: "qrc:/assets/icons_material/duotone_speed-24px.svg"
                                 value: currentDevice.pressure
                                 precision: 0

@@ -478,7 +478,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        property int hhh: (isPhone ? 40 : 48)
+        property int hhh: (isPhone ? 32 : 48)
         property int hhi: (hhh / 2)
 
         height: hhh + screenPaddingBottom
@@ -556,7 +556,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (appWindow.width < 480 || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             signal deviceDataButtonClicked()
             signal deviceHistoryButtonClicked()

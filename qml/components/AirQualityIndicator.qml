@@ -27,29 +27,29 @@ Item {
         ProgressCircle {
             anchors.fill: parent
 
-            lineWidth: 10
+            lineWidth: (isMobile ? 8 : 10)
             arcBegin: 0
-            arcEnd: 87
-            colorCircle: Theme.colorGreen
-            opacity: 0.8
+            arcEnd: 88
+            colorCircle: (Theme.currentTheme === ThemeEngine.THEME_GREEN ? Theme.colorLightGreen : Theme.colorGreen)
+            //opacity: 0.95
         }
         ProgressCircle {
             anchors.fill: parent
 
-            lineWidth: 10
-            arcBegin: 93
-            arcEnd: 177
+            lineWidth: (isMobile ? 8 : 10)
+            arcBegin: 92
+            arcEnd: 178
             colorCircle: Theme.colorOrange
-            opacity: 0.95
+            //opacity: 0.95
         }
         ProgressCircle {
             anchors.fill: parent
 
-            lineWidth: 10
-            arcBegin: 183
+            lineWidth: (isMobile ? 8 : 10)
+            arcBegin: 182
             arcEnd: 270
             colorCircle: Theme.colorRed
-            opacity: 0.8
+            //opacity: 0.95
         }
     }
 
