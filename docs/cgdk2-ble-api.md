@@ -1,17 +1,12 @@
 
-<img src="hygrotemp_cgg1.svg" width="400px" alt="Digital Hygrometer" align="right" />
+<img src="hygrotemp_cgdk2.svg" width="400px" alt="Digital Hygrometer" align="right" />
 
-## About CGG1
+## About CGDK2
 
-* ClearGrass 'Temp and RH' [CGG1]() are hygrometers
+* QinPing 'Temp RH Lite' [CGDK2]() are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2430 coin cell battery is used as power source
-
-There are multiple variant of this device, sold under various names but the same FCC ID:
-- ClearGrass **Temp and RH** (CGG1)  
-- QingPing **Temp and RH M** (CGG1-M) (NOT COMPATIBLE)  
-- QingPing **Temp and RH H** HomeKit edition (CGG1-H) (NOT COMPATIBLE)  
 
 ## Features
 
@@ -34,19 +29,13 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ## Services, characteristics and handles
 
-The name advertised by the devices (CGG1) is `ClearGrass Temp and RH`.  
-The name advertised by the devices (CGG1-M) is `Qingping Temp and RH M`.  
-The name advertised by the devices (CGG1-H) is unknown.  
+The name advertised by the devices is `Qingping Temp RH Lite`.
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
 ##### Generic attribute (UUID 00001801-0000-1000-8000-00805f9b34fb)
 
 ##### Device information (UUID 0000180a-0000-1000-8000-00805f9b34fb)
-
-##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
-
-(Only for QingPing variants)
 
 ##### Data service (UUID 22210000-554a-4546-5542-46534450464d)
 
@@ -57,13 +46,14 @@ The name advertised by the devices (CGG1-H) is unknown.
 #### Communication with the device
 
 Register to get notification on the 'real time data' characteristic.  
-The device will send back 6 bytes data packets:
+The device will send back 7 bytes data packets:
 
 | Bytes | Type      | Value                 | Description           |
 | ----- | --------- | --------------------- | --------------------- |
 | 00-01 | bytes     |                       | unknown?              |
-| 02-03 | Int16     | 198 / 10 = 19.8       | temperature °C        |
-| 04-05 | Int16     | 578 / 10 = 57.8       | humidity %RH          |
+| 02    | byte      | 236                   | battery voltage?      |
+| 03-04 | Int16     | 198 / 10 = 19.8       | temperature °C        |
+| 05-06 | Int16     | 578 / 10 = 57.8       | humidity %RH          |
 
 ## Historical data
 

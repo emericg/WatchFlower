@@ -27,12 +27,16 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 * CSV data export
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
-TODOs:
+### TODOs
 
 * Background updates & notifications (Android, maybe iOS)
 * Continuous measurements (BLE advertising support)
 
-### Supported devices
+
+![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
+
+
+## Supported devices
 
 WatchFlower has been built to be compatible with as many Bluetooth sensors as possible.  
 Various new Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
@@ -49,11 +53,17 @@ Please note that most Chinese devices have many names, usually no official manuf
 | Xiaomi / VegTrug / WANFEI<br>(International and Chinese versions) | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
-| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | Miaomiaoce Digital Hygrometer 2 (EInk) |
-| :-----------------------------: | :----------------------------------: | :---------------------------: | :-------------------------------: | :------------------------------------: |
-| ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_eink.svg) | ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
-| LYWSDCGQ | CGG1 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
-| [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
+| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | QingPing Temp RH Lite (LCD) |
+| :-----------------------------: | :----------------------------------: | :-------------------------: |
+| ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_cgg1.svg) | ![HygroTemp](docs/hygrotemp_cgdk2.svg) |
+| LYWSDCGQ | CGG1 | CGDK2 |
+| [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
+
+| Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | Miaomiaoce Digital Hygrometer 2 (EInk) |
+| :---------------------------: | :-------------------------------: | :------------------------------------: |
+| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
+| LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
+| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
 | ThermoBeacon (keychain) | ThermoBeacon (LCD) |
 | :---------------------: | :----------------: |
@@ -64,7 +74,7 @@ Please note that most Chinese devices have many names, usually no official manuf
 | Air Box WP6003 |
 | :------------: |
 | ![WP6003](docs/wp6003.svg) |
-| ? |
+| |
 | [shop](https://www.banggood.com/custlink/mK3yOI9teA) |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
@@ -72,25 +82,23 @@ Please note that most Chinese devices have many names, usually no official manuf
 | ![Air Monitor](docs/lungs-solid.svg) | ![Weather Station](docs/cloud-sun-solid.svg) | ![Geiger Counter](docs/radiation-alt-solid.svg) |
 | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/AirQualityMonitor) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/WeatherStation) | [build](https://github.com/emericg/esp32-environmental-sensors/tree/master/GeigerCounter) |
 
-### Screenshots
 
-![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
+## Screenshots
+
 ![GUI_MOBILE2](https://i.imgur.com/e1bXFXM.png)
-
 ![GUI_MOBILE3](https://i.imgur.com/UiirNMw.png)
-
 ![GUI_DESKTOP1](https://i.imgur.com/1cAIta8.png)
 ![GUI_DESKTOP2](https://i.imgur.com/joJB4pB.png)
 
 
 ## Documentation
 
-### Dependencies
+#### Dependencies
 
 You will need a C++11 compiler and Qt 5.12+ (with Qt Charts).  
 For Android builds, the appropriates SDK and NDK.
 
-### Building WatchFlower
+#### Building WatchFlower
 
 ```
 $ git clone https://github.com/emericg/WatchFlower.git
@@ -106,7 +114,7 @@ $ make
 * Mickael Heudre <mickheudre@gmail.com> for his invaluable QML expertise!
 * Everyone who gave time to [help translate](i18n/README.md#special-thanks) this application!
 
-### Third party projects used by WatchFlower
+#### Third party projects used by WatchFlower
 
 * [Qt](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
 * [StatusBar](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
@@ -116,11 +124,11 @@ $ make
 
 ## Get involved!
 
-### Developers
+#### Developers
 
 You can browse the code on the GitHub page, submit patches and pull requests! Your help would be greatly appreciated ;-)
 
-### Users
+#### Users
 
 You can help us find and report bugs, suggest new features, help with translation, documentation and more! Visit the Issues section of the GitHub page to start!
 

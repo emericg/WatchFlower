@@ -141,7 +141,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 
             // Characteristic "Units" // 1 byte READ WRITE // 0x00 - F, 0x01 - C    READ WRITE
             {
-                QBluetoothUuid u(QString("EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handle 0x??
+                QBluetoothUuid u(QString("EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6"));
                 QLowEnergyCharacteristic chu = serviceData->characteristic(u);
 
                 const quint8 *unit = reinterpret_cast<const quint8 *>(chu.value().constData());
@@ -161,7 +161,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 
             // Characteristic "Time" // 5 bytes READ WRITE
             {
-                QBluetoothUuid a(QString("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handle 0x??
+                QBluetoothUuid a(QString("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6"));
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
 
@@ -206,7 +206,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 
             // Characteristic "Temp&Humi" // 3 bytes, READ NOTIFY
             {
-                QBluetoothUuid b(QString("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6")); // handle 0x??
+                QBluetoothUuid b(QString("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6"));
                 QLowEnergyCharacteristic chb = serviceData->characteristic(b);
                 m_notificationDesc = chb.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -268,7 +268,7 @@ void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const 
 
     if (c.uuid().toString().toUpper() == "{EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
-        // timedate // handle 0x??
+        // timedate
 
         if (value.size() == 5)
         {
@@ -295,7 +295,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
 
     if (c.uuid().toString().toUpper() == "{EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6}")
     {
-        // sensor data // handle 0x??
+        // sensor data
 
         if (value.size() == 3)
         {

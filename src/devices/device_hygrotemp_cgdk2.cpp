@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2021
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "device_hygrotemp_eink.h"
+#include "device_hygrotemp_cgdk2.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>
@@ -36,45 +36,36 @@
 
 /* ************************************************************************** */
 
-DeviceHygrotempEInk::DeviceHygrotempEInk(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceHygrotempCGDK2::DeviceHygrotempCGDK2(QString &deviceAddr, QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
-
-    if (!hasBatteryLevel() && m_deviceBattery > 0)
-    {
-        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    }
 }
 
-DeviceHygrotempEInk::DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject *parent):
+DeviceHygrotempCGDK2::DeviceHygrotempCGDK2(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
-
-    if (!hasBatteryLevel() && m_deviceBattery > 0)
-    {
-        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    }
 }
 
-DeviceHygrotempEInk::~DeviceHygrotempEInk()
+DeviceHygrotempCGDK2::~DeviceHygrotempCGDK2()
 {
     delete serviceInfos;
-    delete serviceBattery;
     delete serviceData;
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceHygrotempEInk::serviceScanDone()
+void DeviceHygrotempCGDK2::serviceScanDone()
 {
-    //qDebug() << "DeviceHygrotempEInk::serviceScanDone(" << m_deviceAddress << ")";
+    qDebug() << "DeviceHygrotempCGDK2::serviceScanDone(" << m_deviceAddress << ")";
 
     if (serviceInfos)
     {
@@ -82,7 +73,7 @@ void DeviceHygrotempEInk::serviceScanDone()
         {
             if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
             {
-                connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_infos);
+                connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos);
 
                 // Windows hack, see: QTBUG-80770 and QTBUG-78488
                 QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
@@ -90,23 +81,12 @@ void DeviceHygrotempEInk::serviceScanDone()
         }
     }
 
-    if (serviceBattery)
-    {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
-        {
-            connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_battery);
-
-            // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
-        }
-    }
-
     if (serviceData)
     {
         if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
         {
-            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempEInk::serviceDetailsDiscovered_data);
-            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempEInk::bleReadNotify);
+            connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempCGDK2::serviceDetailsDiscovered_data);
+            connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempCGDK2::bleReadNotify);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
@@ -116,9 +96,9 @@ void DeviceHygrotempEInk::serviceScanDone()
 
 /* ************************************************************************** */
 
-void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
+void DeviceHygrotempCGDK2::addLowEnergyService(const QBluetoothUuid &uuid)
 {
-    //qDebug() << "DeviceHygrotempEInk::addLowEnergyService(" << uuid.toString() << ")";
+    //qDebug() << "DeviceHygrotempCGDK2::addLowEnergyService(" << uuid.toString() << ")";
 
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
@@ -128,16 +108,6 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
         serviceInfos = m_bleController->createServiceObject(uuid);
         if (!serviceInfos)
             qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
-    }
-
-    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
-    {
-        delete serviceBattery;
-        serviceBattery = nullptr;
-
-        serviceBattery = m_bleController->createServiceObject(uuid);
-        if (!serviceBattery)
-            qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
     }
 
     if (uuid.toString() == "{22210000-554a-4546-5542-46534450464d}") // (custom) data service
@@ -153,11 +123,11 @@ void DeviceHygrotempEInk::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
-void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+void DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceInfos)
         {
@@ -182,38 +152,17 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_infos(QLowEnergyService::Serv
     }
 }
 
-void DeviceHygrotempEInk::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
+void DeviceHygrotempCGDK2::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
     {
-        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
-
-        if (serviceBattery)
-        {
-            // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
-
-            if (cbat.value().size() == 1)
-            {
-                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                setBattery(lvl);
-            }
-        }
-    }
-}
-
-void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::ServiceDiscovered)
-    {
-        //qDebug() << "DeviceHygrotempEInk::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
+        //qDebug() << "DeviceHygrotempCGDK2::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (serviceData)
         {
             // hygrotemp readings
             {
-                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb")); // handle 0x??
+                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb"));
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -223,30 +172,30 @@ void DeviceHygrotempEInk::serviceDetailsDiscovered_data(QLowEnergyService::Servi
 }
 /* ************************************************************************** */
 
-void DeviceHygrotempEInk::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
+void DeviceHygrotempCGDK2::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "DeviceHygrotempEInk::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "DeviceHygrotempCGDK2::bleWriteDone(" << m_deviceAddress << ")";
     //qDebug() << "DATA: 0x" << value.toHex();
 }
 
-void DeviceHygrotempEInk::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
+void DeviceHygrotempCGDK2::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "DeviceHygrotempEInk::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DeviceHygrotempCGDK2::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 }
 
-void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceHygrotempCGDK2::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
 {
-    //qDebug() << "DeviceHygrotempEInk::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    //qDebug() << "DeviceHygrotempCGDK2::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
     if (c.uuid().toString() == "{00000100-0000-1000-8000-00805f9b34fb}")
     {
-        // sensor data // handle 0x??
+        // sensor data
 
-        if (value.size() == 6)
+        if (value.size() == 7)
         {
             m_temperature = static_cast<int16_t>(data[2] + (data[3] << 8)) / 10.f;
             m_humidity = static_cast<int16_t>(data[4] + (data[5] << 8)) / 10;
@@ -282,7 +231,7 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
             }
 
 #ifndef QT_NO_DEBUG
-            qDebug() << "* DeviceHygrotempEInk update:" << getAddress();
+            qDebug() << "* DeviceHygrotempCGDK2 update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_temperature:" << m_temperature;
@@ -292,13 +241,13 @@ void DeviceHygrotempEInk::bleReadNotify(const QLowEnergyCharacteristic &c, const
     }
 }
 
-void DeviceHygrotempEInk::confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value)
+void DeviceHygrotempCGDK2::confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value)
 {
-    //qDebug() << "DeviceHygrotempEInk::confirmedDescriptorWrite!";
+    //qDebug() << "DeviceHygrotempCGDK2::confirmedDescriptorWrite!";
 
     if (d.isValid() && d == m_notificationDesc && value == QByteArray::fromHex("0000"))
     {
-        qDebug() << "confirmedDescriptorWrite() disconnect?!";
+        //qDebug() << "confirmedDescriptorWrite() disconnect?!";
 
         //disabled notifications -> assume disconnect intent
         //m_control->disconnectFromDevice();

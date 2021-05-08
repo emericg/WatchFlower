@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2019
+ * \date      2021
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_HYGROTEMP_EINK_H
-#define DEVICE_HYGROTEMP_EINK_H
+#ifndef DEVICE_HYGROTEMP_CGDK2_H
+#define DEVICE_HYGROTEMP_CGDK2_H
 /* ************************************************************************** */
 
 #include "device_sensor.h"
@@ -34,31 +34,29 @@
 /* ************************************************************************** */
 
 /*!
- * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
- * CGG1 device / round body / E-Ink
+ * QingPing "Temp RH Lite"
+ * CGDK2 device / round body / LCD screen
  *
  * Protocol infos:
- * - WatchFlower/docs/cgg1-ble-api.md
+ * - WatchFlower/docs/cgdk2-ble-api.md
  */
-class DeviceHygrotempEInk: public DeviceSensor
+class DeviceHygrotempCGDK2: public DeviceSensor
 {
     Q_OBJECT
 
 public:
-    DeviceHygrotempEInk(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceHygrotempEInk(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceHygrotempEInk();
+    DeviceHygrotempCGDK2(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempCGDK2(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceHygrotempCGDK2();
 
 private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
     void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceInfos = nullptr;
-    QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceData = nullptr;
 
     QLowEnergyDescriptor m_notificationDesc;
@@ -70,4 +68,4 @@ private:
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_HYGROTEMP_EINK_H
+#endif // DEVICE_HYGROTEMP_CGDK2_H

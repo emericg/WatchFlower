@@ -70,8 +70,10 @@ Item {
                     imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
         } else if (boxDevice.isThermometer) {
-            if (boxDevice.deviceName === "MJ_HT_V1" || boxDevice.deviceName === "ClearGrass Temp & RH" ||
+            if (boxDevice.deviceName === "MJ_HT_V1" ||
+                boxDevice.deviceName === "ClearGrass Temp & RH" ||
                 boxDevice.deviceName === "Qingping Temp & RH M" || boxDevice.deviceName === "Qingping Temp & RH H" ||
+                boxDevice.deviceName === "Qingping Temp RH Lite" ||
                 boxDevice.deviceName === "ThermoBeacon") {
                 imageDevice.source = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
             } else if (boxDevice.deviceName === "LYWSD02" ||

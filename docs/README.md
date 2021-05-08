@@ -72,10 +72,19 @@
 | Digital Hygrometer                | ClearGrass                        |
 | --------------------------------- | --------------------------------- |
 | FCC ID                            | CGG1                              |
-| <img src="hygrotemp_eink.svg" width="256">                           ||
+| <img src="hygrotemp_cgg1.svg" width="256">                           ||
 | Screen                            | EInk                              |
 | Battery                           | 1 x CR2430                        |
 | Thermometer                       | 0 ~ 50 °C                         |
+| Hygrometer                        | 0 ~ 99.9% RH                      |
+
+| Temp & RH Monitor Lite            | QingPing                          |
+| --------------------------------- | --------------------------------- |
+| FCC ID                            | CGDK2                             |
+| <img src="hygrotemp_cgdk2.svg" width="256">                          ||
+| Screen                            | LCD                               |
+| Battery                           | 1 x CR2430                        |
+| Thermometer                       | -9.9 ~ 50 °C                      |
 | Hygrometer                        | 0 ~ 99.9% RH                      |
 
 | Digital Hygrometer Clock          | Xiaomi                            |
