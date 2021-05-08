@@ -155,7 +155,7 @@ void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos(QLowEnergyServ
 
         if (serviceInfos)
         {
-            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
+            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
             QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
 
             if (chf.value().size() > 0)
@@ -196,7 +196,7 @@ void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data(QLowEnergyServi
 
         if (serviceData)
         {
-            QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -215,7 +215,7 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
 
     if (c.uuid().toString() == "{eeee9a32-a0a0-4cbd-b00b-6b519bf2780f}")
     {
-        // Air Quality Monitor realtime data // handle 0x?
+        // Air Quality Monitor realtime data
 
         if (value.size() == 16)
         {

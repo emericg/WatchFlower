@@ -38,7 +38,6 @@
  * - https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow
  *
  * Protocol infos:
- * - WatchFlower/docs/higrow-ble-api.md
  * - https://github.com/emericg/esp32-environmental-sensors/blob/master/HiGrow/doc/higrow-ble-api.md
  */
 class DeviceEsp32HiGrow: public DeviceSensor

@@ -55,7 +55,7 @@
 | Hygrometer                        |                                   |
 | Soil moisture                     |                                   |
 | Light sensor                      |                                   |
-| BLE API                           | [link](higrow-ble-api.md)         |
+| BLE API                           | [link](https://github.com/emericg/esp32-environmental-sensors/blob/master/HiGrow/doc/higrow-ble-api.md) |
 
 
 # Thermometers

@@ -161,7 +161,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
         if (serviceInfos)
         {
-            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // handle 0x2c // firmware version
+            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
             QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
 
             if (chf.value().size() > 0)
@@ -202,7 +202,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
 
         if (serviceData)
         {
-            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // handle 0x30 // rt data
+            QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
@@ -221,15 +221,17 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
     if (c.uuid().toString() == "{eeee9a32-a0c0-4cbd-b00b-6b519bf2780f}")
     {
-        // HiGrow realtime data // handle 0x3431
+        // HiGrow realtime data
 
         if (value.size() == 16)
         {
-            m_temperature = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_humidity = data[2];
-            m_soil_moisture = data[3];
-            m_soil_conductivity = static_cast<uint16_t>(data[4] + (data[5] << 8));
-            m_luminosity = static_cast<uint32_t>(data[6] + (data[7] << 8) + (data[8] << 16) /*+ (data[6] << 24)*/);
+            m_soil_moisture = data[0];
+            m_soil_conductivity = static_cast<uint16_t>(data[1] + (data[2] << 8));
+            //m_soil_temperature = static_cast<uint16_t>(data[3] + (data[4] << 8));
+            m_temperature = static_cast<uint16_t>(data[5] + (data[6] << 8)) / 10.f;
+            m_humidity = data[7];
+            m_luminosity = static_cast<uint32_t>(data[8] + (data[9] << 8) + (data[10] << 16));
+            //m_pressure = static_cast<uint16_t>(data[11] + (data[12] << 8));
 
             m_lastUpdate = QDateTime::currentDateTime();
 
