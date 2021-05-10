@@ -23,6 +23,7 @@ Item {
             var ttt = 1.15
             var bbb = 0.85
             var base = containerbar.height
+            var base2 = containerbar.height - rectangle_temp_mean.height
             var h = UtilsNumber.normalize(mmd.tempMax, graphMin*bbb, graphMax*ttt)
             var m = UtilsNumber.normalize(mmd.tempMean, graphMin*bbb, graphMax*ttt)
             var l = UtilsNumber.normalize(mmd.tempMin, graphMin*bbb, graphMax*ttt)
@@ -36,8 +37,8 @@ Item {
                 rectangle_temp.height = hhh
             }
 
-            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.2)
-            rectangle_temp_mean.y = base - (base * m) - rectangle_temp.y
+            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.33)
+            rectangle_temp_mean.y = base2 - ((base2) * m) - rectangle_temp.y
 
             if ((mmd.tempMax === mmd.tempMin && mmd.hygroMax === mmd.hygroMin)) {
                 text_temp_low.visible = false

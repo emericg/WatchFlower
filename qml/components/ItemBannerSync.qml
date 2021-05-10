@@ -7,7 +7,7 @@ Rectangle {
     id: statusBox
     width: parent.width
 
-    height: (syncing && visible) ? 48 : 0
+    height: (syncing && visible) ? (isPhone ? 40 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
     color: Theme.colorActionbar
@@ -83,7 +83,7 @@ Rectangle {
 
         visible: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
         width: (parent.width * (currentDevice.historyUpdatePercent/100))
-        height: 3
+        height: 4
         color: Theme.colorActionbarHighlight
     }
 }
