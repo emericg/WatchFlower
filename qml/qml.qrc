@@ -50,6 +50,7 @@
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
         <file alias="ItemImageButtonTooltip.qml">components_generic/ItemImageButtonTooltip.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
+        <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
         <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
         <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>

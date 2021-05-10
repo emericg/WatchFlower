@@ -838,9 +838,8 @@ Item {
                     else if (boxDevice.voc > 500) clr = Theme.colorOrange
 
                     gaugeLegend.text = qsTr("VOC")
-                    gaugeBg.colorCircle = clr
-                    gaugeValue.colorCircle = clr
-                    gaugeValue.arcEnd = UtilsNumber.mapNumber(boxDevice.voc, 0, 1500, 0, 270)
+                    gaugeValue.arcColor = clr
+                    gaugeValue.backgroundColor = clr
                 }
             }
 
@@ -851,16 +850,19 @@ Item {
                 color: Theme.colorSubText
             }
 
-            ProgressCircle {
-                id: gaugeBg
-                anchors.fill: parent
-                lineWidth: isMobile ? 10 : 12
-                opacity: 0.33
-            }
-            ProgressCircle {
+            ProgressArc {
                 id: gaugeValue
                 anchors.fill: parent
-                lineWidth: isMobile ? 10 : 12
+
+                arcWidth: isMobile ? 10 : 12
+                arcSpan: 270
+
+                from: 0
+                to: 1500
+                value: boxDevice.voc
+
+                background: true
+                backgroundOpacity: 0.33
             }
         }
     }

@@ -1211,9 +1211,9 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
 /* ************************************************************************** */
 
 void DeviceSensor::getChartData_plantAIO(int maxDays,
-                                   QtCharts::QDateTimeAxis *axis,
-                                   QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
-                                   QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi)
+                                         QtCharts::QDateTimeAxis *axis,
+                                         QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                                         QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi)
 {
     if (!axis || !hygro || !condu || !temp || !lumi) return;
 

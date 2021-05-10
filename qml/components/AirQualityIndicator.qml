@@ -26,48 +26,54 @@ Item {
 
         ProgressCircle {
             anchors.fill: parent
-
-            lineWidth: (isMobile ? 8 : 10)
+            value: 100
+            arcWidth: (isMobile ? 8 : 10)
             arcBegin: 0
             arcEnd: 88
-            colorCircle: (Theme.currentTheme === ThemeEngine.THEME_GREEN ? Theme.colorLightGreen : Theme.colorGreen)
-            //opacity: 0.95
+            arcOffset: 225
+            arcColor: (Theme.currentTheme === ThemeEngine.THEME_GREEN ? Theme.colorLightGreen : Theme.colorGreen)
+            //arcOpacity: 0.95
         }
         ProgressCircle {
             anchors.fill: parent
-
-            lineWidth: (isMobile ? 8 : 10)
+            value: 100
+            arcWidth: (isMobile ? 8 : 10)
             arcBegin: 92
             arcEnd: 178
-            colorCircle: Theme.colorOrange
-            //opacity: 0.95
+            arcOffset: 225
+            arcColor: Theme.colorOrange
+            //arcOpacity: 0.95
         }
         ProgressCircle {
             anchors.fill: parent
-
-            lineWidth: (isMobile ? 8 : 10)
+            value: 100
+            arcWidth: (isMobile ? 8 : 10)
             arcBegin: 182
             arcEnd: 270
-            colorCircle: Theme.colorRed
-            //opacity: 0.95
+            arcOffset: 225
+            arcColor: Theme.colorRed
+            //arcOpacity: 0.95
         }
     }
 
     ////////////////
 
-    ProgressCircle { // background
+    ProgressCircle {
         anchors.fill: parent
-        lineWidth: isMobile ? 16 : 20
-        colorCircle: indicatorAirQuality.color
-        opacity: 0.75
-    }
-    ProgressCircle { // value
-        anchors.fill: parent
-        lineWidth: isMobile ? 16 : 20
-        colorCircle: indicatorAirQuality.color
-        arcEnd: UtilsNumber.mapNumber(indicatorAirQuality.value,
-                                      indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
-                                      0, 270)
+
+        arcOffset: 225
+        arcBegin: 0
+        arcEnd: 270
+        arcWidth: isMobile ? 16 : 20
+        arcColor: indicatorAirQuality.color
+
+        background: true
+        backgroundOpacity: 0.75
+        backgroundColor: indicatorAirQuality.color
+
+        from:indicatorAirQuality.valueMin
+        to: indicatorAirQuality.valueMax
+        value: indicatorAirQuality.value
     }
 
     ////////////////

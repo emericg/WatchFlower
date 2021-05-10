@@ -9,28 +9,54 @@ Item {
     width: 256
     height: width
 
+    property real from: 0
+    property real to: 100
+    property real value: 50
+
     property bool isPie: false          // paint a pie instead of an arc
 
-    property real arcBegin: 0           // start arc angle in degree
-    property real arcEnd: 270           // end arc angle in degree
-    property real arcOffset: -90 -135   // rotation
+    property real arcOffset: 0              // rotation (0 means starts at top center)
+    property real arcBegin: 0
+    property real arcEnd: 360
+    property real arcWidth: 16              // width of the arc
+    property real arcOpacity: 1
+    property string arcColor: "white"
 
     property bool background: false     // a full circle as a background of the arc
-    property real lineWidth: 16         // width of the line
-    property string colorCircle: "#CC3333"
-    property string colorBackground: "#779933"
+    property real backgroundOpacity: 1
+    property string backgroundColor: "#33000000"
 
     property alias animationBegin: animationArcBegin.enabled
     property alias animationEnd: animationArcEnd.enabled
+    property alias animationValue: animationArcValue.enabled
     property int animationDuration: 233
+
+    // private
+    property real arcValue: mapNumber(value, from, to, arcBegin, arcEnd)
+
+    function mapNumber(n, srcMin, srcMax, dstMin, dstMax) {
+        if (n < srcMin) n = srcMin
+        if (n > srcMax) n = srcMax
+        return (dstMin + ((n - srcMin) * (dstMax - dstMin)) / (srcMax - srcMin))
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
+    onFromChanged: canvas.requestPaint()
+    onToChanged: canvas.requestPaint()
+    onValueChanged: canvas.requestPaint()
+
     onIsPieChanged: canvas.requestPaint()
+
     onArcBeginChanged: canvas.requestPaint()
     onArcEndChanged: canvas.requestPaint()
-    onColorCircleChanged: canvas.requestPaint()
-    onColorBackgroundChanged: canvas.requestPaint()
+    onArcWidthChanged: canvas.requestPaint()
+    onArcColorChanged: canvas.requestPaint()
+    onArcOpacityChanged: canvas.requestPaint()
+
+    onBackgroundChanged: canvas.requestPaint()
+    onBackgroundColorChanged: canvas.requestPaint()
+    onBackgroundOpacityChanged: canvas.requestPaint()
 
     Connections {
         target: ThemeEngine
@@ -55,48 +81,62 @@ Item {
        }
     }
 
+    Behavior on arcValue {
+       id: animationArcValue
+       enabled: true
+       NumberAnimation {
+           duration: control.animationDuration
+           easing.type: Easing.InOutCubic
+       }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     Canvas {
         id: canvas
         anchors.fill: parent
-        rotation: parent.arcOffset
 
         onPaint: {
             var ctx = getContext("2d")
-            var x = width / 2
-            var y = height / 2
-            var start = Math.PI * (parent.arcBegin / 180)
-            var end = Math.PI * (parent.arcEnd / 180)
+            var x = (width / 2)
+            var y = (height / 2)
+            var start = Math.PI * ((control.arcBegin + control.arcOffset - 90) / 180)
+            var end = Math.PI * ((control.arcEnd + control.arcOffset - 90) / 180)
+            var end_value = Math.PI * ((control.arcValue + control.arcOffset - 90) / 180)
             ctx.reset()
 
+            // draw
             if (control.isPie) {
                 if (control.background) {
                     ctx.beginPath()
-                    ctx.fillStyle = control.colorBackground
+                    ctx.globalAlpha = control.backgroundOpacity
+                    ctx.fillStyle = control.backgroundColor
                     ctx.moveTo(x, y)
-                    ctx.arc(x, y, (width / 2), 0, (Math.PI * 2), false)
+                    ctx.arc(x, y, (width / 2), start, end, false)
                     ctx.lineTo(x, y)
                     ctx.fill()
                 }
                 ctx.beginPath()
-                ctx.fillStyle = control.colorCircle
+                ctx.globalAlpha = control.arcOpacity
+                ctx.fillStyle = control.arcColor
                 ctx.moveTo(x, y)
-                ctx.arc(x, y, (width / 2), start, end, false)
+                ctx.arc(x, y, (width / 2), start, end_value, false)
                 ctx.lineTo(x, y)
                 ctx.fill()
             } else {
                 if (control.background) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, (width / 2) - (parent.lineWidth / 2), 0, (Math.PI * 2), false)
-                    ctx.lineWidth = control.lineWidth
-                    ctx.strokeStyle = control.colorBackground
+                    ctx.beginPath()
+                    ctx.globalAlpha = control.backgroundOpacity
+                    ctx.arc(x, y, (width / 2) - (control.arcWidth / 2), start, end, false)
+                    ctx.lineWidth = control.arcWidth
+                    ctx.strokeStyle = control.backgroundColor
                     ctx.stroke()
                 }
-                ctx.beginPath();
-                ctx.arc(x, y, (width / 2) - (parent.lineWidth / 2), start, end, false)
-                ctx.lineWidth = control.lineWidth
-                ctx.strokeStyle = control.colorCircle
+                ctx.beginPath()
+                ctx.globalAlpha = control.arcOpacity
+                ctx.arc(x, y, (width / 2) - (control.arcWidth / 2), start, end_value, false)
+                ctx.lineWidth = control.arcWidth
+                ctx.strokeStyle = control.arcColor
                 ctx.stroke()
             }
         }
