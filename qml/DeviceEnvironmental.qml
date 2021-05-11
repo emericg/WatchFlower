@@ -24,7 +24,7 @@ Item {
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
         onBatteryUpdated: { updateHeader() }
-        onDataUpdated: { updateData() }
+        onDataUpdated: { updateHeader(); updateData(); }
     }
 
     Connections {
@@ -111,10 +111,6 @@ Item {
         //isGeigerCounter = true
         //isWeatherStation = true
 
-        indicatorDisconnected.visible = !currentDevice.isDataAvailable()
-        indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
-        indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
-
         //
         loadGraph()
         //
@@ -137,6 +133,10 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
+
+        //indicatorDisconnected.visible = !currentDevice.isDataAvailable()
+        //indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
+        //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
 
         // Indicators
         if (isAirMonitor) {
@@ -167,7 +167,7 @@ Item {
         // GRAPH
         if (isAirMonitor) {
             if (currentDevice.hasVocSensor) {
-                currentDevice.updateChartData_environmentalVoc(14)
+                currentDevice.updateChartData_environmentalVoc(31)
             }
         }
     }
@@ -227,8 +227,10 @@ Item {
                     id: indicatorDisconnected
                     width: isMobile ? 96 : 128
                     height: isMobile ? 96 : 128
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+
+                    visible: (currentDevice && !currentDevice.isDataAvailable())
                     color: cccc
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 }
 
                 ////////////////
@@ -237,7 +239,9 @@ Item {
                     id: indicatorAirQuality
                     width: singleColumn ? headerBox.height * 0.666 : headerBox.width * 0.5
                     height: width
+
                     color: cccc
+                    visible: (currentDevice && isAirMonitor && currentDevice.isDataAvailable())
                 }
 
                 ////////////////
@@ -247,6 +251,7 @@ Item {
                     width: isMobile ? 128 : 160
                     height: isMobile ? 128 : 160
 
+                    visible: (currentDevice && isGeigerCounter && currentDevice.isDataAvailable())
                     color: cccc
                     source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
 

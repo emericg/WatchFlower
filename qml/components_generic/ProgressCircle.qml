@@ -42,14 +42,15 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    onFromChanged: canvas.requestPaint()
-    onToChanged: canvas.requestPaint()
-    onValueChanged: canvas.requestPaint()
+    //onFromChanged: canvas.requestPaint()
+    //onToChanged: canvas.requestPaint()
+    //onValueChanged: canvas.requestPaint()
 
     onIsPieChanged: canvas.requestPaint()
 
     onArcBeginChanged: canvas.requestPaint()
     onArcEndChanged: canvas.requestPaint()
+    onArcValueChanged: canvas.requestPaint()
     onArcWidthChanged: canvas.requestPaint()
     onArcColorChanged: canvas.requestPaint()
     onArcOpacityChanged: canvas.requestPaint()

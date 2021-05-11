@@ -39,9 +39,10 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    onFromChanged: canvas.requestPaint()
-    onToChanged: canvas.requestPaint()
-    onValueChanged: canvas.requestPaint()
+    //onFromChanged: canvas.requestPaint()
+    //onToChanged: canvas.requestPaint()
+    //onValueChanged: canvas.requestPaint()
+    onArcValueChanged: canvas.requestPaint()
 
     onArcSpanChanged: canvas.requestPaint()
     onArcWidthChanged: canvas.requestPaint()
