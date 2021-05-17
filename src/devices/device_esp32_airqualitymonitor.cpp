@@ -47,7 +47,7 @@ DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(QString &deviceAddr, 
     //m_deviceSensors += DeviceUtils::SENSOR_PM25;
     //m_deviceSensors += DeviceUtils::SENSOR_PM10;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
-    m_deviceSensors += DeviceUtils::SENSOR_CO2;
+    m_deviceSensors += DeviceUtils::SENSOR_eCO2;
 }
 
 DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QBluetoothDeviceInfo &d, QObject *parent):

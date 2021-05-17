@@ -237,7 +237,7 @@ Item {
 
                 AirQualityIndicator {
                     id: indicatorAirQuality
-                    width: singleColumn ? headerBox.height * 0.666 : headerBox.width * 0.5
+                    width: singleColumn ? headerBox.height * 0.73 : headerBox.width * 0.5
                     height: width
 
                     color: cccc
@@ -411,6 +411,7 @@ Item {
 
             ItemBannerSync {
                 id: bannersync
+                z: 2
                 anchors.left: parent.left
                 anchors.right: parent.right
             }
@@ -467,7 +468,7 @@ Item {
                                 //console.log("--- wwww: " + www)
                             }
 
-                            property int wwwTarget: isPhone ? 144 : 160
+                            property int wwwTarget: isPhone ? 128 : 160
                             property int wwwMax: 200
                             property int www: wwwTarget
 
@@ -600,7 +601,7 @@ Item {
                         }
                     }
 
-                    ////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////
 
                     Rectangle {
                         id: radBox
@@ -675,7 +676,7 @@ Item {
                         }
                     }
 
-                    ////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////
 
                     Rectangle {
                         id: weatherBox
@@ -698,7 +699,7 @@ Item {
                             spacing: isDesktop ? 16 : 12
 
                             onWidthChanged: {
-                                var itemcount = 1
+                                var itemcount = 3
                                 var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
                                 var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
                                 if (cellColumnsTarget >= itemcount) {
@@ -711,8 +712,8 @@ Item {
                                 //console.log("--- wwww: " + www)
                             }
 
-                            property int wwwTarget: 128
-                            property int wwwMax: 128
+                            property int wwwTarget: isPhone ? 96 : 112
+                            property int wwwMax: isPhone ? 112 : 128
                             property int www: wwwTarget
 
                             ItemWeatherBox {
@@ -830,16 +831,17 @@ Item {
                         color: Theme.colorSeparator
                     }
 */
-                    ////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////
 
                     Loader {
                         id: chartEnvironmentalLoader
                         width: parent.width
-                        height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
+                        height: (sensorFlick.height - airBox.height - weatherBox.height)
+                        //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
                         asynchronous: true
                     }
 
-                    ////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////
                 }
             }
         }

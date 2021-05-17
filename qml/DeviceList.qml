@@ -296,7 +296,7 @@ Item {
             var cellColumnsTarget = Math.trunc(availableWidth / (cellSizeTarget + cellMarginTarget))
             singleColumn = (cellColumnsTarget === 1)
             // 1 // Adjust only cellSize
-            cellSize = (availableWidth - (cellMarginTarget * cellColumnsTarget)) / cellColumnsTarget
+            cellSize = ((availableWidth - (cellMarginTarget * cellColumnsTarget)) / cellColumnsTarget)
             // Recompute
             cellWidth = cellSize + cellMargin
             cellHeight = boxHeight + cellMarginTarget

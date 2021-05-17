@@ -188,7 +188,7 @@ Item {
 
                         visible: isDesktop
 
-                        text: currentDevice.deviceName
+                        text: currentDevice ? currentDevice.deviceName : ""
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeTitle
                         font.capitalization: Font.AllUppercase

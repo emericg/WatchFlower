@@ -642,9 +642,7 @@ Item {
                 id: hygro_bg
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
 
                 Rectangle {
                     id: bg1
@@ -656,11 +654,8 @@ Item {
                 Rectangle {
                     id: hygro_data
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
 
                     color: Theme.colorBlue
                     radius: rectangleSensors.sensorRadius
@@ -672,9 +667,7 @@ Item {
                 id: temp_bg
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
 
                 Rectangle {
                     id: bg2
@@ -686,11 +679,8 @@ Item {
                 Rectangle {
                     id: temp_data
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
 
                     visible: true
                     color: Theme.colorGreen
@@ -703,14 +693,11 @@ Item {
                 id: lumi_bg
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
 
                 Rectangle {
                     id: bg3
                     anchors.fill: parent
-
                     color: Theme.colorYellow
                     opacity: 0.33
                     radius: rectangleSensors.sensorRadius
@@ -718,11 +705,8 @@ Item {
                 Rectangle {
                     id: lumi_data
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
 
                     color: Theme.colorYellow
                     radius: rectangleSensors.sensorRadius
@@ -734,14 +718,11 @@ Item {
                 id: cond_bg
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
 
                 Rectangle {
                     id: bg4
                     anchors.fill: parent
-
                     color: Theme.colorRed
                     opacity: 0.33
                     radius: rectangleSensors.sensorRadius
@@ -749,10 +730,7 @@ Item {
                 Rectangle {
                     id: cond_data
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorRed
@@ -854,7 +832,7 @@ Item {
                 id: gaugeValue
                 anchors.fill: parent
 
-                arcWidth: isMobile ? 10 : 12
+                arcWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
                 arcSpan: 270
 
                 from: 0

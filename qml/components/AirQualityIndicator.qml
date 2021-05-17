@@ -18,8 +18,8 @@ Item {
 
     Item {
         id: legendSimple
-        width: parent.width + (isMobile ? 32 : 40)
-        height: parent.height + (isMobile ? 32 : 40)
+        width: parent.width + (isMobile ? 30 : 40)
+        height: parent.height + (isMobile ? 30 : 40)
         anchors.centerIn: parent
 
         visible: true
@@ -64,7 +64,7 @@ Item {
         arcOffset: 225
         arcBegin: 0
         arcEnd: 270
-        arcWidth: isMobile ? 16 : 20
+        arcWidth: isMobile ? 14 : 18
         arcColor: indicatorAirQuality.color
 
         background: true
@@ -80,8 +80,8 @@ Item {
 
     ImageSvg {
         id: lungsIcon
-        width: parent.width * 0.6
-        height: parent.height * 0.6
+        width: parent.width * 0.58
+        height: parent.height * 0.58
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -12
@@ -117,17 +117,17 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: indicatorAirQuality.value
-            font.pixelSize: 24
-            font.bold: true
             color: indicatorAirQuality.color
+            font.pixelSize: isMobile ? 22 : 24
+            font.bold: true
         }
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: indicatorAirQuality.legend
-            font.pixelSize: 24
-            font.bold: false
             color: indicatorAirQuality.color
+            font.pixelSize: isMobile ? 22 : 24
+            font.bold: false
         }
     }
 }

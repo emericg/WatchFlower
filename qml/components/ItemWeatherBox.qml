@@ -6,7 +6,7 @@ Rectangle {
     id: itemWeatherBox
     width: (duo) ? height*2 : height
     height: 128
-    radius: 16
+    radius: 12
 
     property string title: ""
     property string legend: ""
@@ -25,16 +25,16 @@ Rectangle {
 
     Column {
         anchors.top: parent.top
-        anchors.topMargin: isDesktop ? 16 : 12
+        anchors.topMargin: isDesktop ? 12 : 10
         anchors.left: parent.left
-        anchors.leftMargin: isDesktop ? 16 : 12
+        anchors.leftMargin: isDesktop ? 12 : 10
         anchors.right: parent.right
-        anchors.rightMargin: 8
-        spacing: 8
+        anchors.rightMargin: 6
+        spacing: 6
 
         ImageSvg {
-            width: 32
-            height: 32
+            width: isDesktop ? 32 : 24
+            height: isDesktop ? 32 : 24
             source: icon
             color: Theme.colorIcon
         }
@@ -45,7 +45,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             color: Theme.colorText
             font.bold: false
-            font.pixelSize: Theme.fontSizeContentSmall
+            font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
         }
 
         Row {
@@ -57,13 +57,13 @@ Rectangle {
                 font.bold: false
                 font.pixelSize: {
                     if (itemWeatherBox.value >= 10000)
-                        return 22
+                        return 20
                     else if (itemWeatherBox.value >= 1000)
-                        return 24
+                        return 22
                     else if (itemWeatherBox.precision > 1)
-                        return 26
+                        return 24
                     else
-                        return 28
+                        return 26
                 }
             }
 

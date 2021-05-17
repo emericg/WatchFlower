@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Item {
     id: itemEnvBox
     width: 144
-    height: 72
+    height: isPhone ? 64 : 72 // (width / 2)
 
     property string title: ""
     property string legend: ""
@@ -36,36 +36,38 @@ Item {
         radius: 1
     }
 
-    Row {
-        anchors.top: parent.top
-        anchors.topMargin: 8
+    ////////
+
+    Column {
         anchors.left: parent.left
         anchors.leftMargin: 16
-        spacing: 8
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 2
+        spacing: 2
+
+        Row {
+            spacing: 8
+
+            Text {
+                text: itemEnvBox.title
+                color: Theme.colorText
+                font.bold: true
+                font.pixelSize: Theme.fontSizeContent
+            }
+
+            Text {
+                text: itemEnvBox.legend
+                color: Theme.colorSubText
+                font.bold: false
+                font.pixelSize: Theme.fontSizeContent
+            }
+        }
 
         Text {
-            text: itemEnvBox.title
-            color: Theme.colorText
-            font.bold: true
-            font.pixelSize: Theme.fontSizeContent
-        }
-        Text {
-            text: itemEnvBox.legend
+            text: (itemEnvBox.value > -99) ? itemEnvBox.value.toFixed(itemEnvBox.precision) : "?"
             color: Theme.colorSubText
             font.bold: false
-            font.pixelSize: Theme.fontSizeContent
+            font.pixelSize: isPhone ? 25 : 26
         }
-    }
-
-    Text {
-        anchors.left: parent.left
-        anchors.leftMargin: 16
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
-
-        text: (itemEnvBox.value > -99) ? itemEnvBox.value.toFixed(itemEnvBox.precision) : "?"
-        color: Theme.colorSubText
-        font.bold: false
-        font.pixelSize: 26
     }
 }

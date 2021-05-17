@@ -421,7 +421,7 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceEnvironmental"
-                PropertyChanges { target: appHeader; title: qsTr("Environmental"); }
+                PropertyChanges { target: appHeader; title: selectedDevice.deviceName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenDeviceList; enabled: false; visible: false; }
                 PropertyChanges { target: screenDevicePlantSensor; enabled: false; visible: false }
@@ -478,8 +478,8 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        property int hhh: (isPhone ? 32 : 48)
-        property int hhi: (hhh / 2)
+        property int hhh: (isPhone ? 36 : 48)
+        property int hhi: (hhh * 0.666)
 
         height: hhh + screenPaddingBottom
         color: isTablet ? Theme.colorTabletmenu : "transparent"
@@ -504,7 +504,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: wideMode ? 24 : 0
+            spacing: (wideMode ? 24 : 0)
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||
@@ -512,7 +512,7 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuPlants
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -525,7 +525,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuSettings
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -538,7 +538,7 @@ ApplicationWindow {
             }
             ItemMenuButton {
                 id: menuAbout
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
@@ -582,40 +582,40 @@ ApplicationWindow {
 
             ItemMenuButton {
                 id: menuDeviceData
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("Data")
-                selected: (appContent.state === "DevicePlantSensor" && appContent.state === "DeviceList")
+                //selected: (appContent.state === "DevicePlantSensor")
                 source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
                 onClicked: tabletMenuDevice.deviceDataButtonClicked()
             }
             ItemMenuButton {
                 id: menuDeviceHistory
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("History")
-                selected: (appContent.state === "About")
+                //selected: (appContent.state === "DevicePlantSensor")
                 source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
                 onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
             }
             ItemMenuButton {
                 id: menuDeviceSettings
-                imgSize: hhi
+                imgSize: appTabletMenu.hhi
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
                 menuText: qsTr("Settings")
-                selected: (appContent.state === "About")
+                //selected: (appContent.state === "DevicePlantSensor")
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                 onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
             }
