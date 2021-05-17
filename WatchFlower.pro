@@ -111,7 +111,8 @@ RESOURCES   += qml/qml.qrc \
 OTHER_FILES += .gitignore \
                .travis.yml
 
-TRANSLATIONS = i18n/watchflower_da.ts \
+TRANSLATIONS = i18n/watchflower_ca.ts \
+               i18n/watchflower_da.ts \
                i18n/watchflower_de.ts \
                i18n/watchflower_en.ts \
                i18n/watchflower_es.ts \
@@ -124,7 +125,10 @@ TRANSLATIONS = i18n/watchflower_da.ts \
                i18n/watchflower_zh_CN.ts \
                i18n/watchflower_zh_TW.ts
 
-lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
+lupdate_only {
+    SOURCES += qml/*.qml qml/*.js \
+               qml/components/*.qml qml/components_generic/*.qml qml/components_js/*.js
+}
 
 # Build settings ###############################################################
 
