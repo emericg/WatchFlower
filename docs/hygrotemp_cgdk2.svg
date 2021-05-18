@@ -23,9 +23,9 @@
      borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="9.566807"
-     inkscape:cx="36.04814"
-     inkscape:cy="38.065501"
+     inkscape:zoom="9.8714282"
+     inkscape:cx="45.214633"
+     inkscape:cy="45.752409"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -95,18 +95,19 @@
        id="path4551"
        inkscape:connector-curvature="0" />
     <ellipse
-       style="opacity:1;fill:none;fill-opacity:0.930303;stroke:#848e98;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:none;fill-opacity:0.930303;stroke:#848e98;stroke-width:0.499417;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4539"
-       cx="10.715625"
+       cx="10.583333"
        cy="286.41666"
-       rx="9.0876207"
-       ry="8.9553232" />
-    <circle
-       style="opacity:1;fill:none;fill-opacity:0.930303;stroke:#848e98;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       rx="9.0107088"
+       ry="9.0107126" />
+    <ellipse
+       style="opacity:1;fill:none;fill-opacity:0.930303;stroke:#848e98;stroke-width:0.50636;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4543"
        cx="10.583333"
        cy="286.41666"
-       r="7.5878134" />
+       rx="7.6843204"
+       ry="7.6843171" />
     <g
        aria-label="24. "
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#495057;fill-opacity:1;stroke:none;stroke-width:0.358822"
