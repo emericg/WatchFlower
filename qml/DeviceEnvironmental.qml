@@ -506,6 +506,43 @@ Item {
                             }
 
                             ItemEnvBox {
+                                id: voc
+                                width: airFlow.www
+                                visible: currentDevice.hasVocSensor
+
+                                title: qsTr("VOC")
+                                legend: qsTr("µg/m³")
+                                value: currentDevice.voc
+                                limit_mid: 500
+                                limit_high: 1000
+                                precision: 0
+                            }
+
+                            ItemEnvBox {
+                                id: hcho
+                                width: airFlow.www
+                                visible: currentDevice.hasHchoSensor
+
+                                title: qsTr("HCHO")
+                                legend: qsTr("µg/m³")
+                                value: currentDevice.hcho
+                                limit_mid: 500
+                                limit_high: 1000
+                                precision: 0
+                            }
+/*
+                            ItemEnvBox {
+                                id: o2
+                                width: airFlow.www
+                                visible: currentDevice.hasO3Sensor
+
+                                title: qsTr("O2")
+                                legend: qsTr("µg/m³")
+                                value: currentDevice.o3
+                                precision: 0
+                            }
+
+                            ItemEnvBox {
                                 id: o3
                                 width: airFlow.www
                                 visible: currentDevice.hasO3Sensor
@@ -548,7 +585,7 @@ Item {
                                 value: currentDevice.co
                                 precision: 0
                             }
-
+*/
                             ItemEnvBox {
                                 id: co2
                                 width: airFlow.www
@@ -560,32 +597,6 @@ Item {
                                 precision: 0
                                 limit_mid: 850
                                 limit_high: 1500
-                            }
-
-                            ItemEnvBox {
-                                id: voc
-                                width: airFlow.www
-                                visible: currentDevice.hasVocSensor
-
-                                title: qsTr("VOC")
-                                legend: qsTr("µg/m³")
-                                value: currentDevice.voc
-                                limit_mid: 500
-                                limit_high: 1000
-                                precision: 0
-                            }
-
-                            ItemEnvBox {
-                                id: hcho
-                                width: airFlow.www
-                                visible: currentDevice.hasHchoSensor
-
-                                title: qsTr("HCHO")
-                                legend: qsTr("µg/m³")
-                                value: currentDevice.hcho
-                                limit_mid: 500
-                                limit_high: 1000
-                                precision: 0
                             }
                         }
 
@@ -784,7 +795,7 @@ Item {
                                 value: currentDevice.uv
                                 precision: 0
                             }
-
+/*
                             ItemWeatherBox {
                                 id: windd
                                 height: weatherFlow.www
@@ -819,6 +830,7 @@ Item {
                                 value: 7
                                 precision: 0
                             }
+*/
                         }
                     }
 /*
