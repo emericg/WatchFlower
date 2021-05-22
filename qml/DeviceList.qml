@@ -270,9 +270,9 @@ Item {
 
         property bool singleColumn: true
         property bool bigWidget: settingsManager.bigWidget || (isTablet && width >= 480)
-        property int boxHeight: bigWidget ? 140 : 100
+        property int boxHeight: bigWidget ? 144 : 110
 
-        property int cellSizeTarget: bigWidget ? 400 : 300
+        property int cellSizeTarget: bigWidget ? 440 : 320
         property int cellSize: cellSizeTarget
         property int cellMarginTarget: 0
         property int cellMargin: cellMarginTarget
@@ -281,16 +281,16 @@ Item {
         cellHeight: boxHeight + cellMarginTarget
 
         function computeCellSize() {
-            cellSizeTarget = bigWidget ? 400 : 300
-            boxHeight = bigWidget ? 140 : 100
+            cellSizeTarget = bigWidget ? 440 : 320
+            boxHeight = bigWidget ? 144 : 110
 
             var availableWidth = devicesView.width - cellMarginTarget
 
             if (isTablet) { // FIXME hacky...
-                if (devicesView.width > 350)
-                    cellSizeTarget = 350
+                if (devicesView.width > 360)
+                    cellSizeTarget = 360
                 else
-                    cellSizeTarget = 300
+                    cellSizeTarget = 320
             }
 
             var cellColumnsTarget = Math.trunc(availableWidth / (cellSizeTarget + cellMarginTarget))

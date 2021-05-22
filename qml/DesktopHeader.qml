@@ -193,23 +193,15 @@ Rectangle {
             onClicked: deviceLedButtonClicked()
             tooltipText: qsTr("Blink LED")
         }
-        ButtonCompactable {
-            id: buttonClearHistory
-            height: compact ? 36 : 34
+
+        Rectangle { // separator
             anchors.verticalCenter: parent.verticalCenter
-
-            visible: (deviceManager.bluetooth &&
-                      (selectedDevice && selectedDevice.hasHistory) &&
-                      (appContent.state === "DevicePlantSensor" ||
-                       appContent.state === "DeviceThermometer" ||
-                       appContent.state === "DeviceEnvironmental"))
-
-            source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceClearButtonClicked()
-            tooltipText: qsTr("Clear history")
+            height: 40
+            width: Theme.componentBorderWidth
+            color: Theme.colorHeaderHighlight
+            visible: (buttonThermoChart.visible || buttonWatering.visible || buttonLed.visible)
         }
+
         ButtonCompactable {
             id: buttonRefreshHistory
             height: compact ? 36 : 34
@@ -227,6 +219,28 @@ Rectangle {
             onClicked: deviceRefreshHistoryButtonClicked()
             tooltipText: qsTr("Sync history")
         }
+        ButtonCompactable {
+            id: buttonClearHistory
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: buttonRefreshHistory.visible
+
+            source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceClearButtonClicked()
+            tooltipText: qsTr("Clear history")
+        }
+
+        Rectangle { // separator
+            anchors.verticalCenter: parent.verticalCenter
+            height: 40
+            width: Theme.componentBorderWidth
+            color: Theme.colorHeaderHighlight
+            visible: buttonRefreshHistory.visible
+        }
+
         ButtonCompactable {
             id: buttonRefreshRealtime
             height: compact ? 36 : 34

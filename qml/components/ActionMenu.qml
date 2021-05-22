@@ -101,7 +101,7 @@ Rectangle {
             index: 3
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
             button_text: qsTr("Clear history")
-            button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            button_source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
             onButtonClicked: {
                 deviceClearButtonClicked()
                 menuSelected(index)
