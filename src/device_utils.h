@@ -25,9 +25,9 @@
 
 #include <QObject>
 #include <QString>
-#include <QDate>
-#include <QQmlApplicationEngine>
+#include <QDateTime>
 #include <QQmlContext>
+#include <QQmlApplicationEngine>
 
 /* ************************************************************************** */
 
@@ -150,13 +150,74 @@ public:
 
 /* ************************************************************************** */
 
+class ChartDataHistory: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(bool today READ isToday NOTIFY updated)
+    Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(int hour READ getHour NOTIFY updated)
+    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
+
+    Q_PROPERTY(float soilMoisture READ getSoilMoisture NOTIFY updated)
+    Q_PROPERTY(float soilConductivity READ getSoilCondu NOTIFY updated)
+    Q_PROPERTY(float soilTemperature READ getSoilTemperature NOTIFY updated)
+    Q_PROPERTY(float temperature READ getTemperature NOTIFY updated)
+    Q_PROPERTY(float humidity READ getHumidity NOTIFY updated)
+    Q_PROPERTY(float luminosity READ getLuminosity NOTIFY updated)
+
+    QDateTime datetime;
+
+    float soilMoisture = -99.f;
+    float soilConductivity = -99.f;
+    float soilTemperature = -99.f;
+    float temperature = -99.f;
+    float humidity = -99.f;
+    float luminosity = -99.f;
+
+signals:
+    void updated();
+
+public:
+    ChartDataHistory(const QDateTime &dt,
+                     float sm, float sc, float st,
+                     float t, float h, float l,
+                     QObject *parent) : QObject(parent)
+    {
+        datetime = dt;
+
+        soilMoisture = sm;
+        soilConductivity = sc;
+        soilTemperature = st;
+        temperature = t;
+        humidity = h;
+        luminosity = l;
+    }
+
+public slots:
+    bool isToday() { return (datetime.date() == QDate::currentDate()); }
+    int getDay() { return datetime.date().day(); }
+    int getHour() { return datetime.time().hour(); }
+    QDateTime getDateTime() { return datetime; }
+
+    float getSoilMoisture() { return soilMoisture; }
+    float getSoilCondu() { return soilConductivity; }
+    float getSoilTemperature() { return soilTemperature; }
+    float getTemperature() { return temperature; }
+    float getHumidity() { return humidity; }
+    float getLuminosity() { return luminosity; }
+};
+
+/* ************************************************************************** */
+
 class ChartDataMinMax: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QDate date READ getDate NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
     Q_PROPERTY(bool today READ isToday NOTIFY updated)
+    Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(int hour READ getHour NOTIFY updated)
+    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
 
     Q_PROPERTY(float tempMin READ getTempMin NOTIFY updated)
     Q_PROPERTY(float tempMean READ getTempMean NOTIFY updated)
@@ -164,8 +225,8 @@ class ChartDataMinMax: public QObject
     Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY updated)
     Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY updated)
 
-    QDate date;
-    int dayNb = -1;
+    QDateTime datetime;
+
     float tempMin;
     float tempMean = -99.f;
     float tempMax;
@@ -176,21 +237,23 @@ signals:
     void updated();
 
 public:
-    ChartDataMinMax(const QDate &dt,
+    ChartDataMinMax(const QDateTime &dt,
                     float tmin, float t, float tmax,
                     int hmin, int hmax,
                     QObject *parent) : QObject(parent)
     {
-        date = dt;
-        dayNb = dt.day();
+        datetime = dt;
+
         tempMin = tmin; tempMean = t; tempMax = tmax;
         hygroMin = hmin; hygroMax = hmax;
     }
 
 public slots:
-    QDate getDate() { return date; }
-    int getDay() { return dayNb; }
-    bool isToday() { return (date == QDate::currentDate()); }
+    bool isToday() { return (datetime.date() == QDate::currentDate()); }
+    int getDay() { return datetime.date().day(); }
+    int getHour() { return datetime.time().hour(); }
+    QDateTime getDateTime() { return datetime; }
+
     float getTempMin() { return tempMin; }
     float getTempMean() { return tempMean; }
     float getTempMax() { return tempMax; }
@@ -204,9 +267,10 @@ class ChartDataVoc: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QDate date READ getDate NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
     Q_PROPERTY(bool today READ isToday NOTIFY updated)
+    Q_PROPERTY(int day READ getDay NOTIFY updated)
+    Q_PROPERTY(int hour READ getHour NOTIFY updated)
+    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
 
     Q_PROPERTY(float vocMin READ getVocMin NOTIFY updated)
     Q_PROPERTY(float vocMean READ getVocMean NOTIFY updated)
@@ -220,8 +284,7 @@ class ChartDataVoc: public QObject
     Q_PROPERTY(float co2Mean READ getCo2Mean NOTIFY updated)
     Q_PROPERTY(float co2Max READ getCo2Max NOTIFY updated)
 
-    QDate date;
-    int dayNb = -1;
+    QDateTime datetime;
 
     float vocMin;
     float vocMean = -99.f;
@@ -239,23 +302,24 @@ signals:
     void updated();
 
 public:
-    ChartDataVoc(const QDate &dt,
+    ChartDataVoc(const QDateTime &dt,
                  float vmin, float v, float vmax,
                  float hmin, float h, float hmax,
                  float cmin, float c, float cmax,
                  QObject *parent) : QObject(parent)
     {
-        date = dt;
-        dayNb = dt.day();
+        datetime = dt;
+
         vocMin = vmin; vocMean = v; vocMax = vmax;
         hchoMin = hmin; hchoMean = h; hchoMax = hmax;
         co2Min = cmin; co2Mean = c; co2Max = cmax;
     }
 
 public slots:
-    QDate getDate() { return date; }
-    int getDay() { return dayNb; }
-    bool isToday() { return (date == QDate::currentDate()); }
+    bool isToday() { return (datetime.date() == QDate::currentDate()); }
+    int getDay() { return datetime.date().day(); }
+    int getHour() { return datetime.time().hour(); }
+    QDateTime getDateTime() { return datetime; }
 
     float getVocMin() { return  vocMin; }
     float getVocMean() { return vocMean; }

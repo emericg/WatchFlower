@@ -104,12 +104,17 @@ class DeviceSensor: public Device
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
 
     // graphs
+    Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryUpdated_days)
+    Q_PROPERTY(QVariant aioHistoryData_week READ getChartData_history_week NOTIFY chartDataHistoryUpdated_days)
+    Q_PROPERTY(QVariant aioHistoryData_day READ getChartData_history_day NOTIFY chartDataHistoryUpdated_hours)
     Q_PROPERTY(QVariant aioMinMaxData READ getChartData_minmax NOTIFY chartDataMinMaxUpdated)
     Q_PROPERTY(QVariant aioEnvData READ getChartData_env NOTIFY chartDataEnvUpdated)
 
 Q_SIGNALS:
     void minmaxUpdated();
     void limitsUpdated();
+    void chartDataHistoryUpdated_days();
+    void chartDataHistoryUpdated_hours();
     void chartDataMinMaxUpdated();
     void chartDataEnvUpdated();
 
@@ -190,9 +195,11 @@ protected:
     // clock
     int64_t m_device_lastmove = -1;
 
-    //
+    // graphs data
+    QList <QObject *> m_chartData_history_month;
+    QList <QObject *> m_chartData_history_week;
+    QList <QObject *> m_chartData_history_day;
     QList <QObject *> m_chartData_minmax;
-    //
     QList <QObject *> m_chartData_env;
 
 protected:
@@ -299,6 +306,13 @@ public slots:
 
     // History sync
     int getHistoryUpdatePercent() const;
+
+    // Chart history
+    void updateChartData_history_days(int maxDays);
+    void updateChartData_history_hours();
+    QVariant getChartData_history_month() const { return QVariant::fromValue(m_chartData_history_month); }
+    QVariant getChartData_history_week() const { return QVariant::fromValue(m_chartData_history_week); }
+    QVariant getChartData_history_day() const { return QVariant::fromValue(m_chartData_history_day); }
 
     // Chart environmental histogram
     void updateChartData_environmentalVoc(int maxDays);

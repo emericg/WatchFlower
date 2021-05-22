@@ -7,7 +7,7 @@ import ThemeEngine 1.0
 Button {
     id: control
     width: contentText.width + 24
-    implicitHeight: Theme.componentHeight
+    height: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
     font.bold: fullColor ? true : false
