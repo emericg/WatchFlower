@@ -16,7 +16,7 @@ RangeSlider {
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
 
-    property int hhh: 16
+    property int hhh: 18
 
     background: Rectangle {
         x: control.leftPadding

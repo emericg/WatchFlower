@@ -138,7 +138,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        spacing: 8
+        spacing: 12
         visible: true
 
         ////////////
@@ -280,9 +280,17 @@ Rectangle {
             animation: "rotate"
             animationRunning: selectedDevice.updating
         }
+
+        Rectangle { // separator
+            anchors.verticalCenter: parent.verticalCenter
+            height: 40
+            width: Theme.componentBorderWidth
+            color: Theme.colorHeaderHighlight
+            visible: appContent.state === "DevicePlantSensor"
+        }
+
         Item { // spacer
-            width: 8
-            height: 8
+            width: 1; height: 1;
             anchors.verticalCenter: parent.verticalCenter
             visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
         }

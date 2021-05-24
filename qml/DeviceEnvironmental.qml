@@ -617,7 +617,7 @@ Item {
                     Rectangle {
                         id: radBox
                         width: parent.width
-                        height: radFlow.height + 48
+                        height: radFlow.height + (radFlow.anchors.topMargin*2)
 
                         visible: isGeigerCounter
                         color: Theme.colorDeviceHeader
@@ -626,12 +626,12 @@ Item {
                         Flow {
                             id: radFlow
                             anchors.top: parent.top
-                            anchors.topMargin: 24
+                            anchors.topMargin: isDesktop ? 24 : 16
                             anchors.left: parent.left
-                            anchors.leftMargin: 24
+                            anchors.leftMargin: isDesktop ? 24 : 16
                             anchors.right: parent.right
                             anchors.rightMargin: 0
-                            spacing: 16
+                            spacing: isDesktop ? 16 : 12
 
                             onWidthChanged: {
                                 var itemcount = 2
@@ -702,11 +702,11 @@ Item {
                         Flow {
                             id: weatherFlow
                             anchors.top: parent.top
-                            anchors.topMargin: isDesktop ? 24 : 16
+                            anchors.topMargin: isDesktop ? 16 : 12
                             anchors.left: parent.left
-                            anchors.leftMargin: isDesktop ? 24 : 16
+                            anchors.leftMargin: isDesktop ? 16 : 12
                             anchors.right: parent.right
-                            anchors.rightMargin: 8
+                            anchors.rightMargin: isDesktop ? 8 : 6
                             spacing: isDesktop ? 16 : 12
 
                             onWidthChanged: {

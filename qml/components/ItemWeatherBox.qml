@@ -6,7 +6,7 @@ Rectangle {
     id: itemWeatherBox
     width: (duo) ? height*2 : height
     height: 128
-    radius: 12
+    radius: 10
 
     property string title: ""
     property string legend: ""
