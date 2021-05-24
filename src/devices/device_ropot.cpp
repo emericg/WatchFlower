@@ -72,6 +72,17 @@ DeviceRopot::~DeviceRopot()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DeviceRopot::hasHistory() const
+{
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+    if (!hasSetting("mac")) return false;
+#endif
+
+    return true;
+}
+
+/* ************************************************************************** */
+
 void DeviceRopot::serviceScanDone()
 {
     //qDebug() << "DeviceRopot::serviceScanDone(" << m_deviceAddress << ")";

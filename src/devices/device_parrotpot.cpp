@@ -20,6 +20,7 @@
  */
 
 #include "device_parrotpot.h"
+#include "utils/utils_maths.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>
@@ -349,8 +350,8 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            // sensor output (no soil: 2036) - (max observed: ?) wich maps to 0 - 10 (mS/cm)
-            m_soil_conductivity = std::round(rawValue / 1.0);
+            // sensor output (no soil: 2036) - (max observed: 1747) wich maps to 0 - 10 (mS/cm)
+            m_soil_conductivity = mapNumber(rawValue, 2036, 1500, 0, 1000);
 
             /////////
 
@@ -412,7 +413,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            // Sometimes, Parrot devices send obviously wrong data over ble
+            // Sometimes, Parrot devices send obviously wrong data over BLE
             if (m_soil_temperature > -10.f && m_temperature > -10.f &&
                 m_soil_temperature < 100.f && m_temperature < 100.f)
             {
@@ -443,8 +444,16 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                 qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_live() values reported are wrong and won't be saved";
             }
 
-            refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+            {
+                refreshDataRealtime(true);
+                // TODO // ask for new values?
+            }
+            else
+            {
+                refreshDataFinished(true);
+                m_bleController->disconnectFromDevice();
+            }
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceParrotPot update:" << getAddress();

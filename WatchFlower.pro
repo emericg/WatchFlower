@@ -67,6 +67,7 @@ SOURCES  += src/main.cpp \
             src/utils/utils_app.cpp \
             src/utils/utils_android.cpp \
             src/utils/utils_language.cpp \
+            src/utils/utils_maths.cpp \
             src/utils/utils_screen.cpp \
             src/thirdparty/RC4/rc4.cpp
 
@@ -97,6 +98,7 @@ HEADERS  += src/SettingsManager.h \
             src/utils/utils_app.h \
             src/utils/utils_android.h \
             src/utils/utils_language.h \
+            src/utils/utils_maths.h \
             src/utils/utils_screen.h \
             src/utils/utils_versionchecker.h \
             src/thirdparty/RC4/rc4.h \
