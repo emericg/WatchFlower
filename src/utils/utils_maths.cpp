@@ -40,7 +40,7 @@ int mapNumber(const int value, const int a1, const int a2, const int b1, const i
     if (n < a1) n = a1;
     if (n > a2) n = a2;
 
-    return (b1 + ((value - a1) * (b2 - b1)) / (a2 - a1));
+    return (b1 + ((n - a1) * (b2 - b1)) / (a2 - a1));
 }
 
 /* ************************************************************************** */

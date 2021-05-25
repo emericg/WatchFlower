@@ -191,7 +191,6 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
         {
             QDate d(2000 + data[1], data[2], data[3]);
             QTime t(data[4], data[5]);
-            QDateTime tmcd(d, t);
 
             int16_t temp = static_cast<int16_t>((data[6] << 8) + data[7]);
             uint16_t voc = static_cast<uint16_t>((data[10] << 8) + data[11]);
@@ -233,7 +232,7 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
 
 #ifndef QT_NO_DEBUG
             //qDebug() << "* DeviceWP6003 update:" << getAddress();
-            //qDebug() << "- timecode:" << tmcd;
+            //qDebug() << "- timecode:" << QDateTime(d, t);
             //qDebug() << "- temperature:" << m_temperature;
             //qDebug() << "- TVOC:" << m_voc;
             //qDebug() << "- HCHO:" << m_hcho;

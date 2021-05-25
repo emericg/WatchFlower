@@ -169,16 +169,16 @@ protected:
     int m_limitMmolMax = 0;
 
     // min/max data (x days period)
-    int m_hygroMin = 999999;
-    int m_hygroMax = -99;
-    int m_conduMin = 999999;
-    int m_conduMax = -99;
-    float m_soilTempMin = 99.f;
-    float m_soilTempMax = -99.f;
+    int m_soilMoistureMin = 999999;
+    int m_soildMoistureMax = -99;
+    int m_soilConduMin = 999999;
+    int m_soilConduMax = -99;
+    int m_soilTempMin = 99.f;
+    int m_soilTempMax = -99.f;
     float m_soilPhMin = 999.f;
     float m_soilPhMax = -99.f;
-    float m_tempMin = 99.f;
-    float m_tempMax = -99.f;
+    int m_tempMin = 99.f;
+    int m_tempMax = -99.f;
     int m_humiMin = 999999;
     int m_humiMax = -99;
     int m_luxMin = 999999;
@@ -291,10 +291,10 @@ public slots:
     void setLimitMmolMax(int limitMmolMax) { if (m_limitMmolMax == limitMmolMax) return; m_limitMmolMax = limitMmolMax; setDbLimits(); }
 
     // Data min/max
-    int getHygroMin() const { return m_hygroMin; }
-    int getHygroMax() const { return m_hygroMax; }
-    int getConduMin() const { return m_conduMin; }
-    int getConduMax() const { return m_conduMax; }
+    int getHygroMin() const { return m_soilMoistureMin; }
+    int getHygroMax() const { return m_soildMoistureMax; }
+    int getConduMin() const { return m_soilConduMin; }
+    int getConduMax() const { return m_soilConduMax; }
     float getTempMin() const { return m_tempMin; }
     float getTempMax() const { return m_tempMax; }
     int getHumiMin() const { return m_humiMin; }

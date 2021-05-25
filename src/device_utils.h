@@ -73,7 +73,7 @@ public:
         DEVICE_BEACON,
         DEVICE_PGP,
     };
-    Q_ENUMS(DeviceType)
+    Q_ENUM(DeviceType)
 
     enum DeviceCapabilities {
         DEVICE_REALTIME             = (1 <<  0), //!< Can report realtime data
@@ -86,7 +86,7 @@ public:
         DEVICE_LAST_MOVE            = (1 <<  7), //!< Can report the last time it has been physically moved
         DEVICE_WATER_TANK           = (1 <<  8), //!< Has a water tank / automatic watering capability
     };
-    Q_ENUMS(DeviceCapabilities)
+    Q_ENUM(DeviceCapabilities)
 
     enum DeviceSensors {
         // plant data
@@ -121,7 +121,7 @@ public:
         // environmental data (geiger counter)
         SENSOR_GEIGER               = (1 << 31),
     };
-    Q_ENUMS(DeviceSensors)
+    Q_ENUM(DeviceSensors)
 
     enum DeviceStatus {
         DEVICE_OFFLINE              =  0, //!< Not connected
@@ -134,7 +134,7 @@ public:
         DEVICE_UPDATING_REALTIME    = 10, //!< Connected, reading realtime data
         DEVICE_UPDATING_HISTORY     = 11, //!< Connected, reading data history
     };
-    Q_ENUMS(DeviceStatus)
+    Q_ENUM(DeviceStatus)
 
     enum DeviceActions {
         ACTION_UPDATE = 0,              //!< Read sensor latest data
@@ -145,7 +145,7 @@ public:
         ACTION_CLEAR_HISTORY,
         ACTION_WATERING,
     };
-    Q_ENUMS(DeviceActions)
+    Q_ENUM(DeviceActions)
 };
 
 /* ************************************************************************** */

@@ -1199,6 +1199,8 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
             return;
         }
 
+        bool minmaxChanged = false;
+
         while (graphData.next())
         {
             if (m_chartData_history_month.size() < maxDays)
@@ -1217,6 +1219,21 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
                         }
                     }
                 }
+
+                // min/max
+                if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toInt() < m_soilTempMin) { m_soilTempMin = graphData.value(3).toInt(); minmaxChanged = true; }
+                if (graphData.value(4).toInt() < m_tempMin) { m_tempMin = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() < m_humiMin) { m_humiMin = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(6).toInt() < m_luxMin) { m_luxMin = graphData.value(6).toInt(); minmaxChanged = true; }
+
+                if (graphData.value(1).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toInt() > m_soilTempMax) { m_soilTempMax = graphData.value(3).toInt(); minmaxChanged = true; }
+                if (graphData.value(4).toInt() > m_tempMax) { m_tempMax = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() > m_humiMax) { m_humiMax = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(6).toInt() > m_luxMax) { m_luxMax = graphData.value(6).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
@@ -1270,6 +1287,7 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
         }
 
         Q_EMIT chartDataHistoryUpdated_days();
+        if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
     }
 }
 
@@ -1447,8 +1465,8 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 // min/max
                 if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); }
                 if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); }
-                if (graphData.value(4).toInt() < m_hygroMin) { m_hygroMin = graphData.value(4).toInt(); }
-                if (graphData.value(5).toInt() > m_hygroMax) { m_hygroMax = graphData.value(5).toInt(); }
+                if (graphData.value(4).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(4).toInt(); }
+                if (graphData.value(5).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(5).toInt(); }
 
                 // data
                 ChartDataMinMax *d = new ChartDataMinMax(graphData.value(0).toDateTime(),
@@ -1493,10 +1511,10 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
     else
     {
         // No database, use fake values
-        m_hygroMin = 0;
-        m_hygroMax = 50;
-        m_conduMin = 0;
-        m_conduMax = 2000;
+        m_soilMoistureMin = 0;
+        m_soildMoistureMax = 50;
+        m_soilConduMin = 0;
+        m_soilConduMax = 2000;
         m_soilTempMin = 0.f;
         m_soilTempMax = 36.f;
         m_soilPhMin = 0.f;
@@ -1564,13 +1582,13 @@ void DeviceSensor::getChartData_plantAIO(int maxDays,
             temp->append(timecode, graphData.value(3).toReal());
             lumi->append(timecode, graphData.value(4).toReal());
 
-            if (graphData.value(1).toInt() < m_hygroMin) { m_hygroMin = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() < m_conduMin) { m_conduMin = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
             if (graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
             if (graphData.value(4).toInt() < m_luxMin) { m_luxMin = graphData.value(4).toInt(); minmaxChanged = true; }
 
-            if (graphData.value(1).toInt() > m_hygroMax) { m_hygroMax = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() > m_conduMax) { m_conduMax = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (graphData.value(1).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
             if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
             if (graphData.value(4).toInt() > m_luxMax) { m_luxMax = graphData.value(4).toInt(); minmaxChanged = true; }
         }
@@ -1580,10 +1598,10 @@ void DeviceSensor::getChartData_plantAIO(int maxDays,
     else
     {
         // No database, use fake values
-        m_hygroMin = 0;
-        m_hygroMax = 50;
-        m_conduMin = 0;
-        m_conduMax = 2000;
+        m_soilMoistureMin = 0;
+        m_soildMoistureMax = 50;
+        m_soilConduMin = 0;
+        m_soilConduMax = 2000;
         m_soilTempMin = 0.f;
         m_soilTempMax = 36.f;
         m_soilPhMin = 0.f;
