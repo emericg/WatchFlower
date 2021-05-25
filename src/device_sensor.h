@@ -326,17 +326,6 @@ public slots:
     void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
                                QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
                                QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
-
-    // Histograms (days)
-    QVariantList getDataDays(const QString &dataName, int maxDays);
-    QVariantList getBackgroundDays(float maxValue, int maxDays);
-    QVariantList getLegendDays(int maxDays);
-
-    // Histograms (hours)
-    QVariantList getDataHours(const QString &dataName);
-    QVariantList getBackgroundDaytime(float maxValue);
-    QVariantList getBackgroundNighttime(float maxValue);
-    QVariantList getLegendHours();
 };
 
 /* ************************************************************************** */

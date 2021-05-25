@@ -1,181 +1,412 @@
 import QtQuick 2.12
-import QtCharts 2.3
+import QtQuick.Controls 2.12
+import QtQuick.Shapes 1.0
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: chartHistory
-    width: parent.width
 
-    property string graphViewSelected
-    property string graphDataSelected
+    property string title: ""
+    property string suffix: ""
+    property int floatprecision: 0
+    property string color: Theme.colorBlue
 
-    function loadGraph() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartHistory // loadGraph() >> " + currentDevice)
+    property real valueMin: limitMin - (25 * ((limitMax-limitMin)/50))
+    property real valueMax: limitMax + (25 * ((limitMax-limitMin)/50))
+    property real limitMin: -1
+    property real limitMax: -1
 
-        axisY0.min = 0;
-        if (graphDataSelected === "soilMoisture") {
-            axisY0.max = 66
-            myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "soilConductivity") {
-            axisY0.max = 2000
-            myBarSet.color = Theme.colorRed
-        } if (graphDataSelected === "soilTemperature") {
-            axisY0.max = 40
-            myBarSet.color = Theme.colorGreen
-        } else if (graphDataSelected === "temperature") {
-            axisY0.max = 40
-            myBarSet.color = Theme.colorGreen
-        }  else if (graphDataSelected === "humidity") {
-            axisY0.max = 100
-            myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "luminosity") {
-            axisY0.max = 3000
-            myBarSet.color = Theme.colorYellow
-        }
-        myBarSet.borderColor = "transparent"
+    property var ddd //: ChartHistory.Span.Weekly
+    property var uuu //: ChartHistory.Data.SoilMoisture
 
-        loadAxis()
+    enum Span {
+        Daily = 0,
+        Weekly,
+        Monthly
+    }
+    enum Data {
+        SoilMoisture = 0,
+        SoilConductivity,
+        SoilTemperature,
+        Temperature,
+        Humidity,
+        Luminosity
     }
 
-    property string lastMode: ""
-    function loadAxis() {
-        if (lastMode != graphViewSelected) {
-            lastMode = graphViewSelected
+    clip: false
 
-            // Decorations
-            if (graphViewSelected === "daily") {
-                backgroundDayBars.borderColor = "transparent"
-                backgroundDayBars.color = Theme.colorForeground
-                backgroundNightBars.borderColor = "transparent"
-                backgroundNightBars.color = (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? "#111111": "#dddddd"
-            } else {
-                backgroundDayBars.borderColor = "transparent"
-                backgroundDayBars.color = Theme.colorForeground
-                backgroundNightBars.borderColor = "transparent"
-                backgroundNightBars.values = [0]
+    ////////////////////////////////////////////////////////////////////////////
+/*
+    Rectangle { // DEBUG
+        anchors.fill: parent
+        opacity: 0.1
+        color: "red"
+        border.color: "blue"
+    }
+*/
+    Text { // title
+        id: titleArea
+        anchors.top: chartHistory.top
+        anchors.topMargin: singleColumn ? 8 : 16
+        anchors.left: chartArea.left
+        anchors.leftMargin: singleColumn ? 8 : 0
+
+        text: title
+        color: Theme.colorIcon
+        font.bold: true
+        font.pixelSize: Theme.fontSizeContentSmall
+        font.capitalization: Font.AllUppercase
+        verticalAlignment: Text.AlignBottom
+    }
+
+    Text {
+        id: dataArea
+        anchors.top: chartHistory.top
+        anchors.topMargin: singleColumn ? 8 : 16
+        anchors.left: titleArea.right
+        anchors.leftMargin: 16
+
+        text: ""
+        color: Theme.colorIcon
+        font.bold: false
+        font.pixelSize: Theme.fontSizeContentSmall
+        verticalAlignment: Text.AlignBottom
+
+        Connections {
+            target: graphGrid
+            onBarSelectionIndexChanged: {
+                var txt = ""
+                if (graphGrid.barSelectionIndex >= 0) {
+                    if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
+                        txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
+                        txt += suffix.replace("<br>", "")
+                    }
+                }
+                dataArea.text = txt
             }
-
-            //
-            if (graphViewSelected === "daily") {
-                myBarSeries.barWidth = 0.90
-                axisX0.labelsFont.pixelSize = 8
-                axisX0.categories = currentDevice.getLegendHours()
-            } else if (graphViewSelected === "weekly") {
-                myBarSeries.barWidth = 0.75
-                axisX0.labelsFont.pixelSize = 12
-                axisX0.categories = currentDevice.getLegendDays(7)
-            } else {
-                myBarSeries.barWidth = 0.94
-                axisX0.labelsFont.pixelSize = 6
-                axisX0.categories = currentDevice.getLegendDays(30)
-            }
-        }
-    }
-
-    function updateColors() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartHistory // updateColors() >> " + currentDevice)
-
-        // Bars
-        if (graphDataSelected === "soilMoisture") {
-            myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "soilConductivity") {
-            myBarSet.color = Theme.colorRed
-        } else if (graphDataSelected === "soilTemperature") {
-            myBarSet.color = Theme.colorGreen
-        } else if (graphDataSelected === "temperature") {
-            myBarSet.color = Theme.colorGreen
-        } else if (graphDataSelected === "humidity") {
-            myBarSet.color = Theme.colorBlue
-        } else if (graphDataSelected === "luminosity") {
-            myBarSet.color = Theme.colorYellow
-        }
-        myBarSet.borderColor = "transparent"
-
-        // Decorations
-        if (graphViewSelected === "daily") {
-            backgroundDayBars.borderColor = "transparent"
-            backgroundDayBars.color = Theme.colorForeground
-            backgroundNightBars.borderColor = "transparent"
-            backgroundNightBars.color = (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? "#111111": "#dddddd"
-        } else {
-            backgroundDayBars.borderColor = "transparent"
-            backgroundDayBars.color = Theme.colorForeground
-            backgroundNightBars.borderColor = "transparent"
-            backgroundNightBars.values = [0]
-        }
-    }
-
-    function updateGraph() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartHistory // updateGraph() >> " + currentDevice)
-
-        loadAxis()
-
-        // Get data
-        if (graphViewSelected === "daily") {
-            myBarSet.values = currentDevice.getDataHours(graphDataSelected)
-        } else if (graphViewSelected === "weekly") {
-            myBarSet.values = currentDevice.getDataDays(graphDataSelected, 7)
-        } else {
-            myBarSet.values = currentDevice.getDataDays(graphDataSelected, 30)
-        }
-
-        // Min axis
-        //var min_of_array = Math.min.apply(Math, myBarSet.values);
-        axisY0.min = 0;
-
-        // Max axis
-        var max_of_array = Math.max.apply(Math, myBarSet.values);
-        var max_of_legend = max_of_array*1.20;
-        if ((graphDataSelected === "soilMoisture" || graphDataSelected === "humidity") && max_of_legend > 100.0) {
-            max_of_legend = 100.0; // no need to go higher than 100% humidity
-        }
-        if (max_of_legend <= 0) max_of_legend = 1 // if we have no data
-        axisY0.max = max_of_legend;
-
-        // Decorations
-        if (graphViewSelected === "daily") {
-            backgroundDayBars.values = currentDevice.getBackgroundDaytime(max_of_legend)
-            backgroundNightBars.values = currentDevice.getBackgroundNighttime(max_of_legend)
-        } else if (graphViewSelected === "weekly") {
-            backgroundDayBars.values = currentDevice.getBackgroundDays(max_of_legend, 7)
-        } else {
-            backgroundDayBars.values = currentDevice.getBackgroundDays(max_of_legend, 30)
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ChartView {
-        id: myBarGraph
-        anchors.fill: parent
-        anchors.topMargin: -5
-        anchors.bottomMargin: -20
-        anchors.leftMargin: -20
-        anchors.rightMargin: -20
+    Item { // chart area
+        id: chartArea
+        width: parent.width - (singleColumn ? 4+4 : 28+14)
 
-        antialiasing: false
-        legend.visible: false
-        backgroundColor: "transparent"
+        anchors.top: titleArea.bottom
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: isPhone ? 12 : 24
+        anchors.horizontalCenter: parent.horizontalCenter
+/*
+        Rectangle { // DEBUG
+            anchors.fill: parent
+            color: "blue"
+            opacity: 0.1
+        }
+*/
+        ////////////////
 
-        //animationOptions: ChartView.SeriesAnimations
+        Shape {
+            id: legendMaxBar
+            y: parent.height - (UtilsNumber.normalize(limitMax, valueMin, valueMax) * parent.height)
+            z: graphRow.z+1
+            opacity: 0.33
+            visible: (limitMax > valueMin && limitMax < valueMax)
 
-        StackedBarSeries {
-            id: myBarSeries
-            barWidth: 0.90
+            ShapePath {
+                strokeColor: Theme.colorSubText
+                strokeWidth: isPhone ? 1 : 2
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [ 1, 4 ]
+                startX: 0
+                startY: 0
+                PathLine { x: chartArea.width; y: 0; }
+            }
+            Text {
+                anchors.right: parent.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: parent.verticalCenter
 
-            labelsVisible: false
+                text: qsTr("max")
+                color: Theme.colorSubText
+                font.pixelSize: 10
+            }
+        }
+        Shape {
+            id: legendMinBar
+            y: parent.height - (UtilsNumber.normalize(limitMin, valueMin, valueMax) * parent.height)
+            z: graphRow.z+1
+            opacity: 0.33
+            visible: (limitMin > valueMin && limitMin < valueMax)
 
-            axisY: ValueAxis { id: axisY0; visible: false; gridVisible: false; }
-            axisX: BarCategoryAxis { id: axisX0; visible: true; gridVisible: false;
-                                     labelsFont.pixelSize: 8; labelsColor: Theme.colorSubText; }
+            ShapePath {
+                strokeColor: Theme.colorSubText
+                strokeWidth: isPhone ? 1 : 2
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [ 1, 4 ]
+                startX: 0
+                startY: 0
+                PathLine { x: chartArea.width; y: 0; }
+            }
+            Text {
+                anchors.right: parent.left
+                anchors.rightMargin: 4
+                anchors.verticalCenter: parent.verticalCenter
 
-            BarSet { id: myBarSet; }
-            BarSet { id: backgroundDayBars; }
-            BarSet { id: backgroundNightBars; }
+                text: qsTr("min")
+                color: Theme.colorSubText
+                font.pixelSize: 10
+            }
+        }
+
+        ////////////////
+
+        Row {
+            id: graphRow
+            anchors.fill: parent
+
+            property int barCount: {
+                return graphRepeater.count
+                //if (ddd === ChartHistory.Span.Daily) return 24
+                //if (ddd === ChartHistory.Span.Weekly) return 7
+                //if (ddd === ChartHistory.Span.Monthly) return 31
+            }
+
+            //property int barWidth: Math.round((width - ((barCount-1)*spacing)) / (barCount))
+            //property int barWidth: UtilsNumber.alignTo(((width - ((barCount-1)*spacing)) / barCount), 2)
+            property real barWidth: ((width - ((barCount-1)*spacing)) / (barCount))
+            property int barHeight: height
+            property int barRadius: isPhone ? 0 : 4
+            property int barSpacing: {
+                if (ddd === ChartHistory.Span.Daily) return 1
+                if (ddd === ChartHistory.Span.Weekly) return 4
+                if (ddd === ChartHistory.Span.Monthly) return 1
+            }
+            spacing: 0
+/*
+            onWidthChanged: { // DEBUG
+                if (graphRow.barCount > 0) {
+                    console.log("")
+                    console.log("onWidthChanged:")
+                    console.log("- chartArea    : " + chartArea.width)
+                    console.log("- graphWidth   : " + graphRow.width)
+                    console.log("- barCount     : " + graphRow.barCount)
+                    console.log("- barSpacing   : " + graphRow.barSpacing)
+                    console.log("- barWidth f   : " + ((width - ((barCount-1)*spacing)) / barCount))
+                    console.log("- barWidth 2   : " + graphRow.barWidth)
+                    console.log("- bar actual   : " + UtilsNumber.alignTo(graphRow.barWidth - 2, 2))
+                }
+            }
+*/
+            Repeater {
+                id: graphRepeater
+
+                model: {
+                    if (ddd === ChartHistory.Span.Daily) return currentDevice.aioHistoryData_day
+                    if (ddd === ChartHistory.Span.Weekly) return currentDevice.aioHistoryData_week
+                    if (ddd === ChartHistory.Span.Monthly) return currentDevice.aioHistoryData_month
+                    return null
+                }
+
+                Item { ////////////////
+                    id: graphBar
+                    width: graphRow.barWidth
+                    height: graphRow.barHeight
+
+                    property real value: {
+                        if (uuu === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
+                        if (uuu === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
+                        if (uuu === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
+                        if (uuu === ChartHistory.Data.Temperature) return modelData.temperature
+                        if (uuu === ChartHistory.Data.Humidity) return modelData.humidity
+                        if (uuu === ChartHistory.Data.Luminosity) return modelData.luminosity
+                        return -99
+                    }
+
+                    ////
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (ddd === ChartHistory.Span.Daily) {
+                                if (graphGrid.barSelectionHours === modelData.hour) {
+                                    graphGrid.barSelectionHours = -1
+                                    graphGrid.barSelectionIndex = -1
+                                } else {
+                                    graphGrid.barSelectionHours = modelData.hour
+                                    graphGrid.barSelectionIndex = index
+                                }
+                            } else {
+                                if (graphGrid.barSelectionDays === modelData.day) {
+                                    graphGrid.barSelectionDays = -1
+                                    graphGrid.barSelectionIndex = -1
+                                } else {
+                                    graphGrid.barSelectionDays = modelData.day
+                                    graphGrid.barSelectionIndex = index
+                                }
+                            }
+                        }
+                    }
+
+                    ////
+
+                    Rectangle {
+                        id: graphBarBg
+                        anchors.fill: parent
+
+                        color: {
+                            if (ddd === ChartHistory.Span.Daily) {
+                                return (graphGrid.barSelectionHours === modelData.hour) ? "#fcea32" : Theme.colorForeground
+                            } else {
+                                return (graphGrid.barSelectionDays === modelData.day) ? "#fcea32" : Theme.colorForeground
+                            }
+                        }
+                        Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+
+                        border.width: (graphRow.barSpacing/2)
+                        border.color: Theme.colorBackground
+                    }
+
+                    ////
+
+                    Rectangle {
+                        id: graphBarFg
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        width: parent.width
+                        height: UtilsNumber.normalize(value, valueMin, valueMax) * parent.height
+
+                        border.width: (graphRow.barSpacing/2)
+                        border.color: Theme.colorBackground
+
+                        clip: true
+                        visible: (graphBar.value > -80)
+                        radius: graphRow.barRadius
+                        color: chartHistory.color
+
+                        Text { // legend horizontal value
+                            id: l1
+                            anchors.top: parent.top
+                            anchors.topMargin: 8
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            visible: (ddd === ChartHistory.Span.Weekly)
+
+                            text: value.toFixed(floatprecision) + suffix
+                            color: "white"
+                            font.pixelSize: isPhone ? 13 : 14
+                            font.bold: true
+                            horizontalAlignment: Text.AlignHCenter
+                        }
+
+                        Text { // legend vertical value
+                            id: l2
+                            height: parent.width
+                            anchors.top: parent.top
+                            anchors.topMargin: contentWidth*0.33
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.horizontalCenterOffset: -1
+
+                            visible: ( !singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*2)
+                            rotation: 90
+
+                            text: value.toFixed(floatprecision) + suffix.replace("<br>", "")
+                            color: "white"
+                            font.pixelSize: 10
+                            font.bold: true
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+/*
+                            Rectangle { // DEBUG
+                                anchors.fill: parent
+                                color: "red"
+                                opacity: 0.1
+                            }
+*/
+                        }
+                    }
+
+                    ////
+
+                    ImageSvg {
+                        width: UtilsNumber.alignTo(parent.width * 0.666, 2)
+                        height: width
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 2
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        visible: {
+                            if (isPhone) return false
+                            if (value < -40) return true
+                            else if ((value < limitMin || value > limitMax) && (graphBarFg.height > height*1.5)) return true
+                            else return false
+                        }
+                        source: {
+                            if (value < -40) return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                            else "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        }
+                        color:  {
+                            if (value < -40) return Theme.colorSubText
+                            else return "white"
+                        }
+                        opacity: 0.66
+                    }
+
+                    ////
+
+                    Rectangle {
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        width: 1
+                        height: 4
+                        color: Theme.colorSubText
+                    }
+                    Rectangle {
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: 1
+                        color: Theme.colorSubText
+                    }
+                    Rectangle {
+                        anchors.top: parent.bottom
+                        anchors.right: parent.right
+                        anchors.rightMargin: -1
+                        width: 1
+                        height: 4
+                        color: Theme.colorSubText
+                    }
+
+                    ////
+
+                    Text { // bottom legend
+                        id: legendBottom
+                        anchors.top: parent.bottom
+                        anchors.topMargin: isPhone ? 3 : 6
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        rotation: (ddd === ChartHistory.Span.Weekly) ? 0 : -40
+                        visible: true
+                        text: {
+                            if (ddd === ChartHistory.Span.Monthly) {
+                                return modelData.day
+                            } else if (ddd === ChartHistory.Span.Weekly) {
+                                return modelData.datetime.toLocaleString(Qt.locale(), "ddd")
+                            } else if (ddd === ChartHistory.Span.Daily) {
+                                return modelData.datetime.toLocaleString(Qt.locale(), "HH")
+                            }
+                        }
+                        color: Theme.colorSubText
+                        font.pixelSize: (ddd === ChartHistory.Span.Weekly) ? (isPhone ? 10 : 12) : (isPhone ? 8 : 10)
+                        font.bold: false
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+
+                } ////////////////
+            }
         }
     }
 }

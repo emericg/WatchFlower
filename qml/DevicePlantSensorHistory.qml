@@ -7,8 +7,6 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 Item {
     id: devicePlantSensorHistory
 
-    property string graphMode: settingsManager.graphHistory
-
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
@@ -21,71 +19,76 @@ Item {
 
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-/*
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
 
-        console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor)
-        console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor)
-        console.log("hasSoilTemperatureSensor(): " + currentDevice.hasSoilTemperatureSensor)
-        console.log("hasTemperatureSensor(): " + currentDevice.hasTemperatureSensor)
-        console.log("hasHumiditySensor(): " + currentDevice.hasHumiditySensor)
-        console.log("hasLuminositySensor(): " + currentDevice.hasLuminositySensor)
+        graphGrid.resetSelection()
 
-        console.log("hasData(soilMoisture): " + currentDevice.hasData("soilMoisture"))
-        console.log("hasData(soilConductivity): " + currentDevice.hasData("soilConductivity"))
-        console.log("hasData(soilTemperature): " + currentDevice.hasData("soilTemperature"))
-        console.log("hasData(temperature): " + currentDevice.hasData("temperature"))
-        console.log("hasData(humidity): " + currentDevice.hasData("humidity"))
-        console.log("hasData(luminosity): " + currentDevice.hasData("luminosity"))
-*/
+        // graph mode
+        if (settingsManager.graphHistory === "daily") {
+            graphGrid.mode = ChartHistory.Span.Daily
+        } else if (settingsManager.graphHistory === "weekly") {
+            graphGrid.mode = ChartHistory.Span.Weekly
+        } else if (settingsManager.graphHistory === "monthly") {
+            graphGrid.mode = ChartHistory.Span.Monthly
+        }
+
+        // graph visibility
         graphCount = 0
-
         if (currentDevice.hasTemperatureSensor) {
-            tempGraph.visible = true
-            tempGraph.loadGraph()
+            tempChart.visible = true
             graphCount += 1
         } else {
-            tempGraph.visible = false
+            tempChart.visible = false
         }
         if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) {
             if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
-                hygroGraph.visible = true
-                hygroGraph.loadGraph()
+                hygroChart.visible = true
                 graphCount += 1
             } else {
-                hygroGraph.visible = false
+                hygroChart.visible = false
             }
         } else {
-            hygroGraph.visible = false
+            hygroChart.visible = false
         }
         if (currentDevice.hasLuminositySensor) {
-            lumiGraph.visible = true
-            lumiGraph.loadGraph()
+            lumiChart.visible = true
             graphCount += 1
         } else {
-            lumiGraph.visible = false
+            lumiChart.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor) {
             if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
-                conduGraph.visible = true
-                conduGraph.loadGraph()
+                conduChart.visible = true
                 graphCount += 1
             } else {
-                conduGraph.visible = false
+                conduChart.visible = false
             }
         } else {
-            conduGraph.visible = false
+            conduChart.visible = false
         }
 
+        // graph sizes
+        if (graphCount === 3 && graphGrid.columns === 2) {
+            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
+                hygroChart.duo = 2
+                lumiChart.duo = 1
+            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
+                hygroChart.duo = 1
+                lumiChart.duo = 2
+            }
+        } else {
+            hygroChart.duo = 1
+            lumiChart.duo = 1
+        }
+
+        updateColors()
         updateSize()
         updateData()
     }
 
     function updateColors() {
-        tempGraph.updateColors()
-        hygroGraph.updateColors()
-        lumiGraph.updateColors()
-        conduGraph.updateColors()
+        //
     }
 
     function updateSize() {
@@ -133,22 +136,6 @@ Item {
                 rectangleHeader.height = 48
             }
         }
-
-        graphWidth = (graphGrid.width) / graphGrid.columns
-        graphHeight = (graphGrid.height) / Math.ceil(graphCount / graphGrid.columns)
-
-        if (graphCount === 3 && graphGrid.columns === 2) {
-            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
-                hygroGraph.width = (graphWidth*2)
-                lumiGraph.width = graphWidth
-            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
-                hygroGraph.width = graphWidth
-                lumiGraph.width = (graphWidth*2)
-            }
-        } else {
-            hygroGraph.width = graphWidth
-            lumiGraph.width = graphWidth
-        }
     }
 
     function updateData() {
@@ -156,10 +143,8 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
-        if (currentDevice.hasTemperatureSensor) { tempGraph.updateGraph() }
-        if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) { hygroGraph.updateGraph() }
-        if (currentDevice.hasLuminositySensor) { lumiGraph.updateGraph() }
-        if (currentDevice.hasSoilConductivitySensor) { conduGraph.updateGraph() }
+        currentDevice.updateChartData_history_days(31)
+        currentDevice.updateChartData_history_hours()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -185,45 +170,37 @@ Item {
                 width: 100
                 height: 32
 
-                fullColor: (graphMode === "monthly")
+                fullColor: (settingsManager.graphHistory === "monthly")
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Month")
-                onClicked: {
-                    settingsManager.graphHistory = "monthly"
-                    updateData()
-                }
+                onClicked: settingsManager.graphHistory = "monthly"
             }
 
             ButtonWireframe {
                 width: 100
                 height: 32
 
-                fullColor: (graphMode === "weekly")
+                fullColor: (settingsManager.graphHistory === "weekly")
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Week")
-                onClicked: {
-                    settingsManager.graphHistory = "weekly"
-                    updateData()
-                }
+                onClicked: settingsManager.graphHistory = "weekly"
+
             }
 
             ButtonWireframe {
                 width: 100
                 height: 32
 
-                fullColor: (graphMode === "daily")
+                fullColor: (settingsManager.graphHistory === "daily")
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Day")
-                onClicked: {
-                    settingsManager.graphHistory = "daily"
-                    updateData()
-                }
+                onClicked: settingsManager.graphHistory = "daily"
             }
         }
 
@@ -271,100 +248,133 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int graphHeight: 256
-    property int graphWidth: 256
     property int graphCount: 4
+    property int graphWidth: (graphGrid.width / graphGrid.columns)
+    property int graphHeight: (graphGrid.height / Math.ceil(graphCount / graphGrid.columns))
 
     Flow {
         id: graphGrid
-        property var columns: 1
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 12
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
 
         onWidthChanged: updateSize()
-        onHeightChanged: updateSize()
+        //onHeightChanged: updateSize()
 
-        ChartHistory {
-            id: hygroGraph
-            height: graphHeight
-            width: graphWidth
-            graphDataSelected: "soilMoisture"
-            graphViewSelected: graphMode
+        property int columns: 1
+        property var mode: ChartHistory.Span.Weekly
 
-            Text {
-                id: hygroLegend
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                text: qsTr("Moisture")
-                color: Theme.colorIcon
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
+        property int barSelectionIndex: -1
+        property int barSelectionDays: -1
+        property int barSelectionHours: -1
+
+        function resetSelection() {
+            graphGrid.barSelectionIndex = -1
+            graphGrid.barSelectionDays = -1
+            graphGrid.barSelectionHours = -1
+        }
+
+        Connections {
+            target: settingsManager
+            onGraphHistoryChanged: {
+                if (settingsManager.graphHistory === "daily") {
+                    graphGrid.mode = ChartHistory.Span.Daily
+                }
+                else if (settingsManager.graphHistory === "weekly") {
+                    graphGrid.mode = ChartHistory.Span.Weekly
+                }
+                else if (settingsManager.graphHistory === "monthly") {
+                    graphGrid.mode = ChartHistory.Span.Monthly
+                }
             }
         }
 
-        ChartHistory {
-            id: tempGraph
-            height: graphHeight
-            width: graphWidth
-            graphDataSelected: "temperature"
-            graphViewSelected: graphMode
-
-            Text {
-                id: tempLegend
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                text: qsTr("Temperature")
-                color: Theme.colorIcon
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
-            }
-        }
+        ////////
 
         ChartHistory {
-            id: lumiGraph
+            id: hygroChart
+            width: graphWidth * duo
             height: graphHeight
-            width: graphWidth
-            graphDataSelected: "luminosity"
-            graphViewSelected: graphMode
+            property var duo: 1
 
-            Text {
-                id: lumiLegend
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                text: qsTr("Luminosity")
-                color: Theme.colorIcon
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
-            }
+            title: qsTr("Moisture")
+            ddd: graphGrid.mode
+            uuu: ChartHistory.Data.SoilMoisture
+            color: Theme.colorBlue
+            suffix: "%"
+            floatprecision: 0
+
+            valueMax: currentDevice.hygroMax*1.2
+            valueMin: currentDevice.hygroMin*0.8
+            limitMin: currentDevice.limitHygroMin
+            limitMax: currentDevice.limitHygroMax
         }
+
+        ////////
 
         ChartHistory {
-            id: conduGraph
+            id: tempChart
+            width: graphWidth * duo
             height: graphHeight
-            width: graphWidth
-            graphDataSelected: "soilConductivity"
-            graphViewSelected: graphMode
+            property var duo: 1
 
-            Text {
-                id: conduLegend
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                text: qsTr("Fertility")
-                color: Theme.colorIcon
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
-            }
+            title: qsTr("Temperature")
+            ddd: graphGrid.mode
+            uuu: ChartHistory.Data.Temperature
+            color: Theme.colorGreen
+            suffix: qsTr("°C")
+            floatprecision: 1
+
+            valueMax: currentDevice.tempMax*1.2
+            valueMin: currentDevice.tempMin*0.8
+            limitMin: currentDevice.limitTempMin
+            limitMax: currentDevice.limitTempMax
         }
+
+        ////////
+
+        ChartHistory {
+            id: lumiChart
+            width: graphWidth * duo
+            height: graphHeight
+            property var duo: 1
+
+            title: qsTr("Luminosity")
+            ddd: graphGrid.mode
+            uuu: ChartHistory.Data.Luminosity
+            color: Theme.colorYellow
+            suffix: " " + qsTr("lux")
+            floatprecision: 0
+
+            valueMax: currentDevice.luxMax*1.2
+            valueMin: currentDevice.luxMin*0.8
+            limitMin: currentDevice.limitLuxMin
+            limitMax: currentDevice.limitLuxMax
+        }
+
+        ////////
+
+        ChartHistory { // graph
+            id: conduChart
+            width: graphWidth * duo
+            height: graphHeight
+            property var duo: 1
+
+            title: qsTr("Fertility")
+            ddd: graphGrid.mode
+            uuu: ChartHistory.Data.SoilConductivity
+            color: Theme.colorRed
+            suffix: " " + "<br>" + qsTr("µs/cm")
+            floatprecision: 0
+
+            valueMax: currentDevice.conduMax*1.2
+            valueMin: currentDevice.conduMin*0.8
+            limitMin: currentDevice.limitConduMin
+            limitMax: currentDevice.limitConduMax
+        }
+
+        ////////
     }
 }
