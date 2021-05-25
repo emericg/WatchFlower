@@ -7,8 +7,6 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
     id: devicePlantSensorData
-    width: 400
-    height: 300
 
     property var dataIndicators: null
     property var dataCharts: null

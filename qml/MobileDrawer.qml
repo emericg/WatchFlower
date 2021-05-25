@@ -465,62 +465,6 @@ Drawer {
                 }
 
                 ////////
-
-                Item { // spacer
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: isDesktop
-                }
-                Rectangle {
-                    height: 1
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: Theme.colorSeparator
-                    visible: isDesktop
-                }
-                Item {
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: isDesktop
-                }
-
-                ////////
-
-                Item {
-                    id: rectangleExit
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: isDesktop
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: utilsApp.appExit()
-                    }
-
-                    ImageSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
-                        color: Theme.colorText
-                    }
-                    Label {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Exit")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
             }
         }
     }

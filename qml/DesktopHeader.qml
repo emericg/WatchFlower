@@ -199,7 +199,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (buttonThermoChart.visible || buttonWatering.visible || buttonLed.visible)
+            visible: (!singleColumn && (buttonThermoChart.visible || buttonWatering.visible || buttonLed.visible))
         }
 
         ButtonCompactable {
@@ -238,7 +238,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: buttonRefreshHistory.visible
+            visible: (!singleColumn && buttonRefreshHistory.visible)
         }
 
         ButtonCompactable {
@@ -286,7 +286,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: appContent.state === "DevicePlantSensor"
+            visible: (!singleColumn && appContent.state === "DevicePlantSensor")
         }
 
         Item { // spacer

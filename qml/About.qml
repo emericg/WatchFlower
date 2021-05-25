@@ -670,7 +670,6 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeContent
-                    wrapMode: Text.WordWrap
                 }
 
                 Column {
@@ -692,7 +691,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -703,7 +701,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -714,7 +711,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -725,7 +721,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -736,7 +731,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -747,7 +741,6 @@ Item {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
                     }
                 }
             }

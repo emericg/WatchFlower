@@ -6,13 +6,12 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 
 Item {
     id: devicePlantSensorHistory
-    width: 400
-    height: 300
 
     property string graphMode: settingsManager.graphHistory
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
 
         // Battery level
@@ -23,7 +22,7 @@ Item {
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
 /*
-        console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
+        //console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
 
         console.log("hasSoilMoistureSensor(): " + currentDevice.hasSoilMoistureSensor)
         console.log("hasSoilConductivitySensor(): " + currentDevice.hasSoilConductivitySensor)
@@ -90,6 +89,8 @@ Item {
     }
 
     function updateSize() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("width: " + graphGrid.width)
         //console.log("height: " + graphGrid.height)
 
@@ -152,6 +153,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
         if (currentDevice.hasTemperatureSensor) { tempGraph.updateGraph() }
@@ -169,11 +171,8 @@ Item {
         z: 5
 
         anchors.top: parent.top
-        anchors.topMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
 
         Row {
             id: buttonPanel

@@ -67,9 +67,9 @@ Item {
         anchors.bottomMargin: 16
         anchors.horizontalCenter: parent.horizontalCenter
 
-        visible: (mmd.tempMean < -10)
+        visible: (mmd.tempMean < -40)
         color: Theme.colorSubText
-        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
     }
 
     Text {
