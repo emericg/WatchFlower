@@ -283,7 +283,6 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 8
 
-                clip: true
                 height: 24
                 spacing: 8
 
@@ -298,12 +297,14 @@ Item {
                 }
                 Text {
                     id: textStatus
+                    width: status.width - status.spacing - imageStatus.width
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Loading...")
                     color: cccc
-                    font.pixelSize: 17
                     font.bold: false
+                    font.pixelSize: 17
+                    elide: Text.ElideRight
                 }
             }
 

@@ -10,7 +10,7 @@ Slider {
     leftPadding: 0
     rightPadding: 0
 
-    property var ticksCount: ((to - from) / stepSize)
+    property int ticksCount: ((to - from) / stepSize)
     value: 0.5
 
     ////////

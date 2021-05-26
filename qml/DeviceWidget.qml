@@ -404,7 +404,6 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
 
-            clip: true
             spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
 
             ImageSvg {
@@ -424,26 +423,24 @@ Item {
 
                 Text {
                     id: textTitle
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.rightMargin: bigAssMode ? 0 : 8
+                    width: rowLeft.width - imageDevice.width - rowLeft.spacing
 
                     color: Theme.colorText
+                    font.pixelSize: bigAssMode ? 22 : 20
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: bigAssMode ? 22 : 20
+                    elide: Text.ElideRight
                 }
 
                 Text {
                     id: textLocation
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.rightMargin: bigAssMode ? 0 : 8
+                    width: rowLeft.width - imageDevice.width - rowLeft.spacing
 
                     color: Theme.colorSubText
+                    font.pixelSize: bigAssMode ? 20 : 18
                     font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: bigAssMode ? 20 : 18
+                    elide: Text.ElideRight
                 }
 
                 Row {
@@ -559,7 +556,6 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 14 : 10)
 
-            z: 1
             spacing: 8
 
             ////
@@ -569,6 +565,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 sourceComponent: null
+                asynchronous: false
             }
 
             ////
@@ -580,7 +577,6 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
-                z: 1
                 visible: singleColumn
                 color: boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
@@ -620,7 +616,6 @@ Item {
             id: rectangleSensors
             height: rowRight.height
 
-            clip: true
             spacing: 8
             visible: boxDevice.dataAvailable
 
@@ -633,19 +628,18 @@ Item {
                 lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
-                hygro_bg.visible = hasHygro
-                lumi_bg.visible = boxDevice.hasLuminositySensor
-                cond_bg.visible = hasHygro
+                hygro.visible = hasHygro
+                lumi.visible = boxDevice.hasLuminositySensor
+                cond.visible = hasHygro
             }
 
             Item {
-                id: hygro_bg
+                id: hygro
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
                 Rectangle {
-                    id: bg1
                     anchors.fill: parent
                     color: Theme.colorBlue
                     opacity: 0.33
@@ -664,13 +658,12 @@ Item {
             }
 
             Item {
-                id: temp_bg
+                id: temp
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
                 Rectangle {
-                    id: bg2
                     anchors.fill: parent
                     color: Theme.colorGreen
                     opacity: 0.33
@@ -682,7 +675,6 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: true
                     color: Theme.colorGreen
                     radius: rectangleSensors.sensorRadius
                     Behavior on height { NumberAnimation { duration: 333 } }
@@ -690,13 +682,12 @@ Item {
             }
 
             Item {
-                id: lumi_bg
+                id: lumi
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
                 Rectangle {
-                    id: bg3
                     anchors.fill: parent
                     color: Theme.colorYellow
                     opacity: 0.33
@@ -715,13 +706,12 @@ Item {
             }
 
             Item {
-                id: cond_bg
+                id: cond
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
                 Rectangle {
-                    id: bg4
                     anchors.fill: parent
                     color: Theme.colorRed
                     opacity: 0.33

@@ -64,7 +64,6 @@ Item {
                 id: rect_bg
                 anchors.fill: parent
 
-                clip: true
                 radius: 4
                 color: dataBarCompact.colorBackground
 

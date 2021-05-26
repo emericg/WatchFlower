@@ -26,7 +26,7 @@ Item {
         anchors.fill: sourceImg
         visible: parent.color ? true : false
 
-        cached: visible
+        cached: true
         color: parent.color
     }
 }

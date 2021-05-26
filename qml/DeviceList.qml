@@ -29,9 +29,9 @@ Item {
         }
     }
 
-    property var selectionMode: false
+    property bool selectionMode: false
     property var selectionList: []
-    property var selectionCount: 0
+    property int selectionCount: 0
 
     function selectDevice(index) {
         // make sure it's not already selected
@@ -108,11 +108,12 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            color: Theme.colorActionbar
-            clip: true
-
             height: 0
             Behavior on height { NumberAnimation { duration: 133 } }
+
+            clip: true
+            visible: (height > 0)
+            color: Theme.colorActionbar
 
             // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
@@ -170,15 +171,14 @@ Item {
         Rectangle {
             id: rectangleActions
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
-
-            color: Theme.colorActionbar
-            clip: true
 
             height: (screenDeviceList.selectionCount) ? 48 : 0
             Behavior on height { NumberAnimation { duration: 133 } }
+
+            clip: true
+            visible: (height > 0)
+            color: Theme.colorActionbar
 
             // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }

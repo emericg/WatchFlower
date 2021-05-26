@@ -6,12 +6,12 @@ import DeviceUtils 1.0
 Rectangle {
     id: statusBox
     width: parent.width
-
     height: (syncing && visible) ? (isPhone ? 40 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
-    color: Theme.colorActionbar
     clip: true
+    visible: (height > 0)
+    color: Theme.colorActionbar
 
     property bool syncing: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
                             currentDevice.status === DeviceUtils.DEVICE_UPDATING_REALTIME)

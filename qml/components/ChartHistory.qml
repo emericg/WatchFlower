@@ -35,8 +35,6 @@ Item {
         Luminosity
     }
 
-    clip: false
-
     ////////////////////////////////////////////////////////////////////////////
 /*
     Rectangle { // DEBUG
@@ -282,7 +280,7 @@ Item {
                         border.width: (graphRow.barSpacing/2)
                         border.color: Theme.colorBackground
 
-                        clip: true
+                        clip: false
                         visible: (graphBar.value > -80)
                         radius: graphRow.barRadius
                         color: chartHistory.color
@@ -306,7 +304,7 @@ Item {
                             id: l2
                             height: parent.width
                             anchors.top: parent.top
-                            anchors.topMargin: contentWidth*0.33
+                            anchors.topMargin: contentWidth*0.4
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.horizontalCenterOffset: -1
 

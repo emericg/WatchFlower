@@ -4,8 +4,8 @@ import QtGraphicalEffects 1.12
 import ThemeEngine 1.0
 
 Item {
-    property var color: "#eee"
-    property var radius: 0
+    property string color: "#eee"
+    property int radius: 0
 
     Rectangle {
         id: rect

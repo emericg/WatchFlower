@@ -153,7 +153,7 @@ Item {
             }
 
             DevicePlantSensorData {
-                clip: true
+                clip: false
                 id: rectangleDeviceData
             }
             DevicePlantSensorHistory {
@@ -161,7 +161,7 @@ Item {
                 id: rectangleDeviceHistory
             }
             DevicePlantSensorLimits {
-                clip: true
+                clip: false
                 id: rectangleDeviceLimits
             }
         }

@@ -127,7 +127,7 @@ ApplicationWindow {
 
     MobileUI {
         id: mobileUI
-        property var isLoading: true
+        property bool isLoading: true
 
         statusbarTheme: Theme.themeStatusbar
         statusbarColor: isLoading ? "white" : Theme.colorStatusbar

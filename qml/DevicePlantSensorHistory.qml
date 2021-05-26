@@ -297,7 +297,7 @@ Item {
             id: hygroChart
             width: graphWidth * duo
             height: graphHeight
-            property var duo: 1
+            property int duo: 1
 
             title: qsTr("Moisture")
             ddd: graphGrid.mode
@@ -318,7 +318,7 @@ Item {
             id: tempChart
             width: graphWidth * duo
             height: graphHeight
-            property var duo: 1
+            property int duo: 1
 
             title: qsTr("Temperature")
             ddd: graphGrid.mode
@@ -339,7 +339,7 @@ Item {
             id: lumiChart
             width: graphWidth * duo
             height: graphHeight
-            property var duo: 1
+            property int duo: 1
 
             title: qsTr("Luminosity")
             ddd: graphGrid.mode
@@ -360,7 +360,7 @@ Item {
             id: conduChart
             width: graphWidth * duo
             height: graphHeight
-            property var duo: 1
+            property int duo: 1
 
             title: qsTr("Fertility")
             ddd: graphGrid.mode

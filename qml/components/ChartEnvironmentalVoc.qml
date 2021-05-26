@@ -109,8 +109,8 @@ Item {
 
         Item {
             anchors.fill: parent
-            clip:true
             anchors.bottomMargin: -24
+            clip:true
 
             Item { // Flickable
                 id: vocFlickable

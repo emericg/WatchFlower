@@ -8,10 +8,10 @@ Item {
     anchors.fill: parent
     anchors.margins: 0
 
-    property var widgetWidthTarget: (isPhone ? 48 : 64)
-    property var widgetWidth: 64
-    property var graphMin: currentDevice.tempMin
-    property var graphMax: currentDevice.tempMax
+    property int widgetWidthTarget: (isPhone ? 48 : 64)
+    property int widgetWidth: 64
+    property int graphMin: currentDevice.tempMin
+    property int graphMax: currentDevice.tempMax
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return

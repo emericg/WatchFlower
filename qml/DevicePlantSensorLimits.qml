@@ -1353,11 +1353,14 @@ Item {
                             width: (sections.width - 4) * 0.1 // 0 to 1k
                             visible: !outsideMode
                             color: Theme.colorGrey
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("low")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
                         Rectangle {
@@ -1366,11 +1369,14 @@ Item {
                             width: (sections.width - 8) * 0.2 // 1k to 3k
                             visible: !outsideMode
                             color: "grey"
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("indirect")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
                         Rectangle {
@@ -1379,11 +1385,14 @@ Item {
                             width: (sections.width - 16) * 0.5 // 3k to 8k
                             visible: !outsideMode
                             color: Theme.colorYellow
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("direct light (indoor)")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
                         Rectangle {
@@ -1392,11 +1401,14 @@ Item {
                             width: (sections.width - 0) * 0.2 // 8k+
                             visible: !outsideMode
                             color: "orange"
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("sunlight")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
 
@@ -1406,11 +1418,14 @@ Item {
                             width: (sections.width - 6) * 0.16 // 0-15k
                             visible: outsideMode
                             color: "grey"
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("indirect")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
                         Rectangle {
@@ -1419,11 +1434,14 @@ Item {
                             width: (sections.width - 6) * 0.84 // 15k+
                             visible: outsideMode
                             color: Theme.colorYellow
-                            clip: true
                             Text {
+                                anchors.fill: parent
                                 text: qsTr("sunlight")
-                                font.pixelSize: 12; color: "white";
-                                anchors.horizontalCenter: parent.horizontalCenter
+                                color: "white"
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                elide: Text.ElideRight
                             }
                         }
                     }
