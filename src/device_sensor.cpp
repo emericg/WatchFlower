@@ -872,10 +872,14 @@ void DeviceSensor::updateChartData_history_hours()
         }
 
         // first vs last
-        while (static_cast<ChartDataHistory *>(m_chartData_history_day.first())->getHour() ==
-               static_cast<ChartDataHistory *>(m_chartData_history_day.last())->getHour())
+        if (m_chartData_history_day.size() > 1)
         {
-            m_chartData_history_day.pop_front();
+            while (!m_chartData_history_day.isEmpty() &&
+                   static_cast<ChartDataHistory *>(m_chartData_history_day.first())->getHour() ==
+                   static_cast<ChartDataHistory *>(m_chartData_history_day.last())->getHour())
+            {
+                m_chartData_history_day.pop_front();
+            }
         }
 
         Q_EMIT chartDataHistoryUpdated_hours();
@@ -886,6 +890,8 @@ void DeviceSensor::updateChartData_history_hours()
 
 void DeviceSensor::updateChartData_history_days(int maxDays)
 {
+    if (maxDays <= 0) return;
+
     qDeleteAll(m_chartData_history_month);
     m_chartData_history_month.clear();
     ChartDataHistory *previousdata = nullptr;
@@ -992,10 +998,14 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
         }
 
         // first vs last (for months less than 31 days long)
-        while (static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() ==
-               static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDay())
+        if (m_chartData_history_month.size() > 1)
         {
-            m_chartData_history_month.pop_front();
+            while (!m_chartData_history_month.isEmpty() &&
+                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() ==
+                   static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDay())
+            {
+                m_chartData_history_month.pop_front();
+            }
         }
 
         // weekly graph
@@ -1021,6 +1031,8 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
 
 void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
 {
+    if (maxDays <= 0) return;
+
     qDeleteAll(m_chartData_env);
     m_chartData_env.clear();
     ChartDataVoc *previousdata = nullptr;
@@ -1113,10 +1125,14 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
         }
 
         // first vs last (for months less than 31 days long)
-        while (static_cast<ChartDataVoc *>(m_chartData_env.first())->getDay() ==
-               static_cast<ChartDataVoc *>(m_chartData_env.last())->getDay())
+        if (m_chartData_env.size() > 1)
         {
-            m_chartData_env.pop_front();
+            while (!m_chartData_env.isEmpty() &&
+                   static_cast<ChartDataVoc *>(m_chartData_env.first())->getDay() ==
+                   static_cast<ChartDataVoc *>(m_chartData_env.last())->getDay())
+            {
+                m_chartData_env.pop_front();
+            }
         }
 
         Q_EMIT chartDataEnvUpdated();
@@ -1128,6 +1144,8 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
 
 void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
 {
+    if (maxDays <= 0) return;
+
     qDeleteAll(m_chartData_minmax);
     m_chartData_minmax.clear();
     m_tempMin = 999.f;
@@ -1224,10 +1242,14 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
         }
 
         // first vs last (for months less than 31 days long)
-        while (static_cast<ChartDataMinMax *>(m_chartData_minmax.first())->getDay() ==
-               static_cast<ChartDataMinMax *>(m_chartData_minmax.last())->getDay())
+        if (m_chartData_minmax.size() > 1)
         {
-            m_chartData_minmax.pop_front();
+            while (!m_chartData_minmax.isEmpty() &&
+                   static_cast<ChartDataMinMax *>(m_chartData_minmax.first())->getDay() ==
+                   static_cast<ChartDataMinMax *>(m_chartData_minmax.last())->getDay())
+            {
+                m_chartData_minmax.pop_front();
+            }
         }
 
         Q_EMIT chartDataMinMaxUpdated();
