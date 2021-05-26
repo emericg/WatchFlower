@@ -101,7 +101,7 @@ Item {
         SequentialAnimation on opacity {
             id: lungsAnimation
             loops: Animation.Infinite
-            running: true
+            running: visible
             onStopped: lungsIcon.opacity = lungsIcon.maxOpacity
             OpacityAnimator { from: lungsIcon.minOpacity; to: lungsIcon.maxOpacity; duration: lungsIcon.duration }
             OpacityAnimator { from: lungsIcon.maxOpacity; to: lungsIcon.minOpacity; duration: lungsIcon.duration }
