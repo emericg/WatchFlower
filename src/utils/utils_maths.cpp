@@ -34,11 +34,14 @@ int roundTo(const int value, const int roundTo)
     return (value + (roundTo - 1)) & ~(roundTo - 1);
 }
 
-int mapNumber(const int value, const int a1, const int a2, const int b1, const int b2)
+int mapNumber(const int value, const int a1, const int a2, const int b1, const int b2, bool checks)
 {
     int n = value;
-    if (n < a1) n = a1;
-    if (n > a2) n = a2;
+    if (checks)
+    {
+        if (n < a1) n = a1;
+        if (n > a2) n = a2;
+    }
 
     return (b1 + ((n - a1) * (b2 - b1)) / (a2 - a1));
 }

@@ -26,7 +26,7 @@
 int roundTo(const int value, const int roundTo);
 
 //! Map a number from range [a1-a2] to [b1:b2]
-int mapNumber(const int value, const int a1, const int a2, const int b1, const int b2);
+int mapNumber(const int value, const int a1, const int a2, const int b1, const int b2, bool checks = true);
 
 /* ************************************************************************** */
 

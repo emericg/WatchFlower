@@ -351,7 +351,9 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
             // sensor output (no soil: 2036) - (max observed: 1747) wich maps to 0 - 10 (mS/cm)
-            m_soil_conductivity = mapNumber(rawValue, 2036, 1500, 0, 1000);
+            if (rawValue < 1500) rawValue = 1500;
+            if (rawValue > 2036) rawValue = 2036;
+            m_soil_conductivity = mapNumber(rawValue, 2036, 1500, 0, 1000, false);
 
             /////////
 
