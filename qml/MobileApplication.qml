@@ -482,7 +482,7 @@ ApplicationWindow {
         property int hhi: (hhh * 0.666)
 
         height: hhh + screenPaddingBottom
-        color: isTablet ? Theme.colorTabletmenu : "transparent"
+        color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
         Rectangle {
             anchors.top: parent.top

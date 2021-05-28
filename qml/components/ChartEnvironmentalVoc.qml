@@ -148,8 +148,8 @@ Item {
                                 anchors.bottom: parent.bottom
 
                                 height: (modelData.vocMax / 1500) * parent.height
-                                width: 11
-                                radius: 11
+                                width: 13
+                                radius: 13
                                 clip: true
 
                                 color: {
@@ -165,9 +165,9 @@ Item {
                                     y: (modelData.vocMean / 1500) * parent.height
                                     anchors.horizontalCenter: parent.horizontalCenter
 
-                                    width: 9
-                                    height: 9
-                                    radius: 9
+                                    width: parent.width - 2
+                                    height: width
+                                    radius: width
                                     color: "white"
                                     opacity: 0.8
                                 }

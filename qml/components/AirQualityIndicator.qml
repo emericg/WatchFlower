@@ -8,7 +8,7 @@ Item {
     width: 128
     height: 128
 
-    property real value: 250
+    property real value: 0
     property real valueMin: 0
     property real valueMax: 500
     property string legend: "AQI"

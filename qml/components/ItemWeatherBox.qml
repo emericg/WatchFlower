@@ -4,8 +4,8 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: itemWeatherBox
-    width: (duo) ? height*2 : height
-    height: 128
+    width: (duo) ? size*2 : size
+    height: column.height + column.anchors.topMargin*2
     radius: 10
 
     property string title: ""
@@ -13,6 +13,7 @@ Rectangle {
     property string icon: ""
 
     property bool duo: false
+    property int size: 96
 
     property real value
     property int precision: 1
@@ -24,6 +25,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
+        id: column
         anchors.top: parent.top
         anchors.topMargin: isDesktop ? 12 : 10
         anchors.left: parent.left

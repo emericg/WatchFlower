@@ -291,7 +291,7 @@ Item {
                             anchors.topMargin: 8
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            visible: (ddd === ChartHistory.Span.Weekly)
+                            visible: (ddd === ChartHistory.Span.Weekly && parent.height > contentHeight+8)
 
                             text: value.toFixed(floatprecision) + suffix
                             color: "white"
@@ -308,9 +308,9 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.horizontalCenterOffset: -1
 
-                            visible: ( !singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*2)
-                            rotation: 90
+                            visible: (!singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*2)
 
+                            rotation: 90
                             text: value.toFixed(floatprecision) + suffix.replace("<br>", "")
                             color: "white"
                             font.pixelSize: 10
@@ -330,7 +330,7 @@ Item {
                     ////
 
                     ImageSvg {
-                        width: UtilsNumber.alignTo(parent.width * 0.666, 2)
+                        width: UtilsNumber.alignTo(parent.width * 0.6, 2)
                         height: width
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 2
@@ -338,19 +338,23 @@ Item {
 
                         visible: {
                             if (isPhone) return false
-                            if (value < -40) return true
+                            //if (value < -40) return true
                             else if ((value < limitMin || value > limitMax) && (graphBarFg.height > height*1.5)) return true
                             else return false
                         }
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: "white"
+                        opacity: 0.66
+/*
                         source: {
                             if (value < -40) return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                             else "qrc:/assets/icons_material/baseline-warning-24px.svg"
                         }
-                        color:  {
+                        color: {
                             if (value < -40) return Theme.colorSubText
                             else return "white"
                         }
-                        opacity: 0.66
+*/
                     }
 
                     ////
@@ -361,6 +365,7 @@ Item {
                         width: 1
                         height: 4
                         color: Theme.colorSubText
+                        opacity: 0.66
                     }
                     Rectangle {
                         anchors.top: parent.bottom
@@ -368,6 +373,7 @@ Item {
                         anchors.right: parent.right
                         height: 1
                         color: Theme.colorSubText
+                        opacity: 0.66
                     }
                     Rectangle {
                         anchors.top: parent.bottom
@@ -376,6 +382,7 @@ Item {
                         width: 1
                         height: 4
                         color: Theme.colorSubText
+                        opacity: 0.66
                     }
 
                     ////
@@ -398,6 +405,7 @@ Item {
                             }
                         }
                         color: Theme.colorSubText
+                        opacity: 0.66
                         font.pixelSize: (ddd === ChartHistory.Span.Weekly) ? (isPhone ? 10 : 12) : (isPhone ? 8 : 10)
                         font.bold: false
                         horizontalAlignment: Text.AlignHCenter

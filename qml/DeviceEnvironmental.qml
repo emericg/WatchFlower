@@ -730,7 +730,7 @@ Item {
 
                             ItemWeatherBox {
                                 id: temp
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasTemperatureSensor
 
                                 title: qsTr("Temperature")
@@ -741,7 +741,7 @@ Item {
                             }
                             ItemWeatherBox {
                                 id: hum
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasHumiditySensor
 
                                 title: qsTr("Humidity")
@@ -752,7 +752,7 @@ Item {
                             }
                             ItemWeatherBox {
                                 id: press
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasPressureSensor
 
                                 title: qsTr("Pressure")
@@ -764,7 +764,7 @@ Item {
 
                             ItemWeatherBox {
                                 id: sound
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasSoundSensor
 
                                 title: qsTr("Sound level")
@@ -776,7 +776,7 @@ Item {
 
                             ItemWeatherBox {
                                 id: light
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasLuminositySensor
 
                                 title: qsTr("Luminosity")
@@ -787,7 +787,7 @@ Item {
                             }
                             ItemWeatherBox {
                                 id: uv
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasUvSensor
 
                                 title: qsTr("UV index")
@@ -799,7 +799,7 @@ Item {
 /*
                             ItemWeatherBox {
                                 id: windd
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasWindDirectionSensor
 
                                 title: qsTr("Wind direction")
@@ -810,7 +810,7 @@ Item {
                             }
                             ItemWeatherBox {
                                 id: winds
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasWindSpeedSensor
 
                                 title: qsTr("Wind speed")
@@ -822,7 +822,7 @@ Item {
 
                             ItemWeatherBox {
                                 id: rain
-                                height: weatherFlow.www
+                                size: weatherFlow.www
                                 visible: currentDevice.hasWaterLevelSensor
 
                                 title: qsTr("Rain")
