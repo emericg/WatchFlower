@@ -374,9 +374,6 @@ void DeviceManager::startBleAgent()
         {
             connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
                     this, &DeviceManager::deviceDiscoveryError, Qt::UniqueConnection);
-
-            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                    this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
         }
         else
         {
@@ -413,7 +410,6 @@ void DeviceManager::checkBluetoothIos()
 
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(33);
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-
         if (m_discoveryAgent->isActive())
         {
             qDebug() << "Checking iOS bluetooth...";
@@ -512,14 +508,15 @@ void DeviceManager::scanDevices()
         }
         if (m_discoveryAgent)
         {
-/*
-            if (m_discoveryAgent->isActive())
+            //if (m_discoveryAgent->isActive())
+            //{
+            //    //
+            //}
+            //else // (!m_discoveryAgent->isActive())
             {
-                //
-            }
-            else // (!m_discoveryAgent->isActive())
-*/
-            {
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                           this, &DeviceManager::updateBleDevice);
+
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                         this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
@@ -527,7 +524,6 @@ void DeviceManager::scanDevices()
 
                 m_discoveryAgent->setLowEnergyDiscoveryTimeout(10*1000); // 10s
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-
                 if (m_discoveryAgent->isActive())
                 {
                     m_scanning = true;
@@ -562,8 +558,10 @@ void DeviceManager::listenDevices()
                 disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                            this, &DeviceManager::deviceDiscoveryFinished);
 
-                m_discoveryAgent->setLowEnergyDiscoveryTimeout(30*1000); // 30s
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
 
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(30*1000); // 30s
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
                 if (m_discoveryAgent->isActive())
                 {
