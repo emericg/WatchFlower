@@ -249,14 +249,14 @@ Item {
             } else if (boxDevice.isEnvironmentalSensor) {
 
                 // Air warning
-                if (boxDevice.hasVocSensor) {
-                    if (boxDevice.voc > 500) {
-                        ventilate.visible = true
-                        if (boxDevice.voc > 1000)
-                            ventilate.color = Theme.colorRed
-                        else
-                            ventilate.color = Theme.colorYellow
-                    }
+                if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
+                    (boxDevice.hasCo2Sensor && boxDevice.co2 > 1500)) {
+                    ventilate.visible = true
+                    ventilate.color = Theme.colorRed
+                } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
+                           (boxDevice.hasCo2Sensor && boxDevice.co2 > 850)) {
+                    ventilate.visible = true
+                    ventilate.color = Theme.colorYellow
                 }
 
                 // Radiation warning
@@ -823,16 +823,14 @@ Item {
                         limitMin = 500
                         limitMax = 1000
                         gaugeValue.value = boxDevice.voc
-                    }
-                    else if (p === "hcho") {
+                    } else if (p === "hcho") {
                         gaugeLegend.text = qsTr("HCHO")
                         gaugeValue.from = 0
                         gaugeValue.to = 1500
                         limitMin = 500
                         limitMax = 1000
                         gaugeValue.value = boxDevice.hcho
-                    }
-                    else if (p === "co2") {
+                    } else if (p === "co2") {
                         gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
                         gaugeValue.from = 0
                         gaugeValue.to = 2000

@@ -96,7 +96,7 @@ Item {
             if (currentDevice.hasVocSensor) primary = "voc"
             else if (currentDevice.hasCo2Sensor) primary = "co2"
             else if (currentDevice.hasPM10Sensor) primary = "pm10"
-            else primary = "temp"
+            else primary = "hygrometer"
         }
 
         //
@@ -163,6 +163,14 @@ Item {
             indicatorAirQuality.limitMin = 850
             indicatorAirQuality.limitMax = 1500
         }
+
+        if (primary === "hygrometer") {
+            //
+        }
+
+        if (primary === "barometer") {
+            //
+        }
     }
 
     function loadGraph() {
@@ -181,12 +189,46 @@ Item {
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
-        //indicatorDisconnected.visible = !currentDevice.isDataAvailable()
+        indicatorDisconnected.visible = !currentDevice.isDataAvailable()
         //indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
         //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
+        //indicatorHygrometer.visible = isWeatherStation && currentDevice.isDataAvailable()
 
         // Indicators
-        if (isAirMonitor) {
+        if (primary === "hygrometer") {
+            indicatorAirQuality.visible = false
+            indicatorRadioactivity.visible = false
+            indicatorHygrometer.visible = true
+
+            if (currentDevice.deviceTempC < -40) {
+                sensorTemp.visible = false
+                heatIndex.visible = false
+                sensorHygro.visible = false
+            } else {
+                if (currentDevice.deviceTempC >= -40) {
+                    sensorTemp.text = currentDevice.getTempString()
+                    sensorTemp.visible = true
+                }
+                if (currentDevice.deviceHumidity >= 0) {
+                    sensorHygro.text = currentDevice.deviceHumidity.toFixed(0) + "% " + qsTr("humidity")
+                    sensorHygro.visible = true
+                }
+                if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
+                    if (currentDevice.getHeatIndex() > currentDevice.getTemp()) {
+                        heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
+                        heatIndex.visible = true
+                    }
+                }
+            }
+        } else if (primary === "barometer") {
+            indicatorAirQuality.visible = false
+            indicatorRadioactivity.visible = false
+            indicatorHygrometer.visible = true
+        } else if (isAirMonitor) {
+            indicatorAirQuality.visible = true
+            indicatorRadioactivity.visible = false
+            indicatorHygrometer.visible = false
+
             if (currentDevice.hasVocSensor) {
                 if (primary === "voc") indicatorAirQuality.value = currentDevice.voc
                 else if (primary === "hcho") indicatorAirQuality.value = currentDevice.hcho
@@ -293,6 +335,44 @@ Item {
 
                     color: cccc
                     visible: (currentDevice && isAirMonitor && currentDevice.isDataAvailable())
+                }
+
+                ////////////////
+
+                Column {
+                    id: indicatorHygrometer
+                    width: isMobile ? 96 : 128
+                    height: isMobile ? 96 : 128
+                    spacing: 2
+
+                    visible: (currentDevice && primary === "hygrometer")
+
+                    Text {
+                        id: sensorTemp
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        font.bold: false
+                        font.pixelSize: isPhone ? 44 : 48
+                        color: cccc
+                    }
+
+                    Text {
+                        id: heatIndex
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        font.bold: false
+                        font.pixelSize: isPhone ? 18 : 20
+                        color: cccc
+                    }
+
+                    Text {
+                        id: sensorHygro
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        font.bold: false
+                        font.pixelSize: isPhone ? 22 : 24
+                        color: cccc
+                    }
                 }
 
                 ////////////////
@@ -723,6 +803,7 @@ Item {
                                 precision: 2
                                 limit_mid: 1
                                 limit_high: 10
+                                onSensorSelection: primary = "radiation"
                             }
 
                             ItemEnvBox {
@@ -735,6 +816,7 @@ Item {
                                 precision: 2
                                 limit_mid: 1
                                 limit_high: 10
+                                onSensorSelection: primary = "radiation"
                             }
                         }
 

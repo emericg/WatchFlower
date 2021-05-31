@@ -29,8 +29,7 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 ### TODOs
 
-* Background updates & notifications (Android, maybe iOS)
-* Continuous measurements (BLE advertising support)
+* Background updates & notifications for Android and iOS
 
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
