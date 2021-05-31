@@ -21,6 +21,7 @@
 
 #include "device_thermobeacon.h"
 #include "SettingsManager.h"
+#include "utils/utils_maths.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdint>
@@ -438,9 +439,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         m_lastUpdate = QDateTime::currentDateTime();
 
-        if (battv > 3100) battv = 3100;
-        if (battv < 2300) battv = 2300;
-        int battlvl = (0 + ((battv-2300) * (100-0)) / (3100-2300));
+        int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
         setBattery(battlvl);
 
         if (needsUpdateDb())
