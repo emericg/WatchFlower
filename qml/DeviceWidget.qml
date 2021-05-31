@@ -564,6 +564,8 @@ Item {
                 id: loaderIndicators
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: boxDevice.dataAvailable
+
                 sourceComponent: null
                 asynchronous: false
             }
@@ -740,8 +742,6 @@ Item {
             id: rectangleHygroTemp
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: boxDevice.dataAvailable
-
             function updateData() {
                 if (boxDevice.hasGeigerCounter) {
                     textTemp.text = ""
@@ -796,16 +796,72 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 4
 
-            visible: boxDevice.dataAvailable
+            property int limitMin: -1
+            property int limitMax: -1
+
+            Component.onCompleted: {
+                initData()
+                updateData()
+            }
+
+            Connections {
+                target: boxDevice
+                onSensorUpdated: {
+                    initData()
+                    updateData()
+                }
+            }
+
+            function initData() {
+                if (boxDevice.hasSetting("primary")) {
+                    var p = boxDevice.getSetting("primary")
+
+                    if (p === "voc") {
+                        gaugeLegend.text = qsTr("VOC")
+                        gaugeValue.from = 0
+                        gaugeValue.to = 1500
+                        limitMin = 500
+                        limitMax = 1000
+                        gaugeValue.value = boxDevice.voc
+                    }
+                    else if (p === "hcho") {
+                        gaugeLegend.text = qsTr("HCHO")
+                        gaugeValue.from = 0
+                        gaugeValue.to = 1500
+                        limitMin = 500
+                        limitMax = 1000
+                        gaugeValue.value = boxDevice.hcho
+                    }
+                    else if (p === "co2") {
+                        gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+                        gaugeValue.from = 0
+                        gaugeValue.to = 2000
+                        limitMin = 850
+                        limitMax = 1500
+                        gaugeValue.value = boxDevice.co2
+                    }
+                }
+            }
 
             function updateData() {
-                var clr = Theme.colorGreen
+                // value
+                if (boxDevice.hasSetting("primary")) {
+                    var p = boxDevice.getSetting("primary")
+                    if (p === "voc") gaugeValue.value = boxDevice.voc
+                    else if (p === "hcho") gaugeValue.value = boxDevice.hcho
+                    else if (p === "co2") gaugeValue.value = boxDevice.co2
+                    else if (p === "co") gaugeValue.value = boxDevice.co
+                    else if (p === "o2") gaugeValue.value = boxDevice.o2
+                    else if (p === "o3") gaugeValue.value = boxDevice.o3
+                    else if (p === "no2") gaugeValue.value = boxDevice.no2
+                    else if (p === "so2") gaugeValue.value = boxDevice.so2
+                }
 
-                if (boxDevice.hasVocSensor) {
-                    if (boxDevice.voc > 1000) clr = Theme.colorRed
-                    else if (boxDevice.voc > 500) clr = Theme.colorOrange
-
-                    gaugeLegend.text = qsTr("VOC")
+                // limits
+                if (limitMin > 0 && limitMax > 0) {
+                    var clr = Theme.colorGreen
+                    if (gaugeValue.value > limitMax) clr = Theme.colorRed
+                    else if (gaugeValue.value > limitMin) clr = Theme.colorOrange
                     gaugeValue.arcColor = clr
                     gaugeValue.backgroundColor = clr
                 }
@@ -827,10 +883,40 @@ Item {
 
                 from: 0
                 to: 1500
-                value: boxDevice.voc
+                value: -1
 
                 background: true
                 backgroundOpacity: 0.33
+/*
+                Item {
+                    anchors.fill:parent
+                    rotation: 45 + UtilsNumber.mapNumber(limitMin, gaugeValue.from, gaugeValue.to, 0, 270)
+
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: gaugeValue.arcWidth
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: 3
+                        height: 3
+                        color: Theme.colorSubText
+                        antialiasing: true
+                    }
+                }
+                Item {
+                    anchors.fill:parent
+                    rotation: 45 + UtilsNumber.mapNumber(limitMax, gaugeValue.from, gaugeValue.to, 0, 270)
+
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: gaugeValue.arcWidth
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: 3
+                        height: 3
+                        color: Theme.colorSubText
+                        antialiasing: true
+                    }
+                }
+*/
             }
         }
     }

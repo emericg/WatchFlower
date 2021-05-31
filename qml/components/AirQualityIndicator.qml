@@ -9,8 +9,10 @@ Item {
     height: 128
 
     property real value: 0
-    property real valueMin: 0
-    property real valueMax: 500
+    property int valueMin: 0
+    property int valueMax: 500
+    property int limitMin: 500
+    property int limitMax: 1000
     property string legend: "AQI"
     property string color: Theme.colorIcon
 
@@ -24,35 +26,50 @@ Item {
 
         visible: true
 
-        ProgressCircle {
+        ProgressCircle { // arcSafe
             anchors.fill: parent
             value: 100
+
+            animationBegin: false
+            animationEnd: false
+            animationValue: false
+
             arcWidth: (isMobile ? 8 : 10)
             arcBegin: 0
-            arcEnd: 88
+            arcEnd: ((limitMin/valueMax) * 270) - 2
             arcOffset: 225
             arcColor: (Theme.currentTheme === ThemeEngine.THEME_GREEN ? Theme.colorLightGreen : Theme.colorGreen)
-            //arcOpacity: 0.95
+            arcOpacity: 1
         }
-        ProgressCircle {
+        ProgressCircle { // arcWarning
             anchors.fill: parent
             value: 100
+
+            animationBegin: false
+            animationEnd: false
+            animationValue: false
+
             arcWidth: (isMobile ? 8 : 10)
-            arcBegin: 92
-            arcEnd: 178
+            arcBegin: ((limitMin/valueMax) * 270) + 2
+            arcEnd: ((limitMax/valueMax) * 270) - 2
             arcOffset: 225
             arcColor: Theme.colorOrange
-            //arcOpacity: 0.95
+            arcOpacity: 1
         }
-        ProgressCircle {
+        ProgressCircle { // arcDanger
             anchors.fill: parent
             value: 100
+
+            animationBegin: false
+            animationEnd: false
+            animationValue: false
+
             arcWidth: (isMobile ? 8 : 10)
-            arcBegin: 182
+            arcBegin: ((limitMax/valueMax) * 270) + 2
             arcEnd: 270
             arcOffset: 225
             arcColor: Theme.colorRed
-            //arcOpacity: 0.95
+            arcOpacity: 1
         }
     }
 
@@ -98,11 +115,18 @@ Item {
                                                      indicatorAirQuality.valueMin, indicatorAirQuality.valueMax,
                                                      maxDuration, minDuration)
 
+        Connections {
+            target: indicatorAirQuality
+            onValueChanged: {
+                lungsAnimation.restart()
+            }
+        }
+
         SequentialAnimation on opacity {
             id: lungsAnimation
             loops: Animation.Infinite
             running: visible
-            onStopped: lungsIcon.opacity = lungsIcon.maxOpacity
+            //alwaysRunToEnd: true
             OpacityAnimator { from: lungsIcon.minOpacity; to: lungsIcon.maxOpacity; duration: lungsIcon.duration }
             OpacityAnimator { from: lungsIcon.maxOpacity; to: lungsIcon.minOpacity; duration: lungsIcon.duration }
         }

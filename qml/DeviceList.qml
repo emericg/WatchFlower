@@ -270,7 +270,7 @@ Item {
 
         property bool singleColumn: true
         property bool bigWidget: settingsManager.bigWidget || (isTablet && width >= 480)
-        property int boxHeight: bigWidget ? 144 : 110
+        property int boxHeight: bigWidget ? 144 : 100
 
         property int cellSizeTarget: bigWidget ? 440 : 320
         property int cellSize: cellSizeTarget
@@ -282,7 +282,7 @@ Item {
 
         function computeCellSize() {
             cellSizeTarget = bigWidget ? 440 : 320
-            boxHeight = bigWidget ? 144 : 110
+            boxHeight = bigWidget ? 144 : 100
 
             var availableWidth = devicesView.width - cellMarginTarget
 

@@ -891,6 +891,7 @@ void DeviceSensor::updateChartData_history_hours()
 void DeviceSensor::updateChartData_history_days(int maxDays)
 {
     if (maxDays <= 0) return;
+    int maxMonths = 1;
 
     qDeleteAll(m_chartData_history_month);
     m_chartData_history_month.clear();
@@ -905,7 +906,7 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', ts) " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
@@ -916,7 +917,7 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
@@ -1032,6 +1033,7 @@ void DeviceSensor::updateChartData_history_days(int maxDays)
 void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
 {
     if (maxDays <= 0) return;
+    int maxMonths = 2;
 
     qDeleteAll(m_chartData_env);
     m_chartData_env.clear();
@@ -1047,7 +1049,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
                               " min(hcho), avg(hcho), max(hcho), " \
                               " min(co2), avg(co2), max(co2) " \
                               "FROM sensorData " \
-                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', timestamp) " \
                               "ORDER BY timestamp DESC "
                               "LIMIT :maxDays;");
@@ -1059,7 +1061,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
                               " min(hcho), avg(hcho), max(hcho), " \
                               " min(co2), avg(co2), max(co2) " \
                               "FROM sensorData " \
-                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY DATE_FORMAT(timestamp, '%Y-%m-%d') " \
                               "ORDER BY timestamp DESC "
                               "LIMIT :maxDays;");
@@ -1123,7 +1125,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
                 m_chartData_env.push_front(new ChartDataVoc(fakedate, -99, -99, -99, -99, -99, -99, -99, -99, -99, this));
             }
         }
-
+/*
         // first vs last (for months less than 31 days long)
         if (m_chartData_env.size() > 1)
         {
@@ -1134,7 +1136,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
                 m_chartData_env.pop_front();
             }
         }
-
+*/
         Q_EMIT chartDataEnvUpdated();
     }
 }
@@ -1145,6 +1147,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
 void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
 {
     if (maxDays <= 0) return;
+    int maxMonths = 2;
 
     qDeleteAll(m_chartData_minmax);
     m_chartData_minmax.clear();
@@ -1161,7 +1164,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                               " min(temperature), avg(temperature), max(temperature), " \
                               " min(humidity), max(humidity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', ts) " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
@@ -1172,7 +1175,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                               " min(temperature), avg(temperature), max(temperature), " \
                               " min(humidity), max(humidity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
@@ -1240,7 +1243,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 m_chartData_minmax.push_front(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
             }
         }
-
+/*
         // first vs last (for months less than 31 days long)
         if (m_chartData_minmax.size() > 1)
         {
@@ -1251,7 +1254,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 m_chartData_minmax.pop_front();
             }
         }
-
+*/
         Q_EMIT chartDataMinMaxUpdated();
         Q_EMIT minmaxUpdated();
     }

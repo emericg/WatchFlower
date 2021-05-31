@@ -8,21 +8,40 @@ Item {
     width: 640
     height: 400
 
+    property int scaleMin: 0
+    property int scaleMax: 1500
+
+    property int limitMin: -1
+    property int limitMax: -1
+
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
+
+        updateGraph()
     }
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
+        //console.log("chartEnvironmentalVoc // updateGraph() >> " + currentDevice)
+
+        if (deviceEnvironmental.primary === "voc" || deviceEnvironmental.primary === "hcho") {
+            limitMin = 500
+            limitMax = 1000
+            scaleMax = 1500
+        } else if (deviceEnvironmental.primary === "co2") {
+            limitMin = 850
+            limitMax = 1500
+            scaleMax = 2000
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Item {
         anchors.fill: parent
-
         anchors.topMargin: 0
         anchors.leftMargin: 20
         anchors.rightMargin: 16
@@ -46,35 +65,35 @@ Item {
                 Rectangle {
                     width: vocLegend.width; height: 2;
                     //visible: false
-                    opacity: 0.15
+                    opacity: 0.25
                     color: Theme.colorSeparator
                 }
             }
             Rectangle {
                 width: 6; height: 2;
                 color: Theme.colorSeparator
-                anchors.top: parent.top
-                anchors.topMargin: parent.height*0.33
                 anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: (parent.height * (limitMin / scaleMax))
 
                 Rectangle {
                     width: vocLegend.width; height: 2;
                     //visible: false
-                    opacity: 0.15
+                    opacity: 0.25
                     color: Theme.colorSeparator
                 }
             }
             Rectangle {
                 width: 6; height: 2;
                 color: Theme.colorSeparator
-                anchors.top: parent.top
-                anchors.topMargin: parent.height*0.66
                 anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: (parent.height * (limitMax / scaleMax))
 
                 Rectangle {
                     width: vocLegend.width; height: 2;
                     //visible: false
-                    opacity: 0.15
+                    opacity: 0.25
                     color: Theme.colorSeparator
                 }
             }
@@ -87,7 +106,7 @@ Item {
                 Rectangle {
                     width: vocLegend.width; height: 2;
                     visible: false
-                    opacity: 0.15
+                    opacity: 0.25
                     color: Theme.colorSeparator
                 }
             }
@@ -110,7 +129,7 @@ Item {
         Item {
             anchors.fill: parent
             anchors.bottomMargin: -24
-            clip:true
+            clip: true
 
             Item { // Flickable
                 id: vocFlickable
@@ -135,35 +154,63 @@ Item {
                             height: parent.height
                             width: 16
 
+                            property int valueMin
+                            property int valueMean
+                            property int valueMax
+
+                            function loadValues() {
+                                if (deviceEnvironmental.primary === "voc" ||
+                                    deviceEnvironmental.primary === "hcho") {
+                                    valueMin = modelData.vocMin
+                                    valueMean = modelData.vocMean
+                                    valueMax = modelData.vocMax
+                                } else if (deviceEnvironmental.primary === "co2") {
+                                    valueMin = modelData.co2Min
+                                    valueMean = modelData.co2Mean
+                                    valueMax = modelData.co2Max
+                                }
+                            }
+
+                            Component.onCompleted: loadValues()
+
+                            Connections {
+                                target: deviceEnvironmental
+                                onPrimaryChanged: loadValues()
+                            }
+
                             Rectangle {
                                 height: parent.height
                                 width: 2
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: Theme.colorSeparator
-                                opacity: 0.15
+                                opacity: 0.25
                             }
 
                             Rectangle {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: parent.bottom
 
-                                height: (modelData.vocMax / 1500) * parent.height
-                                width: 13
-                                radius: 13
                                 clip: true
+                                radius: 13
+                                width: 13
+                                height: (valueMax / scaleMax) * parent.height
+                                Behavior on height { NumberAnimation { duration: 333 } }
 
                                 color: {
-                                    if (modelData.vocMax > 1000)
+                                    if (valueMax > limitMax)
                                         return Theme.colorOrange
-                                    else if (modelData.vocMax > 500)
+                                    else if (valueMax > limitMin)
                                         return Theme.colorYellow
                                     else
                                         return Theme.colorGreen
                                 }
+                                Behavior on color { ColorAnimation { duration: 333 } }
 
                                 Rectangle {
-                                    y: (modelData.vocMean / 1500) * parent.height
+                                    y: (valueMean / scaleMax) * parent.height
                                     anchors.horizontalCenter: parent.horizontalCenter
+
+                                    visible: (width*1.5 < parent.height)
 
                                     width: parent.width - 2
                                     height: width
@@ -177,7 +224,7 @@ Item {
                                     anchors.topMargin: 1
                                     anchors.horizontalCenter: parent.horizontalCenter
 
-                                    height: (modelData.hchoMax / 1500) * parent.height
+                                    height: (modelData.hchoMax / scaleMax) * parent.height
                                     width: 9
                                     radius: 9
                                     color: "white"
@@ -194,6 +241,7 @@ Item {
                                 rotation: -45
                                 text: modelData.day
                                 color: Theme.colorSubText
+                                font.bold: modelData.today
                                 font.pixelSize: (Theme.fontSizeContentSmall - 2)
                             }
                         }

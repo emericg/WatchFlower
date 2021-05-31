@@ -13,7 +13,7 @@ Item {
     property real to: 100
     property real value: 50
 
-    property bool isPie: false          // paint a pie instead of an arc
+    property bool isPie: false              // paint a pie instead of an arc
 
     property real arcOffset: 0              // rotation (0 means starts at top center)
     property real arcBegin: 0
@@ -22,14 +22,14 @@ Item {
     property real arcOpacity: 1
     property string arcColor: "white"
 
-    property bool background: false     // a full circle as a background of the arc
+    property bool background: false         // a full circle as a background of the arc
     property real backgroundOpacity: 1
     property string backgroundColor: "#33000000"
 
     property alias animationBegin: animationArcBegin.enabled
     property alias animationEnd: animationArcEnd.enabled
     property alias animationValue: animationArcValue.enabled
-    property int animationDuration: 233
+    property int animationDuration: 333
 
     // private
     property real arcValue: mapNumber(value, from, to, arcBegin, arcEnd)

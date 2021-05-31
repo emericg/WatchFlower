@@ -15,6 +15,8 @@ Item {
     property bool isWeatherStation: false
     property bool isGeigerCounter: false
 
+    property string primary: ""
+
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
     ////////////////////////////////////////////////////////////////////////////
@@ -58,9 +60,15 @@ Item {
 
     Keys.onPressed: {
         if (event.key === Qt.Key_Backspace) {
-            event.accepted = true;
+            event.accepted = true
             appWindow.backAction()
         }
+    }
+
+    onPrimaryChanged: {
+        currentDevice.setSetting("primary", primary)
+        loadIndicator()
+        if (chartEnvironmentalLoader.item) chartEnvironmentalLoader.item.updateGraph()
     }
 
     ////////
@@ -81,6 +89,15 @@ Item {
 
         currentDevice = clickedDevice
         console.log("DeviceEnvironmental // loadDevice() >> " + currentDevice)
+
+        if (currentDevice.hasSetting("primary")) {
+            primary = currentDevice.getSetting("primary")
+        } else {
+            if (currentDevice.hasVocSensor) primary = "voc"
+            else if (currentDevice.hasCo2Sensor) primary = "co2"
+            else if (currentDevice.hasPM10Sensor) primary = "pm10"
+            else primary = "temp"
+        }
 
         //
         if (currentDevice.hasPM1Sensor || currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
@@ -112,10 +129,40 @@ Item {
         //isWeatherStation = true
 
         //
+        loadIndicator()
         loadGraph()
         //
         updateHeader()
         updateData()
+    }
+
+    function loadIndicator() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.isEnvironmentalSensor) return
+        //console.log("DeviceEnvironmental // loadIndicator()")
+
+        if (primary === "voc") {
+            indicatorAirQuality.legend = qsTr("VOC")
+            indicatorAirQuality.valueMin = 0
+            indicatorAirQuality.valueMax = 1500
+            indicatorAirQuality.value = currentDevice.voc
+            indicatorAirQuality.limitMin = 500
+            indicatorAirQuality.limitMax = 1000
+        } else if (primary === "hcho") {
+            indicatorAirQuality.legend = qsTr("HCHO")
+            indicatorAirQuality.valueMin = 0
+            indicatorAirQuality.valueMax = 1500
+            indicatorAirQuality.value = currentDevice.hcho
+            indicatorAirQuality.limitMin = 500
+            indicatorAirQuality.limitMax = 1000
+        } else if (primary === "co2") {
+            indicatorAirQuality.legend = (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+            indicatorAirQuality.valueMin = 0
+            indicatorAirQuality.valueMax = 2000
+            indicatorAirQuality.value = currentDevice.co2
+            indicatorAirQuality.limitMin = 850
+            indicatorAirQuality.limitMax = 1500
+        }
     }
 
     function loadGraph() {
@@ -141,10 +188,14 @@ Item {
         // Indicators
         if (isAirMonitor) {
             if (currentDevice.hasVocSensor) {
-                indicatorAirQuality.legend = qsTr("VOC")
-                indicatorAirQuality.value = currentDevice.voc
-                indicatorAirQuality.valueMin = 0
-                indicatorAirQuality.valueMax = 1500
+                if (primary === "voc") indicatorAirQuality.value = currentDevice.voc
+                else if (primary === "hcho") indicatorAirQuality.value = currentDevice.hcho
+                else if (primary === "co2") indicatorAirQuality.value = currentDevice.co2
+                else if (primary === "co") indicatorAirQuality.value = currentDevice.co
+                else if (primary === "o2") indicatorAirQuality.value = currentDevice.o2
+                else if (primary === "o3") indicatorAirQuality.value = currentDevice.o3
+                else if (primary === "no2") indicatorAirQuality.value = currentDevice.no2
+                else if (primary === "so2") indicatorAirQuality.value = currentDevice.so2
             }
         }
 
@@ -482,6 +533,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.pm1
                                 precision: 1
+                                onSensorSelection: primary = "pm1"
                             }
 
                             ItemEnvBox {
@@ -493,6 +545,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.pm25
                                 precision: 1
+                                onSensorSelection: primary = "pm25"
                             }
 
                             ItemEnvBox {
@@ -504,6 +557,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.pm10
                                 precision: 1
+                                onSensorSelection: primary = "pm10"
                             }
 
                             ItemEnvBox {
@@ -517,6 +571,7 @@ Item {
                                 limit_mid: 500
                                 limit_high: 1000
                                 precision: 0
+                                onSensorSelection: primary = "voc"
                             }
 
                             ItemEnvBox {
@@ -530,17 +585,19 @@ Item {
                                 limit_mid: 500
                                 limit_high: 1000
                                 precision: 0
+                                onSensorSelection: primary = "hcho"
                             }
 /*
                             ItemEnvBox {
                                 id: o2
                                 width: airFlow.www
-                                visible: currentDevice.hasO3Sensor
+                                visible: currentDevice.hasO2Sensor
 
                                 title: qsTr("O2")
                                 legend: qsTr("µg/m³")
-                                value: currentDevice.o3
+                                value: currentDevice.o2
                                 precision: 0
+                                onSensorSelection: primary = "o2"
                             }
 
                             ItemEnvBox {
@@ -552,6 +609,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.o3
                                 precision: 0
+                                onSensorSelection: primary = "o3"
                             }
 
                             ItemEnvBox {
@@ -563,6 +621,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.so2
                                 precision: 0
+                                onSensorSelection: primary = "so2"
                             }
 
                             ItemEnvBox {
@@ -574,6 +633,7 @@ Item {
                                 legend: qsTr("µg/m³")
                                 value: currentDevice.no2
                                 precision: 0
+                                onSensorSelection: primary = "no2"
                             }
 
                             ItemEnvBox {
@@ -585,6 +645,7 @@ Item {
                                 legend: qsTr("PPM")
                                 value: currentDevice.co
                                 precision: 0
+                                onSensorSelection: primary = "co"
                             }
 */
                             ItemEnvBox {
@@ -598,6 +659,7 @@ Item {
                                 precision: 0
                                 limit_mid: 850
                                 limit_high: 1500
+                                onSensorSelection: primary = "co2"
                             }
                         }
 
@@ -851,7 +913,9 @@ Item {
                         width: parent.width
                         height: (sensorFlick.height - airBox.height - weatherBox.height)
                         //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
+
                         asynchronous: true
+                        onLoaded: item.loadGraph()
                     }
 
                     ////////////////////////////////////////////////////////////

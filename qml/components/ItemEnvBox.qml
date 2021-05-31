@@ -25,7 +25,16 @@ Item {
         return Theme.colorGreen
     }
 
+    signal sensorSelection()
+
     ////////////////////////////////////////////////////////////////////////////
+
+    MouseArea {
+        anchors.fill: parent
+        onPressAndHold: sensorSelection()
+    }
+
+    ////////
 
     Rectangle {
         color: itemEnvBox.color

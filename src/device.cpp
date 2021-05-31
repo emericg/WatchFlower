@@ -764,22 +764,27 @@ bool Device::setSetting(const QString &key, QVariant value)
     //qDebug() << "Device::setSetting(" << key << value << ")";
     bool status = false;
 
-    m_additionalSettings.insert(key, value.toString());
-
-    if (m_dbInternal || m_dbExternal)
+    if (m_additionalSettings.value(key) != value)
     {
-        QJsonDocument json(m_additionalSettings);
-        QString json_str = QString(json.toJson());
+        m_additionalSettings.insert(key, value.toString());
 
-        QSqlQuery updateSettings;
-        updateSettings.prepare("UPDATE devices SET settings = :settings WHERE deviceAddr = :deviceAddr");
-        updateSettings.bindValue(":settings", json_str);
-        updateSettings.bindValue(":deviceAddr", getAddress());
-        if (updateSettings.exec() == false)
-            qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
+        if (m_dbInternal || m_dbExternal)
+        {
+            QJsonDocument json(m_additionalSettings);
+            QString json_str = QString(json.toJson());
+
+            QSqlQuery updateSettings;
+            updateSettings.prepare("UPDATE devices SET settings = :settings WHERE deviceAddr = :deviceAddr");
+            updateSettings.bindValue(":settings", json_str);
+            updateSettings.bindValue(":deviceAddr", getAddress());
+            if (updateSettings.exec())
+                status = true;
+            else
+                qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
+        }
+
+        Q_EMIT sensorUpdated();
     }
-
-    Q_EMIT sensorUpdated();
 
     return status;
 }

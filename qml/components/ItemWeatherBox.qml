@@ -12,17 +12,28 @@ Rectangle {
     property string legend: ""
     property string icon: ""
 
-    property bool duo: false
     property int size: 96
+    property bool duo: false
 
     property real value
+    property real limit_mid
+    property real limit_high
     property int precision: 1
+
+    signal sensorSelection()
 
     color: Theme.colorForeground
     border.color: Theme.colorSeparator
     border.width: 2
 
     ////////////////////////////////////////////////////////////////////////////
+
+    MouseArea {
+        anchors.fill: parent
+        onPressAndHold: sensorSelection()
+    }
+
+    ////////
 
     Column {
         id: column
