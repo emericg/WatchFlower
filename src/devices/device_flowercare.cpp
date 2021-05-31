@@ -228,14 +228,25 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             serviceData->readCharacteristic(chb);
         }
 
-        if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+        if (serviceData)
         {
-            // Make LED blink
-            QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
-            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-            serviceData->writeCharacteristic(cha, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
+            QBluetoothUuid l(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+            QLowEnergyCharacteristic chl = serviceData->characteristic(l);
 
-            m_bleController->disconnectFromDevice();
+            if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+            {
+                // Make the LED blink
+                serviceData->writeCharacteristic(chl, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
+
+                m_bleController->disconnectFromDevice();
+            }
+            else
+            {
+                // Make sure the LED is off
+                if (chl.value().size() == 2)
+                    if (chl.value().at(0) != 0 || chl.value().at(1) != 0)
+                        serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
+            }
         }
     }
 }
