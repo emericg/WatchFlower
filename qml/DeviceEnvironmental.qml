@@ -15,7 +15,7 @@ Item {
     property bool isWeatherStation: false
     property bool isGeigerCounter: false
 
-    property string primary: ""
+    property string primary: "voc"
 
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
@@ -88,7 +88,7 @@ Item {
         if (clickedDevice === currentDevice) return
 
         currentDevice = clickedDevice
-        console.log("DeviceEnvironmental // loadDevice() >> " + currentDevice)
+        //console.log("DeviceEnvironmental // loadDevice() >> " + currentDevice)
 
         if (currentDevice.hasSetting("primary")) {
             primary = currentDevice.getSetting("primary")
@@ -189,16 +189,16 @@ Item {
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
-        indicatorDisconnected.visible = !currentDevice.isDataAvailable()
+        //indicatorDisconnected.visible = !currentDevice.isDataAvailable()
         //indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
         //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
         //indicatorHygrometer.visible = isWeatherStation && currentDevice.isDataAvailable()
 
         // Indicators
         if (primary === "hygrometer") {
-            indicatorAirQuality.visible = false
-            indicatorRadioactivity.visible = false
-            indicatorHygrometer.visible = true
+            //indicatorAirQuality.visible = false
+            //indicatorRadioactivity.visible = false
+            //indicatorHygrometer.visible = true
 
             if (currentDevice.deviceTempC < -40) {
                 sensorTemp.visible = false
@@ -221,13 +221,13 @@ Item {
                 }
             }
         } else if (primary === "barometer") {
-            indicatorAirQuality.visible = false
-            indicatorRadioactivity.visible = false
-            indicatorHygrometer.visible = true
+            //indicatorAirQuality.visible = false
+            //indicatorRadioactivity.visible = false
+            //indicatorHygrometer.visible = true
         } else if (isAirMonitor) {
-            indicatorAirQuality.visible = true
-            indicatorRadioactivity.visible = false
-            indicatorHygrometer.visible = false
+            //indicatorAirQuality.visible = true
+            //indicatorRadioactivity.visible = false
+            //indicatorHygrometer.visible = false
 
             if (currentDevice.hasVocSensor) {
                 if (primary === "voc") indicatorAirQuality.value = currentDevice.voc

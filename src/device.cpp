@@ -690,7 +690,7 @@ void Device::setLocationName(const QString &name)
             updateLocation.exec();
         }
 
-        Q_EMIT dataUpdated();
+        Q_EMIT settingsUpdated();
 
         if (SettingsManager::getInstance()->getOrderBy() == "location")
         {
@@ -715,7 +715,7 @@ void Device::setAssociatedName(const QString &name)
             updatePlant.exec();
         }
 
-        Q_EMIT dataUpdated();
+        Q_EMIT settingsUpdated();
 
         if (SettingsManager::getInstance()->getOrderBy() == "plant")
         {
@@ -739,7 +739,7 @@ void Device::setOutside(const bool outside)
             updateOutside.exec();
         }
 
-        Q_EMIT sensorUpdated();
+        Q_EMIT settingsUpdated();
     }
 }
 
@@ -783,7 +783,7 @@ bool Device::setSetting(const QString &key, QVariant value)
                 qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
         }
 
-        Q_EMIT sensorUpdated();
+        Q_EMIT settingsUpdated();
     }
 
     return status;

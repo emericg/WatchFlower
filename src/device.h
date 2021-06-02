@@ -100,10 +100,10 @@ class Device: public QObject
     Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
 
-    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY sensorUpdated) // TODO settingsUpdated
-    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY sensorUpdated)
-    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY sensorUpdated)
-    Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY settingsUpdated)
+    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY settingsUpdated)
+    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY settingsUpdated)
+    Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY settingsUpdated)
 
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)

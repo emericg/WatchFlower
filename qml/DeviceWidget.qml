@@ -19,6 +19,7 @@ Item {
 
     Connections {
         target: boxDevice
+        onSettingsUpdated: { updateSensorSettings() }
         onStatusUpdated: { updateSensorStatus() }
         onSensorUpdated: { initBoxData() }
         onBatteryUpdated: { updateSensorBattery() }
@@ -28,6 +29,7 @@ Item {
     Connections {
         target: Theme
         onCurrentThemeChanged: {
+            updateSensorSettings()
             updateSensorStatus()
             updateSensorBattery()
             updateSensorData()
@@ -796,6 +798,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 4
 
+            property string primaryValue: "voc"
             property int limitMin: -1
             property int limitMax: -1
 
@@ -806,54 +809,53 @@ Item {
 
             Connections {
                 target: boxDevice
-                onSensorUpdated: {
-                    initData()
-                    updateData()
-                }
+                onSettingsUpdated: initData()
+                onSensorUpdated: updateData()
             }
 
             function initData() {
                 if (boxDevice.hasSetting("primary")) {
-                    var p = boxDevice.getSetting("primary")
+                    primaryValue = boxDevice.getSetting("primary")
+                }
 
-                    if (p === "voc") {
-                        gaugeLegend.text = qsTr("VOC")
-                        gaugeValue.from = 0
-                        gaugeValue.to = 1500
-                        limitMin = 500
-                        limitMax = 1000
-                        gaugeValue.value = boxDevice.voc
-                    } else if (p === "hcho") {
-                        gaugeLegend.text = qsTr("HCHO")
-                        gaugeValue.from = 0
-                        gaugeValue.to = 1500
-                        limitMin = 500
-                        limitMax = 1000
-                        gaugeValue.value = boxDevice.hcho
-                    } else if (p === "co2") {
-                        gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
-                        gaugeValue.from = 0
-                        gaugeValue.to = 2000
-                        limitMin = 850
-                        limitMax = 1500
-                        gaugeValue.value = boxDevice.co2
-                    }
+                if (primaryValue === "voc") {
+                    gaugeLegend.text = qsTr("VOC")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 1500
+                    limitMin = 500
+                    limitMax = 1000
+                    gaugeValue.value = boxDevice.voc
+                } else if (primaryValue === "hcho") {
+                    gaugeLegend.text = qsTr("HCHO")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 1500
+                    limitMin = 500
+                    limitMax = 1000
+                    gaugeValue.value = boxDevice.hcho
+                } else if (primaryValue === "co2") {
+                    gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+                    gaugeValue.from = 0
+                    gaugeValue.to = 2000
+                    limitMin = 850
+                    limitMax = 1500
+                    gaugeValue.value = boxDevice.co2
                 }
             }
 
             function updateData() {
-                // value
                 if (boxDevice.hasSetting("primary")) {
-                    var p = boxDevice.getSetting("primary")
-                    if (p === "voc") gaugeValue.value = boxDevice.voc
-                    else if (p === "hcho") gaugeValue.value = boxDevice.hcho
-                    else if (p === "co2") gaugeValue.value = boxDevice.co2
-                    else if (p === "co") gaugeValue.value = boxDevice.co
-                    else if (p === "o2") gaugeValue.value = boxDevice.o2
-                    else if (p === "o3") gaugeValue.value = boxDevice.o3
-                    else if (p === "no2") gaugeValue.value = boxDevice.no2
-                    else if (p === "so2") gaugeValue.value = boxDevice.so2
+                    primaryValue = boxDevice.getSetting("primary")
                 }
+
+                // value
+                if (primaryValue === "voc") gaugeValue.value = boxDevice.voc
+                else if (primaryValue === "hcho") gaugeValue.value = boxDevice.hcho
+                else if (primaryValue === "co2") gaugeValue.value = boxDevice.co2
+                else if (primaryValue === "co") gaugeValue.value = boxDevice.co
+                else if (primaryValue === "o2") gaugeValue.value = boxDevice.o2
+                else if (primaryValue === "o3") gaugeValue.value = boxDevice.o3
+                else if (primaryValue === "no2") gaugeValue.value = boxDevice.no2
+                else if (primaryValue === "so2") gaugeValue.value = boxDevice.so2
 
                 // limits
                 if (limitMin > 0 && limitMax > 0) {
