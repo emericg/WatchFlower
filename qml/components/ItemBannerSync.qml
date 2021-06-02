@@ -6,15 +6,16 @@ import DeviceUtils 1.0
 Rectangle {
     id: statusBox
     width: parent.width
-    height: (syncing && visible) ? (isPhone ? 40 : 48) : 0
+    height: syncing ? (isPhone ? 40 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
     clip: true
     visible: (height > 0)
     color: Theme.colorActionbar
 
-    property bool syncing: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
-                            currentDevice.status === DeviceUtils.DEVICE_UPDATING_REALTIME)
+    property bool syncing: (currentDevice &&
+                            (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
+                             currentDevice.status === DeviceUtils.DEVICE_UPDATING_REALTIME))
 
     ////////////////
 
@@ -81,8 +82,8 @@ Rectangle {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
 
-        visible: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
-        width: (parent.width * (currentDevice.historyUpdatePercent/100))
+        visible: (currentDevice && currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
+        width: currentDevice ? (parent.width * (currentDevice.historyUpdatePercent/100)) : 0
         height: 4
         color: Theme.colorActionbarHighlight
     }

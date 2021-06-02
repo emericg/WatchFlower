@@ -20,13 +20,6 @@ Item {
         imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
         imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
 
-        // Plant
-        if (currentDevice.hasSoilMoistureSensor) {
-            itemPlant.visible = true
-        } else {
-            itemPlant.visible = false
-        }
-
         // Status
         updateStatusText()
     }

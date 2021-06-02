@@ -13,32 +13,32 @@ Item {
     Connections {
         target: currentDevice
         onStatusUpdated: {
-            rectangleDeviceData.updateHeader()
+            plantSensorData.updateHeader()
         }
         onSensorUpdated: {
-            rectangleDeviceData.updateHeader()
-            rectangleDeviceLimits.updateHeader()
+            plantSensorData.updateHeader()
+            plantSensorLimits.updateHeader()
         }
         onBatteryUpdated: {
-            rectangleDeviceData.updateHeader()
-            rectangleDeviceLimits.updateHeader()
+            plantSensorData.updateHeader()
+            plantSensorLimits.updateHeader()
         }
         onDataUpdated: {
-            rectangleDeviceData.updateData()
-            rectangleDeviceHistory.updateData()
+            plantSensorData.updateData()
+            plantSensorHistory.updateData()
         }
         onLimitsUpdated: {
-            rectangleDeviceData.updateData()
+            plantSensorData.updateData()
         }
     }
 
     Connections {
         target: Theme
         onCurrentThemeChanged: {
-            rectangleDeviceData.updateHeader()
-            rectangleDeviceHistory.updateHeader()
-            rectangleDeviceHistory.updateColors()
-            rectangleDeviceLimits.updateHeader()
+            plantSensorData.updateHeader()
+            plantSensorHistory.updateHeader()
+            plantSensorHistory.updateColors()
+            plantSensorLimits.updateHeader()
         }
     }
 
@@ -94,10 +94,10 @@ Item {
     ////////
 
     function isHistoryMode() {
-        return rectangleDeviceData.isHistoryMode()
+        return plantSensorData.isHistoryMode()
     }
     function resetHistoryMode() {
-        rectangleDeviceData.resetHistoryMode()
+        plantSensorData.resetHistoryMode()
     }
 
     function loadDevice(clickedDevice) {
@@ -111,12 +111,12 @@ Item {
         sensorPages.currentIndex = 0
         sensorPages.interactive = isPhone
 
-        rectangleDeviceData.loadData()
-        rectangleDeviceHistory.updateHeader()
-        rectangleDeviceHistory.loadData()
-        rectangleDeviceLimits.updateHeader()
-        rectangleDeviceLimits.updateLimits()
-        rectangleDeviceLimits.updateLimitsVisibility()
+        plantSensorData.loadData()
+        plantSensorHistory.updateHeader()
+        plantSensorHistory.loadData()
+        plantSensorLimits.updateHeader()
+        plantSensorLimits.updateLimits()
+        plantSensorLimits.updateLimitsVisibility()
 
         if (isMobile) tabletMenuDevice.setActiveDeviceData()
         if (isDesktop) appHeader.setActiveDeviceData()
@@ -154,15 +154,15 @@ Item {
 
             DevicePlantSensorData {
                 clip: false
-                id: rectangleDeviceData
+                id: plantSensorData
             }
             DevicePlantSensorHistory {
                 clip: true
-                id: rectangleDeviceHistory
+                id: plantSensorHistory
             }
             DevicePlantSensorLimits {
                 clip: false
-                id: rectangleDeviceLimits
+                id: plantSensorLimits
             }
         }
     }
