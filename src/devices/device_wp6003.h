@@ -48,6 +48,9 @@ public:
     DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceWP6003();
 
+public slots:
+    virtual bool hasData() const;
+
 private:
     // QLowEnergyController related
     void serviceScanDone();

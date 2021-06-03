@@ -1337,7 +1337,7 @@ Item {
                     }
 
                     Row {
-                        id: sections
+                        id: lumiScale
                         anchors.right: parent.right
                         anchors.rightMargin: 8
                         anchors.left: parent.left
@@ -1350,7 +1350,7 @@ Item {
                         Rectangle {
                             id: lux_1
                             height: 16
-                            width: (sections.width - 4) * 0.1 // 0 to 1k
+                            width: (lumiScale.width - 4) * 0.1 // 0 to 1k
                             visible: !outsideMode
                             color: Theme.colorGrey
                             Text {
@@ -1366,7 +1366,7 @@ Item {
                         Rectangle {
                             id: lux_2
                             height: 16
-                            width: (sections.width - 8) * 0.2 // 1k to 3k
+                            width: (lumiScale.width - 8) * 0.2 // 1k to 3k
                             visible: !outsideMode
                             color: "grey"
                             Text {
@@ -1382,7 +1382,7 @@ Item {
                         Rectangle {
                             id: lux_3
                             height: 16
-                            width: (sections.width - 16) * 0.5 // 3k to 8k
+                            width: (lumiScale.width - 16) * 0.5 // 3k to 8k
                             visible: !outsideMode
                             color: Theme.colorYellow
                             Text {
@@ -1398,7 +1398,7 @@ Item {
                         Rectangle {
                             id: lux_4
                             height: 16
-                            width: (sections.width - 0) * 0.2 // 8k+
+                            width: (lumiScale.width - 0) * 0.2 // 8k+
                             visible: !outsideMode
                             color: "orange"
                             Text {
@@ -1415,7 +1415,7 @@ Item {
                         Rectangle {
                             id: lux_5
                             height: 16
-                            width: (sections.width - 6) * 0.16 // 0-15k
+                            width: (lumiScale.width - 6) * 0.16 // 0-15k
                             visible: outsideMode
                             color: "grey"
                             Text {
@@ -1431,7 +1431,7 @@ Item {
                         Rectangle {
                             id: lux_6
                             height: 16
-                            width: (sections.width - 6) * 0.84 // 15k+
+                            width: (lumiScale.width - 6) * 0.84 // 15k+
                             visible: outsideMode
                             color: Theme.colorYellow
                             Text {

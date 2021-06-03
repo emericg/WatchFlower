@@ -274,6 +274,7 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool DeviceEsp32GeigerCounter::hasData() const
 {

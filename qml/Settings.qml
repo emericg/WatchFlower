@@ -292,7 +292,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_appThemeAuto
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -362,7 +362,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bigwidget
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -514,7 +514,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bluetoothControl
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -700,7 +700,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_minimized
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -751,7 +751,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_worker
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -836,7 +836,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_notifications
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1051,7 +1051,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_dynascale
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1099,7 +1099,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_showdots
                     anchors.right: parent.right
-                    anchors.rightMargin: 12 + screenPaddingRight
+                    anchors.rightMargin: 8 + screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 

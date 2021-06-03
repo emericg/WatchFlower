@@ -273,3 +273,32 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+bool DeviceEsp32AirQualityMonitor::hasData() const
+{
+    // If we have immediate data (<12h old)
+    if (m_temperature > 0 || m_humidity > 0 || m_pressure > 0 || m_voc > 0 || m_co2 > 0)
+        return true;
+
+    // Otherwise, check if we have stored data
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery hasData;
+        hasData.prepare("SELECT COUNT(*) FROM sensorData WHERE deviceAddr = :deviceAddr;");
+        hasData.bindValue(":deviceAddr", getAddress());
+
+        if (hasData.exec() == false)
+            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+
+        while (hasData.next())
+        {
+            if (hasData.value(0).toInt() > 0) // data count
+                return true;
+        }
+    }
+
+    return false;
+}
+
+/* ************************************************************************** */

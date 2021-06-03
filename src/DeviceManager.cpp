@@ -806,7 +806,10 @@ void DeviceManager::updateDevice(const QString &address)
 
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
-    //qDebug() << "addBleDevice";
+    //qDebug() << "DeviceManager::addBleDevice()" << " > RSSI" << info.rssi();
+
+    if (info.rssi() >= 0) return; // we probably just hit the device cache
+    //if (info.rssi() < -90) return; // device too far away?
 
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {

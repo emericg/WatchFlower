@@ -5,17 +5,13 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
 QT     += core bluetooth sql
-QT     += qml quickcontrols2 svg widgets charts
+QT     += qml quick quickcontrols2 svg widgets charts
 android { QT += androidextras }
 ios { QT += gui-private }
 
 # Validate Qt version
-if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 12)) {
-    error("You need AT LEAST Qt 5.12 to build $${TARGET}")
-}
-if (equals(QT_MAJOR_VERSION, 6)) {
-    error("You need Qt 5 to build $${TARGET}")
-}
+!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for WatchFlower")
+!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for WatchFlower")
 
 # Project features #############################################################
 
