@@ -308,7 +308,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.horizontalCenterOffset: -1
 
-                            visible: (!singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*2)
+                            visible: (!singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*1.5)
 
                             rotation: 90
                             text: value.toFixed(floatprecision) + suffix.replace("<br>", "")

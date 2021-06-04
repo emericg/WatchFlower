@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Shapes 1.0
 
 import ThemeEngine 1.0
 
@@ -56,59 +57,59 @@ Item {
 
             color: Theme.colorSeparator
 
-            Rectangle {
+            Rectangle { // top
                 width: 6; height: 2;
                 color: Theme.colorSeparator
                 anchors.top: parent.top
                 anchors.right: parent.right
-
-                Rectangle {
-                    width: vocLegend.width; height: 2;
-                    //visible: false
-                    opacity: 0.25
-                    color: Theme.colorSeparator
-                }
             }
-            Rectangle {
+            Rectangle { // limitMin
                 width: 6; height: 2;
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: (parent.height * (limitMin / scaleMax))
 
-                Rectangle {
-                    width: vocLegend.width; height: 2;
-                    //visible: false
+                Shape {
+                    anchors.verticalCenter: parent.verticalCenter
                     opacity: 0.25
-                    color: Theme.colorSeparator
+                    ShapePath {
+                        strokeColor: Theme.colorSeparator
+                        strokeWidth: isPhone ? 1 : 2
+                        strokeStyle: ShapePath.DashLine
+                        dashPattern: [ 1, 4 ]
+                        startX: 0
+                        startY: 0
+                        PathLine { x: chartEnvironmentalVoc.width; y: 0; }
+                    }
                 }
             }
-            Rectangle {
+            Rectangle { // limitMax
                 width: 6; height: 2;
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: (parent.height * (limitMax / scaleMax))
 
-                Rectangle {
-                    width: vocLegend.width; height: 2;
-                    //visible: false
+                Shape {
+                    anchors.verticalCenter: parent.verticalCenter
                     opacity: 0.25
-                    color: Theme.colorSeparator
+                    ShapePath {
+                        strokeColor: Theme.colorSeparator
+                        strokeWidth: isPhone ? 1 : 2
+                        strokeStyle: ShapePath.DashLine
+                        dashPattern: [ 1, 4 ]
+                        startX: 0
+                        startY: 0
+                        PathLine { x: chartEnvironmentalVoc.width; y: 0; }
+                    }
                 }
             }
-            Rectangle {
+            Rectangle { // bottom
                 width: 6; height: 2;
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-
-                Rectangle {
-                    width: vocLegend.width; height: 2;
-                    visible: false
-                    opacity: 0.25
-                    color: Theme.colorSeparator
-                }
             }
         }
 

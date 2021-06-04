@@ -136,7 +136,7 @@ Item {
                 sensorHygro.visible = true
             }
             if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
-                if (currentDevice.getHeatIndex() > currentDevice.getTemp()) {
+                if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
                     heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                     heatIndex.visible = true
                 }
@@ -210,7 +210,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     font.bold: false
-                    font.pixelSize: isPhone ? 18 : 20
+                    font.pixelSize: isPhone ? 19 : 20
                     color: cccc
                 }
 

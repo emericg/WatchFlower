@@ -214,7 +214,7 @@ Item {
                     sensorHygro.visible = true
                 }
                 if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
-                    if (currentDevice.getHeatIndex() > currentDevice.getTemp()) {
+                    if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
                         heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                         heatIndex.visible = true
                     }
@@ -330,7 +330,7 @@ Item {
 
                 AirQualityIndicator {
                     id: indicatorAirQuality
-                    width: singleColumn ? headerBox.height * 0.73 : headerBox.width * 0.5
+                    width: singleColumn ? headerBox.height * 0.72 : headerBox.width * 0.5
                     height: width
 
                     color: cccc
@@ -361,7 +361,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 18 : 20
+                        font.pixelSize: isPhone ? 19 : 20
                         color: cccc
                     }
 

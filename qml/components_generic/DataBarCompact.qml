@@ -98,7 +98,7 @@ Item {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
 
-                    visible: (limitMin > 0 && limitMin > valueMin)
+                    visible: (limitMin > 0 && limitMin > valueMin && limitMin < valueMax)
                     x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * rect_bg.width
                     color: (limitMin < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                     opacity: (limitMin < value) ? 0.66 : 0.33
@@ -113,7 +113,7 @@ Item {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
 
-                    visible: (limitMax > 0 && limitMax < valueMax)
+                    visible: (limitMax > 0 && limitMax > valueMin && limitMax < valueMax)
                     x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * rect_bg.width
                     color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                     opacity: (limitMax < value) ? 0.66 : 0.33

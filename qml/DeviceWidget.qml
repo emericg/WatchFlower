@@ -116,6 +116,8 @@ Item {
                     imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
         }
+
+        imageForward.color = boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
     }
 
     function updateSensorBattery() {

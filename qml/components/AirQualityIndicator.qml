@@ -20,8 +20,8 @@ Item {
 
     Item {
         id: legendSimple
-        width: parent.width + (isMobile ? 30 : 40)
-        height: parent.height + (isMobile ? 30 : 40)
+        width: parent.width + (isMobile ? 28 : 40)
+        height: parent.height + (isMobile ? 28 : 40)
         anchors.centerIn: parent
 
         visible: true
@@ -34,7 +34,7 @@ Item {
             animationEnd: false
             animationValue: false
 
-            arcWidth: (isMobile ? 8 : 10)
+            arcWidth: (isMobile ? 7 : 10)
             arcBegin: 0
             arcEnd: ((limitMin/valueMax) * 270) - 2
             arcOffset: 225
@@ -49,7 +49,7 @@ Item {
             animationEnd: false
             animationValue: false
 
-            arcWidth: (isMobile ? 8 : 10)
+            arcWidth: (isMobile ? 7 : 10)
             arcBegin: ((limitMin/valueMax) * 270) + 2
             arcEnd: ((limitMax/valueMax) * 270) - 2
             arcOffset: 225
@@ -64,7 +64,7 @@ Item {
             animationEnd: false
             animationValue: false
 
-            arcWidth: (isMobile ? 8 : 10)
+            arcWidth: (isMobile ? 7 : 10)
             arcBegin: ((limitMax/valueMax) * 270) + 2
             arcEnd: 270
             arcOffset: 225
@@ -81,7 +81,7 @@ Item {
         arcOffset: 225
         arcBegin: 0
         arcEnd: 270
-        arcWidth: isMobile ? 14 : 18
+        arcWidth: isMobile ? 12 : 18
         arcColor: indicatorAirQuality.color
 
         background: true
@@ -101,7 +101,7 @@ Item {
         height: parent.height * 0.58
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -12
+        anchors.verticalCenterOffset: -14
 
         color: indicatorAirQuality.color
         opacity: 0.6
@@ -142,7 +142,7 @@ Item {
 
             text: indicatorAirQuality.value
             color: indicatorAirQuality.color
-            font.pixelSize: isMobile ? 22 : 24
+            font.pixelSize: isMobile ? 20 : 24
             font.bold: true
         }
         Text {
@@ -150,7 +150,7 @@ Item {
 
             text: indicatorAirQuality.legend
             color: indicatorAirQuality.color
-            font.pixelSize: isMobile ? 22 : 24
+            font.pixelSize: isMobile ? 20 : 24
             font.bold: false
         }
     }

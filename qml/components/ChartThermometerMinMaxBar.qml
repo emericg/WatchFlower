@@ -56,15 +56,15 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: (index % 2 === 0) ? Theme.colorForeground : "transparent"
+        color: (index % 2 === 0) ? Theme.colorBackground : Theme.colorForeground
         opacity: 0.66
     }
 
     ImageSvg {
         id: nodata
-        width: 24; height: 24;
+        width: 20; height: 20;
         anchors.bottom: dayoftheweek.top
-        anchors.bottomMargin: 16
+        anchors.bottomMargin: isPhone ? 12 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
         visible: (mmd.tempMean < -40)

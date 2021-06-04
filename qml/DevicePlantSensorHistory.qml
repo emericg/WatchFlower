@@ -68,23 +68,10 @@ Item {
             conduChart.visible = false
         }
 
-        // graph sizes
-        if (graphCount === 3 && graphGrid.columns === 2) {
-            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
-                hygroChart.duo = 2
-                lumiChart.duo = 1
-            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
-                hygroChart.duo = 1
-                lumiChart.duo = 2
-            }
-        } else {
-            hygroChart.duo = 1
-            lumiChart.duo = 1
-        }
 
         updateColors()
-        updateSize()
         updateData()
+        updateSize()
     }
 
     function updateColors() {
@@ -97,6 +84,7 @@ Item {
         //console.log("width: " + graphGrid.width)
         //console.log("height: " + graphGrid.height)
 
+        // grid geometry
         if (isMobile) {
             if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
@@ -135,6 +123,20 @@ Item {
                 buttonPanel.anchors.right = rectangleHeader.right
                 rectangleHeader.height = 48
             }
+        }
+
+        // graph size multiplier
+        if (graphCount === 3 && graphGrid.columns === 2) {
+            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
+                hygroChart.duo = 2
+                lumiChart.duo = 1
+            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
+                hygroChart.duo = 1
+                lumiChart.duo = 2
+            }
+        } else {
+            hygroChart.duo = 1
+            lumiChart.duo = 1
         }
     }
 
