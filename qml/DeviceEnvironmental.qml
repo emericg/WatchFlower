@@ -200,20 +200,20 @@ Item {
             //indicatorRadioactivity.visible = false
             //indicatorHygrometer.visible = true
 
-            if (currentDevice.deviceTempC < -40) {
+            if (currentDevice.temperatureC < -40) {
                 sensorTemp.visible = false
                 heatIndex.visible = false
                 sensorHygro.visible = false
             } else {
-                if (currentDevice.deviceTempC >= -40) {
+                if (currentDevice.temperatureC >= -40) {
                     sensorTemp.text = currentDevice.getTempString()
                     sensorTemp.visible = true
                 }
-                if (currentDevice.deviceHumidity >= 0) {
-                    sensorHygro.text = currentDevice.deviceHumidity.toFixed(0) + "% " + qsTr("humidity")
+                if (currentDevice.humidity >= 0) {
+                    sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
                     sensorHygro.visible = true
                 }
-                if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
+                if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
                     if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
                         heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                         heatIndex.visible = true
@@ -880,7 +880,7 @@ Item {
                                 title: qsTr("Temperature")
                                 legend: "°" + settingsManager.tempUnit
                                 icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
-                                value: currentDevice.deviceTemp
+                                value: currentDevice.temperature
                                 precision: 1
                             }
                             ItemWeatherBox {
@@ -891,7 +891,7 @@ Item {
                                 title: qsTr("Humidity")
                                 legend: qsTr("°RH")
                                 icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                                value: currentDevice.deviceHumidity
+                                value: currentDevice.humidity
                                 precision: 0
                             }
                             ItemWeatherBox {
@@ -926,7 +926,7 @@ Item {
                                 title: qsTr("Luminosity")
                                 legend: qsTr("lux")
                                 icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                value: currentDevice.deviceLuminosity
+                                value: currentDevice.luminosity
                                 precision: 0
                             }
                             ItemWeatherBox {

@@ -380,8 +380,7 @@ void Device::refreshDataFinished(bool status, bool cached)
     }
 
     // Inform device manager
-    if (!cached)
-        Q_EMIT deviceUpdated(this);
+    if (!cached) Q_EMIT deviceUpdated(this);
 }
 
 void Device::refreshHistoryFinished(bool status)

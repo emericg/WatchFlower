@@ -42,7 +42,7 @@ Item {
             tempChart.visible = false
         }
         if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) {
-            if (currentDevice.deviceSoilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
+            if (currentDevice.soilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
                 hygroChart.visible = true
                 graphCount += 1
             } else {
@@ -58,7 +58,7 @@ Item {
             lumiChart.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor) {
-            if (currentDevice.deviceSoilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
+            if (currentDevice.soilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
                 conduChart.visible = true
                 graphCount += 1
             } else {
@@ -67,7 +67,6 @@ Item {
         } else {
             conduChart.visible = false
         }
-
 
         updateColors()
         updateData()
@@ -326,7 +325,7 @@ Item {
             ddd: graphGrid.mode
             uuu: ChartHistory.Data.Temperature
             color: Theme.colorGreen
-            suffix: qsTr("°C")
+            suffix: "°"
             floatprecision: 1
 
             valueMax: currentDevice.tempMax*1.2

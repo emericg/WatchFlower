@@ -27,7 +27,9 @@ Item {
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: { updateData() }
+        onTempUnitChanged: {
+            updateData()
+        }
         onAppLanguageChanged: {
             updateData()
             updateStatusText()
@@ -118,7 +120,7 @@ Item {
         if (!currentDevice.isThermometer) return
         //console.log("DeviceThermometer // updateData() >> " + currentDevice)
 
-        if (currentDevice.deviceTempC < -40) {
+        if (currentDevice.temperatureC < -40) {
             sensorDisconnected.visible = true
 
             sensorTemp.visible = false
@@ -127,15 +129,15 @@ Item {
         } else {
             sensorDisconnected.visible = false
 
-            if (currentDevice.deviceTempC >= -40) {
+            if (currentDevice.temperatureC >= -40) {
                 sensorTemp.text = currentDevice.getTempString()
                 sensorTemp.visible = true
             }
-            if (currentDevice.deviceHumidity >= 0) {
-                sensorHygro.text = currentDevice.deviceHumidity.toFixed(0) + "% " + qsTr("humidity")
+            if (currentDevice.humidity >= 0) {
+                sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
                 sensorHygro.visible = true
             }
-            if (currentDevice.deviceTempC >= 27 && currentDevice.deviceHumidity >= 40) {
+            if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
                 if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
                     heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                     heatIndex.visible = true
@@ -230,7 +232,6 @@ Item {
                     rotation: 90
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    //visible: (currentDevice.hasBatteryLevel && currentDevice.deviceTempC > -40)
                     fillMode: Image.PreserveAspectCrop
                     color: cccc
                     visible: source

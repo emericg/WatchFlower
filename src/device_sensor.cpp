@@ -1298,7 +1298,7 @@ void DeviceSensor::getChartData_plantAIO(int maxDays,
         if (!hasSoilMoistureSensor()) data = "humidity";
 
         QString time = "datetime('now', 'localtime', '-" + QString::number(maxDays) + " days')";
-        if (m_dbExternal)  time = "DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY)";
+        if (m_dbExternal) time = "DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY)";
 
         QSqlQuery graphData;
         graphData.prepare("SELECT ts_full, " + data + ", soilConductivity, temperature, luminosity " \

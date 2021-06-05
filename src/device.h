@@ -126,9 +126,9 @@ Q_SIGNALS:
     void connected();
     void disconnected();
 
-    void statusUpdated();
     void deviceUpdated(Device *d);
     void sensorUpdated();
+    void statusUpdated();
     void settingsUpdated();
     void batteryUpdated();
     void rssiUpdated();
@@ -147,6 +147,10 @@ protected:
     QString m_deviceName;
     QString m_deviceFirmware = "UNKN";
     int m_deviceBattery = -1;
+
+    // Db
+    bool m_dbInternal = false;
+    bool m_dbExternal = false;
 
     // Device settings
     QString m_associatedName;
@@ -203,54 +207,16 @@ protected:
 
     virtual bool getSqlDeviceInfos();
 
-    bool m_dbInternal = false;
-    bool m_dbExternal = false;
+    // helpers
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
+    void setFirmware(const QString &firmware);
+    void setBattery(const int battery);
+    void setBatteryFirmware(const int battery, const QString &firmware);
 
 public:
     Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
-
-    virtual void parseAdvertisementData(const QByteArray &value);
-
-public slots:
-    void deviceConnect();           //!< Initiate a BLE connection with a device
-    void deviceDisconnect();
-
-    void actionLedBlink();
-    void actionWatering();
-    void actionClearData();
-    void actionClearHistory();
-
-    void refreshQueue();
-    void refreshStart();
-    void refreshStartHistory();
-    void refreshStartRealtime();
-    void refreshRetry();
-    void refreshStop();
-
-    // Status
-    int getStatus() const { return m_ble_status; }
-    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
-    bool isDataAvailable() const;       //!< Has at least >12h old data
-    bool isBusy() const;                //!< Is currently doing something?
-    bool isWorking() const;             //!< Is currently working?
-    bool isUpdating() const;            //!< Is currently being updated?
-    bool isErrored() const;             //!< Has emitted a BLE error
-
-    bool needsUpdateRt() const;
-    bool needsUpdateDb() const;
-
-    QString getLastUpdateString() const;
-    int getLastUpdateInt() const;
-    int getLastUpdateDbInt() const;
-    int getLastErrorInt() const;
-
-    QDateTime getDeviceUptime() const;
-    float getDeviceUptime_days() const;
-    QDateTime getLastHistorySync() const;
-    float getLastHistorySync_days() const;
-    virtual int getHistoryUpdatePercent() const;
 
     // Device infos
     QString getModel() const { return m_deviceModel; }
@@ -259,32 +225,6 @@ public slots:
     QString getFirmware() const { return m_deviceFirmware; }
     int getBatteryLevel() const { return m_deviceBattery; }
 
-    // helpers
-    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
-    void setFirmware(const QString &firmware);
-    void setBattery(const int battery);
-    void setBatteryFirmware(const int battery, const QString &firmware);
-
-    // RSSI
-    int getRssi() const { return m_rssi; }
-    void setRssi(const int rssi);
-    void cleanRssi();
-
-    // Device associated data
-    QString getLocationName() { return m_locationName; }
-    void setLocationName(const QString &name);
-    QString getAssociatedName() { return m_associatedName; }
-    void setAssociatedName(const QString &name);
-    int getManualIndex() const { return m_manualOrderIndex; }
-    bool isInside() const { return !m_isOutside; }
-    bool isOutside() const { return m_isOutside; }
-    void setOutside(const bool outside);
-    // Device additional settings
-    bool hasSetting(const QString &key) const;
-    QVariant getSetting(const QString &key) const;
-    bool setSetting(const QString &key, QVariant value);
-
-public:
     // Device type, capabilities and sensors
     int getDeviceType() const { return m_deviceType; }
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
@@ -331,6 +271,67 @@ public:
     bool hasVocSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_VOC); }
     bool hasHchoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HCHO); }
     bool hasGeigerCounter() const { return (m_deviceSensors & DeviceUtils::SENSOR_GEIGER); }
+
+    // Device RSSI
+    int getRssi() const { return m_rssi; }
+    void setRssi(const int rssi);
+    void cleanRssi();
+
+    // BLE advertisement
+    virtual void parseAdvertisementData(const QByteArray &value);
+
+public slots:
+    void deviceConnect();               //!< Initiate a BLE connection with a device
+    void deviceDisconnect();
+
+    void actionLedBlink();
+    void actionWatering();
+    void actionClearData();
+    void actionClearHistory();
+
+    void refreshQueue();
+    void refreshStart();
+    void refreshStartHistory();
+    void refreshStartRealtime();
+    void refreshRetry();
+    void refreshStop();
+
+    // Status
+    int getStatus() const { return m_ble_status; }
+    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
+    bool isDataAvailable() const;       //!< Has at least >12h old data
+    bool isBusy() const;                //!< Is currently doing something?
+    bool isWorking() const;             //!< Is currently working?
+    bool isUpdating() const;            //!< Is currently being updated?
+    bool isErrored() const;             //!< Has emitted a BLE error
+
+    bool needsUpdateRt() const;
+    bool needsUpdateDb() const;
+
+    QString getLastUpdateString() const;
+    int getLastUpdateInt() const;
+    int getLastUpdateDbInt() const;
+    int getLastErrorInt() const;
+
+    QDateTime getDeviceUptime() const;
+    float getDeviceUptime_days() const;
+    QDateTime getLastHistorySync() const;
+    float getLastHistorySync_days() const;
+    virtual int getHistoryUpdatePercent() const;
+
+    // Device associated data
+    QString getLocationName() { return m_locationName; }
+    void setLocationName(const QString &name);
+    QString getAssociatedName() { return m_associatedName; }
+    void setAssociatedName(const QString &name);
+    int getManualIndex() const { return m_manualOrderIndex; }
+    bool isInside() const { return !m_isOutside; }
+    bool isOutside() const { return m_isOutside; }
+    void setOutside(const bool outside);
+    // Device additional settings
+    bool hasSetting(const QString &key) const;
+    QVariant getSetting(const QString &key) const;
+    bool setSetting(const QString &key, QVariant value);
 };
 
 /* ************************************************************************** */

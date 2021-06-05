@@ -245,7 +245,7 @@ Item {
                                                       tempData.at(i).y, -99, lumiData.at(i).y)
                     } else if (appContent.state === "DeviceThermometer") {
                         dataIndicator.visible = true
-                        dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + "°F" : tempData.at(i).y.toFixed(1) + "°C"
+                        dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") : tempData.at(i).y.toFixed(1) + qsTr("°C")
                         dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
                     }
                     break;

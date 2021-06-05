@@ -19,20 +19,20 @@ Item {
 
     Connections {
         target: boxDevice
+        onSensorUpdated: { initBoxData() }
         onSettingsUpdated: { updateSensorSettings() }
         onStatusUpdated: { updateSensorStatus() }
-        onSensorUpdated: { initBoxData() }
-        onBatteryUpdated: { updateSensorBattery() }
         onDataUpdated: { updateSensorData() }
         onLimitsUpdated: { updateSensorData() }
+        onBatteryUpdated: { updateSensorBattery() }
     }
     Connections {
         target: Theme
         onCurrentThemeChanged: {
             updateSensorSettings()
             updateSensorStatus()
-            updateSensorBattery()
             updateSensorData()
+            updateSensorBattery()
         }
     }
     Connections {
@@ -44,6 +44,7 @@ Item {
     Connections {
         target: settingsManager
         onAppLanguageChanged: {
+            updateSensorSettings()
             updateSensorStatus()
             updateSensorData()
         }
@@ -56,7 +57,7 @@ Item {
     function initBoxData() {
         // Set icon
         if (boxDevice.isPlantSensor) {
-            var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
+            var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
             var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
             hasHygro = hasHygro_short || hasHygro_long
 
@@ -97,32 +98,10 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
+        updateSensorSettings()
         updateSensorStatus()
         updateSensorBattery()
         updateSensorData()
-    }
-
-    function updateSensorIcon() {
-        if (boxDevice.isPlantSensor) {
-            if (hasHygro) {
-                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                    imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
-                else
-                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-            } else {
-                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                    imageDevice.source = "qrc:/assets/icons_custom/pot_empty-24px.svg"
-                else
-                    imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
-            }
-        }
-
-        imageForward.color = boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
-    }
-
-    function updateSensorBattery() {
-        imageBattery.visible = (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
     }
 
     function updateSensorStatus() {
@@ -181,36 +160,54 @@ Item {
             if (Qt.platform.os === "osx" || Qt.platform.os === "ios") {
                 textLocation.visible = false
                 textLocation.text = ""
-                //var addr = boxDevice.deviceAddress.toUpperCase()
-                //if (Qt.platform.os === "ios") {
-                //    addr = addr.slice(1, -1)
-                //    if (isPhone || (isTablet && singleColumn)) {
-                //        addr = addr.substr(0, addr.lastIndexOf('-'))
-                //        addr += "-..."
-                //    }
-                //    textLocation.font.pixelSize = 12
-                //} else if (Qt.platform.os === "osx") {
-                //    addr = addr.slice(1, -1)
-                //    textLocation.font.pixelSize = 13
-                //}
             } else {
                 textLocation.visible = true
                 textLocation.text = boxDevice.deviceAddress
             }
         }
+        // Indicators
+        if (!loaderIndicators.sourceComponent) {
+            if (boxDevice.isPlantSensor) {
+                loaderIndicators.sourceComponent = componentPlantSensor
+            } else if (boxDevice.isThermometer) {
+                loaderIndicators.sourceComponent = componentThermometer
+            } else if (boxDevice.isEnvironmentalSensor) {
+                if (boxDevice.deviceName === "GeigerCounter")
+                    loaderIndicators.sourceComponent = componentThermometer
+                else
+                    loaderIndicators.sourceComponent = componentEnvironmentalGauge
+            }
+        }
+        if (loaderIndicators.item) {
+            loaderIndicators.item.initData()
+            loaderIndicators.item.updateData()
+        }
     }
 
-    function updateSensorData() {
+    function updateSensorBattery() {
+        imageBattery.visible = (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
+        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
+    }
 
+    function updateSensorIcon() {
         if (boxDevice.isPlantSensor) {
-            var hasHygro_short = (boxDevice.deviceSoilMoisture > 0 || boxDevice.deviceSoilConductivity > 0)
-            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
-            hasHygro = hasHygro_short || hasHygro_long
+            if (hasHygro) {
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+            } else {
+                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                    imageDevice.source = "qrc:/assets/icons_custom/pot_empty-24px.svg"
+                else
+                    imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+            }
         }
 
-        updateSensorIcon()
-        updateSensorSettings()
+        imageForward.color = boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
+    }
 
+    function updateSensorWarnings() {
         water.visible = false
         temp.visible = false
         ventilate.visible = false
@@ -223,28 +220,28 @@ Item {
             if (boxDevice.isPlantSensor) {
 
                 // Water me notif
-                if (hasHygro && boxDevice.deviceSoilMoisture < boxDevice.limitHygroMin) {
+                if (hasHygro && boxDevice.soilMoisture < boxDevice.limitHygroMin) {
                     water.visible = true
                     water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                     temp.color = Theme.colorBlue
-                } else if (boxDevice.deviceSoilMoisture > boxDevice.limitHygroMax) {
+                } else if (boxDevice.soilMoisture > boxDevice.limitHygroMax) {
                     water.visible = true
                     water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                     temp.color = Theme.colorYellow
                 }
 
                 // Extreme temperature notif
-                if (boxDevice.deviceTempC > 40) {
+                if (boxDevice.temperatureC > 40) {
                     temp.visible = true
                     temp.color = Theme.colorYellow
                     temp.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                } else if (boxDevice.deviceTempC <= 2 && boxDevice.deviceTempC > -80) {
+                } else if (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80) {
                     temp.visible = true
                     temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
 
-                    if (boxDevice.deviceTempC <= -4)
+                    if (boxDevice.temperatureC <= -4)
                         temp.color = Theme.colorRed
-                    else if (boxDevice.deviceTempC <= -2)
+                    else if (boxDevice.temperatureC <= -2)
                         temp.color = Theme.colorYellow
                     else
                         temp.color = Theme.colorBlue
@@ -276,22 +273,25 @@ Item {
                 }
             }
         }
+    }
 
-        // Has data? always display them
+    function updateSensorData() {
+        if (boxDevice.isPlantSensor) {
+            var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
+            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            hasHygro = hasHygro_short || hasHygro_long
+        }
+
+        updateSensorIcon()
+        updateSensorWarnings()
+        if (loaderIndicators.item) loaderIndicators.item.updateData()
+
         if (boxDevice.isDataAvailable()) {
-            if (boxDevice.isPlantSensor) {
-                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentPlantSensor
-            } else if (boxDevice.isThermometer) {
-                if (!loaderIndicators.sourceComponent) loaderIndicators.sourceComponent = componentThermometer
-            } else if (boxDevice.isEnvironmentalSensor) {
-                if (!loaderIndicators.sourceComponent) {
-                    if (boxDevice.deviceName === "GeigerCounter")
-                        loaderIndicators.sourceComponent = componentThermometer
-                    else
-                        loaderIndicators.sourceComponent = componentEnvironmentalGauge
-                }
-            }
-            loaderIndicators.item.updateData()
+            imageStatus.visible = false
+            loaderIndicators.visible = true
+        } else {
+            imageStatus.visible = true
+            loaderIndicators.visible = false
         }
     }
 
@@ -498,15 +498,13 @@ Item {
             anchors.verticalCenter: rowRight.verticalCenter
             layoutDirection: Qt.RightToLeft
 
-            visible: boxDevice.dataAvailable
-            //visible: (water.visible || temp.visible || ventilate.visible || nuclear.visible || warning.visible)
-
             ImageSvg {
                 id: water
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: false
                 source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                 color: Theme.colorBlue
             }
@@ -517,6 +515,7 @@ Item {
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: false
                 source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 color: Theme.colorYellow
             }
@@ -526,6 +525,7 @@ Item {
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: false
                 source: "qrc:/assets/icons_material/baseline-air-24px.svg"
                 color: Theme.colorYellow
             }
@@ -535,6 +535,7 @@ Item {
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: false
                 source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                 color: Theme.colorYellow
             }
@@ -544,6 +545,7 @@ Item {
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
+                visible: false
                 source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
                 color: Theme.colorYellow
             }
@@ -581,7 +583,6 @@ Item {
                 width: 32
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 0
 
                 visible: singleColumn
                 color: boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
@@ -623,20 +624,22 @@ Item {
             height: rowRight.height
 
             spacing: 8
-            visible: boxDevice.dataAvailable
 
             property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
             property int sensorRadius: bigAssMode ? 3 : 2
 
-            function updateData() {
-                hygro_data.height = UtilsNumber.normalize(boxDevice.deviceSoilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
-                temp_data.height = UtilsNumber.normalize(boxDevice.deviceTempC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
-                lumi_data.height = UtilsNumber.normalize(boxDevice.deviceLuminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
-                cond_data.height = UtilsNumber.normalize(boxDevice.deviceSoilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
-
-                hygro.visible = hasHygro
+            function initData() {
                 lumi.visible = boxDevice.hasLuminositySensor
+            }
+
+            function updateData() {
+                hygro.visible = hasHygro
                 cond.visible = hasHygro
+
+                hygro_data.height = UtilsNumber.normalize(boxDevice.soilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+                temp_data.height = UtilsNumber.normalize(boxDevice.temperatureC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
+                lumi_data.height = UtilsNumber.normalize(boxDevice.luminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
+                cond_data.height = UtilsNumber.normalize(boxDevice.soilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
             }
 
             Item {
@@ -746,6 +749,10 @@ Item {
             id: rectangleHygroTemp
             anchors.verticalCenter: parent.verticalCenter
 
+            function initData() {
+                //
+            }
+
             function updateData() {
                 if (boxDevice.hasGeigerCounter) {
                     textTemp.text = ""
@@ -754,10 +761,10 @@ Item {
                 } else if (boxDevice.hasVocSensor) {
                     textTemp.font.pixelSize = bigAssMode ? 28 : 26
                     textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
-                    textHygro.text = boxDevice.deviceTemp.toFixed(1) + "°"
+                    textHygro.text = boxDevice.temperature.toFixed(1) + "°"
                 } else {
-                    textTemp.text = boxDevice.deviceTemp.toFixed(1) + "°"
-                    textHygro.text = boxDevice.deviceHumidity.toFixed(0) + "%"
+                    textTemp.text = boxDevice.temperature.toFixed(1) + "°"
+                    textHygro.text = boxDevice.humidity.toFixed(0) + "%"
                 }
             }
 
@@ -803,17 +810,6 @@ Item {
             property string primaryValue: "voc"
             property int limitMin: -1
             property int limitMax: -1
-
-            Component.onCompleted: {
-                initData()
-                updateData()
-            }
-
-            Connections {
-                target: boxDevice
-                onSettingsUpdated: initData()
-                onSensorUpdated: updateData()
-            }
 
             function initData() {
                 if (boxDevice.hasSetting("primary")) {

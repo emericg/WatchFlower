@@ -12,7 +12,7 @@ Item {
 
     property string colorBackground: {
         if (headerUnicolor) return Theme.colorHeaderHighlight
-        if  (uiMode === 2) return Theme.colorBackground
+        if (uiMode === 2) return Theme.colorBackground
         return Theme.colorForeground
     }
 
@@ -32,6 +32,10 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    function tempHelper(tempDeg) {
+        return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
+    }
+
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
@@ -39,7 +43,7 @@ Item {
 
         // Has data? always display them
         if (currentDevice.isDataAvailable()) {
-            var hasHygro = (currentDevice.deviceSoilMoisture > 0 || currentDevice.deviceSoilConductivity > 0) ||
+            var hasHygro = (currentDevice.soilMoisture > 0 || currentDevice.soilConductivity > 0) ||
                            (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
 
             soil_moisture.visible = hasHygro
@@ -65,8 +69,8 @@ Item {
     function updateDataBars(soilM, soilC, soilT, tempD, humiD, lumiD) {
         soil_moisture.value = soilM
         soil_conductivity.value = soilC
-        soil_temperature.value = soilT
-        temp.value = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempD) : tempD
+        soil_temperature.value = tempHelper(soilT)
+        temp.value = tempHelper(tempD)
         humi.value = humiD
         lumi.value = lumiD
         water_tank.value =  -99
@@ -77,12 +81,12 @@ Item {
     }
 
     function resetDataBars() {
-        soil_moisture.value = currentDevice.deviceSoilMoisture
-        soil_conductivity.value = currentDevice.deviceSoilConductivity
-        soil_temperature.value = currentDevice.deviceSoilTemperature
-        temp.value = (settingsManager.tempUnit === "F") ? currentDevice.deviceTempF : currentDevice.deviceTempC
-        humi.value = currentDevice.deviceHumidity
-        lumi.value = currentDevice.deviceLuminosity
+        soil_moisture.value = currentDevice.soilMoisture
+        soil_conductivity.value = currentDevice.soilConductivity
+        soil_temperature.value = tempHelper(currentDevice.soilTemperature)
+        temp.value = currentDevice.temperature
+        humi.value = currentDevice.humidity
+        lumi.value = currentDevice.luminosity
         water_tank.value = currentDevice.waterTankLevel
 
         soil_moisture.warning = true
@@ -116,7 +120,7 @@ Item {
             colorForeground: Theme.colorBlue
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.deviceSoilMoisture
+            value: currentDevice.soilMoisture
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.hygroMax*1.10) : 50
             limitMin: currentDevice.limitHygroMin
@@ -136,12 +140,8 @@ Item {
             colorForeground: Theme.colorGreen
             colorBackground: indicatorsCompact.colorBackground
 
-            function tempHelper(tempDeg) {
-                return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
-            }
-
-            value: tempHelper(currentDevice.deviceTemp)
             floatprecision: 1
+            value: currentDevice.temperature
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
             valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: tempHelper(currentDevice.limitTempMin)
@@ -160,7 +160,7 @@ Item {
             colorForeground: Theme.colorBlue
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.deviceHumidity
+            value: currentDevice.humidity
             valueMin: 0
             valueMax: 100
             limitMin: 0
@@ -179,7 +179,7 @@ Item {
             colorForeground: Theme.colorYellow
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.deviceLuminosity
+            value: currentDevice.luminosity
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.luxMax*1.10) : 10000
             limitMin: currentDevice.limitLuxMin
@@ -198,7 +198,7 @@ Item {
             colorForeground: Theme.colorRed
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.deviceSoilConductivity
+            value: currentDevice.soilConductivity
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
             limitMin: currentDevice.limitConduMin
@@ -217,7 +217,8 @@ Item {
             colorForeground: Theme.colorGreen
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.deviceSoilTemperature
+            floatprecision: 1
+            value: tempHelper(currentDevice.soilTemperature)
             valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
             valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: 0
@@ -236,8 +237,8 @@ Item {
             colorForeground: Theme.colorBlue
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.waterTankLevel
             floatprecision: 1
+            value: currentDevice.waterTankLevel
             valueMin: 0
             valueMax: currentDevice.waterTankCapacity
             limitMin: currentDevice.waterTankCapacity * 0.15

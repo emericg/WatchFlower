@@ -39,21 +39,21 @@ class DeviceSensor: public Device
     Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
 
     // plant data
-    Q_PROPERTY(int deviceSoilMoisture READ getSoilMoisture NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceSoilConductivity READ getSoilConductivity NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceSoilTemperature READ getSoilTemperature NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceSoilPH READ getSoilPH NOTIFY dataUpdated)
+    Q_PROPERTY(int soilMoisture READ getSoilMoisture NOTIFY dataUpdated)
+    Q_PROPERTY(int soilConductivity READ getSoilConductivity NOTIFY dataUpdated)
+    Q_PROPERTY(float soilTemperature READ getSoilTemperature NOTIFY dataUpdated)
+    Q_PROPERTY(float soilPH READ getSoilPH NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankLevel READ getWaterTankLevel NOTIFY dataUpdated)
     Q_PROPERTY(float waterTankCapacity READ getWaterTankCapacity NOTIFY dataUpdated)
     Q_PROPERTY(QDateTime lastMove READ getLastMove NOTIFY dataUpdated)
     // hygrometer data
-    Q_PROPERTY(float deviceTemp READ getTemp NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceTempC READ getTempC NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceTempF READ getTempF NOTIFY dataUpdated)
-    Q_PROPERTY(float deviceHumidity READ getHumidity NOTIFY dataUpdated)
+    Q_PROPERTY(float temperature READ getTemp NOTIFY dataUpdated)
+    Q_PROPERTY(float temperatureC READ getTempC NOTIFY dataUpdated)
+    Q_PROPERTY(float temperatureF READ getTempF NOTIFY dataUpdated)
+    Q_PROPERTY(float humidity READ getHumidity NOTIFY dataUpdated)
     // environmental data
     Q_PROPERTY(int pressure READ getPressure NOTIFY dataUpdated)
-    Q_PROPERTY(int deviceLuminosity READ getLuminosity NOTIFY dataUpdated)
+    Q_PROPERTY(int luminosity READ getLuminosity NOTIFY dataUpdated)
     Q_PROPERTY(int uv READ getUV NOTIFY dataUpdated)
     Q_PROPERTY(float pm1 READ getPM1 NOTIFY dataUpdated)
     Q_PROPERTY(float pm25 READ getPM25 NOTIFY dataUpdated)
@@ -152,23 +152,25 @@ protected:
     float m_rm = -99.f;
     float m_rs = -99.f;
 
-    // limits
+    // plant limits
     int m_limitHygroMin = 15;
     int m_limitHygroMax = 50;
     int m_limitConduMin = 100;
     int m_limitConduMax = 500;
     float m_limitPhMin = 6.5;
     float m_limitPhMax = 7.5;
-    int m_limitTempMin = 14;
-    int m_limitTempMax = 28;
-    int m_limitHumiMin = 40;
-    int m_limitHumiMax = 60;
     int m_limitLuxMin = 1000;
     int m_limitLuxMax = 3000;
     int m_limitMmolMin = 0;
     int m_limitMmolMax = 0;
+    // hygrometer limits
+    int m_limitTempMin = 14;
+    int m_limitTempMax = 28;
+    int m_limitHumiMin = 40;
+    int m_limitHumiMax = 60;
+    // environmental limits
 
-    // min/max data (x days period)
+    // min/max data (30 days period)
     int m_soilMoistureMin = 999999;
     int m_soildMoistureMax = -99;
     int m_soilConduMin = 999999;
@@ -192,7 +194,7 @@ protected:
     int m_history_session_count = -1;
     int m_history_session_read = -1;
 
-    // clock
+    // device clock
     int64_t m_device_lastmove = -1;
 
     // graphs data

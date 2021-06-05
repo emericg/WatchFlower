@@ -11,7 +11,16 @@ Item {
     property var mmd: null
     property int hhh: 20
 
-    Component.onCompleted: computeSize()
+    Component.onCompleted: {
+        setTemp()
+        computeSize()
+    }
+
+    Connections {
+        target: settingsManager
+        onTempUnitChanged: setTemp()
+    }
+
     onHeightChanged: computeSize()
 
     function computeSize() {
@@ -49,6 +58,19 @@ Item {
             }
             rectangle_water_high.visible = true
         }
+    }
+
+    function setTemp() {
+        var th = mmd.tempMax
+        var tl = mmd.tempMin
+
+        if (settingsManager.tempUnit === "F") {
+            th = UtilsNumber.tempCelsiusToFahrenheit(mmd.tempMax)
+            tl = UtilsNumber.tempCelsiusToFahrenheit(mmd.tempMin)
+        }
+
+        text_temp_high.text = th.toFixed(1) + "°"
+        text_temp_low.text = tl.toFixed(1) + "°"
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -110,7 +132,9 @@ Item {
 
             Rectangle {
                 id: rectangle_temp_mean
-                width: UtilsNumber.alignTo(hhh*0.666, 2); height: width; radius: width;
+                width: UtilsNumber.alignTo(hhh*0.666, 2)
+                height: width
+                radius: width
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: "white"
                 opacity: 0.9
@@ -124,7 +148,6 @@ Item {
                 anchors.horizontalCenterOffset: 2
 
                 color: Theme.colorSubText
-                text: mmd.tempMax.toFixed(1) + "°"
                 font.pixelSize: 12
             }
 
@@ -136,7 +159,6 @@ Item {
                 anchors.horizontalCenterOffset: 2
 
                 color: Theme.colorSubText
-                text: mmd.tempMin.toFixed(1) + "°"
                 font.pixelSize: 12
             }
         }

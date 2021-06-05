@@ -293,7 +293,12 @@ Item {
 
                             visible: (ddd === ChartHistory.Span.Weekly && parent.height > contentHeight+8)
 
-                            text: value.toFixed(floatprecision) + suffix
+                            text: {
+                                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                                    if (settingsManager.tempUnit === "F")
+                                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
+                                return value.toFixed(floatprecision) + suffix
+                            }
                             color: "white"
                             font.pixelSize: isPhone ? 13 : 14
                             font.bold: true
@@ -311,7 +316,12 @@ Item {
                             visible: (!singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*1.5)
 
                             rotation: 90
-                            text: value.toFixed(floatprecision) + suffix.replace("<br>", "")
+                            text: {
+                                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                                    if (settingsManager.tempUnit === "F")
+                                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
+                                return value.toFixed(floatprecision) + suffix.replace("<br>", "")
+                            }
                             color: "white"
                             font.pixelSize: 10
                             font.bold: true

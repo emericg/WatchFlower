@@ -235,7 +235,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
         QtAndroid::startActivity(jniIntent, requestId, this);
     }
 }
@@ -358,7 +358,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
         QtAndroid::startActivity(jniIntent, requestId, this);
     }
 }
@@ -490,7 +490,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
         QtAndroid::startActivity(jniIntent, requestId, this);
     }
 }
