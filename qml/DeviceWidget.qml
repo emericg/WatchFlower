@@ -498,6 +498,8 @@ Item {
             anchors.verticalCenter: rowRight.verticalCenter
             layoutDirection: Qt.RightToLeft
 
+            visible: boxDevice.dataAvailable
+
             ImageSvg {
                 id: water
                 width: bigAssMode ? 28 : 24
