@@ -45,7 +45,7 @@
 
 Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObject(parent)
 {
-#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
     if (deviceAddr.size() != 38)
         qWarning() << "Device() '" << deviceAddr << "' is an invalid UUID...";
 
@@ -91,7 +91,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
     else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
 
-#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();
 #else
     m_deviceAddress = m_bleDevice.address().toString();

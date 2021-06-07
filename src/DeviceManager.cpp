@@ -600,7 +600,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
     {
         Device *dd = qobject_cast<Device*>(d);
 
-#if defined(Q_OS_OSX) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         if (dd && dd->getAddress() == info.deviceUuid().toString())
 #else
         if (dd && dd->getAddress() == info.address().toString())
@@ -618,7 +618,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             }
 #endif // Qt 5.12+
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
+#if defined(QT_BLUETOOTH_PATCH)
             for (const auto id: info.serviceIds())
             {
                 //qDebug() << info.name() << info.address() << Qt::hex

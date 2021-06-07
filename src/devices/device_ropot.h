@@ -55,6 +55,9 @@ public:
 public slots:
     virtual bool hasHistory() const;
 
+private slots:
+    void askForReading();
+
 private:
     // QLowEnergyController related
     void serviceScanDone();

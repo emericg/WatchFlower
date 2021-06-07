@@ -75,7 +75,8 @@ DeviceRopot::~DeviceRopot()
 bool DeviceRopot::hasHistory() const
 {
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-    if (!hasSetting("mac")) return false;
+    if (hasSetting("mac")) return true;
+    return false;
 #endif
 
     return true;
@@ -175,6 +176,18 @@ void DeviceRopot::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
+void DeviceRopot::askForReading()
+{
+    if (serviceData)
+    {
+        QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
+        QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+        serviceData->readCharacteristic(chb);
+    }
+}
+
+/* ************************************************************************** */
+
 void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
     if (newState == QLowEnergyService::ServiceDiscovered)
@@ -214,10 +227,8 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
 
-            // Ask for a reading
-            QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
-            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-            serviceData->readCharacteristic(chb);
+            // Ask for a data reading
+            askForReading();
         }
 
         if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
@@ -360,10 +371,8 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
 
-                // Ask for a reading
-                QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
-                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-                serviceData->readCharacteristic(chb);
+                // Ask for a data reading
+                askForReading();
             }
         }
         return;
@@ -517,7 +526,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshDataRealtime(true);
-                serviceData->readCharacteristic(c); // ask for a new reading
+                // Ask for a new data reading, but not too often...
+                QTimer::singleShot(1000, this, SLOT(askForReading()));
             }
             else
             {
@@ -559,22 +569,20 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
         int fert = -99;
 
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        // get mac address
-        if (!hasSetting("mac"))
-        {
-            QByteArray mac_array = value.mid(10,1);
-            mac_array += value.mid(9,1);
-            mac_array += value.mid(8,1);
-            mac_array += value.mid(7,1);
-            mac_array += value.mid(6,1);
-            mac_array += value.mid(5,1);
-            mac = mac_array.toHex().toUpper();
-            mac.insert(10, ':');
-            mac.insert(8, ':');
-            mac.insert(6, ':');
-            mac.insert(4, ':');
-            mac.insert(2, ':');
-        }
+        // Save mac address
+        mac += value.mid(10,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(9,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(8,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(7,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(6,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(5,1).toHex().toUpper();
+
+        setSetting("mac", mac);
 #endif
 
         if (value.size() >= 16)
