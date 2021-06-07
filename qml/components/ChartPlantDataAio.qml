@@ -87,13 +87,6 @@ Item {
         hygroData.width = 2
         tempData.width = 2
 
-        if (currentDevice.deviceName === "ropot" || currentDevice.deviceName === "Parrot pot") {
-            hygroData.width = 3 // Humidity is primary
-        }
-        if (!currentDevice.hasSoilMoistureSensor) {
-            tempData.width = 3 // Temperature is primary
-        }
-
         if (currentDevice.isPlantSensor) {
             // not planted? don't show hygro and condu
             hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
@@ -103,12 +96,17 @@ Item {
             if (!hygroData.visible && !conduData.visible) {
                 // Show luminosity and make temperature primary
                 lumiData.visible = true
-                tempData.width = 3
+                //tempData.width = 3
 
                 // Luminosity can have min/max, cause values have a very wide range
                 axisLumi.max = currentDevice.luxMax*1.5;
             } else {
-                hygroData.width = 3 // Soil moisture is primary
+                //hygroData.width = 3 // Soil moisture is primary
+            }
+
+            // Pots
+            if (currentDevice.deviceName === "ropot" || currentDevice.deviceName === "Parrot pot") {
+                //hygroData.width = 3 // Humidity is primary
             }
         }
     }
@@ -369,7 +367,7 @@ Item {
         anchors.rightMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
 
-        spacing: 24
+        spacing: 32
         layoutDirection: "LeftToRight"
         columns: 2
         rows: 1

@@ -496,7 +496,7 @@ ApplicationWindow {
         // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermometer") ||
+        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermometer" && appContent.state !== "DeviceEnvironmental") ||
                  (isPhone && appContent.state === "DevicePlantSensor" && screenOrientation === Qt.PortraitOrientation)
 
         Row {
