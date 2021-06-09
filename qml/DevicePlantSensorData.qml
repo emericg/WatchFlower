@@ -8,8 +8,61 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 Item {
     id: devicePlantSensorData
 
+    // 1: single column
+    // 2: wide mode (two main rows)
+    // 3: wide mode for phones (two main columns)
+    property int uiMode: singleColumn ? 1 : (isPhone ? 3 : 2)
+
     property var dataIndicators: null
     property var dataCharts: null
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    function loadData() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
+        //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
+
+        loadIndicators()
+        loadGraph()
+
+        updateHeader()
+        updateData()
+    }
+
+    function loadGraph() {
+        if (graphLoader.status != Loader.Ready) {
+            graphLoader.source = "ChartPlantDataAio.qml"
+            dataCharts = graphLoader.item
+        }
+        dataCharts.loadGraph()
+    }
+
+    function loadIndicators() {
+        if (indicatorsLoader.status != Loader.Ready) {
+            if (settingsManager.bigIndicator)
+                indicatorsLoader.source = "IndicatorsSolid.qml"
+            else
+                indicatorsLoader.source = "IndicatorsCompact.qml"
+
+            dataIndicators = indicatorsLoader.item
+        } else {
+            dataIndicators.updateLegendSize()
+        }
+    }
+    function reloadIndicators() {
+        if (settingsManager.bigIndicator)
+            indicatorsLoader.source = "IndicatorsSolid.qml"
+        else
+            indicatorsLoader.source = "IndicatorsCompact.qml"
+
+        dataIndicators = indicatorsLoader.item
+        dataIndicators.updateLegendSize()
+
+        updateData()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -50,39 +103,17 @@ Item {
         }
     }
 
-    function loadData() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
-        //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
-
-        updateHeader()
-
-        if (indicatorsLoader.status != Loader.Ready) {
-            if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "IndicatorsSolid.qml"
-            else
-                indicatorsLoader.source = "IndicatorsCompact.qml"
-            dataIndicators = indicatorsLoader.item
-        }
-        dataIndicators.updateSize()
-
-        if (graphLoader.status != Loader.Ready) {
-            graphLoader.source = "ChartPlantDataAio.qml"
-            dataCharts = graphLoader.item
-        }
-        dataCharts.loadGraph()
-
-        updateData()
-    }
-
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
-        resetHistoryMode()
         dataIndicators.updateData()
         dataCharts.updateGraph()
+    }
+
+    function updateLegendSizes() {
+        dataIndicators.updateLegendSize()
     }
 
     function isHistoryMode() {
@@ -91,32 +122,6 @@ Item {
     function resetHistoryMode() {
         dataCharts.resetIndicator()
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Connections {
-        target: settingsManager
-        onTempUnitChanged: {
-            updateData()
-        }
-        onBigIndicatorChanged: {
-            if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "IndicatorsSolid.qml"
-            else
-                indicatorsLoader.source = "IndicatorsCompact.qml"
-            dataIndicators = indicatorsLoader.item
-            updateData()
-        }
-        onAppLanguageChanged: {
-            updateStatusText()
-            dataIndicators.updateSize()
-        }
-    }
-
-    // 1: single column
-    // 2: wide mode (two main rows)
-    // 3: wide mode for phones (two main columns)
-    property int uiMode: singleColumn ? 1 : (isPhone ? 3 : 2)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -372,6 +377,8 @@ Item {
                             id: textStatus
                             anchors.left: labelStatus.right
                             anchors.leftMargin: 8
+                            anchors.right: parent.right
+                            anchors.rightMargin: -4
                             anchors.baseline: labelStatus.baseline
                             padding: 4
 
@@ -379,6 +386,7 @@ Item {
                             color: Theme.colorHighContrast
                             font.pixelSize: 17
                             font.bold: false
+                            elide: Text.ElideRight
                         }
                     }
                 }

@@ -48,6 +48,11 @@ Item {
             updateSensorStatus()
             updateSensorData()
         }
+        onTempUnitChanged: {
+            if (loaderIndicators.item) {
+                loaderIndicators.item.updateData()
+            }
+        }
     }
 
     Component.onCompleted: initBoxData()
@@ -779,11 +784,6 @@ Item {
                 font.letterSpacing: -1.4
                 font.pixelSize: bigAssMode ? 32 : 30
                 font.family: "Tahoma"
-
-                Connections {
-                    target: settingsManager
-                    onTempUnitChanged: { textTemp.text = boxDevice.getTemp().toFixed(1) + "°"; }
-                }
             }
 
             Text {

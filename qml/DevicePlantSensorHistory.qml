@@ -7,31 +7,10 @@ import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
 Item {
     id: devicePlantSensorHistory
 
-    function updateHeader() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
-        //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
-
-        // Battery level
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
-    }
-
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
-
-        graphGrid.resetSelection()
-
-        // graph mode
-        if (settingsManager.graphHistory === "daily") {
-            graphGrid.mode = ChartHistory.Span.Daily
-        } else if (settingsManager.graphHistory === "weekly") {
-            graphGrid.mode = ChartHistory.Span.Weekly
-        } else if (settingsManager.graphHistory === "monthly") {
-            graphGrid.mode = ChartHistory.Span.Monthly
-        }
 
         // graph visibility
         graphCount = 0
@@ -68,9 +47,48 @@ Item {
             conduChart.visible = false
         }
 
+        resetHistoryMode()
+        updateHistoryMode()
+
         updateColors()
         updateData()
         updateSize()
+    }
+
+    function updateHeader() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
+        //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
+
+        // Battery level
+        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
+    }
+
+    function updateData() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.hasSoilMoistureSensor) return
+        //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
+
+        currentDevice.updateChartData_history_days(31)
+        currentDevice.updateChartData_history_hours()
+    }
+
+    function updateHistoryMode() {
+        if (settingsManager.graphHistory === "daily") {
+            graphGrid.mode = ChartHistory.Span.Daily
+        } else if (settingsManager.graphHistory === "weekly") {
+            graphGrid.mode = ChartHistory.Span.Weekly
+        } else if (settingsManager.graphHistory === "monthly") {
+            graphGrid.mode = ChartHistory.Span.Monthly
+        }
+    }
+
+    function isHistoryMode() {
+        return false
+    }
+    function resetHistoryMode() {
+        graphGrid.resetSelection()
     }
 
     function updateColors() {
@@ -139,15 +157,6 @@ Item {
         }
     }
 
-    function updateData() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
-        //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
-
-        currentDevice.updateChartData_history_days(31)
-        currentDevice.updateChartData_history_hours()
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
@@ -189,7 +198,6 @@ Item {
 
                 text: qsTr("Week")
                 onClicked: settingsManager.graphHistory = "weekly"
-
             }
 
             ButtonWireframe {
@@ -275,21 +283,6 @@ Item {
             graphGrid.barSelectionIndex = -1
             graphGrid.barSelectionDays = -1
             graphGrid.barSelectionHours = -1
-        }
-
-        Connections {
-            target: settingsManager
-            onGraphHistoryChanged: {
-                if (settingsManager.graphHistory === "daily") {
-                    graphGrid.mode = ChartHistory.Span.Daily
-                }
-                else if (settingsManager.graphHistory === "weekly") {
-                    graphGrid.mode = ChartHistory.Span.Weekly
-                }
-                else if (settingsManager.graphHistory === "monthly") {
-                    graphGrid.mode = ChartHistory.Span.Monthly
-                }
-            }
         }
 
         ////////

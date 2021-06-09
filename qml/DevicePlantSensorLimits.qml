@@ -18,11 +18,11 @@ Item {
 
         // Address
         if (currentDevice.deviceAddress.charAt(0) === '{') {
-            textAddr.text = currentDevice.deviceAddress.toUpperCase()
-            textAddr.font.pixelSize = 15
+            textAddress.text = currentDevice.deviceAddress.toUpperCase()
+            textAddress.font.pixelSize = 15
         } else {
-            textAddr.text = "[" + currentDevice.deviceAddress.toUpperCase() + "]"
-            textAddr.font.pixelSize = 17
+            textAddress.text = "[" + currentDevice.deviceAddress.toUpperCase() + "]"
+            textAddress.font.pixelSize = 17
         }
 
         // MAC Address
@@ -156,9 +156,11 @@ Item {
                         }
 
                         Text {
-                            id: textAddr
+                            id: textAddress
                             anchors.left: labelAddress.right
                             anchors.leftMargin: 10
+                            anchors.right: parent.right
+                            anchors.rightMargin: -2
                             anchors.baseline: labelAddress.baseline
 
                             font.pixelSize: 17
@@ -278,11 +280,14 @@ Item {
                             id: textTime
                             anchors.left: labelTime.right
                             anchors.leftMargin: 10
+                            anchors.right: parent.right
+                            anchors.rightMargin: -2
                             anchors.baseline: labelTime.baseline
 
                             text: currentDevice.deviceTime.toLocaleString()
-                            font.pixelSize: 17
+                            font.pixelSize: 16
                             color: Theme.colorHighContrast
+                            elide: Text.ElideRight
                         }
                     }
 
@@ -312,11 +317,14 @@ Item {
                             id: textLastSync
                             anchors.left: labelLastSync.right
                             anchors.leftMargin: 10
+                            anchors.right: parent.right
+                            anchors.rightMargin: -2
                             anchors.baseline: labelLastSync.baseline
 
                             text: currentDevice.lastHistorySync.toLocaleString()
-                            font.pixelSize: 17
+                            font.pixelSize: 16
                             color: Theme.colorHighContrast
+                            elide: Text.ElideRight
                         }
                     }
 
@@ -346,11 +354,14 @@ Item {
                             id: textLastMove
                             anchors.left: labelLastMove.right
                             anchors.leftMargin: 10
+                            anchors.right: parent.right
+                            anchors.rightMargin: -2
                             anchors.baseline: labelLastMove.baseline
 
                             text: currentDevice.lastMove.toLocaleString()
-                            font.pixelSize: 17
+                            font.pixelSize: 16
                             color: Theme.colorHighContrast
+                            elide: Text.ElideRight
                         }
                     }
 /*
@@ -535,7 +546,7 @@ Item {
                             horizontalAlignment: Text.AlignRight
                         }
                         Text {
-                            id: textAddr
+                            id: textAddress
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: "[" + currentDevice.deviceAddress + "]"

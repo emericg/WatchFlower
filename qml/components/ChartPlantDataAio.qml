@@ -9,6 +9,7 @@ Item {
     width: parent.width
     height: parent.height
 
+    property bool useOpenGL: true
     property bool showGraphDots: settingsManager.graphShowDots
 
     function loadGraph() {
@@ -29,8 +30,6 @@ Item {
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // updateGraph() >> " + currentDevice)
-
-        if (dateIndicator.visible) resetIndicator()
 
         var days = 14
         var count = currentDevice.countData("temperature", days)
@@ -109,6 +108,9 @@ Item {
                 //hygroData.width = 3 // Humidity is primary
             }
         }
+
+        // Update indicator (only works if data are changed in database though...)
+        if (dateIndicator.visible) updateIndicator()
     }
 
     function qpoint_lerp(p0, p1, x) { return (p0.y + (x - p0.x) * ((p1.y - p0.y) / (p1.x - p0.x))) }
@@ -139,25 +141,29 @@ Item {
 
         LineSeries {
             id: lumiData
-            pointsVisible: showGraphDots;
+            useOpenGL: useOpenGL
+            pointsVisible: showGraphDots
             color: Theme.colorYellow; width: 2;
             axisY: axisLumi; axisX: axisTime;
         }
         LineSeries {
             id: conduData
-            pointsVisible: showGraphDots;
+            useOpenGL: useOpenGL
+            pointsVisible: showGraphDots
             color: Theme.colorRed; width: 2;
             axisY: axisCondu; axisX: axisTime;
         }
         LineSeries {
             id: tempData
-            pointsVisible: showGraphDots;
+            useOpenGL: useOpenGL
+            pointsVisible: showGraphDots
             color: Theme.colorGreen; width: 2;
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
             id: hygroData
-            pointsVisible: showGraphDots;
+            useOpenGL: useOpenGL
+            pointsVisible: showGraphDots
             color: Theme.colorBlue; width: 2;
             axisY: axisHygro; axisX: axisTime;
         }
@@ -167,12 +173,7 @@ Item {
             anchors.fill: aioGraph
 
             acceptedButtons: Qt.LeftButton | Qt.RightButton
-/*
-            onPositionChanged: {
-                moveIndicator(mouse, true)
-                mouse.accepted = true
-            }
-*/
+
             onClicked: {
                 if (mouse.button === Qt.LeftButton) {
                     aioGraph.moveIndicator(mouse, false)
@@ -221,58 +222,10 @@ Item {
             dateIndicator.visible = true
             verticalIndicator.visible = true
             verticalIndicator.x = ppp.x
+            verticalIndicator.clickedCoordinates = mpmp
 
-            // set date & time
-            var date = new Date(mpmp.x)
-            var date_string = date.toLocaleDateString()
-            //: "at" is used for DATE at HOUR
-            var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
-            dateIndicator.text = date_string + " " + time_string
-
-            // search index corresponding to the timestamp
-            var x1 = -1
-            var x2 = -1
-            for (var i = 0; i < tempData.count; i++) {
-                var graph_at_x = tempData.at(i).x
-                var dist = (graph_at_x - mpmp.x) / 1000000
-
-                if (Math.abs(dist) < 1) {
-                    // nearest neighbor
-                    if (appContent.state === "DevicePlantSensor") {
-                        dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
-                                                      tempData.at(i).y, -99, lumiData.at(i).y)
-                    } else if (appContent.state === "DeviceThermometer") {
-                        dataIndicator.visible = true
-                        dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") : tempData.at(i).y.toFixed(1) + qsTr("°C")
-                        dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
-                    }
-                    break;
-                } else {
-                    if (dist < 0) {
-                        if (x1 < i) x1 = i
-                    } else {
-                        x2 = i
-                        break
-                    }
-                }
-            }
-
-            if (x1 >= 0 && x2 > x1) {
-                // linear interpolation
-                if (appContent.state === "DevicePlantSensor") {
-                    dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x),
-                                                  qpoint_lerp(conduData.at(x1), conduData.at(x2), mpmp.x),
-                                                  -99,
-                                                  qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x),
-                                                  -99,
-                                                  qpoint_lerp(lumiData.at(x1), lumiData.at(x2), mpmp.x))
-                } else if (appContent.state === "DeviceThermometer") {
-                    dataIndicator.visible = true
-                    var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), mpmp.x)
-                    dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                    dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), mpmp.x).toFixed(0) + "%"
-                }
-            }
+            // update the indicator data
+            updateIndicator()
         }
     }
 
@@ -285,7 +238,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    ////////
+    ////////////////
 
     Rectangle {
         id: verticalIndicator
@@ -298,6 +251,8 @@ Item {
         visible: false
         opacity: 0.66
         color: Theme.colorSubText
+
+        property var clickedCoordinates: null
 
         Behavior on x { NumberAnimation { id: vanim; duration: 266; } }
 
@@ -357,7 +312,7 @@ Item {
         }
     }
 
-    ////////
+    ////////////////
 
     Grid {
         id: indicators
@@ -450,6 +405,8 @@ Item {
         }
     }
 
+    ////////////////
+
     MouseArea {
         anchors.fill: indicators
         anchors.margins: -8
@@ -461,12 +418,70 @@ Item {
     function isIndicator() {
         return verticalIndicator.visible
     }
+
     function resetIndicator() {
         dateIndicator.visible = false
         dataIndicator.visible = false
         verticalIndicator.visible = false
+        verticalIndicator.clickedCoordinates = null
 
         if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
         if (appContent.state === "DevicePlantSensor") dataIndicators.resetDataBars()
+    }
+
+    function updateIndicator() {
+        if (!dateIndicator.visible) return
+
+        // set date & time
+        var date = new Date(verticalIndicator.clickedCoordinates.x)
+        var date_string = date.toLocaleDateString()
+        //: "at" is used for DATE at HOUR
+        var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
+        dateIndicator.text = date_string + " " + time_string
+
+        // search index corresponding to the timestamp
+        var x1 = -1
+        var x2 = -1
+        for (var i = 0; i < tempData.count; i++) {
+            var graph_at_x = tempData.at(i).x
+            var dist = (graph_at_x - verticalIndicator.clickedCoordinates.x) / 1000000
+
+            if (Math.abs(dist) < 1) {
+                // nearest neighbor
+                if (appContent.state === "DevicePlantSensor") {
+                    dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
+                                                  tempData.at(i).y, -99, lumiData.at(i).y)
+                } else if (appContent.state === "DeviceThermometer") {
+                    dataIndicator.visible = true
+                    dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") : tempData.at(i).y.toFixed(1) + qsTr("°C")
+                    dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                }
+                break;
+            } else {
+                if (dist < 0) {
+                    if (x1 < i) x1 = i
+                } else {
+                    x2 = i
+                    break
+                }
+            }
+        }
+
+        if (x1 >= 0 && x2 > x1) {
+            // linear interpolation
+            if (appContent.state === "DevicePlantSensor") {
+                dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              qpoint_lerp(conduData.at(x1), conduData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              -99,
+                                              qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              -99,
+                                              qpoint_lerp(lumiData.at(x1), lumiData.at(x2), verticalIndicator.clickedCoordinates.x))
+            } else if (appContent.state === "DeviceThermometer") {
+                dataIndicator.visible = true
+                var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x)
+                dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
+            }
+        }
     }
 }

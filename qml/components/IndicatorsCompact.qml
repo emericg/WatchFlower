@@ -17,9 +17,9 @@ Item {
     }
 
     property int legendWidth: 92
-    Component.onCompleted: updateSize()
+    Component.onCompleted: updateLegendSize()
 
-    function updateSize() {
+    function updateLegendSize() {
         legendWidth = 0
         if (legendWidth < soil_moisture.legendContentWidth) legendWidth = soil_moisture.legendContentWidth
         if (legendWidth < soil_conductivity.legendContentWidth) legendWidth = soil_conductivity.legendContentWidth

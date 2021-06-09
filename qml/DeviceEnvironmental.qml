@@ -31,7 +31,9 @@ Item {
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: { updateData() }
+        onTempUnitChanged: {
+            updateData()
+        }
         onAppLanguageChanged: {
             updateData()
             updateStatusText()

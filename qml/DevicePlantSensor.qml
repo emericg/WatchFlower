@@ -33,6 +33,24 @@ Item {
     }
 
     Connections {
+        target: settingsManager
+
+        onTempUnitChanged: {
+            plantSensorData.updateData()
+        }
+        onBigIndicatorChanged: {
+            plantSensorData.reloadIndicators()
+        }
+        onAppLanguageChanged: {
+            plantSensorData.updateStatusText()
+            plantSensorData.updateLegendSizes()
+        }
+        onGraphHistoryChanged: {
+            plantSensorHistory.updateHistoryMode()
+        }
+    }
+
+    Connections {
         target: Theme
         onCurrentThemeChanged: {
             plantSensorData.updateHeader()
@@ -91,7 +109,7 @@ Item {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     function isHistoryMode() {
         return plantSensorData.isHistoryMode()
