@@ -34,6 +34,9 @@ exists(assets/demo/demo_bdd.db) {
     RESOURCES += assets/demo/demo.qrc
 }
 
+# Qt patched with BLE advertising support?
+#DEFINES += QT_BLUETOOTH_PATCH
+
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \

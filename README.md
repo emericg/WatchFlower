@@ -94,8 +94,8 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++11 compiler and Qt 5.12+ (with Qt Charts).  
-For Android builds, the appropriates SDK and NDK.
+You will need a C++11 compiler and Qt 5.12+ (with Qt Charts). Qt 6+ won't be supported for a while.  
+For Android builds, you'll need the appropriates SDK and NDK (21+).
 
 #### Building WatchFlower
 
@@ -104,6 +104,29 @@ $ git clone https://github.com/emericg/WatchFlower.git
 $ cd WatchFlower/
 $ qmake
 $ make
+```
+
+#### Using FlowerCare 'live mode' and 'historical data'
+
+##### macOS and iOS
+
+Due to a (bad) combination of factors, these platform need a patched version of Qt in order to work with FlowerCare live mode and history data.  
+The apps published on the app stores are using such patched version, but if you are building it yourself you can get these patches [here](https://github.com/emericg/qtconnectivity).
+Without it, these two features will just be disabled.
+
+##### Linux
+
+While reading FlowerCare historical entry count, the sensors usually freeze for up to a second, and the Linux kernel consider that to be a connection timeout.  
+To be able to get the historical data working on Linux, you'll need to increase the "supervision timeout" value (while root):
+
+```
+# echo 100 > /sys/kernel/debug/bluetooth/hci0/supervision_timeout
+```
+
+You could also give WatchFlower binary the net_raw and net_admin capabilities, so that it could be allowed to changes the supervision timeout on its own. But at the moment that's not fully implemented.
+
+```
+# setcap 'cap_net_raw,cap_net_admin+eip' watchflower
 ```
 
 
