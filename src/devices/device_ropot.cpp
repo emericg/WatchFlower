@@ -591,27 +591,47 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
             if (data[12] == 4 && value.size() >= 17)
             {
                 temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                m_temperature = temp;
+                if (temp != m_temperature)
+                {
+                    m_temperature = temp;
+                    Q_EMIT dataUpdated();
+                }
             }
             else if (data[12] == 6 && value.size() >= 17)
             {
                 hygro = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                m_humidity = hygro;
+                if (hygro != m_humidity)
+                {
+                    m_humidity = hygro;
+                    Q_EMIT dataUpdated();
+                }
             }
             else if (data[12] == 7 && value.size() >= 18)
             {
                 lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
-                m_luminosity = lumi;
+                if (lumi != m_luminosity)
+                {
+                    m_luminosity = lumi;
+                    Q_EMIT dataUpdated();
+                }
             }
             else if (data[12] == 8 && value.size() >= 17)
             {
                 moist = static_cast<int16_t>(data[15] + (data[16] << 8));
-                m_soil_moisture = moist;
+                if (moist != m_soil_moisture)
+                {
+                    m_soil_moisture = moist;
+                    Q_EMIT dataUpdated();
+                }
             }
             else if (data[12] == 9 && value.size() >= 17)
             {
                 fert = static_cast<int16_t>(data[15] + (data[16] << 8));
-                m_soil_conductivity = fert;
+                if (fert != m_soil_conductivity)
+                {
+                    m_soil_conductivity = fert;
+                    Q_EMIT dataUpdated();
+                }
             }
             else if (data[12] == 10 && value.size() >= 16)
             {
@@ -621,11 +641,19 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
             else if (data[12] == 11 && value.size() >= 19)
             {
                 temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                m_temperature = temp;
+                if (temp != m_temperature)
+                {
+                    m_temperature = temp;
+                    Q_EMIT dataUpdated();
+                }
                 hygro = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
-                m_humidity = hygro;
+                if (hygro != m_humidity)
+                {
+                    m_humidity = hygro;
+                    Q_EMIT dataUpdated();
+                }
             }
-
+/*
             if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
@@ -633,12 +661,12 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 if (needsUpdateDb())
                 {
                     // TODO // UPDATE DB
+
+                    Q_EMIT dataUpdated();
+                    Q_EMIT statusUpdated();
                 }
             }
-
-            Q_EMIT dataUpdated();
-            Q_EMIT statusUpdated();
-
+*/
 #ifndef QT_NO_DEBUG
             //qDebug() << "* DeviceRopot service data:" << getAddress();
             //qDebug() << "- MAC:" << mac;

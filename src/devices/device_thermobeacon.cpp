@@ -432,12 +432,23 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
         int battv = static_cast<uint16_t>(data[8] + (data[9] << 8));
-        m_temperature = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;
-        m_humidity = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
+        float temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;
+        float hygro = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
         m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
+        if (temp != m_temperature)
+        {
+            m_temperature = temp;
+            Q_EMIT dataUpdated();
+        }
+        if (hygro != m_humidity)
+        {
+            m_humidity = hygro;
+            Q_EMIT dataUpdated();
+        }
         m_lastUpdate = QDateTime::currentDateTime();
+        Q_EMIT statusUpdated();
 
         int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
         setBattery(battlvl);
@@ -446,15 +457,17 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
         {
             addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
         }
-
-        Q_EMIT dataUpdated();
-        Q_EMIT statusUpdated();
+        else
+        {
+            //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
+            //qDebug() << "No need to save data" << getLastUpdateDbInt();
+        }
 
 #ifndef QT_NO_DEBUG
         //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
         //qDebug() << "- battery:" << m_deviceBattery;
-        //qDebug() << "- temperature:" << m_temperature;
-        //qDebug() << "- humidity:" << m_humidity;
+        //qDebug() << "- temperature:" << temp;
+        //qDebug() << "- humidity:" << hygro;
         //qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
 #endif
     }

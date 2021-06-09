@@ -410,6 +410,7 @@ void DeviceManager::checkBluetoothIos()
 
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(33);
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
         if (m_discoveryAgent->isActive())
         {
             qDebug() << "Checking iOS bluetooth...";
@@ -524,6 +525,7 @@ void DeviceManager::scanDevices()
 
                 m_discoveryAgent->setLowEnergyDiscoveryTimeout(10*1000); // 10s
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
                 if (m_discoveryAgent->isActive())
                 {
                     m_scanning = true;
@@ -562,6 +564,7 @@ void DeviceManager::listenDevices()
                         this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
 
                 m_discoveryAgent->setLowEnergyDiscoveryTimeout(30*1000); // 30s
+
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
                 if (m_discoveryAgent->isActive())
                 {
@@ -882,7 +885,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             if (d->getLastUpdateInt() < 0 ||
                 d->getLastUpdateInt() > (d->hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
             {
-                // old or no data: mark it as queued until the deviceManager sync new devices
+                // Old or no data: mark it as queued until the deviceManager sync new devices
                 d->refreshQueue();
             }
 
