@@ -339,7 +339,7 @@ Item {
             ddd: graphGrid.mode
             uuu: ChartHistory.Data.Luminosity
             color: Theme.colorYellow
-            suffix: " " + qsTr("lux")
+            suffix: " " + "<br>" + qsTr("lux")
             floatprecision: 0
 
             valueMax: currentDevice.luxMax*1.2

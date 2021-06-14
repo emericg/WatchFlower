@@ -217,7 +217,7 @@ Item {
 
                             text: qsTr("Plant")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -292,7 +292,7 @@ Item {
 
                             text: qsTr("Location")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -367,7 +367,7 @@ Item {
 
                             text: qsTr("Status")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight

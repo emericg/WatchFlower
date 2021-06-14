@@ -149,7 +149,7 @@ Item {
 
                             text: qsTr("Address")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -182,7 +182,7 @@ Item {
 
                             text: qsTr("Firmware")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -236,7 +236,7 @@ Item {
 
                             text: qsTr("Battery")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -270,7 +270,7 @@ Item {
 
                             text: qsTr("Uptime")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -307,7 +307,7 @@ Item {
 
                             text: qsTr("Last sync")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -344,7 +344,7 @@ Item {
 
                             text: qsTr("Last move")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -383,7 +383,7 @@ Item {
 
                             text: qsTr("MAC Address")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -540,7 +540,7 @@ Item {
 
                             text: qsTr("Address")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -565,7 +565,7 @@ Item {
 
                             text: qsTr("Firmware")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -615,7 +615,7 @@ Item {
 
                             text: qsTr("Battery")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
@@ -952,7 +952,7 @@ Item {
 
                             text: qsTr("MAC Address")
                             font.bold: true
-                            font.pixelSize: 12
+                            font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                         }
