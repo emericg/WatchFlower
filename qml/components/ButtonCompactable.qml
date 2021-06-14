@@ -25,7 +25,7 @@ Item {
     property string backgroundColor: Theme.colorComponent
 
     // animation
-    property var animation: "rotation" // rotation / fade
+    property var animation: "" // rotate / fade
     property var animationRunning: false
 
     // hover animation

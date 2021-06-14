@@ -32,7 +32,7 @@ Item {
     property string borderColor: Theme.colorComponentBorder
 
     // animation
-    property string animation: "rotation" // rotation / fade
+    property string animation: "" // rotate / fade
     property bool animationRunning: false
 
     // tooltip

@@ -627,7 +627,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             }
 #endif // Qt 5.12+
 
-#if defined(QT_BLUETOOTH_PATCH)
+#if defined(QT_BLUETOOTH_PATCHED)
             for (const auto id: info.serviceIds())
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
@@ -815,7 +815,7 @@ void DeviceManager::updateDevice(const QString &address)
 
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
-    //qDebug() << "DeviceManager::addBleDevice()" << " > RSSI" << info.rssi();
+    //qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
     if (info.rssi() >= 0) return; // we probably just hit the device cache
     //if (info.rssi() < -90) return; // device too far away?
