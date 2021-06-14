@@ -402,13 +402,15 @@ void DeviceManager::checkBluetoothIos()
     {
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                    this, &DeviceManager::addBleDevice);
+        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                   this, &DeviceManager::updateBleDevice);
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::deviceDiscoveryFinished);
 
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                 this, &DeviceManager::bluetoothModeChangedIos, Qt::UniqueConnection);
 
-        m_discoveryAgent->setLowEnergyDiscoveryTimeout(33);
+        m_discoveryAgent->setLowEnergyDiscoveryTimeout(4);
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
         if (m_discoveryAgent->isActive())
@@ -509,17 +511,18 @@ void DeviceManager::scanDevices()
         }
         if (m_discoveryAgent)
         {
-            //if (m_discoveryAgent->isActive())
-            //{
-            //    //
-            //}
-            //else // (!m_discoveryAgent->isActive())
+/*
+            if (m_discoveryAgent->isActive())
             {
-                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                           this, &DeviceManager::updateBleDevice);
-
+                qDebug() << "already active?";
+            }
+            else // (!m_discoveryAgent->isActive())
+*/
+            {
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                         this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                           this, &DeviceManager::updateBleDevice);
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                         this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
 
@@ -541,6 +544,8 @@ void DeviceManager::scanDevices()
 
 void DeviceManager::listenDevices()
 {
+    //qDebug() << "DeviceManager::listenDevices()";
+
     if (hasBluetooth())
     {
         if (!m_discoveryAgent)
@@ -549,21 +554,22 @@ void DeviceManager::listenDevices()
         }
         if (m_discoveryAgent)
         {
+/*
             if (m_discoveryAgent->isActive())
             {
-                // nothing to do then
+                qDebug() << "already active?";
             }
             else // (!m_discoveryAgent->isActive())
+*/
             {
                 disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                            this, &DeviceManager::addBleDevice);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
                 disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                            this, &DeviceManager::deviceDiscoveryFinished);
 
-                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
-
-                m_discoveryAgent->setLowEnergyDiscoveryTimeout(30*1000); // 30s
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(60*1000); // 60s
 
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
                 if (m_discoveryAgent->isActive())
@@ -631,7 +637,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 
                 dd->parseAdvertisementData(info.serviceData(id));
             }
-#endif // Qt 6.2+
+#endif // Qt 6.3+
 
             break;
         }
@@ -916,6 +922,11 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             Q_EMIT devicesListUpdated();
 
             qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+            // try to get the MAC address immediately
+            updateBleDevice(info, 0);
+#endif
         }
         else
         {
