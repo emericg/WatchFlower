@@ -23,6 +23,7 @@
 #include "SettingsManager.h"
 #include "DeviceManager.h"
 #include "NotificationManager.h"
+#include "utils/utils_screen.h"
 #include "utils/utils_versionchecker.h"
 
 #include <cstdlib>
@@ -899,6 +900,13 @@ void Device::deviceConnected()
     if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
+        // Keep screen on
+        UtilsScreen *utilsScreen = UtilsScreen::getInstance();
+        if (utilsScreen)
+        {
+            utilsScreen->keepScreenOn(true);
+        }
+
         // Stop timeout timer, we'll be long...
         m_timeoutTimer.stop();
     }
@@ -938,6 +946,16 @@ void Device::deviceDisconnected()
     //qDebug() << "Device::deviceDisconnected(" << m_deviceAddress << ")";
 
     Q_EMIT disconnected();
+
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
+        m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+    {
+        UtilsScreen *utilsScreen = UtilsScreen::getInstance();
+        if (utilsScreen)
+        {
+            utilsScreen->keepScreenOn(false);
+        }
+    }
 
     if (m_ble_status == DeviceUtils::DEVICE_CONNECTING || m_ble_status == DeviceUtils::DEVICE_UPDATING)
     {

@@ -315,6 +315,11 @@ ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
+    # iOS utils
+    SOURCES += src/utils/utils_ios.mm
+    HEADERS += src/utils/utils_ios.h
+    LIBS    += -framework UIKit
+
     CONFIG += no_autoqmake
 
     # Bundle name

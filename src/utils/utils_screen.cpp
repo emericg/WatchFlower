@@ -31,15 +31,35 @@
 #include "utils_android.h"
 #endif
 #if defined(Q_OS_IOS)
+#include "utils_ios.h"
 #include <QtGui/qpa/qplatformwindow.h>
 #endif
 
 /* ************************************************************************** */
 
-UtilsScreen::UtilsScreen(QObject *parent) : QObject(parent)
+UtilsScreen *UtilsScreen::instance = nullptr;
+
+UtilsScreen *UtilsScreen::getInstance()
 {
-    qmlRegisterUncreatableType<UtilsScreen>("UtilsScreen", 1, 0, "UtilsScreen", "");
+    if (instance == nullptr)
+    {
+        instance = new UtilsScreen();
+    }
+
+    return instance;
 }
+
+UtilsScreen::UtilsScreen()
+{
+    //
+}
+
+UtilsScreen::~UtilsScreen()
+{
+    //
+}
+
+/* ************************************************************************** */
 
 void UtilsScreen::getScreenInfos()
 {
@@ -139,6 +159,9 @@ void UtilsScreen::keepScreenOn(bool on)
 {
 #if defined(Q_OS_ANDROID)
     android_screen_keep_on(on);
+#elif defined(Q_OS_IOS)
+    UtilsIos utils;
+    utils.keepScreenOn(on);
 #else
     Q_UNUSED(on)
 #endif

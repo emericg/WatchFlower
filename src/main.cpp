@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
     }
 
     // Init generic utils
-    UtilsScreen *utilsScreen = new UtilsScreen();
+    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsApp *utilsApp = UtilsApp::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
     if (!utilsScreen || !utilsApp || !utilsLanguage)

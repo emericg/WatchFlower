@@ -18,17 +18,26 @@
  * \date      2020
  */
 
-#ifndef UTILS_IOS_H
-#define UTILS_IOS_H
-/* ************************************************************************** */
+#include "utils_ios.h"
+
 #ifdef Q_OS_IOS
 
-class UtilsIos
-{
-public:
-   void keepScreenOn(bool on);
-};
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-#endif // Q_OS_IOS
 /* ************************************************************************** */
-#endif // UTILS_IOS_H
+
+void UtilsIos::keepScreenOn(bool on)
+{
+    if (on)
+    {
+        [[UIApplication sharedApplication] setIdleTimerDisabled: YES]
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setIdleTimerDisabled: NO]
+    }
+}
+
+/* ************************************************************************** */
+#endif // Q_OS_IOS

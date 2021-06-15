@@ -23,11 +23,9 @@
 
 #include "SharingUtils.h"
 
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS)
 #include "SharingUtils_ios.h"
-#endif
-
-#ifdef Q_OS_ANDROID
+#elif defined(Q_OS_ANDROID)
 #include "SharingUtils_android.h"
 #endif
 

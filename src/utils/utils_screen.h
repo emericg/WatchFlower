@@ -41,12 +41,16 @@ class UtilsScreen: public QObject
     int m_screenDpi = -1;
     double m_screenSize = -1.0;
 
+    // Singleton
+    static UtilsScreen *instance;
+    UtilsScreen();
+    ~UtilsScreen();
+
 Q_SIGNALS:
     void screenChanged();
 
 public:
-    UtilsScreen(QObject *parent = nullptr);
-    ~UtilsScreen() = default;
+    static UtilsScreen *getInstance();
 
     Q_INVOKABLE void getScreenInfos();
 

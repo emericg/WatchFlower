@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <QString>
 
-#ifdef Q_OS_ANDROID
+#if defined(Q_OS_ANDROID)
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
@@ -90,18 +90,18 @@ void NotificationManager::updateDesktopNotification()
 
 void NotificationManager::updateIosNotification()
 {
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS)
     //
 #endif
 }
 
 void NotificationManager::updateAndroidNotification()
 {
-#ifdef Q_OS_ANDROID
+#if defined(Q_OS_ANDROID)
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString(m_notification);
     QAndroidJniObject::callStaticMethod<void>("com/emeric/watchflower/NotificationDispatcher",
                                               "notify",
                                               "(Ljava/lang/String;)V",
                                               javaNotification.object<jstring>());
-#endif // Q_OS_ANDROID
+#endif
 }
