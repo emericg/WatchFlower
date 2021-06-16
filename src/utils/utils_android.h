@@ -22,6 +22,7 @@
 #define UTILS_ANDROID_H
 /* ************************************************************************** */
 
+#include <QtGlobal>
 #include <QString>
 #include <QStringList>
 

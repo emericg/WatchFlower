@@ -31,11 +31,11 @@ void UtilsIos::keepScreenOn(bool on)
 {
     if (on)
     {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: YES]
+        [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
     }
     else
     {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: NO]
+        [[UIApplication sharedApplication] setIdleTimerDisabled: NO];
     }
 }
 
