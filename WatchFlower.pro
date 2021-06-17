@@ -28,12 +28,6 @@ include(src/thirdparty/MobileSharing/MobileSharing.pri)
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
-# Demo mode (for screenshots across devices)
-exists(assets/demo/demo_bdd.db) {
-    DEFINES += DEMO_MODE
-    RESOURCES += assets/demo/demo.qrc
-}
-
 # Qt patched with BLE advertising support?
 #DEFINES += QT_BLUETOOTH_PATCHED
 
@@ -100,8 +94,7 @@ HEADERS  += src/SettingsManager.h \
             src/utils/utils_maths.h \
             src/utils/utils_screen.h \
             src/utils/utils_versionchecker.h \
-            src/thirdparty/RC4/rc4.h \
-            src/demomode.h
+            src/thirdparty/RC4/rc4.h
 
 INCLUDEPATH += src/
 

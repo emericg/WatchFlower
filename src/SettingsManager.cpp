@@ -500,27 +500,3 @@ void SettingsManager::setExternalDb(const QString &value)
 }
 
 /* ************************************************************************** */
-
-bool SettingsManager::getDemoMode()
-{
-    bool demoMode = false;
-
-#ifdef DEMO_MODE
-    demoMode = true;
-#endif
-
-    return demoMode;
-}
-
-QString SettingsManager::getDemoString()
-{
-    QString demoString;
-
-#ifdef DEMO_MODE
-    demoString = " / DEMO";
-#endif
-
-    return demoString;
-}
-
-/* ************************************************************************** */

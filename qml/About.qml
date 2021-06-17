@@ -114,19 +114,7 @@ Item {
                     anchors.bottomMargin: 8
 
                     color: Theme.colorSubText
-                    text: qsTr("version %1%2").arg(utilsApp.appVersion()).arg(settingsManager.getDemoString())
-                    font.pixelSize: Theme.fontSizeContentBig
-                }
-
-                Text {
-                    id: textDebug
-                    anchors.left: textVersion.right
-                    anchors.leftMargin: 8
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 8
-
-                    color: Theme.colorSubText
-                    text: utilsApp.appBuildMode()
+                    text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
                     font.pixelSize: Theme.fontSizeContentBig
                 }
             }

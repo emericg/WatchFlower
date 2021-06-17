@@ -211,8 +211,6 @@ public:
 
     // Utils
     Q_INVOKABLE void resetSettings();
-    Q_INVOKABLE static bool getDemoMode();
-    Q_INVOKABLE static QString getDemoString();
 };
 
 /* ************************************************************************** */

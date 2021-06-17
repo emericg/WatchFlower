@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/demo">
-        <file>demo_bdd.db</file>
-        <file>demo_settings.conf</file>
-    </qresource>
-</RCC>

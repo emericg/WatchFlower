@@ -24,7 +24,6 @@
 #include "SystrayManager.h"
 #include "NotificationManager.h"
 #include "DeviceManager.h"
-#include "demomode.h"
 #include "utils/utils_app.h"
 #include "utils/utils_screen.h"
 #include "utils/utils_language.h"
@@ -129,12 +128,6 @@ int main(int argc, char *argv[])
     // Application icon
     QIcon appIcon(":/assets/logos/watchflower.svg");
     app.setWindowIcon(appIcon);
-#endif
-
-#ifdef DEMO_MODE
-    // DEMO mode, with fake data and fixed config
-    app.setApplicationName("WatchFlower_demo");
-    setup_demo_mode();
 #endif
 
     // Init WatchFlower components

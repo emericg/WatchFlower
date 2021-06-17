@@ -384,13 +384,6 @@ void DeviceManager::startBleAgent()
 
 void DeviceManager::checkBluetoothIos()
 {
-#ifdef DEMO_MODE
-    // iOS simulator doesn't have Bluetooth at all, so we fake it
-    m_btA = true;
-    m_btE = true;
-    return;
-#endif
-
     // iOS behave differently than all other platforms; there is no way to check
     // adapter status, only to start a device discovery and check for errors
 
