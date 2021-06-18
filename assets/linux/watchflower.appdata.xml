@@ -5,6 +5,7 @@
   <id>com.emeric.watchflower</id>
   <name>WatchFlower</name>
   <launchable type="desktop-id">watchflower.desktop</launchable>
+
   <summary>A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi "Flower Care" or Parrot "Flower Power".</summary>
   <description>
     <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers.</p>
@@ -24,9 +25,9 @@
     </ul>
   </description>
 
-  <content_rating type="oars-1.0" />
-  <metadata_license>CC0-1.0</metadata_license>
+  <metadata_license>CC0-1.1</metadata_license>
   <project_license>GPL-3.0+</project_license>
+  <content_rating type="oars-1.0" />
 
   <developer_name>Emeric Grange</developer_name>
   <updatecontact>emeric.grange@gmail.com</updatecontact>

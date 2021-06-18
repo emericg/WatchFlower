@@ -16,6 +16,7 @@ fi
 ## SETTINGS ####################################################################
 
 use_contribs=false
+make_install=false
 create_package=false
 upload_package=false
 
@@ -24,6 +25,9 @@ do
 case $1 in
   -c|--contribs)
   use_contribs=true
+  ;;
+  -i|--install)
+  make_install=true
   ;;
   -p|--package)
   create_package=true
@@ -40,19 +44,23 @@ done
 
 ## APP INSTALL #################################################################
 
-#echo '---- Running make install'
-#make INSTALL_ROOT=bin/ install;
+if [[ $make_install = true ]] ; then
+  echo '---- Running make install'
+  make INSTALL_ROOT=bin/ install;
 
-#echo '---- Installation directory content recap:'
-#find bin/;
+  #echo '---- Installation directory content recap:'
+  #find bin/;
+fi
 
 ## DEPLOY ######################################################################
 
-#echo '---- Running windeployqt'
+echo '---- Running windeployqt'
 windeployqt bin/ --qmldir qml/
 
 #echo '---- Installation directory content recap:'
 #find bin/;
+
+## PACKAGE #####################################################################
 
 mv bin $APP_NAME-$GIT_VERSION-win64;
 
