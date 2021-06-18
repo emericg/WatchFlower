@@ -1,7 +1,7 @@
 TARGET  = WatchFlower
 
 VERSION = 2.0
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
 QT     += core bluetooth sql
@@ -10,7 +10,7 @@ android { QT += androidextras }
 ios { QT += gui-private }
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for WatchFlower")
+!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
 !versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for WatchFlower")
 
 # Project features #############################################################
@@ -167,7 +167,7 @@ linux:!android {
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path         = $${PREFIX}/bin/
-    target_icon.files      += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
+    target_icon.files      += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).svg
     target_icon.path        = $${PREFIX}/share/pixmaps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications

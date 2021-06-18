@@ -9,7 +9,7 @@ WatchFlower is a **plant monitoring application** that reads and plots data from
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
-Virtually all phones have Bluetooth "Low Energy", but you will need to make sure your computer has BLE capabilities (and for Windows, a working driver too).  
+Virtually all phones and laptops have Bluetooth "Low Energy", but you will need to make sure your desktop computer has a Bluetooth card or dongle (and for Windows, a working driver too).  
 
 > Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
 
@@ -17,14 +17,14 @@ Virtually all phones have Bluetooth "Low Energy", but you will need to make sure
 
 ### Features
 
-* Support plant sensors and thermometers
+* Support many plant sensors and thermometers
 * Name your plants and set your own limits for optimal care
-* Synchronize sensors history (FlowerCare ONLY for now)
 * Background updates & notifications (desktop ONLY for now)
-* Configurable update interval
+* Synchronize sensors history (FlowerCare ONLY for now)
+* Configurable update intervals
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
-* CSV data export
+* 90 days CSV data export
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
 ### TODOs

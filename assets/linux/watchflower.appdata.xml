@@ -4,9 +4,23 @@
 <component type="desktop-application">
   <id>watchflower.desktop</id>
   <name>WatchFlower</name>
-  <summary>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers.</summary>
+  <summary>A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi "Flower Care" or Parrot "Flower Power".</summary>
   <description>
     <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers.</p>
+    <p>It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!</p>
+    <p>Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!</p>
+    <p>Features:</p>
+    <ul>
+      <li>Support many plant sensors and thermometers</li>
+      <li>Name your plants and set your own limits for optimal care</li>
+      <li>Background updates & notifications (desktop ONLY for now)</li>
+      <li>Synchronize sensors history (FlowerCare ONLY for now)</li>
+      <li>Configurable update intervals</li>
+      <li>Clickable two-week graphs</li>
+      <li>Monthly/weekly/daily data histograms</li>
+      <li>90 days CSV data export</li>
+      <li>Scalable UI: 4.6" to 34" screens, landscape or portrait</li>
+    </ul>
   </description>
 
   <content_rating type="oars-1.0" />
@@ -17,6 +31,12 @@
   <updatecontact>emeric.grange@gmail.com</updatecontact>
   <url type="homepage">https://emeric.io/WatchFlower</url>
   <url type="bugtracker">https://github.com/emericg/WatchFlower/issues</url>
+  <url type="donation">https://paypal.me/EmericGrange</url>
+
+  <releases>
+    <release version="2.0" date="2021-06-17" />
+    <release version="1.0" date="2021-04-02" />
+  </releases>
 
   <screenshots>
     <screenshot type="default">

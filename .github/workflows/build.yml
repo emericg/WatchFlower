@@ -1,0 +1,172 @@
+#--------------------------------------------------------------------------------
+# Workflow configuration
+#--------------------------------------------------------------------------------
+
+name: build
+on:
+  push:
+
+#--------------------------------------------------------------------------------
+# Define application name & version
+#--------------------------------------------------------------------------------
+
+env:
+  VERSION: "2.0"
+  EXECUTABLE: "WatchFlower"
+  APPLICATION: "WatchFlower"
+  QMAKE_PROJECT: "WatchFlower.pro"
+
+#--------------------------------------------------------------------------------
+# Workflow jobs
+#--------------------------------------------------------------------------------
+
+jobs:
+  ## GNU/Linux build ###########################################################
+  build-linux:
+    name: "Linux CI build"
+    runs-on: ubuntu-18.04
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Cache Qt
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{runner.os}}-QtCache
+
+      # Install Qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          modules: qtcharts
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+
+      # Build application
+      - name: Build application
+        run: |
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
+             make -j$(nproc)
+
+      # Deploy application
+      - name: Deploy application
+        run: |
+             ./deploy_linux.sh -c -p -u
+
+      # Upload AppImage
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-linux64.AppImage
+          path: ${{env.EXECUTABLE}}*.AppImage
+
+  ## macOS build ###############################################################
+  build-mac:
+    name: "macOS CI build"
+    runs-on: macos-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+             brew install qt5
+
+      # Build application
+      - name: Build application
+        run: |
+             export PATH=$PATH:/usr/local/opt/qt@5/bin:/usr/local/bin
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             make -j$(nproc)
+
+      # Deploy application
+      - name: Deploy application
+        run: |
+             export PATH=$PATH:/usr/local/opt/qt@5/bin:/usr/local/bin
+             ./deploy_macos.sh -c -p -u
+
+      # Upload app zip
+      - name: Upload app zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+          path: bin/${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+
+  ## Windows build #############################################################
+  build-windows:
+    name: "Windows CI build"
+    runs-on: windows-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Configure MSVC
+      - name: Configure MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+          spectre: true
+
+      # Cache Qt
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{runner.os}}-QtCache
+
+      # Install Qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          modules: qtcharts
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+
+      # Install NSIS
+      - name: Install NSIS
+        run: |
+             Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+             scoop bucket add extras
+             scoop install nsis
+
+      # Build dependencies
+      - name: Build dependencies
+        run: |
+             cd contribs/
+             python3 contribs.py
+             cd ..
+
+      # Build application
+      - name: Build application
+        run: |
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release
+             nmake
+
+      # Deploy application
+      - name: Deploy application
+        run: |
+             sh deploy_windows.sh -c -p -u
+
+      # Upload NSIS installer
+      - name: Upload NSIS installer
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.exe
+          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.exe

@@ -1,0 +1,28 @@
+#--------------------------------------------------------------------------------
+# Workflow configuration
+#--------------------------------------------------------------------------------
+
+name: build flatpak
+on:
+  push:
+    branches: [master]
+
+#--------------------------------------------------------------------------------
+# Workflow jobs
+#--------------------------------------------------------------------------------
+
+jobs:
+  ## GNU/Linux build ###########################################################
+  build-flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-5.15
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v2
+    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v3
+      name: "Flatpak build"
+      with:
+        bundle: watchflower.flatpak
+        manifest-path: assets/linux/watchflower.flatpak.yml
+        cache-key: flatpak-builder-${{ github.sha }}
