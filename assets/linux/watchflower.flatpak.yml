@@ -4,9 +4,9 @@ runtime-version: '5.15'
 sdk: org.kde.Sdk
 command: watchflower
 
-rename-icon: watchflower.svg
 rename-desktop-file: watchflower.desktop
 rename-appdata-file: watchflower.appdata.xml
+#rename-icon: watchflower
 
 finish-args:
   # Our UI is GPU accelerated
@@ -20,6 +20,21 @@ finish-args:
   - --allow=bluetooth
   - --system-talk-name=org.bluez
   - --share=network
+
+cleanup:
+- /bin/__pypache__
+- /bin/rst*
+- /include
+- /lib/cmake
+- /lib/cups
+- /lib/pkgconfig
+- /lib/python*
+- /share/doc
+- /share/man
+- /share/zsh
+- /src
+- '*.a'
+- '*.la'
 
 modules:
 

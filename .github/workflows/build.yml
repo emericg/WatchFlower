@@ -2,7 +2,7 @@
 # Workflow configuration
 #--------------------------------------------------------------------------------
 
-name: build
+name: "CI builds"
 on:
   push:
   pull_request:
@@ -48,6 +48,12 @@ jobs:
           version: '5.15.2'
           modules: qtcharts
           cached: ${{steps.cache-qt.outputs.cache-hit}}
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+             sudo apt-get install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev -y;
+             sudo apt-get install libgl1-mesa-dev -y;
 
       # Build application
       - name: Build application

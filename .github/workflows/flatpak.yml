@@ -2,7 +2,7 @@
 # Workflow configuration
 #--------------------------------------------------------------------------------
 
-name: build flatpak
+name: "Flatpak build"
 on:
   push:
     branches: [master]
