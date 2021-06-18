@@ -5,6 +5,7 @@
 name: build
 on:
   push:
+  pull_request:
 
 #--------------------------------------------------------------------------------
 # Define application name & version
@@ -52,7 +53,7 @@ jobs:
       - name: Build application
         run: |
              qmake --version
-             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release PREFIX=/usr
              make -j$(nproc)
 
       # Deploy application
@@ -145,18 +146,11 @@ jobs:
              scoop bucket add extras
              scoop install nsis
 
-      # Build dependencies
-      - name: Build dependencies
-        run: |
-             cd contribs/
-             python3 contribs.py
-             cd ..
-
       # Build application
       - name: Build application
         run: |
              qmake --version
-             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
              nmake
 
       # Deploy application
