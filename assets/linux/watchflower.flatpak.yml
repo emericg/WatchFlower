@@ -9,17 +9,17 @@ rename-desktop-file: watchflower.desktop
 rename-appdata-file: watchflower.appdata.xml
 
 finish-args:
-  # We need Bluetooth support
-  - --allow=bluetooth
-  - --system-talk-name=org.bluez
-  - --share=network
+  # Our UI is GPU accelerated
+  - --device=dri
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
   # Wayland access
   - --socket=wayland
-  # Our UI is GPU accelerated
-  - --device=dri
+  # We need Bluetooth support
+  - --allow=bluetooth
+  - --system-talk-name=org.bluez
+  - --share=network
 
 modules:
 
