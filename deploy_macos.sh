@@ -83,5 +83,5 @@ fi
 
 if [[ $upload_package = true ]] ; then
   echo '---- Uploading to transfer.sh'
-  curl --upload-file $APP_NAME*.zip https://transfer.sh/$APP_NAME-git.$APP_VERSION-macOS.zip;
+  curl --upload-file $APP_NAME*.zip https://transfer.sh/$APP_NAME.$APP_VERSION-git$GIT_VERSION-macOS.zip;
 fi

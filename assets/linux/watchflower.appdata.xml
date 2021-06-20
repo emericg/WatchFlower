@@ -25,9 +25,9 @@
     </ul>
   </description>
 
-  <metadata_license>CC0-1.1</metadata_license>
   <project_license>GPL-3.0+</project_license>
-  <content_rating type="oars-1.0" />
+  <metadata_license>CC0-1.1</metadata_license>
+  <content_rating type="oars-1.1" />
 
   <developer_name>Emeric Grange</developer_name>
   <updatecontact>emeric.grange@gmail.com</updatecontact>

@@ -59,7 +59,7 @@ fi
 
 ## DEPLOY ######################################################################
 
-unset LD_LIBRARY_PATH; unset QT_PLUGIN_PATH; #unset QTDIR;
+unset LD_LIBRARY_PATH; #unset QT_PLUGIN_PATH; #unset QTDIR;
 
 if [[ $use_contribs = true ]] ; then
   export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/linux_x86_64/usr/lib/:/usr/lib;
@@ -89,10 +89,6 @@ cp $QTDIR/plugins/iconengines/libqsvgicon.so appdir/$USRDIR/plugins/iconengines/
 #echo '---- Installation directory content recap:'
 #find appdir/;
 
-## PACKAGE (ZIP) ###############################################################
-
-# TODO
-
 ## PACKAGE (AppImage) ##########################################################
 
 if [[ $create_package = true ]] ; then
@@ -100,10 +96,14 @@ if [[ $create_package = true ]] ; then
   ./contribs/src/linuxdeployqt-6-x86_64.AppImage appdir/$USRDIR/share/applications/*.desktop -qmldir=qml/ -unsupported-allow-new-glibc -appimage;
 fi
 
+## PACKAGE (ZIP) ###############################################################
+
+# TODO
+
 ## UPLOAD ######################################################################
 
 if [[ $upload_package = true ]] ; then
   echo '---- Uploading to transfer.sh'
   find appdir -executable -type f -exec ldd {} \; | grep " => $USRDIR" | cut -d " " -f 2-3 | sort | uniq;
-  curl --upload-file $APP_NAME*.AppImage https://transfer.sh/$APP_NAME-$APP_VERSION-linux64.AppImage;
+  curl --upload-file $APP_NAME*.AppImage https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-linux64.AppImage;
 fi

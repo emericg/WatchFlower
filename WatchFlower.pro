@@ -102,8 +102,12 @@ RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc
 
-OTHER_FILES += .gitignore \
-               .travis.yml
+OTHER_FILES += .travis.yml \
+               .gitignore \
+               .github/workflows/builds.yml \
+               deploy_linux.sh \
+               deploy_macos.sh \
+               deploy_windows.sh
 
 TRANSLATIONS = i18n/watchflower_ca.ts \
                i18n/watchflower_da.ts \
