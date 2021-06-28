@@ -519,7 +519,7 @@ void DeviceManager::scanDevices()
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                         this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
 
-                m_discoveryAgent->setLowEnergyDiscoveryTimeout(10*1000); // 10s
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(15*1000); // 15s
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
                 if (m_discoveryAgent->isActive())
