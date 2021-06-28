@@ -99,7 +99,7 @@ For Android builds, you'll need the appropriates SDK and NDK (21+).
 
 #### Building WatchFlower
 
-```
+```bash
 $ git clone https://github.com/emericg/WatchFlower.git
 $ cd WatchFlower/
 $ qmake
@@ -119,13 +119,13 @@ Without it, these two features will just be disabled.
 While reading FlowerCare historical entry count, the sensors usually freeze for up to a second, and the Linux kernel consider that to be a connection timeout.  
 To be able to get the historical data working on Linux, you'll need to increase the "supervision timeout" value (while root):
 
-```
+```bash
 # echo 100 > /sys/kernel/debug/bluetooth/hci0/supervision_timeout
 ```
 
 You could also give WatchFlower binary the net_raw and net_admin capabilities, so that it could be allowed to changes the supervision timeout on its own. But at the moment that's not fully implemented.
 
-```
+```bash
 # setcap 'cap_net_raw,cap_net_admin+eip' watchflower
 ```
 

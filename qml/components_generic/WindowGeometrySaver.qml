@@ -40,6 +40,10 @@ Item {
             windowInstance.height = st.height;
             windowInstance.visibility = st.visibility;
         }
+
+        if (windowInstance.visibility <= 0) {
+            windowInstance.visibility = Window.AutomaticVisibility;
+        }
     }
 
     // Save settings ///////////////////////////////////////////////////////////

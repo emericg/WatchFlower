@@ -27,7 +27,7 @@ Item {
         onBatteryUpdated: { updateSensorBattery() }
     }
     Connections {
-        target: Theme
+        target: ThemeEngine
         onCurrentThemeChanged: {
             updateSensorSettings()
             updateSensorStatus()

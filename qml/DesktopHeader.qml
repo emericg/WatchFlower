@@ -90,7 +90,7 @@ Rectangle {
         onReleased: buttonBack.width = 24
         onClicked: backButtonClicked()
 
-        enabled: (buttonBack.source != "qrc:/assets/menus/menu_logo_large.svg" || wideMode)
+        enabled: (buttonBack.source !== "qrc:/assets/menus/menu_logo_large.svg" || wideMode)
         visible: enabled
 
         Rectangle {

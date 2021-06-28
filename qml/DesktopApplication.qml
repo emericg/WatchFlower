@@ -37,6 +37,7 @@ ApplicationWindow {
     }
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height
+    visibility: settingsManager.initialVisibility
 
     WindowGeometrySaver {
         windowInstance: appWindow
@@ -243,10 +244,6 @@ ApplicationWindow {
         onActivated: forwardAction()
     }
     Shortcut {
-        sequence: StandardKey.Preferences
-        onActivated: appContent.state = "Settings"
-    }
-    Shortcut {
         sequence: StandardKey.Refresh
         onActivated: deviceManager.refreshDevices_check()
     }
@@ -257,6 +254,10 @@ ApplicationWindow {
     Shortcut {
         sequences: [StandardKey.Deselect, StandardKey.Cancel]
         onActivated: deselectAction()
+    }
+    Shortcut {
+        sequence: StandardKey.Preferences
+        onActivated: appContent.state = "Settings"
     }
     Shortcut {
         sequence: StandardKey.Close

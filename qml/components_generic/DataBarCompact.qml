@@ -18,7 +18,7 @@ Item {
     property bool warning: false
 
     property string colorText: Theme.colorText
-    property string colorForeground: Theme.colorBlue
+    property string colorForeground: Theme.colorPrimary
     property string colorBackground: Theme.colorForeground
 
     property int hhh: 8

@@ -679,6 +679,8 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
         mac += value.mid(5,1).toHex().toUpper();
 
         setSetting("mac", mac);
+#else
+        Q_UNUSED(mac)
 #endif
 
         if (value.size() >= 16)

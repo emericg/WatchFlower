@@ -9,7 +9,7 @@ Item {
     anchors.margins: 0
 
     property int widgetWidthTarget: (isPhone ? 48 : 64)
-    property int widgetWidth: 64
+    property int widgetWidth: 48
     property int graphMin: currentDevice.tempMin
     property int graphMax: currentDevice.tempMax
 
@@ -24,7 +24,7 @@ Item {
 
         var daysVisible = Math.floor(width / widgetWidthTarget)
         var daysMax = daysVisible
-        widgetWidth = (width / daysVisible)
+        widgetWidth = Math.floor(width / daysVisible)
         currentDevice.updateChartData_thermometerMinMax(daysMax)
 
         if (currentDevice.countData("temperature", daysMax) > 1) {

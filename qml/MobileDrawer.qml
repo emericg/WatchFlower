@@ -36,7 +36,7 @@ Drawer {
                 onScreenPaddingStatusbarChanged: rectangleHeader.updateIOSHeader()
             }
             Connections {
-                target: Theme
+                target: ThemeEngine
                 onCurrentThemeChanged: rectangleHeader.updateIOSHeader()
             }
 

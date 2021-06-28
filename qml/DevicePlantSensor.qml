@@ -51,7 +51,7 @@ Item {
     }
 
     Connections {
-        target: Theme
+        target: ThemeEngine
         onCurrentThemeChanged: {
             plantSensorData.updateHeader()
             plantSensorHistory.updateHeader()

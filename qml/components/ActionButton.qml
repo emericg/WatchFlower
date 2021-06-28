@@ -8,26 +8,13 @@ Item {
     height: isPhone ? 36 : 40
     width: parent.width
 
+    property int index
     property string button_text
     property string button_source
-    property int index
 
-    property alias contentWidth: tButton.contentWidth
-
-    property bool clicked
     signal buttonClicked
 
-    function viewButtonHovered() {
-        viewButton.state = "hovered"
-    }
-
-    function viewButtonExited() {
-        if (clicked == false) {
-            viewButton.state = ""
-        } else {
-            viewButton.state = "clicked"
-        }
-    }
+    property alias contentWidth: tButton.contentWidth
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -65,31 +52,25 @@ Item {
         MouseArea {
             anchors.fill: parent
 
-            hoverEnabled: isDesktop
-            onEntered: viewButtonHovered()
-            onExited: viewButtonExited()
+            hoverEnabled: isDesktop && visible
+            onEntered: viewButton.state = "hovered"
+            onExited: viewButton.state = "normal"
 
             onClicked: buttonClicked()
         }
 
         states: [
             State {
-                name: "clicked";
+                name: "normal";
                 PropertyChanges { target: viewButton; color: "transparent"; }
-                PropertyChanges { target: tButton; color: "#286E1E"; }
-                PropertyChanges { target: iButton; color: "#286E1E"; }
+                PropertyChanges { target: tButton; color: "#3d3d3d"; }
+                PropertyChanges { target: iButton; color: "#3d3d3d"; }
             },
             State {
                 name: "hovered";
                 PropertyChanges { target: viewButton; color: Theme.colorForeground; }
                 PropertyChanges { target: tButton; color: Theme.colorPrimary; }
                 PropertyChanges { target: iButton; color: Theme.colorPrimary; }
-            },
-            State {
-                name: "normal";
-                PropertyChanges { target: viewButton; color: "transparent"; }
-                PropertyChanges { target: tButton; color: "#3d3d3d"; }
-                PropertyChanges { target: iButton; color: "#3d3d3d"; }
             }
         ]
     }

@@ -74,7 +74,7 @@ class SettingsManager: public QObject
     // Application window
     QSize m_appSize;
     QSize m_appPosition;
-    unsigned m_appVisibility = 2;               //!< QWindow::Visibility
+    unsigned m_appVisibility = 1;               //!< QWindow::Visibility
 
     // Application generic
     QString m_appTheme = "green";

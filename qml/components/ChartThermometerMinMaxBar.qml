@@ -9,7 +9,7 @@ Item {
     height: parent.height
 
     property var mmd: null
-    property int hhh: 20
+    property int www: 20
 
     Component.onCompleted: {
         setTemp()
@@ -41,9 +41,9 @@ Item {
             rectangle_temp.y = base - (base * h)
             rectangle_temp.height = ((base * h) - (base * l))
 
-            if (rectangle_temp.height < hhh) {
-                rectangle_temp.y -= (hhh - rectangle_temp.height) / 2
-                rectangle_temp.height = hhh
+            if (rectangle_temp.height < www) {
+                rectangle_temp.y -= (www - rectangle_temp.height) / 2
+                rectangle_temp.height = www
             }
 
             rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.33)
@@ -119,7 +119,7 @@ Item {
 
         Rectangle {
             id: rectangle_temp
-            width: hhh
+            width: www
             height: 0
             radius: 16
             anchors.horizontalCenter: parent.horizontalCenter
@@ -132,7 +132,7 @@ Item {
 
             Rectangle {
                 id: rectangle_temp_mean
-                width: UtilsNumber.alignTo(hhh*0.666, 2)
+                width: UtilsNumber.alignTo(www*0.666, 2)
                 height: width
                 radius: width
                 anchors.horizontalCenter: parent.horizontalCenter

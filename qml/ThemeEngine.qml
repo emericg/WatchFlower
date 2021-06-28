@@ -81,8 +81,8 @@ Item {
     property string colorDarkGreen: "#1ea892" // unused
     property string colorBlue
     property string colorYellow
-    property string colorRed
     property string colorOrange
+    property string colorRed
     property string colorGrey: "#555151" // unused
     property string colorLightGrey: "#a9bcb8" // unused
 
