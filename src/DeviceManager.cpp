@@ -144,7 +144,7 @@ DeviceManager::DeviceManager()
             }
         }
 
-        Q_EMIT devicesListUpdated();
+        //Q_EMIT devicesListUpdated();
     }
 }
 

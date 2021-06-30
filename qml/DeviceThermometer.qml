@@ -123,7 +123,7 @@ Item {
                 sensorHygro.visible = true
             }
             if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
-                if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
+                if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
                     heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                     heatIndex.visible = true
                 }
@@ -140,8 +140,8 @@ Item {
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-            (currentDevice.isDataFresh() || currentDevice.isDataAvailable())) {
-            if (currentDevice.getLastUpdateInt() <= 1)
+            (currentDevice.dataFresh || currentDevice.dataAvailable)) {
+            if (currentDevice.lastUpdateMin <= 1)
                 textStatus.text = qsTr("Synced")
             else
                 textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
@@ -312,7 +312,7 @@ Item {
 
                     text: currentDevice ? currentDevice.deviceLocationName : ""
                     onEditingFinished: {
-                        currentDevice.setLocationName(text)
+                        currentDevice.deviceLocationName = text
                         focus = false
                     }
 

@@ -42,7 +42,7 @@ Item {
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         // Has data? always display them
-        if (currentDevice.isDataAvailable()) {
+        if (currentDevice.dataAvailable) {
             var hasHygro = (currentDevice.soilMoisture > 0 || currentDevice.soilConductivity > 0) ||
                            (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
 

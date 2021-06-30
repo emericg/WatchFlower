@@ -51,6 +51,12 @@ class Device: public QObject
     Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
 
+    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
+    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+
     Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)
     Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
     Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
@@ -64,44 +70,39 @@ class Device: public QObject
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
 
-    Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasSoilTemperatureSensor READ hasSoilTemperatureSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasSoilPhSensor READ hasSoilPhSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasTemperatureSensor READ hasTemperatureSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasHumiditySensor READ hasHumiditySensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasPressureSensor READ hasPressureSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasLuminositySensor READ hasLuminositySensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasUvSensor READ hasUvSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasSoundSensor READ hasSoundSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasWaterLevelSensor READ hasWaterLevelSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasWindDirectionSensor READ hasWindDirectionSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasWindSpeedSensor READ hasWindSpeedSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasPM1Sensor READ hasPM1Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasPM25Sensor READ hasPM25Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasPM10Sensor READ hasPM10Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasO2Sensor READ hasO2Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasO3Sensor READ hasO3Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasCoSensor READ hasCoSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasCo2Sensor READ hasCo2Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool haseCo2Sensor READ haseCo2Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasNo2Sensor READ hasNo2Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasSo2Sensor READ hasSo2Sensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasVocSensor READ hasVocSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasHchoSensor READ hasHchoSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasGeigerCounter READ hasGeigerCounter NOTIFY sensorUpdated)
-
-    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
-    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilTemperatureSensor READ hasSoilTemperatureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilPhSensor READ hasSoilPhSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasTemperatureSensor READ hasTemperatureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasHumiditySensor READ hasHumiditySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPressureSensor READ hasPressureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasLuminositySensor READ hasLuminositySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasUvSensor READ hasUvSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoundSensor READ hasSoundSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWaterLevelSensor READ hasWaterLevelSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWindDirectionSensor READ hasWindDirectionSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWindSpeedSensor READ hasWindSpeedSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM1Sensor READ hasPM1Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM25Sensor READ hasPM25Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM10Sensor READ hasPM10Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasO2Sensor READ hasO2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasO3Sensor READ hasO3Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasCoSensor READ hasCoSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasCo2Sensor READ hasCo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool haseCo2Sensor READ haseCo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasNo2Sensor READ hasNo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSo2Sensor READ hasSo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasVocSensor READ hasVocSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasHchoSensor READ hasHchoSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasGeigerCounter READ hasGeigerCounter NOTIFY sensorsUpdated)
 
     Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
     Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
 
-    Q_PROPERTY(QString deviceLocationName READ getLocationName NOTIFY settingsUpdated)
-    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName NOTIFY settingsUpdated)
+    Q_PROPERTY(QString deviceLocationName READ getLocationName WRITE setLocationName NOTIFY settingsUpdated)
+    Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated)
+    Q_PROPERTY(QString devicePlantName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated) // legacy
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY settingsUpdated)
 
@@ -283,42 +284,24 @@ public:
     void setRssi(const int rssi);
     void cleanRssi();
 
-    // BLE advertisement
-    virtual void parseAdvertisementData(const QByteArray &value);
-
-public slots:
-    void deviceConnect();               //!< Initiate a BLE connection with a device
-    void deviceDisconnect();
-
-    void actionLedBlink();
-    void actionWatering();
-    void actionClearData();
-    void actionClearHistory();
-
-    void refreshQueue();
-    void refreshStart();
-    void refreshStartHistory();
-    void refreshStartRealtime();
-    void refreshRetry();
-    void refreshStop();
-
-    // Status
+    // Device status
     int getAction() const { return m_ble_action; }
     int getStatus() const { return m_ble_status; }
-    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
-    bool isDataAvailable() const;       //!< Has at least >12h old data
     bool isBusy() const;                //!< Is currently doing something?
     bool isWorking() const;             //!< Is currently working?
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
 
-    bool needsUpdateRt() const;
-    bool needsUpdateDb() const;
+    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
+    bool isDataAvailable() const;       //!< Has at least >12h old data
 
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
+
+    bool needsUpdateRt() const;
+    bool needsUpdateDb() const;
 
     QDateTime getDeviceUptime() const;
     float getDeviceUptime_days() const;
@@ -334,11 +317,31 @@ public slots:
     int getManualIndex() const { return m_manualOrderIndex; }
     bool isInside() const { return !m_isOutside; }
     bool isOutside() const { return m_isOutside; }
-    void setOutside(const bool outside);
+    Q_INVOKABLE void setOutside(const bool outside);
     // Device additional settings
-    bool hasSetting(const QString &key) const;
-    QVariant getSetting(const QString &key) const;
-    bool setSetting(const QString &key, QVariant value);
+    Q_INVOKABLE bool hasSetting(const QString &key) const;
+    Q_INVOKABLE QVariant getSetting(const QString &key) const;
+    Q_INVOKABLE bool setSetting(const QString &key, QVariant value);
+
+    // Start actions
+    Q_INVOKABLE void actionLedBlink();
+    Q_INVOKABLE void actionWatering();
+    Q_INVOKABLE void actionClearData();
+    Q_INVOKABLE void actionClearHistory();
+
+    // BLE advertisement
+    virtual void parseAdvertisementData(const QByteArray &value);
+
+public slots:
+    void deviceConnect();               //!< Initiate a BLE connection with a device
+    void deviceDisconnect();
+
+    void refreshQueue();
+    void refreshStart();
+    void refreshStartHistory();
+    void refreshStartRealtime();
+    void refreshRetry();
+    void refreshStop();
 };
 
 /* ************************************************************************** */

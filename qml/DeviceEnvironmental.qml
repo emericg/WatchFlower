@@ -178,26 +178,15 @@ Item {
         }
     }
 
-    function loadGraph() {
-        chartEnvironmentalLoader.visible = false
-
-        if (isAirMonitor) {
-            if (currentDevice.hasVocSensor) {
-                chartEnvironmentalLoader.source = "ChartEnvironmentalVoc.qml"
-                chartEnvironmentalLoader.visible = true
-            }
-        }
-    }
-
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
-        //indicatorDisconnected.visible = !currentDevice.isDataAvailable()
-        //indicatorAirQuality.visible = isAirMonitor && currentDevice.isDataAvailable()
-        //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.isDataAvailable()
-        //indicatorHygrometer.visible = isWeatherStation && currentDevice.isDataAvailable()
+        //indicatorDisconnected.visible = !currentDevice.dataAvailable
+        //indicatorAirQuality.visible = isAirMonitor && currentDevice.dataAvailable
+        //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.dataAvailable
+        //indicatorHygrometer.visible = isWeatherStation && currentDevice.dataAvailable
 
         // Indicators
         if (primary === "hygrometer") {
@@ -219,7 +208,7 @@ Item {
                     sensorHygro.visible = true
                 }
                 if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
-                    if (currentDevice.getHeatIndex() > (currentDevice.getTemp() + 1)) {
+                    if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
                         heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                         heatIndex.visible = true
                     }
@@ -259,15 +248,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateData() >> " + currentDevice)
-
-        // DATA
-
-        // GRAPH
-        if (isAirMonitor) {
-            if (currentDevice.hasVocSensor) {
-                currentDevice.updateChartData_environmentalVoc(31)
-            }
-        }
     }
 
     function updateStatusText() {
@@ -278,11 +258,34 @@ Item {
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-            (currentDevice.isDataFresh() || currentDevice.isDataAvailable())) {
-            if (currentDevice.getLastUpdateInt() <= 1)
+            (currentDevice.dataFresh || currentDevice.dataAvailable)) {
+            if (currentDevice.lastUpdateMin <= 1)
                 textStatus.text = qsTr("Synced")
             else
                 textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
+        }
+    }
+
+    function loadGraph() {
+        chartEnvironmentalLoader.visible = false
+
+        if (isAirMonitor) {
+            if (currentDevice.hasVocSensor) {
+                chartEnvironmentalLoader.source = "ChartEnvironmentalVoc.qml"
+                chartEnvironmentalLoader.visible = true
+            }
+        }
+    }
+    function updateGraph() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.isEnvironmentalSensor) return
+        //console.log("DeviceEnvironmental // updateGraph() >> " + currentDevice)
+
+        // GRAPH
+        if (isAirMonitor) {
+            if (currentDevice.hasVocSensor) {
+                currentDevice.updateChartData_environmentalVoc(31)
+            }
         }
     }
 
@@ -326,7 +329,7 @@ Item {
                     width: isMobile ? 96 : 128
                     height: isMobile ? 96 : 128
 
-                    visible: (currentDevice && !currentDevice.isDataAvailable())
+                    visible: (currentDevice && !currentDevice.dataAvailable)
                     color: cccc
                     source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 }
@@ -339,7 +342,7 @@ Item {
                     height: width
 
                     color: cccc
-                    visible: (currentDevice && isAirMonitor && currentDevice.isDataAvailable())
+                    visible: (currentDevice && isAirMonitor && currentDevice.dataAvailable)
                 }
 
                 ////////////////
@@ -387,7 +390,7 @@ Item {
                     width: isMobile ? 128 : 160
                     height: isMobile ? 128 : 160
 
-                    visible: (currentDevice && isGeigerCounter && currentDevice.isDataAvailable())
+                    visible: (currentDevice && isGeigerCounter && currentDevice.dataAvailable)
                     color: cccc
                     source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
 
@@ -479,7 +482,7 @@ Item {
 
                     text: currentDevice ? currentDevice.deviceLocationName : ""
                     onEditingFinished: {
-                        currentDevice.setLocationName(text)
+                        currentDevice.deviceLocationName = text
                         focus = false
                     }
 

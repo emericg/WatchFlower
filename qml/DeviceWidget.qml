@@ -116,16 +116,16 @@ Item {
         textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isDataFresh()) {
+            if (boxDevice.dataFresh) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
-            } else if (boxDevice.isDataAvailable()) {
+            } else if (boxDevice.dataAvailable) {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
             }
         }
         // Image
-        if (!boxDevice.isDataAvailable()) {
+        if (!boxDevice.dataAvailable) {
             if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 refreshAnimation.running = false
@@ -221,7 +221,7 @@ Item {
         warning.visible = false
 
         // Warnings icons (for sensors with available data)
-        if (boxDevice.isDataAvailable()) {
+        if (boxDevice.dataAvailable) {
 
             if (boxDevice.isPlantSensor) {
 
@@ -292,7 +292,7 @@ Item {
         updateSensorWarnings()
         if (loaderIndicators.item) loaderIndicators.item.updateData()
 
-        if (boxDevice.isDataAvailable()) {
+        if (boxDevice.dataAvailable) {
             imageStatus.visible = false
             loaderIndicators.visible = true
         } else {

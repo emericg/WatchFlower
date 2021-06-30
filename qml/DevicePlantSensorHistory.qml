@@ -70,8 +70,8 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
-        currentDevice.updateChartData_history_days(31)
-        currentDevice.updateChartData_history_hours()
+        currentDevice.updateChartData_history_month(31)
+        currentDevice.updateChartData_history_day()
     }
 
     function updateHistoryMode() {

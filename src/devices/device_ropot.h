@@ -52,11 +52,7 @@ public:
 
     void parseAdvertisementData(const QByteArray &value);
 
-public slots:
-    virtual bool hasHistory() const;
-
-private slots:
-    void askForReading();
+    Q_INVOKABLE virtual bool hasHistory() const;
 
 private:
     // QLowEnergyController related
@@ -75,6 +71,8 @@ private:
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
+    void askForReading();
 
     // Handshake
     QString m_deviceMacAddress;

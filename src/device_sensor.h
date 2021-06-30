@@ -37,8 +37,6 @@ class DeviceSensor: public Device
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString devicePlantName READ getAssociatedName NOTIFY sensorUpdated) // legacy
-
     // plant data
     Q_PROPERTY(int soilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int soilConductivity READ getSoilConductivity NOTIFY dataUpdated)
@@ -52,6 +50,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float temperatureC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float temperatureF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(float humidity READ getHumidity NOTIFY dataUpdated)
+    Q_PROPERTY(float heatIndex READ getHeatIndex NOTIFY dataUpdated)
     // environmental data
     Q_PROPERTY(int pressure READ getPressure NOTIFY dataUpdated)
     Q_PROPERTY(int luminosity READ getLuminosity NOTIFY dataUpdated)
@@ -105,9 +104,9 @@ class DeviceSensor: public Device
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
 
     // graphs
-    Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryUpdated_days)
-    Q_PROPERTY(QVariant aioHistoryData_week READ getChartData_history_week NOTIFY chartDataHistoryUpdated_days)
-    Q_PROPERTY(QVariant aioHistoryData_day READ getChartData_history_day NOTIFY chartDataHistoryUpdated_hours)
+    Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryMonthsUpdated)
+    Q_PROPERTY(QVariant aioHistoryData_week READ getChartData_history_week NOTIFY chartDataHistoryWeeksUpdated)
+    Q_PROPERTY(QVariant aioHistoryData_day READ getChartData_history_day NOTIFY chartDataHistoryDaysUpdated)
     Q_PROPERTY(QVariant aioMinMaxData READ getChartData_minmax NOTIFY chartDataMinMaxUpdated)
     Q_PROPERTY(QVariant aioEnvData READ getChartData_env NOTIFY chartDataEnvUpdated)
 
@@ -115,8 +114,9 @@ Q_SIGNALS:
     void minmaxUpdated();
     void limitsUpdated();
     void progressUpdated();
-    void chartDataHistoryUpdated_days();
-    void chartDataHistoryUpdated_hours();
+    void chartDataHistoryMonthsUpdated();
+    void chartDataHistoryWeeksUpdated();
+    void chartDataHistoryDaysUpdated();
     void chartDataMinMaxUpdated();
     void chartDataEnvUpdated();
 
@@ -206,6 +206,12 @@ protected:
     QList <QObject *> m_chartData_minmax;
     QList <QObject *> m_chartData_env;
 
+    QVariant getChartData_history_month() const { return QVariant::fromValue(m_chartData_history_month); }
+    QVariant getChartData_history_week() const { return QVariant::fromValue(m_chartData_history_week); }
+    QVariant getChartData_history_day() const { return QVariant::fromValue(m_chartData_history_day); }
+    QVariant getChartData_env() const { return QVariant::fromValue(m_chartData_env); }
+    QVariant getChartData_minmax() const { return QVariant::fromValue(m_chartData_minmax); }
+
 protected:
     virtual void refreshDataFinished(bool status, bool cached = false);
     virtual void refreshHistoryFinished(bool status);
@@ -221,11 +227,6 @@ public:
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 
-public slots:
-    virtual bool hasData() const;
-    bool hasData(const QString &dataName) const;
-    int countData(const QString &dataName, int days = 31) const;
-
     // Plant sensor data
     int getSoilMoisture() const { return m_soil_moisture; }
     int getSoilConductivity() const { return m_soil_conductivity; }
@@ -239,9 +240,9 @@ public slots:
     float getTemp() const;
     float getTempC() const { return m_temperature; }
     float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
-    QString getTempString() const;
-    float getHeatIndex() const;
-    QString getHeatIndexString() const;
+    Q_INVOKABLE QString getTempString() const;
+    Q_INVOKABLE float getHeatIndex() const;
+    Q_INVOKABLE QString getHeatIndexString() const;
     float getHumidity() const { return m_humidity; }
     // Environmental
     int getPressure() const { return m_pressure; }
@@ -312,24 +313,25 @@ public slots:
     int getHistoryUpdatePercent() const;
 
     // Chart history
-    void updateChartData_history_days(int maxDays);
-    void updateChartData_history_hours();
-    QVariant getChartData_history_month() const { return QVariant::fromValue(m_chartData_history_month); }
-    QVariant getChartData_history_week() const { return QVariant::fromValue(m_chartData_history_week); }
-    QVariant getChartData_history_day() const { return QVariant::fromValue(m_chartData_history_day); }
+    Q_INVOKABLE void updateChartData_history_month(int maxDays);
+    Q_INVOKABLE void updateChartData_history_month(const QDateTime &f, const QDateTime &l);
+    Q_INVOKABLE void updateChartData_history_day();
+    Q_INVOKABLE void updateChartData_history_day(const QDateTime &d);
 
     // Chart environmental histogram
-    void updateChartData_environmentalVoc(int maxDays);
-    QVariant getChartData_env() const { return QVariant::fromValue(m_chartData_env); }
+    Q_INVOKABLE void updateChartData_environmentalVoc(int maxDays);
 
     // Chart temperature "min max"
-    void updateChartData_thermometerMinMax(int maxDays);
-    QVariant getChartData_minmax() const { return QVariant::fromValue(m_chartData_minmax); }
+    Q_INVOKABLE void updateChartData_thermometerMinMax(int maxDays);
 
     // Chart plant AIO
-    void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
-                               QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
-                               QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
+    Q_INVOKABLE void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
+                                           QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
+                                           QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
+
+    Q_INVOKABLE virtual bool hasData() const;
+    Q_INVOKABLE bool hasData(const QString &dataName) const;
+    Q_INVOKABLE int countData(const QString &dataName, int days = 31) const;
 };
 
 /* ************************************************************************** */

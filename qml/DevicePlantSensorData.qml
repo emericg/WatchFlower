@@ -92,8 +92,8 @@ Item {
         textStatus.font.bold = false
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (currentDevice.isDataFresh() || currentDevice.isDataAvailable()) {
-                if (currentDevice.getLastUpdateInt() <= 1)
+            if (currentDevice.dataFresh || currentDevice.dataAvailable) {
+                if (currentDevice.lastUpdateMin <= 1)
                     textStatus.text = qsTr("Synced")
                 else
                     textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
@@ -236,7 +236,7 @@ Item {
 
                             text: currentDevice ? currentDevice.devicePlantName : ""
                             onEditingFinished: {
-                                currentDevice.setAssociatedName(text)
+                                currentDevice.devicePlantName = text
                                 focus = false
                             }
 
@@ -311,7 +311,7 @@ Item {
 
                             text: currentDevice ? currentDevice.deviceLocationName : ""
                             onEditingFinished: {
-                                currentDevice.setLocationName(text)
+                                currentDevice.deviceLocationName = text
                                 focus = false
                             }
 

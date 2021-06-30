@@ -181,9 +181,10 @@ void Device::actionClearData()
         deleteData.bindValue(":deviceAddr", getAddress());
         if (deleteData.exec())
         {
-            Q_EMIT dataUpdated();
-
             m_lastHistorySync = QDateTime();
+
+            Q_EMIT dataUpdated();
+            Q_EMIT statusUpdated();
             Q_EMIT historyUpdated();
         }
         else
@@ -342,18 +343,20 @@ void Device::refreshDataFinished(bool status, bool cached)
     m_timeoutTimer.stop();
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
 
     if (status == true)
     {
         // Only update data on success
-        Q_EMIT dataUpdated();
 
         // Reset update timer
         setUpdateTimer();
 
         // Reset last error
         m_lastError = QDateTime();
+
+        Q_EMIT dataUpdated();
+        Q_EMIT refreshUpdated();
+        Q_EMIT statusUpdated();
     }
     else
     {
@@ -373,10 +376,11 @@ void Device::refreshHistoryFinished(bool status)
     m_timeoutTimer.stop();
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
 
     // Even if the status is false, we probably have some new data
     Q_EMIT dataUpdated();
+    Q_EMIT historyUpdated();
+    Q_EMIT statusUpdated();
 }
 
 void Device::refreshRealtime()

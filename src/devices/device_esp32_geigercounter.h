@@ -49,8 +49,7 @@ public:
     DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceEsp32GeigerCounter();
 
-public slots:
-    virtual bool hasData() const;
+    Q_INVOKABLE virtual bool hasData() const;
 
 private:
     // QLowEnergyController related
