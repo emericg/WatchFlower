@@ -12,6 +12,7 @@ Item {
 
     Connections {
         target: currentDevice
+
         onStatusUpdated: {
             plantSensorData.updateHeader()
         }
@@ -62,6 +63,7 @@ Item {
 
     Connections {
         target: appHeader
+
         // desktop only
         onDeviceDataButtonClicked: {
             appHeader.setActiveDeviceData()
@@ -79,6 +81,7 @@ Item {
 
     Connections {
         target: tabletMenuDevice
+
         // mobile only
         onDeviceDataButtonClicked: {
             tabletMenuDevice.setActiveDeviceData()
@@ -126,8 +129,10 @@ Item {
         currentDevice = clickedDevice
         //console.log("DevicePlantSensor // loadDevice() >> " + currentDevice)
 
+        sensorPages.disableAnimation()
         sensorPages.currentIndex = 0
         sensorPages.interactive = isPhone
+        sensorPages.enableAnimation()
 
         plantSensorData.loadData()
         plantSensorHistory.updateHeader()
@@ -168,6 +173,13 @@ Item {
                     else if (sensorPages.currentIndex === 2)
                         tabletMenuDevice.setActiveDeviceSettings()
                 }
+            }
+
+            function enableAnimation() {
+                contentItem.highlightMoveDuration = 333
+            }
+            function disableAnimation() {
+                contentItem.highlightMoveDuration = 0
             }
 
             DevicePlantSensorData {
