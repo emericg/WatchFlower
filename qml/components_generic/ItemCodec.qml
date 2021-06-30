@@ -6,7 +6,6 @@ Item {
     id: codec
     implicitWidth: 80
     implicitHeight: 28
-    clip: true
 
     property string text: "CODEC"
     property string color: Theme.colorForeground
@@ -27,6 +26,7 @@ Item {
             text: codec.text
             textFormat: Text.PlainText
             color: codec.colorText
+            elide: Text.ElideMiddle
             font.capitalization: Font.AllUppercase
             font.pixelSize: Theme.fontSizeComponent
             font.bold: true

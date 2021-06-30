@@ -8,9 +8,10 @@ Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
-    leftPadding: 0
-    rightPadding: 0
+    padding: 4
 
+    //first.value: 0.25
+    //second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
     property string unit: ""
@@ -21,11 +22,11 @@ Slider {
 
     property int hhh: 16
 
+    ////////
+
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
-        implicitWidth: 200
-        implicitHeight: hhh
         width: control.availableWidth
 
         height: hhh
@@ -41,6 +42,8 @@ Slider {
             radius: hhh
         }
     }
+
+    ////////
 
     handle: Rectangle {
         id: h2

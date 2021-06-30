@@ -5,10 +5,10 @@ import ThemeEngine 1.0
 
 Switch {
     id: control
+    implicitHeight: Theme.componentHeight
 
-    leftPadding: 0
-    rightPadding: 0
-    spacing: 16
+    padding: 4
+    spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {

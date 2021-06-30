@@ -6,12 +6,9 @@ import ThemeEngine 1.0
 CheckBox {
     id: control
     implicitHeight: Theme.componentHeight
-    leftPadding: 0
-    rightPadding: 0
-    spacing: 8
 
-    checked: false
-    text: "Check Box"
+    padding: 4
+    spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {

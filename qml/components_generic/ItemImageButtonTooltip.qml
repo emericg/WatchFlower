@@ -126,7 +126,7 @@ Item {
         visible: itemImageButton.tooltipText
         enabled: itemImageButton.tooltipText
 
-        property var tooltipVisible: itemImageButton.highlighted
+        property bool tooltipVisible: itemImageButton.highlighted
         onTooltipVisibleChanged: ttT.checkPosition()
 
         opacity: tooltipVisible ? 1 : 0
@@ -243,7 +243,8 @@ Item {
         Rectangle {
             id: ttA
             anchors.margins: 4
-            width: 12; height: 12; rotation: 45
+            width: 12; height: 12;
+            rotation: 45
             color: backgroundColor
         }
         Rectangle {

@@ -6,7 +6,6 @@ Item {
     id: badge
     implicitWidth: 128
     implicitHeight: 24
-    clip: true
 
     signal clicked()
     property string legend: "legend"

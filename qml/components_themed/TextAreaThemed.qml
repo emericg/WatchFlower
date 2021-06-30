@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 TextArea {
-    id: textAreaThemed
+    id: control
     implicitWidth: 128
     implicitHeight: Theme.componentHeight*2
 
@@ -18,17 +18,17 @@ TextArea {
 
     text: ""
     color: colorText
+    font.pixelSize: Theme.fontSizeComponent
 
     placeholderText: ""
     placeholderTextColor: colorPlaceholderText
-    font.pixelSize: Theme.fontSizeComponent
 
     onEditingFinished: focus = false
 
     background: Rectangle {
         border.width: 2
-        border.color: textAreaThemed.activeFocus ? Theme.colorPrimary : colorBorder
+        border.color: control.activeFocus ? Theme.colorPrimary : control.colorBorder
         radius: Theme.componentRadius
-        color: colorBackground
+        color: control.colorBackground
     }
 }

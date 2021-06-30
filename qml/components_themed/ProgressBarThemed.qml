@@ -5,7 +5,8 @@ import ThemeEngine 1.0
 
 ProgressBar {
     id: control
-    height: 6
+    implicitWidth: 200
+    implicitHeight: 6
 
     value: 0.5
 
@@ -13,18 +14,15 @@ ProgressBar {
     property var colorForeground: Theme.colorPrimary
 
     background: Rectangle {
-        implicitWidth: 200
-        implicitHeight: 6
+        radius: Theme.componentRadius/2
         color: control.colorBackground
     }
 
     contentItem: Item {
-        implicitWidth: 200
-        implicitHeight: 6
-
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
+            radius: Theme.componentRadius/2
             color: control.colorForeground
         }
     }

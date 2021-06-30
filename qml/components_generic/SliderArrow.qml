@@ -7,11 +7,11 @@ Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
-    leftPadding: 0
-    rightPadding: 0
+    padding: 4
+
+    value: 0.5
 
     property int ticksCount: ((to - from) / stepSize)
-    value: 0.5
 
     ////////
 

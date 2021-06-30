@@ -4,15 +4,13 @@ import ThemeEngine 1.0
 
 Item {
     id: itemLilMenuButton
-    implicitWidth: 96
+    implicitWidth: 16 + contentText.width + sourceSize + 16
     implicitHeight: 32
 
-    width: 16 + contentText.width + sourceSize + 16
     height: parent.height
 
     signal clicked()
     property bool selected: false
-    property bool highlighted: false
 
     property string colorBackground: Theme.colorComponent
     property string colorBackgroundHighlight: Theme.colorHighContrast
@@ -30,14 +28,18 @@ Item {
         anchors.fill: parent
         onClicked: parent.clicked()
 
-        hoverEnabled: true
-        onEntered: parent.highlighted = true
-        onExited: parent.highlighted = false
+        property bool isHovered: false
+
+        hoverEnabled: false
+        onEntered: isHovered = true
+        onExited: isHovered = false
+        onCanceled: isHovered = false
     }
 
     Rectangle {
         id: bgHightlight
         anchors.fill: parent
+        anchors.margins: 1
 
         visible: parent.selected
         opacity: 0.1
@@ -47,6 +49,7 @@ Item {
     Rectangle {
         id: bgFocus
         anchors.fill: parent
+        anchors.margins: 1
 
         opacity: mouseArea.isHovered ? 0.1 : 0
         color: parent.colorBackgroundHighlight

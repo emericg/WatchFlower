@@ -8,8 +8,11 @@ Rectangle {
     implicitWidth: 256
     implicitHeight: 32
 
-    color: Theme.colorComponent
     radius: Theme.componentRadius
+    color: Theme.colorComponent
+
+    border.width: 1
+    border.color: Theme.colorComponentBorder
 
     layer.enabled: true
     layer.effect: OpacityMask {

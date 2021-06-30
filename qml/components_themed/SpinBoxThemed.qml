@@ -16,46 +16,78 @@ SpinBox {
 
     property string legend
 
-    background: Rectangle {
-        radius: Theme.componentRadius
-        z: 2
+    ////////
 
-        color: "transparent"
-        border.width: Theme.componentBorderWidth
-        border.color: Theme.colorComponentBorder
+    background: Rectangle {
+        anchors.fill: parent
+        radius: Theme.componentRadius
+        color: Theme.colorComponentBackground
+
+        Rectangle {
+            width: Theme.componentHeight
+            height: control.height
+            anchors.verticalCenter: parent.verticalCenter
+            x: control.mirrored ? 0 : control.width - width
+            color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
+        }
+
+        Rectangle {
+            width: Theme.componentHeight
+            height: control.height
+            anchors.verticalCenter: parent.verticalCenter
+            x: control.mirrored ? control.width - width : 0
+
+            color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            radius: Theme.componentRadius
+            color: "transparent"
+            border.width: Theme.componentBorderWidth
+            border.color: Theme.colorComponentBorder
+        }
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                x: control.x
+                y: control.y
+                width: control.width
+                height: control.height
+                radius: Theme.componentRadius
+            }
+        }
     }
 
-    contentItem: TextInput {
-        text: control.textFromValue(control.value, control.locale) + legend
-        font: control.font
+    ////////
 
-        color: Theme.colorComponentText
-        selectionColor: Theme.colorText
-        selectedTextColor: "white"
-        horizontalAlignment: Qt.AlignHCenter
-        verticalAlignment: Qt.AlignVCenter
+    contentItem: TextInput {
+        height: parent.height
+        anchors.verticalCenter: parent.verticalCenter
 
         readOnly: !control.editable
         validator: control.validator
         inputMethodHints: Qt.ImhFormattedNumbersOnly
 
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -32
-            z: -1
-            radius: Theme.componentRadius
-            color: Theme.colorComponentBackground
-        }
+        text: control.textFromValue(control.value, control.locale) + legend
+        font: control.font
+        color: Theme.colorComponentText
+        horizontalAlignment: Qt.AlignHCenter
+        verticalAlignment: Qt.AlignVCenter
+
+        selectionColor: Theme.colorText
+        selectedTextColor: "white"
     }
 
-    up.indicator: Rectangle {
-        width: Theme.componentHeight
-        height: parent.height
-        anchors.verticalCenter: parent.verticalCenter
-        x: control.mirrored ? 0 : parent.width - width
-        z: 1
+    ////////
 
-        color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
+    up.indicator: Item {
+        width: Theme.componentHeight
+        height: control.height
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? 0 : control.width - width
+        z: 1
 
         Item {
             anchors.centerIn: parent
@@ -77,14 +109,14 @@ SpinBox {
         }
     }
 
-    down.indicator: Rectangle {
-        width: Theme.componentHeight
-        height: parent.height
-        anchors.verticalCenter: parent.verticalCenter
-        x: control.mirrored ? parent.width - width : 0
-        z: 1
+    ////////
 
-        color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
+    down.indicator: Item {
+        width: Theme.componentHeight
+        height: control.height
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? control.width - width : 0
+        z: 1
 
         Item {
             anchors.centerIn: parent
@@ -97,17 +129,6 @@ SpinBox {
                 height: 2
                 color: enabled ? Theme.colorComponentContent : Theme.colorSubText
             }
-        }
-    }
-
-    layer.enabled: true
-    layer.effect: OpacityMask {
-        maskSource: Rectangle {
-            x: control.x
-            y: control.y
-            width: control.width
-            height: control.height
-            radius: Theme.componentRadius
         }
     }
 }

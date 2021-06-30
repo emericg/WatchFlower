@@ -4,11 +4,11 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 TextField {
-    id: textFieldThemed
+    id: control
     implicitWidth: 128
     implicitHeight: Theme.componentHeight
 
-    property string colorText: Theme.colorComponentContent
+    property string colorText: Theme.colorComponentText
     property string colorPlaceholderText: Theme.colorSubText
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
@@ -24,8 +24,8 @@ TextField {
 
     background: Rectangle {
         border.width: 2
-        border.color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
+        border.color: control.activeFocus ? Theme.colorPrimary : control.colorBorder
         radius: Theme.componentRadius
-        color: colorBackground
+        color: control.colorBackground
     }
 }

@@ -41,7 +41,7 @@ Item {
             windowInstance.visibility = st.visibility;
         }
 
-        if (windowInstance.visibility <= 0) {
+        if (windowInstance.visibility < Window.AutomaticVisibility) {
             windowInstance.visibility = Window.AutomaticVisibility;
         }
     }
@@ -67,7 +67,7 @@ Item {
     function saveSettings() {
         if (Qt.platform.os === "android" || Qt.platform.os === "ios") return;
 
-        switch(windowInstance.visibility) {
+        switch (windowInstance.visibility) {
             case ApplicationWindow.Windowed:
                 st.x = windowInstance.x;
                 st.y = windowInstance.y;

@@ -5,8 +5,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: dataBarCompact
-    height: 32
     implicitWidth: 128
+    implicitHeight: 32
 
     property string legend: "legend"
     property int legendWidth: 80

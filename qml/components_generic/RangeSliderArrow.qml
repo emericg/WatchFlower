@@ -7,11 +7,10 @@ RangeSlider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
-    leftPadding: 0
-    rightPadding: 0
+    padding: 4
 
-    first.value: 0.25
-    second.value: 0.75
+    //first.value: 0.25
+    //second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
     ////////
@@ -55,6 +54,8 @@ RangeSlider {
             border.color: parent.border.color
         }
     }
+
+    ////////
 
     second.handle: Rectangle {
         x: Math.round(second.visualPosition * parent.width - width/2)

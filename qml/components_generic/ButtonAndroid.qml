@@ -7,7 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Button {
     id: control
-    width: contentText.width + 24
+    implicitWidth: contentText.width + 24
     implicitHeight: 58
 
     focusPolicy: Qt.NoFocus

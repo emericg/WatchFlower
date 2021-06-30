@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 Button {
     id: control
-    implicitWidth: contentText.contentWidth + (contentText.contentWidth / 2)
+    implicitWidth: Theme.componentHeight
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
@@ -13,7 +13,7 @@ Button {
     focusPolicy: Qt.NoFocus
 
     background: Rectangle {
-        radius: Theme.componentRadius
+        radius: Theme.componentHeight
         opacity: enabled ? 1 : 0.33
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
     }
