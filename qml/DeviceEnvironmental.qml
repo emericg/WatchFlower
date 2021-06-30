@@ -25,8 +25,11 @@ Item {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
+        onSensorsUpdated: { updateHeader() }
         onBatteryUpdated: { updateHeader() }
         onDataUpdated: { updateHeader(); updateData(); }
+        onRefreshUpdated: { updateHeader(); updateData(); }
+        onHistoryUpdated: { updateHeader(); updateGraph(); }
     }
 
     Connections {

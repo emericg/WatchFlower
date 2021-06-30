@@ -448,7 +448,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
                 // TODO // ask for new values?
             }
             else

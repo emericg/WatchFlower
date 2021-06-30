@@ -495,7 +495,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             // Set the progressbar infos
             m_history_session_count = entries_to_read;
             m_history_session_read = 0;
-            Q_EMIT historyUpdated();
+            Q_EMIT progressUpdated();
 
             // (re)start sync
             QByteArray nextentry(QByteArray::fromHex("A1"));
@@ -545,7 +545,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             // Update progress
             m_history_entry_index--;
             m_history_session_read++;
-            Q_EMIT historyUpdated();
+            Q_EMIT progressUpdated();
 
             if (m_history_entry_index > 0)
             {
@@ -620,7 +620,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
                 // Ask for a new data reading, but not too often...
                 QTimer::singleShot(1000, this, SLOT(askForReading()));
             }

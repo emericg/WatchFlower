@@ -379,11 +379,23 @@ void Device::refreshHistoryFinished(bool status)
     Q_EMIT dataUpdated();
 }
 
-void Device::refreshDataRealtime(bool status)
+void Device::refreshRealtime()
 {
-    //qDebug() << "Device::refreshDataRealtime()" << getAddress() << getName();
+    //qDebug() << "Device::refreshRealtime()" << getAddress() << getName();
 
     Q_EMIT dataUpdated();
+    Q_EMIT realtimeUpdated();
+    Q_EMIT statusUpdated();
+}
+
+void Device::refreshRealtimeFinished()
+{
+    //qDebug() << "Device::refreshRealtimeFinished()" << getAddress() << getName();
+
+    m_timeoutTimer.stop();
+
+    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
 }
 
 /* ************************************************************************** */
@@ -949,6 +961,10 @@ void Device::deviceDisconnected()
     {
         // This means we got forcibly disconnected by the device before completing the history sync
         refreshHistoryFinished(false);
+    }
+    else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_REALTIME)
+    {
+        refreshRealtimeFinished();
     }
     else
     {

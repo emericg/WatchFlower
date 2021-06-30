@@ -105,6 +105,7 @@ class Device: public QObject
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY settingsUpdated)
 
+    Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
@@ -114,7 +115,7 @@ class Device: public QObject
 
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY historyUpdated)
+    Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
 
     Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
@@ -128,13 +129,17 @@ Q_SIGNALS:
 
     void deviceUpdated(Device *d);
     void sensorUpdated();
+    void sensorsUpdated();
     void statusUpdated();
     void settingsUpdated();
+    void selectionUpdated();
+
     void batteryUpdated();
     void rssiUpdated();
     void dataUpdated();
-    void historyUpdated();
-    void selectionUpdated();
+    void refreshUpdated();  // sent when a manual refresh is successful
+    void historyUpdated();  // sent when history sync is successful
+    void realtimeUpdated(); // sent when a realtime update is received
 
 protected:
     int m_deviceType = 0;           //!< See DeviceType enum
@@ -202,8 +207,9 @@ protected:
     virtual void actionCanceled();
     virtual void actionTimedout();
     virtual void refreshDataFinished(bool status, bool cached = false);
-    virtual void refreshDataRealtime(bool status);
     virtual void refreshHistoryFinished(bool status);
+    virtual void refreshRealtime();
+    virtual void refreshRealtimeFinished();
 
     virtual bool getSqlDeviceInfos();
 
@@ -297,6 +303,7 @@ public slots:
     void refreshStop();
 
     // Status
+    int getAction() const { return m_ble_action; }
     int getStatus() const { return m_ble_status; }
     bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
     bool isDataAvailable() const;       //!< Has at least >12h old data

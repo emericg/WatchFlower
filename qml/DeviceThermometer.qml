@@ -21,8 +21,10 @@ Item {
         target: currentDevice
         onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
+        onSensorsUpdated: { updateHeader() }
         onBatteryUpdated: { updateHeader() }
         onDataUpdated: { updateData() }
+        onHistoryUpdated: { updateGraph() }
     }
 
     Connections {
@@ -68,13 +70,6 @@ Item {
 
     ////////
 
-    function isHistoryMode() {
-        return deviceScreenChart.isIndicator()
-    }
-    function resetHistoryMode() {
-        deviceScreenChart.resetIndicator()
-    }
-
     function loadDevice(clickedDevice) {
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
         if (!clickedDevice.isThermometer) return
@@ -90,16 +85,6 @@ Item {
         loadGraph()
         updateHeader()
         updateData()
-    }
-
-    function loadGraph() {
-        if (settingsManager.graphThermometer === "lines") {
-            graphLoader.source = "ChartPlantDataAio.qml"
-        } else {
-            graphLoader.source = "ChartThermometerMinMax.qml"
-        }
-        deviceScreenChart.loadGraph()
-        deviceScreenChart.updateGraph()
     }
 
     function updateHeader() {
@@ -144,8 +129,6 @@ Item {
                 }
             }
         }
-
-        deviceScreenChart.updateGraph()
     }
 
     function updateStatusText() {
@@ -163,6 +146,26 @@ Item {
             else
                 textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
         }
+    }
+
+    function loadGraph() {
+        if (settingsManager.graphThermometer === "lines") {
+            graphLoader.source = "ChartPlantDataAio.qml"
+        } else {
+            graphLoader.source = "ChartThermometerMinMax.qml"
+        }
+        deviceScreenChart.loadGraph()
+        deviceScreenChart.updateGraph()
+    }
+    function updateGraph() {
+        deviceScreenChart.updateGraph()
+    }
+
+    function isHistoryMode() {
+        return deviceScreenChart.isIndicator()
+    }
+    function resetHistoryMode() {
+        deviceScreenChart.resetIndicator()
     }
 
     ////////////////////////////////////////////////////////////////////////////

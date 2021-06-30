@@ -20,6 +20,7 @@ Item {
     Connections {
         target: boxDevice
         onSensorUpdated: { initBoxData() }
+        onSensorsUpdated: { initBoxData() }
         onSettingsUpdated: { updateSensorSettings() }
         onStatusUpdated: { updateSensorStatus() }
         onDataUpdated: { updateSensorData() }

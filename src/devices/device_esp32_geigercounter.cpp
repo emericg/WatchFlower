@@ -254,7 +254,7 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
             }
             else
             {

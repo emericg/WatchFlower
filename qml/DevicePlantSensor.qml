@@ -20,12 +20,18 @@ Item {
             plantSensorData.updateHeader()
             plantSensorLimits.updateHeader()
         }
+        onSensorsUpdated: {
+            plantSensorData.updateHeader()
+            plantSensorLimits.updateHeader()
+        }
         onBatteryUpdated: {
             plantSensorData.updateHeader()
             plantSensorLimits.updateHeader()
         }
-        onDataUpdated: {
+        onRefreshUpdated: {
             plantSensorData.updateData()
+        }
+        onHistoryUpdated: {
             plantSensorHistory.updateData()
         }
         onLimitsUpdated: {

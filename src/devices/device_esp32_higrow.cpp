@@ -268,7 +268,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
             }
             else
             {

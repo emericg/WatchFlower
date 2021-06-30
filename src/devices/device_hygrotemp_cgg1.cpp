@@ -273,7 +273,7 @@ void DeviceHygrotempCGG1::bleReadNotify(const QLowEnergyCharacteristic &c, const
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
             }
             else
             {

@@ -457,7 +457,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             // Set the progressbar infos
             m_history_session_count = entries_to_read;
             m_history_session_read = 0;
-            Q_EMIT historyUpdated();
+            Q_EMIT progressUpdated();
 
             // (re)start sync
             QByteArray nextentry(QByteArray::fromHex("A1"));
@@ -525,7 +525,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshDataRealtime(true);
+                refreshRealtime();
                 // Ask for a new data reading, but not too often...
                 QTimer::singleShot(1000, this, SLOT(askForReading()));
             }

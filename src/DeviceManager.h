@@ -94,6 +94,22 @@ public:
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
 
+    Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
+
+    Q_INVOKABLE void updateDevice(const QString &address);
+    Q_INVOKABLE void removeDevice(const QString &address);
+    Q_INVOKABLE void removeDeviceData(const QString &address);
+
+    Q_INVOKABLE void scanDevices();
+    Q_INVOKABLE void listenDevices();
+
+    Q_INVOKABLE void orderby_manual();
+    Q_INVOKABLE void orderby_model();
+    Q_INVOKABLE void orderby_name();
+    Q_INVOKABLE void orderby_location();
+    Q_INVOKABLE void orderby_waterlevel();
+    Q_INVOKABLE void orderby_plant();
+
     Q_INVOKABLE bool exportDataSave();
     Q_INVOKABLE QString exportDataOpen();
     Q_INVOKABLE QString exportDataFolder();
@@ -110,28 +126,12 @@ public:
     void invalidate();
 
 public slots:
-    bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
-
     void refreshDevices_check();    //!< Refresh devices with data >xh old
     void refreshDevices_start();    //!< Refresh every devices
 
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
     void refreshDevices_stop();
-
-    void updateDevice(const QString &address);
-    void removeDevice(const QString &address);
-    void removeDeviceData(const QString &address);
-
-    void scanDevices();
-    void listenDevices();
-
-    void orderby_manual();
-    void orderby_model();
-    void orderby_name();
-    void orderby_location();
-    void orderby_waterlevel();
-    void orderby_plant();
 
 private slots:
     // QBluetoothLocalDevice related

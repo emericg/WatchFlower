@@ -102,7 +102,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(int limitLuxMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
 
     // sensor history
-    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY historyUpdated)
+    Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
 
     // graphs
     Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryUpdated_days)
@@ -114,6 +114,7 @@ class DeviceSensor: public Device
 Q_SIGNALS:
     void minmaxUpdated();
     void limitsUpdated();
+    void progressUpdated();
     void chartDataHistoryUpdated_days();
     void chartDataHistoryUpdated_hours();
     void chartDataMinMaxUpdated();
