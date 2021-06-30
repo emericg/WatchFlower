@@ -18,8 +18,8 @@ Item {
     property real limitMin: -1
     property real limitMax: -1
 
-    property var ddd //: ChartHistory.Span.Weekly
-    property var uuu //: ChartHistory.Data.SoilMoisture
+    property var ddd
+    property var uuu
 
     enum Span {
         Daily = 0,
@@ -36,14 +36,7 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-/*
-    Rectangle { // DEBUG
-        anchors.fill: parent
-        opacity: 0.1
-        color: "red"
-        border.color: "blue"
-    }
-*/
+
     Text { // title
         id: titleArea
         anchors.top: chartHistory.top
@@ -97,13 +90,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: isPhone ? 12 : 24
         anchors.horizontalCenter: parent.horizontalCenter
-/*
-        Rectangle { // DEBUG
-            anchors.fill: parent
-            color: "blue"
-            opacity: 0.1
-        }
-*/
+
         ////////////////
 
         Shape {
@@ -164,16 +151,10 @@ Item {
         Row {
             id: graphRow
             anchors.fill: parent
+            spacing: 0
 
-            property int barCount: {
-                return graphRepeater.count
-                //if (ddd === ChartHistory.Span.Daily) return 24
-                //if (ddd === ChartHistory.Span.Weekly) return 7
-                //if (ddd === ChartHistory.Span.Monthly) return 31
-            }
+            property int barCount: graphRepeater.count
 
-            //property int barWidth: Math.round((width - ((barCount-1)*spacing)) / (barCount))
-            //property int barWidth: UtilsNumber.alignTo(((width - ((barCount-1)*spacing)) / barCount), 2)
             property real barWidth: ((width - ((barCount-1)*spacing)) / (barCount))
             property int barHeight: height
             property int barRadius: isPhone ? 0 : 4
@@ -182,22 +163,7 @@ Item {
                 if (ddd === ChartHistory.Span.Weekly) return 4
                 if (ddd === ChartHistory.Span.Monthly) return 1
             }
-            spacing: 0
-/*
-            onWidthChanged: { // DEBUG
-                if (graphRow.barCount > 0) {
-                    console.log("")
-                    console.log("onWidthChanged:")
-                    console.log("- chartArea    : " + chartArea.width)
-                    console.log("- graphWidth   : " + graphRow.width)
-                    console.log("- barCount     : " + graphRow.barCount)
-                    console.log("- barSpacing   : " + graphRow.barSpacing)
-                    console.log("- barWidth f   : " + ((width - ((barCount-1)*spacing)) / barCount))
-                    console.log("- barWidth 2   : " + graphRow.barWidth)
-                    console.log("- bar actual   : " + UtilsNumber.alignTo(graphRow.barWidth - 2, 2))
-                }
-            }
-*/
+
             Repeater {
                 id: graphRepeater
 
@@ -281,92 +247,47 @@ Item {
                         border.color: Theme.colorBackground
 
                         clip: false
-                        visible: (graphBar.value > -80)
+                        visible: (value > -80)
                         radius: graphRow.barRadius
                         color: chartHistory.color
 
-                        Text { // legend horizontal value
-                            id: l1
+                        Loader {
+                            id: legendLoader
                             anchors.top: parent.top
                             anchors.topMargin: 8
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            visible: (ddd === ChartHistory.Span.Weekly && parent.height > contentHeight+8)
+                            enabled: (value > -80)
+                            sourceComponent: (ddd === ChartHistory.Span.Weekly) ? legendHorizontal : legendVertical
+                            asynchronous: true
 
-                            text: {
-                                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
-                                    if (settingsManager.tempUnit === "F")
-                                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
-                                return value.toFixed(floatprecision) + suffix
-                            }
-                            color: "white"
-                            font.pixelSize: isPhone ? 13 : 14
-                            font.bold: true
-                            horizontalAlignment: Text.AlignHCenter
-                        }
-
-                        Text { // legend vertical value
-                            id: l2
-                            height: parent.width
-                            anchors.top: parent.top
-                            anchors.topMargin: contentWidth*0.4
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.horizontalCenterOffset: -1
-
-                            visible: (!singleColumn && ddd !== ChartHistory.Span.Weekly && parent.height > contentWidth*1.5)
-
-                            rotation: 90
-                            text: {
-                                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
-                                    if (settingsManager.tempUnit === "F")
-                                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
-                                return value.toFixed(floatprecision) + suffix.replace("<br>", "")
-                            }
-                            color: "white"
-                            font.pixelSize: 10
-                            font.bold: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-/*
-                            Rectangle { // DEBUG
-                                anchors.fill: parent
-                                color: "red"
-                                opacity: 0.1
-                            }
-*/
+                            property real _value: value
+                            property int _barHeight: graphBarFg.height
                         }
                     }
 
                     ////
-
-                    ImageSvg {
-                        width: UtilsNumber.alignTo(parent.width * 0.6, 2)
+/*
+                    Loader {
+                        id: imgLoader
                         height: width
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 2
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        visible: {
+                        enabled: {
                             if (isPhone) return false
                             //if (value < -40) return true
                             else if ((value < limitMin || value > limitMax) && (graphBarFg.height > height*1.5)) return true
                             else return false
                         }
-                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                        color: "white"
-                        opacity: 0.66
-/*
-                        source: {
-                            if (value < -40) return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                            else "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                        }
-                        color: {
-                            if (value < -40) return Theme.colorSubText
-                            else return "white"
-                        }
-*/
-                    }
 
+                        sourceComponent: (enabled) ? legendImage : null
+                        asynchronous: true
+
+                        property real _value: value
+                    }
+*/
                     ////
 
                     Rectangle {
@@ -423,6 +344,88 @@ Item {
 
                 } ////////////////
             }
+        }
+    }
+
+    // horizontal legend ///////////////////////////////////////////////////////
+
+    Component {
+        id: legendHorizontal
+
+        Text {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            property real value: _value
+            property int barHeight: _barHeight
+
+            visible: barHeight > contentHeight+8
+
+            text: {
+                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                    if (settingsManager.tempUnit === "F")
+                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
+                return value.toFixed(floatprecision) + suffix
+            }
+            color: "white"
+            font.bold: true
+            font.pixelSize: isPhone ? 13 : 14
+        }
+    }
+
+    // vertical legend /////////////////////////////////////////////////////////
+
+    Component {
+        id: legendVertical
+
+        Text {
+            anchors.top: parent.top
+            anchors.topMargin: contentWidth*0.33
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: -1
+
+            property real value: _value
+            property int barHeight: _barHeight
+
+            visible: barHeight > contentWidth*1.5
+
+            rotation: 90
+            color: "white"
+            text: {
+                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                    if (settingsManager.tempUnit === "F")
+                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
+                return value.toFixed(floatprecision) + suffix.replace("<br>", "")
+            }
+            font.bold: true
+            font.pixelSize: 10
+        }
+    }
+
+    // image legend ////////////////////////////////////////////////////////////
+
+    Component {
+        id: legendImage
+
+        ImageSvg {
+            width: 20
+            height: 20
+
+            property real value: _value
+
+            color: "white"
+            opacity: 0.66
+            source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+/*
+            source: {
+                if (value < -40) return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                else "qrc:/assets/icons_material/baseline-warning-24px.svg"
+            }
+            color: {
+                if (value < -40) return Theme.colorSubText
+                else return "white"
+            }
+*/
         }
     }
 }
