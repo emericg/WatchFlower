@@ -54,20 +54,15 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("DevicePlantSensorLimits // updateLimits() >> " + currentDevice)
 
+        itemHygro.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
+        itemTemp.visible = currentDevice.hasTemperatureSensor
+        itemLumi.visible = currentDevice.hasLuminositySensor
+        itemCondu.visible = currentDevice.hasSoilConductivitySensor
+
         rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
         rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
         rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
         rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
-    }
-
-    function updateLimitsVisibility() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("DevicePlantSensorLimits // updateLimitsVisibility() >> " + currentDevice)
-
-        itemTemp.visible = currentDevice.hasTemperatureSensor
-        itemHygro.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
-        itemLumi.visible = currentDevice.hasLuminositySensor
-        itemCondu.visible = currentDevice.hasSoilConductivitySensor
     }
 
     property bool insideMode: (currentDevice && currentDevice.deviceIsInside)

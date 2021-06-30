@@ -328,7 +328,7 @@ bool DeviceSensor::getSqlPlantData(int minutes)
 
     if (cachedData.exec() == false)
     {
-        qWarning() << "> cachedData.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
+        qWarning() << "> cachedDataPlant.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     }
     else
     {
@@ -445,7 +445,7 @@ bool DeviceSensor::getSqlSensorData(int minutes)
 
     if (cachedData.exec() == false)
     {
-        qWarning() << "> cachedData.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
+        qWarning() << "> cachedDataSensor.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     }
     else
     {

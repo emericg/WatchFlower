@@ -323,25 +323,6 @@ void Device::actionTimedout()
 void Device::refreshRetry()
 {
     //qDebug() << "Device::refreshRetry()" << getAddress() << getName();
-/*
-    if (controller)
-    {
-        m_retries--;
-        if (m_retries > 0)
-        {
-            controller->disconnectFromDevice();
-
-            //connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
-
-            m_timeoutTimer.start();
-            controller->connectToDevice();
-        }
-        else
-        {
-            refreshDataCanceled();
-        }
-    }
-*/
 }
 
 /* ************************************************************************** */
@@ -387,6 +368,7 @@ void Device::refreshDataFinished(bool status, bool cached)
 void Device::refreshHistoryFinished(bool status)
 {
     //qDebug() << "Device::refreshHistoryFinished()" << getAddress() << getName();
+    Q_UNUSED(status)
 
     m_timeoutTimer.stop();
 

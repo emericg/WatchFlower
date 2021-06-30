@@ -139,7 +139,6 @@ Item {
         plantSensorHistory.loadData()
         plantSensorLimits.updateHeader()
         plantSensorLimits.updateLimits()
-        plantSensorLimits.updateLimitsVisibility()
 
         if (isMobile) tabletMenuDevice.setActiveDeviceData()
         if (isDesktop) appHeader.setActiveDeviceData()

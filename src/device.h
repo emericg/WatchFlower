@@ -23,6 +23,8 @@
 #define DEVICE_H
 /* ************************************************************************** */
 
+#include "device_utils.h"
+
 #include <QObject>
 #include <QList>
 #include <QTimer>
@@ -36,8 +38,6 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
 
-#include "device_utils.h"
-
 /* ************************************************************************** */
 
 /*!
@@ -48,7 +48,7 @@ class Device: public QObject
     Q_OBJECT
 
     Q_PROPERTY(int deviceType READ getDeviceType CONSTANT)
-    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated) // TODO capabilitiesUpdated
+    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
 
     Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)

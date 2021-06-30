@@ -38,6 +38,7 @@ ApplicationWindow {
     x: settingsManager.initialPosition.width
     y: settingsManager.initialPosition.height
     visibility: settingsManager.initialVisibility
+    visible: true
 
     WindowGeometrySaver {
         windowInstance: appWindow
