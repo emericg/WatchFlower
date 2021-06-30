@@ -6,12 +6,17 @@ import DeviceUtils 1.0
 Rectangle {
     id: statusBox
     width: parent.width
-    height: syncing ? (isPhone ? 40 : 48) : 0
+    height: (connecting || syncing) ? (isPhone ? 40 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
     clip: true
     visible: (height > 0)
     color: Theme.colorActionbar
+
+    property bool connecting: (currentDevice &&
+                               currentDevice.status === DeviceUtils.DEVICE_CONNECTING &&
+                               (currentDevice.action === DeviceUtils.ACTION_UPDATE_HISTORY ||
+                                currentDevice.action === DeviceUtils.ACTION_UPDATE_REALTIME))
 
     property bool syncing: (currentDevice &&
                             (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY ||
@@ -36,21 +41,31 @@ Rectangle {
             height: 24
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+            source: syncing ? "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg" :
+                              "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
             color: Theme.colorActionbarContent
+
+            SequentialAnimation on opacity {
+                running: (connecting || syncing)
+                alwaysRunToEnd: true
+                loops: Animation.Infinite
+
+                PropertyAnimation { to: 0.33; duration: 750; }
+                PropertyAnimation { to: 1; duration: 750; }
+            }
         }
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("Syncing with the sensor")
+            text: syncing ? qsTr("Syncing with the sensor") : qsTr("Connecting")
             color: Theme.colorActionbarContent
             font.pixelSize: Theme.fontSizeContent
         }
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
-            visible: (currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
+            visible: (currentDevice && currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
 
             text: " (" + currentDevice.historyUpdatePercent + "%)"
             color: Theme.colorActionbarContent
