@@ -131,12 +131,14 @@ Q_SIGNALS:
     void deviceUpdated(Device *d);
     void sensorUpdated();
     void sensorsUpdated();
-    void statusUpdated();
+    void capabilitiesUpdated();
     void settingsUpdated();
     void selectionUpdated();
 
     void batteryUpdated();
     void rssiUpdated();
+    void statusUpdated();
+    void dataAvailableUpdated();
     void dataUpdated();
     void refreshUpdated();  // sent when a manual refresh is successful
     void historyUpdated();  // sent when history sync is successful

@@ -20,8 +20,6 @@ Item {
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
-
-        updateGraph()
     }
 
     function updateGraph() {

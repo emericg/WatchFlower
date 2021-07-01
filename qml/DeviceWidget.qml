@@ -21,6 +21,7 @@ Item {
         target: boxDevice
         onSensorUpdated: { initBoxData() }
         onSensorsUpdated: { initBoxData() }
+        onCapabilitiesUpdated: { initBoxData() }
         onSettingsUpdated: { updateSensorSettings() }
         onStatusUpdated: { updateSensorStatus() }
         onDataUpdated: { updateSensorData() }

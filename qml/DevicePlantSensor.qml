@@ -28,6 +28,9 @@ Item {
             plantSensorData.updateHeader()
             plantSensorLimits.updateHeader()
         }
+        onDataUpdated: {
+            plantSensorData.updateData()
+        }
         onRefreshUpdated: {
             plantSensorData.updateData()
         }

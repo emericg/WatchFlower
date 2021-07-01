@@ -19,17 +19,30 @@ Item {
 
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
+    property var historyChart: chartEnvLoader.item
+
     ////////////////////////////////////////////////////////////////////////////
 
     Connections {
         target: currentDevice
-        onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
         onSensorsUpdated: { updateHeader() }
+        onCapabilitiesUpdated: { updateHeader() }
+        onStatusUpdated: { updateHeader() }
         onBatteryUpdated: { updateHeader() }
-        onDataUpdated: { updateHeader(); updateData(); }
-        onRefreshUpdated: { updateHeader(); updateData(); }
-        onHistoryUpdated: { updateHeader(); updateGraph(); }
+        onDataUpdated: {
+            updateHeader()
+            updateData()
+        }
+        onRefreshUpdated: {
+            updateHeader()
+            updateData()
+            updateGraph()
+        }
+        onHistoryUpdated: {
+            updateHeader()
+            updateGraph()
+        }
     }
 
     Connections {
@@ -73,7 +86,7 @@ Item {
     onPrimaryChanged: {
         currentDevice.setSetting("primary", primary)
         loadIndicator()
-        if (chartEnvironmentalLoader.item) chartEnvironmentalLoader.item.updateGraph()
+        if (chartEnvLoader.status == Loader.Ready) historyChart.updateGraph()
     }
 
     ////////
@@ -267,12 +280,17 @@ Item {
     }
 
     function loadGraph() {
-        chartEnvironmentalLoader.visible = false
+        chartEnvLoader.visible = false
 
         if (isAirMonitor) {
             if (currentDevice.hasVocSensor) {
-                chartEnvironmentalLoader.source = "ChartEnvironmentalVoc.qml"
-                chartEnvironmentalLoader.visible = true
+                if (chartEnvLoader.status != Loader.Ready) {
+                    chartEnvLoader.source = "ChartEnvironmentalVoc.qml"
+                } else {
+                    historyChart.loadGraph()
+                    historyChart.updateGraph()
+                }
+                chartEnvLoader.visible = true
             }
         }
     }
@@ -999,13 +1017,16 @@ Item {
                     ////////////////////////////////////////////////////////////
 
                     Loader {
-                        id: chartEnvironmentalLoader
+                        id: chartEnvLoader
                         width: parent.width
                         height: (sensorFlick.height - airBox.height - weatherBox.height)
                         //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
 
                         asynchronous: true
-                        onLoaded: item.loadGraph()
+                        onLoaded: {
+                            historyChart.loadGraph()
+                            historyChart.updateGraph()
+                        }
                     }
 
                     ////////////////////////////////////////////////////////////

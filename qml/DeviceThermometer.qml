@@ -11,7 +11,7 @@ Item {
     height: 700
 
     property var currentDevice: null
-    property alias deviceScreenChart: graphLoader.item
+    property alias thermoChart: graphLoader.item
 
     property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
@@ -19,12 +19,21 @@ Item {
 
     Connections {
         target: currentDevice
-        onStatusUpdated: { updateHeader() }
         onSensorUpdated: { updateHeader() }
         onSensorsUpdated: { updateHeader() }
+        onCapabilitiesUpdated: { updateHeader() }
+        onStatusUpdated: { updateHeader() }
         onBatteryUpdated: { updateHeader() }
-        onDataUpdated: { updateData() }
-        onHistoryUpdated: { updateGraph() }
+        onDataUpdated: {
+            updateData()
+        }
+        onRefreshUpdated: {
+            updateData()
+            updateGraph()
+        }
+        onHistoryUpdated: {
+            updateGraph()
+        }
     }
 
     Connections {
@@ -149,23 +158,32 @@ Item {
     }
 
     function loadGraph() {
-        if (settingsManager.graphThermometer === "lines") {
-            graphLoader.source = "ChartPlantDataAio.qml"
-        } else {
-            graphLoader.source = "ChartThermometerMinMax.qml"
+        var reload = !(settingsManager.graphThermometer === "lines" && graphLoader.source === "ChartPlantDataAio.qml") ||
+                     !(settingsManager.graphThermometer === "minmax" && graphLoader.source === "ChartThermometerMinMax.qml")
+
+        if (graphLoader.status != Loader.Ready || reload) {
+            if (settingsManager.graphThermometer === "lines") {
+                graphLoader.source = "ChartPlantDataAio.qml"
+            } else {
+                graphLoader.source = "ChartThermometerMinMax.qml"
+            }
         }
-        deviceScreenChart.loadGraph()
-        deviceScreenChart.updateGraph()
+
+        if (graphLoader.status == Loader.Ready) {
+            thermoChart.loadGraph()
+            thermoChart.updateGraph()
+        }
     }
     function updateGraph() {
-        deviceScreenChart.updateGraph()
+        if (graphLoader.status == Loader.Ready) thermoChart.updateGraph()
     }
 
     function isHistoryMode() {
-        return deviceScreenChart.isIndicator()
+        if (graphLoader.status == Loader.Ready) return thermoChart.isIndicator()
+        return false
     }
     function resetHistoryMode() {
-        deviceScreenChart.resetIndicator()
+        if (graphLoader.status == Loader.Ready) thermoChart.resetIndicator()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -392,7 +410,11 @@ Item {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                asynchronous: false
+                asynchronous: true
+                onLoaded: {
+                    thermoChart.loadGraph()
+                    thermoChart.updateGraph()
+                }
             }
         }
     }

@@ -13,8 +13,8 @@ Item {
     // 3: wide mode for phones (two main columns)
     property int uiMode: singleColumn ? 1 : (isPhone ? 3 : 2)
 
-    property var dataIndicators: null
-    property var dataCharts: null
+    property var dataIndicators: indicatorsLoader.item
+    property var dataChart: chartAioLoader.item
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -31,11 +31,12 @@ Item {
     }
 
     function loadGraph() {
-        if (graphLoader.status != Loader.Ready) {
-            graphLoader.source = "ChartPlantDataAio.qml"
-            dataCharts = graphLoader.item
+        if (chartAioLoader.status != Loader.Ready) {
+            chartAioLoader.source = "ChartPlantDataAio.qml"
+        } else {
+            dataChart.loadGraph()
+            dataChart.updateGraph()
         }
-        dataCharts.loadGraph()
     }
 
     function loadIndicators() {
@@ -44,10 +45,9 @@ Item {
                 indicatorsLoader.source = "IndicatorsSolid.qml"
             else
                 indicatorsLoader.source = "IndicatorsCompact.qml"
-
-            dataIndicators = indicatorsLoader.item
         } else {
             dataIndicators.updateLegendSize()
+            dataIndicators.updateData()
         }
     }
     function reloadIndicators() {
@@ -56,10 +56,10 @@ Item {
         else
             indicatorsLoader.source = "IndicatorsCompact.qml"
 
-        dataIndicators = indicatorsLoader.item
-        dataIndicators.updateLegendSize()
-
-        updateData()
+        if (indicatorsLoader.status == Loader.Ready) {
+            dataIndicators.updateLegendSize()
+            dataIndicators.updateData()
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -107,20 +107,22 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
-
-        dataIndicators.updateData()
-        dataCharts.updateGraph()
     }
 
     function updateLegendSizes() {
-        dataIndicators.updateLegendSize()
+        if (indicatorsLoader.status == Loader.Ready) dataIndicators.updateLegendSize()
+    }
+
+    function updateGraph() {
+        if (chartAioLoader.status == Loader.Ready) dataChart.updateGraph()
     }
 
     function isHistoryMode() {
-        return dataCharts.isIndicator()
+        if (chartAioLoader.status == Loader.Ready) return dataChart.isIndicator()
+        return false
     }
     function resetHistoryMode() {
-        dataCharts.resetIndicator()
+        if (chartAioLoader.status == Loader.Ready) dataChart.resetIndicator()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -411,6 +413,10 @@ Item {
                     id: indicatorsLoader
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
+                    onLoaded: {
+                        dataIndicators.updateLegendSize()
+                        dataIndicators.updateData()
+                    }
                 }
             }
         }
@@ -430,13 +436,17 @@ Item {
             }
 
             Loader {
-                id: graphLoader
+                id: chartAioLoader
                 anchors.top: bannersync2.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                asynchronous: false
+                asynchronous: true
+                onLoaded: {
+                    dataChart.loadGraph()
+                    dataChart.updateGraph()
+                }
             }
         }
     }
