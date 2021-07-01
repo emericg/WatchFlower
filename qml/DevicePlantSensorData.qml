@@ -437,7 +437,8 @@ Item {
 
             Loader {
                 id: chartAioLoader
-                anchors.top: bannersync2.bottom
+                anchors.top: parent.top
+                anchors.topMargin: bannersync2.visible ? bannersync2.height : 0
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
