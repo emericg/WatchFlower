@@ -48,8 +48,8 @@ class Device: public QObject
     Q_OBJECT
 
     Q_PROPERTY(int deviceType READ getDeviceType CONSTANT)
-    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY sensorUpdated)
-    Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorsUpdated)
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
@@ -61,14 +61,14 @@ class Device: public QObject
     Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
     Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
 
-    Q_PROPERTY(bool hasRealTime READ hasRealTime NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasClock READ hasClock NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasLED READ hasLED NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY sensorUpdated)
-    Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY sensorUpdated)
+    Q_PROPERTY(bool hasRealTime READ hasRealTime NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasBattery READ hasBatteryLevel NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasClock READ hasClock NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasLED READ hasLED NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY capabilitiesUpdated)
 
     Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorsUpdated)
     Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorsUpdated)
@@ -109,10 +109,9 @@ class Device: public QObject
     Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
+    Q_PROPERTY(bool working READ isWorking NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
-    Q_PROPERTY(bool dataFresh READ isDataFresh NOTIFY statusUpdated)
-    Q_PROPERTY(bool dataAvailable READ isDataAvailable NOTIFY statusUpdated)
 
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
@@ -289,21 +288,18 @@ public:
     // Device status
     int getAction() const { return m_ble_action; }
     int getStatus() const { return m_ble_status; }
-    bool isBusy() const;                //!< Is currently doing something?
+    bool isBusy() const;                //!< Is currently doing/trying something?
     bool isWorking() const;             //!< Is currently working?
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
-
-    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
-    bool isDataAvailable() const;       //!< Has at least >12h old data
 
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
 
-    bool needsUpdateRt() const;
-    bool needsUpdateDb() const;
+    virtual bool needsUpdateRt() const;
+    virtual bool needsUpdateDb() const;
 
     QDateTime getDeviceUptime() const;
     float getDeviceUptime_days() const;

@@ -412,9 +412,9 @@ bool DeviceSensor::setDbLimits()
         status = updateLimits.exec();
         if (status == false)
             qWarning() << "> updateLimits.exec() ERROR" << updateLimits.lastError().type() << ":" << updateLimits.lastError().text();
-
-        Q_EMIT limitsUpdated();
     }
+
+    Q_EMIT limitsUpdated();
 
     return status;
 }
@@ -560,7 +560,7 @@ bool DeviceSensor::hasData() const
     return false;
 }
 
-bool DeviceSensor::hasData(const QString &dataName) const
+bool DeviceSensor::hasDataNamed(const QString &dataName) const
 {
     QString tableName;
 
@@ -613,7 +613,7 @@ bool DeviceSensor::hasData(const QString &dataName) const
     return false;
 }
 
-int DeviceSensor::countData(const QString &dataName, int days) const
+int DeviceSensor::countDataNamed(const QString &dataName, int days) const
 {
     // Count stored data
     if (m_dbInternal || m_dbExternal)
@@ -655,6 +655,28 @@ int DeviceSensor::countData(const QString &dataName, int days) const
     }
 
     return 0;
+}
+
+bool DeviceSensor::isDataAvailable() const
+{
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
+}
+
+bool DeviceSensor::isDataFresh() const
+{
+    SettingsManager *sm = SettingsManager::getInstance();
+    int maxMin = hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo();
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
+}
+
+bool DeviceSensor::needsUpdateRt() const
+{
+    return isDataFresh();
+}
+
+bool DeviceSensor::needsUpdateDb() const
+{
+    return (getLastUpdateDbInt() < 0 || getLastUpdateDbInt() > 60);
 }
 
 /* ************************************************************************** */
@@ -1376,6 +1398,8 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
             return;
         }
 
+        bool minmaxChanged = false;
+
         while (graphData.next())
         {
             if (m_chartData_minmax.size() < maxDays)
@@ -1396,10 +1420,10 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 }
 
                 // min/max
-                if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); }
-                if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); }
-                if (graphData.value(4).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(4).toInt(); }
-                if (graphData.value(5).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(5).toInt(); }
+                if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); minmaxChanged = true; }
+                if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (graphData.value(4).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(5).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataMinMax *d = new ChartDataMinMax(graphData.value(0).toDateTime(),
@@ -1409,6 +1433,8 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 previousdata = d;
             }
         }
+
+        if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
 
         // missing day(s)?
         {
@@ -1442,7 +1468,6 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
             }
         }
 */
-        Q_EMIT minmaxUpdated();
         Q_EMIT chartDataMinMaxUpdated();
     }
     else

@@ -237,8 +237,9 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
             if (cfw.value().size() > 0)
             {
-                m_deviceFirmware = cfw.value();
-                m_deviceFirmware =  m_deviceFirmware.split('_')[1].split('-')[1];
+                QString fw = cfw.value();
+                fw =  fw.split('_')[1].split('-')[1];
+                setFirmware(fw);
             }
 
             if (m_deviceFirmware.size() == 5)
@@ -246,6 +247,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
                 if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
                 {
                     m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
             }
 
@@ -258,8 +260,6 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
                 if (updateDevice.exec() == false)
                     qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
-
-            Q_EMIT sensorUpdated();
         }
     }
 }

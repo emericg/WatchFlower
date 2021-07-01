@@ -52,8 +52,8 @@ class DeviceManager: public QObject
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
-    Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
-    Q_PROPERTY(bool updating READ isRefreshing NOTIFY refreshingChanged)
+    Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
+    Q_PROPERTY(bool refreshing READ isUpdating NOTIFY updatingChanged) // legacy
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
@@ -75,7 +75,7 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_updating;
 
     QTimer m_refreshTimer;
-    bool isRefreshing() const;
+    bool isUpdating() const;
 
     bool m_scanning = false;
     bool isScanning() const;
@@ -151,7 +151,7 @@ Q_SIGNALS:
 
     void bluetoothChanged();
     void scanningChanged();
-    void refreshingChanged();
+    void updatingChanged();
 };
 
 /* ************************************************************************** */

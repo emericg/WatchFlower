@@ -27,7 +27,7 @@ Item {
         widgetWidth = Math.floor(width / daysVisible)
         currentDevice.updateChartData_thermometerMinMax(daysMax)
 
-        if (currentDevice.countData("temperature", daysMax) > 1) {
+        if (currentDevice.countDataNamed("temperature", daysMax) > 1) {
             mmGraph.visible = true
             noDataIndicator.visible = false
         } else {

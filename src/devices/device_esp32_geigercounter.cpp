@@ -278,6 +278,8 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 
 bool DeviceEsp32GeigerCounter::hasData() const
 {
+    //qDebug() << "DeviceEsp32GeigerCounter::hasData()";
+
     // If we have immediate data (<12h old)
     if (m_rh > 0 || m_rm > 0 || m_rs > 0)
         return true;

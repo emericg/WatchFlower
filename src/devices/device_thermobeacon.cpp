@@ -447,6 +447,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
             m_humidity = hygro;
             Q_EMIT dataUpdated();
         }
+
         m_lastUpdate = QDateTime::currentDateTime();
         Q_EMIT statusUpdated();
 

@@ -65,7 +65,7 @@ Item {
         // Set icon
         if (boxDevice.isPlantSensor) {
             var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
-            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            var hasHygro_long = (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity"))
             hasHygro = hasHygro_short || hasHygro_long
 
             if (hasHygro) {
@@ -211,7 +211,7 @@ Item {
             }
         }
 
-        imageForward.color = boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
+        imageForward.color = boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
     }
 
     function updateSensorWarnings() {
@@ -285,7 +285,7 @@ Item {
     function updateSensorData() {
         if (boxDevice.isPlantSensor) {
             var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
-            var hasHygro_long = (boxDevice.hasData("soilMoisture") || boxDevice.hasData("soilConductivity"))
+            var hasHygro_long = (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity"))
             hasHygro = hasHygro_short || hasHygro_long
         }
 
@@ -374,7 +374,7 @@ Item {
                     }
 
                     // regular click
-                    if (boxDevice.hasData()) {
+                    if (boxDevice.hasData) {
                         selectedDevice = boxDevice
 
                         if (boxDevice.isPlantSensor) {
@@ -594,7 +594,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: singleColumn
-                color: boxDevice.hasData() ? Theme.colorHighContrast : Theme.colorSubText
+                color: boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             }
         }

@@ -205,9 +205,8 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
             {
                 batt = chc.value().at(0);
                 fw = chc.value().remove(0, 2);
+                setBatteryFirmware(batt, fw);
             }
-
-            setBatteryFirmware(batt, fw);
 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
@@ -322,6 +321,7 @@ void DeviceRopot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArr
 {
     //qDebug() << "DeviceRopot::bleWriteDone(" << m_deviceAddress << ")";
     //qDebug() << "DATA: 0x" << value.toHex();
+    Q_UNUSED(value)
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {

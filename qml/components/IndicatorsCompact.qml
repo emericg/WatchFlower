@@ -44,7 +44,7 @@ Item {
         // Has data? always display them
         if (currentDevice.dataAvailable) {
             var hasHygro = (currentDevice.soilMoisture > 0 || currentDevice.soilConductivity > 0) ||
-                           (currentDevice.hasData("soilMoisture") || currentDevice.hasData("soilConductivity"))
+                           (currentDevice.hasDataNamed("soilMoisture") || currentDevice.hasDataNamed("soilConductivity"))
 
             soil_moisture.visible = hasHygro
             soil_conductivity.visible = hasHygro

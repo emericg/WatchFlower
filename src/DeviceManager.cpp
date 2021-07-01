@@ -144,7 +144,7 @@ DeviceManager::DeviceManager()
             }
         }
 
-        //Q_EMIT devicesListUpdated();
+        Q_EMIT devicesListUpdated();
     }
 }
 
@@ -640,7 +640,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool DeviceManager::isRefreshing() const
+bool DeviceManager::isUpdating() const
 {
     return !m_devices_updating.empty();
 }
@@ -650,7 +650,7 @@ void DeviceManager::refreshDevices_start()
     //qDebug() << "DeviceManager::refreshDevices_start()";
 
     // Already refreshing?
-    if (isRefreshing())
+    if (isUpdating())
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh
@@ -687,7 +687,7 @@ void DeviceManager::refreshDevices_check()
     //qDebug() << "DeviceManager::refreshDevices_check()";
 
     // Already refreshing?
-    if (isRefreshing())
+    if (isUpdating())
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh
@@ -749,7 +749,7 @@ void DeviceManager::refreshDevices_continue()
         }
     }
 
-    Q_EMIT refreshingChanged();
+    Q_EMIT updatingChanged();
 }
 
 void DeviceManager::refreshDevices_finished(Device *dev)
@@ -780,7 +780,7 @@ void DeviceManager::refreshDevices_stop()
             if (dd) dd->refreshStop();
         }
 
-        Q_EMIT refreshingChanged();
+        Q_EMIT updatingChanged();
     }
 }
 

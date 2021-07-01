@@ -209,9 +209,8 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             {
                 batt = chc.value().at(0);
                 fw = chc.value().remove(0, 2);
+                setBatteryFirmware(batt, fw);
             }
-
-            setBatteryFirmware(batt, fw);
 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
@@ -345,6 +344,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
 {
     //qDebug() << "DeviceFlowerCare::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+    Q_UNUSED(value)
 
     if (c.uuid().toString() == "{00000010-0000-1000-8000-00805f9b34fb}")
     {

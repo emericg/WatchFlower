@@ -16,10 +16,10 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
 
-        hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
-        conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
+        hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")
+        conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasDataNamed("soilConductivity")
         tempData.visible = currentDevice.hasTemperatureSensor
-        hygroData.visible |= currentDevice.hasHumiditySensor && currentDevice.hasData("humidity")
+        hygroData.visible |= currentDevice.hasHumiditySensor && currentDevice.hasDataNamed("humidity")
         lumiData.visible = currentDevice.hasLuminositySensor
 
         dateIndicator.visible = false
@@ -32,7 +32,7 @@ Item {
         //console.log("chartPlantDataAio // updateGraph() >> " + currentDevice)
 
         var days = 14
-        var count = currentDevice.countData("temperature", days)
+        var count = currentDevice.countDataNamed("temperature", days)
 
         showGraphDots = (settingsManager.graphShowDots && count < 16)
 
@@ -88,8 +88,8 @@ Item {
 
         if (currentDevice.isPlantSensor) {
             // not planted? don't show hygro and condu
-            hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")
-            conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasData("soilConductivity")
+            hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")
+            conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasDataNamed("soilConductivity")
 
             // Flower Care without hygro & conductivity data
             if (!hygroData.visible && !conduData.visible) {

@@ -343,6 +343,7 @@ void Device::refreshDataFinished(bool status, bool cached)
     m_timeoutTimer.stop();
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
 
     if (status == true)
     {
@@ -353,10 +354,10 @@ void Device::refreshDataFinished(bool status, bool cached)
 
         // Reset last error
         m_lastError = QDateTime();
+        Q_EMIT statusUpdated();
 
         Q_EMIT dataUpdated();
         Q_EMIT refreshUpdated();
-        Q_EMIT statusUpdated();
     }
     else
     {
@@ -376,11 +377,11 @@ void Device::refreshHistoryFinished(bool status)
     m_timeoutTimer.stop();
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
 
     // Even if the status is false, we probably have some new data
     Q_EMIT dataUpdated();
     Q_EMIT historyUpdated();
-    Q_EMIT statusUpdated();
 }
 
 void Device::refreshRealtime()
@@ -389,7 +390,6 @@ void Device::refreshRealtime()
 
     Q_EMIT dataUpdated();
     Q_EMIT realtimeUpdated();
-    Q_EMIT statusUpdated();
 }
 
 void Device::refreshRealtimeFinished()
@@ -502,31 +502,19 @@ bool Device::isErrored() const
     return (getLastErrorInt() >= 0 && getLastErrorInt() <= 12*60);
 }
 
-bool Device::isDataFresh() const
-{
-    SettingsManager *sm = SettingsManager::getInstance();
-    return (getLastUpdateInt() >= 0 &&
-            getLastUpdateInt() <= (hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()));
-}
-
-bool Device::isDataAvailable() const
-{
-    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
-}
-
 bool Device::isBusy() const
 {
     return (m_ble_status >= DeviceUtils::DEVICE_CONNECTING);
 }
 
-bool Device::isUpdating() const
-{
-    return (m_ble_status >= DeviceUtils::DEVICE_UPDATING);
-}
-
 bool Device::isWorking() const
 {
     return (m_ble_status == DeviceUtils::DEVICE_WORKING);
+}
+
+bool Device::isUpdating() const
+{
+    return (m_ble_status >= DeviceUtils::DEVICE_UPDATING);
 }
 
 /* ************************************************************************** */
@@ -573,12 +561,12 @@ int Device::getHistoryUpdatePercent() const
 
 bool Device::needsUpdateRt() const
 {
-    return !isDataFresh();
+    return false;
 }
 
 bool Device::needsUpdateDb() const
 {
-    return (getLastUpdateDbInt() < 0 || getLastUpdateDbInt() > 60);
+    return false;
 }
 
 /* ************************************************************************** */
@@ -674,10 +662,12 @@ QString Device::getLastUpdateString() const
 
 void Device::setLocationName(const QString &name)
 {
+    //qDebug() << "setLocationName(" << name << ")";
+
     if (m_locationName != name)
     {
         m_locationName = name;
-        //qDebug() << "setLocationName(" << m_locationName << ")";
+        Q_EMIT settingsUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -688,8 +678,6 @@ void Device::setLocationName(const QString &name)
             updateLocation.exec();
         }
 
-        Q_EMIT settingsUpdated();
-
         if (SettingsManager::getInstance()->getOrderBy() == "location")
         {
             if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
@@ -699,21 +687,21 @@ void Device::setLocationName(const QString &name)
 
 void Device::setAssociatedName(const QString &name)
 {
+    //qDebug() << "setAssociatedName(" << name << ")";
+
     if (m_associatedName != name)
     {
         m_associatedName = name;
-        //qDebug() << "setAssociatedName(" << m_associatedName << ")";
+        Q_EMIT settingsUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
-            QSqlQuery updatePlant;
-            updatePlant.prepare("UPDATE devices SET associatedName = :name WHERE deviceAddr = :deviceAddr");
-            updatePlant.bindValue(":name", name);
-            updatePlant.bindValue(":deviceAddr", getAddress());
-            updatePlant.exec();
+            QSqlQuery updateName;
+            updateName.prepare("UPDATE devices SET associatedName = :name WHERE deviceAddr = :deviceAddr");
+            updateName.bindValue(":name", name);
+            updateName.bindValue(":deviceAddr", getAddress());
+            updateName.exec();
         }
-
-        Q_EMIT settingsUpdated();
 
         if (SettingsManager::getInstance()->getOrderBy() == "plant")
         {
@@ -727,6 +715,7 @@ void Device::setOutside(const bool outside)
     if (m_isOutside != outside)
     {
         m_isOutside = outside;
+        Q_EMIT settingsUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -736,8 +725,6 @@ void Device::setOutside(const bool outside)
             updateOutside.bindValue(":deviceAddr", getAddress());
             updateOutside.exec();
         }
-
-        Q_EMIT settingsUpdated();
     }
 }
 
@@ -765,6 +752,7 @@ bool Device::setSetting(const QString &key, QVariant value)
     if (m_additionalSettings.value(key) != value)
     {
         m_additionalSettings.insert(key, value.toString());
+        Q_EMIT settingsUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -780,8 +768,6 @@ bool Device::setSetting(const QString &key, QVariant value)
             else
                 qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
         }
-
-        Q_EMIT settingsUpdated();
     }
 
     return status;
@@ -794,6 +780,7 @@ void Device::setFirmware(const QString &firmware)
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
         m_deviceFirmware = firmware;
+        Q_EMIT sensorUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -804,8 +791,6 @@ void Device::setFirmware(const QString &firmware)
             if (setFirmware.exec() == false)
                 qWarning() << "> setFirmware.exec() ERROR" << setFirmware.lastError().type() << ":" << setFirmware.lastError().text();
         }
-
-        Q_EMIT sensorUpdated();
     }
 }
 
@@ -816,12 +801,13 @@ void Device::setBattery(const int battery)
         if (!hasBatteryLevel())
         {
             m_deviceCapabilities |= DeviceUtils::DEVICE_BATTERY;
-            Q_EMIT sensorUpdated();
+            Q_EMIT capabilitiesUpdated();
         }
 
         if (m_deviceBattery != battery)
         {
             m_deviceBattery = battery;
+            Q_EMIT batteryUpdated();
 
             if (m_dbInternal || m_dbExternal)
             {
@@ -832,8 +818,6 @@ void Device::setBattery(const int battery)
                 if (setBattery.exec() == false)
                     qWarning() << "> setBattery.exec() ERROR" << setBattery.lastError().type() << ":" << setBattery.lastError().text();
             }
-
-            Q_EMIT batteryUpdated();
         }
     }
 }
@@ -955,7 +939,7 @@ void Device::deviceDisconnected()
         }
     }
 
-    if (m_ble_status == DeviceUtils::DEVICE_CONNECTING || m_ble_status == DeviceUtils::DEVICE_UPDATING)
+    if (m_ble_status == DeviceUtils::DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
         m_lastError = QDateTime::currentDateTime();

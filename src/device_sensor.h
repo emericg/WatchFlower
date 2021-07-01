@@ -37,6 +37,10 @@ class DeviceSensor: public Device
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool hasData READ hasData NOTIFY dataAvailableUpdated)
+    Q_PROPERTY(bool dataFresh READ isDataFresh NOTIFY dataAvailableUpdated)
+    Q_PROPERTY(bool dataAvailable READ isDataAvailable NOTIFY dataAvailableUpdated)
+
     // plant data
     Q_PROPERTY(int soilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int soilConductivity READ getSoilConductivity NOTIFY dataUpdated)
@@ -227,6 +231,15 @@ public:
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 
+    virtual bool hasData() const;
+    Q_INVOKABLE bool hasDataNamed(const QString &dataName) const;
+    Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
+    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
+    bool isDataAvailable() const;       //!< Has at least >12h old data
+
+    virtual bool needsUpdateRt() const;
+    virtual bool needsUpdateDb() const;
+
     // Plant sensor data
     int getSoilMoisture() const { return m_soil_moisture; }
     int getSoilConductivity() const { return m_soil_conductivity; }
@@ -328,10 +341,6 @@ public:
     Q_INVOKABLE void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
                                            QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
                                            QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
-
-    Q_INVOKABLE virtual bool hasData() const;
-    Q_INVOKABLE bool hasData(const QString &dataName) const;
-    Q_INVOKABLE int countData(const QString &dataName, int days = 31) const;
 };
 
 /* ************************************************************************** */

@@ -21,7 +21,7 @@ Item {
             tempChart.visible = false
         }
         if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) {
-            if (currentDevice.soilMoisture > 0 || currentDevice.countData("soilMoisture") > 0) {
+            if (currentDevice.soilMoisture > 0 || currentDevice.countDataNamed("soilMoisture") > 0) {
                 hygroChart.visible = true
                 graphCount += 1
             } else {
@@ -37,7 +37,7 @@ Item {
             lumiChart.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor) {
-            if (currentDevice.soilConductivity > 0 || currentDevice.countData("soilConductivity") > 0) {
+            if (currentDevice.soilConductivity > 0 || currentDevice.countDataNamed("soilConductivity") > 0) {
                 conduChart.visible = true
                 graphCount += 1
             } else {
@@ -144,10 +144,10 @@ Item {
 
         // graph size multiplier
         if (graphCount === 3 && graphGrid.columns === 2) {
-            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasData("soilMoisture")) {
+            if (currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")) {
                 hygroChart.duo = 2
                 lumiChart.duo = 1
-            } else if (currentDevice.hasLuminositySensor && currentDevice.hasData("luminosity")) {
+            } else if (currentDevice.hasLuminositySensor && currentDevice.hasDataNamed("luminosity")) {
                 hygroChart.duo = 1
                 lumiChart.duo = 2
             }

@@ -137,9 +137,10 @@ public:
     Q_ENUM(DeviceStatus)
 
     enum DeviceActions {
-        ACTION_UPDATE = 0,              //!< Read sensor latest data
-        ACTION_UPDATE_REALTIME,         //!< Stay connected and read sensor data
-        ACTION_UPDATE_HISTORY,          //!< Read sensor history
+        ACTION_IDLE                 = 0,  //!< No action
+        ACTION_UPDATE,                    //!< Read sensor latest data
+        ACTION_UPDATE_REALTIME,           //!< Stay connected and read sensor data
+        ACTION_UPDATE_HISTORY,            //!< Sync sensor history
 
         ACTION_LED_BLINK = 8,
         ACTION_CLEAR_HISTORY,

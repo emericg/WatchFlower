@@ -277,6 +277,8 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
 
 bool DeviceEsp32AirQualityMonitor::hasData() const
 {
+    //qDebug() << "DeviceEsp32AirQualityMonitor::hasData()";
+
     // If we have immediate data (<12h old)
     if (m_temperature > 0 || m_humidity > 0 || m_pressure > 0 || m_voc > 0 || m_co2 > 0)
         return true;
