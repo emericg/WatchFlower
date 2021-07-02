@@ -37,9 +37,9 @@ class DeviceSensor: public Device
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool hasData READ hasData NOTIFY dataAvailableUpdated)
-    Q_PROPERTY(bool dataFresh READ isDataFresh NOTIFY dataAvailableUpdated)
-    Q_PROPERTY(bool dataAvailable READ isDataAvailable NOTIFY dataAvailableUpdated)
+    Q_PROPERTY(bool hasData READ hasDataHistory NOTIFY dataAvailableUpdated)
+    Q_PROPERTY(bool hasDataFresh READ hasDataFresh NOTIFY dataAvailableUpdated)
+    Q_PROPERTY(bool hasDataToday READ hasDataToday NOTIFY dataAvailableUpdated)
 
     // plant data
     Q_PROPERTY(int soilMoisture READ getSoilMoisture NOTIFY dataUpdated)
@@ -125,6 +125,14 @@ Q_SIGNALS:
     void chartDataEnvUpdated();
 
 protected:
+    bool m_hasDataFresh = false;
+    bool m_hasDataToday = false;
+    bool m_hasDataHistory = false;
+
+    bool hasDataFresh() const { return m_hasDataFresh; }
+    bool hasDataToday() const { return m_hasDataFresh || m_hasDataToday; }
+    bool hasDataHistory() const { return m_hasDataFresh || m_hasDataToday || m_hasDataHistory; }
+
     // plant data
     int m_soil_moisture = -99;
     int m_soil_conductivity = -99;
@@ -226,17 +234,21 @@ protected:
     virtual bool getSqlSensorLimits();
     virtual bool getSqlSensorData(int minutes);
 
+    virtual bool hasData() const;
+
 public:
     DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 
-    virtual bool hasData() const;
     Q_INVOKABLE bool hasDataNamed(const QString &dataName) const;
     Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
-    bool isDataFresh() const;           //!< Has at least >Xh (user set) old data
-    bool isDataAvailable() const;       //!< Has at least >12h old data
 
+    Q_INVOKABLE bool isDataFresh() const;           //!< Has at most Xh (user set) old data
+    Q_INVOKABLE bool isDataToday() const;           //!< Has at most 12h old data
+    Q_INVOKABLE bool isDataAvailable() const;       //!< Has data, immediate or from history
+
+    virtual void checkDataAvailability();
     virtual bool needsUpdateRt() const;
     virtual bool needsUpdateDb() const;
 

@@ -298,14 +298,15 @@ public:
     int getLastUpdateDbInt() const;
     int getLastErrorInt() const;
 
-    virtual bool needsUpdateRt() const;
-    virtual bool needsUpdateDb() const;
-
     QDateTime getDeviceUptime() const;
     float getDeviceUptime_days() const;
     QDateTime getLastHistorySync() const;
     float getLastHistorySync_days() const;
     virtual int getHistoryUpdatePercent() const;
+
+    virtual void checkDataAvailability();
+    virtual bool needsUpdateRt() const;
+    virtual bool needsUpdateDb() const;
 
     // Device associated data
     QString getLocationName() { return m_locationName; }

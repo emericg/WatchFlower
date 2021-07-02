@@ -112,7 +112,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
     if (status == true)
     {
         // Plant sensor?
-        if (hasSoilMoistureSensor())
+        if (isPlantSensor())
         {
             SettingsManager *sm = SettingsManager::getInstance();
 
@@ -517,47 +517,85 @@ bool DeviceSensor::getSqlSensorData(int minutes)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool DeviceSensor::hasData() const
+void DeviceSensor::checkDataAvailability()
 {
-    QString tableName;
+    bool somethingchanged = false;
 
-    if (isPlantSensor() || isThermometer())
+    // fresh
     {
-        // If we have immediate data (<12h old)
-        if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
-            m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
-            return true;
+        SettingsManager *sm = SettingsManager::getInstance();
+        int maxMin = isPlantSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo();
 
-        tableName = "plantData";
-    }
-    else if (isEnvironmentalSensor())
-    {
-        // If we have immediate data (<12h old)
-        if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
-            m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
-            return true;
+        bool status =  (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
 
-        tableName = "sensorData";
-    }
-
-    // Otherwise, check if we have stored data
-    if (m_dbInternal || m_dbExternal)
-    {
-        QSqlQuery hasData;
-        hasData.prepare("SELECT COUNT(*) FROM " + tableName + " WHERE deviceAddr = :deviceAddr;");
-        hasData.bindValue(":deviceAddr", getAddress());
-
-        if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
-
-        while (hasData.next())
+        if (status != m_hasDataFresh)
         {
-            if (hasData.value(0).toInt() > 0) // data count
-                return true;
+            m_hasDataFresh = status;
+            somethingchanged = true;
         }
     }
 
-    return false;
+    // today
+    {
+        bool status = (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
+
+        if (status != m_hasDataToday)
+        {
+            m_hasDataToday = status;
+            somethingchanged = true;
+        }
+    }
+
+    // history
+    if (0)
+    {
+        QString tableName;
+        bool status = false;
+
+        if (isPlantSensor() || isThermometer())
+        {
+            // If we have immediate data (<12h old)
+            if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
+                m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+                status = true;
+
+            tableName = "plantData";
+        }
+        else if (isEnvironmentalSensor())
+        {
+            // If we have immediate data (<12h old)
+            if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
+                m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
+                status = true;
+
+            tableName = "sensorData";
+        }
+
+        // Otherwise, check if we have stored data
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery hasData;
+            hasData.prepare("SELECT COUNT(*) FROM " + tableName + " WHERE deviceAddr = :deviceAddr;");
+            hasData.bindValue(":deviceAddr", getAddress());
+
+            if (hasData.exec() == false)
+                qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+
+            while (hasData.next())
+            {
+                if (hasData.value(0).toInt() > 0) // data count
+                    status = true;
+            }
+        }
+
+        if (status != m_hasDataHistory)
+        {
+            m_hasDataHistory = status;
+            somethingchanged = true;
+        }
+    }
+
+    if (somethingchanged) Q_EMIT dataAvailableUpdated();
 }
 
 bool DeviceSensor::hasDataNamed(const QString &dataName) const
@@ -657,9 +695,47 @@ int DeviceSensor::countDataNamed(const QString &dataName, int days) const
     return 0;
 }
 
-bool DeviceSensor::isDataAvailable() const
+bool DeviceSensor::hasData() const
 {
-    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
+    QString tableName;
+
+    if (isPlantSensor() || isThermometer())
+    {
+        // If we have immediate data (<12h old)
+        if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
+            m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+            return true;
+
+        tableName = "plantData";
+    }
+    else if (isEnvironmentalSensor())
+    {
+        // If we have immediate data (<12h old)
+        if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
+            m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
+            return true;
+
+        tableName = "sensorData";
+    }
+
+    // Otherwise, check if we have stored data
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery hasData;
+        hasData.prepare("SELECT COUNT(*) FROM " + tableName + " WHERE deviceAddr = :deviceAddr;");
+        hasData.bindValue(":deviceAddr", getAddress());
+
+        if (hasData.exec() == false)
+            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+
+        while (hasData.next())
+        {
+            if (hasData.value(0).toInt() > 0) // data count
+                return true;
+        }
+    }
+
+    return false;
 }
 
 bool DeviceSensor::isDataFresh() const
@@ -669,9 +745,19 @@ bool DeviceSensor::isDataFresh() const
     return (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
 }
 
+bool DeviceSensor::isDataToday() const
+{
+    return (getLastUpdateInt() >= 0 && getLastUpdateInt() <= 12*60);
+}
+
+bool DeviceSensor::isDataAvailable() const
+{
+    return hasData();
+}
+
 bool DeviceSensor::needsUpdateRt() const
 {
-    return isDataFresh();
+    return !isDataFresh();
 }
 
 bool DeviceSensor::needsUpdateDb() const

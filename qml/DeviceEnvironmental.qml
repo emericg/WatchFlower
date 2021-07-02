@@ -196,10 +196,10 @@ Item {
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
-        //indicatorDisconnected.visible = !currentDevice.dataAvailable
-        //indicatorAirQuality.visible = isAirMonitor && currentDevice.dataAvailable
-        //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.dataAvailable
-        //indicatorHygrometer.visible = isWeatherStation && currentDevice.dataAvailable
+        //indicatorDisconnected.visible = !currentDevice.hasDataToday
+        //indicatorAirQuality.visible = isAirMonitor && currentDevice.hasDataToday
+        //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.hasDataToday
+        //indicatorHygrometer.visible = isWeatherStation && currentDevice.hasDataToday
 
         // Indicators
         if (primary === "hygrometer") {
@@ -271,7 +271,7 @@ Item {
         textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-            (currentDevice.dataFresh || currentDevice.dataAvailable)) {
+            (currentDevice.isDataFresh() || currentDevice.isDataToday())) {
             if (currentDevice.lastUpdateMin <= 1)
                 textStatus.text = qsTr("Synced")
             else
@@ -348,7 +348,7 @@ Item {
                     width: isMobile ? 96 : 128
                     height: isMobile ? 96 : 128
 
-                    visible: (currentDevice && !currentDevice.dataAvailable)
+                    visible: (currentDevice && !currentDevice.hasDataToday)
                     color: cccc
                     source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 }
@@ -361,7 +361,7 @@ Item {
                     height: width
 
                     color: cccc
-                    visible: (currentDevice && isAirMonitor && currentDevice.dataAvailable)
+                    visible: (currentDevice && isAirMonitor && currentDevice.hasDataToday)
                 }
 
                 ////////////////
@@ -409,7 +409,7 @@ Item {
                     width: isMobile ? 128 : 160
                     height: isMobile ? 128 : 160
 
-                    visible: (currentDevice && isGeigerCounter && currentDevice.dataAvailable)
+                    visible: (currentDevice && isGeigerCounter && currentDevice.hasDataToday)
                     color: cccc
                     source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
 

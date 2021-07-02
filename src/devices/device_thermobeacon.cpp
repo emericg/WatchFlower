@@ -464,6 +464,8 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
             //qDebug() << "No need to save data" << getLastUpdateDbInt();
         }
 
+        refreshDataFinished(true);
+
 #ifndef QT_NO_DEBUG
         //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
         //qDebug() << "- battery:" << m_deviceBattery;

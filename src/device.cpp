@@ -182,9 +182,9 @@ void Device::actionClearData()
         if (deleteData.exec())
         {
             m_lastHistorySync = QDateTime();
+            Q_EMIT statusUpdated();
 
             Q_EMIT dataUpdated();
-            Q_EMIT statusUpdated();
             Q_EMIT historyUpdated();
         }
         else
@@ -300,8 +300,6 @@ void Device::actionCanceled()
     if (m_bleController)
     {
         m_bleController->disconnectFromDevice();
-
-        m_lastError = QDateTime::currentDateTime();
     }
 
     refreshDataFinished(false);
@@ -314,8 +312,6 @@ void Device::actionTimedout()
     if (m_bleController)
     {
         m_bleController->disconnectFromDevice();
-
-        m_lastError = QDateTime::currentDateTime();
     }
 
     refreshDataFinished(false);
@@ -361,9 +357,15 @@ void Device::refreshDataFinished(bool status, bool cached)
     }
     else
     {
+        // Set last error
+        m_lastError = QDateTime::currentDateTime();
+        Q_EMIT statusUpdated();
+
         // Set error timer value
         setUpdateTimer(ERROR_UPDATE_INTERVAL);
     }
+
+    checkDataAvailability();
 
     // Inform device manager
     if (!cached) Q_EMIT deviceUpdated(this);
@@ -382,6 +384,8 @@ void Device::refreshHistoryFinished(bool status)
     // Even if the status is false, we probably have some new data
     Q_EMIT dataUpdated();
     Q_EMIT historyUpdated();
+
+    checkDataAvailability();
 }
 
 void Device::refreshRealtime()
@@ -558,6 +562,11 @@ int Device::getHistoryUpdatePercent() const
 }
 
 /* ************************************************************************** */
+
+void Device::checkDataAvailability()
+{
+    //
+}
 
 bool Device::needsUpdateRt() const
 {
@@ -942,7 +951,6 @@ void Device::deviceDisconnected()
     if (m_ble_status == DeviceUtils::DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
-        m_lastError = QDateTime::currentDateTime();
         refreshDataFinished(false);
     }
     else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_HISTORY)

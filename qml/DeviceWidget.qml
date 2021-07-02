@@ -105,6 +105,24 @@ Item {
             imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
 
+        // Load indicators
+        if (!loaderIndicators.sourceComponent) {
+            if (boxDevice.isPlantSensor) {
+                loaderIndicators.sourceComponent = componentPlantSensor
+            } else if (boxDevice.isThermometer) {
+                loaderIndicators.sourceComponent = componentThermometer
+            } else if (boxDevice.isEnvironmentalSensor) {
+                if (boxDevice.deviceName === "GeigerCounter")
+                    loaderIndicators.sourceComponent = componentThermometer
+                else
+                    loaderIndicators.sourceComponent = componentEnvironmentalGauge
+            }
+            if (loaderIndicators.item) {
+                loaderIndicators.item.initData()
+                loaderIndicators.item.updateData()
+            }
+        }
+
         updateSensorSettings()
         updateSensorStatus()
         updateSensorBattery()
@@ -117,16 +135,16 @@ Item {
         textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.dataFresh) {
+            if (boxDevice.isDataFresh()) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
-            } else if (boxDevice.dataAvailable) {
+            } else if (boxDevice.isDataToday()) {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
             }
         }
         // Image
-        if (!boxDevice.dataAvailable) {
+        if (!boxDevice.isDataToday()) {
             if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 refreshAnimation.running = false
@@ -172,23 +190,6 @@ Item {
                 textLocation.text = boxDevice.deviceAddress
             }
         }
-        // Indicators
-        if (!loaderIndicators.sourceComponent) {
-            if (boxDevice.isPlantSensor) {
-                loaderIndicators.sourceComponent = componentPlantSensor
-            } else if (boxDevice.isThermometer) {
-                loaderIndicators.sourceComponent = componentThermometer
-            } else if (boxDevice.isEnvironmentalSensor) {
-                if (boxDevice.deviceName === "GeigerCounter")
-                    loaderIndicators.sourceComponent = componentThermometer
-                else
-                    loaderIndicators.sourceComponent = componentEnvironmentalGauge
-            }
-        }
-        if (loaderIndicators.item) {
-            loaderIndicators.item.initData()
-            loaderIndicators.item.updateData()
-        }
     }
 
     function updateSensorBattery() {
@@ -210,8 +211,6 @@ Item {
                     imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
             }
         }
-
-        imageForward.color = boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
     }
 
     function updateSensorWarnings() {
@@ -222,7 +221,7 @@ Item {
         warning.visible = false
 
         // Warnings icons (for sensors with available data)
-        if (boxDevice.dataAvailable) {
+        if (boxDevice.isDataToday()) {
 
             if (boxDevice.isPlantSensor) {
 
@@ -292,14 +291,6 @@ Item {
         updateSensorIcon()
         updateSensorWarnings()
         if (loaderIndicators.item) loaderIndicators.item.updateData()
-
-        if (boxDevice.dataAvailable) {
-            imageStatus.visible = false
-            loaderIndicators.visible = true
-        } else {
-            imageStatus.visible = true
-            loaderIndicators.visible = false
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -374,7 +365,7 @@ Item {
                     }
 
                     // regular click
-                    if (boxDevice.hasData) {
+                    if (boxDevice.isDataAvailable()) {
                         selectedDevice = boxDevice
 
                         if (boxDevice.isPlantSensor) {
@@ -505,7 +496,7 @@ Item {
             anchors.verticalCenter: rowRight.verticalCenter
             layoutDirection: Qt.RightToLeft
 
-            visible: boxDevice.dataAvailable
+            visible: boxDevice.hasDataToday
 
             ImageSvg {
                 id: water
@@ -579,7 +570,7 @@ Item {
                 id: loaderIndicators
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: boxDevice.dataAvailable
+                visible: boxDevice.hasDataToday
 
                 sourceComponent: null
                 asynchronous: false
@@ -609,7 +600,7 @@ Item {
             anchors.rightMargin: singleColumn ? 56 : 36
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: !boxDevice.dataAvailable
+            visible: !boxDevice.hasDataToday
             color: Theme.colorIcon
 
             SequentialAnimation on opacity {
