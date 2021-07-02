@@ -40,8 +40,6 @@
         <file alias="PopupDeleteData.qml">components/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">components/PopupDeleteDevice.qml</file>
 
-        <file alias="ButtonImage.qml">components_generic/ButtonImage.qml</file>
-        <file alias="ButtonImageThemed.qml">components_generic/ButtonImageThemed.qml</file>
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="DataBarCompact.qml">components_generic/DataBarCompact.qml</file>
@@ -56,9 +54,7 @@
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
         <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
 
-        <file alias="ButtonThemed.qml">components_themed/ButtonThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
-        <file alias="ProgressBarThemed.qml">components_themed/ProgressBarThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
         <file alias="SliderThemed.qml">components_themed/SliderThemed.qml</file>
