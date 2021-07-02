@@ -11,6 +11,7 @@ Item {
 
     property bool useOpenGL: true
     property bool showGraphDots: settingsManager.graphShowDots
+    property color legendColor: Theme.colorSubText
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -25,6 +26,8 @@ Item {
         dateIndicator.visible = false
         dataIndicator.visible = false
         verticalIndicator.visible = false
+
+        legendColor = Qt.rgba(legendColor.r, legendColor.g, legendColor.b, 0.8)
     }
 
     function updateGraph() {
@@ -120,9 +123,9 @@ Item {
     ChartView {
         id: aioGraph
         anchors.fill: parent
-        anchors.topMargin: -24
-        anchors.leftMargin: -20
-        anchors.rightMargin: -20
+        anchors.topMargin: -28
+        anchors.leftMargin: -24
+        anchors.rightMargin: -24
         anchors.bottomMargin: -24
 
         antialiasing: true
@@ -136,7 +139,8 @@ Item {
         ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
         ValueAxis { id: axisCondu; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
-                       labelsFont.pixelSize: Theme.fontSizeContentSmall; labelsColor: Theme.colorText;
+                       labelsFont.pixelSize: Theme.fontSizeContentSmall-1; labelsColor: legendColor;
+                       color: legendColor;
                        gridLineColor: Theme.colorSeparator; }
 
         LineSeries {
@@ -254,7 +258,7 @@ Item {
 
         property var clickedCoordinates: null
 
-        Behavior on x { NumberAnimation { id: vanim; duration: 266; } }
+        Behavior on x { NumberAnimation { id: vanim; duration: 333; easing.type: Easing.InOutCubic; } }
 
         MouseArea {
             id: verticalIndicatorArea
@@ -317,9 +321,9 @@ Item {
     Grid {
         id: indicators
         anchors.top: parent.top
-        anchors.topMargin: 20
-        anchors.leftMargin: 24
-        anchors.rightMargin: 24
+        anchors.topMargin: isPhone ? 16 : 20
+        anchors.leftMargin: isPhone ? 20 : 24
+        anchors.rightMargin: isPhone ? 20 : 24
         anchors.horizontalCenter: parent.horizontalCenter
 
         spacing: 32

@@ -227,7 +227,7 @@ Item {
                                 return (graphGrid.barSelectionDays === modelData.day) ? "#fcea32" : Theme.colorForeground
                             }
                         }
-                        Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
+                        Behavior on color { ColorAnimation { duration: animated ? 233 : 0 } }
 
                         border.width: (graphRow.barSpacing/2)
                         border.color: Theme.colorBackground
@@ -257,9 +257,15 @@ Item {
                             anchors.topMargin: 8
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            enabled: (value > -80)
-                            sourceComponent: (ddd === ChartHistory.Span.Weekly) ? legendHorizontal : legendVertical
                             asynchronous: true
+                            sourceComponent: {
+                                if (value > -80) {
+                                    if (ddd === ChartHistory.Span.Weekly)
+                                        return legendHorizontal
+                                    if (ddd !== ChartHistory.Span.Weekly && !isMobile)
+                                        return legendVertical
+                                }
+                            }
 
                             property real _value: value
                             property int _barHeight: graphBarFg.height
@@ -370,6 +376,7 @@ Item {
             color: "white"
             font.bold: true
             font.pixelSize: isPhone ? 13 : 14
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
@@ -380,14 +387,14 @@ Item {
 
         Text {
             anchors.top: parent.top
-            anchors.topMargin: contentWidth*0.33
+            anchors.topMargin: contentWidth*0.3
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -1
+            anchors.horizontalCenterOffset: 0
 
             property real value: _value
             property int barHeight: _barHeight
 
-            visible: barHeight > contentWidth*1.5
+            visible: (barHeight > contentWidth*1.5)
 
             rotation: 90
             color: "white"

@@ -7,12 +7,13 @@ Item {
 
     property alias source: sourceImg.source
     property alias fillMode: sourceImg.fillMode
-    property string color
+    property alias color: overlayImg.color
+    property alias asynchronous: sourceImg.asynchronous
 
     Image {
         id: sourceImg
         anchors.fill: parent
-        visible: parent.color ? false : true
+        visible: overlayImg.color ? false : true
 
         asynchronous: false
         smooth: false
@@ -22,6 +23,7 @@ Item {
     }
 
     ColorOverlay {
+        id: overlayImg
         source: sourceImg
         anchors.fill: sourceImg
         visible: parent.color ? true : false

@@ -15,7 +15,7 @@ PageIndicator {
         radius: (width / 2)
 
         color: Theme.colorHeaderContent
-        opacity: (parent.index === control.currentIndex) ? (0.95) : (control.pressed ? 0.7 : 0.45)
+        opacity: (index === control.currentIndex) ? (0.95) : (control.pressed ? 0.7 : 0.45)
 
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }

@@ -46,7 +46,7 @@ Item {
                 rectangle_temp.height = www
             }
 
-            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.33)
+            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.5)
             rectangle_temp_mean.y = base2 - ((base2) * m) - rectangle_temp.y
 
             if ((mmd.tempMax === mmd.tempMin && mmd.hygroMax === mmd.hygroMin)) {
@@ -89,9 +89,9 @@ Item {
         anchors.bottomMargin: isPhone ? 12 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
-        visible: (mmd.tempMean < -40)
+        asynchronous: true
         color: Theme.colorSubText
-        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+        source: (mmd.tempMean < -40) ? "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg" : ""
     }
 
     Text {

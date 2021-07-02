@@ -100,6 +100,7 @@ Rectangle {
             id: menu
             anchors.top: parent.top
             anchors.right: parent.right
+            anchors.rightMargin: 4
             anchors.bottom: parent.bottom
 
             spacing: 4

@@ -36,8 +36,8 @@ Item {
         }
 
         Text {
-            anchors.right: parent.right
             anchors.left: parent.left
+            anchors.right: parent.right
 
             visible: (Qt.platform.os === "android")
 

@@ -30,7 +30,7 @@ Item {
         Text {
             id: textTitle
             anchors.left: parent.left
-            anchors.leftMargin: 16 + screenPaddingLeft
+            anchors.leftMargin: screenPaddingLeft + 16
             anchors.top: parent.top
             anchors.topMargin: 12
 
@@ -43,7 +43,7 @@ Item {
         Text {
             id: textSubtitle
             anchors.left: parent.left
-            anchors.leftMargin: 16 + screenPaddingLeft
+            anchors.leftMargin: screenPaddingLeft + 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 14
 
@@ -66,8 +66,8 @@ Item {
 
         Column {
             anchors.fill: parent
-            anchors.leftMargin: 16 + screenPaddingLeft
-            anchors.rightMargin: 16 + screenPaddingRight
+            anchors.leftMargin: screenPaddingLeft + 16
+            anchors.rightMargin: screenPaddingRight + 16
 
             topPadding: 8
             bottomPadding: 8
@@ -454,7 +454,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -16
                     anchors.right: parent.right
+                    anchors.rightMargin: -16
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -521,7 +523,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -16
                     anchors.right: parent.right
+                    anchors.rightMargin: -16
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -620,7 +624,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -16
                     anchors.right: parent.right
+                    anchors.rightMargin: -16
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

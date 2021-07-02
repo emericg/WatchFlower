@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -8,7 +9,7 @@ Item {
     implicitWidth: 128
     implicitHeight: 32
 
-    property string legend: "legend"
+    property string legend: ""
     property int legendWidth: 80
     property int legendContentWidth: item_legend.contentWidth
 
@@ -56,8 +57,8 @@ Item {
 
         Item {
             id: item_bg
-            height: hhh
             width: dataBarCompact.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
+            height: hhh
             anchors.bottom: parent.bottom
 
             Rectangle {
@@ -65,7 +66,19 @@ Item {
                 anchors.fill: parent
 
                 radius: 4
+                clip: isDesktop
                 color: dataBarCompact.colorBackground
+
+                layer.enabled: !isDesktop
+                layer.effect: OpacityMask {
+                    maskSource: Rectangle {
+                        x: rect_bg.x
+                        y: rect_bg.y
+                        width: rect_bg.width
+                        height: rect_bg.height
+                        radius: rect_bg.radius
+                    }
+                }
 
                 Rectangle {
                     id: item_data

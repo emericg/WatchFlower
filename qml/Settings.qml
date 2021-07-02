@@ -9,6 +9,8 @@ Item {
     height: 640
     anchors.fill: parent
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: rectangleHeader
         color: Theme.colorDeviceHeader
@@ -148,7 +150,7 @@ Item {
                 Row {
                     id: theme_selector
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
@@ -292,7 +294,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_appThemeAuto
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -310,7 +312,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
 
                 visible: (element_appThemeAuto.visible)
 
@@ -362,7 +364,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bigwidget
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -421,7 +423,7 @@ Item {
                     width: wideMode ? 256 : 160
                     height: 36
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -514,7 +516,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bluetoothControl
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -527,7 +529,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 0
 
@@ -616,7 +618,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: isMobile
@@ -636,7 +638,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 12
 
@@ -700,7 +702,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_minimized
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -751,7 +753,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_worker
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -764,7 +766,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 12
 
@@ -781,7 +783,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 12
 
@@ -836,7 +838,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_notifications
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -849,7 +851,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 12
 
@@ -938,7 +940,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -992,9 +994,9 @@ Item {
                 Row {
                     id: row_bigindicators
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: text_bigindicators.verticalCenter
-                    spacing: 16
+                    spacing: 12
 
                     RadioButtonThemed {
                         text: qsTr("thin")
@@ -1051,7 +1053,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_dynascale
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1099,7 +1101,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_showdots
                     anchors.right: parent.right
-                    anchors.rightMargin: 8 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1184,7 +1186,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1238,9 +1240,9 @@ Item {
                 Row {
                     id: row_thermometer_unit
                     anchors.right: parent.right
-                    anchors.rightMargin: 16 + screenPaddingRight
+                    anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: text_thermometer_unit.verticalCenter
-                    spacing: 16
+                    spacing: 12
 
                     RadioButtonThemed {
                         id: radioDelegateCelsius
@@ -1327,7 +1329,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + column.leftPad2
                 anchors.right: parent.right
-                anchors.rightMargin: 16 + screenPaddingRight
+                anchors.rightMargin: screenPaddingRight + 16
 
                 topPadding: 8
 

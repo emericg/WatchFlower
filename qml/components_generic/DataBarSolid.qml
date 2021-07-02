@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -54,31 +55,48 @@ Item {
 
         ////////
 
-        Rectangle {
+        Item {
             id: item_bg
             width: dataBarSolid.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             height: hhh
             anchors.verticalCenter: parent.verticalCenter
 
             clip: true
-            radius: hhh
-            color: dataBarSolid.colorBackground
 
             Rectangle {
-                id: item_data
-                width: {
-                    var res = UtilsNumber.normalize(value, valueMin, valueMax) * item_bg.width
-                    if (res > item_bg.width) res = item_bg.width
-                    return res
-                }
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
+                id: rect_bg
+                anchors.fill: parent
 
                 radius: hhh
-                color: dataBarSolid.colorForeground
+                color: dataBarSolid.colorBackground
 
-                Behavior on width { NumberAnimation { duration: animated ? 333 : 0 } }
+                layer.enabled: !isDesktop
+                layer.effect: OpacityMask {
+                    maskSource: Rectangle {
+                        x: rect_bg.x
+                        y: rect_bg.y
+                        width: rect_bg.width
+                        height: rect_bg.height
+                        radius: rect_bg.radius
+                    }
+                }
+
+                Rectangle {
+                    id: item_data
+                    width: {
+                        var res = UtilsNumber.normalize(value, valueMin, valueMax) * item_bg.width
+                        if (res > item_bg.width) res = item_bg.width
+                        return res
+                    }
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+
+                    radius: hhh
+                    color: dataBarSolid.colorForeground
+
+                    Behavior on width { NumberAnimation { duration: animated ? 333 : 0 } }
+                }
             }
 
             ////////
