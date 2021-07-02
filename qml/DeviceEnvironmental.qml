@@ -290,6 +290,7 @@ Item {
                     historyChart.loadGraph()
                     historyChart.updateGraph()
                 }
+                currentDevice.updateChartData_environmentalVoc(31)
                 chartEnvLoader.visible = true
             }
         }

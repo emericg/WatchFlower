@@ -766,10 +766,10 @@ Item {
                 if (boxDevice.hasGeigerCounter) {
                     textTemp.text = ""
                     textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + "µSv/h"
+                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + qsTr("µSv/h")
                 } else if (boxDevice.hasVocSensor) {
                     textTemp.font.pixelSize = bigAssMode ? 28 : 26
-                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + "µg/m"
+                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + qsTr("µg/m³")
                     textHygro.text = boxDevice.temperature.toFixed(1) + "°"
                 } else {
                     textTemp.text = boxDevice.temperature.toFixed(1) + "°"
