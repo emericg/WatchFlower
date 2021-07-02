@@ -73,12 +73,13 @@ private:
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    void askForReading();
-
     // Handshake
     QString m_deviceMacAddress;
     QByteArray m_key_challenge;
     QByteArray m_key_finish;
+
+private slots:
+    void askForReading();
 };
 
 /* ************************************************************************** */
