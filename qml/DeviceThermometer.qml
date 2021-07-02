@@ -71,8 +71,11 @@ Item {
     }
 
     Keys.onPressed: {
-        if (event.key === Qt.Key_Backspace) {
-            event.accepted = true;
+        if (event.key === Qt.Key_F5) {
+            event.accepted = true
+            deviceManager.updateDevice(currentDevice.deviceAddress)
+        } else if (event.key === Qt.Key_Backspace) {
+            event.accepted = true
             appWindow.backAction()
         }
     }

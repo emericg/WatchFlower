@@ -85,7 +85,7 @@ Item {
     }
 
     function isHistoryMode() {
-        return false
+        return graphGrid.hasSelection()
     }
     function resetHistoryMode() {
         graphGrid.resetSelection()
@@ -279,10 +279,13 @@ Item {
         property int barSelectionDays: -1
         property int barSelectionHours: -1
 
+        function hasSelection() {
+            return (barSelectionIndex >= 0 || barSelectionDays >= 0 || barSelectionHours >= 0)
+        }
         function resetSelection() {
-            graphGrid.barSelectionIndex = -1
-            graphGrid.barSelectionDays = -1
-            graphGrid.barSelectionHours = -1
+            barSelectionIndex = -1
+            barSelectionDays = -1
+            barSelectionHours = -1
         }
 
         ////////

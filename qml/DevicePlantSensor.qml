@@ -112,9 +112,12 @@ Item {
             if (sensorPages.currentIndex > 0)
                 sensorPages.currentIndex--
         } else if (event.key === Qt.Key_Right) {
-            event.accepted = true;
+            event.accepted = true
             if (sensorPages.currentIndex+1 < sensorPages.count)
                 sensorPages.currentIndex++
+        } else if (event.key === Qt.Key_F5) {
+            event.accepted = true
+            deviceManager.updateDevice(currentDevice.deviceAddress)
         } else if (event.key === Qt.Key_Backspace) {
             event.accepted = true
             appWindow.backAction()
@@ -124,10 +127,11 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function isHistoryMode() {
-        return plantSensorData.isHistoryMode()
+        return (plantSensorData.isHistoryMode() || plantSensorHistory.isHistoryMode())
     }
     function resetHistoryMode() {
         plantSensorData.resetHistoryMode()
+        plantSensorHistory.resetHistoryMode()
     }
 
     function loadDevice(clickedDevice) {
