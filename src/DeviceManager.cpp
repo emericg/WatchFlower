@@ -675,6 +675,8 @@ void DeviceManager::refreshDevices_start()
             Device *dd = qobject_cast<Device*>(d);
             if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
             {
+                if (dd->getName() == "ThermoBeacon") continue;
+
                 // as long as we didn't just update it: go for refresh
                 m_devices_queued.push_back(dd);
                 dd->refreshQueue();

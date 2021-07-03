@@ -262,7 +262,7 @@ Item {
                                 if (value > -80) {
                                     if (ddd === ChartHistory.Span.Weekly)
                                         return legendHorizontal
-                                    if (ddd !== ChartHistory.Span.Weekly && !isMobile)
+                                    if (ddd !== ChartHistory.Span.Weekly && !isPhone)
                                         return legendVertical
                                 }
                             }
