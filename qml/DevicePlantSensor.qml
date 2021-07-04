@@ -35,6 +35,7 @@ Item {
             plantSensorData.updateData()
         }
         onHistoryUpdated: {
+            plantSensorData.updateGraph()
             plantSensorHistory.updateData()
         }
         onLimitsUpdated: {

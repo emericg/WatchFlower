@@ -280,7 +280,7 @@ Item {
                             anchors.baseline: labelTime.baseline
 
                             text: currentDevice.deviceTime.toLocaleString()
-                            font.pixelSize: 16
+                            font.pixelSize: singleColumn ? 16 : 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }
@@ -317,7 +317,7 @@ Item {
                             anchors.baseline: labelLastSync.baseline
 
                             text: currentDevice.lastHistorySync.toLocaleString()
-                            font.pixelSize: 16
+                            font.pixelSize: singleColumn ? 16 : 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }
@@ -354,7 +354,7 @@ Item {
                             anchors.baseline: labelLastMove.baseline
 
                             text: currentDevice.lastMove.toLocaleString()
-                            font.pixelSize: 16
+                            font.pixelSize: singleColumn ? 16 : 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }

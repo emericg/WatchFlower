@@ -254,7 +254,6 @@ Item {
                         Loader {
                             id: legendLoader
                             anchors.top: parent.top
-                            anchors.topMargin: 8
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             asynchronous: true
@@ -360,12 +359,13 @@ Item {
 
         Text {
             anchors.top: parent.top
+            anchors.topMargin: 8
             anchors.horizontalCenter: parent.horizontalCenter
 
             property real value: _value
             property int barHeight: _barHeight
 
-            visible: barHeight > contentHeight+8
+            visible: (barHeight > contentHeight+8)
 
             text: {
                 if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
@@ -387,7 +387,7 @@ Item {
 
         Text {
             anchors.top: parent.top
-            anchors.topMargin: contentWidth*0.3
+            anchors.topMargin: (contentWidth/2)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 0
 
