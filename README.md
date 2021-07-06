@@ -1,7 +1,6 @@
 # ![WatchFlower](assets/android/res/drawable-xhdpi/splashicon.png)
 
-[![Travis](https://img.shields.io/travis/emericg/WatchFlower.svg?style=flat-square&logo=travis)](https://travis-ci.com/emericg/WatchFlower)
-[![AppVeyor](https://img.shields.io/appveyor/ci/emericg/WatchFlower.svg?style=flat-square&logo=appveyor)](https://ci.appveyor.com/project/emericg/watchflower)
+[![Build Status](https://github.com/emericg/WatchFlower/workflows/build/badge.svg)](https://github.com/emericg/WatchFlower/actions)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
