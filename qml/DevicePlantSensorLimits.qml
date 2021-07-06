@@ -279,8 +279,8 @@ Item {
                             anchors.rightMargin: -2
                             anchors.baseline: labelTime.baseline
 
-                            text: currentDevice.deviceTime.toLocaleString()
-                            font.pixelSize: singleColumn ? 16 : 17
+                            text: currentDevice.deviceTime.toLocaleString(Locale.ShortFormat)
+                            font.pixelSize: 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }
@@ -316,8 +316,8 @@ Item {
                             anchors.rightMargin: -2
                             anchors.baseline: labelLastSync.baseline
 
-                            text: currentDevice.lastHistorySync.toLocaleString()
-                            font.pixelSize: singleColumn ? 16 : 17
+                            text: currentDevice.lastHistorySync.toLocaleString(Locale.ShortFormat)
+                            font.pixelSize: 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }
@@ -353,8 +353,8 @@ Item {
                             anchors.rightMargin: -2
                             anchors.baseline: labelLastMove.baseline
 
-                            text: currentDevice.lastMove.toLocaleString()
-                            font.pixelSize: singleColumn ? 16 : 17
+                            text: currentDevice.lastMove.toLocaleString(Locale.ShortFormat)
+                            font.pixelSize: 17
                             color: Theme.colorHighContrast
                             elide: Text.ElideRight
                         }
