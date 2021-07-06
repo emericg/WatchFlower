@@ -14,62 +14,66 @@
         <translation>您想了解什么？</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="117"/>
         <source>version %1%2</source>
-        <translation>%1%2 版本</translation>
+        <translation type="vanished">%1%2 版本</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="162"/>
+        <location filename="../qml/About.qml" line="117"/>
+        <source>version %1 %2</source>
+        <translation type="unfinished">%1 %2 版本</translation>
+    </message>
+    <message>
+        <location filename="../qml/About.qml" line="150"/>
         <source>WEBSITE</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="176"/>
+        <location filename="../qml/About.qml" line="164"/>
         <source>SUPPORT</source>
         <translation>支援</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="214"/>
+        <location filename="../qml/About.qml" line="202"/>
         <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
         <translation>一款为小米「花花草草检测仪」及「RoPot花花草草智能花盆」蓝牙传感器及温度计而设的应用程式</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="251"/>
+        <location filename="../qml/About.qml" line="239"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
         <translation>程式由&lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;编写&lt;br&gt;视觉界面由&lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;设计</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="295"/>
+        <location filename="../qml/About.qml" line="283"/>
         <source>Rate the application</source>
         <translation>为APP打分</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="340"/>
+        <location filename="../qml/About.qml" line="328"/>
         <source>Open the tutorial</source>
         <translation>启动教程</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="383"/>
+        <location filename="../qml/About.qml" line="371"/>
         <source>Website</source>
         <translation>网站</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="426"/>
+        <location filename="../qml/About.qml" line="414"/>
         <source>GitHub page</source>
         <translation>Github专页</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="502"/>
+        <location filename="../qml/About.qml" line="492"/>
         <source>About permissions</source>
         <translation>关於权限</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="571"/>
+        <location filename="../qml/About.qml" line="563"/>
         <source>This application is made possible thanks to a couple of third party open source projects:</source>
         <translation>本应用程式得以面世有赖几个第三方开源项目：</translation>
     </message>
     <message>
-        <location filename="../qml/About.qml" line="669"/>
+        <location filename="../qml/About.qml" line="663"/>
         <source>Special thanks to our translators:</source>
         <translation>特别呜谢本程式的翻译者：</translation>
     </message>
@@ -115,12 +119,12 @@
 <context>
     <name>ChartHistory</name>
     <message>
-        <location filename="../qml/components/ChartHistory.qml" line="130"/>
+        <location filename="../qml/components/ChartHistory.qml" line="117"/>
         <source>max</source>
         <translation type="unfinished">最高</translation>
     </message>
     <message>
-        <location filename="../qml/components/ChartHistory.qml" line="156"/>
+        <location filename="../qml/components/ChartHistory.qml" line="143"/>
         <source>min</source>
         <translation type="unfinished">最低</translation>
     </message>
@@ -128,18 +132,18 @@
 <context>
     <name>ChartPlantDataAio</name>
     <message>
-        <location filename="../qml/components/ChartPlantDataAio.qml" line="439"/>
+        <location filename="../qml/components/ChartPlantDataAio.qml" line="443"/>
         <source>at</source>
         <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
         <translation>于</translation>
     </message>
     <message>
-        <location filename="../qml/components/ChartPlantDataAio.qml" line="456"/>
+        <location filename="../qml/components/ChartPlantDataAio.qml" line="460"/>
         <source>°F</source>
         <translation type="unfinished">华氏</translation>
     </message>
     <message>
-        <location filename="../qml/components/ChartPlantDataAio.qml" line="456"/>
+        <location filename="../qml/components/ChartPlantDataAio.qml" line="460"/>
         <source>°C</source>
         <translation type="unfinished">摄氏</translation>
     </message>
@@ -147,13 +151,13 @@
 <context>
     <name>DataBarSolid</name>
     <message>
-        <location filename="../qml/components_generic/DataBarSolid.qml" line="115"/>
+        <location filename="../qml/components_generic/DataBarSolid.qml" line="133"/>
         <source>min</source>
         <extracomment>Short for minimum</extracomment>
         <translation>最低</translation>
     </message>
     <message>
-        <location filename="../qml/components_generic/DataBarSolid.qml" line="172"/>
+        <location filename="../qml/components_generic/DataBarSolid.qml" line="190"/>
         <source>max</source>
         <extracomment>Short for maximum</extracomment>
         <translation>最高</translation>
@@ -240,14 +244,14 @@
 <context>
     <name>Device</name>
     <message numerus="yes">
-        <location filename="../src/device.cpp" line="665"/>
+        <location filename="../src/device.cpp" line="660"/>
         <source>%n minute(s)</source>
         <translation>
             <numerusform>%n 分</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/device.cpp" line="667"/>
+        <location filename="../src/device.cpp" line="662"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n 小时</numerusform>
@@ -257,146 +261,146 @@
 <context>
     <name>DeviceEnvironmental</name>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="147"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="650"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="166"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="678"/>
         <source>VOC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="280"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="279"/>
         <source>Synced</source>
         <translation>已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="282"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="281"/>
         <source>Synced %1 ago</source>
         <translation>%1前已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="436"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="464"/>
         <source>Loading...</source>
         <translation>载入中...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="614"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="642"/>
         <source>PM1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="615"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="627"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="639"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="651"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="665"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="643"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="655"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="667"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="679"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="693"/>
         <source>µg/m³</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="626"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="654"/>
         <source>PM2.5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="638"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="666"/>
         <source>PM10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="739"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="767"/>
         <source>PPM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="161"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="738"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="180"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="766"/>
         <source>eCO2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="161"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="738"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="180"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="766"/>
         <source>CO2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="154"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="664"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="173"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="692"/>
         <source>HCHO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="215"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="223"/>
         <source>humidity</source>
         <translation type="unfinished">湿度</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="220"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="228"/>
         <source>feels like %1</source>
         <translation type="unfinished">感觉像 %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="802"/>
-        <location filename="../qml/DeviceEnvironmental.qml" line="815"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="830"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="843"/>
         <source>RADIATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="803"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="831"/>
         <source>µSv/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="816"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="844"/>
         <source>µSv/m</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="882"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="910"/>
         <source>Temperature</source>
         <translation type="unfinished">温度</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="893"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="922"/>
         <source>Humidity</source>
         <translation type="unfinished">湿度</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="894"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="923"/>
         <source>°RH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="904"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="934"/>
         <source>Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="905"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="935"/>
         <source>hPa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="916"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="947"/>
         <source>Sound level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="917"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="948"/>
         <source>db</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="928"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="959"/>
         <source>Luminosity</source>
         <translation type="unfinished">亮度</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="929"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="960"/>
         <source>lux</source>
         <translation type="unfinished">勒克斯</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceEnvironmental.qml" line="939"/>
+        <location filename="../qml/DeviceEnvironmental.qml" line="970"/>
         <source>UV index</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,22 +453,22 @@
         <translation>%1前已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorData.qml" line="218"/>
+        <location filename="../qml/DevicePlantSensorData.qml" line="220"/>
         <source>Plant</source>
         <translation>植物</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorData.qml" line="293"/>
+        <location filename="../qml/DevicePlantSensorData.qml" line="295"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorData.qml" line="368"/>
+        <location filename="../qml/DevicePlantSensorData.qml" line="370"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorData.qml" line="385"/>
+        <location filename="../qml/DevicePlantSensorData.qml" line="387"/>
         <source>Loading...</source>
         <translation>载入中...</translation>
     </message>
@@ -487,32 +491,32 @@
         <translation>日</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="296"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="299"/>
         <source>Moisture</source>
         <translation>湿度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="317"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="320"/>
         <source>Temperature</source>
         <translation>温度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="338"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="341"/>
         <source>Luminosity</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="342"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="345"/>
         <source>lux</source>
         <translation type="unfinished">勒克斯</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="359"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="362"/>
         <source>Fertility</source>
         <translation>养分</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorHistory.qml" line="363"/>
+        <location filename="../qml/DevicePlantSensorHistory.qml" line="366"/>
         <source>µs/cm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -520,153 +524,153 @@
 <context>
     <name>DevicePlantSensorLimits</name>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="150"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="145"/>
         <source>Address</source>
         <translation>地址</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="183"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="178"/>
         <source>Firmware</source>
         <translation>韧体</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="219"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="214"/>
         <source>Update %1 available with official application</source>
         <translation>有%1项官方程式更新</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="237"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="232"/>
         <source>Battery</source>
         <translation>电池量</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="271"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="266"/>
         <source>Uptime</source>
         <translation>上线时间</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="308"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="303"/>
         <source>Last sync</source>
         <translation>最后同步时间</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="345"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="340"/>
         <source>Last move</source>
         <translation>最后移动</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="953"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="948"/>
         <source>MAC Address</source>
         <translation>MAC位址</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1069"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1064"/>
         <source>inside</source>
         <translation>室内</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1109"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1104"/>
         <source>outside</source>
         <translation>室外</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1145"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1140"/>
         <source>Moisture</source>
         <translation>水分</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1145"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1140"/>
         <source>Humidity</source>
         <translation>湿度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1181"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1176"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
         <translation>室内植物理想的土壤水分一般是15至50%。  仙人掌及多肉植物则可低至7%。热带植物需要多些水分。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1182"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1183"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1272"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1273"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1542"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1177"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1178"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1267"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1268"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1537"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
         <translation>&lt;br&gt;&lt;b&gt;提示：&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1182"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1177"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
         <translation>小心长时间持续过量的水分与持续缺水同样能使植物凋谢！</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1183"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1178"/>
         <source>Water your plants more frequently during their growth period.</source>
         <translation>请在植物的生长期间较频密地浇水。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1218"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1213"/>
         <source>Temperature</source>
         <translation>温度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1271"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1266"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
         <translation>大部分的室内植物能够在摄氏15至25度（华氏59至77度）的环境下茂盛生长。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1272"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1267"/>
         <source>Having constant temperature is important for indoor plants.</source>
         <translation>对室内植物来说维持恒温至为重要。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1273"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1268"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
         <translation>如果您有湿度计，您可以监测空气的湿度使它保持在40到60%之间（热带植物可更高）。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1308"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1303"/>
         <source>Luminosity</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1369"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1364"/>
         <source>low</source>
         <translation>低</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1385"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1434"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1380"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1429"/>
         <source>indirect</source>
         <translation>间接</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1401"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1396"/>
         <source>direct light (indoor)</source>
         <translation>直接光线</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1417"/>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1450"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1412"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1445"/>
         <source>sunlight</source>
         <translation>日光</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1470"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1465"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation>有些植物喜欢整天或只是一天中部分时段暴晒在阳光下。但许多室内植物则不爱阳光直接照射：就请不要把它们放在向南的窗户旁！</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1506"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1501"/>
         <source>Fertility</source>
         <translation>养分</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1541"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1536"/>
         <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
         <translation>土壤的养分值显示泥土中可供给的养分。（适量）使用肥料能维持这个数值。</translation>
     </message>
     <message>
-        <location filename="../qml/DevicePlantSensorLimits.qml" line="1542"/>
+        <location filename="../qml/DevicePlantSensorLimits.qml" line="1537"/>
         <source>Be sure to use the right soil composition for your plants.</source>
         <translation>请务必使用成分合适您的植物的泥土。</translation>
     </message>
@@ -692,27 +696,27 @@
 <context>
     <name>DeviceThermometer</name>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="137"/>
+        <location filename="../qml/DeviceThermometer.qml" line="134"/>
         <source>humidity</source>
         <translation>湿度</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="142"/>
+        <location filename="../qml/DeviceThermometer.qml" line="139"/>
         <source>feels like %1</source>
         <translation>感觉像 %1</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="162"/>
+        <location filename="../qml/DeviceThermometer.qml" line="157"/>
         <source>Synced</source>
         <translation>已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="164"/>
+        <location filename="../qml/DeviceThermometer.qml" line="159"/>
         <source>Synced %1 ago</source>
         <translation>%1前已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceThermometer.qml" line="269"/>
+        <location filename="../qml/DeviceThermometer.qml" line="293"/>
         <source>Loading...</source>
         <translation>载入中...</translation>
     </message>
@@ -720,33 +724,43 @@
 <context>
     <name>DeviceWidget</name>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="120"/>
-        <location filename="../qml/DeviceWidget.qml" line="123"/>
+        <location filename="../qml/DeviceWidget.qml" line="140"/>
+        <location filename="../qml/DeviceWidget.qml" line="143"/>
         <source>Synced</source>
         <translation>已同步</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="155"/>
+        <location filename="../qml/DeviceWidget.qml" line="175"/>
         <source>Thermometer</source>
         <translation>温度计</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="822"/>
+        <location filename="../qml/DeviceWidget.qml" line="760"/>
+        <source>µSv/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceWidget.qml" line="763"/>
+        <source>µg/m³</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceWidget.qml" line="815"/>
         <source>VOC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="829"/>
+        <location filename="../qml/DeviceWidget.qml" line="822"/>
         <source>HCHO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="836"/>
+        <location filename="../qml/DeviceWidget.qml" line="829"/>
         <source>eCO2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="836"/>
+        <location filename="../qml/DeviceWidget.qml" line="829"/>
         <source>CO2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -850,12 +864,21 @@
 <context>
     <name>ItemBannerSync</name>
     <message>
-        <location filename="../qml/components/ItemBannerSync.qml" line="46"/>
         <source>Syncing with the sensor</source>
-        <translation>与传感器同步中</translation>
+        <translation type="vanished">与传感器同步中</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemBannerSync.qml" line="73"/>
+        <location filename="../qml/components/ItemBannerSync.qml" line="61"/>
+        <source>Syncing with the sensor...</source>
+        <translation type="unfinished">与传感器同步中...</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemBannerSync.qml" line="61"/>
+        <source>Connecting...</source>
+        <translation type="unfinished">连线中...</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemBannerSync.qml" line="88"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -1103,217 +1126,217 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../qml/Settings.qml" line="34"/>
+        <location filename="../qml/Settings.qml" line="36"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="47"/>
+        <location filename="../qml/Settings.qml" line="49"/>
         <source>Change persistent settings here!</source>
         <translation>在这里更改恒常设置模式！</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="103"/>
+        <location filename="../qml/Settings.qml" line="105"/>
         <source>Application</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="141"/>
+        <location filename="../qml/Settings.qml" line="143"/>
         <source>Application theme</source>
         <translation>应用主题</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="171"/>
+        <location filename="../qml/Settings.qml" line="173"/>
         <source>snow</source>
         <translation>雪白</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="195"/>
+        <location filename="../qml/Settings.qml" line="197"/>
         <source>green</source>
         <translation>翠绿</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="219"/>
+        <location filename="../qml/Settings.qml" line="221"/>
         <source>day</source>
         <translation>日间</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="243"/>
+        <location filename="../qml/Settings.qml" line="245"/>
         <source>night</source>
         <translation>晚间</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="285"/>
+        <location filename="../qml/Settings.qml" line="287"/>
         <source>Automatic dark mode</source>
         <translation>自动暗黑模式</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="317"/>
+        <location filename="../qml/Settings.qml" line="319"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
         <translation>晚上9时至早上9时间暗黑模式会自动开启。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="355"/>
+        <location filename="../qml/Settings.qml" line="357"/>
         <source>Use bigger widgets</source>
         <translation>使用较大小工具</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="412"/>
+        <location filename="../qml/Settings.qml" line="414"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="432"/>
+        <location filename="../qml/Settings.qml" line="434"/>
         <source>auto</source>
         <extracomment>Short for automatic</extracomment>
         <translation>自动</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="507"/>
+        <location filename="../qml/Settings.qml" line="509"/>
         <source>Bluetooth control</source>
         <translation>控制蓝牙</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="536"/>
+        <location filename="../qml/Settings.qml" line="538"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation>WatchFlower运作时可启动您的装置之蓝牙功能。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="572"/>
-        <location filename="../qml/Settings.qml" line="608"/>
+        <location filename="../qml/Settings.qml" line="574"/>
+        <location filename="../qml/Settings.qml" line="610"/>
         <source>Simultaneous updates</source>
         <translation>同步更新</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="645"/>
+        <location filename="../qml/Settings.qml" line="647"/>
         <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
         <translation>同步进行更新的传感器数目。设定同步更新较少传感器可改善蓝牙同步过程的可靠性，但需时较久。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="693"/>
+        <location filename="../qml/Settings.qml" line="695"/>
         <source>Start application minimized</source>
         <translation>开启APP时最小化</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="744"/>
+        <location filename="../qml/Settings.qml" line="746"/>
         <source>Enable background updates</source>
         <translation>开启背景更新功能</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="773"/>
+        <location filename="../qml/Settings.qml" line="775"/>
         <source>Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
         <translation>在预设时间周期醒来更新传感器数据。只在蓝牙（或蓝牙控制）启动时有效。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="790"/>
+        <location filename="../qml/Settings.qml" line="792"/>
         <source>WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.</source>
         <translation>WatchFlower会在系统匣中保持运作，并会定时醒来更新传感器数据。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="829"/>
+        <location filename="../qml/Settings.qml" line="831"/>
         <source>Enable notifications</source>
         <translation>开启通知</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="858"/>
+        <location filename="../qml/Settings.qml" line="860"/>
         <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
         <translation>WatchFlower会在植物需要浇水时提示请您注意！</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="891"/>
+        <location filename="../qml/Settings.qml" line="893"/>
         <source>Plant sensors</source>
         <translation>植物传感器</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="929"/>
-        <location filename="../qml/Settings.qml" line="1175"/>
+        <location filename="../qml/Settings.qml" line="931"/>
+        <location filename="../qml/Settings.qml" line="1177"/>
         <source>Update interval</source>
         <translation>更新周期</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="945"/>
-        <location filename="../qml/Settings.qml" line="1191"/>
+        <location filename="../qml/Settings.qml" line="947"/>
+        <location filename="../qml/Settings.qml" line="1193"/>
         <source> h.</source>
         <translation> 小时</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="985"/>
+        <location filename="../qml/Settings.qml" line="987"/>
         <source>Data indicators</source>
         <translation>数据标示</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1000"/>
+        <location filename="../qml/Settings.qml" line="1002"/>
         <source>thin</source>
         <translation>幼</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1007"/>
+        <location filename="../qml/Settings.qml" line="1009"/>
         <source>solid</source>
         <translation>粗</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1044"/>
+        <location filename="../qml/Settings.qml" line="1046"/>
         <source>Dynamic scale for indicators</source>
         <translation>以动态比例单位标示</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1092"/>
+        <location filename="../qml/Settings.qml" line="1094"/>
         <source>Show graph dots</source>
         <translation>显示图表圆点</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1137"/>
+        <location filename="../qml/Settings.qml" line="1139"/>
         <source>Thermometers</source>
         <translation>温度计</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1231"/>
+        <location filename="../qml/Settings.qml" line="1233"/>
         <source>Temperature unit</source>
         <translation>温度单位</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1247"/>
+        <location filename="../qml/Settings.qml" line="1249"/>
         <source>°C</source>
         <translation>摄氏</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1266"/>
+        <location filename="../qml/Settings.qml" line="1268"/>
         <source>°F</source>
         <translation>华氏</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1315"/>
+        <location filename="../qml/Settings.qml" line="1317"/>
         <source>Data archiving</source>
         <translation>数据存档</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1341"/>
+        <location filename="../qml/Settings.qml" line="1343"/>
         <source>Export up to 90 days of data into a CSV file.</source>
         <translation>把最多90天的数据导出至CSV档。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1355"/>
+        <location filename="../qml/Settings.qml" line="1357"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
         <translation>储存在您的文件，在「WatchFlower」资料夹内。</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1383"/>
-        <location filename="../qml/Settings.qml" line="1393"/>
+        <location filename="../qml/Settings.qml" line="1385"/>
+        <location filename="../qml/Settings.qml" line="1395"/>
         <source>Export file</source>
         <translation>导出档案</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1388"/>
+        <location filename="../qml/Settings.qml" line="1390"/>
         <source>Exported</source>
         <translation>已导出</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1410"/>
+        <location filename="../qml/Settings.qml" line="1412"/>
         <source>Open folder</source>
         <translation>开启资料夹</translation>
     </message>
     <message>
-        <location filename="../qml/Settings.qml" line="1425"/>
+        <location filename="../qml/Settings.qml" line="1427"/>
         <source>Open with</source>
         <translation>以...开启</translation>
     </message>
@@ -1411,7 +1434,7 @@
     <message>
         <location filename="../qml/components_js/UtilsDeviceBLE.js" line="15"/>
         <source>Queued</source>
-        <translation>等待中...</translation>
+        <translation>等待中</translation>
     </message>
     <message>
         <location filename="../qml/components_js/UtilsDeviceBLE.js" line="17"/>

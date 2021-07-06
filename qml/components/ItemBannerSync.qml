@@ -58,7 +58,7 @@ Rectangle {
         Text {
             anchors.verticalCenter: parent.verticalCenter
 
-            text: syncing ? qsTr("Syncing with the sensor") : qsTr("Connecting")
+            text: syncing ? qsTr("Syncing with the sensor...") : qsTr("Connecting...")
             color: Theme.colorActionbarContent
             font.pixelSize: Theme.fontSizeContent
         }
