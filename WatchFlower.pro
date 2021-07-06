@@ -1,6 +1,6 @@
 TARGET  = WatchFlower
 
-VERSION = 2.0
+VERSION = 2.1
 DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
