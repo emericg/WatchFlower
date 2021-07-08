@@ -1,8 +1,10 @@
 # ![WatchFlower](assets/android/res/drawable-xhdpi/splashicon.png)
 
-[![Build Status](https://github.com/emericg/WatchFlower/workflows/build/badge.svg)](https://github.com/emericg/WatchFlower/actions)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
-
+[![GitHub release](https://img.shields.io/github/release/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/releases)
+[![GitHub action](https://img.shields.io/github/workflow/status/emericg/WatchFlower/CI%20builds.svg?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
+[![GitHub issues](https://img.shields.io/github/issues/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/issues)
+[![GitHub contributors](https://img.shields.io/github/contributors/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/graphs/contributors)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "RoPot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
