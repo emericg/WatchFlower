@@ -9,7 +9,7 @@ Unicode True
 !define EXECNAME                     "WatchFlower"
 !define COMPANYNAME                  "Emeric Grange"
 !define DESCRIPTION                  "A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'"
-!define VERSIONMAJOR                 2
+!define VERSIONMAJOR                 3
 !define VERSIONMINOR                 0
 !define VERSIONBUILD                 0
 !define MUI_ABORTWARNING
