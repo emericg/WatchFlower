@@ -68,7 +68,7 @@ void NotificationManager::setNotification(const QString &notification)
     //    return;
 
     m_notification = notification;
-    emit notificationChanged();
+    Q_EMIT notificationChanged();
 }
 
 QString NotificationManager::notification() const

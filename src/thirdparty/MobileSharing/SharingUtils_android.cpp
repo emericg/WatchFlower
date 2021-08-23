@@ -97,7 +97,7 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
     if (!ok)
     {
         qWarning() << "Unable to resolve activity from Java";
-        emit shareNoAppAvailable(0);
+        Q_EMIT shareNoAppAvailable(0);
     }
 }
 
@@ -128,7 +128,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
@@ -141,7 +141,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
@@ -149,7 +149,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
@@ -159,7 +159,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniAction.isValid())
     {
         qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
@@ -167,7 +167,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniIntent.isValid())
     {
         qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -175,7 +175,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
@@ -183,7 +183,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniMimeType.isValid())
     {
         qWarning() << "QAndroidJniObject jniMimeType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Type (MimeType)
@@ -191,7 +191,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!jniType.isValid())
     {
         qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -200,7 +200,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     QAndroidJniObject jniExtra = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
     if (!jniExtra.isValid()) {
         qWarning() << "QAndroidJniObject jniExtra not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // put Extra (EXTRA_STREAM and URI)
@@ -208,7 +208,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     //QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniExtra.object<jstring>());
     if (!jniExtraStreamUri.isValid()) {
         qWarning() << "QAndroidJniObject jniExtraStreamUri not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -221,7 +221,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
@@ -266,7 +266,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
@@ -279,7 +279,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
@@ -287,7 +287,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
@@ -297,7 +297,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniParam.isValid())
     {
         qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
@@ -305,7 +305,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniIntent.isValid())
     {
         qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -313,7 +313,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
@@ -321,7 +321,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniType.isValid())
     {
         qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Data (the URI) and Type (MimeType)
@@ -331,7 +331,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!jniResult.isValid())
     {
         qWarning() << "QAndroidJniObject jniResult not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -344,7 +344,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
@@ -396,7 +396,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
@@ -409,7 +409,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
@@ -417,7 +417,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
@@ -427,7 +427,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniParam.isValid())
     {
         qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
@@ -435,7 +435,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniIntent.isValid())
     {
         qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -443,7 +443,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
@@ -451,7 +451,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniType.isValid())
     {
         qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Data (the URI) and Type (MimeType)
@@ -462,7 +462,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!jniResult.isValid())
     {
         qWarning() << "QAndroidJniObject jniResult not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -475,7 +475,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
@@ -500,7 +500,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
 // used from QAndroidActivityResultReceiver
 void AndroidShareUtils::handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data)
 {
-    Q_UNUSED(data);
+    Q_UNUSED(data)
     qDebug() << "From JNI QAndroidActivityResultReceiver: " << receiverRequestCode << "ResultCode:" << resultCode;
     processActivityResult(receiverRequestCode, resultCode);
 }
@@ -517,7 +517,7 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
     if (resultCode == RESULT_OK)
     {
         // only if edit is done
-        emit shareEditDone(requestCode);
+        Q_EMIT shareEditDone(requestCode);
     }
     else if (resultCode == RESULT_CANCELED)
     {
@@ -527,22 +527,22 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
             // Google Fotos will send OK if saved and CANCELED if canceled
             // Some Apps always sends CANCELED even if you modified and Saved the File
             // so you should check the modified Timestamp of the File to know if
-            // you should emit shareEditDone() or shareFinished() !!!
+            // you should Q_EMIT shareEditDone() or shareFinished() !!!
             QFileInfo fileInfo = QFileInfo(mCurrentFilePath);
             qint64 currentModified = fileInfo.lastModified().toSecsSinceEpoch();
             qDebug() << "CURRENT MODIFIED: " << currentModified;
             if (currentModified > mLastModified)
             {
-                emit shareEditDone(requestCode);
+                Q_EMIT shareEditDone(requestCode);
                 return;
             }
         }
-        emit shareFinished(requestCode);
+        Q_EMIT shareFinished(requestCode);
     }
     else
     {
         qDebug() << "wrong result code: " << resultCode << " from request: " << requestCode;
-        emit shareError(requestCode, "Share: an Error occured");
+        Q_EMIT shareError(requestCode, "Share: an Error occured");
     }
 }
 
@@ -556,7 +556,7 @@ void AndroidShareUtils::checkPendingIntents(const QString workingDirPath)
         if (!jniWorkingDir.isValid())
         {
             qWarning() << "QAndroidJniObject jniWorkingDir not valid.";
-            emit shareError(0, "Share: an Error occured\nWorkingDir not valid");
+            Q_EMIT shareError(0, "Share: an Error occured\nWorkingDir not valid");
             return;
         }
         activity.callMethod<void>("checkPendingIntents", "(Ljava/lang/String;)V", jniWorkingDir.object<jstring>());
@@ -571,7 +571,7 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "setFileUrlReceived: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return;
     }
     qDebug() << "AndroidShareUtils setFileUrlReceived: we got the File URL from JAVA: " << url;
@@ -590,12 +590,12 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
-        emit fileUrlReceived(myUrl);
+        Q_EMIT fileUrlReceived(myUrl);
     }
     else
     {
         qDebug() << "setFileUrlReceived: FILE does NOT exist ";
-        emit shareError(0, QString("File does not exist: %1").arg(myUrl));
+        Q_EMIT shareError(0, QString("File does not exist: %1").arg(myUrl));
     }
 }
 
@@ -604,7 +604,7 @@ void AndroidShareUtils::setFileReceivedAndSaved(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "setFileReceivedAndSaved: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return;
     }
     qDebug() << "AndroidShareUtils setFileReceivedAndSaved: we got the File URL from JAVA: " << url;
@@ -623,12 +623,12 @@ void AndroidShareUtils::setFileReceivedAndSaved(const QString &url)
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
-        emit fileReceivedAndSaved(myUrl);
+        Q_EMIT fileReceivedAndSaved(myUrl);
     }
     else
     {
         qDebug() << "setFileReceivedAndSaved: FILE does NOT exist ";
-        emit shareError(0, QString("File does not exist: %1").arg(myUrl));
+        Q_EMIT shareError(0, QString("File does not exist: %1").arg(myUrl));
     }
 }
 
@@ -639,7 +639,7 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "checkFileExits: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return false;
     }
     qDebug() << "AndroidShareUtils checkFileExits: we got the File URL from JAVA: " << url;

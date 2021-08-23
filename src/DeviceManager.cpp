@@ -143,8 +143,6 @@ DeviceManager::DeviceManager()
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
             }
         }
-
-        Q_EMIT devicesListUpdated();
     }
 }
 
@@ -580,27 +578,8 @@ void DeviceManager::listenDevices()
 void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
     //qDebug() << "updateBleDevice() " << info.address() /*<< info.deviceUuid()*/ << " updatedFields: " << updatedFields;
-/*
-    if ((updatedFields & 0x0001) == 0x0001) // RSSI = 0x0001
-    {
-        //qDebug() << "RSSI > " << info.rssi();
+    Q_UNUSED(updatedFields)
 
-        for (auto d: qAsConst(m_devices_model->m_devices))
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd && dd->getAddress() == info.address().toString())
-            {
-                dd->setRssi(info.rssi());
-                break;
-            }
-        }
-    }
-    if ((updatedFields & 0x0002) == 0x0002) // ManufacturerData = 0x0002 // DOESN'T WORK
-    {
-        QHash<quint16, QByteArray> dat = info.manufacturerData();
-        qDebug() << "device > " << info.address() << " manufacturerData > " << dat;
-    }
-*/
     for (auto d: qAsConst(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
@@ -612,7 +591,8 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 #endif
         {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
-            for (const auto id: info.manufacturerIds())
+            const QVector<quint16> &manufacturerIds = info.manufacturerIds();
+            for (const auto id: manufacturerIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
                 //         << "ID" << id
@@ -624,7 +604,8 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 #endif // Qt 5.12+
 
 #if defined(QT_BLUETOOTH_PATCHED)
-            for (const auto id: info.serviceIds())
+            const QVector<quint16> &serviceIds = info.serviceIds();
+            for (const auto id: serviceIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
                 //         << "ID" << id
@@ -886,7 +867,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
             SettingsManager *sm = SettingsManager::getInstance();
             if (d->getLastUpdateInt() < 0 ||
-                d->getLastUpdateInt() > (d->isPlantSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
+                d->getLastUpdateInt() > (int)(d->isPlantSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
             {
                 // Old or no data: mark it as queued until the deviceManager sync new devices
                 d->refreshQueue();

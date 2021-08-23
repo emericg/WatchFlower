@@ -211,7 +211,7 @@ void DeviceEsp32GeigerCounter::bleReadDone(const QLowEnergyCharacteristic &c, co
 
     if (c.uuid().toString() == "{x}")
     {
-        Q_UNUSED(data);
+        Q_UNUSED(data)
     }
 }
 
@@ -228,7 +228,7 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 
         if (value.size() > 0)
         {
-            Q_UNUSED(data);
+            Q_UNUSED(data)
             m_rh = value.toFloat();
             m_rm = value.toFloat();
             m_rs = value.toFloat();

@@ -69,7 +69,7 @@ bool SharingApplication::event(QEvent *e)
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(e);
         if (QFile::exists(openEvent->file()))
         {
-            //emit fileDropped(openEvent->file());
+            //Q_EMIT fileDropped(openEvent->file());
         }
     }
 

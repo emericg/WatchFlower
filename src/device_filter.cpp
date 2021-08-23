@@ -105,7 +105,7 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
 
 int DeviceModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return m_devices.count();
 }
 
