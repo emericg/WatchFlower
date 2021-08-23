@@ -143,11 +143,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Address")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -176,11 +177,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Firmware")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -230,11 +232,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Battery")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -264,11 +267,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Uptime")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -301,11 +305,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Last sync")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -338,11 +343,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Last move")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         Text {
@@ -377,11 +383,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("MAC Address")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
 
                         TextInput {
@@ -534,11 +541,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Address")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
                         Text {
                             id: textAddress
@@ -559,11 +567,12 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Firmware")
+                            color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
-                            color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                            elide: Text.ElideRight
                         }
                         Text {
                             id: textFirmware

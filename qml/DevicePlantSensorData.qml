@@ -433,6 +433,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 visible: !bannersync.visible
+                z: 5
             }
 
             Loader {

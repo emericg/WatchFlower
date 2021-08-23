@@ -61,7 +61,7 @@ Item {
 
                 text: qsTr("Official information")
                 primaryColor: Theme.colorSubText
-                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions")
             }
 
             ButtonWireframe {
