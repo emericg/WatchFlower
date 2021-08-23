@@ -93,36 +93,42 @@ struct Version
 /*
 static void testVersionStringComparison()
 {
-    assert( (Version("3.7.8.0") ==  Version("3.7.8.0") )    == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7.8") )      == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7.8") )      == true);
-    assert( (Version("3.7.0.0") ==  Version("3.7") )        == true);
-    assert( (Version("3.0.0.0") ==  Version("3") )          == true);
-    assert( (Version("3")       ==  Version("3.0.0.0") )    == true);
-    assert( (Version("3.7.8.0") ==  Version("3.7") )        == false);
-    assert( (Version("3.7.8.0") ==  Version("3.6.8") )      == false);
-    assert( (Version("3.7.8.0") ==  Version("5") )          == false);
-    assert( (Version("3.7.8.0") ==  Version("2.7.8") )      == false);
+    assert( (Version("3.7.8.0")  ==  Version("3.7.8.0") )   == true);
+    assert( (Version("3.7.8.0")  ==  Version("3.7.8") )     == true);
+    assert( (Version("3.7.8.0")  ==  Version("3.7.8") )     == true);
+    assert( (Version("3.7.0.0")  ==  Version("3.7") )       == true);
+    assert( (Version("3.0.0.0")  ==  Version("3") )         == true);
+    assert( (Version("3")        ==  Version("3.0.0.0") )   == true);
+    assert( (Version("3.7.8.0")  ==  Version("3.7") )       == false);
+    assert( (Version("3.7.8.0")  ==  Version("3.6.8") )     == false);
+    assert( (Version("3.7.8.0")  ==  Version("5") )         == false);
+    assert( (Version("3.7.8.0")  ==  Version("2.7.8") )     == false);
+    assert( (Version("01.02.03") ==  Version("01.02.03") )  == true);
+    assert( (Version("01.02.03") ==  Version("02.02.03") )  == false);
 
-    assert( (Version("3")       <   Version("3.7.9") )  == true);
-    assert( (Version("1.7.9")   <   Version("3.1") )    == true);
-    assert( (Version("3.7.8.0") <   Version("3.7.8") )  == false);
-    assert( (Version("3.7.9")   <   Version("3.7.8") )  == false);
-    assert( (Version("3.7.8")   <   Version("3.7.9") )  == true);
-    assert( (Version("3.7")     <   Version("3.7.0"))    == false);
-    assert( (Version("3.7.8.0") <   Version("3.7.8"))   == false);
-    assert( (Version("2.7.9")   <   Version("3.8.8"))   == true);
-    assert( (Version("3.7.9")   <   Version("3.8.8"))   == true);
-    assert( (Version("4")       <   Version("3.7.9"))   == false);
+    assert( (Version("3")         <  Version("3.7.9") )     == true);
+    assert( (Version("1.7.9")     <  Version("3.1") )       == true);
+    assert( (Version("3.7.8.0")   <  Version("3.7.8") )     == false);
+    assert( (Version("3.7.9")     <  Version("3.7.8") )     == false);
+    assert( (Version("3.7.8")     <  Version("3.7.9") )     == true);
+    assert( (Version("3.7")       <  Version("3.7.0") )     == false);
+    assert( (Version("3.7.8.0")   <  Version("3.7.8") )     == false);
+    assert( (Version("2.7.9")     <  Version("3.8.8") )     == true);
+    assert( (Version("3.7.9")     <  Version("3.8.8") )     == true);
+    assert( (Version("4")         <  Version("3.7.9") )     == false);
+    assert( (Version("01.02.03")  <  Version("01.02.03") )  == false);
+    assert( (Version("01.02.03")  <  Version("02.02.03") )  == true);
 
-    assert( (Version("4")       >   Version("3.7.9"))   == true);
-    assert( (Version("3.7.9")   >   Version("3.7.8"))   == true);
-    assert( (Version("4.7.9")   >   Version("3.1"))     == true);
-    assert( (Version("3.10")    >   Version("3.8.8"))   == true);
-    assert( (Version("3.7")     >   Version("3.7.0"))   == false);
-    assert( (Version("3.7.8.0") >   Version("3.7.8"))   == false);
-    assert( (Version("2.7.9")   >   Version("3.8.8"))   == false);
-    assert( (Version("3.7.9")   >   Version("3.8.8"))   == false);
+    assert( (Version("4")         >  Version("3.7.9") )     == true);
+    assert( (Version("3.7.9")     >  Version("3.7.8") )     == true);
+    assert( (Version("4.7.9")     >  Version("3.1") )       == true);
+    assert( (Version("3.10")      >  Version("3.8.8") )     == true);
+    assert( (Version("3.7")       >  Version("3.7.0") )     == false);
+    assert( (Version("3.7.8.0")   >  Version("3.7.8") )     == false);
+    assert( (Version("2.7.9")     >  Version("3.8.8") )     == false);
+    assert( (Version("3.7.9")     >  Version("3.8.8") )     == false);
+    assert( (Version("02.02.03")  >  Version("01.02.03") )  == true);
+    assert( (Version("01.02.03")  >  Version("02.02.03") )  == false);
 }
 */
 /* ************************************************************************** */
