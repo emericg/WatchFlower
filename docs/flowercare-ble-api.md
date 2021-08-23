@@ -9,6 +9,7 @@
 * A CR2032 coin cell battery is used as power source
 
 Xiaomi MiJia **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01)  
+Xiaomi MiJia **Flower Care Max** (HHCCJCY09)  
 VegTrug **Grow Care Garden** (GCLS002)  
 
 ## Features
@@ -45,7 +46,8 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
-The name advertised by the device is `Flower care`.
+The name advertised by the device is `Flower care` for HHCCJCY01.  
+The name advertised by the device is `Grow care garden` for HHCCJCY09 and GCLS002.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 

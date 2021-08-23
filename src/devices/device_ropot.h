@@ -36,7 +36,7 @@
 /*!
  * Xiaomi MiJia "RoPot" or "FlowerPot" (HHCCPOT002)
  * WANFEI "RoPot" (?)
- * VegTrug "Grow Care Home"
+ * VegTrug "VegTrugGrow Pot"
  *
  * Protocol infos:
  * - WatchFlower/docs/ropot-ble-api.md

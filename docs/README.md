@@ -4,9 +4,9 @@
 
 | Flower Care                       | Xiaomi / VegTrug / WANFEI         |
 | ----------------------------------| ----------------------------------|
-| FCC ID                            | HHCCJCY01 / GCLS002               |
+| FCC ID                            | HHCCJCY01 / HHCCJCY09 / GCLS002   |
 | <img src="flowercare.svg" width="256">                               ||
-| Battery                           | 1 x AAA                           |
+| Battery                           | 1 x 2032                          |
 | Thermometer                       | -15 → 50 °C (± 0.5 °C)            |
 | Soil moisture                     | 0 → 100%                          |
 | Light sensor                      | 0 → 100k lux (± 100 lux)          |

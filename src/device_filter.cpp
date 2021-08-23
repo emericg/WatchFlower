@@ -126,7 +126,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         }
         if (role == DeviceModelRole)
         {
-            if (device->getName() == "Flower care" || device->getName() == "Flower mate") {
+            if (device->getName() == "Flower care" || device->getName() == "Flower mate" || device->getName() == "Grow care garden") {
                 return "a";
             } else if (device->getName() == "Flower power") {
                 return "b";

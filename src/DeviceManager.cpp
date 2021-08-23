@@ -106,7 +106,7 @@ DeviceManager::DeviceManager()
 
             Device *d = nullptr;
 
-            if (deviceName == "Flower care" || deviceName == "Flower mate")
+            if (deviceName == "Flower care" || deviceName == "Flower mate" || deviceName == "Grow care garden")
                 d = new DeviceFlowerCare(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
                 d = new DeviceRopot(deviceAddr, deviceName, this);
@@ -800,7 +800,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
-        if (info.name() == "Flower care" || info.name() == "Flower mate" ||
+        if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden" ||
             info.name().startsWith("Flower power") ||
             info.name().startsWith("Parrot pot") ||
             info.name() == "ropot" ||
@@ -832,7 +832,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             // Create the device
             Device *d = nullptr;
 
-            if (info.name() == "Flower care" || info.name() == "Flower mate")
+            if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
                 d = new DeviceFlowerCare(info, this);
             else if (info.name() == "ropot")
                 d = new DeviceRopot(info, this);

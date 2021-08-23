@@ -37,6 +37,7 @@
 
 /*!
  * Xiaomi "Flower Care" or VegTrug "Grow Care Home" (HHCCJCY01)
+ * Xiaomi "Flower Care Max" (HHCCJCY09)
  * VegTrug "Grow Care Garden" (GCLS002)
  *
  * Protocol infos:

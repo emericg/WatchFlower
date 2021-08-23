@@ -280,10 +280,18 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
             QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
 
             // Generate token
-            uint8_t pid[2] = {0x98, 0x00};
             uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
             uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
             uint8_t token2[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
+
+            // HHCCJCY01: {0x98, 0x00};
+            // HHCCJCY09: {0xBC, 0x03};
+            // HHCCPOT002: {0x01, 0x5D};
+            uint8_t pid[2] = {0x98, 0x00};
+            if (m_deviceName == "Grow care garden") {
+                pid[0] = 0xBC;
+                pid[1] = 0x03;
+            }
 
             uint8_t mixa[8] = {0};
             mixa[0] = mac[5];
