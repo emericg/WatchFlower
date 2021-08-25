@@ -916,7 +916,7 @@ void DeviceSensor::updateChartData_history_day()
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -1 DAY) " \
                               "GROUP BY DATE_FORMAT(ts, '%d-%H') " \
                               "ORDER BY ts DESC "
                               "LIMIT 24;");
@@ -1116,7 +1116,7 @@ void DeviceSensor::updateChartData_history_month(int maxDays)
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
@@ -1356,7 +1356,7 @@ void DeviceSensor::updateChartData_environmentalVoc(int maxDays)
                               " min(hcho), avg(hcho), max(hcho), " \
                               " min(co2), avg(co2), max(co2) " \
                               "FROM sensorData " \
-                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-" + QString::number(maxMonths) + " month') " \
+                              "WHERE deviceAddr = :deviceAddr AND timestamp >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(timestamp, '%Y-%m-%d') " \
                               "ORDER BY timestamp DESC "
                               "LIMIT :maxDays;");
@@ -1470,7 +1470,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                               " min(temperature), avg(temperature), max(temperature), " \
                               " min(humidity), max(humidity) " \
                               "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
+                              "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
                               "ORDER BY ts DESC "
                               "LIMIT :maxDays;");
