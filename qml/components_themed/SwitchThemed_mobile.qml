@@ -19,7 +19,6 @@ Switch {
         radius: 16
 
         color: control.checked ? Theme.colorSecondary : Theme.colorComponentDown
-        //border.color: control.checked ? Theme.colorSecondary : Theme.colorComponentBackground
 
         Rectangle {
             x: control.checked ? (parent.width - width) : 0
@@ -29,7 +28,8 @@ Switch {
             radius: (width / 2)
 
             color: control.checked ? Theme.colorPrimary : Theme.colorComponent
-            border.color: control.checked ? Theme.colorPrimary : Theme.colorComponent
+            border.width: control.checked ? 0 : 1
+            border.color: Theme.colorComponentBorder
 
             Behavior on x { NumberAnimation { duration: 133 } }
         }

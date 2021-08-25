@@ -11,6 +11,7 @@ Slider {
 
     value: 0.5
 
+    snapMode: RangeSlider.SnapAlways
     property int ticksCount: ((to - from) / stepSize)
 
     ////////
@@ -22,19 +23,20 @@ Slider {
         height: 4
         radius: 2
         color: Theme.colorForeground
+        clip: true
 
         Repeater {
             width: control.availableWidth
             model: (control.ticksCount-1)
             Rectangle {
-                x: ((control.width / control.ticksCount-0) * (index+1))
+                x: (((control.availableWidth) / control.ticksCount) * (index+1))
                 width: 1; height: 4;
                 color: Theme.colorComponentBorder
             }
         }
 
         Rectangle {
-            width: control.visualPosition * parent.width
+            width: control.visualPosition * control.availableWidth + 1
             height: parent.height
             radius: 2
             color: Theme.colorPrimary
@@ -44,7 +46,7 @@ Slider {
                 width: control.availableWidth
                 model: (control.ticksCount-1)
                 Rectangle {
-                    x: ((control.width / control.ticksCount) * (index+1))
+                    x: (((control.availableWidth) / control.ticksCount) * (index+1))
                     width: 1; height: 4;
                     color: Theme.colorComponentBackground
                 }
@@ -55,13 +57,12 @@ Slider {
     ////////
 
     handle: Rectangle {
-        x: Math.round(control.visualPosition * parent.width - width/2)
+        x: control.leftPadding + Math.round(control.visualPosition * control.availableWidth - width/2)
         y: 0
         width: 14
         height: 10
 
-        color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
-        border.color: Theme.colorPrimary
+        color: control.pressed ? Theme.colorSecondary : Theme.colorPrimary
 
         Rectangle {
             width: 10
@@ -69,9 +70,9 @@ Slider {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.bottom
 
+            z: -1
             rotation: 45
-            color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
-            border.color: Theme.colorPrimary
+            color: parent.color
         }
     }
 }

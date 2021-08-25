@@ -26,7 +26,7 @@ Item {
 
         cached: true
         radius: 12.0
-        samples: 25
+        samples: 25 // (radius*2 + 1)
         color: parent.color
         horizontalOffset: 0
         verticalOffset: 0

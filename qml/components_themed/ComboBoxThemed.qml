@@ -22,7 +22,7 @@ ComboBox {
     ////////
 
     contentItem: Text {
-        leftPadding: 16
+        leftPadding: 12
         rightPadding: 8
 
         text: control.displayText

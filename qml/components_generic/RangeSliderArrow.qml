@@ -35,13 +35,12 @@ RangeSlider {
     ////////
 
     first.handle: Rectangle {
-        x: Math.round(first.visualPosition * parent.width - width/2)
+        x: control.leftPadding + Math.round(first.visualPosition * control.availableWidth - width/2)
         y: 0
         width: 14
         height: 10
 
         color: first.pressed ? Theme.colorSecondary : Theme.colorPrimary
-        border.color: first.pressed ? Theme.colorSecondary : Theme.colorPrimary
 
         Rectangle {
             width: 10
@@ -51,20 +50,18 @@ RangeSlider {
 
             rotation: 45
             color: parent.color
-            border.color: parent.border.color
         }
     }
 
     ////////
 
     second.handle: Rectangle {
-        x: Math.round(second.visualPosition * parent.width - width/2)
+        x: control.leftPadding + Math.round(second.visualPosition * control.availableWidth - width/2)
         y: 0
         width: 14
         height: 10
 
         color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
-        border.color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
 
         Rectangle {
             width: 10
@@ -74,7 +71,6 @@ RangeSlider {
 
             rotation: 45
             color: parent.color
-            border.color: parent.border.color
         }
     }
 }

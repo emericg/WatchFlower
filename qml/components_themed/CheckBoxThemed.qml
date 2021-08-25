@@ -26,6 +26,7 @@ CheckBox {
             anchors.centerIn: parent
             width: 12
             height: 12
+            radius: (Theme.componentRadius / 2)
 
             color: Theme.colorSecondary
             opacity: control.checked ? 1 : 0

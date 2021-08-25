@@ -7,9 +7,10 @@ Item {
     implicitWidth: 128
     implicitHeight: 24
 
-    signal clicked()
     property string legend: "legend"
     property string text: "text"
+
+    signal clicked()
 
     Rectangle {
         id: leftRect
