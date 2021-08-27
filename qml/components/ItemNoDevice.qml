@@ -41,7 +41,7 @@ Item {
 
             visible: (Qt.platform.os === "android")
 
-            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.")
+            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContentSmall
             color: Theme.colorSubText
@@ -49,7 +49,25 @@ Item {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Item { width: 1; height: 16; anchors.horizontalCenter: parent.horizontalCenter; } // spacer
+        Text {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            visible: (Qt.platform.os === "ios")
+
+            text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentSmall
+            color: Theme.colorSubText
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Item { // spacer
+            width: 1; height: 16;
+            anchors.horizontalCenter: parent.horizontalCenter;
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+        }
 
         Row {
             id: row
@@ -70,6 +88,22 @@ Item {
                 primaryColor: Theme.colorPrimary
                 onClicked: deviceManager.scanDevices()
             }
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: contentHeight + 16
+
+            visible: settingsManager.bluetoothLimitScanningRange
+
+            text: qsTr("Please keep your device close to the sensors you want to scan.")
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentSmall
+            color: Theme.colorSubText
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignBottom
         }
     }
 }
