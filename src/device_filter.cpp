@@ -97,6 +97,7 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
 
     roles[PlantNameRole] = "plant";
     roles[SoilMoistureRole] = "waterlevel";
+    roles[InsideOutsideRole] = "insideoutside";
 
     roles[PointerRole] = "pointer";
 
@@ -205,6 +206,14 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                     return 99;
             else
                 return 199;
+        }
+        if (role == InsideOutsideRole)
+        {
+            DeviceSensor *sensor = dynamic_cast<DeviceSensor *>(device);
+            if (sensor && sensor->isInside())
+                return 0;
+            else
+                return 1;
         }
 
         if (role == PointerRole)

@@ -74,12 +74,13 @@ public:
         DeviceNameRole,
         DeviceRssiRole,
         // user set
+        ManualIndexRole,
         AssociatedLocationRole,
         AssociatedNameRole,
-        ManualIndexRole,
         // plant sensors
         PlantNameRole,
         SoilMoistureRole,
+        InsideOutsideRole,
 
         PointerRole,
     };

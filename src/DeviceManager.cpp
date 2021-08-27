@@ -1205,4 +1205,11 @@ void DeviceManager::orderby_plant()
     m_devices_filter->invalidate();
 }
 
+void DeviceManager::orderby_insideoutside()
+{
+    m_devices_filter->setSortRole(DeviceModel::InsideOutsideRole);
+    m_devices_filter->sort(0, Qt::AscendingOrder);
+    m_devices_filter->invalidate();
+}
+
 /* ************************************************************************** */

@@ -108,6 +108,7 @@ public:
     Q_INVOKABLE void orderby_location();
     Q_INVOKABLE void orderby_waterlevel();
     Q_INVOKABLE void orderby_plant();
+    Q_INVOKABLE void orderby_insideoutside();
 
     Q_INVOKABLE bool exportDataSave();
     Q_INVOKABLE QString exportDataOpen();
