@@ -77,6 +77,7 @@ DeviceManager::DeviceManager()
         if (sm->getOrderBy() == "plant") orderby_plant();
         if (sm->getOrderBy() == "waterlevel") orderby_waterlevel();
         if (sm->getOrderBy() == "model") orderby_model();
+        if (sm->getOrderBy() == "insideoutside") orderby_insideoutside();
     }
 
     // BLE init
@@ -796,9 +797,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     //qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
     if (info.rssi() >= 0) return; // we probably just hit the device cache
-
     SettingsManager *sm = SettingsManager::getInstance();
-    if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) // device too far away?
+    if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device too far away
 
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
