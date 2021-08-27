@@ -76,12 +76,6 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
 
-        if (settings.contains("settings/autoDark")) // LEGACY
-        {
-            m_appThemeAuto = settings.value("settings/autoDark").toBool();
-            settings.remove("settings/autoDark");
-        }
-
         if (settings.contains("settings/appThemeAuto"))
             m_appThemeAuto = settings.value("settings/appThemeAuto").toBool();
 
@@ -90,6 +84,9 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/bluetoothControl"))
             m_bluetoothControl = settings.value("settings/bluetoothControl").toBool();
+
+        if (settings.contains("settings/bluetoothLimitScanningRange"))
+            m_bluetoothLimitScanningRange = settings.value("settings/bluetoothLimitScanningRange").toBool();
 
         if (settings.contains("settings/bluetoothSimUpdates"))
             m_bluetoothSimUpdates = settings.value("settings/bluetoothSimUpdates").toUInt();
@@ -156,8 +153,23 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/orderBy"))
             m_orderBy = settings.value("settings/orderBy").toString();
 
-        if (settings.contains("settings/externalDb"))
-            m_externalDb = settings.value("settings/externalDb").toString();
+        if (settings.contains("database/enabled"))
+            m_externalDb = settings.value("database/enabled").toBool();
+
+        if (settings.contains("database/host"))
+            m_externalDbHost = settings.value("database/host").toString();
+
+        if (settings.contains("database/port"))
+            m_externalDbPort = settings.value("database/port").toInt();
+
+        if (settings.contains("database/name"))
+            m_externalDbName = settings.value("database/name").toString();
+
+        if (settings.contains("database/user"))
+            m_externalDbUser = settings.value("database/user").toString();
+
+        if (settings.contains("database/password"))
+            m_externalDbPassword = settings.value("database/password").toString();
 
         status = true;
     }
@@ -183,6 +195,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/appThemeAuto", m_appThemeAuto);
         settings.setValue("settings/appLanguage", m_appLanguage);
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
+        settings.setValue("settings/bluetoothLimitScanningRange", m_bluetoothLimitScanningRange);
         settings.setValue("settings/bluetoothSimUpdates", m_bluetoothSimUpdates);
         settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
@@ -197,7 +210,13 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/orderBy", m_orderBy);
-        settings.setValue("settings/externalDb", m_externalDb);
+
+        settings.setValue("database/enabled", m_externalDb);
+        settings.setValue("database/host", m_externalDbHost);
+        settings.setValue("database/port", m_externalDbPort);
+        settings.setValue("database/name", m_externalDbName);
+        settings.setValue("database/user", m_externalDbUser);
+        settings.setValue("database/password", m_externalDbPassword);
 
         if (settings.status() == QSettings::NoError)
         {
@@ -244,6 +263,8 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
+    m_bluetoothLimitScanningRange = false;
+    Q_EMIT bluetoothLimitScanningRangeChanged();
     m_bluetoothSimUpdates = 2;
     Q_EMIT bluetoothSimUpdatesChanged();
 
@@ -267,7 +288,13 @@ void SettingsManager::resetSettings()
     Q_EMIT dynaScaleChanged();
     m_orderBy = "model";
     Q_EMIT orderByChanged();
-    m_externalDb = "";
+
+    m_externalDb = false;
+    m_externalDbHost = "";
+    m_externalDbPort = 3306;
+    m_externalDbName = "watchflower";
+    m_externalDbUser = "watchflower";
+    m_externalDbPassword = "watchflower";
     Q_EMIT externalDbChanged();
 }
 
@@ -376,6 +403,15 @@ void SettingsManager::setBluetoothControl(const bool value)
         m_bluetoothControl = value;
         writeSettings();
         Q_EMIT bluetoothControlChanged();
+    }
+}
+void SettingsManager::setBluetoothLimitScanningRange(const bool value)
+{
+    if (m_bluetoothLimitScanningRange != value)
+    {
+        m_bluetoothLimitScanningRange = value;
+        writeSettings();
+        Q_EMIT bluetoothLimitScanningRangeChanged();
     }
 }
 
@@ -489,11 +525,51 @@ void SettingsManager::setOrderBy(const QString &value)
     }
 }
 
-void SettingsManager::setExternalDb(const QString &value)
+void SettingsManager::setExternalDb(const bool value)
 {
     if (m_externalDb != value)
     {
         m_externalDb = value;
+        writeSettings();
+        Q_EMIT externalDbChanged();
+    }
+}
+
+void SettingsManager::setExternalDbHost(const QString &value)
+{
+    if (m_externalDbHost != value)
+    {
+        m_externalDbHost = value;
+        writeSettings();
+        Q_EMIT externalDbChanged();
+    }
+}
+
+void SettingsManager::setExternalDbPort(const int value)
+{
+    if (m_externalDbPort != value)
+    {
+        m_externalDbPort = value;
+        writeSettings();
+        Q_EMIT externalDbChanged();
+    }
+}
+
+void SettingsManager::setExternalDbUser(const QString &value)
+{
+    if (m_externalDbUser != value)
+    {
+        m_externalDbUser = value;
+        writeSettings();
+        Q_EMIT externalDbChanged();
+    }
+}
+
+void SettingsManager::setExternalDbPassword(const QString &value)
+{
+    if (m_externalDbPassword != value)
+    {
+        m_externalDbPassword = value;
         writeSettings();
         Q_EMIT externalDbChanged();
     }

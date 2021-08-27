@@ -56,6 +56,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
     Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
+    Q_PROPERTY(bool bluetoothLimitScanningRange READ getBluetoothLimitScanningRange WRITE setBluetoothLimitScanningRange NOTIFY bluetoothLimitScanningRangeChanged)
     Q_PROPERTY(uint bluetoothSimUpdates READ getBluetoothSimUpdates WRITE setBluetoothSimUpdates NOTIFY bluetoothSimUpdatesChanged)
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
@@ -67,7 +68,11 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
-    Q_PROPERTY(QString externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
+    Q_PROPERTY(bool externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
+    Q_PROPERTY(QString externalDbHost READ getExternalDbHost WRITE setExternalDbHost NOTIFY externalDbChanged)
+    Q_PROPERTY(uint externalDbPort READ getExternalDbPort WRITE setExternalDbPort NOTIFY externalDbChanged)
+    Q_PROPERTY(QString externalDbUser READ getExternalDbUser WRITE setExternalDbUser NOTIFY externalDbChanged)
+    Q_PROPERTY(QString externalDbPassword READ getExternalDbPassword WRITE setExternalDbPassword NOTIFY externalDbChanged)
 
     bool m_firstlaunch = true;
 
@@ -89,6 +94,7 @@ class SettingsManager: public QObject
     bool m_notificationsEnabled = true;
 
     bool m_bluetoothControl = false;
+    bool m_bluetoothLimitScanningRange = true;
     unsigned m_bluetoothSimUpdates = 2;
 
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
@@ -96,13 +102,18 @@ class SettingsManager: public QObject
     QString m_tempUnit = "C";
     QString m_graphHistogram = "monthly";
     QString m_graphThermometer = "minmax";
-    bool m_graphShowDots = false;
+    bool m_graphShowDots = true;
     bool m_bigWidget = false;
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
     QString m_orderBy = "model";
 
-    QString m_externalDb;
+    bool m_externalDb = false;
+    QString m_externalDbHost;
+    int m_externalDbPort = 3306;
+    QString m_externalDbName = "watchflower";
+    QString m_externalDbUser = "watchflower";
+    QString m_externalDbPassword = "watchflower";
 
     // Singleton
     static SettingsManager *instance;
@@ -125,6 +136,7 @@ Q_SIGNALS:
     void notifsChanged();
     void bluetoothControlChanged();
     void bluetoothSimUpdatesChanged();
+    void bluetoothLimitScanningRangeChanged();
     void updateIntervalPlantChanged();
     void updateIntervalThermoChanged();
     void tempUnitChanged();
@@ -173,6 +185,9 @@ public:
     bool getBluetoothControl() const { return m_bluetoothControl; }
     void setBluetoothControl(const bool value);
 
+    bool getBluetoothLimitScanningRange() const { return m_bluetoothLimitScanningRange; }
+    void setBluetoothLimitScanningRange(const bool value);
+
     unsigned getBluetoothSimUpdates() const { return m_bluetoothSimUpdates; }
     void setBluetoothSimUpdates(const unsigned value);
 
@@ -206,8 +221,24 @@ public:
     QString getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);
 
-    QString getExternalDb() const { return m_externalDb; }
-    void setExternalDb(const QString &value);
+    bool getExternalDb() const { return m_externalDb; }
+    void setExternalDb(const bool value);
+
+    QString getExternalDbHost() const { return m_externalDbHost; }
+    void setExternalDbHost(const QString &value);
+
+    int getExternalDbPort() const { return m_externalDbPort; }
+    void setExternalDbPort(const int value);
+
+    QString getExternalDbName() const { return m_externalDbName; }
+    void setExternalDbName(const QString &value);
+
+    QString getExternalDbUser() const { return m_externalDbUser; }
+    void setExternalDbUser(const QString &value);
+
+
+    QString getExternalDbPassword() const { return m_externalDbPassword; }
+    void setExternalDbPassword(const QString &value);
 
     // Utils
     Q_INVOKABLE void resetSettings();

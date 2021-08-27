@@ -172,45 +172,48 @@ bool DatabaseManager::openDatabase_mysql()
 
         SettingsManager *sm = SettingsManager::getInstance();
 
-        QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-        db.setHostName(sm->getExternalDb());
-        db.setPort(3306);
-        db.setDatabaseName("watchflower");
-        db.setUserName("watchflower");
-        db.setPassword("watchflower");
+        if (sm->getExternalDb())
+        {
+            QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+            db.setHostName(sm->getExternalDbHost());
+            db.setPort(sm->getExternalDbPort());
+            db.setDatabaseName(sm->getExternalDbName());
+            db.setUserName(sm->getExternalDbUser());
+            db.setPassword(sm->getExternalDbPassword());
 
-        if (db.isOpen())
-        {
-            m_dbExternalOpen = true;
-        }
-        else
-        {
-            if (db.open())
+            if (db.isOpen())
             {
                 m_dbExternalOpen = true;
-
-                // Migrations ///////////////////////////////////////////////////
-
-                // Must be done before the creation, so we migrate old data tables
-                // instead of creating new empty tables
-
-                migrateDatabase();
-
-                // Check if our tables exists //////////////////////////////////
-
-                createDatabase();
-
-                // Delete everything that's in the future //////////////////////
-
-                // TODO
-
-                // Sanitize database ///////////////////////////////////////////
-
-                // We don't sanetize MySQL databases
             }
             else
             {
-                qWarning() << "Cannot open database... Error:" << db.lastError();
+                if (db.open())
+                {
+                    m_dbExternalOpen = true;
+
+                    // Migrations ///////////////////////////////////////////////////
+
+                    // Must be done before the creation, so we migrate old data tables
+                    // instead of creating new empty tables
+
+                    migrateDatabase();
+
+                    // Check if our tables exists //////////////////////////////////
+
+                    createDatabase();
+
+                    // Delete everything that's in the future //////////////////////
+
+                    // TODO
+
+                    // Sanitize database ///////////////////////////////////////////
+
+                    // We don't sanetize MySQL databases
+                }
+                else
+                {
+                    qWarning() << "Cannot open database... Error:" << db.lastError();
+                }
             }
         }
     }
