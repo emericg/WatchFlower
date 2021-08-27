@@ -12,66 +12,57 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorDeviceHeader
-        height: 80
-        z: 5
-
-        visible: isDesktop
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Text {
-            id: textTitle
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft + 16
-            anchors.top: parent.top
-            anchors.topMargin: 12
-
-            text: qsTr("About")
-            font.bold: true
-            font.pixelSize: Theme.fontSizeTitle
-            color: Theme.colorText
-        }
-
-        Text {
-            id: textSubtitle
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft + 16
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
-
-            text: qsTr("What do you want to know?")
-            color: Theme.colorSubText
-            font.pixelSize: Theme.fontSizeContentBig
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     ScrollView {
-        id: scrollView
+        anchors.fill: parent
         contentWidth: -1
-
-        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
 
         Column {
             anchors.fill: parent
             anchors.leftMargin: screenPaddingLeft + 16
             anchors.rightMargin: screenPaddingRight + 16
 
-            topPadding: 8
+            topPadding: isMobile ? 8 : 0
             bottomPadding: 8
             spacing: 8
+
+            ////////
+
+            Rectangle {
+                id: rectangleHeader
+                anchors.left: parent.left
+                anchors.leftMargin: -(screenPaddingLeft + 16)
+                anchors.right: parent.right
+                anchors.rightMargin: -(screenPaddingRight + 16)
+
+                height: 80
+                visible: isDesktop
+                color: Theme.colorDeviceHeader
+
+                Text {
+                    id: textTitle
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+
+                    text: qsTr("About")
+                    font.bold: true
+                    font.pixelSize: Theme.fontSizeTitle
+                    color: Theme.colorText
+                }
+
+                Text {
+                    id: textSubtitle
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 14
+
+                    text: qsTr("What do you want to know?")
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentBig
+                }
+            }
 
             ////////
 
@@ -134,7 +125,7 @@ Item {
                 spacing: 16
 
                 onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
+                    var ww = (parent.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
                     if (ww > 0) { websiteBtn.width = ww; githubBtn.width = ww; }
                 }
 

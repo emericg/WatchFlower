@@ -19,6 +19,7 @@
         <file>icons_custom/pot_empty-24px.svg</file>
         <file>icons_custom/pot_flower-24px.svg</file>
         <file>icons_custom/thermometer-24px.svg</file>
+        <file>icons_custom/thermometer_big-24px.svg</file>
         <file>icons_custom/indicators-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
@@ -49,16 +50,21 @@
         <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-insert_link-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>
+        <file>icons_material/baseline-manage_accounts-24px.svg</file>
         <file>icons_material/baseline-menu-24px.svg</file>
         <file>icons_material/baseline-more_vert-24px.svg</file>
         <file>icons_material/baseline-near_me-24px.svg</file>
         <file>icons_material/baseline-new_releases-24px.svg</file>
         <file>icons_material/baseline-notifications_none-24px.svg</file>
+        <file>icons_material/baseline-password-24px.svg</file>
+        <file>icons_material/baseline-pin-24px.svg</file>
+        <file>icons_material/baseline-radar-24px.svg</file>
         <file>icons_material/baseline-refresh-24px.svg</file>
-        <file>icons_material/baseline-sort-24px.svg</file>
         <file>icons_material/baseline-search-24px.svg</file>
         <file>icons_material/baseline-settings-20px.svg</file>
+        <file>icons_material/baseline-sort-24px.svg</file>
         <file>icons_material/baseline-stars-24px.svg</file>
+        <file>icons_material/baseline-storage-24px.svg</file>
         <file>icons_material/baseline-straighten-24px.svg</file>
         <file>icons_material/baseline-supervised_user_circle-24px.svg</file>
         <file>icons_material/baseline-support-24px.svg</file>

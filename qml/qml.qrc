@@ -50,18 +50,18 @@
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
         <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
         <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
-        <file alias="RangeSliderValue.qml">components_generic/RangeSliderValue.qml</file>
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
+        <file alias="SliderValueSolid.qml">components_generic/SliderValueSolid.qml</file>
         <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
 
+        <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
+        <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
-        <file alias="SliderThemed.qml">components_themed/SliderThemed.qml</file>
         <file alias="SwitchThemedDesktop.qml">components_themed/SwitchThemed_desktop.qml</file>
         <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
-        <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
-        <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
+        <file alias="TextFieldThemed.qml">components_themed/TextFieldThemed.qml</file>
     </qresource>
 
     <qresource prefix="/js">

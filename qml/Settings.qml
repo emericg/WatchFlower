@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: settingsScreen
@@ -11,77 +12,65 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorDeviceHeader
-        height: 80
-        z: 5
-
-        visible: isDesktop
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Text {
-            id: textTitle
-            anchors.left: parent.left
-            anchors.leftMargin: column.leftPad1
-            anchors.top: parent.top
-            anchors.topMargin: 12
-
-            text: qsTr("Settings")
-            font.bold: true
-            font.pixelSize: Theme.fontSizeTitle
-            color: Theme.colorText
-        }
-
-        Text {
-            id: textSubtitle
-            anchors.left: parent.left
-            anchors.leftMargin: column.leftPad1
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
-
-            text: qsTr("Change persistent settings here!")
-            font.pixelSize: Theme.fontSizeContentBig
-            color: Theme.colorSubText
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     ScrollView {
-        id: scrollView
+        anchors.fill: parent
         contentWidth: -1
 
-        anchors.top: (rectangleHeader.visible) ? rectangleHeader.bottom : parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        ////////////////
 
         Column {
             id: column
             anchors.fill: parent
 
-            topPadding: 12
+            topPadding: isMobile ? 12 : 0
             bottomPadding: 12
             spacing: 8
 
             property int leftPad1: screenPaddingLeft + 16
             property int leftPad2: 24
 
-            ////////
+            Rectangle {
+                id: rectangleHeader
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                height: 80
+                visible: isDesktop
+                color: Theme.colorDeviceHeader
+
+                Text {
+                    id: textTitle
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+
+                    text: qsTr("Settings")
+                    font.bold: true
+                    font.pixelSize: Theme.fontSizeTitle
+                    color: Theme.colorText
+                }
+
+                Text {
+                    id: textSubtitle
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 14
+
+                    text: qsTr("Change persistent settings here!")
+                    font.pixelSize: Theme.fontSizeContentBig
+                    color: Theme.colorSubText
+                }
+            }
+
+            ////////////////
 
             Rectangle {
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                visible: isMobile
                 color: Theme.colorForeground
 
                 ImageSvg {
@@ -111,7 +100,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Item {
                 id: element_theme
@@ -140,7 +129,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Application theme")
+                    text: qsTr("Theme")
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -298,8 +287,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.appThemeAuto
-                    onCheckedChanged: {
+                    checked: settingsManager.appThemeAuto
+                    onClicked: {
                         settingsManager.appThemeAuto = checked
                         Theme.loadTheme(settingsManager.appTheme)
                     }
@@ -314,63 +303,13 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
 
-                visible: (element_appThemeAuto.visible)
+                visible: (element_appThemeAuto.visible && settingsManager.appThemeAuto)
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            Item {
-                id: element_bigwidget
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                visible: isDesktop
-
-                ImageSvg {
-                    id: image_bigwidget
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-format_size-24px.svg"
-                }
-
-                Text {
-                    id: text_bigwidget
-                    height: 40
-                    anchors.left: image_bigwidget.right
-                    anchors.leftMargin: column.leftPad2
-                    anchors.right: switch_bigwidget.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Use bigger widgets")
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SwitchThemedMobile {
-                    id: switch_bigwidget
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    Component.onCompleted: checked = settingsManager.bigWidget
-                    onCheckedChanged: settingsManager.bigWidget = checked
-                }
             }
 
             ////////
@@ -425,13 +364,14 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight + 12
                     anchors.verticalCenter: parent.verticalCenter
+
                     z: 1
+                    wheelEnabled: false
 
                     model: ListModel {
                         id: cbAppLanguage
                         ListElement {
-                            //: Short for automatic
-                            text: qsTr("auto");
+                            text: qsTr("auto", "short for automatic");
                         }
                         ListElement { text: "Chinese (traditional)"; }
                         ListElement { text: "Chinese (simplified)"; }
@@ -520,8 +460,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.bluetoothControl
-                    onCheckedChanged: settingsManager.bluetoothControl = checked
+                    checked: settingsManager.bluetoothControl
+                    onClicked: settingsManager.bluetoothControl = checked
                 }
             }
             Text {
@@ -536,6 +476,71 @@ Item {
                 visible: element_bluetoothControl.visible
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            Item {
+                id: element_bluetoothRange
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                ImageSvg {
+                    id: image_bluetoothRange
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                }
+
+                Text {
+                    id: text_bluetoothRange
+                    height: 40
+                    anchors.left: image_bluetoothRange.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.right: switch_bluetoothRange.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Limit Bluetooth scanning range")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_bluetoothRange
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.bluetoothLimitScanningRange
+                    onClicked: settingsManager.bluetoothLimitScanningRange = checked
+                }
+            }
+            Text {
+                id: legend_bluetoothRange
+                anchors.left: parent.left
+                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 16
+                topPadding: -12
+                bottomPadding: 0
+
+                visible: (element_bluetoothRange.visible && settingsManager.bluetoothLimitScanningRange)
+
+                text: qsTr("Will only scan for sensors ~2m around you.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -563,23 +568,22 @@ Item {
                 }
 
                 Text {
-                    id: text_bluetoothSimUpdate1
+                    id: text_bluetoothSimUpdate
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: column.leftPad2
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: isDesktop
-
-                    text: qsTr("Simultaneous updates") + " (" + settingsManager.bluetoothSimUpdates + ")"
+                    text: qsTr("Simultaneous updates")
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
-                SliderThemed {
+
+                SliderValueSolid {
                     id: slider_bluetoothSimUpdate
-                    anchors.left: text_bluetoothSimUpdate1.right
+                    anchors.left: text_bluetoothSimUpdate.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 12
@@ -591,27 +595,10 @@ Item {
                     from: 1
                     to: 6
                     stepSize: 1
+                    wheelEnabled: false
 
                     value: settingsManager.bluetoothSimUpdates
                     onValueChanged: settingsManager.bluetoothSimUpdates = value
-                }
-
-                Text {
-                    id: text_bluetoothSimUpdate2
-                    height: 40
-                    anchors.left: image_bluetoothSimUpdate.right
-                    anchors.leftMargin: column.leftPad2
-                    anchors.right: spinBox_bluetoothSimUpdate.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: isMobile
-
-                    text: qsTr("Simultaneous updates")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
                 }
                 SpinBoxThemed {
                     id: spinBox_bluetoothSimUpdate
@@ -706,8 +693,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.minimized
-                    onCheckedChanged: settingsManager.minimized = checked
+                    checked: settingsManager.minimized
+                    onClicked: settingsManager.minimized = checked
                 }
             }
 
@@ -757,8 +744,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.systray
-                    onCheckedChanged: settingsManager.systray = checked
+                    checked: settingsManager.systray
+                    onClicked: settingsManager.systray = checked
                 }
             }
             Text {
@@ -770,7 +757,7 @@ Item {
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: (element_worker.visible && isMobile)
+                visible: (element_worker.visible && isMobile && settingsManager.systray)
 
                 text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
                 textFormat: Text.PlainText
@@ -787,7 +774,7 @@ Item {
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: (element_worker.visible && isDesktop)
+                visible: (element_worker.visible && isDesktop && settingsManager.systray)
 
                 text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.")
                 textFormat: Text.PlainText
@@ -842,8 +829,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.notifications
-                    onCheckedChanged: settingsManager.notifications = checked
+                    checked: settingsManager.notifications
+                    onClicked: settingsManager.notifications = checked
                 }
             }
             Text {
@@ -855,7 +842,7 @@ Item {
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: element_notifications.visible
+                visible: (element_notifications.visible && settingsManager.notifications)
 
                 text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
                 textFormat: Text.PlainText
@@ -864,7 +851,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
             }
 
-            ////////
+            ////////////////
 
             Rectangle {
                 height: 48
@@ -899,7 +886,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Item {
                 id: element_update
@@ -944,11 +931,12 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    legend: qsTr(" h.")
+                    legend: " " + qsTr("h.", "short for hours")
                     from: 1
                     to: 12
                     stepSize: 1
                     editable: false
+                    wheelEnabled: isDesktop
 
                     value: (settingsManager.updateIntervalPlant / 60)
                     onValueChanged: settingsManager.updateIntervalPlant = (value * 60)
@@ -984,7 +972,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Data indicators")
+                    text: qsTr("Data indicators style")
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1057,60 +1045,12 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    Component.onCompleted: checked = settingsManager.dynaScale
-                    onCheckedChanged: settingsManager.dynaScale = checked
+                    checked: settingsManager.dynaScale
+                    onClicked: settingsManager.dynaScale = checked
                 }
             }
 
-            ////////
-
-            Item {
-                id: element_showdots
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                ImageSvg {
-                    id: image_showdots
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
-                }
-
-                Text {
-                    id: text_showdots
-                    height: 40
-                    anchors.left: image_showdots.right
-                    anchors.leftMargin: column.leftPad2
-                    anchors.right: switch_showdots.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Show graph dots")
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SwitchThemedMobile {
-                    id: switch_showdots
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    Component.onCompleted: checked = settingsManager.graphShowDots
-                    onCheckedChanged: settingsManager.graphShowDots = checked
-                }
-            }
-
-            ////////
+            ////////////////
 
             Rectangle {
                 height: 48
@@ -1127,7 +1067,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
+                    source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
 
                 Text {
@@ -1145,7 +1085,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Item {
                 id: element_thermometer_update
@@ -1190,11 +1130,12 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    legend: qsTr(" h.")
+                    legend: " " + qsTr("h.", "short for hours")
                     from: 1
                     to: 12
                     stepSize: 1
                     editable: false
+                    wheelEnabled: isDesktop
 
                     value: (settingsManager.updateIntervalThermo / 60)
                     onValueChanged: settingsManager.updateIntervalThermo = (value * 60)
@@ -1284,16 +1225,103 @@ Item {
                 }
             }
 
+            ////////////////
+/*
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 48
+
+                visible: isDesktop
+                color: Theme.colorForeground
+
+                ImageSvg {
+                    id: image_database
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                }
+
+                Text {
+                    id: text_database
+                    anchors.left: image_database.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("External database")
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedMobile {
+                    id: switch_database_enabled
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.externalDb
+                    onClicked: settingsManager.externalDb = checked
+                }
+            }
+
+            ////////////////
+
+            Item {
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad2
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 16
+                height: UtilsNumber.alignTo(legend_database.contentHeight, 16)
+
+                visible: isDesktop
+
+                Text {
+                    id: legend_database
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Connects to a remote MySQL database, instead of the embedded database. Allows multiple instances of the application to share data. Setup is at your own charge.")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    verticalAlignment: Text.AlignBottom
+                }
+            }
+
             ////////
+
+            Loader {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                asynchronous: true
+                Component.onCompleted: {
+                    if (isDesktop) {
+                        sourceComponent = wideMode ? dbSettingsDesktop : dbSettingsMobile
+                    }
+                }
+            }
+*/
+            ////////////////
 
             Rectangle {
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                color: Theme.colorForeground
-
                 visible: deviceManager.hasDevices
+                color: Theme.colorForeground
 
                 ImageSvg {
                     id: image_export
@@ -1323,7 +1351,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Column {
                 anchors.left: parent.left
@@ -1363,10 +1391,12 @@ Item {
                 }
             }
 
+            ////////
+
             Row {
                 id: element_export
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: 40 + column.leftPad2
                 anchors.right: parent.right
                 height: 48
                 spacing: 16
@@ -1429,6 +1459,335 @@ Item {
                         var file = deviceManager.exportDataOpen()
                         utilsShare.sendFile(file, "Send file", "text/csv", 0)
                     }
+                }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Component {
+        id: dbSettingsDesktop
+
+        Column {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            spacing: 8
+            bottomPadding: 8
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad2
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 12
+
+                height: 36
+                spacing: 8
+
+                TextFieldThemed {
+                    id: tf_database_host
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Math.min((parent.width / 2), 512) - 4
+                    height: 36
+
+                    placeholderText: qsTr("Host")
+                    text: settingsManager.externalDbHost
+                    onEditingFinished: settingsManager.externalDbHost = text
+                    selectByMouse: true
+
+                    ImageSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    }
+                }
+
+                TextFieldThemed {
+                    id: tf_database_port
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Math.min((parent.width / 2), 512) - 4
+                    height: 36
+
+                    placeholderText: qsTr("Port")
+                    text: settingsManager.externalDbPort
+                    onEditingFinished: settingsManager.externalDbPort = text
+                    validator: IntValidator { bottom: 1; top: 65535; }
+                    selectByMouse: true
+
+                    ImageSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
+                    }
+                }
+            }
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 40 + column.leftPad2
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 12
+
+                height: 36
+                spacing: 8
+
+                TextFieldThemed {
+                    id: tf_database_user
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Math.min((parent.width / 2), 512) - 4
+                    height: 36
+
+                    placeholderText: qsTr("User")
+                    text: settingsManager.externalDbUser
+                    onEditingFinished: settingsManager.externalDbUser = text
+                    selectByMouse: true
+
+                    ImageSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-manage_accounts-24px.svg"
+                    }
+                }
+
+                TextFieldThemed {
+                    id: tf_database_pwd
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Math.min((parent.width / 2), 512) - 4
+                    height: 36
+
+                    placeholderText: qsTr("Password")
+                    text: settingsManager.externalDbPassword
+                    onEditingFinished: settingsManager.externalDbPassword = text
+                    selectByMouse: true
+                    echoMode: TextInput.PasswordEchoOnEdit
+
+                    ImageSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-password-24px.svg"
+                    }
+                }
+            }
+        }
+    }
+
+    ////////
+
+    Component {
+        id: dbSettingsMobile
+
+        Column {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            Item {
+                id: element_database_host
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 48
+
+                ImageSvg {
+                    id: image_database_host
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                }
+
+                Text {
+                    id: text_database_host
+                    height: 40
+                    anchors.left: image_database_host.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.right: switch_database_host.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Host")
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                TextFieldThemed {
+                    id: tf_database_host
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 256
+                    height: 36
+
+                    placeholderText: qsTr("Host")
+                    text: settingsManager.externalDbHost
+                    onEditingFinished: settingsManager.externalDbHost = text
+                }
+            }
+
+            Item {
+                id: element_database_port
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 48
+
+                ImageSvg {
+                    id: image_database_port
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
+                }
+
+                Text {
+                    id: text_database_port
+                    height: 40
+                    anchors.left: image_database_port.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.right: switch_database_port.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Port")
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                TextFieldThemed {
+                    id: tf_database_port
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 256
+                    height: 36
+
+                    placeholderText: qsTr("Port")
+                    text: settingsManager.externalDbPort
+                    onEditingFinished: settingsManager.externalDbPort = text
+                }
+            }
+
+            Item {
+                id: element_database_user
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 48
+
+                ImageSvg {
+                    id: image_database_user
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-manage_accounts-24px.svg"
+                }
+
+                Text {
+                    id: text_database_user
+                    height: 40
+                    anchors.left: image_database_user.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.right: switch_database_user.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("User")
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                TextFieldThemed {
+                    id: tf_database_user
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 256
+                    height: 36
+
+                    placeholderText: qsTr("User")
+                    text: settingsManager.externalDbUser
+                    onEditingFinished: settingsManager.externalDbUser = text
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_database_pwd
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 48
+
+                ImageSvg {
+                    id: image_database_pwd
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: column.leftPad1
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-password-24px.svg"
+                }
+
+                Text {
+                    id: text_database_pwd
+                    height: 40
+                    anchors.left: image_database_pwd.right
+                    anchors.leftMargin: column.leftPad2
+                    anchors.right: switch_database_pwd.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Password")
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                TextFieldThemed {
+                    id: tf_database_pwd
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 256
+                    height: 36
+
+                    text: settingsManager.externalDbPassword
+                    onEditingFinished: settingsManager.externalDbPassword = text
+                    echoMode: TextInput.PasswordEchoOnEdit
                 }
             }
         }
