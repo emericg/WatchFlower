@@ -405,7 +405,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: !deviceManager.refreshing
+            enabled: !deviceManager.updating
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -433,7 +433,7 @@ Rectangle {
             tooltipText: text
 
             animation: "rotate"
-            animationRunning: deviceManager.refreshing
+            animationRunning: deviceManager.updating
         }
 
         ////////////

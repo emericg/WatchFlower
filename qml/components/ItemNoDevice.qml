@@ -16,7 +16,7 @@ Item {
 
         ImageSvg {
             id: imageSearch
-            width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -28,7 +28,7 @@ Item {
                 id: rescanAnimation
                 loops: Animation.Infinite
                 running: deviceManager.scanning
-                onStopped: imageSearch.opacity = 1
+                alwaysRunToEnd: true
 
                 PropertyAnimation { to: 0.33; duration: 750; }
                 PropertyAnimation { to: 1; duration: 750; }

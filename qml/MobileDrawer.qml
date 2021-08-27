@@ -367,7 +367,7 @@ Drawer {
                         anchors.fill: parent
                         onClicked: {
                             if (!deviceManager.scanning) {
-                                if (deviceManager.refreshing) {
+                                if (deviceManager.updating) {
                                     deviceManager.refreshDevices_stop()
                                 } else {
                                     deviceManager.refreshDevices_start()
@@ -394,7 +394,7 @@ Drawer {
                             from: 0
                             to: 360
                             loops: Animation.Infinite
-                            running: deviceManager.refreshing
+                            running: deviceManager.updating
                             alwaysRunToEnd: true
                             easing.type: Easing.Linear
                         }
@@ -419,12 +419,12 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: deviceManager.bluetooth && !deviceManager.refreshing
+                    enabled: deviceManager.bluetooth && !deviceManager.updating
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (!deviceManager.scanning && !deviceManager.refreshing) {
+                            if (!deviceManager.scanning && !deviceManager.updating) {
                                 deviceManager.scanDevices()
                                 appDrawer.close()
                             }

@@ -126,7 +126,9 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         }
         if (role == DeviceModelRole)
         {
-            if (device->getName() == "Flower care" || device->getName() == "Flower mate" || device->getName() == "Grow care garden") {
+            if (device->getName() == "Flower care" ||
+                device->getName() == "Flower mate" ||
+                device->getName() == "Grow care garden") { // plant sensors
                 return "a";
             } else if (device->getName() == "Flower power") {
                 return "b";
@@ -136,7 +138,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "d";
             } else if (device->getName() == "HiGrow") {
                 return "e";
-            } else if (device->getName() == "ThermoBeacon") {
+            } else if (device->getName() == "ThermoBeacon") { // thermometers
                 return "f";
             } else if (device->getName() == "MJ_HT_V1") {
                 return "g";
@@ -152,7 +154,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "k";
             } else if (device->getName() == "MHO-C401") {
                 return "l";
-            } else if (device->getName() == "AirQualityMonitor") {
+            } else if (device->getName() == "AirQualityMonitor") { // other sensors
                 return "m";
             } else if (device->getName().startsWith("6003#")) {
                 return "n";
@@ -174,14 +176,14 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         if (role == AssociatedLocationRole)
         {
             if (device->getLocationName().isEmpty())
-                return  "zzz";
+                return "zzz";
             else
                 return device->getLocationName().toLower();
         }
         if (role == AssociatedNameRole)
         {
             if (device->getAssociatedName().isEmpty())
-                return  "zzz";
+                return "zzz";
             else
                 return device->getAssociatedName();
         }
@@ -189,7 +191,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         if (role == PlantNameRole)
         {
             if (device->getAssociatedName().isEmpty())
-                return  "zzz";
+                return "zzz";
             else
                 return device->getAssociatedName();
         }

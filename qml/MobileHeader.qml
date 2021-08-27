@@ -129,7 +129,7 @@ Rectangle {
                         duration: 2000
                         loops: Animation.Infinite
                         easing.type: Easing.Linear
-                        running: deviceManager.refreshing
+                        running: deviceManager.updating
                         alwaysRunToEnd: true
                         onStarted: workingIndicator.opacity = 1
                         onStopped: workingIndicator.opacity = 0

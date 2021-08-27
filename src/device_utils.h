@@ -322,17 +322,17 @@ public slots:
     int getHour() { return datetime.time().hour(); }
     QDateTime getDateTime() { return datetime; }
 
-    float getVocMin() { return  vocMin; }
+    float getVocMin() { return vocMin; }
     float getVocMean() { return vocMean; }
-    float getVocMax() { return  vocMax; }
+    float getVocMax() { return vocMax; }
 
-    float getHchoMin() { return  hchoMin; }
+    float getHchoMin() { return hchoMin; }
     float getHchoMean() { return hchoMean; }
-    float getHchoMax() { return  hchoMax; }
+    float getHchoMax() { return hchoMax; }
 
-    float getCo2Min() { return  co2Min; }
+    float getCo2Min() { return co2Min; }
     float getCo2Mean() { return co2Mean; }
-    float getCo2Max() { return  co2Max; }
+    float getCo2Max() { return co2Max; }
 };
 
 /* ************************************************************************** */

@@ -16,7 +16,7 @@ Item {
         spacing: 16
 
         ImageSvg {
-            width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 

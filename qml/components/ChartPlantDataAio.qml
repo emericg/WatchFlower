@@ -338,28 +338,28 @@ Item {
             State {
                 name: "reanchoredmid"
                 AnchorChanges {
-                    target: indicators;
-                    anchors.right: undefined;
-                    anchors.left: undefined;
-                    anchors.horizontalCenter: parent.horizontalCenter;
+                    target: indicators
+                    anchors.right: undefined
+                    anchors.left: undefined
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             },
             State {
                 name: "reanchoredleft"
                 AnchorChanges {
-                    target: indicators;
-                    anchors.horizontalCenter: undefined;
-                    anchors.right: undefined;
-                    anchors.left: verticalIndicator.right;
+                    target: indicators
+                    anchors.horizontalCenter: undefined
+                    anchors.right: undefined
+                    anchors.left: verticalIndicator.right
                 }
             },
             State {
                 name: "reanchoredright"
                 AnchorChanges {
-                    target: indicators;
-                    anchors.horizontalCenter: undefined;
-                    anchors.left: undefined;
-                    anchors.right: verticalIndicator.right;
+                    target: indicators
+                    anchors.horizontalCenter: undefined
+                    anchors.left: undefined
+                    anchors.right: verticalIndicator.right
                 }
             }
         ]

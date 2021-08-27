@@ -53,7 +53,6 @@ class DeviceManager: public QObject
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
-    Q_PROPERTY(bool refreshing READ isUpdating NOTIFY updatingChanged) // legacy
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)

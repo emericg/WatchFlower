@@ -118,12 +118,12 @@ ApplicationWindow {
             }
         }
         onRefreshButtonClicked: {
-            if (!deviceManager.scanning && !deviceManager.refreshing) {
+            if (!deviceManager.scanning && !deviceManager.updating) {
                 deviceManager.refreshDevices_start()
             }
         }
         onRescanButtonClicked: {
-            if (!deviceManager.scanning && !deviceManager.refreshing) {
+            if (!deviceManager.scanning && !deviceManager.updating) {
                 deviceManager.scanDevices()
             }
         }
@@ -151,7 +151,7 @@ ApplicationWindow {
                 // Check Bluetooth anyway (on macOS)
                 //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
 
-                // Needs to check if a refresh could be usefull
+                // Needs to check if a refresh could be useful
                 deviceManager.refreshDevices_check();
 
                 break;

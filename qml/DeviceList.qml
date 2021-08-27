@@ -233,7 +233,7 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
 
                     animation: "rotate"
-                    animationRunning: deviceManager.refreshing
+                    animationRunning: deviceManager.updating
                 }
 
                 ButtonCompactable {
@@ -260,13 +260,13 @@ Item {
         id: devicesView
 
         anchors.top: rowbar.bottom
-        anchors.topMargin: singleColumn ? 2 : 9
+        anchors.topMargin: singleColumn ? 0 : 8
         anchors.left: screenDeviceList.left
         anchors.leftMargin: 6
         anchors.right: screenDeviceList.right
         anchors.rightMargin: 6
         anchors.bottom: screenDeviceList.bottom
-        anchors.bottomMargin: 9
+        anchors.bottomMargin: singleColumn ? 0 : 8
 
         property bool singleColumn: true
         property bool bigWidget: (!isHdpi || (isTablet && width >= 480))

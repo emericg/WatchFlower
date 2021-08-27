@@ -633,7 +633,7 @@ void DeviceManager::refreshDevices_start()
 {
     //qDebug() << "DeviceManager::refreshDevices_start()";
 
-    // Already refreshing?
+    // Already updating?
     if (isUpdating())
     {
         // Here we can:             // > do nothing, and queue another refresh
@@ -672,7 +672,7 @@ void DeviceManager::refreshDevices_check()
 {
     //qDebug() << "DeviceManager::refreshDevices_check()";
 
-    // Already refreshing?
+    // Already updating?
     if (isUpdating())
     {
         // Here we can:             // > do nothing, and queue another refresh
