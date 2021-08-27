@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -14,58 +10,6 @@
    id="svg6"
    sodipodi:docname="duotone-local_drink-24px.svg"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
-  <metadata
-     id="metadata12">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1834"
-     inkscape:window-height="1238"
-     id="namedview8"
-     showgrid="false"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-bbox="true"
-     inkscape:bbox-nodes="true"
-     inkscape:snap-bbox-edge-midpoints="true"
-     inkscape:bbox-paths="true"
-     inkscape:zoom="30.763733"
-     inkscape:cx="7.6496214"
-     inkscape:cy="12.271933"
-     inkscape:window-x="1143"
-     inkscape:window-y="9"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg6">
-    <sodipodi:guide
-       position="3.7626187,3.7608434"
-       orientation="0,-1"
-       id="guide883" />
-    <sodipodi:guide
-       position="6.9874634,2"
-       orientation="1,0"
-       id="guide885" />
-    <sodipodi:guide
-       position="16.974479,2"
-       orientation="1,0"
-       id="guide887" />
-  </sodipodi:namedview>
   <path
      d="M 3,2 5.01,20.23 C 5.13,21.23 5.97,22 7,22 h 10 c 1.03,0 1.87,-0.77 1.99,-1.77 L 21,2 Z M 16.974479,20.239157 H 6.9874634 L 5.23,4 h 13.53 z"
      id="path4"

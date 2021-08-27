@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -14,63 +10,6 @@
    viewBox="0 0 24 24"
    height="24"
    width="24">
-  <metadata
-     id="metadata12">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     inkscape:current-layer="svg6"
-     inkscape:window-maximized="0"
-     inkscape:window-y="0"
-     inkscape:window-x="1720"
-     inkscape:cy="13.865478"
-     inkscape:cx="12.928251"
-     inkscape:zoom="35.512159"
-     inkscape:guide-bbox="true"
-     showguides="true"
-     showgrid="false"
-     id="namedview8"
-     inkscape:window-height="1355"
-     inkscape:window-width="1720"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0"
-     guidetolerance="10"
-     gridtolerance="10"
-     objecttolerance="10"
-     borderopacity="1"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     inkscape:document-rotation="0">
-    <sodipodi:guide
-       id="guide840"
-       orientation="1,0"
-       position="14.927177,7.6401055" />
-    <sodipodi:guide
-       id="guide842"
-       orientation="1,0"
-       position="9.05,15.52" />
-    <sodipodi:guide
-       id="guide844"
-       orientation="0,-1"
-       position="5.7784744,10.601126" />
-    <sodipodi:guide
-       position="6.19,16.04"
-       orientation="1,0"
-       id="guide835" />
-    <sodipodi:guide
-       position="17.81,16.04"
-       orientation="1,0"
-       id="guide837" />
-  </sodipodi:namedview>
   <path
      id="path2"
      d="m 0,1.1 h 24 v 24 H 0 Z"
