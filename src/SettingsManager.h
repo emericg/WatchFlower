@@ -65,7 +65,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString graphHistory READ getGraphHistogram WRITE setGraphHistogram NOTIFY graphHistogramChanged)
     Q_PROPERTY(QString graphThermometer READ getGraphThermometer WRITE setGraphThermometer NOTIFY graphThermometerChanged)
     Q_PROPERTY(bool graphShowDots READ getGraphShowDots WRITE setGraphShowDots NOTIFY graphShowDotsChanged)
-    Q_PROPERTY(bool bigWidget READ getBigWidget WRITE setBigWidget NOTIFY bigWidgetChanged)
+    Q_PROPERTY(bool compactView READ getCompactView WRITE setCompactView NOTIFY compactViewChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
     Q_PROPERTY(bool externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
@@ -103,7 +103,7 @@ class SettingsManager: public QObject
     QString m_graphHistogram = "monthly";
     QString m_graphThermometer = "minmax";
     bool m_graphShowDots = true;
-    bool m_bigWidget = false;
+    bool m_compactView = true;
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
     QString m_orderBy = "model";
@@ -143,7 +143,7 @@ Q_SIGNALS:
     void graphHistogramChanged();
     void graphThermometerChanged();
     void graphShowDotsChanged();
-    void bigWidgetChanged();
+    void compactViewChanged();
     void bigIndicatorChanged();
     void dynaScaleChanged();
     void orderByChanged();
@@ -209,8 +209,8 @@ public:
     bool getGraphShowDots() const { return m_graphShowDots; }
     void setGraphShowDots(const bool value);
 
-    bool getBigWidget() const { return m_bigWidget; }
-    void setBigWidget(const bool value);
+    bool getCompactView() const { return m_compactView; }
+    void setCompactView(const bool value);
 
     bool getBigIndicator() const { return m_bigIndicator; }
     void setBigIndicator(const bool value);

@@ -141,8 +141,17 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/graphShowDots"))
             m_graphShowDots = settings.value("settings/graphShowDots").toBool();
 
-        if (settings.contains("settings/bigWidget"))
-            m_bigWidget = settings.value("settings/bigWidget").toBool();
+        if (settings.contains("settings/compactView"))
+            m_compactView = settings.value("settings/compactView").toBool();
+        else
+        {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+            // these platforms have HiDPI screens
+            m_compactView = true;
+#else
+            m_compactView = false;
+#endif
+        }
 
         if (settings.contains("settings/bigIndicator"))
             m_bigIndicator = settings.value("settings/bigIndicator").toBool();
@@ -205,8 +214,8 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/graphHistory", m_graphHistogram);
         settings.setValue("settings/graphThermometer", m_graphThermometer);
         settings.setValue("settings/graphShowDots", m_graphShowDots);
-        settings.setValue("settings/bigWidget", m_bigWidget);
         settings.setValue("settings/bigIndicator", m_bigIndicator);
+        settings.setValue("settings/compactView", m_compactView);
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/orderBy", m_orderBy);
@@ -274,14 +283,22 @@ void SettingsManager::resetSettings()
     else
         m_tempUnit = "F";
     Q_EMIT tempUnitChanged();
+
     m_graphHistogram = "monthly";
     Q_EMIT graphHistogramChanged();
     m_graphThermometer = "minmax";
     Q_EMIT graphThermometerChanged();
     m_graphShowDots = false;
     Q_EMIT graphShowDotsChanged();
-    m_bigWidget = false;
-    Q_EMIT bigWidgetChanged();
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_MACOS)
+    // these platforms have HiDPI screens
+    m_compactView = true;
+#else
+    m_compactView = false;
+#endif
+    Q_EMIT compactViewChanged();
+
     m_bigIndicator = false;
     Q_EMIT bigIndicatorChanged();
     m_dynaScale = false;
@@ -485,13 +502,13 @@ void SettingsManager::setGraphShowDots(const bool value)
     }
 }
 
-void SettingsManager::setBigWidget(const bool value)
+void SettingsManager::setCompactView(const bool value)
 {
-    if (m_bigWidget != value)
+    if (m_compactView != value)
     {
-        m_bigWidget = value;
+        m_compactView = value;
         writeSettings();
-        Q_EMIT bigWidgetChanged();
+        Q_EMIT compactViewChanged();
     }
 }
 

@@ -368,7 +368,7 @@ Item {
             id: dateIndicator
 
             visible: false
-            font.pixelSize: (settingsManager.bigWidget || isMobile) ? 15 : 14
+            font.pixelSize: 15
             font.bold: true
             color: Theme.colorSubText
 
@@ -390,7 +390,7 @@ Item {
             id: dataIndicator
 
             visible: false
-            font.pixelSize: (settingsManager.bigWidget || isMobile) ? 15 : 14
+            font.pixelSize: 15
             font.bold: true
             color: Theme.colorSubText
 

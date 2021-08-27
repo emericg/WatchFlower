@@ -269,7 +269,7 @@ Item {
         anchors.bottomMargin: 9
 
         property bool singleColumn: true
-        property bool bigWidget: settingsManager.bigWidget || (isTablet && width >= 480)
+        property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
         property int boxHeight: bigWidget ? 144 : 100
 
         property int cellSizeTarget: bigWidget ? 440 : 320
