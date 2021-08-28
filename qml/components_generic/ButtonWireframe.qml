@@ -6,7 +6,7 @@ import ThemeEngine 1.0
 
 Button {
     id: control
-    implicitWidth: contentText.width + 24
+    implicitWidth: contentTextInvisible.contentWidth + 24
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
@@ -106,9 +106,16 @@ Button {
 
     contentItem: Item {
         Text {
+            id: contentTextInvisible
+            // this one is just used for size reference
+            text: control.text
+            textFormat: Text.PlainText
+            font: control.font
+            visible: false
+        }
+        Text {
             id: contentText
-            height: parent.height
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.fill: parent
 
             text: control.text
             textFormat: Text.PlainText
@@ -117,7 +124,9 @@ Button {
             color: fullColor ? fulltextColor : control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
+
+            //elide: Text.ElideMiddle
+            wrapMode: Text.WordWrap
         }
     }
 }

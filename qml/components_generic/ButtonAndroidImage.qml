@@ -12,7 +12,7 @@ Button {
 
     focusPolicy: Qt.NoFocus
 
-    property url source: ""
+    property string source: ""
     property int imgSize: 26
 
     property string primaryColor: Theme.colorPrimary
