@@ -224,7 +224,7 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="351"/>
         <source>Order by:</source>
-        <translation>Classer par :</translation>
+        <translation type="unfinished">Classé par :</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="353"/>

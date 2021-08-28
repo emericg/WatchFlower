@@ -15,20 +15,23 @@ Button {
 
     focusPolicy: Qt.NoFocus
 
+    // actions
     signal clicked()
     signal pressed()
     signal pressAndHold()
 
+    // settings
     property alias source: contentImage.source
+    property bool sourceRightToLeft: false
     property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
 
+    // colors
     property bool fullColor: false
     property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorComponentBackground
 
-    property bool sourceRightToLeft: false
-
+    // animation
     property bool hoverAnimation: isDesktop
 
     ////////////////////////////////////////////////////////////////////////////

@@ -3,35 +3,45 @@ import QtQuick 2.12
 import ThemeEngine 1.0
 
 Item {
-    id: itemMenuButton
+    id: control
     implicitWidth: 64
     implicitHeight: 64
 
     width: 16 + imgSize * 1.5 + contentText.contentWidth + 16
     //height: parent.height
 
-    property int imgSize: 32
-
+    // actions
     signal clicked()
+    signal pressed()
+    signal pressAndHold()
+
+    // states
+    property bool hovered: false
     property bool selected: false
-    property bool highlighted: false
 
-    property string colorBackground: Theme.colorForeground
-    property string colorHighlight: Theme.colorBackground
-    property string colorContent: Theme.colorHeaderContent
-
+    // settings
+    property int imgSize: 32
+    property url source: ""
+    property string menuText: ""
     property string highlightMode: "background" // available: background & text
 
-    property string menuText: ""
-    property url source: ""
+    // colors
+    property string colorContent: Theme.colorHeaderContent
+    property string colorHighlight: Theme.colorBackground
+    property string colorBackground: Theme.colorForeground
+
+    ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
         anchors.fill: parent
-        onClicked: itemMenuButton.clicked()
-
         hoverEnabled: true
-        onEntered: itemMenuButton.highlighted = true
-        onExited: itemMenuButton.highlighted = false
+
+        onClicked: control.clicked()
+        onPressed: control.pressed()
+        onPressAndHold: control.pressAndHold()
+
+        onEntered: hovered = true
+        onExited: hovered = false
     }
 
     Rectangle {
@@ -39,7 +49,7 @@ Item {
         anchors.fill: parent
 
         visible: (selected && highlightMode === "background")
-        color: itemMenuButton.colorBackground
+        color: control.colorBackground
     }
     Rectangle {
         id: bgFocus
@@ -47,9 +57,11 @@ Item {
 
         visible: (highlightMode === "background")
         color: colorHighlight
-        opacity: highlighted ? 0.5 : 0
+        opacity: hovered ? 0.5 : 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     ImageSvg {
         id: contentImage
@@ -57,11 +69,11 @@ Item {
         height: imgSize
         anchors.left: parent.left
         anchors.leftMargin: 16
-        anchors.verticalCenter: itemMenuButton.verticalCenter
+        anchors.verticalCenter: control.verticalCenter
 
-        source: itemMenuButton.source
-        color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
-        opacity: itemMenuButton.enabled ? 1.0 : 0.33
+        source: control.source
+        color: (!selected && highlightMode === "text") ? control.colorBackground : control.colorContent
+        opacity: control.enabled ? 1.0 : 0.33
     }
 
     Text {
@@ -69,12 +81,12 @@ Item {
         height: parent.height
         anchors.left: contentImage.right
         anchors.leftMargin: (imgSize / 3)
-        anchors.verticalCenter: itemMenuButton.verticalCenter
+        anchors.verticalCenter: control.verticalCenter
 
         text: menuText
         font.pixelSize: Theme.fontSizeComponent
         font.bold: true
-        color: (!selected && highlightMode === "text") ? itemMenuButton.colorBackground : itemMenuButton.colorContent
+        color: (!selected && highlightMode === "text") ? control.colorBackground : control.colorContent
         verticalAlignment: Text.AlignVCenter
     }
 }

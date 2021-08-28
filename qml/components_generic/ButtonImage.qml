@@ -6,7 +6,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Button {
     id: control
-    width: contentText.width + imgSize*3
+    implicitWidth: contentText.width + imgSize*3
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent

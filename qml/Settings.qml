@@ -46,7 +46,7 @@ Item {
                     anchors.topMargin: 12
 
                     text: qsTr("Settings")
-                    font.bold: true
+                    font.bold: false
                     font.pixelSize: Theme.fontSizeTitle
                     color: Theme.colorText
                 }
@@ -183,7 +183,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             visible: wideWideMode
-                            text: qsTr("green")
+                            text: qsTr("plant")
                             color: "white"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall

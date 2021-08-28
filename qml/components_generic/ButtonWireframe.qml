@@ -14,15 +14,18 @@ Button {
 
     focusPolicy: Qt.NoFocus
 
+    // actions
     signal clicked()
     signal pressed()
     signal pressAndHold()
 
+    // colors
     property bool fullColor: false
     property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorComponentBackground
 
+    // animation
     property bool hoverAnimation: isDesktop
 
     ////////////////////////////////////////////////////////////////////////////

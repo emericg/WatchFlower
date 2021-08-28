@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.12
 
 Item {
     enum ThemeNames {
-        THEME_GREEN = 0,
+        THEME_PLANT = 0,
         THEME_DAY = 1,
         THEME_NIGHT = 2,
         THEME_SNOW = 3,
@@ -116,17 +116,18 @@ Item {
     function loadTheme(themeIndex) {
         //console.log("ThemeEngine.loadTheme(" + themeIndex + ")")
 
-        if (themeIndex === "green") themeIndex = ThemeEngine.THEME_GREEN
+        if (themeIndex === "snow") themeIndex = ThemeEngine.THEME_SNOW
+        if (themeIndex === "green") themeIndex = ThemeEngine.THEME_PLANT // legacy
+        if (themeIndex === "plant") themeIndex = ThemeEngine.THEME_PLANT
         if (themeIndex === "day") themeIndex = ThemeEngine.THEME_DAY
         if (themeIndex === "night") themeIndex = ThemeEngine.THEME_NIGHT
-        if (themeIndex === "snow") themeIndex = ThemeEngine.THEME_SNOW
-        if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
+        if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = ThemeEngine.THEME_PLANT // default
 
         if (settingsManager.appThemeAuto) {
-            var rightnow = new Date();
-            var hour = Qt.formatDateTime(rightnow, "hh");
+            var rightnow = new Date()
+            var hour = Qt.formatDateTime(rightnow, "hh")
             if (hour >= 21 || hour <= 8) {
-                themeIndex = ThemeEngine.THEME_NIGHT;
+                themeIndex = ThemeEngine.THEME_NIGHT
             }
         }
 
@@ -185,7 +186,7 @@ Item {
             colorComponentDown = "#DADADA"
             colorComponentBackground = "#FAFAFA"
 
-        } else if (themeIndex === ThemeEngine.THEME_GREEN) {
+        } else if (themeIndex === ThemeEngine.THEME_PLANT) {
 
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
@@ -200,9 +201,9 @@ Item {
             colorHeaderContent = "white"
             colorHeaderHighlight = "#009688"
 
-            colorActionbar = colorYellow
+            colorActionbar = "#00b5c4"
             colorActionbarContent = "white"
-            colorActionbarHighlight = "#ff8b5a"
+            colorActionbarHighlight = "#069fac"
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"

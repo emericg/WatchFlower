@@ -1066,6 +1066,7 @@ Item {
                         ImageSvg {
                             id: insideImage
                             width: 48; height: 48;
+                            anchors.horizontalCenter: parent.horizontalCenter
                             color: Theme.colorText
                             source: "qrc:/assets/icons_custom/inside-24px.svg"
                         }
@@ -1106,6 +1107,7 @@ Item {
                         ImageSvg {
                             id: outsideImage
                             width: 48; height: 48;
+                            anchors.horizontalCenter: parent.horizontalCenter
                             source: "qrc:/assets/icons_custom/outside-24px.svg"
                             color: Theme.colorText
                         }

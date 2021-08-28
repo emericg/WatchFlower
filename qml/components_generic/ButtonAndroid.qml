@@ -33,8 +33,11 @@ Button {
                 mouseBackground.width = mmmm.width*2
                 mouseBackground.opacity = 0.1
             }
-
             onReleased: {
+                mouseBackground.width = 0
+                mouseBackground.opacity = 0
+            }
+            onCanceled: {
                 mouseBackground.width = 0
                 mouseBackground.opacity = 0
             }

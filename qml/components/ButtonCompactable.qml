@@ -11,22 +11,24 @@ Item {
 
     width: compact ? height : (contentRow.width + 12 + ((source && !text) ? 0 : 16))
 
+    // actions
     signal clicked()
     signal pressed()
-    signal longPressed()
+    signal pressAndHold()
 
+    // settings
     property bool compact: true
-
-    property alias source: contentImage.source
     property alias text: contentText.text
-
+    property alias source: contentImage.source
     property int iconSize: UtilsNumber.alignTo(height * 0.666, 2)
+
+    // colors
     property string iconColor: Theme.colorIcon
     property string backgroundColor: Theme.colorComponent
 
     // animation
-    property var animation: "" // rotate / fade
-    property var animationRunning: false
+    property string animation: "" // available: rotate, fade
+    property bool animationRunning: false
 
     // hover animation
     property bool hovered: false
@@ -52,7 +54,11 @@ Item {
             anchors.fill: parent
 
             onClicked: buttonCompactable.clicked()
-            onPressed: mouseBackground.width = bgRect.width*2
+            onPressAndHold: buttonCompactable.pressAndHold()
+            onPressed: {
+                buttonCompactable.pressed()
+                mouseBackground.width = bgRect.width*2
+            }
 
             hoverEnabled: isDesktop
             onEntered: {

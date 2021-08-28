@@ -38,7 +38,7 @@ Item {
             arcBegin: 0
             arcEnd: ((limitMin/valueMax) * 270) - 2
             arcOffset: 225
-            arcColor: (Theme.currentTheme === ThemeEngine.THEME_GREEN ? Theme.colorLightGreen : Theme.colorGreen)
+            arcColor: (Theme.currentTheme === ThemeEngine.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
         }
         ProgressCircle { // arcWarning

@@ -154,13 +154,13 @@ ApplicationWindow {
                 //console.log("Qt.ApplicationActive")
 
                 // Check if we need an 'automatic' theme change
-                Theme.loadTheme(settingsManager.appTheme);
+                Theme.loadTheme(settingsManager.appTheme)
 
                 // Check Bluetooth anyway (on macOS)
                 //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
 
                 // Needs to check if a refresh could be useful
-                deviceManager.refreshDevices_check();
+                deviceManager.refreshDevices_check()
 
                 break;
             }
@@ -169,8 +169,8 @@ ApplicationWindow {
 
     onClosing: {
         if (settingsManager.systray || Qt.platform.os === "osx") {
-            close.accepted = false;
-            appWindow.hide();
+            close.accepted = false
+            appWindow.hide()
         }
     }
 

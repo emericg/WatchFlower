@@ -4,26 +4,28 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemImageButton
+    id: control
     implicitWidth: 40
     implicitHeight: 40
 
+    // actions
     signal clicked()
+    signal pressed()
+    signal pressAndHold()
 
     // states
     property bool hovered: false
     property bool selected: false
-    property bool highlighted: false
 
     // settings
     property int btnSize: height
     property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
-    property url imgSource: ""
     property url source: ""
+    property int rotation: 0
 
     property bool border: false
     property bool background: false
-    property string highlightMode: "circle" // circle / color / both / off
+    property string highlightMode: "circle" // available: circle, color, both, off
 
     // colors
     property string iconColor: Theme.colorIcon
@@ -32,7 +34,7 @@ Item {
     property string borderColor: Theme.colorComponentBorder
 
     // animation
-    property string animation: "" // rotate / fade
+    property string animation: "" // available: rotate, fade
     property bool animationRunning: false
 
     // tooltip
@@ -44,19 +46,21 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
-        anchors.fill: itemImageButton
-        onClicked: itemImageButton.clicked()
-
+        anchors.fill: control
+        propagateComposedEvents: false
         hoverEnabled: true
+
+        onClicked: control.clicked()
+        onPressed: control.pressed()
+        onPressAndHold: control.pressAndHold()
+
         onEntered: {
             hovered = true
-            highlighted = true
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
+            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
         }
         onExited: {
             hovered = false
-            highlighted = false
-            bgRect.opacity = itemImageButton.background ? 0.75 : 0
+            bgRect.opacity = control.background ? 0.75 : 0
         }
     }
 
@@ -65,15 +69,15 @@ Item {
         width: btnSize
         height: btnSize
         radius: btnSize
-        anchors.verticalCenter: itemImageButton.verticalCenter
+        anchors.verticalCenter: control.verticalCenter
 
-        visible: (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background)
-        color: itemImageButton.backgroundColor
+        visible: (highlightMode === "circle" || highlightMode === "both" || control.background)
+        color: control.backgroundColor
 
-        border.width: itemImageButton.border ? Theme.componentBorderWidth : 0
-        border.color: itemImageButton.borderColor
+        border.width: control.border ? Theme.componentBorderWidth : 0
+        border.color: control.borderColor
 
-        opacity: itemImageButton.background ? 0.75 : 0
+        opacity: control.background ? 0.75 : 0
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
@@ -83,22 +87,23 @@ Item {
         height: imgSize
         anchors.centerIn: bgRect
 
-        opacity: itemImageButton.enabled ? 1.0 : 0.33
+        rotation: control.rotation
+        opacity: control.enabled ? 1.0 : 0.33
         Behavior on opacity { NumberAnimation { duration: 333 } }
 
-        source: itemImageButton.source
+        source: control.source
         color: {
             if (selected === true) {
-                itemImageButton.highlightColor
+                control.highlightColor
             } else if (highlightMode === "color" || highlightMode === "both") {
-                itemImageButton.highlighted ? itemImageButton.highlightColor : itemImageButton.iconColor
+                control.hovered ? control.highlightColor : control.iconColor
             } else {
-                itemImageButton.iconColor
+                control.iconColor
             }
         }
 
         SequentialAnimation on opacity {
-            running: animation === "fade" && animationRunning
+            running: (animation === "fade" && animationRunning)
             alwaysRunToEnd: true
             loops: Animation.Infinite
 
@@ -106,7 +111,7 @@ Item {
             PropertyAnimation { to: 1; duration: 750; }
         }
         NumberAnimation on rotation {
-            running: animation === "rotate" && animationRunning
+            running: (animation === "rotate" && animationRunning)
             alwaysRunToEnd: true
             loops: Animation.Infinite
 
@@ -123,16 +128,16 @@ Item {
         id: tooltip
         anchors.fill: bgRect
 
-        visible: itemImageButton.tooltipText
-        enabled: itemImageButton.tooltipText
+        visible: control.tooltipText
+        enabled: control.tooltipText
 
-        property bool tooltipVisible: itemImageButton.highlighted
+        property bool tooltipVisible: control.hovered
         onTooltipVisibleChanged: ttT.checkPosition()
 
         opacity: tooltipVisible ? 1 : 0
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
-        state: itemImageButton.tooltipPosition
+        state: control.tooltipPosition
         states: [
             State {
                 name: "top"
@@ -263,7 +268,7 @@ Item {
 
             function checkPosition() {
                 if (!text) return;
-                if (!itemImageButton.highlighted) return;
+                if (!control.hovered) return;
 
                 var obj = mapToItem(appContent, x, y)
                 var thestart = obj.x - 12
@@ -288,7 +293,7 @@ Item {
                 }
             }
 
-            text: itemImageButton.tooltipText
+            text: control.tooltipText
             textFormat: Text.PlainText
             color: iconColor
         }

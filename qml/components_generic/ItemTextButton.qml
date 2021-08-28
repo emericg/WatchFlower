@@ -4,47 +4,52 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: itemTextButton
+    id: control
     implicitWidth: 40
     implicitHeight: 40
 
-    // states
+    // actions
     signal clicked()
-    signal longClicked()
-    property bool highlighted: false
+    signal pressed()
+    signal pressAndHold()
+
+    // states
+    property bool hovered: false
     property bool selected: false
 
     // settings
+    property string text: ""
     property int btnSize: height
     property int txtSize: (height * 0.4)
-
-    property bool background: false
-    property string backgroundColor: Theme.colorComponent
+    property string highlightMode: "circle" // available: circle, color, both, off
 
     property bool border: false
-    property string borderColor: Theme.colorComponentBorder
+    property bool background: false
 
-    property string highlightMode: "circle" // circle / color / both / off
-    property string highlightColor: Theme.colorPrimary
-
-    property string text: "btn"
+    // colors
     property string textColor: Theme.colorText
+    property string highlightColor: Theme.colorPrimary
+    property string borderColor: Theme.colorComponentBorder
+    property string backgroundColor: Theme.colorComponent
 
     ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
-        anchors.fill: bgRect
-        onClicked: itemTextButton.clicked()
-        onPressAndHold: itemTextButton.longClicked()
-
+        anchors.fill: control
+        propagateComposedEvents: false
         hoverEnabled: true
+
+        onClicked: control.clicked()
+        onPressed: control.pressed()
+        onPressAndHold: control.pressAndHold()
+
         onEntered: {
-            itemTextButton.highlighted = true
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemTextButton.background) ? 1 : 0.75
+            hovered = true
+            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
         }
         onExited: {
-            itemTextButton.highlighted = false
-            bgRect.opacity = itemTextButton.background ? 0.75 : 0
+            hovered = false
+            bgRect.opacity = control.background ? 0.75 : 0
         }
     }
 
@@ -53,15 +58,15 @@ Item {
         width: btnSize
         height: btnSize
         radius: btnSize
-        anchors.verticalCenter: itemTextButton.verticalCenter
+        anchors.verticalCenter: control.verticalCenter
 
-        visible: (highlightMode === "circle" || highlightMode === "both" || itemTextButton.background)
-        color: itemTextButton.backgroundColor
+        visible: (highlightMode === "circle" || highlightMode === "both" || control.background)
+        color: control.backgroundColor
 
-        border.width: itemTextButton.border ? 1 : 0
-        border.color: itemTextButton.borderColor
+        border.width: control.border ? 1 : 0
+        border.color: control.borderColor
 
-        opacity: itemTextButton.background ? 0.75 : 0
+        opacity: control.background ? 0.75 : 0
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
@@ -69,20 +74,20 @@ Item {
         id: contentImage
         anchors.centerIn: bgRect
 
-        text: itemTextButton.text
+        text: control.text
         textFormat: Text.PlainText
         font.bold: true
-        font.pixelSize: itemTextButton.txtSize
+        font.pixelSize: control.txtSize
         font.capitalization: Font.AllUppercase
 
-        opacity: itemTextButton.enabled ? 1.0 : 0.75
+        opacity: control.enabled ? 1.0 : 0.75
         color: {
             if (selected === true) {
-                itemTextButton.highlightColor
+                control.highlightColor
             } else if (highlightMode === "color" || highlightMode === "both") {
-                itemTextButton.highlighted ? itemTextButton.highlightColor : itemTextButton.textColor
+                control.hovered ? control.highlightColor : control.textColor
             } else {
-                itemTextButton.textColor
+                control.textColor
             }
         }
     }

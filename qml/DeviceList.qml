@@ -195,7 +195,8 @@ Item {
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+                    rotation: 180
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenDeviceList.exitSelectionMode()
@@ -240,7 +241,6 @@ Item {
                     id: buttonDelete
                     height: compact ? 36 : 34
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: deviceManager.bluetooth
 
                     compact: !wideMode
                     iconColor: Theme.colorActionbarContent

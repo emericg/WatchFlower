@@ -20,28 +20,6 @@ Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-
-        Rectangle {
-            id: rect
-            anchors.fill: parent
-            border.color: "#eee"
-            radius: Theme.componentRadius
-            border.width: 1
-            color: "white"
-        }
-        DropShadow {
-            anchors.fill: rect
-            cached: true
-            horizontalOffset: 0
-            verticalOffset: 0
-            radius: 4.0
-            samples: 8
-            color: "#20000000"
-            source: rect
-        }
-
-        ////////
-
         MouseArea {
             id: mmmm
             anchors.fill: parent
@@ -59,6 +37,10 @@ Button {
                 mouseBackground.opacity = 0.1
             }
             onReleased: {
+                mouseBackground.width = 0
+                mouseBackground.opacity = 0
+            }
+            onCanceled: {
                 mouseBackground.width = 0
                 mouseBackground.opacity = 0
             }
@@ -85,6 +67,27 @@ Button {
                     radius: Theme.componentRadius
                 }
             }
+        }
+
+        ////////
+
+        Rectangle {
+            id: rect
+            anchors.fill: parent
+            border.color: "#eee"
+            radius: Theme.componentRadius
+            border.width: 1
+            color: "white"
+        }
+        DropShadow {
+            anchors.fill: rect
+            cached: true
+            horizontalOffset: 0
+            verticalOffset: 0
+            radius: 4.0
+            samples: 8
+            color: "#20000000"
+            source: rect
         }
     }
 

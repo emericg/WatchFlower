@@ -46,7 +46,7 @@ Item {
                     anchors.topMargin: 12
 
                     text: qsTr("About")
-                    font.bold: true
+                    font.bold: false
                     font.pixelSize: Theme.fontSizeTitle
                     color: Theme.colorText
                 }
@@ -584,6 +584,17 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
+                        text: "- SingleApplication (MIT)"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
+                    }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
                         text: "- Google Material Icons (MIT)"
                         textFormat: Text.PlainText
                         color: Theme.colorText
@@ -595,7 +606,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: "- MobileUI & SingleApplication (MIT)"
+                        text: "- MobileUI & MobileSharing (MIT)"
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
