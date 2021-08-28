@@ -73,11 +73,14 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_queued;
     QList <QObject *> m_devices_updating;
 
-    QTimer m_refreshTimer;
+    bool m_updating = false;
     bool isUpdating() const;
 
     bool m_scanning = false;
     bool isScanning() const;
+
+    static const int ble_scanning_duration = 15;
+    static const int ble_listening_duration = 60;
 
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;
@@ -99,8 +102,15 @@ public:
     Q_INVOKABLE void removeDevice(const QString &address);
     Q_INVOKABLE void removeDeviceData(const QString &address);
 
-    Q_INVOKABLE void scanDevices();
+    Q_INVOKABLE void scanDevices_start();
+    Q_INVOKABLE void scanDevices_stop();
     Q_INVOKABLE void listenDevices();
+
+    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old
+    Q_INVOKABLE void refreshDevices_start();    //!< Refresh every devices
+    void refreshDevices_continue();
+    void refreshDevices_finished(Device *dev);
+    Q_INVOKABLE void refreshDevices_stop();
 
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
@@ -125,14 +135,6 @@ public:
 
     void invalidate();
 
-public slots:
-    void refreshDevices_check();    //!< Refresh devices with data >xh old
-    void refreshDevices_start();    //!< Refresh every devices
-
-    void refreshDevices_continue();
-    void refreshDevices_finished(Device *dev);
-    void refreshDevices_stop();
-
 private slots:
     // QBluetoothLocalDevice related
     void bluetoothModeChanged(QBluetoothLocalDevice::HostMode);
@@ -144,6 +146,7 @@ private slots:
     void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
     void deviceDiscoveryFinished();
+    void deviceDiscoveryStopped();
 
 Q_SIGNALS:
     void devicesListUpdated();

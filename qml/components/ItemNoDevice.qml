@@ -86,7 +86,15 @@ Item {
                 text: qsTr("Launch detection")
                 fullColor: true
                 primaryColor: Theme.colorPrimary
-                onClicked: deviceManager.scanDevices()
+                onClicked: {
+                    if (!deviceManager.updating) {
+                        if (deviceManager.scanning) {
+                            deviceManager.scanDevices_stop()
+                        } else {
+                            deviceManager.scanDevices_start()
+                        }
+                    }
+                }
             }
         }
 

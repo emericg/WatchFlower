@@ -398,6 +398,8 @@ void DeviceManager::checkBluetoothIos()
                    this, &DeviceManager::updateBleDevice);
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::deviceDiscoveryFinished);
+        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
+                   this, &DeviceManager::deviceDiscoveryStopped);
 
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                 this, &DeviceManager::bluetoothModeChangedIos, Qt::UniqueConnection);
@@ -458,15 +460,18 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
         qWarning() << "An unknown error has occurred.";
     }
 
-    m_scanning = false;
+    if (m_scanning)
+    {
+        m_scanning = false;
 
-    Q_EMIT devicesListUpdated();
-    Q_EMIT scanningChanged();
+        Q_EMIT devicesListUpdated();
+        Q_EMIT scanningChanged();
+    }
 }
 
 void DeviceManager::deviceDiscoveryFinished()
 {
-    //qDebug() << "deviceDiscoveryFinished()";
+    //qDebug() << "DeviceManager::deviceDiscoveryFinished()";
 
     m_scanning = false;
 
@@ -477,9 +482,22 @@ void DeviceManager::deviceDiscoveryFinished()
     refreshDevices_check();
 }
 
+void DeviceManager::deviceDiscoveryStopped()
+{
+    //qDebug() << "DeviceManager::deviceDiscoveryStopped()";
+
+    if (m_scanning)
+    {
+        m_scanning = false;
+
+        Q_EMIT devicesListUpdated();
+        Q_EMIT scanningChanged();
+    }
+}
+
 void DeviceManager::bluetoothModeChangedIos()
 {
-    //qDebug() << "bluetoothModeChangedIos()";
+    //qDebug() << "DeviceManager::bluetoothModeChangedIos()";
 
     if (!m_btE)
     {
@@ -494,9 +512,9 @@ void DeviceManager::bluetoothModeChangedIos()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DeviceManager::scanDevices()
+void DeviceManager::scanDevices_start()
 {
-    //qDebug() << "DeviceManager::scanDevices()";
+    //qDebug() << "DeviceManager::scanDevices_start()";
 
     if (hasBluetooth())
     {
@@ -507,21 +525,24 @@ void DeviceManager::scanDevices()
         if (m_discoveryAgent)
         {
 /*
-            if (m_discoveryAgent->isActive())
+            if (m_discoveryAgent->isActive() && !m_scanning)
             {
                 qDebug() << "already active?";
+                m_discoveryAgent->stop();
             }
             else // (!m_discoveryAgent->isActive())
 */
             {
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                         this, &DeviceManager::addBleDevice, Qt::UniqueConnection);
-                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                           this, &DeviceManager::updateBleDevice);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                         this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
+                        this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
-                m_discoveryAgent->setLowEnergyDiscoveryTimeout(15*1000); // 15s
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_scanning_duration*1000);
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
                 if (m_discoveryAgent->isActive())
@@ -530,6 +551,25 @@ void DeviceManager::scanDevices()
                     Q_EMIT scanningChanged();
                     qDebug() << "Scanning (Bluetooth) for devices...";
                 }
+            }
+        }
+    }
+}
+
+void DeviceManager::scanDevices_stop()
+{
+    //qDebug() << "DeviceManager::scanDevices_stop()";
+
+    if (hasBluetooth())
+    {
+        if (m_discoveryAgent)
+        {
+            if (m_discoveryAgent->isActive())
+            {
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                           this, &DeviceManager::addBleDevice);
+
+                m_discoveryAgent->stop();
             }
         }
     }
@@ -550,21 +590,25 @@ void DeviceManager::listenDevices()
         if (m_discoveryAgent)
         {
 /*
-            if (m_discoveryAgent->isActive())
+            if (m_discoveryAgent->isActive() && m_scanning)
             {
                 qDebug() << "already active?";
+                m_discoveryAgent->stop();
             }
             else // (!m_discoveryAgent->isActive())
 */
             {
                 disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                            this, &DeviceManager::addBleDevice);
-                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
                 disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                            this, &DeviceManager::deviceDiscoveryFinished);
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
+                           this, &DeviceManager::deviceDiscoveryStopped);
 
-                m_discoveryAgent->setLowEnergyDiscoveryTimeout(60*1000); // 60s
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                        this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
+
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration*1000);
 
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
                 if (m_discoveryAgent->isActive())
@@ -604,7 +648,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             }
 #endif // Qt 5.12+
 
-#if defined(QT_BLUETOOTH_PATCHED)
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0)) || defined(QT_BLUETOOTH_PATCHED)
             const QVector<quint16> &serviceIds = info.serviceIds();
             for (const auto id: serviceIds)
             {
@@ -648,7 +692,7 @@ void DeviceManager::refreshDevices_start()
         m_devices_queued.clear();
         m_devices_updating.clear();
 
-        // Background refresh // WIP
+        // Background refresh
         listenDevices();
 
         // Start refresh (if last device update > 1 min)
@@ -717,25 +761,40 @@ void DeviceManager::refreshDevices_continue()
 {
     //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_queued.size() << "device left";
 
-    if (hasBluetooth() && !m_devices_queued.empty())
+    if (hasBluetooth())
     {
-        int sim = SettingsManager::getInstance()->getBluetoothSimUpdates();
-
-        while (!m_devices_queued.empty() && m_devices_updating.size() < sim)
+        if (!m_devices_queued.empty())
         {
-            // update next device in the list
-            Device *d = qobject_cast<Device*>(m_devices_queued.first());
-            if (d)
-            {
-                m_devices_queued.removeFirst();
-                m_devices_updating.push_back(d);
+            int sim = SettingsManager::getInstance()->getBluetoothSimUpdates();
 
-                d->refreshStart();
+            while (!m_devices_queued.empty() && m_devices_updating.size() < sim)
+            {
+                // update next device in the list
+                Device *d = qobject_cast<Device*>(m_devices_queued.first());
+                if (d)
+                {
+                    m_devices_queued.removeFirst();
+                    m_devices_updating.push_back(d);
+                    if (!m_updating)
+                    {
+                        m_updating = true;
+                        Q_EMIT updatingChanged();
+                    }
+
+                    d->refreshStart();
+                }
             }
         }
     }
 
-    Q_EMIT updatingChanged();
+    if (m_devices_queued.empty() && m_devices_updating.empty())
+    {
+        if (m_updating)
+        {
+            m_updating = false;
+            Q_EMIT updatingChanged();
+        }
+    }
 }
 
 void DeviceManager::refreshDevices_finished(Device *dev)
@@ -744,7 +803,7 @@ void DeviceManager::refreshDevices_finished(Device *dev)
 
     if (m_devices_updating.contains(dev))
     {
-        m_devices_updating.removeOne(dev);
+        m_devices_updating.removeAll(dev);
 
         // update next device in the list
         refreshDevices_continue();
@@ -757,14 +816,15 @@ void DeviceManager::refreshDevices_stop()
 
     if (!m_devices_queued.empty())
     {
-        m_devices_queued.clear();
-        m_devices_updating.clear();
-
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: qAsConst(m_devices_updating))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd) dd->refreshStop();
         }
+
+        m_devices_queued.clear();
+        m_devices_updating.clear();
+        m_updating = false;
 
         Q_EMIT updatingChanged();
     }

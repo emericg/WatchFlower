@@ -34,6 +34,7 @@ Item {
         onRefreshUpdated: {
             plantSensorData.resetHistoryMode()
             plantSensorData.updateData()
+            plantSensorHistory.updateData()
         }
         onHistoryUpdated: {
             plantSensorData.updateGraph()

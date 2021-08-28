@@ -424,9 +424,12 @@ Drawer {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (!deviceManager.scanning && !deviceManager.updating) {
-                                deviceManager.scanDevices()
-                                appDrawer.close()
+                            if (!deviceManager.updating) {
+                                if (deviceManager.scanning) {
+                                    deviceManager.scanDevices_stop()
+                                } else {
+                                    deviceManager.scanDevices_start()
+                                }
                             }
                         }
                     }

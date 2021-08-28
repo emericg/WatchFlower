@@ -118,13 +118,21 @@ ApplicationWindow {
             }
         }
         onRefreshButtonClicked: {
-            if (!deviceManager.scanning && !deviceManager.updating) {
-                deviceManager.refreshDevices_start()
+            if (!deviceManager.scanning) {
+                if (deviceManager.updating) {
+                    deviceManager.refreshDevices_stop()
+                } else {
+                    deviceManager.refreshDevices_start()
+                }
             }
         }
         onRescanButtonClicked: {
-            if (!deviceManager.scanning && !deviceManager.updating) {
-                deviceManager.scanDevices()
+            if (!deviceManager.updating) {
+                if (deviceManager.scanning) {
+                    deviceManager.scanDevices_stop()
+                } else {
+                    deviceManager.scanDevices_start()
+                }
             }
         }
 
