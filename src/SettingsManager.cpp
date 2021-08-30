@@ -87,6 +87,15 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/bluetoothLimitScanningRange"))
             m_bluetoothLimitScanningRange = settings.value("settings/bluetoothLimitScanningRange").toBool();
+        else
+        {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+            // these platforms may not be mobile device
+            m_bluetoothLimitScanningRange = false;
+#else
+            m_bluetoothLimitScanningRange = true;
+#endif
+        }
 
         if (settings.contains("settings/bluetoothSimUpdates"))
             m_bluetoothSimUpdates = settings.value("settings/bluetoothSimUpdates").toUInt();
@@ -272,7 +281,13 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+    // these platforms may not be mobile device
     m_bluetoothLimitScanningRange = false;
+#else
+    m_bluetoothLimitScanningRange = true;
+#endif
     Q_EMIT bluetoothLimitScanningRangeChanged();
     m_bluetoothSimUpdates = 2;
     Q_EMIT bluetoothSimUpdatesChanged();
