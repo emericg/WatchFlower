@@ -140,7 +140,7 @@ Item {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: indicatorAirQuality.value
+            text: (indicatorAirQuality.value > -99) ? indicatorAirQuality.value : "?"
             color: indicatorAirQuality.color
             font.pixelSize: isMobile ? 20 : 24
             font.bold: true
