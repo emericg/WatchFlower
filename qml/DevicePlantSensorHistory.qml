@@ -149,7 +149,7 @@ Item {
             if (currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")) {
                 hygroChart.duo = 2
                 lumiChart.duo = 1
-            } else if (currentDevice.hasLuminositySensor && currentDevice.hasDataNamed("luminosity")) {
+            } else if (currentDevice.hasLuminositySensor && currentDevice.hasDataNamed("luminosityLux")) {
                 hygroChart.duo = 1
                 lumiChart.duo = 2
             }
@@ -342,7 +342,7 @@ Item {
 
             title: qsTr("Luminosity")
             ddd: graphGrid.mode
-            uuu: ChartHistory.Data.Luminosity
+            uuu: ChartHistory.Data.LuminosityLux
             color: Theme.colorYellow
             suffix: " " + "<br>" + qsTr("lux")
             floatprecision: 0

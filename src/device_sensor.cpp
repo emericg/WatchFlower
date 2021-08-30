@@ -50,6 +50,7 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
     if (m_dbInternal || m_dbExternal)
     {
         getSqlDeviceInfos();
+        //getSqlSensorBias();
         getSqlPlantLimits();
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
@@ -80,6 +81,7 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     if (m_dbInternal || m_dbExternal)
     {
         getSqlDeviceInfos();
+        //getSqlSensorBias();
         getSqlPlantLimits();
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
@@ -126,7 +128,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             if (sm->getNotifs())
             {
                 // Only if the sensor has a plant
-                if (m_soil_moisture > 0 && m_soil_moisture < m_limitHygroMin)
+                if (m_soilMoisture > 0 && m_soilMoisture < m_limit_soilMoistureMin)
                 {
                     NotificationManager *nm = NotificationManager::getInstance();
                     if (nm)
@@ -153,10 +155,10 @@ void DeviceSensor::refreshHistoryFinished(bool status)
 
     Device::refreshHistoryFinished(status);
 
-    m_history_entry_count = -1;
-    m_history_entry_index = -1;
-    m_history_session_count = -1;
-    m_history_session_read = -1;
+    m_history_entryCount = -1;
+    m_history_entryIndex = -1;
+    m_history_sessionCount = -1;
+    m_history_sessionRead = -1;
 
     if (m_lastHistorySync.isValid())
     {
@@ -283,20 +285,20 @@ bool DeviceSensor::getSqlPlantLimits()
     getLimits.exec();
     while (getLimits.next())
     {
-        m_limitHygroMin = getLimits.value(0).toInt();
-        m_limitHygroMax = getLimits.value(1).toInt();
-        m_limitConduMin = getLimits.value(2).toInt();
-        m_limitConduMax = getLimits.value(3).toInt();
-        m_limitPhMin = getLimits.value(4).toInt();
-        m_limitPhMax = getLimits.value(5).toInt();
-        m_limitTempMin = getLimits.value(6).toInt();
-        m_limitTempMax = getLimits.value(7).toInt();
-        m_limitHumiMin = getLimits.value(8).toInt();
-        m_limitHumiMax = getLimits.value(9).toInt();
-        m_limitLuxMin = getLimits.value(10).toInt();
-        m_limitLuxMax = getLimits.value(11).toInt();
-        m_limitMmolMin = getLimits.value(12).toInt();
-        m_limitMmolMax = getLimits.value(13).toInt();
+        m_limit_soilMoistureMin = getLimits.value(0).toInt();
+        m_limit_soilMoistureMax = getLimits.value(1).toInt();
+        m_limit_soilConduMin = getLimits.value(2).toInt();
+        m_limit_soilConduMax = getLimits.value(3).toInt();
+        m_limit_soilPhMin = getLimits.value(4).toInt();
+        m_limit_soilPhMax = getLimits.value(5).toInt();
+        m_limit_tempMin = getLimits.value(6).toInt();
+        m_limit_tempMax = getLimits.value(7).toInt();
+        m_limit_humiMin = getLimits.value(8).toInt();
+        m_limit_humiMax = getLimits.value(9).toInt();
+        m_limit_luxMin = getLimits.value(10).toInt();
+        m_limit_luxMax = getLimits.value(11).toInt();
+        m_limit_mmolMin = getLimits.value(12).toInt();
+        m_limit_mmolMax = getLimits.value(13).toInt();
 
         status = true;
         Q_EMIT limitsUpdated();
@@ -339,13 +341,13 @@ bool DeviceSensor::getSqlPlantData(int minutes)
 
     while (cachedData.next())
     {
-        m_soil_moisture =  cachedData.value(1).toInt();
-        m_soil_conductivity = cachedData.value(2).toInt();
-        m_soil_temperature = cachedData.value(3).toFloat();
-        m_soil_ph = cachedData.value(4).toFloat();
+        m_soilMoisture =  cachedData.value(1).toInt();
+        m_soilConductivity = cachedData.value(2).toInt();
+        m_soilTemperature = cachedData.value(3).toFloat();
+        m_soilPH = cachedData.value(4).toFloat();
         m_temperature = cachedData.value(5).toFloat();
         m_humidity =  cachedData.value(6).toFloat();
-        m_luminosity = cachedData.value(7).toInt();
+        m_luminosityLux = cachedData.value(7).toInt();
         m_watertank_level = cachedData.value(8).toFloat();
 
         QString datetime = cachedData.value(0).toString();
@@ -365,6 +367,70 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     }
 
     refreshDataFinished(status, true);
+    return status;
+}
+
+/* ************************************************************************** */
+
+bool DeviceSensor::getSqlSensorBias()
+{
+    //qDebug() << "DeviceSensor::getSqlSensorBias(" << m_deviceAddress << ")";
+    bool status = false;
+
+    QSqlQuery getBias;
+    getBias.prepare("SELECT soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
+                    " tempBias, humiBias, pressureBias, luminosityBias " \
+                    "FROM sensorBias WHERE deviceAddr = :deviceAddr");
+    getBias.bindValue(":deviceAddr", getAddress());
+    getBias.exec();
+    while (getBias.next())
+    {
+        m_bias_soilMoisture = getBias.value(0).toFloat();
+        m_bias_soilConductivity = getBias.value(1).toFloat();
+        m_bias_soilTemperature = getBias.value(2).toFloat();
+        m_bias_soilPH = getBias.value(3).toFloat();
+        m_bias_temperature = getBias.value(4).toFloat();
+        m_bias_humidity = getBias.value(5).toFloat();
+        m_bias_pressure = getBias.value(6).toFloat();
+        m_bias_luminosityLux = getBias.value(7).toFloat();
+
+        status = true;
+        Q_EMIT biasUpdated();
+    }
+
+    return status;
+}
+
+bool DeviceSensor::setDbBias()
+{
+    bool status = false;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery updateBias;
+        updateBias.prepare("REPLACE INTO sensorBias (deviceAddr, " \
+                           " soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
+                           " tempBias, humiBias, pressureBias, luminosityBias)" \
+                           " VALUES (:deviceAddr, " \
+                                    ":soilMoistureBias, :soilConduBias, :soilTempBias, :soilPhBias, " \
+                                    ":tempBias, :humiBias, :pressureBias, :luminosityBias)");
+        updateBias.bindValue(":deviceAddr", getAddress());
+        updateBias.bindValue(":soilMoistureBias", m_bias_soilMoisture);
+        updateBias.bindValue(":soilConduBias", m_bias_soilConductivity);
+        updateBias.bindValue(":soilTempBias", m_bias_soilTemperature);
+        updateBias.bindValue(":soilPhBias", m_bias_soilPH);
+        updateBias.bindValue(":tempBias", m_bias_temperature);
+        updateBias.bindValue(":humiBias", m_bias_humidity);
+        updateBias.bindValue(":pressureBias", m_bias_humidity);
+        updateBias.bindValue(":luminosityBias", m_bias_luminosityLux);
+
+        status = updateBias.exec();
+        if (status == false)
+            qWarning() << "> updateBias.exec() ERROR" << updateBias.lastError().type() << ":" << updateBias.lastError().text();
+    }
+
+    Q_EMIT biasUpdated();
+
     return status;
 }
 
@@ -394,20 +460,20 @@ bool DeviceSensor::setDbLimits()
                                       ":hygroMin, :hygroMax, :conduMin, :conduMax, :phMin, :phMax, :tempMin, :tempMax, " \
                                       ":humiMin, :humiMax, :luxMin, :luxMax, :mmolMin, :mmolMax)");
         updateLimits.bindValue(":deviceAddr", getAddress());
-        updateLimits.bindValue(":hygroMin", m_limitHygroMin);
-        updateLimits.bindValue(":hygroMax", m_limitHygroMax);
-        updateLimits.bindValue(":conduMin", m_limitConduMin);
-        updateLimits.bindValue(":conduMax", m_limitConduMax);
-        updateLimits.bindValue(":phMin", m_limitPhMin);
-        updateLimits.bindValue(":phMax", m_limitPhMax);
-        updateLimits.bindValue(":tempMin", m_limitTempMin);
-        updateLimits.bindValue(":tempMax", m_limitTempMax);
-        updateLimits.bindValue(":humiMin", m_limitHumiMin);
-        updateLimits.bindValue(":humiMax", m_limitHumiMax);
-        updateLimits.bindValue(":luxMin", m_limitLuxMin);
-        updateLimits.bindValue(":luxMax", m_limitLuxMax);
-        updateLimits.bindValue(":mmolMin", m_limitMmolMin);
-        updateLimits.bindValue(":mmolMax", m_limitMmolMax);
+        updateLimits.bindValue(":hygroMin", m_limit_soilMoistureMin);
+        updateLimits.bindValue(":hygroMax", m_limit_soilMoistureMax);
+        updateLimits.bindValue(":conduMin", m_limit_soilConduMin);
+        updateLimits.bindValue(":conduMax", m_limit_soilConduMax);
+        updateLimits.bindValue(":phMin", m_limit_soilPhMin);
+        updateLimits.bindValue(":phMax", m_limit_soilPhMax);
+        updateLimits.bindValue(":tempMin", m_limit_tempMin);
+        updateLimits.bindValue(":tempMax", m_limit_tempMax);
+        updateLimits.bindValue(":humiMin", m_limit_humiMin);
+        updateLimits.bindValue(":humiMax", m_limit_humiMax);
+        updateLimits.bindValue(":luxMin", m_limit_luxMin);
+        updateLimits.bindValue(":luxMax", m_limit_luxMax);
+        updateLimits.bindValue(":mmolMin", m_limit_mmolMin);
+        updateLimits.bindValue(":mmolMax", m_limit_mmolMax);
 
         status = updateLimits.exec();
         if (status == false)
@@ -461,12 +527,12 @@ bool DeviceSensor::getSqlSensorData(int minutes)
         m_humidity = cachedData.value(2).toFloat();
         // environmental data
         m_pressure = cachedData.value(3).toFloat();
-        m_luminosity = cachedData.value(4).toInt();
+        m_luminosityLux = cachedData.value(4).toInt();
         m_uv = cachedData.value(5).toFloat();
         m_sound_level = cachedData.value(6).toFloat();
         m_water_level = cachedData.value(7).toFloat();
-        m_wind_direction = cachedData.value(8).toFloat();
-        m_wind_speed = cachedData.value(9).toFloat();
+        m_windDirection = cachedData.value(8).toFloat();
+        m_windSpeed = cachedData.value(9).toFloat();
         m_pm_1 = cachedData.value(10).toFloat();
         m_pm_25 = cachedData.value(11).toFloat();
         m_pm_10 = cachedData.value(12).toFloat();
@@ -555,8 +621,8 @@ void DeviceSensor::checkDataAvailability()
         if (isPlantSensor() || isThermometer())
         {
             // If we have immediate data (<12h old)
-            if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
-                m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+            if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
+                m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
                 status = true;
 
             tableName = "plantData";
@@ -564,7 +630,7 @@ void DeviceSensor::checkDataAvailability()
         else if (isEnvironmentalSensor())
         {
             // If we have immediate data (<12h old)
-            if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
+            if (m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0 ||
                 m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
                 status = true;
 
@@ -605,17 +671,21 @@ bool DeviceSensor::hasDataNamed(const QString &dataName) const
     if (isPlantSensor() || isThermometer())
     {
         // If we have immediate data (<12h old)
-        if (dataName == "soilMoisture" && m_soil_moisture > 0)
+        if (dataName == "soilMoisture" && m_soilMoisture > 0)
             return true;
-        else if (dataName == "soilConductivity" && m_soil_conductivity > 0)
+        else if (dataName == "soilConductivity" && m_soilConductivity > 0)
             return true;
-        else if (dataName == "soilTemperature" && m_soil_temperature > 0)
+        else if (dataName == "soilTemperature" && m_soilTemperature > 0.f)
+            return true;
+        else if (dataName == "soilPH" && m_soilPH > 0.f)
             return true;
         else if (dataName == "temperature" && m_temperature > -20.f)
             return true;
-        else if (dataName == "humidity" && m_humidity > 0)
+        else if (dataName == "humidity" && m_humidity > 0.f)
             return true;
-        else if (dataName == "luminosity" && m_luminosity > 0)
+        else if (dataName == "luminosityLux" && m_luminosityLux > 0)
+            return true;
+        else if (dataName == "luminosityMmol" && m_luminosityMmol > 0)
             return true;
 
         tableName = "plantData";
@@ -687,8 +757,8 @@ int DeviceSensor::countDataNamed(const QString &dataName, int days) const
     else
     {
         // No database
-        if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
-            m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+        if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
+            m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
         return 1;
     }
 
@@ -702,8 +772,8 @@ bool DeviceSensor::hasData() const
     if (isPlantSensor() || isThermometer())
     {
         // If we have immediate data (<12h old)
-        if (m_soil_moisture > 0 || m_soil_conductivity > 0 || m_soil_temperature > 0 ||
-            m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0)
+        if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
+            m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
             return true;
 
         tableName = "plantData";
@@ -711,7 +781,7 @@ bool DeviceSensor::hasData() const
     else if (isEnvironmentalSensor())
     {
         // If we have immediate data (<12h old)
-        if (m_temperature > -20.f || m_humidity > 0 || m_luminosity > 0 ||
+        if (m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0 ||
             m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
             return true;
 
@@ -856,9 +926,9 @@ int DeviceSensor::getHistoryUpdatePercent() const
 
     if (m_ble_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
-        if (m_history_session_count > 0)
+        if (m_history_sessionCount > 0)
         {
-            p = static_cast<int>((m_history_session_read / static_cast<float>(m_history_session_count)) * 100.f);
+            p = static_cast<int>((m_history_sessionRead / static_cast<float>(m_history_sessionCount)) * 100.f);
         }
     }
 
@@ -1154,15 +1224,15 @@ void DeviceSensor::updateChartData_history_month(int maxDays)
                 // min/max
                 if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
                 if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toInt() < m_soilTempMin) { m_soilTempMin = graphData.value(3).toInt(); minmaxChanged = true; }
-                if (graphData.value(4).toInt() < m_tempMin) { m_tempMin = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toFloat() < m_soilTempMin) { m_soilTempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (graphData.value(4).toFloat() < m_tempMin) { m_tempMin = graphData.value(4).toFloat(); minmaxChanged = true; }
                 if (graphData.value(5).toInt() < m_humiMin) { m_humiMin = graphData.value(5).toInt(); minmaxChanged = true; }
                 if (graphData.value(6).toInt() < m_luxMin) { m_luxMin = graphData.value(6).toInt(); minmaxChanged = true; }
 
-                if (graphData.value(1).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
                 if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toInt() > m_soilTempMax) { m_soilTempMax = graphData.value(3).toInt(); minmaxChanged = true; }
-                if (graphData.value(4).toInt() > m_tempMax) { m_tempMax = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toFloat() > m_soilTempMax) { m_soilTempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (graphData.value(4).toFloat() > m_tempMax) { m_tempMax = graphData.value(4).toFloat(); minmaxChanged = true; }
                 if (graphData.value(5).toInt() > m_humiMax) { m_humiMax = graphData.value(5).toInt(); minmaxChanged = true; }
                 if (graphData.value(6).toInt() > m_luxMax) { m_luxMax = graphData.value(6).toInt(); minmaxChanged = true; }
 
@@ -1509,7 +1579,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
                 if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); minmaxChanged = true; }
                 if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
                 if (graphData.value(4).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(4).toInt(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(5).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataMinMax *d = new ChartDataMinMax(graphData.value(0).toDateTime(),
@@ -1560,7 +1630,7 @@ void DeviceSensor::updateChartData_thermometerMinMax(int maxDays)
     {
         // No database, use fake values
         m_soilMoistureMin = 0;
-        m_soildMoistureMax = 50;
+        m_soilMoistureMax = 50;
         m_soilConduMin = 0;
         m_soilConduMax = 2000;
         m_soilTempMin = 0.f;
@@ -1635,7 +1705,7 @@ void DeviceSensor::getChartData_plantAIO(int maxDays,
             if (graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
             if (graphData.value(4).toInt() < m_luxMin) { m_luxMin = graphData.value(4).toInt(); minmaxChanged = true; }
 
-            if (graphData.value(1).toInt() > m_soildMoistureMax) { m_soildMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
             if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
             if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
             if (graphData.value(4).toInt() > m_luxMax) { m_luxMax = graphData.value(4).toInt(); minmaxChanged = true; }
@@ -1647,7 +1717,7 @@ void DeviceSensor::getChartData_plantAIO(int maxDays,
     {
         // No database, use fake values
         m_soilMoistureMin = 0;
-        m_soildMoistureMax = 50;
+        m_soilMoistureMax = 50;
         m_soilConduMin = 0;
         m_soilConduMax = 2000;
         m_soilTempMin = 0.f;

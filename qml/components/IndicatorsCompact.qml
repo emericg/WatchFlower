@@ -86,7 +86,7 @@ Item {
         soil_temperature.value = tempHelper(currentDevice.soilTemperature)
         temp.value = currentDevice.temperature
         humi.value = currentDevice.humidity
-        lumi.value = currentDevice.luminosity
+        lumi.value = currentDevice.luminosityLux
         water_tank.value = currentDevice.waterTankLevel
 
         soil_moisture.warning = true
@@ -179,7 +179,7 @@ Item {
             colorForeground: Theme.colorYellow
             colorBackground: indicatorsCompact.colorBackground
 
-            value: currentDevice.luminosity
+            value: currentDevice.luminosityLux
             valueMin: 0
             valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.luxMax*1.10) : 10000
             limitMin: currentDevice.limitLuxMin

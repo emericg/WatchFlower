@@ -30,9 +30,11 @@ Item {
         SoilMoisture = 0,
         SoilConductivity,
         SoilTemperature,
+        SoilPH,
         Temperature,
         Humidity,
-        Luminosity
+        LuminosityLux,
+        LuminosityMmol
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -183,9 +185,11 @@ Item {
                         if (uuu === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
                         if (uuu === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
                         if (uuu === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
+                        if (uuu === ChartHistory.Data.SoilPH) return modelData.soilPH
                         if (uuu === ChartHistory.Data.Temperature) return modelData.temperature
                         if (uuu === ChartHistory.Data.Humidity) return modelData.humidity
-                        if (uuu === ChartHistory.Data.Luminosity) return modelData.luminosity
+                        if (uuu === ChartHistory.Data.LuminosityLux) return modelData.luminosityLux
+                        if (uuu === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
                         return -99
                     }
 

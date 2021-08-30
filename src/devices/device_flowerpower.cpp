@@ -327,7 +327,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-                m_luminosity = std::round(1000.0 * 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619)));
+                m_luminosityLux = std::round(1000.0 * 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619)));
 
                 /////////
 
@@ -339,7 +339,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 // sensor output (no soil: 0) - (max observed: 1771) wich maps to 0 - 10 (mS/cm)
                 // divide by 177,1 to 10 (mS/cm)
                 // divide by 1,771 to 1 (uS/cm)
-                m_soil_conductivity = std::round(rawValue / 1.771);
+                m_soilConductivity = std::round(rawValue / 1.771);
 
                 /////////
 
@@ -348,7 +348,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-                m_soil_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+                m_soilTemperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
 
                 /////////
 
@@ -372,7 +372,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 double hygro2 = 100.0 * (0.0000045 * std::pow(hygro1, 3.0) - 0.00055 * std::pow(hygro1, 2.0) + 0.0292 * hygro1 - 0.053);
                 if (hygro2 < 0.0) hygro2 = 0.0;
                 if (hygro2 > 60.0) hygro2 = 60.0;
-                m_soil_moisture = std::round(hygro2);
+                m_soilMoisture = std::round(hygro2);
             }
 
             /////////
@@ -395,8 +395,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             m_lastUpdate = QDateTime::currentDateTime();
 
             // Sometimes, Parrot devices send obviously wrong data over ble
-            if (m_soil_temperature > -10.f && m_temperature > -10.f &&
-                m_soil_temperature < 100.f && m_temperature < 100.f)
+            if (m_soilTemperature > -10.f && m_temperature > -10.f &&
+                m_soilTemperature < 100.f && m_temperature < 100.f)
             {
                 if (m_dbInternal || m_dbExternal)
                 {
@@ -410,11 +410,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                     addData.bindValue(":deviceAddr", getAddress());
                     addData.bindValue(":ts", tsStr);
                     addData.bindValue(":ts_full", tsFullStr);
-                    addData.bindValue(":hygro", m_soil_moisture);
-                    addData.bindValue(":condu", m_soil_conductivity);
-                    addData.bindValue(":stemp", m_soil_temperature);
+                    addData.bindValue(":hygro", m_soilMoisture);
+                    addData.bindValue(":condu", m_soilConductivity);
+                    addData.bindValue(":stemp", m_soilTemperature);
                     addData.bindValue(":atemp", m_temperature);
-                    addData.bindValue(":lumi", m_luminosity);
+                    addData.bindValue(":lumi", m_luminosityLux);
                     if (addData.exec() == false)
                         qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
                 }
@@ -440,11 +440,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_device_lastmove : " << QDateTime::fromSecsSinceEpoch(m_device_lastmove);
-            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
-            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
-            qDebug() << "- m_soil_temperature : " << m_soil_temperature;
+            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
+            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
+            qDebug() << "- m_soil_temperature : " << m_soilTemperature;
             qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosity;
+            qDebug() << "- m_luminosity:" << m_luminosityLux;
 #endif
         }
     }

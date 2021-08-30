@@ -397,7 +397,29 @@ void DatabaseManager::createDatabase()
         if (createLimits.exec() == false)
             qWarning() << "> createLimits.exec() ERROR" << createLimits.lastError().type() << ":" << createLimits.lastError().text();
     }
+/*
+    if (!tableExists("sensorBias"))
+    {
+        qDebug() << "+ Adding 'sensorBias' table to local database";
+        QSqlQuery createBias;
+        createBias.prepare("CREATE TABLE sensorBias (" \
+                           "deviceAddr CHAR(38)," \
+                             "soilMoistureBias FLOAT," \
+                             "soilConduBias FLOAT," \
+                             "soilTempBias FLOAT," \
+                             "soilPhBias FLOAT," \
+                             "tempBias FLOAT," \
+                             "humiBias FLOAT," \
+                             "pressureBias FLOAT," \
+                             "luminosityBias FLOAT," \
+                           " PRIMARY KEY(deviceAddr), " \
+                           " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                           ");");
 
+        if (createBias.exec() == false)
+            qWarning() << "> createBias.exec() ERROR" << createBias.lastError().type() << ":" << createBias.lastError().text();
+    }
+*/
     if (!tableExists("sensorData"))
     {
         qDebug() << "+ Adding 'sensorData' table to local database";

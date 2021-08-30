@@ -163,18 +163,22 @@ class ChartDataHistory: public QObject
     Q_PROPERTY(float soilMoisture READ getSoilMoisture NOTIFY updated)
     Q_PROPERTY(float soilConductivity READ getSoilCondu NOTIFY updated)
     Q_PROPERTY(float soilTemperature READ getSoilTemperature NOTIFY updated)
+    Q_PROPERTY(float soilPH READ getSoilPH NOTIFY updated)
     Q_PROPERTY(float temperature READ getTemperature NOTIFY updated)
     Q_PROPERTY(float humidity READ getHumidity NOTIFY updated)
-    Q_PROPERTY(float luminosity READ getLuminosity NOTIFY updated)
+    Q_PROPERTY(float luminosityLux READ getLuminosityLux NOTIFY updated)
+    Q_PROPERTY(float luminosityMmol READ getLuminosityMmol NOTIFY updated)
 
     QDateTime datetime;
 
     float soilMoisture = -99.f;
     float soilConductivity = -99.f;
     float soilTemperature = -99.f;
+    float soilPH = -99.f;
     float temperature = -99.f;
     float humidity = -99.f;
-    float luminosity = -99.f;
+    float luminosityLux = -99.f;
+    float luminosityMmol = -99.f;
 
 signals:
     void updated();
@@ -192,7 +196,7 @@ public:
         soilTemperature = st;
         temperature = t;
         humidity = h;
-        luminosity = l;
+        luminosityLux = l;
     }
 
 public slots:
@@ -204,9 +208,11 @@ public slots:
     float getSoilMoisture() { return soilMoisture; }
     float getSoilCondu() { return soilConductivity; }
     float getSoilTemperature() { return soilTemperature; }
+    float getSoilPH() { return soilPH; }
     float getTemperature() { return temperature; }
     float getHumidity() { return humidity; }
-    float getLuminosity() { return luminosity; }
+    float getLuminosityLux() { return luminosityLux; }
+    float getLuminosityMmol() { return luminosityMmol; }
 };
 
 /* ************************************************************************** */

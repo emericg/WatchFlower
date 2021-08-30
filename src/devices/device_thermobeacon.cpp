@@ -255,12 +255,12 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
         // Parse entry count ///////////////////////////////////////////////////
         if (data[0] == 01)
         {
-            m_history_entry_count = static_cast<int16_t>(data[1] + (data[2] << 8));
+            m_history_entryCount = static_cast<int16_t>(data[1] + (data[2] << 8));
 
             if (m_device_time < 0)
             {
                 // no device time? generate one out of the number of entries
-                m_device_time = m_history_entry_count * 10 * 60;
+                m_device_time = m_history_entryCount * 10 * 60;
                 m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
             }
 /*
@@ -275,18 +275,18 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE)
             {
                 // Ask the LAST 3 values
-                idx = m_history_entry_count - 3;
+                idx = m_history_entryCount - 3;
             }
             else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
                 // We read entry from older to newer (0 to entry_count)
-                int entries_to_read = m_history_entry_count;
+                int entries_to_read = m_history_entryCount;
 
                 // Is m_lastHistorySync valid AND inside the range of stored history entries
                 if (m_lastHistorySync.isValid())
                 {
                     int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
-                    int64_t entries_count_sec = (m_history_entry_count * 10 * 60);
+                    int64_t entries_count_sec = (m_history_entryCount * 10 * 60);
 
                     if (lastSync_sec < entries_count_sec)
                     {
@@ -305,28 +305,28 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 }
 
                 // Is the restart point to old, outside the range of stored history entries?
-                if (entries_to_read > m_history_entry_count)
+                if (entries_to_read > m_history_entryCount)
                 {
-                    entries_to_read = m_history_entry_count;
+                    entries_to_read = m_history_entryCount;
                 }
 
                 // Now we can set our first index to read!
-                m_history_entry_index = m_history_entry_count - entries_to_read;
+                m_history_entryIndex = m_history_entryCount - entries_to_read;
 
                 // Sanetize, just to be sure
-                if (m_history_entry_index < 0) m_history_entry_index = 0;
-                if (m_history_entry_index >= m_history_entry_count)
+                if (m_history_entryIndex < 0) m_history_entryIndex = 0;
+                if (m_history_entryIndex >= m_history_entryCount)
                 {
                     // abort sync?
                     m_bleController->disconnectFromDevice();
                     return;
                 }
 
-                idx = m_history_entry_index;
+                idx = m_history_entryIndex;
 
                 // Set the progressbar infos
-                m_history_session_count = m_history_entry_count - m_history_entry_index;
-                m_history_session_read = 0;
+                m_history_sessionCount = m_history_entryCount - m_history_entryIndex;
+                m_history_sessionRead = 0;
             }
 
             // (re)start sync
@@ -352,7 +352,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
-                int64_t tmcd = QDateTime::currentSecsSinceEpoch() - ((m_history_entry_count - m_history_entry_index) * 10 * 60);
+                int64_t tmcd = QDateTime::currentSecsSinceEpoch() - ((m_history_entryCount - m_history_entryIndex) * 10 * 60);
                 m_lastHistorySync.setSecsSinceEpoch(tmcd);
 
                 // Save these values in db?
@@ -361,15 +361,15 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 //addDatabaseRecord(tmcd + 1200, temp3, hygro3);
 
                 // Update progress
-                m_history_entry_index += 3;
-                m_history_session_read += 3;
+                m_history_entryIndex += 3;
+                m_history_sessionRead += 3;
                 Q_EMIT progressUpdated();
 
-                if (m_history_entry_index < m_history_entry_count)
+                if (m_history_entryIndex < m_history_entryCount)
                 {
                     // Ask the NEXT 3 pairs
                     QByteArray cmd(QByteArray::fromHex("07"));
-                    int idx = m_history_entry_index;
+                    int idx = m_history_entryIndex;
                     cmd.push_back(idx%256);
                     cmd.push_back(idx/256);
                     cmd.push_back(QByteArray::fromHex("00"));
@@ -381,7 +381,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 else
                 {
                     // Update last sync
-                    int64_t lastSync = m_device_wall_time + (m_history_entry_count * 10 * 60);
+                    int64_t lastSync = m_device_wall_time + (m_history_entryCount * 10 * 60);
                     m_lastHistorySync.setSecsSinceEpoch(lastSync);
 
                     // Finish it
@@ -392,7 +392,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
             }
             else
             {
-                int64_t tmcd = m_device_wall_time + (m_history_entry_count * 10 * 60);
+                int64_t tmcd = m_device_wall_time + (m_history_entryCount * 10 * 60);
 
                 // Save this pair (if it's more recent than advertising data)
                 if (!m_lastUpdate.isValid() ||

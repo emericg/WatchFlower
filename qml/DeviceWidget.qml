@@ -638,7 +638,7 @@ Item {
 
                 hygro_data.height = UtilsNumber.normalize(boxDevice.soilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
                 temp_data.height = UtilsNumber.normalize(boxDevice.temperatureC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
-                lumi_data.height = UtilsNumber.normalize(boxDevice.luminosity, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
+                lumi_data.height = UtilsNumber.normalize(boxDevice.luminosityLux, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
                 cond_data.height = UtilsNumber.normalize(boxDevice.soilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
             }
 

@@ -956,7 +956,7 @@ Item {
                                 title: qsTr("Luminosity")
                                 legend: qsTr("lux")
                                 icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                value: currentDevice.luminosity
+                                value: currentDevice.luminosityLux
                                 precision: 0
                             }
                             ItemWeatherBox {

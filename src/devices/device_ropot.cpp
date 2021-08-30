@@ -408,26 +408,26 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3c
         QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
 
-        if (m_history_entry_count < 0)
+        if (m_history_entryCount < 0)
         {
             // Parse entry count
-            m_history_entry_count = static_cast<int16_t>(data[0] + (data[1] << 8));
+            m_history_entryCount = static_cast<int16_t>(data[0] + (data[1] << 8));
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* DeviceRopot history sync  > " << getAddress();
             qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
             qDebug() << "- last_sync    :" << m_lastHistorySync;
-            qDebug() << "- entry_count  :" << m_history_entry_count;
+            qDebug() << "- entry_count  :" << m_history_entryCount;
 #endif
 
             // We read entry from older to newer (entry_count to 0)
-            int entries_to_read = m_history_entry_count;
+            int entries_to_read = m_history_entryCount;
 
             // Is m_lastHistorySync valid AND inside the range of stored history entries
             if (m_lastHistorySync.isValid())
             {
                 int64_t lastSync_sec = QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
-                int64_t entries_count_sec = (m_history_entry_count * 3600);
+                int64_t entries_count_sec = (m_history_entryCount * 3600);
 
                 if (lastSync_sec < entries_count_sec)
                 {
@@ -437,17 +437,17 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
 
             // Is the restart point to old, outside the range of stored history entries?
-            if (entries_to_read > m_history_entry_count)
+            if (entries_to_read > m_history_entryCount)
             {
-                entries_to_read = m_history_entry_count;
+                entries_to_read = m_history_entryCount;
             }
 
             // Now we can set our first index to read!
-            m_history_entry_index = entries_to_read;
+            m_history_entryIndex = entries_to_read;
 
             // Sanetize, just to be sure
-            if (m_history_entry_index > m_history_entry_count) m_history_entry_index = 0;
-            if (m_history_entry_index < 0)
+            if (m_history_entryIndex > m_history_entryCount) m_history_entryIndex = 0;
+            if (m_history_entryIndex < 0)
             {
                 // abort sync?
                 m_bleController->disconnectFromDevice();
@@ -455,14 +455,14 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
 
             // Set the progressbar infos
-            m_history_session_count = entries_to_read;
-            m_history_session_read = 0;
+            m_history_sessionCount = entries_to_read;
+            m_history_sessionRead = 0;
             Q_EMIT progressUpdated();
 
             // (re)start sync
             QByteArray nextentry(QByteArray::fromHex("A1"));
-            nextentry.push_back(m_history_entry_index%256);
-            nextentry.push_back(m_history_entry_index/256);
+            nextentry.push_back(m_history_entryIndex%256);
+            nextentry.push_back(m_history_entryIndex/256);
 
             serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
         }
@@ -497,8 +497,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 return;
 
             m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_soil_moisture = data[7];
-            m_soil_conductivity = data[8] + (data[9] << 8);
+            m_soilMoisture = data[7];
+            m_soilConductivity = data[8] + (data[9] << 8);
 
             m_lastUpdate = QDateTime::currentDateTime();
 
@@ -514,8 +514,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                 addData.bindValue(":deviceAddr", getAddress());
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":hygro", m_soil_moisture);
-                addData.bindValue(":condu", m_soil_conductivity);
+                addData.bindValue(":hygro", m_soilMoisture);
+                addData.bindValue(":condu", m_soilConductivity);
                 addData.bindValue(":temp", m_temperature);
                 if (addData.exec() == false)
                     qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
@@ -539,8 +539,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "* DeviceRopot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
-            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
+            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
+            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
             qDebug() << "- m_temperature:" << m_temperature;
 #endif
         }
@@ -611,27 +611,27 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
             else if (data[12] == 7 && value.size() >= 18)
             {
                 lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
-                if (lumi != m_luminosity)
+                if (lumi != m_luminosityLux)
                 {
-                    m_luminosity = lumi;
+                    m_luminosityLux = lumi;
                     Q_EMIT dataUpdated();
                 }
             }
             else if (data[12] == 8 && value.size() >= 17)
             {
                 moist = static_cast<int16_t>(data[15] + (data[16] << 8));
-                if (moist != m_soil_moisture)
+                if (moist != m_soilMoisture)
                 {
-                    m_soil_moisture = moist;
+                    m_soilMoisture = moist;
                     Q_EMIT dataUpdated();
                 }
             }
             else if (data[12] == 9 && value.size() >= 17)
             {
                 fert = static_cast<int16_t>(data[15] + (data[16] << 8));
-                if (fert != m_soil_conductivity)
+                if (fert != m_soilConductivity)
                 {
-                    m_soil_conductivity = fert;
+                    m_soilConductivity = fert;
                     Q_EMIT dataUpdated();
                 }
             }

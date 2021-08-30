@@ -353,7 +353,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             // sensor output (no soil: 2036) - (max observed: 1747) wich maps to 0 - 10 (mS/cm)
             if (rawValue < 1500) rawValue = 1500;
             if (rawValue > 2036) rawValue = 2036;
-            m_soil_conductivity = mapNumber(rawValue, 2036, 1500, 0, 1000, false);
+            m_soilConductivity = mapNumber(rawValue, 2036, 1500, 0, 1000, false);
 
             /////////
 
@@ -362,7 +362,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_soil_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+            m_soilTemperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
 
             /////////
 
@@ -395,7 +395,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chsmc.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_soil_moisture = std::round(*((float*)&rawValueCal));
+            m_soilMoisture = std::round(*((float*)&rawValueCal));
 /*
             QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
             QLowEnergyCharacteristic chatc = serviceLive->characteristic(at_calibrated);
@@ -409,15 +409,15 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_luminosity = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93;
+            m_luminosityLux = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93;
 
             /////////
 
             m_lastUpdate = QDateTime::currentDateTime();
 
             // Sometimes, Parrot devices send obviously wrong data over BLE
-            if (m_soil_temperature > -10.f && m_temperature > -10.f &&
-                m_soil_temperature < 100.f && m_temperature < 100.f)
+            if (m_soilTemperature > -10.f && m_temperature > -10.f &&
+                m_soilTemperature < 100.f && m_temperature < 100.f)
             {
                 if (m_dbInternal || m_dbExternal)
                 {
@@ -431,11 +431,11 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                     addData.bindValue(":deviceAddr", getAddress());
                     addData.bindValue(":ts", tsStr);
                     addData.bindValue(":ts_full", tsFullStr);
-                    addData.bindValue(":hygro", m_soil_moisture);
-                    addData.bindValue(":condu", m_soil_conductivity);
-                    addData.bindValue(":stemp", m_soil_temperature);
+                    addData.bindValue(":hygro", m_soilMoisture);
+                    addData.bindValue(":condu", m_soilConductivity);
+                    addData.bindValue(":stemp", m_soilTemperature);
                     addData.bindValue(":atemp", m_temperature);
-                    addData.bindValue(":lumi", m_luminosity);
+                    addData.bindValue(":lumi", m_luminosityLux);
                     addData.bindValue(":tank", m_watertank_level);
                     if (addData.exec() == false)
                         qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
@@ -461,11 +461,11 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             qDebug() << "* DeviceParrotPot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soil_moisture:" << m_soil_moisture;
-            qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
-            qDebug() << "- m_soil_temperature:" << m_soil_temperature;
+            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
+            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
+            qDebug() << "- m_soil_temperature:" << m_soilTemperature;
             qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosity;
+            qDebug() << "- m_luminosity:" << m_luminosityLux;
 #endif
         }
     }
