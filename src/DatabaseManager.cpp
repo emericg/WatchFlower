@@ -51,8 +51,16 @@ DatabaseManager *DatabaseManager::getInstance()
 
 DatabaseManager::DatabaseManager()
 {
-    openDatabase_sqlite();
-    //openDatabase_mysql();
+    bool status = false;
+
+    if (!status)
+    {
+        status = openDatabase_mysql();
+    }
+    if (!status)
+    {
+        status = openDatabase_sqlite();
+    }
 }
 
 DatabaseManager::~DatabaseManager()
