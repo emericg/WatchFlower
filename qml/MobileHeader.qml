@@ -153,7 +153,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: (appContent.state === "DeviceThermometer")
-                source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+                source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
                 iconColor: Theme.colorHeaderContent
                 backgroundColor: Theme.colorHeaderHighlight
 

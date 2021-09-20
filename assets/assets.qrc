@@ -24,6 +24,7 @@
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-air-24px.svg</file>
+        <file>icons_material/baseline-archive-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
         <file>icons_material/baseline-backspace-24px.svg</file>
@@ -43,12 +44,10 @@
         <file>icons_material/baseline-crop_16_9-24px.svg</file>
         <file>icons_material/baseline-crop_square-24px.svg</file>
         <file>icons_material/baseline-close-24px.svg</file>
-        <file>icons_material/baseline-date_range-24px.svg</file>
         <file>icons_material/baseline-delete-24px.svg</file>
         <file>icons_material/baseline-filter_list-24px.svg</file>
         <file>icons_material/baseline-flaky-24px.svg</file>
         <file>icons_material/baseline-import_contacts-24px.svg</file>
-        <file>icons_material/baseline-insert_chart_outlined-24px.svg</file>
         <file>icons_material/baseline-insert_link-24px.svg</file>
         <file>icons_material/baseline-iso-24px.svg</file>
         <file>icons_material/baseline-manage_accounts-24px.svg</file>
@@ -89,13 +88,13 @@
         <file>icons_material/duotone-format_size-24px.svg</file>
         <file>icons_material/duotone-date_range-24px.svg</file>
         <file>icons_material/duotone-date_clear-24px.svg</file>
-        <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
+        <file>icons_material/duotone-insert_chart-24px.svg</file>
         <file>icons_material/duotone-local_drink-24px.svg</file>
         <file>icons_material/duotone-mic-24px.svg</file>
         <file>icons_material/duotone-minimize-24px.svg</file>
         <file>icons_material/duotone-pin_drop-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
-        <file>icons_material/duotone_speed-24px.svg</file>
+        <file>icons_material/duotone-speed-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
         <file>icons_material/duotone-timer-24px.svg</file>
         <file>icons_material/duotone-translate-24px.svg</file>

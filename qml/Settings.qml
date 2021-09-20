@@ -1331,9 +1331,8 @@ Item {
                     anchors.leftMargin: column.leftPad1
                     anchors.verticalCenter: parent.verticalCenter
 
-                    rotation: 270
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                 }
 
                 Text {

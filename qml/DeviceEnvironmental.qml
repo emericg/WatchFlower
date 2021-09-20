@@ -490,7 +490,7 @@ Item {
                     source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                     color: cccc
 
-                    opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.75 : 0
+                    opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                     Behavior on opacity { OpacityAnimator { duration: 133 } }
                 }
                 TextInput {
@@ -931,7 +931,7 @@ Item {
 
                                 title: qsTr("Pressure")
                                 legend: qsTr("hPa")
-                                icon: "qrc:/assets/icons_material/duotone_speed-24px.svg"
+                                icon: "qrc:/assets/icons_material/duotone-speed-24px.svg"
                                 value: currentDevice.pressure
                                 precision: 0
                             }

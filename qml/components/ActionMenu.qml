@@ -147,7 +147,7 @@ Rectangle {
             id: actionGraphMode
             index: 0
             button_text: qsTr("Switch graph")
-            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
             visible: (appContent.state === "DeviceThermometer")
             onButtonClicked: {
                 if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"

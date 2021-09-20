@@ -590,7 +590,7 @@ ApplicationWindow {
 
                 menuText: qsTr("Data")
                 //selected: (appContent.state === "DevicePlantSensor")
-                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
                 onClicked: tabletMenuDevice.deviceDataButtonClicked()
             }
             ItemMenuButton {
@@ -603,7 +603,7 @@ ApplicationWindow {
 
                 menuText: qsTr("History")
                 //selected: (appContent.state === "DevicePlantSensor")
-                source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
             }
             ItemMenuButton {

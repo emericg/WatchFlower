@@ -7,13 +7,7 @@
    height="24"
    viewBox="0 0 24 24"
    version="1.1"
-   id="svg6"
-   sodipodi:docname="duotone-timer-24px.svg"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14">
-  <path
-     d="M0 0h24v24H0z"
-     fill="none"
-     id="path2" />
+   id="svg6">
   <path
      d="M 15,1 H 9 v 2 h 6 z m -4,13 h 2 V 8 h -2 z"
      id="path4"

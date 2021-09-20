@@ -150,7 +150,7 @@ Rectangle {
 
             visible: (appContent.state === "DeviceThermometer")
 
-            source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: {
@@ -310,7 +310,7 @@ Rectangle {
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
-                source: "qrc:/assets/icons_material/baseline-insert_chart_outlined-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
                 onClicked: deviceDataButtonClicked()
             }
             ItemMenuButton {
@@ -320,7 +320,7 @@ Rectangle {
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
-                source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 onClicked: deviceHistoryButtonClicked()
             }
             ItemMenuButton {

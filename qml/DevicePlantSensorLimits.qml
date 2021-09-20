@@ -932,7 +932,7 @@ Item {
                     height: 24
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 }
 
                 Column {
