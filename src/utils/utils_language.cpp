@@ -73,7 +73,7 @@ void UtilsLanguage::setQmlEngine(QQmlApplicationEngine *engine)
 
 void UtilsLanguage::loadLanguage(const QString &lng)
 {
-    //qDebug() << "UtilsLanguage::loadLanguage <<" << lng;
+    //qDebug() << "UtilsLanguage::loadLanguage(" << lng << ")";
 
     if (!m_qt_app) return;
     if (m_appLanguage == lng) return;

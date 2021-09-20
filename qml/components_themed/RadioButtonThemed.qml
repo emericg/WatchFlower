@@ -43,7 +43,7 @@ RadioButton {
         font: control.font
         wrapMode: Text.WordWrap
 
-        color: Theme.colorSubText
+        color: control.checked ? Theme.colorText : Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33
     }
 }

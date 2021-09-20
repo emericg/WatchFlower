@@ -10,19 +10,19 @@ Slider {
     implicitHeight: Theme.componentHeight
     padding: 4
 
-    //first.value: 0.25
-    //second.value: 0.75
+    value: 0.5
     snapMode: RangeSlider.SnapAlways
 
+    property int hhh: 16
     property string unit: ""
     property bool kshort: false
-    property string colorBg: Theme.colorComponent
+
+    // colors
+    property string colorBg: Theme.colorForeground
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
 
-    property int hhh: 16
-
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         x: control.leftPadding
@@ -43,7 +43,7 @@ Slider {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     handle: Rectangle {
         id: h2

@@ -8,13 +8,17 @@ Slider {
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
     padding: 4
+    topPadding: 10
 
     value: 0.5
-
     snapMode: RangeSlider.SnapAlways
-    property int ticksCount: ((to - from) / stepSize)
 
-    ////////
+    // colors
+    property string colorBg: Theme.colorForeground
+    property string colorFg: Theme.colorPrimary
+    property string colorTxt: "white"
+
+    ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         x: control.leftPadding
@@ -22,31 +26,33 @@ Slider {
         width: control.availableWidth
         height: 4
         radius: 2
-        color: Theme.colorForeground
+        color: colorBg
         clip: true
+
+        property int ticksCount: ((to - from) / stepSize)
 
         Repeater {
             width: control.availableWidth
-            model: (control.ticksCount-1)
+            model: (background.ticksCount-1)
             Rectangle {
-                x: (((control.availableWidth) / control.ticksCount) * (index+1))
+                x: (((control.availableWidth) / background.ticksCount) * (index+1))
                 width: 1; height: 4;
                 color: Theme.colorComponentBorder
             }
         }
 
         Rectangle {
-            width: control.visualPosition * control.availableWidth + 1
+            width: (control.visualPosition * control.availableWidth) + 1
             height: parent.height
             radius: 2
-            color: Theme.colorPrimary
+            color: colorFg
             clip: true
 
             Repeater {
                 width: control.availableWidth
-                model: (control.ticksCount-1)
+                model: (background.ticksCount-1)
                 Rectangle {
-                    x: (((control.availableWidth) / control.ticksCount) * (index+1))
+                    x: (((control.availableWidth) / background.ticksCount) * (index+1))
                     width: 1; height: 4;
                     color: Theme.colorComponentBackground
                 }
@@ -54,16 +60,27 @@ Slider {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     handle: Rectangle {
         x: control.leftPadding + Math.round(control.visualPosition * control.availableWidth - width/2)
         y: 0
-        width: 14
-        height: 10
+        width: 16
+        height: 12
 
         color: control.pressed ? Theme.colorSecondary : Theme.colorPrimary
 
+        Text {
+            anchors.fill: parent
+            y: 2
+
+            text: control.value
+            font.pixelSize: 10
+            font.bold: true
+            color: colorTxt
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
         Rectangle {
             width: 10
             height: 10

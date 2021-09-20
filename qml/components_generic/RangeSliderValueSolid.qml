@@ -10,19 +10,20 @@ RangeSlider {
     implicitHeight: 4
     padding: 4
 
-    //first.value: 0.25
-    //second.value: 0.75
+    first.value: 0.25
+    second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
+    property int hhh: 18
     property string unit: ""
     property bool kshort: false
+
+    // colors
     property string colorBg: Theme.colorComponent
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
 
-    property int hhh: 18
-
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         x: control.leftPadding
@@ -45,7 +46,7 @@ RangeSlider {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     first.handle: Rectangle {
         id: h1
@@ -81,7 +82,7 @@ RangeSlider {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     second.handle: Rectangle {
         id: h2

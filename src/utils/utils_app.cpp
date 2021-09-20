@@ -164,32 +164,7 @@ void UtilsApp::openWith(const QString &path)
 
 QUrl UtilsApp::getStandardPath_url(const QString &type)
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    android_ask_storage_read_permission();
-#endif
-
-    QUrl path;
-    QStringList paths;
-
-    if (type == "audio")
-        paths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
-    else if (type == "video")
-        paths = QStandardPaths::standardLocations(QStandardPaths::MoviesLocation);
-    else if (type == "photo")
-        paths = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
-    else
-    {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-        paths = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
-#else
-        paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-#endif
-    }
-
-    if (!paths.isEmpty())
-        path = QUrl::fromLocalFile(paths.at(0));
-
-    return path;
+    return QUrl::fromLocalFile(getStandardPath_string(type));
 }
 
 QString UtilsApp::getStandardPath_string(const QString &type)
@@ -216,8 +191,7 @@ QString UtilsApp::getStandardPath_string(const QString &type)
 #endif
     }
 
-    if (!paths.isEmpty())
-        path = paths.at(0);
+    if (!paths.isEmpty()) path = paths.at(0);
 
     return path;
 }
