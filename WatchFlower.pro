@@ -11,7 +11,7 @@ ios { QT += gui-private }
 
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
-!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for WatchFlower")
+!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for $${TARGET}")
 
 # Project features #############################################################
 
@@ -192,7 +192,6 @@ android {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
 
-    #
     OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java \
                    assets/android/src/com/emeric/utils/QShareUtils.java \
                    assets/android/src/com/emeric/utils/QSharePathResolver.java

@@ -11,7 +11,8 @@
 
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
-    <application android:hardwareAccelerated="true" android:requestLegacyExternalStorage="true" android:extractNativeLibs="true"
+    <application android:hardwareAccelerated="true"
+                 android:requestLegacyExternalStorage="true" android:extractNativeLibs="true"
                  android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="WatchFlower"
                  android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
 

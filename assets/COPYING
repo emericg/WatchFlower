@@ -9,10 +9,13 @@
 
 # Device icons:
 - docs/flowercare.svg                   // Emeric Grange // CC BY-SA 4.0
+- docs/flowercaremax.svg                // Emeric Grange // CC BY-SA 4.0
 - docs/flowerpower.svg                  // Emeric Grange // CC BY-SA 4.0
 - docs/higrow.svg                       // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_alarm.svg              // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_clock.svg              // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_eink.svg               // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_cgdk2.svg              // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_cgg2.svg               // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_lcd.svg                // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_square_eink.svg        // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_square_lcd.svg         // Emeric Grange // CC BY-SA 4.0
@@ -20,6 +23,7 @@
 - docs/ropot.svg                        // Emeric Grange // CC BY-SA 4.0
 - docs/thermobeacon_round.svg           // Emeric Grange // CC BY-SA 4.0
 - docs/thermobeacon_square.svg          // Emeric Grange // CC BY-SA 4.0
+- docs/wp6003.svg                       // Emeric Grange // CC BY-SA 4.0
 
 # Google Material Design icons:
 - assets/icons_material/*               // Google // CC BY-SA 4.0
@@ -30,6 +34,7 @@
 # Font Awesome icons:
 - assets/icons_fontawesome/*            // Font Awesome // CC BY 4.0
 - docs/bluetooth-brands.svg             // Font Awesome // CC BY 4.0
+- docs/cloud-sun-solid.svg              // Font Awesome // CC BY 4.0
 - docs/lungs-solid.svg                  // Font Awesome // CC BY 4.0
 - docs/radiation-alt-solid.svg          // Font Awesome // CC BY 4.0
 
