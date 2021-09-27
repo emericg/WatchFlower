@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="24"
    viewBox="0 0 24 24"
    width="24"
    version="1.1"
-   id="svg6"
-   sodipodi:docname="device_thermostat-24px.svg"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+   id="svg6">
   <path
-     id="path4"
      d="M 12,2 C 10.34,2 9,3.34 9,5 v 8 c -1.21,0.91 -2,2.37 -2,4 0,2.76 2.24,5 5,5 2.76,0 5,-2.24 5,-5 0,-1.63 -0.79,-3.09 -2,-4 V 5 C 15,3.34 13.66,2 12,2 Z m 0,2 c 0.55,0 1,0.45 1,1 h -1 v 1 h 1 v 2 h -1 v 1 h 1 v 2 h -1 v 1 h 1 v 2.291016 C 14.134513,14.709686 14.888184,15.790701 14.888672,17 14.888602,18.59534 13.59534,19.888602 12,19.888672 10.40466,19.888602 9.1113982,18.59534 9.1113281,17 9.1118157,15.790701 9.8654869,14.709686 11,14.291016 V 5 c 0,-0.55 0.45,-1 1,-1 z"
-     sodipodi:nodetypes="sscssscssscccccccccccccccccss" />
+     id="path4" />
 </svg>
