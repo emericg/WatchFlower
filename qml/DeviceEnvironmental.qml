@@ -453,7 +453,7 @@ Item {
                     height: 24
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-schedule-24px.svg"
                     color: cccc
                 }
                 Text {

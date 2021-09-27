@@ -855,7 +855,7 @@ Item {
                                 background: true
                                 backgroundColor: "white"
                                 iconColor: Theme.colorText
-                                source: "qrc:/assets/icons_material/duotone-access_time-24px.svg"
+                                source: "qrc:/assets/icons_material/duotone-schedule-24px.svg"
                             }
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
