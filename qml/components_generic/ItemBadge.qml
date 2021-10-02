@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Item {
     id: badge
     implicitWidth: 128
-    implicitHeight: 24
+    implicitHeight: 22
 
     property string legend: "legend"
     property string text: "text"

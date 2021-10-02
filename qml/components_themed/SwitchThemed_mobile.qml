@@ -19,6 +19,7 @@ Switch {
         radius: 16
 
         color: control.checked ? Theme.colorSecondary : Theme.colorComponentDown
+        Behavior on color { ColorAnimation { duration: 133; easing.type: Easing.InOutCirc; } }
 
         Rectangle {
             x: control.checked ? (parent.width - width) : 0

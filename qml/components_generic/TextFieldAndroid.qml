@@ -9,7 +9,6 @@ TextField {
     implicitHeight: Theme.componentHeight
 
     color: colorText
-    font.family: fontText.name
     font.pixelSize: Theme.fontSizeComponent
 
     property string title: ""

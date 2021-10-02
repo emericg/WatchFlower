@@ -9,7 +9,7 @@ Rectangle {
     implicitHeight: 32
 
     radius: Theme.componentRadius
-    color: Theme.colorComponent
+    color: Theme.colorComponentBackground
 
     border.width: 1
     border.color: Theme.colorComponentBorder

@@ -32,7 +32,7 @@ Button {
 
     background: Rectangle {
         radius: Theme.componentRadius
-        opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.33
+        opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.4
         color: fullColor ? control.primaryColor : control.secondaryColor
         border.width: Theme.componentBorderWidth
         border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
@@ -120,7 +120,7 @@ Button {
             text: control.text
             textFormat: Text.PlainText
             font: control.font
-            opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.33
+            opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.66
             color: fullColor ? fulltextColor : control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

@@ -72,12 +72,12 @@ ComboBox {
 
             radius: Theme.componentRadius
             opacity: enabled ? 1 : 0.3
-            color: highlighted ? "#F6F6F6" : "white"
+            color: highlighted ? "#F6F6F6" : "transparent"
         }
 
         contentItem: Text {
             text: modelData
-            color: highlighted ? "black" : "#666"
+            color: highlighted ? "black" : Theme.colorSubText
             font.pixelSize: Theme.fontSizeComponent
             elide: Text.ElideRight
             verticalAlignment: Text.AlignVCenter
@@ -89,7 +89,7 @@ ComboBox {
     popup: Popup {
         y: control.height - 1
         width: control.width
-        implicitHeight: contentItem.implicitHeight
+        implicitHeight: contentItem.implicitHeight + 2
         padding: 1
 
         contentItem: ListView {

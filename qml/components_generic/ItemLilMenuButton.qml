@@ -12,9 +12,8 @@ Item {
     signal clicked()
     property bool selected: false
 
-    property string colorBackground: Theme.colorComponent
-    property string colorBackgroundHighlight: Theme.colorHighContrast
-    property string colorContent: Theme.colorComponentContent
+    property string colorBackgroundHighlight: Theme.colorComponentDown
+    property string colorContent: Theme.colorComponentText
     property string colorContentHighlight: Theme.colorComponentContent
 
     property string text: ""
@@ -30,31 +29,32 @@ Item {
 
         property bool isHovered: false
 
-        hoverEnabled: false
+        hoverEnabled: true
         onEntered: isHovered = true
         onExited: isHovered = false
         onCanceled: isHovered = false
     }
 
     Rectangle {
-        id: bgHightlight
+        id: background
         anchors.fill: parent
         anchors.margins: 1
 
-        visible: parent.selected
-        opacity: 0.1
-        color: parent.colorContent
-    }
-
-    Rectangle {
-        id: bgFocus
-        anchors.fill: parent
-        anchors.margins: 1
-
-        opacity: mouseArea.isHovered ? 0.1 : 0
         color: parent.colorBackgroundHighlight
+        opacity: {
+            if (mouseArea.isHovered && parent.selected)
+                return 0.9
+            else if (parent.selected)
+                return 0.7
+            else if (mouseArea.isHovered)
+                return 0.5
+            else
+                return 0
+        }
         Behavior on opacity { OpacityAnimator { duration: 233 } }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     ImageSvg {
         id: contentImage
@@ -80,6 +80,6 @@ Item {
         verticalAlignment: Text.AlignVCenter
 
         color: (parent.selected) ? parent.colorContentHighlight : parent.colorContent
-        opacity: (parent.selected) ? 1 : 0.5
+        opacity: (parent.selected) ? 1 : 0.6
     }
 }
