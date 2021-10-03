@@ -268,39 +268,17 @@ Item {
         anchors.bottom: screenDeviceList.bottom
         anchors.bottomMargin: singleColumn ? 0 : 8
 
-        property bool singleColumn: true
         property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
-        property int boxHeight: bigWidget ? 144 : 100
 
-        property int cellSizeTarget: bigWidget ? 440 : 320
-        property int cellSize: cellSizeTarget
-        property int cellMarginTarget: 0
-        property int cellMargin: cellMarginTarget
-
-        cellWidth: cellSizeTarget + cellMarginTarget
-        cellHeight: boxHeight + cellMarginTarget
-
-        function computeCellSize() {
-            cellSizeTarget = bigWidget ? 440 : 320
-            boxHeight = bigWidget ? 144 : 100
-
-            var availableWidth = devicesView.width - cellMarginTarget
-
-            if (isTablet) { // FIXME hacky...
-                if (devicesView.width > 360)
-                    cellSizeTarget = 360
-                else
-                    cellSizeTarget = 320
-            }
-
-            var cellColumnsTarget = Math.trunc(availableWidth / (cellSizeTarget + cellMarginTarget))
-            singleColumn = (cellColumnsTarget === 1)
-            // 1 // Adjust only cellSize
-            cellSize = ((availableWidth - (cellMarginTarget * cellColumnsTarget)) / cellColumnsTarget)
-            // Recompute
-            cellWidth = cellSize + cellMargin
-            cellHeight = boxHeight + cellMarginTarget
+        property int cellWidthTarget: {
+            if (singleColumn) return devicesView.width
+            if (isTablet) return (bigWidget ? 350 : 280)
+            return (bigWidget ? 440 : 320)
         }
+        property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
+
+        cellWidth: (devicesView.width / cellColumnsTarget)
+        cellHeight: (bigWidget ? 144 : 100)
 
         ScrollBar.vertical: ScrollBar {
             visible: isDesktop
@@ -309,15 +287,12 @@ Item {
             policy: ScrollBar.AsNeeded
         }
 
-        onBigWidgetChanged: computeCellSize()
-        onWidthChanged: computeCellSize()
-
         model: deviceManager.devicesList
         delegate: DeviceWidget {
-            width: devicesView.cellSize
-            height: devicesView.boxHeight
-            singleColumn: devicesView.singleColumn
+            width: devicesView.cellWidth
+            height: devicesView.cellHeight
             bigAssMode: devicesView.bigWidget
+            singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
         }
     }
 

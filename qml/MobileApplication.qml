@@ -252,8 +252,8 @@ ApplicationWindow {
 
     property bool singleColumn: {
         if (isMobile) {
-            if (screenOrientation === Qt.PortraitOrientation ||
-                (isTablet && width < 480)) { // can be a 2/3 split screen on tablet
+            if ((isPhone && screenOrientation === Qt.PortraitOrientation) ||
+                (isTablet && width < 512)) { // can be a 2/3 split screen on tablet
                 return true
             } else {
                 return false
@@ -504,7 +504,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (wideMode ? 24 : 0)
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||

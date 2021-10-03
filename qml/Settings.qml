@@ -572,12 +572,14 @@ Item {
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: column.leftPad2
+                    anchors.right: spinBox_bluetoothSimUpdate.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Simultaneous updates")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                    font.pixelSize: Theme.fontSizeContent
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -968,7 +970,7 @@ Item {
                     height: 40
                     anchors.left: image_bigindicators.right
                     anchors.leftMargin: column.leftPad2
-                    anchors.right: switch_bigindicators.left
+                    anchors.right: row_bigindicators.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 

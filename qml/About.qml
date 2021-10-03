@@ -124,14 +124,9 @@ Item {
                 visible: isMobile
                 spacing: 16
 
-                onWidthChanged: {
-                    var ww = (parent.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
-                    if (ww > 0) { websiteBtn.width = ww; githubBtn.width = ww; }
-                }
-
                 ButtonWireframeImage {
                     id: websiteBtn
-                    width: 180
+                    width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
                     imgSize: 28
@@ -145,7 +140,7 @@ Item {
 
                 ButtonWireframeImage {
                     id: githubBtn
-                    width: 180
+                    width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
                     imgSize: 22
