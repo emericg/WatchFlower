@@ -572,7 +572,7 @@ Item {
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: column.leftPad2
-                    anchors.right: spinBox_bluetoothSimUpdate.left
+                    anchors.right: isDesktop ? null : spinBox_bluetoothSimUpdate.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 

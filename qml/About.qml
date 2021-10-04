@@ -139,7 +139,7 @@ Item {
                 }
 
                 ButtonWireframeImage {
-                    id: githubBtn
+                    id: supportBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -216,6 +216,7 @@ Item {
                 }
 
                 Text {
+                    id: authorTxt
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.right: parent.right
@@ -232,7 +233,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.NoButton
-                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        cursorShape: authorTxt.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
             }
@@ -262,6 +263,7 @@ Item {
                 }
 
                 Text {
+                    id: rateTxt
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
@@ -270,16 +272,19 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -16
-                        onClicked: {
-                            if (Qt.platform.os === "android")
-                                Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
-                            else if (Qt.platform.os === "ios")
-                                Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
-                        }
+                MouseArea {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : rateTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+                    onClicked: {
+                        if (Qt.platform.os === "android")
+                            Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
+                        else if (Qt.platform.os === "ios")
+                            Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
                     }
                 }
             }
@@ -307,6 +312,7 @@ Item {
                 }
 
                 Text {
+                    id: tutoTxt
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
@@ -315,12 +321,15 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -16
-                        onClicked: screenTutorial.reopen()
-                    }
+                MouseArea {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : tutoTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+                    onClicked: screenTutorial.reopen()
                 }
             }
 
@@ -358,12 +367,15 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -16
-                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
-                    }
+                MouseArea {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : websiteTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+                    onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
             }
 
@@ -401,12 +413,15 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -12
-                        onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
-                    }
+                MouseArea {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : githubTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+                    onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                 }
             }
 
