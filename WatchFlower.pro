@@ -322,13 +322,17 @@ ios {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
     QMAKE_BUNDLE = watchflower
 
+    # OS infos
+    QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
+    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
+
     # OS icons
     QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
     QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
 
-    # OS infos
-    QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
-    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
+    # iOS launch screen
+    AppLaunchScreen.files += $${PWD}/assets/ios/AppLaunchScreen.storyboard
+    QMAKE_BUNDLE_DATA += AppLaunchScreen
 
     # iOS developer settings
     exists($${PWD}/assets/ios/ios_signature.pri) {

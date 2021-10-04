@@ -33,7 +33,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>WatchFlower connects to Bluetooth Low Energy sensors.</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>AppLaunchScreen</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
