@@ -69,10 +69,6 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateHeader() >> " + currentDevice)
 
-        // Battery level
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
-
         // Status
         updateStatusText()
     }
@@ -201,8 +197,9 @@ Item {
                             anchors.left: textDeviceName.right
                             anchors.leftMargin: 16
 
-                            visible: source
-                            color: Theme.colorIcon
+                            visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+                            source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                            color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
                         }
                     }
 

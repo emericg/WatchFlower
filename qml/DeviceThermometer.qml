@@ -23,7 +23,6 @@ Item {
         onSensorsUpdated: { updateHeader() }
         onCapabilitiesUpdated: { updateHeader() }
         onStatusUpdated: { updateHeader() }
-        onBatteryUpdated: { updateHeader() }
         onDataUpdated: {
             updateData()
         }
@@ -103,10 +102,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isThermometer) return
         //console.log("DeviceThermometer // updateHeader() >> " + currentDevice)
-
-        // Battery level
-        imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
 
         // Status
         updateStatusText()
@@ -256,9 +251,10 @@ Item {
                     rotation: 90
                     anchors.horizontalCenter: parent.horizontalCenter
 
+                    visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+                    source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
                     fillMode: Image.PreserveAspectCrop
                     color: cccc
-                    visible: source
                 }
             }
 

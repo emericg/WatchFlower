@@ -12,10 +12,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("DevicePlantSensorLimits // updateHeader() >> " + currentDevice)
 
-        // Battery level
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
-
         // Address
         if (currentDevice.deviceAddress.charAt(0) === '{') {
             textAddress.text = currentDevice.deviceAddress.toUpperCase()
@@ -127,8 +123,9 @@ Item {
                             anchors.left: textDeviceName.right
                             anchors.leftMargin: 16
 
-                            visible: source
-                            color: Theme.colorIcon
+                            visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+                            source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                            color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
                         }
                     }
 

@@ -29,7 +29,6 @@ Item {
         onSensorsUpdated: { updateHeader() }
         onCapabilitiesUpdated: { updateHeader() }
         onStatusUpdated: { updateHeader() }
-        onBatteryUpdated: { updateHeader() }
         onDataUpdated: {
             updateHeader()
             updateData()

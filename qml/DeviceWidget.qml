@@ -22,24 +22,17 @@ Item {
         onSensorUpdated: { initBoxData() }
         onSensorsUpdated: { initBoxData() }
         onCapabilitiesUpdated: { initBoxData() }
-        onSettingsUpdated: { updateSensorSettings() }
         onStatusUpdated: { updateSensorStatus() }
+        onSettingsUpdated: { updateSensorSettings() }
         onDataUpdated: { updateSensorData() }
+        onRefreshUpdated: { updateSensorData() }
         onLimitsUpdated: { updateSensorData() }
-        onBatteryUpdated: { updateSensorBattery() }
     }
     Connections {
         target: ThemeEngine
         onCurrentThemeChanged: {
             updateSensorSettings()
             updateSensorStatus()
-            updateSensorData()
-            updateSensorBattery()
-        }
-    }
-    Connections {
-        target: devicesView
-        onBigWidgetChanged: {
             updateSensorData()
         }
     }
@@ -125,7 +118,6 @@ Item {
 
         updateSensorSettings()
         updateSensorStatus()
-        updateSensorBattery()
         updateSensorData()
     }
 
@@ -190,11 +182,6 @@ Item {
                 textLocation.text = boxDevice.deviceAddress
             }
         }
-    }
-
-    function updateSensorBattery() {
-        imageBattery.visible = (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
     }
 
     function updateSensorIcon() {
@@ -457,6 +444,8 @@ Item {
                         height: bigAssMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
+                        visible: (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
+                        source: UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
                         color: Theme.colorIcon
                         rotation: 90
                         fillMode: Image.PreserveAspectCrop

@@ -24,33 +24,19 @@ Item {
             plantSensorData.updateHeader()
             plantSensorLimits.updateHeader()
         }
-        onBatteryUpdated: {
-            plantSensorData.updateHeader()
-            plantSensorLimits.updateHeader()
-        }
-        onDataUpdated: {
-            plantSensorData.updateData()
-        }
         onRefreshUpdated: {
             plantSensorData.resetHistoryMode()
-            plantSensorData.updateData()
+            plantSensorData.updateGraph
             plantSensorHistory.updateData()
         }
         onHistoryUpdated: {
             plantSensorData.updateGraph()
-            plantSensorHistory.updateData()
-        }
-        onLimitsUpdated: {
-            plantSensorData.updateData()
         }
     }
 
     Connections {
         target: settingsManager
 
-        onTempUnitChanged: {
-            plantSensorData.updateData()
-        }
         onBigIndicatorChanged: {
             plantSensorData.reloadIndicators()
         }

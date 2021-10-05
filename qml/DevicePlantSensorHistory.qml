@@ -21,8 +21,7 @@ Item {
             tempChart.visible = false
         }
         if (currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor) {
-            if ((currentDevice.countDataNamed("soilMoisture") === 0) ||
-                (currentDevice.soilMoisture > 0 && currentDevice.countDataNamed("soilMoisture") > 0)) {
+            if (currentDevice.soilMoisture > 0 || currentDevice.countDataNamed("soilMoisture") > 0) {
                 hygroChart.visible = true
                 graphCount += 1
             } else {
@@ -38,8 +37,7 @@ Item {
             lumiChart.visible = false
         }
         if (currentDevice.hasSoilConductivitySensor) {
-            if ((currentDevice.countDataNamed("soilConductivity") === 0) ||
-                (currentDevice.soilConductivity > 0 && currentDevice.countDataNamed("soilConductivity") > 0)) {
+            if (currentDevice.soilConductivity > 0 || currentDevice.countDataNamed("soilConductivity") > 0) {
                 conduChart.visible = true
                 graphCount += 1
             } else {
@@ -61,10 +59,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
-
-        // Battery level
-        imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
     }
 
     function updateData() {
@@ -240,8 +234,9 @@ Item {
                 anchors.left: textDeviceName.right
                 anchors.leftMargin: 16
 
-                visible: source
-                color: Theme.colorIcon
+                visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+                source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
             }
         }
 
