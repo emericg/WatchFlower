@@ -1153,9 +1153,9 @@ bool DeviceManager::exportData(const QString &path)
         status = true;
         QTextStream eout(&efile);
 
-        QString legend = "Soil humidity (%), Soil conductivity (μs/cm), Temperature (";
+        QString legend = "Timestamp (YYYY-MM-DD hh:mm:ss), Soil moisture (%), Soil conductivity (μs/cm), Temperature (";
         legend += (isCelcius ? "℃" : "℉");
-        legend += "), Luminosity (lux)";
+        legend += "), Humidity (%RH), Luminosity (lux)";
         eout << legend << endl;
 
         for (auto d: qAsConst(m_devices_model->m_devices))
@@ -1185,8 +1185,10 @@ bool DeviceManager::exportData(const QString &path)
                 {
                     while (data.next())
                     {
-                        eout << data.value(0).toString() << ","
-                             << data.value(1).toString() << ",";
+                        eout << data.value(0).toString() << ",";
+
+                        if (dd->hasSoilMoistureSensor()) eout<< data.value(1).toString();
+                        eout << ",";
 
                         if (dd->hasSoilConductivitySensor()) eout << data.value(2).toString();
                         eout << ",";
@@ -1199,6 +1201,7 @@ bool DeviceManager::exportData(const QString &path)
                         eout << ",";
 
                         if (dd->hasLuminositySensor()) eout << data.value(6).toString();
+                        eout << ",";
 
                         eout << endl;
                     }
