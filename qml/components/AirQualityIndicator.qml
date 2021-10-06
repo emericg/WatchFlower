@@ -13,6 +13,7 @@ Item {
     property int valueMax: 500
     property int limitMin: 500
     property int limitMax: 1000
+
     property string legend: "AQI"
     property string color: Theme.colorIcon
 
@@ -36,7 +37,7 @@ Item {
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: 0
-            arcEnd: ((limitMin/valueMax) * 270) - 2
+            arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 2
             arcOffset: 225
             arcColor: (Theme.currentTheme === ThemeEngine.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
@@ -50,8 +51,8 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((limitMin/valueMax) * 270) + 2
-            arcEnd: ((limitMax/valueMax) * 270) - 2
+            arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 2
+            arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 2
             arcOffset: 225
             arcColor: Theme.colorOrange
             arcOpacity: 1
@@ -65,7 +66,7 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((limitMax/valueMax) * 270) + 2
+            arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 2
             arcEnd: 270
             arcOffset: 225
             arcColor: Theme.colorRed
@@ -88,7 +89,7 @@ Item {
         backgroundOpacity: 0.75
         backgroundColor: indicatorAirQuality.color
 
-        from:indicatorAirQuality.valueMin
+        from: indicatorAirQuality.valueMin
         to: indicatorAirQuality.valueMax
         value: indicatorAirQuality.value
     }
