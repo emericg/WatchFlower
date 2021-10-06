@@ -21,6 +21,7 @@ Unicode True
 !define MUI_FINISHPAGE_LINK_LOCATION "https://emeric.io/${APPNAME}/"
 !define MUI_WELCOMEPAGE_TITLE        "Welcome to the ${APPNAME} installer!"
 !define MUI_ICON                     "watchflower.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "nsis-banner.bmp"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
