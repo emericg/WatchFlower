@@ -37,6 +37,7 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+        <file alias="PopupCalibration.qml">components/PopupCalibration.qml</file>
         <file alias="PopupDeleteData.qml">components/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">components/PopupDeleteDevice.qml</file>
 

@@ -69,6 +69,8 @@ class Device: public QObject
     Q_PROPERTY(bool hasLastMove READ hasLastMove NOTIFY capabilitiesUpdated)
     Q_PROPERTY(bool hasWaterTank READ hasWaterTank NOTIFY capabilitiesUpdated)
     Q_PROPERTY(bool hasButtons READ hasButtons NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasCalibration READ hasCalibration NOTIFY capabilitiesUpdated)
+    Q_PROPERTY(bool hasReboot READ hasReboot NOTIFY capabilitiesUpdated)
 
     Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorsUpdated)
     Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorsUpdated)

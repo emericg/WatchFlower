@@ -131,22 +131,30 @@ void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState
                 // send initialize command "ee"
                 //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ee"), QLowEnergyService::WriteWithoutResponse);
 
-                // send command "aa" + datetime
-                QDateTime cdt = QDateTime::currentDateTime();
-                QByteArray cmd(QByteArray::fromHex("aa"));
-                cmd.push_back(cdt.date().year()%100);
-                cmd.push_back(cdt.date().month());
-                cmd.push_back(cdt.date().day());
-                cmd.push_back(cdt.time().hour());
-                cmd.push_back(cdt.time().minute());
-                cmd.push_back(cdt.time().second());
-                serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
+                if (m_ble_action == DeviceUtils::ACTION_CALIBRATE)
+                {
+                    // send qualibration request "ad"
+                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ad"), QLowEnergyService::WriteWithoutResponse);
+                }
+                else // if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+                {
+                    // send command "aa" + datetime
+                    QDateTime cdt = QDateTime::currentDateTime();
+                    QByteArray cmd(QByteArray::fromHex("aa"));
+                    cmd.push_back(cdt.date().year()%100);
+                    cmd.push_back(cdt.date().month());
+                    cmd.push_back(cdt.date().day());
+                    cmd.push_back(cdt.time().hour());
+                    cmd.push_back(cdt.time().minute());
+                    cmd.push_back(cdt.time().second());
+                    serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
 
-                // set notify interval "ae" + interval
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ae0101"), QLowEnergyService::WriteWithoutResponse);
+                    // set notify interval "ae" + interval
+                    //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ae0101"), QLowEnergyService::WriteWithoutResponse);
 
-                // send notify request "ab"
-                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ab"), QLowEnergyService::WriteWithoutResponse);
+                    // send notify request "ab"
+                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ab"), QLowEnergyService::WriteWithoutResponse);
+                }
             }
         }
     }
@@ -188,6 +196,10 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
         {
             //qDebug() << "* DeviceWP6003 update:" << getAddress();
             //qDebug() << "- data?" << data[6];
+        }
+        else if (data[0] == 173) // 0xad
+        {
+            //qDebug() << "* DeviceWP6003 calibration started:" << getAddress();
         }
         else if (data[0] == 10) // 0x0a
         {

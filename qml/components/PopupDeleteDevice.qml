@@ -44,6 +44,7 @@ Popup {
                 width: parent.width
 
                 text: qsTr("Are you sure you want to delete selected sensor(s)?")
+                textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
                 wrapMode: Text.WordWrap

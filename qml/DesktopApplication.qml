@@ -95,6 +95,16 @@ ApplicationWindow {
                 selectedDevice.actionWatering()
             }
         }
+        onDeviceCalibrateButtonClicked: {
+            if (selectedDevice) {
+                popupCalibration.open()
+            }
+        }
+        onDeviceRebootButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.actionReboot()
+            }
+        }
 
         onDeviceClearButtonClicked: {
             if (selectedDevice) {
@@ -305,6 +315,9 @@ ApplicationWindow {
         anchors.top: parent.top
     }
 
+    PopupCalibration {
+        id: popupCalibration
+    }
     PopupDeleteData {
         id: popupDeleteData
     }

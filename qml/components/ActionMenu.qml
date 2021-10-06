@@ -51,7 +51,7 @@ Rectangle {
 
         ActionButton {
             id: actionUpdate
-            index: 2
+            index: 0
             visible: (deviceManager.bluetooth && selectedDevice)
             button_text: qsTr("Update data")
             button_source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
@@ -64,7 +64,7 @@ Rectangle {
 
         ActionButton {
             id: actionRealtime
-            index: 2
+            index: 1
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
             button_text: qsTr("Real time data")
             button_source: "qrc:/assets/icons_material/duotone-update-24px.svg"
@@ -85,7 +85,7 @@ Rectangle {
 
         ActionButton {
             id: actionHistoryRefresh
-            index: 3
+            index: 2
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
             button_text: qsTr("Update history")
             button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
@@ -119,7 +119,7 @@ Rectangle {
 
         ActionButton {
             id: actionLed
-            index: 1
+            index: 4
             button_text: qsTr("Blink LED")
             button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
@@ -145,13 +145,39 @@ Rectangle {
 
         ActionButton {
             id: actionGraphMode
-            index: 0
+            index: 5
             button_text: qsTr("Switch graph")
-            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg"
             visible: (appContent.state === "DeviceThermometer")
             onButtonClicked: {
                 if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
                 else settingsManager.graphThermometer = "minmax"
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionCalibrate
+            index: 6
+            button_text: qsTr("Calibrate sensor")
+            button_source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
+            onButtonClicked: {
+                deviceCalibrateButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionButton {
+            id: actionReboot
+            index: 7
+            button_text: qsTr("Reboot sensor")
+            button_source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasReboot))
+            onButtonClicked: {
+                deviceRebootButtonClicked()
                 menuSelected(index)
                 close()
             }

@@ -185,6 +185,16 @@ ApplicationWindow {
                 selectedDevice.actionWatering()
             }
         }
+        onDeviceCalibrateButtonClicked: {
+            if (selectedDevice) {
+                popupCalibration.open()
+            }
+        }
+        onDeviceRebootButtonClicked: {
+            if (selectedDevice) {
+                selectedDevice.actionReboot()
+            }
+        }
 
         onDeviceClearButtonClicked: {
             if (selectedDevice) {
@@ -268,6 +278,9 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
+    PopupCalibration {
+        id: popupCalibration
+    }
     PopupDeleteData {
         id: popupDeleteData
     }

@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Popup {
-    id: popupDeleteData
+    id: popupCalibration
     x: (appWindow.width / 2) - (width / 2)
     y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (height / 2) /*- (appHeader.height)*/)
 
@@ -43,21 +43,46 @@ Popup {
             Text {
                 width: parent.width
 
-                text: qsTr("Are you sure you want to delete data for this sensor?")
+                text: qsTr("You are about to start sensor calibration.")
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
                 wrapMode: Text.WordWrap
             }
 
-            Text {
+            Column {
                 width: parent.width
+                spacing: 8
 
-                text: qsTr("You can either delete data from the application, or from both the sensor and application.")
-                textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeContent
-                color: Theme.colorSubText
-                wrapMode: Text.WordWrap
+                Text {
+                    width: parent.width
+
+                    text: qsTr("Calibration is needed when the values from the sensor stop making sense.")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                }
+
+                Text {
+                    width: parent.width
+
+                    text: qsTr("Before starting the calibration, please note that you need to place this sensor either <b>outside, close to a window, or inside a very well ventilated room</b>.")
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                }
+
+                Text {
+                    width: parent.width
+
+                    text: qsTr("The calibration process will take around 10 minutes to complete.")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                }
             }
 
             Flow {
@@ -65,7 +90,7 @@ Popup {
                 width: parent.width
                 height: singleColumn ? 120+32 : 40
 
-                property var btnSize: singleColumn ? width : ((width-spacing*2) / 3)
+                property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
                 spacing: 16
 
                 ButtonWireframe {
@@ -75,36 +100,21 @@ Popup {
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
-                    onClicked: popupDeleteData.close()
+                    onClicked: popupCalibration.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm1
+                    id: buttonConfirm
                     width: parent.btnSize
 
-                    text: qsTr("Delete local data")
-                    primaryColor: Theme.colorOrange
+                    text: qsTr("Start calibration")
+                    primaryColor: Theme.colorPrimary
                     fullColor: true
                     onClicked: {
                         if (selectedDevice) {
-                            selectedDevice.actionClearData()
+                             selectedDevice.actionCalibrate()
                         }
-                        popupDeleteData.confirmed()
-                        popupDeleteData.close()
-                    }
-                }
-                ButtonWireframe {
-                    id: buttonConfirm2
-                    width: parent.btnSize
-
-                    text: qsTr("Delete sensor data")
-                    primaryColor: Theme.colorRed
-                    fullColor: true
-                    onClicked: {
-                        if (selectedDevice) {
-                             selectedDevice.actionClearHistory()
-                        }
-                        popupDeleteData.confirmed()
-                        popupDeleteData.close()
+                        popupCalibration.confirmed()
+                        popupCalibration.close()
                     }
                 }
             }

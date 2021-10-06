@@ -16,6 +16,8 @@ Rectangle {
     signal backButtonClicked()
     signal rightMenuClicked() // compatibility
 
+    signal deviceRebootButtonClicked()
+    signal deviceCalibrateButtonClicked()
     signal deviceWateringButtonClicked()
     signal deviceLedButtonClicked()
     signal deviceRefreshButtonClicked()
@@ -175,6 +177,34 @@ Rectangle {
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceWateringButtonClicked()
             tooltipText: qsTr("Watering")
+        }
+        ButtonCompactable {
+            id: buttonCalibrate
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasCalibration))
+
+            source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceCalibrateButtonClicked()
+            tooltipText: qsTr("Calibrate")
+        }
+        ButtonCompactable {
+            id: buttonReboot
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasReboot))
+
+            source: "qrc:/assets/icons_material/baseline-restart_alt-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: deviceRebootButtonClicked()
+            tooltipText: qsTr("Reboot")
         }
         ButtonCompactable {
             id: buttonLed

@@ -1559,7 +1559,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/baseline-manage_accounts-24px.svg"
+                        source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
                     }
                 }
 
@@ -1709,7 +1709,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-manage_accounts-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
                 }
 
                 Text {
