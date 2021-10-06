@@ -439,13 +439,19 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         if (temp != m_temperature)
         {
-            m_temperature = temp;
-            Q_EMIT dataUpdated();
+            if (temp > -20.f && temp < 100.f)
+            {
+                m_temperature = temp;
+                Q_EMIT dataUpdated();
+            }
         }
         if (hygro != m_humidity)
         {
-            m_humidity = hygro;
-            Q_EMIT dataUpdated();
+            if (hygro >= 0.f && hygro <= 100.f)
+            {
+                m_humidity = hygro;
+                Q_EMIT dataUpdated();
+            }
         }
 
         m_lastUpdate = QDateTime::currentDateTime();
@@ -478,38 +484,52 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
 /* ************************************************************************** */
 
+bool DeviceThermoBeacon::areValuesValid(const float t, const float h) const
+{
+    if (t <= 0.f && h <= 0.f) return false;
+    if (t < -20.f || t > 100.f) return false;
+    if (h < 0.f || t > 100.f) return false;
+
+    return true;
+}
+
 bool DeviceThermoBeacon::addDatabaseRecord(const int64_t timestamp, const float t, const float h)
 {
     bool status = false;
 
-    if (t <= 0.f && h <= 0.f) return status;
-
-    if (m_dbInternal || m_dbExternal)
+    if (areValuesValid(t, h))
     {
-        // SQL date format YYYY-MM-DD HH:MM:SS
-        // We only save one value every 30m
-
-        QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
-        QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (1800 - timestamp % 1800) - 1800);
-
-        QSqlQuery addData;
-        addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                        " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
-        addData.bindValue(":deviceAddr", getAddress());
-        addData.bindValue(":ts", tmcd_rounded.toString("yyyy-MM-dd hh:mm:00"));
-        addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
-        addData.bindValue(":temp", t);
-        addData.bindValue(":hygro", h);
-        status = addData.exec();
-
-        if (status)
+        if (m_dbInternal || m_dbExternal)
         {
-            m_lastUpdateDatabase = tmcd;
+            // SQL date format YYYY-MM-DD HH:MM:SS
+            // We only save one record every 30m
+
+            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+            QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (1800 - timestamp % 1800) - 1800);
+
+            QSqlQuery addData;
+            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
+                            " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
+            addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":ts", tmcd_rounded.toString("yyyy-MM-dd hh:mm:00"));
+            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
+            addData.bindValue(":temp", t);
+            addData.bindValue(":hygro", h);
+            status = addData.exec();
+
+            if (status)
+            {
+                m_lastUpdateDatabase = tmcd;
+            }
+            else
+            {
+                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+            }
         }
-        else
-        {
-            qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-        }
+    }
+    else
+    {
+        qWarning() << "DeviceThermoBeacon values are INVALID";
     }
 
     return status;

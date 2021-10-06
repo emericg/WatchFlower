@@ -121,7 +121,7 @@
 | Screen                            | EInk                              |
 | Battery                           | 1 x CR2032                        |
 | Thermometer                       | 0 ~ 60 °C (± 0.3 °C)              |
-| Hygrometer                        | 0 ~ 99% RH (± 3 %RH)              |
+| Hygrometer                        | 0 ~ 99% RH (± 3% RH)              |
 
 | Hygrometer                        | SensorBlue / Brifit / ORIA        |
 | --------------------------------- | --------------------------------- |
@@ -130,7 +130,7 @@
 | Screen                            | LCD                               |
 | Battery                           | 1 x CR2477                        |
 | Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |
-| Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
+| Hygrometer                        | 0 ~ 99% RH (± 5% RH)              |
 | BLE API                           | [link](thermobeacon-ble-api.md)   |
 
 | Keychain Hygrometer               | SensorBlue / Brifit / ORIA        |
@@ -140,7 +140,7 @@
 | Screen                            | N/A                               |
 | Battery                           | 1 x CR2032 or CR2477              |
 | Thermometer                       | -20 ~ 65 °C (± 0.5 °C)            |
-| Hygrometer                        | 0 ~ 99% RH (± 5 %RH)              |
+| Hygrometer                        | 0 ~ 99% RH (± 5% RH)              |
 | BLE API                           | [link](thermobeacon-ble-api.md)   |
 
 

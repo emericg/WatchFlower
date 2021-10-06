@@ -133,7 +133,11 @@ Item {
                 if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
                     heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                     heatIndex.visible = true
+                } else {
+                    heatIndex.visible = false
                 }
+            } else {
+                heatIndex.visible = false
             }
         }
     }

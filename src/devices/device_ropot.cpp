@@ -470,6 +470,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         {
             // Parse entry // TODO
         }
+
         return;
     }
 
@@ -502,27 +503,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            if (m_dbInternal || m_dbExternal)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":hygro", m_soilMoisture);
-                addData.bindValue(":condu", m_soilConductivity);
-                addData.bindValue(":temp", m_temperature);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-
-                m_lastUpdateDatabase = m_lastUpdate;
-            }
-
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshRealtime();
@@ -531,7 +511,10 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
             else
             {
-                refreshDataFinished(true);
+                bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
+                                                m_soilMoisture, m_soilConductivity, m_temperature);
+
+                refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
             }
 
@@ -544,6 +527,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "- m_temperature:" << m_temperature;
 #endif
         }
+
         return;
     }
 }
@@ -595,8 +579,11 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
                 if (temp != m_temperature)
                 {
-                    m_temperature = temp;
-                    Q_EMIT dataUpdated();
+                    if (temp > -20.f && temp < 100.f)
+                    {
+                        m_temperature = temp;
+                        Q_EMIT dataUpdated();
+                    }
                 }
             }
             else if (data[12] == 6 && value.size() >= 17)
@@ -604,8 +591,11 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 hygro = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
                 if (hygro != m_humidity)
                 {
-                    m_humidity = hygro;
-                    Q_EMIT dataUpdated();
+                    if (hygro >= 0.f && hygro <= 100.f)
+                    {
+                        m_humidity = hygro;
+                        Q_EMIT dataUpdated();
+                    }
                 }
             }
             else if (data[12] == 7 && value.size() >= 18)
@@ -613,8 +603,11 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
                 if (lumi != m_luminosityLux)
                 {
-                    m_luminosityLux = lumi;
-                    Q_EMIT dataUpdated();
+                    if (lumi >= 0 && lumi < 150000)
+                    {
+                        m_luminosityLux = lumi;
+                        Q_EMIT dataUpdated();
+                    }
                 }
             }
             else if (data[12] == 8 && value.size() >= 17)
@@ -622,8 +615,11 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 moist = static_cast<int16_t>(data[15] + (data[16] << 8));
                 if (moist != m_soilMoisture)
                 {
-                    m_soilMoisture = moist;
-                    Q_EMIT dataUpdated();
+                    if (moist >= 0 && moist <= 100)
+                    {
+                        m_soilMoisture = moist;
+                        Q_EMIT dataUpdated();
+                    }
                 }
             }
             else if (data[12] == 9 && value.size() >= 17)
@@ -631,8 +627,11 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                 fert = static_cast<int16_t>(data[15] + (data[16] << 8));
                 if (fert != m_soilConductivity)
                 {
-                    m_soilConductivity = fert;
-                    Q_EMIT dataUpdated();
+                    if (fert >= 0 && fert < 20000)
+                    {
+                        m_soilConductivity = fert;
+                        Q_EMIT dataUpdated();
+                    }
                 }
             }
             else if (data[12] == 10 && value.size() >= 16)
@@ -681,6 +680,62 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
 #endif
         }
     }
+}
+
+/* ************************************************************************** */
+
+bool DeviceRopot::areValuesValid(const int soilMoisture, const int soilConductivity,
+                                 const float temperature) const
+{
+    if (soilMoisture < 0 || soilMoisture > 100) return false;
+    if (soilConductivity < 0 || soilConductivity > 20000) return false;
+    if (temperature < -20.f || temperature > 100.f) return false;
+
+    return true;
+}
+
+bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
+                                    const int soilMoisture, const int soilConductivity,
+                                    const float temperature)
+{
+    bool status = false;
+
+    if (areValuesValid(soilMoisture, soilConductivity, temperature))
+    {
+        if (m_dbInternal || m_dbExternal)
+        {
+            // SQL date format YYYY-MM-DD HH:MM:SS
+            // We only save one record every 60m
+
+            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+
+            QSqlQuery addData;
+            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
+                            " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
+            addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":ts", tmcd.toString("yyyy-MM-dd hh:00:00"));
+            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
+            addData.bindValue(":hygro", soilMoisture);
+            addData.bindValue(":condu", soilConductivity);
+            addData.bindValue(":temp", temperature);
+            status = addData.exec();
+
+            if (status)
+            {
+                m_lastUpdateDatabase = tmcd;
+            }
+            else
+            {
+                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "DeviceRopot values are INVALID";
+    }
+
+    return status;
 }
 
 /* ************************************************************************** */

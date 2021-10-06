@@ -79,6 +79,13 @@ private:
     QByteArray m_key_challenge;
     QByteArray m_key_finish;
 
+    bool areValuesValid(const int soilMoisture, const int soilConductivity,
+                        const float temperature, const int luminosity) const;
+
+    bool addDatabaseRecord(const int64_t timestamp,
+                           const int soilMoisture, const int soilConductivity,
+                           const float temperature, const int luminosity);
+
 private slots:
     void askForReading();
 };
