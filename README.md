@@ -45,9 +45,9 @@ Various new Bluetooth devices and sensors can be added to WatchFlower. If you ha
 Checkout out this [page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
 You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
 
-Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
-
 > WatchFlower is NOT associated with Xiaomi, Parrot, or any device manufacturer.
+
+Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
 
 | Flower Care | RoPot | Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :----------: | :--------: | :----: |
@@ -146,7 +146,7 @@ You could also give WatchFlower binary the net_raw and net_admin capabilities, s
 * [StatusBar](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
 * [ekkesSHAREexample](https://github.com/ekke/ekkesSHAREexample) ([license](https://github.com/ekke/ekkesSHAREexample/blob/master/LICENSE))
 * [SingleApplication](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
-* RC4 code from Christophe Devine([GPL 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
+* RC4 code from Christophe Devine ([GPL 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
 * Graphical resources: [assets/COPYING](assets/COPYING)
 
 
