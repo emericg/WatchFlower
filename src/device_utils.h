@@ -84,7 +84,9 @@ public:
         DEVICE_LED_RGB              = (1 <<  5), //!< Has an addressable LED
         DEVICE_BUTTONS              = (1 <<  6), //!< Has button(s)
         DEVICE_LAST_MOVE            = (1 <<  7), //!< Can report the last time it has been physically moved
-        DEVICE_WATER_TANK           = (1 <<  8), //!< Has a water tank / automatic watering capability
+        DEVICE_WATER_TANK           = (1 <<  8), //!< Has a water tank and automatic/manual watering capability
+        DEVICE_CALIBRATION          = (1 <<  9), //!< Can be calibrated
+        DEVICE_REBOOT               = (1 << 10), //!< Can be rebooted
     };
     Q_ENUM(DeviceCapabilities)
 
@@ -105,7 +107,7 @@ public:
         SENSOR_WATER_LEVEL          = (1 << 12), //!< Has a rain gauge (or water tank level)
         SENSOR_WIND_DIRECTION       = (1 << 13), //!< Has a weather vane
         SENSOR_WIND_SPEED           = (1 << 14), //!< Has an anemometer
-        // environmental data (air monitoring)
+        // environmental data (air quality monitoring)
         SENSOR_PM1                  = (1 << 16),
         SENSOR_PM25                 = (1 << 17),
         SENSOR_PM10                 = (1 << 18),
@@ -145,6 +147,10 @@ public:
         ACTION_LED_BLINK = 8,
         ACTION_CLEAR_HISTORY,
         ACTION_WATERING,
+        ACTION_CALIBRATE,
+
+        ACTION_REBOOT,
+        ACTION_SHUTDOWN,
     };
     Q_ENUM(DeviceActions)
 };

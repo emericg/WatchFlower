@@ -41,6 +41,7 @@ DeviceWP6003::DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *pa
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceCapabilities += DeviceUtils::DEVICE_CALIBRATION;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_eCO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
@@ -51,6 +52,7 @@ DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceCapabilities += DeviceUtils::DEVICE_CALIBRATION;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_eCO2;
     m_deviceSensors += DeviceUtils::SENSOR_VOC;
@@ -197,6 +199,7 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             uint16_t hcho = static_cast<uint16_t>((data[12] << 8) + data[13]);
             uint16_t co2 = static_cast<uint16_t>((data[16] << 8) + data[17]);
 
+            // still preheating?
             if (voc < 16383 && hcho < 16383)
             {
                 m_voc = voc;

@@ -230,6 +230,42 @@ void Device::actionWatering()
     }
 }
 
+void Device::actionCalibrate()
+{
+    //qDebug() << "Device::actionCalibrate()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        m_ble_action = DeviceUtils::ACTION_CALIBRATE;
+        actionStarted();
+        deviceConnect();
+    }
+}
+
+void Device::actionReboot()
+{
+    //qDebug() << "Device::actionReboot()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        m_ble_action = DeviceUtils::ACTION_REBOOT;
+        actionStarted();
+        deviceConnect();
+    }
+}
+
+void Device::actionShutdown()
+{
+    //qDebug() << "Device::actionShutdown()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        m_ble_action = DeviceUtils::ACTION_SHUTDOWN;
+        actionStarted();
+        deviceConnect();
+    }
+}
+
 /* ************************************************************************** */
 
 void Device::refreshQueue()

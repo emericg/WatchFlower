@@ -250,6 +250,8 @@ public:
     bool hasLastMove() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_LAST_MOVE); }
     bool hasWaterTank() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_WATER_TANK); }
     bool hasButtons() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_BUTTONS); }
+    bool hasCalibration() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CALIBRATION); }
+    bool hasReboot() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REBOOT); }
 
     bool hasSoilMoistureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_MOISTURE); }
     bool hasSoilConductivitySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_CONDUCTIVITY); }
@@ -323,10 +325,13 @@ public:
     Q_INVOKABLE bool setSetting(const QString &key, QVariant value);
 
     // Start actions
-    Q_INVOKABLE void actionLedBlink();
-    Q_INVOKABLE void actionWatering();
     Q_INVOKABLE void actionClearData();
     Q_INVOKABLE void actionClearHistory();
+    Q_INVOKABLE void actionLedBlink();
+    Q_INVOKABLE void actionWatering();
+    Q_INVOKABLE void actionCalibrate();
+    Q_INVOKABLE void actionReboot();
+    Q_INVOKABLE void actionShutdown();
 
     // BLE advertisement
     virtual void parseAdvertisementData(const QByteArray &value);
