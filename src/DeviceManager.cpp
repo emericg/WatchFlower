@@ -409,7 +409,7 @@ void DeviceManager::checkBluetoothIos()
 
         if (m_discoveryAgent->isActive())
         {
-            qDebug() << "Checking iOS bluetooth...";
+            qDebug() << "Checking iOS Bluetooth...";
         }
     }
 }

@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi MiJia "bluetooth Temperature and Humidity sensor with LCD"
+ * Xiaomi "Bluetooth Temperature and Humidity sensor with LCD"
  * ClearGrass "Digital Bluetooth Thermometer and Hygrometer"
  * LYWSDCGQ device / round body / LCD
  *

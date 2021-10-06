@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi MiJia "Digital Hygrometer"
+ * Xiaomi "Digital Hygrometer"
  * LYWSD03MMC device / square body / LCD
  *
  * MMC "Digital Hygrometer"

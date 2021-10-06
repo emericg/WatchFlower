@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi MiJia "Digital Hygrometer Clock"
+ * Xiaomi "Digital Hygrometer Clock"
  * LYWSD02 device / rectangular body / E-Ink
  *
  * Miaomiaoce "Smart Hygrometer Alarm Clock"

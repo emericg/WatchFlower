@@ -6,7 +6,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/graphs/contributors)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
-WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi MiJia "Flower Care" and "RoPot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
+WatchFlower is a **plant monitoring application** that reads and plots data from compatible Bluetooth sensors like Xiaomi "Flower Care" and "RoPot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!
 It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!
 
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
@@ -19,9 +19,10 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 ### Features
 
 * Support many plant sensors and thermometers
+* Support a couple of environmental sensors
 * Name your plants and set your own limits for optimal care
-* Background updates & notifications (desktop ONLY for now)
-* Synchronize sensors history (FlowerCare ONLY for now)
+* Background updates and notifications (desktop ONLY for now)
+* Synchronize sensors history (FlowerCare and ThermoBeacon ONLY for now)
 * Configurable update intervals
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
@@ -30,7 +31,7 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 
 ### TODOs
 
-* Background updates & notifications for Android and iOS
+* Background updates and notifications for Android and iOS
 
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
@@ -45,6 +46,8 @@ Checkout out this [page](docs/README.md) to get more informations about the devi
 You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
 
 Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
+
+> WatchFlower is NOT associated with Xiaomi, Parrot, or any device manufacturer.
 
 | Flower Care | RoPot | Flower Power | Parrot Pot | HiGrow |
 | :---------: | :---: | :----------: | :--------: | :----: |
@@ -141,7 +144,9 @@ You could also give WatchFlower binary the net_raw and net_admin capabilities, s
 
 * [Qt](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
 * [StatusBar](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
+* [ekkesSHAREexample](https://github.com/ekke/ekkesSHAREexample) ([license](https://github.com/ekke/ekkesSHAREexample/blob/master/LICENSE))
 * [SingleApplication](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
+* RC4 code from Christophe Devine([GPL 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
 * Graphical resources: [assets/COPYING](assets/COPYING)
 
 

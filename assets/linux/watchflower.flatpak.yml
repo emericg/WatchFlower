@@ -62,12 +62,12 @@ modules:
     - --sysconfdir=/app/etc
   sources:
     - type: archive
-      url: http://www.kernel.org/pub/linux/bluetooth/bluez-5.59.tar.xz
-      sha256: 046b95b386d0bfb2a16311fe799d517ee7735045512d89902c4ed701db477316
+      url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.61.tar.xz
+      sha256: 83afd6c52179554bfeabbcb538fec2eb6be90a8ac3c40871b49d7ad8b49c423b
       x-checker-data:
         type: anitya
         project-id: 10029
-        url-template: http://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
+        url-template: https://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
 
 - name: qtconnectivity
   buildsystem: simple
@@ -94,5 +94,5 @@ modules:
   buildsystem: qmake
   sources:
     - type: archive
-      url: https://github.com/emericg/WatchFlower/archive/refs/tags/v2.0.tar.gz
-      sha256: 0b237e0fc7990151d8a08c7083f7ebdcb01712274cc35628b04e261561e47929
+      url: https://github.com/emericg/WatchFlower/archive/refs/tags/v2.1.tar.gz
+      sha256: 01c917b7f2c7173da70eb90d7d5aaccf578ceccec09a1cc999ab65bbc830d5d5

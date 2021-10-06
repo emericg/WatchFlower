@@ -36,7 +36,7 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi MiJia "RoPot" or "FlowerPot" (HHCCPOT002)
+ * Xiaomi "RoPot" or "FlowerPot" (HHCCPOT002)
  * WANFEI "RoPot" (?)
  * VegTrug "VegTrugGrow Pot"
  *

@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * ClearGrass "Digital bluetooth Thermometer and Hygrometer"
+ * ClearGrass "Digital Bluetooth Thermometer and Hygrometer"
  * CGG1 device / round body / E-Ink
  *
  * Protocol infos:
