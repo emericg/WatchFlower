@@ -77,7 +77,7 @@ jobs:
   ## macOS build ###############################################################
   build-mac:
     name: "macOS CI build"
-    runs-on: macos-latest
+    runs-on: macos-11
     steps:
       # Checkout the repository
       - name: Checkout repository and submodules
