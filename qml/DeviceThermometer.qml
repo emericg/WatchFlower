@@ -401,6 +401,7 @@ Item {
 
             ItemBannerSync {
                 id: bannersync
+                z: 5
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right

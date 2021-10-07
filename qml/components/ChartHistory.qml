@@ -13,8 +13,8 @@ Item {
     property int floatprecision: 0
     property string color: Theme.colorBlue
 
-    property real valueMin: limitMin - (25 * ((limitMax-limitMin)/50))
-    property real valueMax: limitMax + (25 * ((limitMax-limitMin)/50))
+    property real valueMin: limitMin - (25 * ((limitMax-limitMin) / 50))
+    property real valueMax: limitMax + (25 * ((limitMax-limitMin) / 50))
     property real limitMin: -1
     property real limitMax: -1
 
@@ -86,12 +86,13 @@ Item {
 
     Item { // chart area
         id: chartArea
-        width: parent.width - (singleColumn ? 4+4 : 28+14)
+        width: parent.width - (singleColumn ? 8 : 32)
 
         anchors.top: titleArea.bottom
         anchors.bottom: parent.bottom
         anchors.bottomMargin: isPhone ? 12 : 24
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: singleColumn ? 0 : 12
 
         ////////////////
 

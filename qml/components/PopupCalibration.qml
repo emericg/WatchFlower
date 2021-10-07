@@ -88,9 +88,9 @@ Popup {
             Flow {
                 id: flowContent
                 width: parent.width
-                height: singleColumn ? 120+32 : 40
+                height: singleColumn ? 80+16 : 40
 
-                property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
+                property var btnSize: singleColumn ? width : ((width-spacing) / 2)
                 spacing: 16
 
                 ButtonWireframe {

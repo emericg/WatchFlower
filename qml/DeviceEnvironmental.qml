@@ -576,7 +576,7 @@ Item {
 
             ItemBannerSync {
                 id: bannersync
-                z: 2
+                z: 5
                 anchors.left: parent.left
                 anchors.right: parent.right
             }
