@@ -389,7 +389,15 @@ void Device::refreshDataFinished(bool status, bool cached)
         Q_EMIT statusUpdated();
 
         Q_EMIT dataUpdated();
-        Q_EMIT refreshUpdated();
+
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        {
+            Q_EMIT refreshUpdated();
+        }
+        else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        {
+            Q_EMIT historyUpdated();
+        }
     }
     else
     {
@@ -404,7 +412,17 @@ void Device::refreshDataFinished(bool status, bool cached)
     checkDataAvailability();
 
     // Inform device manager
-    if (!cached) Q_EMIT deviceUpdated(this);
+    if (!cached)
+    {
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        {
+            Q_EMIT deviceUpdated(this);
+        }
+        else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        {
+            Q_EMIT deviceSynced(this);
+        }
+    }
 }
 
 void Device::refreshHistoryFinished(bool status)
@@ -422,6 +440,9 @@ void Device::refreshHistoryFinished(bool status)
     Q_EMIT historyUpdated();
 
     checkDataAvailability();
+
+    // Inform device manager
+    Q_EMIT deviceSynced(this);
 }
 
 void Device::refreshRealtime()
@@ -582,6 +603,14 @@ QDateTime Device::getLastHistorySync() const
     return m_lastHistorySync;
 }
 
+int Device::getLastHistorySync_int() const
+{
+    if (m_lastHistorySync.isValid())
+        return QDateTime::currentDateTime().toSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
+
+    return -1;
+}
+
 float Device::getLastHistorySync_days() const
 {
     int64_t sec = QDateTime::currentDateTime().toSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
@@ -614,6 +643,11 @@ bool Device::needsUpdateDb() const
     return false;
 }
 
+bool Device::needsSync() const
+{
+    return false;
+}
+
 /* ************************************************************************** */
 
 int Device::getLastUpdateInt() const
@@ -635,6 +669,30 @@ int Device::getLastUpdateInt() const
     }
 
     return mins;
+}
+
+QString Device::getLastUpdateString() const
+{
+    QString lastUpdate;
+
+    if (m_lastUpdate.isValid())
+    {
+        // Return timestamp (HH:MM) of last update
+        //lastUpdate = m_lastUpdate.toString("HH:MM");
+
+        // Return number of hours or minutes since last update
+        int mins = getLastUpdateInt();
+        if (mins > 0)
+        {
+            if (mins < 60) {
+                lastUpdate = tr("%n minute(s)", "", mins);
+            } else {
+                lastUpdate = tr("%n hour(s)", "", std::floor(mins / 60.0));
+            }
+        }
+    }
+
+    return lastUpdate;
 }
 
 int Device::getLastUpdateDbInt() const
@@ -677,30 +735,6 @@ int Device::getLastErrorInt() const
     }
 
     return mins;
-}
-
-QString Device::getLastUpdateString() const
-{
-    QString lastUpdate;
-
-    if (m_lastUpdate.isValid())
-    {
-        // Return timestamp (HH:MM) of last update
-        //lastUpdate = m_lastUpdate.toString("HH:MM");
-
-        // Return number of hours or minutes since last update
-        int mins = getLastUpdateInt();
-        if (mins > 0)
-        {
-            if (mins < 60) {
-                lastUpdate = tr("%n minute(s)", "", mins);
-            } else {
-                lastUpdate = tr("%n hour(s)", "", std::floor(mins / 60.0));
-            }
-        }
-    }
-
-    return lastUpdate;
 }
 
 /* ************************************************************************** */

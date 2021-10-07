@@ -69,6 +69,14 @@ Item {
         }
         exitSelectionMode()
     }
+    function syncSelectedDevice() {
+        for (var i = 0; i < devicesView.count; i++) {
+            if (deviceManager.getDeviceByProxyIndex(i).selected) {
+                deviceManager.syncDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
+            }
+        }
+        exitSelectionMode()
+    }
     function removeSelectedDevice() {
         var devicesAddr = [];
         for (var i = 0; i < devicesView.count; i++) {
@@ -218,6 +226,24 @@ Item {
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
+
+                ButtonCompactable {
+                    id: buttonSync
+                    height: !wideMode ? 36 : 34
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: deviceManager.bluetooth
+
+                    compact: !wideMode
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
+                    onClicked: screenDeviceList.syncSelectedDevice()
+
+                    text: qsTr("Sync")
+                    source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+
+                    animation: "rotate"
+                    animationRunning: deviceManager.syncing
+                }
 
                 ButtonCompactable {
                     id: buttonRefresh

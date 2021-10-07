@@ -19,10 +19,12 @@ function getDeviceStatusText(deviceStatus) {
         txt = qsTr("Connected")
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_WORKING) {
         txt = qsTr("Working...")
-    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING ||
-               deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_HISTORY ||
-               deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_REALTIME) {
+    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING) {
         txt = qsTr("Updating...")
+    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_HISTORY) {
+        txt = qsTr("Syncing...")
+    } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_UPDATING_REALTIME) {
+        txt = qsTr("Realtime data")
     }
 
     return txt + " "

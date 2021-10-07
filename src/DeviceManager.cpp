@@ -139,6 +139,7 @@ DeviceManager::DeviceManager()
             if (d)
             {
                 connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+                connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
                 m_devices_model->addDevice(d);
 
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
@@ -674,42 +675,23 @@ bool DeviceManager::isUpdating() const
     return !m_devices_updating.empty();
 }
 
-void DeviceManager::refreshDevices_start()
+void DeviceManager::updateDevice(const QString &address)
 {
-    //qDebug() << "DeviceManager::refreshDevices_start()";
+    //qDebug() << "DeviceManager::updateDevice() " << address;
 
-    // Already updating?
-    if (isUpdating())
+    if (hasBluetooth())
     {
-        // Here we can:             // > do nothing, and queue another refresh
-        //refreshDevices_stop();    // > (or) cancel current refresh
-        return;                     // > (or) bail
-    }
-
-    // Make sure we have Bluetooth and devices
-    if (checkBluetooth() && m_devices_model->hasDevices())
-    {
-        m_devices_queued.clear();
-        m_devices_updating.clear();
-
-        // Background refresh
-        listenDevices();
-
-        // Start refresh (if last device update > 1 min)
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
+            if (dd && dd->getAddress() == address)
             {
-                if (dd->getName() == "ThermoBeacon") continue;
-
-                // as long as we didn't just update it: go for refresh
-                m_devices_queued.push_back(dd);
+                m_devices_updating_queue += dd;
                 dd->refreshQueue();
+                refreshDevices_continue();
+                break;
             }
         }
-
-        refreshDevices_continue();
     }
 }
 
@@ -728,7 +710,7 @@ void DeviceManager::refreshDevices_check()
     // Make sure we have Bluetooth and devices
     if (checkBluetooth() && m_devices_model->hasDevices())
     {
-        m_devices_queued.clear();
+        m_devices_updating_queue.clear();
         m_devices_updating.clear();
 
         // Background refresh // WIP
@@ -747,7 +729,7 @@ void DeviceManager::refreshDevices_check()
                 if (dd->needsUpdateRt())
                 {
                     // old or no data: go for refresh
-                    m_devices_queued.push_back(dd);
+                    m_devices_updating_queue.push_back(dd);
                     dd->refreshQueue();
                 }
             }
@@ -757,23 +739,62 @@ void DeviceManager::refreshDevices_check()
     }
 }
 
+void DeviceManager::refreshDevices_start()
+{
+    //qDebug() << "DeviceManager::refreshDevices_start()";
+
+    // Already updating?
+    if (isUpdating())
+    {
+        // Here we can:             // > do nothing, and queue another refresh
+        //refreshDevices_stop();    // > (or) cancel current refresh
+        return;                     // > (or) bail
+    }
+
+    // Make sure we have Bluetooth and devices
+    if (checkBluetooth() && m_devices_model->hasDevices())
+    {
+        m_devices_updating_queue.clear();
+        m_devices_updating.clear();
+
+        // Background refresh
+        listenDevices();
+
+        // Start refresh (if last device update > 1 min)
+        for (auto d: qAsConst(m_devices_model->m_devices))
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
+            {
+                if (dd->getName() == "ThermoBeacon") continue;
+
+                // as long as we didn't just update it: go for refresh
+                m_devices_updating_queue.push_back(dd);
+                dd->refreshQueue();
+            }
+        }
+
+        refreshDevices_continue();
+    }
+}
+
 void DeviceManager::refreshDevices_continue()
 {
-    //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_queued.size() << "device left";
+    //qDebug() << "DeviceManager::refreshDevices_continue()" << m_devices_updating_queue.size() << "device left";
 
     if (hasBluetooth())
     {
-        if (!m_devices_queued.empty())
+        if (!m_devices_updating_queue.empty())
         {
             int sim = SettingsManager::getInstance()->getBluetoothSimUpdates();
 
-            while (!m_devices_queued.empty() && m_devices_updating.size() < sim)
+            while (!m_devices_updating_queue.empty() && m_devices_updating.size() < sim)
             {
                 // update next device in the list
-                Device *d = qobject_cast<Device*>(m_devices_queued.first());
+                Device *d = qobject_cast<Device*>(m_devices_updating_queue.first());
                 if (d)
                 {
-                    m_devices_queued.removeFirst();
+                    m_devices_updating_queue.removeFirst();
                     m_devices_updating.push_back(d);
                     if (!m_updating)
                     {
@@ -787,7 +808,7 @@ void DeviceManager::refreshDevices_continue()
         }
     }
 
-    if (m_devices_queued.empty() && m_devices_updating.empty())
+    if (m_devices_updating_queue.empty() && m_devices_updating.empty())
     {
         if (m_updating)
         {
@@ -814,7 +835,7 @@ void DeviceManager::refreshDevices_stop()
 {
     //qDebug() << "DeviceManager::refreshDevices_stop()";
 
-    if (!m_devices_queued.empty())
+    if (!m_devices_updating_queue.empty())
     {
         for (auto d: qAsConst(m_devices_updating))
         {
@@ -822,7 +843,7 @@ void DeviceManager::refreshDevices_stop()
             if (dd) dd->refreshStop();
         }
 
-        m_devices_queued.clear();
+        m_devices_updating_queue.clear();
         m_devices_updating.clear();
         m_updating = false;
 
@@ -830,9 +851,17 @@ void DeviceManager::refreshDevices_stop()
     }
 }
 
-void DeviceManager::updateDevice(const QString &address)
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+bool DeviceManager::isSyncing() const
 {
-    //qDebug() << "DeviceManager::updateDevice() " << address;
+    return !m_devices_syncing.empty();
+}
+
+void DeviceManager::syncDevice(const QString &address)
+{
+    //qDebug() << "DeviceManager::syncDevice() " << address;
 
     if (hasBluetooth())
     {
@@ -841,15 +870,168 @@ void DeviceManager::updateDevice(const QString &address)
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address)
             {
-                m_devices_queued += dd;
+                m_devices_syncing_queue += dd;
                 dd->refreshQueue();
-                refreshDevices_continue();
+                syncDevices_continue();
                 break;
             }
         }
     }
 }
 
+void DeviceManager::syncDevices_check()
+{
+    //qDebug() << "DeviceManager::syncDevices_check()";
+
+    // Already syncing?
+    if (isSyncing())
+    {
+        // Here we can:             // > do nothing, and queue another sync
+        //syncDevices_stop();       // > (or) cancel current sync
+        return;                     // > (or) bail
+    }
+
+    // Make sure we have Bluetooth and devices
+    if (checkBluetooth() && m_devices_model->hasDevices())
+    {
+        m_devices_syncing_queue.clear();
+        m_devices_syncing.clear();
+
+        // Start sync (if necessary)
+        for (int i = 0; i < m_devices_model->rowCount(); i++)
+        {
+            QModelIndex e = m_devices_filter->index(i, 0);
+            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+
+            if (dd)
+            {
+                if (!(dd->getName() == "Flower care" || dd->getName() == "ThermoBeacon")) continue;
+
+                if (dd->getLastHistorySync_int() < 0 || dd->getLastHistorySync_int() > 6*60*60)
+                {
+                    // old or no data: go for refresh
+                    m_devices_syncing_queue.push_back(dd);
+                    dd->refreshQueue();
+                }
+            }
+        }
+
+        syncDevices_continue();
+    }
+}
+
+void DeviceManager::syncDevices_start()
+{
+    //qDebug() << "DeviceManager::syncDevices_start()";
+
+    // Already syncing?
+    if (isSyncing())
+    {
+        // Here we can:             // > do nothing, and queue another sync
+        //syncDevices_stop();       // > (or) cancel current sync
+        return;                     // > (or) bail
+    }
+
+    // Make sure we have Bluetooth and devices
+    if (checkBluetooth() && m_devices_model->hasDevices())
+    {
+        m_devices_syncing_queue.clear();
+        m_devices_syncing.clear();
+
+        // Start sync (if necessary)
+        for (auto d: qAsConst(m_devices_model->m_devices))
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd)
+            {
+                if (!(dd->getName() == "Flower care" || dd->getName() == "ThermoBeacon")) continue;
+
+                if (dd->getLastHistorySync_int() < 0 || dd->getLastHistorySync_int() > 6*60*60)
+                {
+                    m_devices_syncing_queue.push_back(dd);
+                    dd->refreshQueue();
+                }
+            }
+        }
+
+        syncDevices_continue();
+    }
+}
+
+void DeviceManager::syncDevices_continue()
+{
+    //qDebug() << "DeviceManager::syncDevices_continue()" << m_devices_syncing_queue.size() << "device left";
+
+    if (hasBluetooth())
+    {
+        if (!m_devices_syncing_queue.empty())
+        {
+            int sim = 1;
+
+            while (!m_devices_syncing_queue.empty() && m_devices_syncing.size() < sim)
+            {
+                // update next device in the list
+                Device *d = qobject_cast<Device*>(m_devices_syncing_queue.first());
+                if (d)
+                {
+                    m_devices_syncing_queue.removeFirst();
+                    m_devices_syncing.push_back(d);
+                    if (!m_syncing)
+                    {
+                        m_syncing = true;
+                        Q_EMIT syncingChanged();
+                    }
+
+                    d->refreshStartHistory();
+                }
+            }
+        }
+    }
+
+    if (m_devices_syncing_queue.empty() && m_devices_syncing.empty())
+    {
+        if (m_syncing)
+        {
+            m_syncing = false;
+            Q_EMIT syncingChanged();
+        }
+    }
+}
+
+void DeviceManager::syncDevices_finished(Device *dev)
+{
+    //qDebug() << "DeviceManager::syncDevices_finished()" << dev->getAddress();
+
+    if (m_devices_syncing.contains(dev))
+    {
+        m_devices_syncing.removeAll(dev);
+
+        // sync next device in the list
+        syncDevices_continue();
+    }
+}
+
+void DeviceManager::syncDevices_stop()
+{
+    //qDebug() << "DeviceManager::syncDevices_stop()";
+
+    if (!m_devices_syncing_queue.empty())
+    {
+        for (auto d: qAsConst(m_devices_syncing))
+        {
+            Device *dd = qobject_cast<Device*>(d);
+            if (dd) dd->refreshStop();
+        }
+
+        m_devices_syncing_queue.clear();
+        m_devices_syncing.clear();
+        m_updating = false;
+
+        Q_EMIT syncingChanged();
+    }
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)

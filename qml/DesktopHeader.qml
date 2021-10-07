@@ -29,6 +29,7 @@ Rectangle {
     signal deviceSettingsButtonClicked()
 
     signal refreshButtonClicked()
+    signal syncButtonClicked()
     signal rescanButtonClicked()
     signal plantsButtonClicked()
     signal settingsButtonClicked()
@@ -456,6 +457,24 @@ Rectangle {
             animationRunning: deviceManager.scanning
         }
         ButtonCompactable {
+            id: buttonSyncAll
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: (deviceManager.bluetooth && menuMain.visible)
+            enabled: !deviceManager.syncing
+
+            source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+            onClicked: syncButtonClicked()
+            text: qsTr("Sync all sensors")
+            tooltipText: text
+
+            animation: "fade"
+            animationRunning: deviceManager.syncing
+        }
+        ButtonCompactable {
             id: buttonRefreshAll
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
@@ -467,7 +486,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: refreshButtonClicked()
-            text: qsTr("Refresh sensors")
+            text: qsTr("Refresh all sensors")
             tooltipText: text
 
             animation: "rotate"
@@ -478,10 +497,11 @@ Rectangle {
 
         Row {
             id: menuMain
-            spacing: 0
+
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "Settings" ||
                       appContent.state === "About")
+            spacing: 0
 
             ItemMenuButton {
                 id: menuPlants

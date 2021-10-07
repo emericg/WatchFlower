@@ -414,6 +414,64 @@ Drawer {
                 ////////
 
                 Item {
+                    id: rectangleSync
+                    height: 48
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    enabled: deviceManager.bluetooth && !deviceManager.scanning
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            if (!deviceManager.scanning) {
+                                if (deviceManager.syncing) {
+                                    deviceManager.syncDevices_stop()
+                                } else {
+                                    deviceManager.syncDevices_start()
+                                }
+                                appDrawer.close()
+                            }
+                        }
+                    }
+
+                    ImageSvg {
+                        id: buttonSync
+                        width: 24
+                        height: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft + 16
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+                        color: rectangleSync.enabled ? Theme.colorText : Theme.colorSubText
+
+                        NumberAnimation on rotation {
+                            id: syncAnimation
+                            duration: 2000
+                            from: 0
+                            to: 360
+                            loops: Animation.Infinite
+                            running: deviceManager.syncing
+                            alwaysRunToEnd: true
+                            easing.type: Easing.Linear
+                        }
+                    }
+                    Label {
+                        anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft + 56
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("Sync sensors history")
+                        font.pixelSize: 13
+                        font.bold: true
+                        color: rectangleSync.enabled ? Theme.colorText : Theme.colorSubText
+                    }
+                }
+
+                ////////
+
+                Item {
                     id: rectangleRescan
                     height: 48
                     anchors.left: parent.left

@@ -31,6 +31,7 @@ Item {
         }
         onHistoryUpdated: {
             plantSensorData.updateGraph()
+            plantSensorHistory.updateData()
         }
     }
 

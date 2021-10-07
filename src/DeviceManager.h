@@ -52,6 +52,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
+    Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
@@ -70,11 +71,17 @@ class DeviceManager: public QObject
     DeviceModel *m_devices_model = nullptr;
     DeviceFilter *m_devices_filter = nullptr;
 
-    QList <QObject *> m_devices_queued;
+    QList <QObject *> m_devices_updating_queue;
     QList <QObject *> m_devices_updating;
+
+    QList <QObject *> m_devices_syncing_queue;
+    QList <QObject *> m_devices_syncing;
 
     bool m_updating = false;
     bool isUpdating() const;
+
+    bool m_syncing = false;
+    bool isSyncing() const;
 
     bool m_scanning = false;
     bool isScanning() const;
@@ -99,6 +106,7 @@ public:
     Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
 
     Q_INVOKABLE void updateDevice(const QString &address);
+    Q_INVOKABLE void syncDevice(const QString &address);
     Q_INVOKABLE void removeDevice(const QString &address);
     Q_INVOKABLE void removeDeviceData(const QString &address);
 
@@ -106,11 +114,17 @@ public:
     Q_INVOKABLE void scanDevices_stop();
     Q_INVOKABLE void listenDevices();
 
-    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old
+    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old necessary?
     Q_INVOKABLE void refreshDevices_start();    //!< Refresh every devices
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
     Q_INVOKABLE void refreshDevices_stop();
+
+    Q_INVOKABLE void syncDevices_check();       //!< Sync history for devices necessary?
+    Q_INVOKABLE void syncDevices_start();       //!< Sync history for every devices
+    void syncDevices_continue();
+    void syncDevices_finished(Device *dev);
+    Q_INVOKABLE void syncDevices_stop();
 
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
@@ -155,6 +169,7 @@ Q_SIGNALS:
     void bluetoothChanged();
     void scanningChanged();
     void updatingChanged();
+    void syncingChanged();
 };
 
 /* ************************************************************************** */

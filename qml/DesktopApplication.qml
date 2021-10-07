@@ -136,6 +136,15 @@ ApplicationWindow {
                 }
             }
         }
+        onSyncButtonClicked: {
+            if (!deviceManager.scanning) {
+                if (deviceManager.syncing) {
+                    deviceManager.syncDevices_stop()
+                } else {
+                    deviceManager.syncDevices_start()
+                }
+            }
+        }
         onRescanButtonClicked: {
             if (!deviceManager.updating) {
                 if (deviceManager.scanning) {
