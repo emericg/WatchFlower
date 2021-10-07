@@ -184,7 +184,10 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
-                      (selectedDevice && selectedDevice.hasCalibration))
+                      (selectedDevice && selectedDevice.hasCalibration) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -198,7 +201,10 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
-                      (selectedDevice && selectedDevice.hasReboot))
+                      (selectedDevice && selectedDevice.hasReboot) &&
+                      (appContent.state === "DevicePlantSensor" ||
+                       appContent.state === "DeviceThermometer" ||
+                       appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/baseline-restart_alt-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -229,7 +235,9 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn && (buttonThermoChart.visible || buttonWatering.visible || buttonLed.visible))
+            visible: (!singleColumn && (buttonThermoChart.visible || buttonWatering.visible ||
+                                        buttonCalibrate.visible || buttonReboot.visible ||
+                                        buttonLed.visible))
         }
 
         ButtonCompactable {

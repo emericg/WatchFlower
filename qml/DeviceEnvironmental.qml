@@ -163,25 +163,25 @@ Item {
 
         if (primary === "voc") {
             indicatorAirQuality.legend = qsTr("VOC")
+            indicatorAirQuality.limitMin = 500
+            indicatorAirQuality.limitMax = 1000
             indicatorAirQuality.valueMin = 0
             indicatorAirQuality.valueMax = 1500
             indicatorAirQuality.value = currentDevice.voc
-            indicatorAirQuality.limitMin = 500
-            indicatorAirQuality.limitMax = 1000
         } else if (primary === "hcho") {
             indicatorAirQuality.legend = qsTr("HCHO")
+            indicatorAirQuality.limitMin = 500
+            indicatorAirQuality.limitMax = 1000
             indicatorAirQuality.valueMin = 0
             indicatorAirQuality.valueMax = 1500
             indicatorAirQuality.value = currentDevice.hcho
-            indicatorAirQuality.limitMin = 500
-            indicatorAirQuality.limitMax = 1000
         } else if (primary === "co2") {
             indicatorAirQuality.legend = (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+            indicatorAirQuality.limitMin = 850
+            indicatorAirQuality.limitMax = 1500
             indicatorAirQuality.valueMin = 0
             indicatorAirQuality.valueMax = 2000
             indicatorAirQuality.value = currentDevice.co2
-            indicatorAirQuality.limitMin = 850
-            indicatorAirQuality.limitMax = 1500
         }
 
         if (primary === "hygrometer") {
