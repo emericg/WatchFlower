@@ -79,7 +79,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 1;
-            color: Theme.colorSeparator;
+            color: Theme.colorSeparator
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
         }
 
@@ -113,7 +113,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width; height: 1;
-            color: Theme.colorSeparator;
+            color: Theme.colorSeparator
             visible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible)
         }
 

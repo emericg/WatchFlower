@@ -6,13 +6,16 @@ import ThemeEngine 1.0
 Item {
     id: actionButton
     height: isPhone ? 36 : 40
-    width: parent.width
+    anchors.left: parent.left
+    anchors.leftMargin: Theme.componentBorderWidth
+    anchors.right: parent.right
+    anchors.rightMargin: Theme.componentBorderWidth
+
+    signal buttonClicked()
 
     property int index
     property string button_text
     property string button_source
-
-    signal buttonClicked
 
     property alias contentWidth: tButton.contentWidth
 
@@ -55,6 +58,7 @@ Item {
             hoverEnabled: isDesktop && visible
             onEntered: viewButton.state = "hovered"
             onExited: viewButton.state = "normal"
+            onCanceled: viewButton.state = "normal"
 
             onClicked: buttonClicked()
         }

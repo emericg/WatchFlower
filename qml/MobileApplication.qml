@@ -322,6 +322,12 @@ ApplicationWindow {
                 } else {
                     appContent.state = "DeviceList"
                 }
+            } else if (appContent.state === "DeviceEnvironmental") {
+                if (appHeader.rightMenuIsOpen()) {
+                    appHeader.rightMenuClose()
+                } else {
+                    appContent.state = "DeviceList"
+                }
             } else if (appContent.state === "Permissions") {
                 appContent.state = "About"
             } else if (appContent.state === "Tutorial") {
