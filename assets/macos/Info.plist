@@ -26,5 +26,9 @@
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>WatchFlower connects to Bluetooth Low Energy sensors.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>WatchFlower connects to Bluetooth Low Energy sensors.</string>
 </dict>
 </plist>
