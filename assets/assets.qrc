@@ -12,15 +12,16 @@
         <file>menus/menu_infos.svg</file>
 
         <file>icons_fontawesome/lungs-solid.svg</file>
+        <file>icons_custom/duotone-date_all-24px.svg</file>
+        <file>icons_custom/indicators-24px.svg</file>
+        <file>icons_custom/inside-24px.svg</file>
         <file>icons_custom/nuclear_icon.svg</file>
         <file>icons_custom/nuclear_icon_big.svg</file>
-        <file>icons_custom/inside-24px.svg</file>
         <file>icons_custom/outside-24px.svg</file>
         <file>icons_custom/pot_empty-24px.svg</file>
         <file>icons_custom/pot_flower-24px.svg</file>
         <file>icons_custom/thermometer-24px.svg</file>
         <file>icons_custom/thermometer_big-24px.svg</file>
-        <file>icons_custom/indicators-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-air-24px.svg</file>
@@ -78,7 +79,6 @@
         <file>icons_material/outline-settings_remote-24px.svg</file>
         <file>icons_material/outline-settings-24px.svg</file>
 
-        <file>icons_material/duotone-autorenew-24px.svg</file>
         <file>icons_material/duotone-bluetooth_connected-24px.svg</file>
         <file>icons_material/duotone-bluetooth_searching-24px.svg</file>
         <file>icons_material/duotone-brightness_4-24px.svg</file>

@@ -256,7 +256,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRefreshHistoryButtonClicked()
-            tooltipText: qsTr("Sync history")
+            tooltipText: qsTr("Synchronize history")
         }
         ButtonCompactable {
             id: buttonClearHistory
@@ -381,7 +381,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: menuMain.visible
+            visible: (appContent.state === "DeviceList")
             source: "qrc:/assets/icons_material/baseline-filter_list-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
@@ -438,6 +438,13 @@ Rectangle {
                 }
             }
         }
+        Rectangle { // separator
+            anchors.verticalCenter: parent.verticalCenter
+            height: 40
+            width: Theme.componentBorderWidth
+            color: Theme.colorHeaderHighlight
+            visible: (deviceManager.bluetooth && appContent.state === "DeviceList")
+        }
         ButtonCompactable {
             id: buttonScan
             height: compact ? 36 : 34
@@ -464,7 +471,7 @@ Rectangle {
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: !deviceManager.syncing
 
-            source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+            source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: syncButtonClicked()
@@ -491,6 +498,13 @@ Rectangle {
 
             animation: "rotate"
             animationRunning: deviceManager.updating
+        }
+        Rectangle { // separator
+            anchors.verticalCenter: parent.verticalCenter
+            height: 40
+            width: Theme.componentBorderWidth
+            color: Theme.colorHeaderHighlight
+            visible: (deviceManager.bluetooth && menuMain.visible)
         }
 
         ////////////

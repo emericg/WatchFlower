@@ -109,8 +109,8 @@ Rectangle {
             visible: true
 
             Item {
-                width: parent.height;
-                height: width;
+                width: parent.height
+                height: width
                 anchors.verticalCenter: parent.verticalCenter
                 visible: (appContent.state === "DeviceList")
 
@@ -119,7 +119,14 @@ Rectangle {
                     width: 24; height: 24;
                     anchors.centerIn: parent
 
-                    source: (deviceManager.scanning) ? "qrc:/assets/icons_material/baseline-search-24px.svg" : "qrc:/assets/icons_material/baseline-autorenew-24px.svg";
+                    source: {
+                        if (deviceManager.scanning)
+                            return "qrc:/assets/icons_material/baseline-search-24px.svg"
+                        else if (deviceManager.syncing)
+                            return "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+                        else
+                            return "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                    }
                     color: Theme.colorHeaderContent
                     opacity: 0
                     Behavior on opacity { OpacityAnimator { duration: 333 } }
@@ -139,7 +146,7 @@ Rectangle {
                     SequentialAnimation on opacity {
                         //id: rescanAnimation
                         loops: Animation.Infinite
-                        running: deviceManager.scanning
+                        running: deviceManager.scanning || deviceManager.syncing
                         onStopped: workingIndicator.opacity = 0
                         PropertyAnimation { to: 1; duration: 750; }
                         PropertyAnimation { to: 0.33; duration: 750; }

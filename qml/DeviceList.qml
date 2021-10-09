@@ -238,10 +238,10 @@ Item {
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenDeviceList.syncSelectedDevice()
 
-                    text: qsTr("Sync")
-                    source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+                    text: qsTr("Synchronize history")
+                    source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
 
-                    animation: "rotate"
+                    animation: "fade"
                     animationRunning: deviceManager.syncing
                 }
 

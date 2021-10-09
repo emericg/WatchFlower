@@ -443,18 +443,17 @@ Drawer {
                         anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material/duotone-autorenew-24px.svg"
+                        source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
                         color: rectangleSync.enabled ? Theme.colorText : Theme.colorSubText
 
-                        NumberAnimation on rotation {
+                        SequentialAnimation on opacity {
                             id: syncAnimation
-                            duration: 2000
-                            from: 0
-                            to: 360
                             loops: Animation.Infinite
                             running: deviceManager.syncing
-                            alwaysRunToEnd: true
-                            easing.type: Easing.Linear
+                            onStopped: buttonRescan.opacity = 1
+
+                            PropertyAnimation { to: 0.33; duration: 750; }
+                            PropertyAnimation { to: 1; duration: 750; }
                         }
                     }
                     Label {
@@ -507,7 +506,7 @@ Drawer {
                             id: rescanAnimation
                             loops: Animation.Infinite
                             running: deviceManager.scanning
-                            onStopped: buttonRescan.opacity = 1;
+                            onStopped: buttonRescan.opacity = 1
 
                             PropertyAnimation { to: 0.33; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }

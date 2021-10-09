@@ -676,6 +676,7 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeContent
+                    wrapMode: Text.WordWrap
                 }
 
                 Column {
