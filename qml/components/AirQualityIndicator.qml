@@ -76,7 +76,7 @@ Item {
 
     ////////////////
 
-    ProgressCircle {
+    ProgressCircle { // actual indicator
         anchors.fill: parent
 
         arcOffset: 225
@@ -86,7 +86,7 @@ Item {
         arcColor: indicatorAirQuality.color
 
         background: true
-        backgroundOpacity: 0.75
+        backgroundOpacity: 0.5
         backgroundColor: indicatorAirQuality.color
 
         from: indicatorAirQuality.valueMin

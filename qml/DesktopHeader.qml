@@ -393,7 +393,7 @@ Rectangle {
                 } else if (settingsManager.orderBy === "plant") {
                     txt += qsTr("plant name")
                 } else if (settingsManager.orderBy === "model") {
-                    txt += qsTr("device model")
+                    txt += qsTr("sensor model")
                 } else if (settingsManager.orderBy === "location") {
                     txt += qsTr("location")
                 }
@@ -457,7 +457,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: rescanButtonClicked()
-            text: qsTr("Scan for sensors")
+            text: qsTr("Search for new sensors")
             tooltipText: text
 
             animation: "fade"
@@ -475,7 +475,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: syncButtonClicked()
-            text: qsTr("Sync all sensors")
+            text: qsTr("Sync sensors history")
             tooltipText: text
 
             animation: "fade"
@@ -493,7 +493,7 @@ Rectangle {
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: refreshButtonClicked()
-            text: qsTr("Refresh all sensors")
+            text: qsTr("Refresh sensors data")
             tooltipText: text
 
             animation: "rotate"

@@ -149,8 +149,20 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    ItemBannerSync {
+        id: bannerSync
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        z: 5
+    }
+
     Item {
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.topMargin: bannerSync.visible ? bannerSync.height : 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         SwipeView {
             id: sensorPages

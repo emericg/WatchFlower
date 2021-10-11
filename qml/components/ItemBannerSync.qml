@@ -36,7 +36,6 @@ Rectangle {
         spacing: 8
 
         ImageSvg {
-            id: buttonBle
             width: 24
             height: 24
             anchors.verticalCenter: parent.verticalCenter

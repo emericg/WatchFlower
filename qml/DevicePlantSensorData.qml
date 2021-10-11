@@ -272,7 +272,6 @@ Item {
                             source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                             color: Theme.colorSubText
 
-                            //visible: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse)
                             opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
@@ -347,7 +346,6 @@ Item {
                             source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                             color: Theme.colorSubText
 
-                            //visible: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputArea.containsMouse)
                             opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
@@ -393,14 +391,6 @@ Item {
 
             ////////
 
-            ItemBannerSync {
-                id: bannersync
-                visible: (contentGrid_lvl2.columns === 1)
-                width: parent.width
-            }
-
-            ////////
-
             Item {
                 id: itemIndicators
                 height: Math.max(itemHeader.height, indicatorsLoader.height)
@@ -424,22 +414,9 @@ Item {
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
             height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height) : contentGrid_lvl1.height
 
-            ItemBannerSync {
-                id: bannersync2
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: !bannersync.visible
-                z: 5
-            }
-
             Loader {
                 id: chartAioLoader
-                anchors.top: parent.top
-                anchors.topMargin: bannersync2.visible ? bannersync2.height : 0
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
+                anchors.fill: parent
 
                 asynchronous: true
                 onLoaded: {

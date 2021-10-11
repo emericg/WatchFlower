@@ -130,10 +130,8 @@ Item {
                 anchors.leftMargin: 64
                 anchors.right: parent.right
                 anchors.rightMargin: 4
-                topPadding: 0
-                bottomPadding: 0
 
-                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby BLE (Bluetooth Low Energy) sensors.<br>" +
+                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.<br>" +
                            "This permission is only needed while scanning for new sensors.<br>" +
                            "WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
                 textFormat: Text.StyledText
@@ -149,7 +147,7 @@ Item {
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
                 text: qsTr("Official information")
-                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth-le#permissions")
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
             }
 
             ////////

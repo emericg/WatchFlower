@@ -314,7 +314,7 @@ Drawer {
                             } else if (settingsManager.orderBy === "plant") {
                                 txt += qsTr("plant name")
                             } else if (settingsManager.orderBy === "model") {
-                                txt += qsTr("device model")
+                                txt += qsTr("sensor model")
                             } else if (settingsManager.orderBy === "location") {
                                 txt += qsTr("location")
                             }
@@ -517,7 +517,7 @@ Drawer {
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Search for new devices")
+                        text: qsTr("Search for new sensors")
                         font.pixelSize: 13
                         font.bold: true
                         color: rectangleRescan.enabled ? Theme.colorText : Theme.colorSubText

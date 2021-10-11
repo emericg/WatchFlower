@@ -79,7 +79,7 @@ Item {
 
                 text: qsTr("Official information")
                 primaryColor: Theme.colorSubText
-                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions")
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
             }
 
             ButtonWireframe {
