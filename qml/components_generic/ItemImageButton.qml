@@ -19,13 +19,14 @@ Item {
 
     // settings
     property url source: ""
-    property int btnSize: height
-    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
-    property string highlightMode: "circle" // available: circle, color, both, off
 
-    property int rotation: 0
+    property string highlightMode: "circle" // available: border, circle, color, both (circle+color), off
     property bool border: false
     property bool background: false
+
+    property int rotation: 0
+    property int btnSize: height
+    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
 
     // colors
     property string iconColor: Theme.colorIcon
@@ -41,58 +42,66 @@ Item {
 
     MouseArea {
         anchors.fill: control
-        propagateComposedEvents: false
+
         hoverEnabled: true
+        propagateComposedEvents: false
 
         onClicked: control.clicked()
         onPressed: control.pressed()
         onPressAndHold: control.pressAndHold()
 
-        onEntered: {
-            hovered = true
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
-        }
-        onExited: {
-            hovered = false
-            bgRect.opacity = control.background ? 0.75 : 0
-        }
+        onEntered: hovered = true
+        onExited: hovered = false
+        onCanceled: hovered = false
     }
+
+    ////////
 
     Rectangle {
         id: bgRect
         width: btnSize
         height: btnSize
         radius: btnSize
-        anchors.verticalCenter: control.verticalCenter
+        anchors.centerIn: control
 
         visible: (highlightMode === "circle" || highlightMode === "both" || control.background)
         color: control.backgroundColor
 
-        border.width: control.border ? Theme.componentBorderWidth : 0
+        border.width: {
+            if (control.border || ((hovered || selected) && highlightMode === "border"))
+                return Theme.componentBorderWidth
+            return 0
+        }
         border.color: control.borderColor
 
-        opacity: control.background ? 0.75 : 0
+        opacity: {
+            if (hovered) {
+               return (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
+            } else {
+                return control.background ? 0.75 : 0
+            }
+        }
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
+
+    ////////
 
     ImageSvg {
         id: contentImage
         width: imgSize
         height: imgSize
-        anchors.centerIn: bgRect
+        anchors.centerIn: control
 
         rotation: control.rotation
         opacity: control.enabled ? 1.0 : 0.33
+        Behavior on opacity { NumberAnimation { duration: 333 } }
 
         source: control.source
         color: {
-            if (selected === true) {
-                control.highlightColor
-            } else if (highlightMode === "color" || highlightMode === "both") {
-                control.hovered ? control.highlightColor : control.iconColor
-            } else {
-                control.iconColor
+            if ((selected || hovered) && (highlightMode === "color" || highlightMode === "both")) {
+                return control.highlightColor
             }
+            return control.iconColor
         }
 
         SequentialAnimation on opacity {

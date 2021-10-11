@@ -18,26 +18,28 @@ Item {
     property bool selected: false
 
     // settings
-    property int btnSize: height
-    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
     property url source: ""
-    property int rotation: 0
 
+    property string highlightMode: "circle" // available: border, circle, color, both (circle+color), off
     property bool border: false
     property bool background: false
-    property string highlightMode: "circle" // available: circle, color, both, off
+
+    property int rotation: 0
+    property int btnSize: height
+    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
 
     // colors
     property string iconColor: Theme.colorIcon
     property string highlightColor: Theme.colorPrimary
-    property string backgroundColor: Theme.colorComponent
     property string borderColor: Theme.colorComponentBorder
+    property string backgroundColor: Theme.colorComponent
 
     // animation
     property string animation: "" // available: rotate, fade
     property bool animationRunning: false
 
     // tooltip
+    property bool tooltipEnabled: true
     property string tooltipPosition: "bottom"
     property string tooltipText: ""
 
@@ -47,45 +49,55 @@ Item {
 
     MouseArea {
         anchors.fill: control
-        propagateComposedEvents: false
+
         hoverEnabled: true
+        propagateComposedEvents: false
 
         onClicked: control.clicked()
         onPressed: control.pressed()
         onPressAndHold: control.pressAndHold()
 
-        onEntered: {
-            hovered = true
-            bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
-        }
-        onExited: {
-            hovered = false
-            bgRect.opacity = control.background ? 0.75 : 0
-        }
+        onEntered: hovered = true
+        onExited: hovered = false
+        onCanceled: hovered = false
     }
+
+    ////////
 
     Rectangle {
         id: bgRect
         width: btnSize
         height: btnSize
         radius: btnSize
-        anchors.verticalCenter: control.verticalCenter
+        anchors.centerIn: control
 
         visible: (highlightMode === "circle" || highlightMode === "both" || control.background)
         color: control.backgroundColor
 
-        border.width: control.border ? Theme.componentBorderWidth : 0
+        border.width: {
+            if (control.border || ((hovered || selected) && highlightMode === "border"))
+                return Theme.componentBorderWidth
+            return 0
+        }
         border.color: control.borderColor
 
-        opacity: control.background ? 0.75 : 0
+        opacity: {
+            if (hovered) {
+               return (highlightMode === "circle" || highlightMode === "both" || control.background) ? 1 : 0.75
+            } else {
+                return control.background ? 0.75 : 0
+            }
+        }
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
+
+    ////////
 
     ImageSvg {
         id: contentImage
         width: imgSize
         height: imgSize
-        anchors.centerIn: bgRect
+        anchors.centerIn: control
 
         rotation: control.rotation
         opacity: control.enabled ? 1.0 : 0.33
@@ -93,13 +105,10 @@ Item {
 
         source: control.source
         color: {
-            if (selected === true) {
-                control.highlightColor
-            } else if (highlightMode === "color" || highlightMode === "both") {
-                control.hovered ? control.highlightColor : control.iconColor
-            } else {
-                control.iconColor
+            if ((selected || hovered) && (highlightMode === "color" || highlightMode === "both")) {
+                return control.highlightColor
             }
+            return control.iconColor
         }
 
         SequentialAnimation on opacity {
@@ -129,12 +138,10 @@ Item {
         anchors.fill: bgRect
 
         visible: control.tooltipText
-        enabled: control.tooltipText
-
         property bool tooltipVisible: control.hovered
         onTooltipVisibleChanged: ttT.checkPosition()
 
-        opacity: tooltipVisible ? 1 : 0
+        opacity: (tooltipEnabled && tooltipVisible) ? 1 : 0
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
         state: control.tooltipPosition
@@ -266,13 +273,17 @@ Item {
             anchors.rightMargin: (tooltip.state === "topRight" || tooltip.state === "bottomRight") ? 8 : 16
             anchors.bottomMargin: 16
 
+            text: tooltipText
+            textFormat: Text.PlainText
+            color: iconColor
+
             function checkPosition() {
-                if (!text) return;
-                if (!control.hovered) return;
+                if (!text) return
+                if (!control.hovered) return
 
                 var obj = mapToItem(appContent, x, y)
-                var thestart = obj.x - 12
-                var theend = obj.x + 12 + 12 + ttT.contentWidth
+                var thestart = obj.x
+                var theend = obj.x + 12*2 + ttT.width
 
                 if (tooltip.state === "top") {
                     if (thestart < 0) {
@@ -292,10 +303,6 @@ Item {
                     }
                 }
             }
-
-            text: control.tooltipText
-            textFormat: Text.PlainText
-            color: iconColor
         }
     }
 }

@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: buttonCompactable
+    id: control
     implicitWidth: 40
     implicitHeight: 40
 
@@ -53,10 +53,10 @@ Item {
             id: mmmm
             anchors.fill: parent
 
-            onClicked: buttonCompactable.clicked()
-            onPressAndHold: buttonCompactable.pressAndHold()
+            onClicked: control.clicked()
+            onPressAndHold: control.pressAndHold()
             onPressed: {
-                buttonCompactable.pressed()
+                control.pressed()
                 mouseBackground.width = bgRect.width*2
             }
 
@@ -112,11 +112,12 @@ Item {
             id: contentImage
             width: iconSize
             height: iconSize
+            anchors.verticalCenter: parent.verticalCenter
 
-            opacity: buttonCompactable.enabled ? 1.0 : 0.4
+            opacity: control.enabled ? 1.0 : 0.4
             Behavior on opacity { NumberAnimation { duration: 333 } }
 
-            source: buttonCompactable.source
+            source: control.source
             color: iconColor
 
             SequentialAnimation on opacity {
@@ -145,7 +146,7 @@ Item {
             visible: !compact
 
             textFormat: Text.PlainText
-            color: buttonCompactable.iconColor
+            color: control.iconColor
             font.pixelSize: Theme.fontSizeComponent
             font.bold: true
             elide: Text.ElideRight
@@ -158,16 +159,14 @@ Item {
         id: tooltip
         anchors.fill: bgRect
 
-        visible: tooltipText
-        enabled: tooltipText
-
-        property bool tooltipVisible: (buttonCompactable.compact && buttonCompactable.hovered)
+        visible: control.tooltipText
+        property bool tooltipVisible: (control.compact && control.hovered)
         onTooltipVisibleChanged: ttT.checkPosition()
 
-        opacity: tooltipVisible ? 1 : 0
+        opacity: (tooltipVisible) ? 1 : 0
         Behavior on opacity { OpacityAnimator { duration: 133 } }
 
-        state: buttonCompactable.tooltipPosition
+        state: control.tooltipPosition
         states: [
             State {
                 name: "top"
@@ -295,13 +294,17 @@ Item {
             anchors.rightMargin: (tooltip.state === "topRight" || tooltip.state === "bottomRight") ? 8 : 16
             anchors.bottomMargin: 16
 
+            text: tooltipText
+            textFormat: Text.PlainText
+            color: iconColor
+
             function checkPosition() {
-                if (!text) return;
-                if (!hovered) return;
+                if (!text) return
+                if (!control.hovered) return
 
                 var obj = mapToItem(appContent, x, y)
-                var thestart = obj.x - 12
-                var theend = obj.x + 12 + 12 + ttT.contentWidth
+                var thestart = obj.x
+                var theend = obj.x + 12*2 + ttT.width
 
                 if (tooltip.state === "top") {
                     if (thestart < 0) {
@@ -321,10 +324,6 @@ Item {
                     }
                 }
             }
-
-            text: tooltipText
-            textFormat: Text.PlainText
-            color: iconColor
         }
     }
 }
