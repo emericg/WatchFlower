@@ -14,10 +14,6 @@
         <translation>Was möchtest du wissen?</translation>
     </message>
     <message>
-        <source>version %1%2</source>
-        <translation type="vanished">Version %1%2</translation>
-    </message>
-    <message>
         <location filename="../qml/About.qml" line="136"/>
         <source>WEBSITE</source>
         <translation>WEBSEITE</translation>
@@ -76,10 +72,6 @@
         <location filename="../qml/About.qml" line="226"/>
         <source>Application by &lt;a href=&quot;https://emeric.io&quot;&gt;Emeric Grange&lt;/a&gt;&lt;br&gt;Visual design by &lt;a href=&quot;https://dribbble.com/chrisdiaz&quot;&gt;Chris Díaz&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A plant monitoring application for Xiaomi / MiJia &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
-        <translation type="vanished">Eine Pflanzenüberwachungsapp für Xiaomi / MiJia &apos;Flower Care&apos; und &apos;RoPot&apos; Bluetooth-Sensoren und -Thermometer.</translation>
     </message>
 </context>
 <context>
@@ -272,18 +264,6 @@
 </context>
 <context>
     <name>Device</name>
-    <message>
-        <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="vanished">Bitte gieße dein(e) &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="obsolete">Bitte gießen Sie die Pflanze in der Nähe von &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="vanished">Eine deiner Pflanzen benötigt Wasser.</translation>
-    </message>
     <message numerus="yes">
         <location filename="../src/device.cpp" line="696"/>
         <source>%n minute(s)</source>
@@ -299,10 +279,6 @@
             <numerusform>%n Stunde</numerusform>
             <numerusform>%n Stunden</numerusform>
         </translation>
-    </message>
-    <message>
-        <source> hours</source>
-        <translation type="vanished"> Stunden</translation>
     </message>
 </context>
 <context>
@@ -450,37 +426,6 @@
         <location filename="../qml/DeviceEnvironmental.qml" line="970"/>
         <source>UV index</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeviceGeiger</name>
-    <message>
-        <source>Update queued.</source>
-        <translation type="obsolete">Update in der Warteschlange.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="obsolete">Verbinde...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="obsolete">Verbunden</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="obsolete">Aktualisiere...</translation>
-    </message>
-    <message>
-        <source>Just synced!</source>
-        <translation type="obsolete">Daten sind aktuell.</translation>
-    </message>
-    <message>
-        <source>Synced %1 ago</source>
-        <translation type="obsolete">vor %1 aktualisiert</translation>
-    </message>
-    <message>
-        <source>Loading...</source>
-        <translation type="obsolete">Lade...</translation>
     </message>
 </context>
 <context>
@@ -760,191 +705,6 @@
     </message>
 </context>
 <context>
-    <name>DeviceScreenData</name>
-    <message>
-        <source>Update queued. </source>
-        <translation type="vanished">Update in der Warteschlange. </translation>
-    </message>
-    <message>
-        <source>Connecting... </source>
-        <translation type="vanished">Verbinde... </translation>
-    </message>
-    <message>
-        <source>Updating... </source>
-        <translation type="vanished">Aktualisiere... </translation>
-    </message>
-    <message>
-        <source>Just synced!</source>
-        <translation type="vanished">Daten sind aktuell.</translation>
-    </message>
-    <message>
-        <source>Synced %1 ago</source>
-        <translation type="vanished">vor %1 aktualisiert</translation>
-    </message>
-    <message>
-        <source>Update queued.</source>
-        <translation type="obsolete">Update in der Warteschlange.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="obsolete">Verbinde...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="obsolete">Verbunden</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="obsolete">Aktualisiere...</translation>
-    </message>
-    <message>
-        <source>Plant</source>
-        <translation type="vanished">Pflanze</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Standort</translation>
-    </message>
-    <message>
-        <source>Loading...</source>
-        <translation type="vanished">Lade...</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceScreenHistory</name>
-    <message>
-        <source>Month</source>
-        <translation type="vanished">Monat</translation>
-    </message>
-    <message>
-        <source>Week</source>
-        <translation type="vanished">Woche</translation>
-    </message>
-    <message>
-        <source>Day</source>
-        <translation type="vanished">Tag</translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Bodenfeuchtigkeit</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Luftfeuchtigkeit</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Lichteinstrahlung</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Fruchtbarkeit</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceScreenLimits</name>
-    <message>
-        <source>Address</source>
-        <translation type="vanished">Adresse</translation>
-    </message>
-    <message>
-        <source>Use official app to upgrade</source>
-        <translation type="vanished">Verwenden Sie die offizielle App, um ein Upgrade durchzuführen</translation>
-    </message>
-    <message>
-        <source>Update available!</source>
-        <translation type="vanished">Update verfügbar!</translation>
-    </message>
-    <message>
-        <source>Battery</source>
-        <translation type="vanished">Batterie</translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Bodenfeuchtigkeit</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Luftfeuchtigkeit</translation>
-    </message>
-    <message>
-        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Succulent can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="vanished">Die ideale Bodenfeuchtigkeit für Zimmerpflanzen beträgt normalerweise 15 bis 50%. Sukkulente können bis zu 7% betragen. Tropische Pflanzen haben gerne mehr Wasser.</translation>
-    </message>
-    <message>
-        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="obsolete">Die ideale Bodenfeuchtigkeit für Zimmerpflanzen beträgt normalerweise 15 bis 50%. Sukkulente können bis zu 7% betragen. Tropische Pflanzen haben gerne mehr Wasser.</translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation type="vanished">&lt;br&gt;&lt;b&gt;Tipp: &lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation type="vanished">Seien Sie vorsichtig, zu viel Wasser über längere Zeiträume kann genauso schlecht sein wie zu wenig Wasser.</translation>
-    </message>
-    <message>
-        <source>Water your plants more frequently during their growth period.</source>
-        <translation type="vanished">Gießen Sie Ihre Pflanzen während ihrer Wachstumsphase häufiger.</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation type="vanished">Die meisten Zimmerpflanzen gedeihen zwischen 15 und 25 ° C. Nicht viele Pflanzen vertragen -2 ° C oder weniger.</translation>
-    </message>
-    <message>
-        <source>Having constant temperature is important for indoor plants.</source>
-        <translation type="vanished">Eine konstante Temperatur ist wichtig für Zimmerpflanzen.</translation>
-    </message>
-    <message>
-        <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation type="vanished">Wenn Sie ein Hygrometer haben, können Sie die Luftfeuchtigkeit so überwachen, dass sie zwischen 40 und 60% bleibt (und bei tropischen Pflanzen auch mehr).</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Lichteinstrahlung</translation>
-    </message>
-    <message>
-        <source>low</source>
-        <translation type="vanished">niedrig</translation>
-    </message>
-    <message>
-        <source>indirect</source>
-        <translation type="vanished">indirekt</translation>
-    </message>
-    <message>
-        <source>direct light (indoor)</source>
-        <translation type="vanished">direktes Licht (innen)</translation>
-    </message>
-    <message>
-        <source>sunlight</source>
-        <translation type="vanished">Sonnenlicht</translation>
-    </message>
-    <message>
-        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation type="vanished">Einige Pflanzen mögen direktes Sonnenlicht, teilweise sogar den ganzen Tag. Aber viele Zimmerpflanzen mögen kein direktes Sonnenlicht: Wählen Sie in diesem Fall kein Südfenster.</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Fruchtbarkeit</translation>
-    </message>
-    <message>
-        <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation type="vanished">Die Bodenfruchtbarkeit ist ein Hinweis auf die Verfügbarkeit von Nährstoffen im Boden. Düngen Sie regelmäßig, um den Wert im grünen Bereich zu halten.</translation>
-    </message>
-    <message>
-        <source>Be sure to use the right soil composition for your plants.</source>
-        <translation type="vanished">Stellen Sie sicher, dass Sie die richtige Bodenzusammensetzung für Ihre Pflanzen verwenden.</translation>
-    </message>
-</context>
-<context>
     <name>DeviceSensor</name>
     <message>
         <location filename="../src/device_sensor.cpp" line="138"/>
@@ -960,21 +720,6 @@
         <location filename="../src/device_sensor.cpp" line="142"/>
         <source>You need to water one of your (unnamed) plants!</source>
         <translation type="unfinished">Eine deiner Pflanzen benötigt Wasser.</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceSensors</name>
-    <message>
-        <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="obsolete">Bitte gieße dein(e) &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="obsolete">Bitte gießen Sie die Pflanze in der Nähe von &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="obsolete">Eine deiner Pflanzen benötigt Wasser.</translation>
     </message>
 </context>
 <context>
@@ -995,34 +740,6 @@
         <translation type="unfinished">Daten sind aktuell.</translation>
     </message>
     <message>
-        <source>Update queued. </source>
-        <translation type="vanished">Update in der Warteschlange. </translation>
-    </message>
-    <message>
-        <source>Connecting... </source>
-        <translation type="vanished">Verbinde... </translation>
-    </message>
-    <message>
-        <source>Updating... </source>
-        <translation type="vanished">Aktualisiere... </translation>
-    </message>
-    <message>
-        <source>Update queued.</source>
-        <translation type="obsolete">Update in der Warteschlange.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="obsolete">Verbinde...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="obsolete">Verbunden</translation>
-    </message>
-    <message>
-        <source>Just synced!</source>
-        <translation type="vanished">Daten sind aktuell.</translation>
-    </message>
-    <message>
         <location filename="../qml/DeviceThermometer.qml" line="158"/>
         <source>Synced %1 ago</source>
         <translation>vor %1 aktualisiert</translation>
@@ -1031,10 +748,6 @@
         <location filename="../qml/DeviceThermometer.qml" line="293"/>
         <source>Loading...</source>
         <translation type="unfinished">Lade...</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Aktualisiere...</translation>
     </message>
 </context>
 <context>
@@ -1073,22 +786,6 @@
         <location filename="../qml/DeviceWidget.qml" line="818"/>
         <source>CO2</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Queued</source>
-        <translation type="vanished">In Warteschlange</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="vanished">Verbinde...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="obsolete">Verbunden</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Aktualisiere...</translation>
     </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="132"/>
@@ -1194,21 +891,6 @@
     </message>
 </context>
 <context>
-    <name>ItemAioBarCharts</name>
-    <message>
-        <source>Fertility</source>
-        <translation type="obsolete">Fruchtbarkeit</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation type="vanished">Tage</translation>
-    </message>
-    <message>
-        <source>Hours</source>
-        <translation type="vanished">Stunden</translation>
-    </message>
-</context>
-<context>
     <name>ItemBannerSync</name>
     <message>
         <location filename="../qml/components/ItemBannerSync.qml" line="60"/>
@@ -1224,75 +906,6 @@
         <location filename="../qml/components/ItemBannerSync.qml" line="87"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>ItemDeletePopup</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Löschen</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsCompact</name>
-    <message>
-        <source>Moisture</source>
-        <translatorcomment>Bodenfeuchtigkeit ?</translatorcomment>
-        <translation type="obsolete">Bodenfeuchte</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translatorcomment>Luftfeuchtigkeit ?</translatorcomment>
-        <translation type="obsolete">Bodenfeuchte</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translatorcomment>Lichtintensität ?</translatorcomment>
-        <translation type="obsolete">Leuchtkraft</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translatorcomment>Fruchtbarkeit ?</translatorcomment>
-        <translation type="obsolete">Düngung</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsFilled</name>
-    <message>
-        <source>Moisture</source>
-        <translatorcomment>Bodenfeuchtigkeit ?</translatorcomment>
-        <translation type="obsolete">Bodenfeuchte</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translatorcomment>Luftfeuchtigkeit ?</translatorcomment>
-        <translation type="obsolete">Bodenfeuchte</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translatorcomment>Lichtintensität ?</translatorcomment>
-        <translation type="obsolete">Leuchtkraft</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translatorcomment>Fruchtbarkeit ?</translatorcomment>
-        <translation type="obsolete">Düngung</translation>
     </message>
 </context>
 <context>
@@ -1318,18 +931,6 @@
 </context>
 <context>
     <name>ItemNoDevice</name>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using or storing your location. Sorry for the inconveniance.</source>
-        <translation type="vanished">Unter Android 6 und höher ist für den Zugriff auf Bluetooth Low Energy-Geräten eine Standortberechtigung erforderlich. Die Anwendung verwendet weder Ihren Standort, noch speichert sie diesen.</translation>
-    </message>
-    <message>
-        <source>Official informations</source>
-        <translation type="vanished">Offizielle Informationen</translation>
-    </message>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
-        <translation type="obsolete">Unter Android 6 und höher ist für den Zugriff auf Bluetooth Low Energy-Geräten eine Standortberechtigung erforderlich. Die Anwendung verwendet weder Ihren Standort, noch speichert sie diesen.</translation>
-    </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="44"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
@@ -1410,10 +1011,6 @@
 <context>
     <name>MobileDrawer</name>
     <message>
-        <source>My plants</source>
-        <translation type="vanished">meine Pflanzen</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="149"/>
         <source>Sensors</source>
         <translation type="unfinished">Sensoren</translation>
@@ -1468,60 +1065,9 @@
         <source>Refresh sensors data</source>
         <translation>Sensordaten aktualisieren</translation>
     </message>
-    <message>
-        <source>Search for new devices</source>
-        <translation type="vanished">Suche nach neuen Geräten</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Beenden</translation>
-    </message>
-</context>
-<context>
-    <name>MobileMain</name>
-    <message>
-        <source>Welcome</source>
-        <translation type="vanished">Wilkommen</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Einstellungen</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation type="obsolete">Berechtigungen</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Über</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation type="obsolete">Sensoren</translation>
-    </message>
-    <message>
-        <source>My plants</source>
-        <translation type="vanished">meine Pflanzen</translation>
-    </message>
-    <message>
-        <source>Data</source>
-        <translation type="vanished">Daten</translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation type="vanished">Verlauf</translation>
-    </message>
-    <message>
-        <source>Press one more time to exit...</source>
-        <translation type="vanished">Noch einmal drücken zum beenden...</translation>
-    </message>
 </context>
 <context>
     <name>Permissions</name>
-    <message>
-        <source>Permissions</source>
-        <translation type="obsolete">Berechtigungen</translation>
-    </message>
     <message>
         <location filename="../qml/Permissions.qml" line="101"/>
         <source>Location</source>
@@ -1589,17 +1135,6 @@
         <location filename="../qml/components/PopupCalibration.qml" line="109"/>
         <source>Start calibration</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PopupDelete</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Löschen</translation>
     </message>
 </context>
 <context>
@@ -1671,21 +1206,9 @@
         <translation type="unfinished">Anwendung</translation>
     </message>
     <message>
-        <source>Application theme</source>
-        <translation type="vanished">Benutzeroberfläche</translation>
-    </message>
-    <message>
-        <source>Automatique dark mode</source>
-        <translation type="vanished">Automatischer Dunkelmodus</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="308"/>
         <source>Dark mode will switch on automatically between 9 PM and 9 AM.</source>
         <translation>Der Dunkelmodus wird zwischen 21 Uhr und 9 Uhr automatisch eingeschaltet.</translation>
-    </message>
-    <message>
-        <source>Use bigger widgets</source>
-        <translation type="vanished">größere Widgets verwenden</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="353"/>
@@ -1698,10 +1221,6 @@
         <translation>Bluetooth-Steuerung</translation>
     </message>
     <message>
-        <source>WatchFlower can power on your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">WatchFlower kann Bluetooth automatisch aktivieren, was für eine korrekte Funktion benötigt wird.</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="276"/>
         <source>Automatic dark mode</source>
         <translation>Automatischer Dunkelmodus</translation>
@@ -1710,18 +1229,6 @@
         <location filename="../qml/Settings.qml" line="478"/>
         <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished">WatchFlower kann Bluetooth automatisch aktivieren, was für eine korrekte Funktion benötigt wird.</translation>
-    </message>
-    <message>
-        <source>Bluetooth compatibility</source>
-        <translation type="vanished">Bluetooth-Kompatibilität</translation>
-    </message>
-    <message>
-        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expanse of synchronization speed.</source>
-        <translation type="vanished">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
-    </message>
-    <message>
-        <source>Sensors will be updated sequentially instead of simultaneously. Improve Bluetooth communication reliability, at the expense of synchronization speed.</source>
-        <translation type="obsolete">Die Sensoren werden nicht gleichzeitig, sondern nacheinander aktualisiert. Dies verbessert die Zuverlässigkeit der Bluetooth-Kommunikation bei gleichzeitiger Synchronisationsgeschwindigkeit.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="579"/>
@@ -1742,14 +1249,6 @@
         <location filename="../qml/Settings.qml" line="735"/>
         <source>Enable background updates</source>
         <translation>Aktiviert die Hintergrundaktualisierung</translation>
-    </message>
-    <message>
-        <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation type="vanished">Wacht in vordefinierten Intervallen auf, um die Sensordaten zu aktualisieren. Nur wenn Bluetooth (oder Bluetooth-Steuerung) aktiviert ist.</translation>
-    </message>
-    <message>
-        <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation type="vanished">WatchFlower bleibt in der Taskleiste aktiv und wird in regelmäßigen Abständen aktiviert, um die Sensordaten zu aktualisieren.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="162"/>
@@ -1873,10 +1372,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> h.</source>
-        <translation type="vanished"> Std.</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="992"/>
         <source>thin</source>
         <translation type="unfinished"></translation>
@@ -1887,17 +1382,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use bigger indicators</source>
-        <translation type="vanished">Verwende größere Indikatoren</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="1036"/>
         <source>Dynamic scale for indicators</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show graph dots</source>
-        <translation type="vanished">Diagrammpunkte anzeigen</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1346"/>
@@ -1934,18 +1421,6 @@
         <location filename="../qml/Settings.qml" line="1458"/>
         <source>Open with</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Histograms</source>
-        <translation type="vanished">Histogramme</translation>
-    </message>
-    <message>
-        <source>Monthly</source>
-        <translation type="vanished">Monatlich</translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation type="vanished">Wöchentlich</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1081"/>
@@ -1996,10 +1471,6 @@
 <context>
     <name>Tutorial</name>
     <message>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
-        <translation type="vanished">&lt;b&gt;WatchFlower&lt;/b&gt; ist eine App zur Pflanzenüberwachung, welche u. a. Xiaomi / MiJia-Sensoren &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; und &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; unterstützt.</translation>
-    </message>
-    <message>
         <location filename="../qml/Tutorial.qml" line="56"/>
         <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
         <translation>&lt;b&gt;WatchFlower&lt;/b&gt; ist eine App zur Pflanzenüberwachung, welche u. a. Xiaomi / MiJia-Sensoren &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; und &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; unterstützt.</translation>
@@ -2040,26 +1511,14 @@
         <translation type="unfinished">Habs verstanden.</translation>
     </message>
     <message>
-        <source>Click on sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
-        <translation type="vanished">Klicken Sie auf Sensoren, um auf &lt;b&gt;detaillierte Informationen&lt;/b&gt;, &lt;b&gt;Diagramme&lt;/b&gt; und &lt;b&gt;historische Daten&lt;/b&gt; zuzugreifen.</translation>
-    </message>
-    <message>
         <location filename="../qml/Tutorial.qml" line="198"/>
         <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
         <translation>Sie können Ihre Pflanzen &lt;b&gt;benennen&lt;/b&gt; und den Standort der Geräte &lt;b&gt;festlegen&lt;/b&gt;.</translation>
     </message>
     <message>
-        <source>Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal water level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</source>
-        <translation type="vanished">Je nach Sensor können Sie &lt;b&gt;Grenzwerte&lt;/b&gt; wie &lt;b&gt;den optimalen Wasserstand&lt;/b&gt; oder &lt;b&gt;den Temperaturbereich&lt;/b&gt; festlegen.</translation>
-    </message>
-    <message>
         <location filename="../qml/Tutorial.qml" line="241"/>
         <source>Previous</source>
         <translation>Zurück</translation>
-    </message>
-    <message>
-        <source>Allright!</source>
-        <translation type="vanished">Habs verstanden.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="264"/>

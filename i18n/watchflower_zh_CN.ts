@@ -14,10 +14,6 @@
         <translation>您想了解什么？</translation>
     </message>
     <message>
-        <source>version %1%2</source>
-        <translation type="vanished">%1%2 版本</translation>
-    </message>
-    <message>
         <location filename="../qml/About.qml" line="108"/>
         <source>version %1 %2</source>
         <translation type="unfinished">%1 %2 版本</translation>
@@ -236,10 +232,6 @@
         <translation type="unfinished">刷新传感器数据</translation>
     </message>
     <message>
-        <source>Sync history</source>
-        <translation type="vanished">同步历史</translation>
-    </message>
-    <message>
         <location filename="../qml/DesktopHeader.qml" line="299"/>
         <source>Real time data</source>
         <translation>实时数据</translation>
@@ -265,21 +257,9 @@
         <translation>植物名称</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">装置型号</translation>
-    </message>
-    <message>
         <location filename="../qml/DesktopHeader.qml" line="398"/>
         <source>location</source>
         <translation>位置</translation>
-    </message>
-    <message>
-        <source>Scan for sensors</source>
-        <translation type="vanished">扫描传感器</translation>
-    </message>
-    <message>
-        <source>Refresh sensors</source>
-        <translation type="vanished">刷新传感器</translation>
     </message>
 </context>
 <context>
@@ -910,10 +890,6 @@
 <context>
     <name>ItemBannerSync</name>
     <message>
-        <source>Syncing with the sensor</source>
-        <translation type="vanished">与传感器同步中</translation>
-    </message>
-    <message>
         <location filename="../qml/components/ItemBannerSync.qml" line="60"/>
         <source>Syncing with the sensor...</source>
         <translation type="unfinished">与传感器同步中...</translation>
@@ -953,10 +929,6 @@
 <context>
     <name>ItemNoDevice</name>
     <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
-        <translation type="vanished">在安卓6+的装置侦测低功率蓝牙设备需要采用位置权限。本应用程式不会使用或储存您的位置资讯。不便之处请见谅。</translation>
-    </message>
-    <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="44"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
         <translation type="unfinished">在安卓6+的装置侦测低功率蓝牙设备需要采用位置权限。本应用程式不会使用或储存您的位置资讯。不便之处请见谅。</translation>
@@ -993,10 +965,6 @@
         <location filename="../qml/MobileApplication.qml" line="431"/>
         <source>Thermometer</source>
         <translation>温度计</translation>
-    </message>
-    <message>
-        <source>Environmental</source>
-        <translation type="vanished">环保信息</translation>
     </message>
     <message>
         <location filename="../qml/MobileApplication.qml" line="455"/>
@@ -1085,10 +1053,6 @@
         <translation type="unfinished">搜索新的裝置</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">装置型号</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="319"/>
         <source>location</source>
         <translation>位置</translation>
@@ -1098,14 +1062,6 @@
         <source>Refresh sensors data</source>
         <translation>刷新传感器数据</translation>
     </message>
-    <message>
-        <source>Search for new devices</source>
-        <translation type="vanished">搜索新的裝置</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">退出</translation>
-    </message>
 </context>
 <context>
     <name>Permissions</name>
@@ -1113,10 +1069,6 @@
         <location filename="../qml/Permissions.qml" line="101"/>
         <source>Location</source>
         <translation>位置</translation>
-    </message>
-    <message>
-        <source>The Android operating system requires applications to ask for device location permission in order to scan for nearby BLE (Bluetooth Low Energy) sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="vanished">安卓作业系统需要应用程式先徵得装置位置权限才可侦测附近的低功率蓝牙（BLE）传感器。&lt;br&gt;我们只会在侦测新传感器时才会徵求此权限。&lt;br&gt;WatchFlower不会使用、储存或向任何人或东西传送您的位置信息。</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="134"/>
@@ -1251,17 +1203,9 @@
         <translation>应用</translation>
     </message>
     <message>
-        <source>Application theme</source>
-        <translation type="vanished">应用主题</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="162"/>
         <source>snow</source>
         <translation>雪白</translation>
-    </message>
-    <message>
-        <source>green</source>
-        <translation type="vanished">翠绿</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="210"/>
@@ -1284,18 +1228,9 @@
         <translation>晚上9时至早上9时间暗黑模式会自动开启。</translation>
     </message>
     <message>
-        <source>Use bigger widgets</source>
-        <translation type="vanished">使用较大小工具</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="353"/>
         <source>Language</source>
         <translation>语言</translation>
-    </message>
-    <message>
-        <source>auto</source>
-        <extracomment>Short for automatic</extracomment>
-        <translation type="vanished">自动</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="132"/>
@@ -1424,14 +1359,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> h.</source>
-        <translation type="vanished"> 小时</translation>
-    </message>
-    <message>
-        <source>Data indicators</source>
-        <translation type="vanished">数据标示</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="992"/>
         <source>thin</source>
         <translation>幼</translation>
@@ -1445,10 +1372,6 @@
         <location filename="../qml/Settings.qml" line="1036"/>
         <source>Dynamic scale for indicators</source>
         <translation>以动态比例单位标示</translation>
-    </message>
-    <message>
-        <source>Show graph dots</source>
-        <translation type="vanished">显示图表圆点</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1081"/>

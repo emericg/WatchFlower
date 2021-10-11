@@ -14,10 +14,6 @@
         <translation>Что вам следует знать?</translation>
     </message>
     <message>
-        <source>version %1%2</source>
-        <translation type="vanished">Версия %1%2</translation>
-    </message>
-    <message>
         <location filename="../qml/About.qml" line="136"/>
         <source>WEBSITE</source>
         <translation>Веб-сайт</translation>
@@ -218,12 +214,12 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="396"/>
         <source>sensor model</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">модели устройства</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="460"/>
         <source>Search for new sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поиск новых устройств</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="478"/>
@@ -261,10 +257,6 @@
         <translation>названию растения</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">модели устройства</translation>
-    </message>
-    <message>
         <location filename="../qml/DesktopHeader.qml" line="398"/>
         <source>location</source>
         <translation>расположению</translation>
@@ -289,14 +281,6 @@
             <numerusform>%n часа</numerusform>
             <numerusform>%n часов</numerusform>
         </translation>
-    </message>
-    <message>
-        <source> min.</source>
-        <translation type="obsolete"> минут.</translation>
-    </message>
-    <message>
-        <source> hours</source>
-        <translation type="obsolete"> часов</translation>
     </message>
 </context>
 <context>
@@ -444,45 +428,6 @@
         <location filename="../qml/DeviceEnvironmental.qml" line="970"/>
         <source>UV index</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeviceGeiger</name>
-    <message>
-        <source>Update queued.</source>
-        <translation type="vanished">Обновление запрошено.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="vanished">Подключение...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="vanished">Подключено</translation>
-    </message>
-    <message>
-        <source>Working...</source>
-        <translation type="vanished">Работает...</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Обновление...</translation>
-    </message>
-    <message>
-        <source>Just synced!</source>
-        <translation type="vanished">Только что синхронизовалось!</translation>
-    </message>
-    <message>
-        <source>Synced %1 ago</source>
-        <translation type="vanished">Синхронизовано %1 назад</translation>
-    </message>
-    <message>
-        <source>Offline!</source>
-        <translation type="vanished">Не в сети!</translation>
-    </message>
-    <message>
-        <source>Loading...</source>
-        <translation type="vanished">Загрузка...</translation>
     </message>
 </context>
 <context>
@@ -763,223 +708,6 @@
     </message>
 </context>
 <context>
-    <name>DeviceScreenData</name>
-    <message>
-        <source>Just synced!</source>
-        <translation type="vanished">Только что синхронизовалось!</translation>
-    </message>
-    <message>
-        <source>Synced %1 ago</source>
-        <translation type="vanished">Синхронизировано %1 назад</translation>
-    </message>
-    <message>
-        <source>Offline! </source>
-        <translation type="obsolete">Удалять! </translation>
-    </message>
-    <message>
-        <source>Update queued.</source>
-        <translation type="vanished">Обновление запрошено.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="vanished">Подключение...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="vanished">Подключено</translation>
-    </message>
-    <message>
-        <source>Working...</source>
-        <translation type="vanished">Работает...</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Обновление...</translation>
-    </message>
-    <message>
-        <source>Offline!</source>
-        <translation type="vanished">Не в сети!</translation>
-    </message>
-    <message>
-        <source>Plant</source>
-        <translation type="vanished">Растение</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="vanished">Расположение</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation type="vanished">Статус</translation>
-    </message>
-    <message>
-        <source>Loading...</source>
-        <translation type="vanished">Загрузка...</translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="obsolete">влага</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="obsolete">влага</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="obsolete">температура</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="obsolete">светимость</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="obsolete">плодородие</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceScreenHistory</name>
-    <message>
-        <source>Month</source>
-        <translation type="vanished">Месяц</translation>
-    </message>
-    <message>
-        <source>Week</source>
-        <translation type="vanished">Неделя</translation>
-    </message>
-    <message>
-        <source>Day</source>
-        <translation type="vanished">День</translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Температура</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Освещённость</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Плодородие</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceScreenLimits</name>
-    <message>
-        <source>Address</source>
-        <translation type="vanished">Адрес</translation>
-    </message>
-    <message>
-        <source>Firmware</source>
-        <translation type="vanished">Прошивка</translation>
-    </message>
-    <message>
-        <source>Update available!</source>
-        <translation type="vanished">Доступно обновление!</translation>
-    </message>
-    <message>
-        <source>Use official app to upgrade</source>
-        <translation type="vanished">Используйте официальное приложение для обновления</translation>
-    </message>
-    <message>
-        <source>Battery</source>
-        <translation type="vanished">Батарея</translation>
-    </message>
-    <message>
-        <source>inside</source>
-        <translation type="vanished">Внутри</translation>
-    </message>
-    <message>
-        <source>outside</source>
-        <translation type="vanished">Снаржуи</translation>
-    </message>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
-        <translation type="vanished">Идеальная влажность почвы для домашних растений обычно от 15 до 50%. Кактусы и суккуленты допускают её снижение до 7%. Тропические растения требуют больше воды.</translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
-        <translation type="vanished">&lt;br&gt;&lt;b&gt;Совет: &lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
-        <translation type="vanished">Будьте осторожны, чрезмерный полив в течение длительного периода времени может быть столь же губительным, как и недостаточный!</translation>
-    </message>
-    <message>
-        <source>Water your plants more frequently during their growth period.</source>
-        <translation type="vanished">Чаще поливайте растения в период их роста.</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Температура</translation>
-    </message>
-    <message>
-        <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
-        <translation type="vanished">Большинство комнатных растений развиваются при температуре от 15 до 25°C (от 59 до 77°F). Лишь некоторые растения переносят -2°C (28°F) и ниже.</translation>
-    </message>
-    <message>
-        <source>Having constant temperature is important for indoor plants.</source>
-        <translation type="vanished">Для комнатных растений важна постоянная температура.</translation>
-    </message>
-    <message>
-        <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
-        <translation type="vanished">Если у вас есть гигрометр, вы можете контролировать влажность воздуха, чтобы она оставалась в пределах от 40 до 60% (и даже выше для тропических растений).</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Освещённость</translation>
-    </message>
-    <message>
-        <source>low</source>
-        <translation type="vanished">Тень</translation>
-    </message>
-    <message>
-        <source>indirect</source>
-        <translation type="vanished">Полутень</translation>
-    </message>
-    <message>
-        <source>direct light (indoor)</source>
-        <translation type="vanished">Прямой свет (в помещении)</translation>
-    </message>
-    <message>
-        <source>sunlight</source>
-        <translation type="vanished">На солнце</translation>
-    </message>
-    <message>
-        <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
-        <translation type="vanished">Некоторые растения любят воздействие прямых солнечных лучей в течение всего дня или нескольких часов. Но многие комнатные растения не любят прямых солнечных лучей: размещайте их подальше от окон, ориентированных на юг!</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Плодородие</translation>
-    </message>
-    <message>
-        <source>Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
-        <translation type="vanished">Значение плодородия почвы является показателем наличия в ней питательных веществ. Используйте удобрения (умеренно), чтобы поддерживать это значение.</translation>
-    </message>
-    <message>
-        <source>Be sure to use the right soil composition for your plants.</source>
-        <translation type="vanished">Обязательно используйте правильный состав почвы для ваших растений.</translation>
-    </message>
-</context>
-<context>
     <name>DeviceSensor</name>
     <message>
         <location filename="../src/device_sensor.cpp" line="138"/>
@@ -995,21 +723,6 @@
         <location filename="../src/device_sensor.cpp" line="142"/>
         <source>You need to water one of your (unnamed) plants!</source>
         <translation type="unfinished">Вам необходимо полить одно из ваших неназванных растений!</translation>
-    </message>
-</context>
-<context>
-    <name>DeviceSensors</name>
-    <message>
-        <source>You need to water your &apos;%1&apos; now!</source>
-        <translation type="vanished">Вам необходимо полить ваш &apos;%1&apos;!</translation>
-    </message>
-    <message>
-        <source>You need to water the plant near &apos;%1&apos;</source>
-        <translation type="vanished">Вам необходимо полить растение рядом с &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>You need to water one of your (unnamed) plants!</source>
-        <translation type="vanished">Вам необходимо полить одно из ваших неназванных растений!</translation>
     </message>
 </context>
 <context>
@@ -1030,54 +743,18 @@
         <translation type="unfinished">Синхронизовано</translation>
     </message>
     <message>
-        <source>Update queued.</source>
-        <translation type="vanished">Обновление запрошено.</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="vanished">Подключение...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="vanished">Подключено</translation>
-    </message>
-    <message>
-        <source>Working...</source>
-        <translation type="vanished">Работает...</translation>
-    </message>
-    <message>
-        <source>Just synced!</source>
-        <translation type="vanished">Только что синхронизовалось!</translation>
-    </message>
-    <message>
         <location filename="../qml/DeviceThermometer.qml" line="158"/>
         <source>Synced %1 ago</source>
         <translation>Синхронизовано %1 назад</translation>
-    </message>
-    <message>
-        <source>Offline!</source>
-        <translation type="vanished">Не в сети!</translation>
     </message>
     <message>
         <location filename="../qml/DeviceThermometer.qml" line="293"/>
         <source>Loading...</source>
         <translation>Загрузка...</translation>
     </message>
-    <message>
-        <source>Offline! </source>
-        <translation type="obsolete">Удалять! </translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Обновление...</translation>
-    </message>
 </context>
 <context>
     <name>DeviceWidget</name>
-    <message>
-        <source>Geiger counter</source>
-        <translation type="vanished">Счётчик Гейгера</translation>
-    </message>
     <message>
         <location filename="../qml/DeviceWidget.qml" line="167"/>
         <source>Thermometer</source>
@@ -1114,34 +791,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Queued</source>
-        <translation type="vanished">В очереди</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="vanished">Подключение...</translation>
-    </message>
-    <message>
-        <source>Connected</source>
-        <translation type="vanished">Подключен</translation>
-    </message>
-    <message>
-        <source>Working...</source>
-        <translation type="vanished">Работает...</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation type="vanished">Обновление...</translation>
-    </message>
-    <message>
         <location filename="../qml/DeviceWidget.qml" line="132"/>
         <location filename="../qml/DeviceWidget.qml" line="135"/>
         <source>Synced</source>
         <translation>Синхронизовано</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation type="vanished">Не в сети</translation>
     </message>
 </context>
 <context>
@@ -1241,33 +894,6 @@
     </message>
 </context>
 <context>
-    <name>ItemAioBarCharts</name>
-    <message>
-        <source>Hygro</source>
-        <translation type="obsolete">влага</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="obsolete">плодородие</translation>
-    </message>
-    <message>
-        <source>Days</source>
-        <translation type="obsolete">дней</translation>
-    </message>
-    <message>
-        <source>Hours</source>
-        <translation type="obsolete">часов</translation>
-    </message>
-</context>
-<context>
-    <name>ItemAioLineCharts</name>
-    <message>
-        <source>at</source>
-        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
-        <translation type="vanished">в</translation>
-    </message>
-</context>
-<context>
     <name>ItemBannerSync</name>
     <message>
         <location filename="../qml/components/ItemBannerSync.qml" line="60"/>
@@ -1283,84 +909,6 @@
         <location filename="../qml/components/ItemBannerSync.qml" line="87"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
-</context>
-<context>
-    <name>ItemDataBarFilled</name>
-    <message>
-        <source>min</source>
-        <extracomment>Short for minimum</extracomment>
-        <translation type="vanished">мин</translation>
-    </message>
-    <message>
-        <source>max</source>
-        <extracomment>Short for maximum</extracomment>
-        <translation type="vanished">макс</translation>
-    </message>
-</context>
-<context>
-    <name>ItemDeletePopup</name>
-    <message>
-        <source>Are you sure you want to delete selected device(s)?</source>
-        <translation type="vanished">Вы действительно хотите удалить выбранные устройства?</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отмена</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsCompact</name>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Температура</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Освещённость</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Плодородие</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsFilled</name>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Влажность</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Температура</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Освещённость</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Плодородие</translation>
     </message>
 </context>
 <context>
@@ -1386,14 +934,6 @@
 </context>
 <context>
     <name>ItemNoDevice</name>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
-        <translation type="vanished">На версиях Anrdoid 6 и выше, для поиска устройств Bluetooth Low Energy требуется доступ к вашему местоположению. Данное приложение не использует и не хранит информацию о вашем местоположении. Приносим извинения за неудобство.</translation>
-    </message>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
-        <translation type="vanished">На версиях Anrdoid 6 и выше, для поиска устройств Bluetooth Low Energy требуется доступ к вашему местоположению. Данное приложение не использует и не хранит информацию о вашем местоположении. Приносим извинения за неудобство.</translation>
-    </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="44"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
@@ -1474,10 +1014,6 @@
 <context>
     <name>MobileDrawer</name>
     <message>
-        <source>My plants</source>
-        <translation type="obsolete">Мои растения</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="149"/>
         <source>Sensors</source>
         <translation>Датчики</translation>
@@ -1508,10 +1044,6 @@
         <translation type="unfinished">Поиск новых устройств</translation>
     </message>
     <message>
-        <source>Order by</source>
-        <translation type="vanished">Сортировать по</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="311"/>
         <source>Order by:</source>
         <translation type="unfinished">Сортировать по:</translation>
@@ -1527,10 +1059,6 @@
         <translation>названию растения</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">модели устройства</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="319"/>
         <source>location</source>
         <translation>расположению</translation>
@@ -1540,80 +1068,13 @@
         <source>Refresh sensors data</source>
         <translation>Обновить данные датчиков</translation>
     </message>
-    <message>
-        <source>Search for new devices</source>
-        <translation type="vanished">Поиск новых устройств</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Выход</translation>
-    </message>
-</context>
-<context>
-    <name>MobileMain</name>
-    <message>
-        <source>Welcome</source>
-        <translation type="vanished">Добро пожаловать</translation>
-    </message>
-    <message>
-        <source>Thermometer</source>
-        <translation type="vanished">Термометр</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Настройки</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation type="vanished">Разрешения</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">О приложении</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation type="vanished">Датчики</translation>
-    </message>
-    <message>
-        <source>My plants</source>
-        <translation type="obsolete">Мои растения</translation>
-    </message>
-    <message>
-        <source>Data</source>
-        <translation type="vanished">Данные</translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation type="vanished">История</translation>
-    </message>
-    <message>
-        <source>Press one more time to exit...</source>
-        <translation type="vanished">Нажмите ещё раз для выхода...</translation>
-    </message>
 </context>
 <context>
     <name>Permissions</name>
     <message>
-        <source>Permissions</source>
-        <translation type="vanished">Разрешения</translation>
-    </message>
-    <message>
-        <source>Why are we using these permissions?</source>
-        <translation type="vanished">Почему нам требуются данные разрешения?</translation>
-    </message>
-    <message>
         <location filename="../qml/Permissions.qml" line="101"/>
         <source>Location</source>
         <translation>Местоположение</translation>
-    </message>
-    <message>
-        <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="vanished">Операционная система Android требует, чтобы приложения запрашивали разрешение на определение местоположения устройства для возможности сканировать близлежащие датчики Bluetooth LE. &lt;br&gt; Это разрешение требуется только при поиске новых датчиков. &lt;br&gt; WatchFlower не использует, не хранит и никому не передает данные о вашем местоположении.</translation>
-    </message>
-    <message>
-        <source>The Android operating system requires applications to ask for device location permission in order to scan for nearby BLE (Bluetooth Low Energy) sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="obsolete">Операционная система Android требует, чтобы приложения запрашивали разрешение на определение местоположения устройства для возможности сканировать близлежащие датчики Bluetooth LE. &lt;br&gt; Это разрешение требуется только при поиске новых датчиков. &lt;br&gt; WatchFlower не использует, не хранит и никому не передает данные о вашем местоположении.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="134"/>
@@ -1677,17 +1138,6 @@
         <location filename="../qml/components/PopupCalibration.qml" line="109"/>
         <source>Start calibration</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PopupDelete</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Удалить</translation>
     </message>
 </context>
 <context>
@@ -1759,10 +1209,6 @@
         <translation>Приложение</translation>
     </message>
     <message>
-        <source>Application theme</source>
-        <translation type="vanished">Тема приложения</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="162"/>
         <source>snow</source>
         <translation type="unfinished"></translation>
@@ -1786,11 +1232,6 @@
         <location filename="../qml/Settings.qml" line="353"/>
         <source>Language</source>
         <translation>Язык</translation>
-    </message>
-    <message>
-        <source>auto</source>
-        <extracomment>Short for automatic</extracomment>
-        <translation type="vanished">Авто</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="449"/>
@@ -1843,10 +1284,6 @@
         <translation type="unfinished">Экспорт данных до 90 дней в файл CSV.</translation>
     </message>
     <message>
-        <source>Export up to 30 days of data into a CSV file.</source>
-        <translation type="vanished">Экспорт данных до 30 дней в файл CSV.</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="1386"/>
         <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
         <translation>Сохраняется в ваших документах в папке WatchFlower.</translation>
@@ -1878,14 +1315,6 @@
         <translation>Включить фоновые обновления</translation>
     </message>
     <message>
-        <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation type="vanished">Пробуждаться через определенные промежутки времени, чтобы обновлять данные датчика. Только если включен Bluetooth (или управление Bluetooth).</translation>
-    </message>
-    <message>
-        <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation type="vanished">WatchFlower останется активным на панели задач и будет регулярно выходить из режима сна для обновления данных датчика.</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="820"/>
         <source>Enable notifications</source>
         <translation>Включить уведомления</translation>
@@ -1899,10 +1328,6 @@
         <location filename="../qml/Settings.qml" line="882"/>
         <source>Plant sensors</source>
         <translation>Датчики растений</translation>
-    </message>
-    <message>
-        <source> h.</source>
-        <translation type="vanished"> ч.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="920"/>
@@ -1986,10 +1411,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use bigger widgets</source>
-        <translation type="vanished">Использовать крупные виджеты</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="276"/>
         <source>Automatic dark mode</source>
         <translation>Автоматическй тёмный режим</translation>
@@ -2000,17 +1421,9 @@
         <translation>WatchFlower может активировать Bluetooth вашего устройства для работы.</translation>
     </message>
     <message>
-        <source>Use bigger indicators</source>
-        <translation type="vanished">Использовать крупные индикаторы</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="1036"/>
         <source>Dynamic scale for indicators</source>
         <translation>Динамическая шкала для индикаторов</translation>
-    </message>
-    <message>
-        <source>Show graph dots</source>
-        <translation type="vanished">Показывать точки на графике</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1081"/>
@@ -2031,18 +1444,6 @@
         <location filename="../qml/Settings.qml" line="1211"/>
         <source>°F</source>
         <translation>°F</translation>
-    </message>
-    <message>
-        <source>Histograms</source>
-        <translation type="obsolete">Гистограммы</translation>
-    </message>
-    <message>
-        <source>Monthly</source>
-        <translation type="obsolete">ежемесячно</translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation type="obsolete">еженедельно</translation>
     </message>
 </context>
 <context>
@@ -2072,10 +1473,6 @@
 </context>
 <context>
     <name>Tutorial</name>
-    <message>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; sensors.</source>
-        <translation type="vanished">&lt;b&gt;WatchFlower&lt;/b&gt; - это приложение для отслеживания датчиков Xiaomi / MiJia &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; и &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos;.</translation>
-    </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="79"/>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
@@ -2125,10 +1522,6 @@
         <location filename="../qml/Tutorial.qml" line="241"/>
         <source>Previous</source>
         <translation>Назад</translation>
-    </message>
-    <message>
-        <source>Allright!</source>
-        <translation type="obsolete">Хорошо!</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="264"/>

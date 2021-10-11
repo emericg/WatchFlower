@@ -14,10 +14,6 @@
         <translation>Hva vil du vite?</translation>
     </message>
     <message>
-        <source>version %1%2</source>
-        <translation type="vanished">versjon %1%2</translation>
-    </message>
-    <message>
         <location filename="../qml/About.qml" line="108"/>
         <source>version %1 %2</source>
         <translation>versjon %1 %2</translation>
@@ -210,7 +206,7 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="259"/>
         <source>Synchronize history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Synkroniser historikk</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="272"/>
@@ -220,12 +216,12 @@
     <message>
         <location filename="../qml/DesktopHeader.qml" line="396"/>
         <source>sensor model</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">modell for sensor</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="460"/>
         <source>Search for new sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Søk etter nye sensorer</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="478"/>
@@ -236,14 +232,6 @@
         <location filename="../qml/DesktopHeader.qml" line="496"/>
         <source>Refresh sensors data</source>
         <translation type="unfinished">Gjenoppfrisk sensordata</translation>
-    </message>
-    <message>
-        <source>Sync history</source>
-        <translation type="vanished">Synkroniser historikk</translation>
-    </message>
-    <message>
-        <source>Refresh device</source>
-        <translation type="vanished">Last om att eining</translation>
     </message>
     <message>
         <location filename="../qml/DesktopHeader.qml" line="299"/>
@@ -271,29 +259,9 @@
         <translation>plantenavn</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">modell for enhet</translation>
-    </message>
-    <message>
         <location filename="../qml/DesktopHeader.qml" line="398"/>
         <source>location</source>
         <translation>plassering</translation>
-    </message>
-    <message>
-        <source>Scan for sensors</source>
-        <translation type="vanished">Søk etter sensorer</translation>
-    </message>
-    <message>
-        <source>Refresh sensors</source>
-        <translation type="vanished">Gjenoppfrisk sensorer</translation>
-    </message>
-    <message>
-        <source>Scan for devices</source>
-        <translation type="vanished">Leit etter einingar</translation>
-    </message>
-    <message>
-        <source>Refresh devices</source>
-        <translation type="vanished">Last om att einingar</translation>
     </message>
 </context>
 <context>
@@ -926,23 +894,7 @@
     </message>
 </context>
 <context>
-    <name>ItemAioLineCharts</name>
-    <message>
-        <source>at</source>
-        <extracomment>&quot;at&quot; is used for DATE at HOUR</extracomment>
-        <translation type="vanished">kl.</translation>
-    </message>
-</context>
-<context>
     <name>ItemBannerSync</name>
-    <message>
-        <source>Syncing with the device</source>
-        <translation type="vanished">Synkroniserer med eininga</translation>
-    </message>
-    <message>
-        <source>Syncing with the sensor</source>
-        <translation type="vanished">Synkroniserer med sensoren</translation>
-    </message>
     <message>
         <location filename="../qml/components/ItemBannerSync.qml" line="60"/>
         <source>Syncing with the sensor...</source>
@@ -957,91 +909,6 @@
         <location filename="../qml/components/ItemBannerSync.qml" line="87"/>
         <source>Stop</source>
         <translation type="unfinished">Avbryt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Avbryt</translation>
-    </message>
-</context>
-<context>
-    <name>ItemDeletePopup</name>
-    <message>
-        <source>Are you sure you want to delete selected device(s)?</source>
-        <translation type="vanished">Er du sikker på at du ynskjer å slette (dei ) valt(e) eining(ane)?</translation>
-    </message>
-    <message>
-        <source>Data from the device(s) will be kept for an additional 90 days, if you want to re-add this device later.</source>
-        <translation type="vanished">Data frå eininga(ne) vil bli bevart i 90 dagar, i tilfelle du ynskjer å leggje til att eininga seinare.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Avbryt</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Slett</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsCompact</name>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Væte</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Fukt</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Lysstyrke</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Næring</translation>
-    </message>
-    <message>
-        <source>Soil temp.</source>
-        <translation type="vanished">Jordtemperatur</translation>
-    </message>
-    <message>
-        <source>Water tank</source>
-        <translation type="vanished">Vasstank</translation>
-    </message>
-</context>
-<context>
-    <name>ItemIndicatorsSolid</name>
-    <message>
-        <source>Moisture</source>
-        <translation type="vanished">Væte</translation>
-    </message>
-    <message>
-        <source>Temperature</source>
-        <translation type="vanished">Temperatur</translation>
-    </message>
-    <message>
-        <source>Humidity</source>
-        <translation type="vanished">Fukt</translation>
-    </message>
-    <message>
-        <source>Luminosity</source>
-        <translation type="vanished">Lysstyrke</translation>
-    </message>
-    <message>
-        <source>Fertility</source>
-        <translation type="vanished">Næring</translation>
-    </message>
-    <message>
-        <source>Soil temp.</source>
-        <translation type="vanished">Jordtemperatur</translation>
-    </message>
-    <message>
-        <source>Water tank</source>
-        <translation type="vanished">Vasstank</translation>
     </message>
 </context>
 <context>
@@ -1067,14 +934,6 @@
 </context>
 <context>
     <name>ItemNoDevice</name>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconveniance.</source>
-        <translation type="vanished">For å leite etter Bluetooth Low Energy-einingar på Android 6+ trengs plasseringsløyve. Programmet verken brukar eller lagrar plasseringa di. Beklagar dette.</translation>
-    </message>
-    <message>
-        <source>On Android 6+, scanning for Bluetooth Low Energy devices needs location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
-        <translation type="vanished">For å søke etter Bluetooth Low Energy-enheter på Android 6+ trengs plasseringstillatelse. Programmet verken bruker eller lagrer plasseringa di. Beklager dette.</translation>
-    </message>
     <message>
         <location filename="../qml/components/ItemNoDevice.qml" line="44"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
@@ -1112,10 +971,6 @@
         <location filename="../qml/MobileApplication.qml" line="431"/>
         <source>Thermometer</source>
         <translation>Termometer</translation>
-    </message>
-    <message>
-        <source>Environmental</source>
-        <translation type="vanished">Miljø</translation>
     </message>
     <message>
         <location filename="../qml/MobileApplication.qml" line="455"/>
@@ -1204,10 +1059,6 @@
         <translation type="unfinished">Søk etter nye sensorer</translation>
     </message>
     <message>
-        <source>device model</source>
-        <translation type="vanished">modell for enheten</translation>
-    </message>
-    <message>
         <location filename="../qml/MobileDrawer.qml" line="319"/>
         <source>location</source>
         <translation>plassering</translation>
@@ -1217,14 +1068,6 @@
         <source>Refresh sensors data</source>
         <translation>Gjenoppfrisk sensordata</translation>
     </message>
-    <message>
-        <source>Search for new devices</source>
-        <translation type="vanished">Søk etter nye enheter</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Avslutt</translation>
-    </message>
 </context>
 <context>
     <name>Permissions</name>
@@ -1232,14 +1075,6 @@
         <location filename="../qml/Permissions.qml" line="101"/>
         <source>Location</source>
         <translation>Plassering</translation>
-    </message>
-    <message>
-        <source>Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth LE sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="vanished">For å leite etter Bluetooth Low Energy-einingar på Android må program be om plasseringsløyve.&lt;br&gt;Dette løyvet trengs berre for å leita etter nye einingar.&lt;br&gt;WatchFlower verken brukar, lagrar eller deler plasseringa di med nokon eller noko som helst.</translation>
-    </message>
-    <message>
-        <source>The Android operating system requires applications to ask for device location permission in order to scan for nearby BLE (Bluetooth Low Energy) sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="vanished">For å søke etter Bluetooth Low Energy-enheter på Android må program be om plasseringstillatelse.&lt;br&gt;Denne tillatelsen trengs bare for å søke etter nye enheter.&lt;br&gt;WatchFlower verken bruker, lagrer eller deler plasseringa di med noen eller noe som helst.</translation>
     </message>
     <message>
         <location filename="../qml/Permissions.qml" line="134"/>
@@ -1303,25 +1138,6 @@
         <location filename="../qml/components/PopupCalibration.qml" line="109"/>
         <source>Start calibration</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PopupDelete</name>
-    <message>
-        <source>Are you sure you want to delete selected sensor(s)?</source>
-        <translation type="vanished">Er du sikker på at du vil slette valgt(e) sensor(er)?</translation>
-    </message>
-    <message>
-        <source>Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
-        <translation type="vanished">Data fra enhet(ene) vil bli bevart i 90 dager, i tilfelle du ønsker å legge enheten til igjen senere.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Avbryt</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Slett</translation>
     </message>
 </context>
 <context>
@@ -1393,17 +1209,9 @@
         <translation>Program</translation>
     </message>
     <message>
-        <source>Application theme</source>
-        <translation type="vanished">Programdrakt</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="162"/>
         <source>snow</source>
         <translation>snø</translation>
-    </message>
-    <message>
-        <source>green</source>
-        <translation type="vanished">grønn</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="210"/>
@@ -1426,18 +1234,9 @@
         <translation>Mørkmodus blir automatisk slått på mellom 21 og 09.</translation>
     </message>
     <message>
-        <source>Use bigger widgets</source>
-        <translation type="vanished">Bruk større element</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="353"/>
         <source>Language</source>
         <translation>Språk</translation>
-    </message>
-    <message>
-        <source>auto</source>
-        <extracomment>Short for automatic</extracomment>
-        <translation type="vanished">auto</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="449"/>
@@ -1480,10 +1279,6 @@
         <translation>WatchFlower vil være aktivt i systemtrauet, og våkne opp med faste mellomrom for å laste inn data fra sensor(ene).</translation>
     </message>
     <message>
-        <source>Data indicators</source>
-        <translation type="vanished">Data-indikatorer</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="992"/>
         <source>thin</source>
         <translation>tynn</translation>
@@ -1492,14 +1287,6 @@
         <location filename="../qml/Settings.qml" line="999"/>
         <source>solid</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Wake up at a predefined intervals to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-        <translation type="vanished">Vakna med faste mellomrom for å laste inn data frå sensorane. Berre dersom Bluetooth eller Bluetooth-styring er slått på.</translation>
-    </message>
-    <message>
-        <source>WatchFlower will remain active in the system tray, and will wake up at a regular intervals to refresh sensor data.</source>
-        <translation type="vanished">WatchFlower vil vere aktivt i systemtrauet, og vakne opp med faste mellomrom for å laste inn data frå sensorane.</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="820"/>
@@ -1523,21 +1310,9 @@
         <translation>Oppdateringsintervall</translation>
     </message>
     <message>
-        <source> h.</source>
-        <translation type="vanished"> t.</translation>
-    </message>
-    <message>
-        <source>Use bigger indicators</source>
-        <translation type="vanished">Bruk større indikatorar</translation>
-    </message>
-    <message>
         <location filename="../qml/Settings.qml" line="1036"/>
         <source>Dynamic scale for indicators</source>
         <translation>Dynamisk skala for indikatorer</translation>
-    </message>
-    <message>
-        <source>Show graph dots</source>
-        <translation type="vanished">Vis grafpunkt</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="132"/>
