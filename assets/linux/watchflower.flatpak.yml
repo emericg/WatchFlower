@@ -62,8 +62,8 @@ modules:
     - --sysconfdir=/app/etc
   sources:
     - type: archive
-      url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.61.tar.xz
-      sha256: 83afd6c52179554bfeabbcb538fec2eb6be90a8ac3c40871b49d7ad8b49c423b
+      url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.62.tar.xz
+      sha256: 38090a5b750e17fc08d3e52178ed8d3254c5f4bd2c48830d5c1955b88e3bc0c2
       x-checker-data:
         type: anitya
         project-id: 10029
