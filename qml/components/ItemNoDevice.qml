@@ -49,26 +49,6 @@ Item {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Text {
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            visible: (Qt.platform.os === "ios")
-
-            text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
-            textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeContentSmall
-            color: Theme.colorSubText
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Item { // spacer
-            width: 1; height: 16;
-            anchors.horizontalCenter: parent.horizontalCenter;
-            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-        }
-
         Row {
             id: row
             anchors.horizontalCenter: parent.horizontalCenter
@@ -96,6 +76,26 @@ Item {
                     }
                 }
             }
+        }
+
+        Item { // spacer
+            width: 1; height: 24;
+            anchors.horizontalCenter: parent.horizontalCenter;
+            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            visible: (Qt.platform.os === "ios")
+
+            text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentSmall
+            color: Theme.colorSubText
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
         }
 
         Text {
