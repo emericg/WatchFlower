@@ -10,7 +10,7 @@ Unicode True
 !define COMPANYNAME                  "Emeric Grange"
 !define DESCRIPTION                  "A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'"
 !define VERSIONMAJOR                 3
-!define VERSIONMINOR                 0
+!define VERSIONMINOR                 1
 !define VERSIONBUILD                 0
 !define INSTALL_DIR_DEFAULT          "$PROGRAMFILES64\${APPNAME}"
 !define MUI_ABORTWARNING

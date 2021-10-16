@@ -3,7 +3,7 @@
 echo "> WatchFlower packager (macOS x86_64)"
 
 export APP_NAME="WatchFlower";
-export APP_VERSION=3.0;
+export APP_VERSION=3.1;
 export GIT_VERSION=$(git rev-parse --short HEAD);
 
 ## CHECKS ######################################################################
