@@ -65,6 +65,13 @@ private:
     QLowEnergyDescriptor m_notificationDesc;
 
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
+    bool areValuesValid(const float temperature, const float humidity,
+                        const float pressure, const float voc, const float co2) const;
+
+    bool addDatabaseRecord(const int64_t timestamp,
+                           const float temperature, const float humidity,
+                           const float pressure, const float voc, const float co2);
 };
 
 /* ************************************************************************** */

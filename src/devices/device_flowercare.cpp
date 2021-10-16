@@ -582,7 +582,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         {
             // first read might send bad data (0x aa bb cc dd ee ff 99 88 77 66...)
             // until the first write is done
-            if (data[0] == 0xAA && data[1] == 0xbb)
+            if (data[0] == 0xAA && data[1] == 0xBB)
                 return;
 
             m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;

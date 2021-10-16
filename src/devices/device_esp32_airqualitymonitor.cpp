@@ -221,33 +221,11 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
         {
             m_temperature = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
             m_humidity = data[2];
-
             m_pressure = static_cast<uint16_t>(data[3] + (data[4] << 8));
             m_voc = static_cast<uint16_t>(data[5] + (data[6] << 8));
             m_co2 = static_cast<uint16_t>(data[7] + (data[8] << 8));
 
             m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_dbInternal || m_dbExternal)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, pressure, voc, co2)"
-                                " VALUES (:deviceAddr, :ts, :temp, :humi, :pres, :voc, :co2)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":humi", m_humidity);
-                addData.bindValue(":pres", m_pressure);
-                addData.bindValue(":voc", m_voc);
-                addData.bindValue(":co2", m_co2);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-
-                m_lastUpdateDatabase = m_lastUpdate;
-            }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
@@ -255,7 +233,11 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
             }
             else
             {
-                refreshDataFinished(true);
+                bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
+                                                m_temperature, m_humidity, m_pressure,
+                                                m_voc, m_co2);
+
+                refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
             }
 
@@ -280,7 +262,7 @@ bool DeviceEsp32AirQualityMonitor::hasData() const
     //qDebug() << "DeviceEsp32AirQualityMonitor::hasData()";
 
     // If we have immediate data (<12h old)
-    if (m_temperature > 0 || m_humidity > 0 || m_pressure > 0 || m_voc > 0 || m_co2 > 0)
+    if (m_temperature > 0.f || m_humidity > 0.f || m_pressure > 0.f || m_voc > 0.f || m_co2 > 0.f)
         return true;
 
     // Otherwise, check if we have stored data
@@ -301,6 +283,63 @@ bool DeviceEsp32AirQualityMonitor::hasData() const
     }
 
     return false;
+}
+
+bool DeviceEsp32AirQualityMonitor::areValuesValid(const float temperature, const float humidity,
+                                                  const float pressure, const float voc, const float co2) const
+{
+    if (temperature < -20.f || temperature > 100.f) return false;
+    if (humidity < 0.f || humidity > 100.f) return false;
+    if (pressure < 900.f || humidity > 1100.f) return false;
+
+    if (voc < 0.f || voc > 10000.f) return false;
+    if (co2 < 0.f || co2 > 10000.f) return false;
+
+    return true;
+}
+
+bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
+                                                     const float temperature, const float humidity,
+                                                     const float pressure, const float voc, const float co2)
+{
+    bool status = false;
+
+    if (areValuesValid(temperature, humidity, pressure, voc, co2))
+    {
+        if (m_dbInternal || m_dbExternal)
+        {
+            // SQL date format YYYY-MM-DD HH:MM:SS
+            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+
+            QSqlQuery addData;
+            addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, pressure, voc, co2)"
+                            " VALUES (:deviceAddr, :ts, :temp, :humi, :pres, :voc, :co2)");
+            addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":ts", tmcd);
+            addData.bindValue(":temp", m_temperature);
+            addData.bindValue(":humi", m_humidity);
+            addData.bindValue(":pres", m_pressure);
+            addData.bindValue(":voc", m_voc);
+            addData.bindValue(":co2", m_co2);
+            if (addData.exec() == false)
+                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+            if (status)
+            {
+                m_lastUpdateDatabase = tmcd;
+            }
+            else
+            {
+                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "DeviceEsp32AirQualityMonitor values are INVALID";
+    }
+
+    return status;
 }
 
 /* ************************************************************************** */
