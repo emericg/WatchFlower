@@ -137,7 +137,6 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
-
                 ButtonWireframeImage {
                     id: supportBtn
                     width: ((parent.width - 16) / 2)
@@ -236,6 +235,17 @@ Item {
                         cursorShape: authorTxt.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
+
+                ImageSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                }
             }
 
             ////////
@@ -274,6 +284,17 @@ Item {
                     color: Theme.colorText
                 }
 
+                ImageSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                }
+
                 MouseArea {
                     anchors.top: parent.top
                     anchors.left: parent.left
@@ -300,7 +321,6 @@ Item {
                 anchors.rightMargin: 0
 
                 ImageSvg {
-                    id: tutoImg
                     width: 27
                     height: 27
                     anchors.left: parent.left
@@ -346,7 +366,6 @@ Item {
                 visible: !isMobile
 
                 ImageSvg {
-                    id: websiteImg
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -367,6 +386,17 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
+
+                ImageSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 }
 
                 MouseArea {
@@ -392,7 +422,6 @@ Item {
                 visible: !isPhone
 
                 ImageSvg {
-                    id: githubImg
                     width: 26
                     height: 26
                     anchors.left: parent.left
@@ -413,6 +442,17 @@ Item {
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
+                }
+
+                ImageSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 }
 
                 MouseArea {
@@ -455,9 +495,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -16
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
-                    anchors.rightMargin: -16
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -524,9 +564,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -16
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
-                    anchors.rightMargin: -16
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -543,10 +583,10 @@ Item {
                     id: dependenciesImg
                     width: 24
                     height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 4
                     anchors.top: parent.top
                     anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                     color: Theme.colorText
@@ -636,9 +676,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -16
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
-                    anchors.rightMargin: -16
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

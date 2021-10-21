@@ -54,9 +54,11 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 16
 
-            ButtonWireframe {
+            ButtonWireframeImage {
                 visible: (Qt.platform.os === "android")
 
+                imgSize: 20
+                source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 text: qsTr("Official information")
                 primaryColor: Theme.colorSubText
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")

@@ -139,13 +139,15 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
             }
-            ButtonWireframe {
+            ButtonWireframeImage {
                 height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 64
 
+                imgSize: 20
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
+                source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 text: qsTr("Official information")
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
             }
@@ -161,7 +163,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -screenPaddingLeft
                     anchors.right: parent.right
+                    anchors.rightMargin: -screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -235,7 +239,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -screenPaddingLeft
                     anchors.right: parent.right
+                    anchors.rightMargin: -screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -307,7 +313,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -screenPaddingLeft
                     anchors.right: parent.right
+                    anchors.rightMargin: -screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

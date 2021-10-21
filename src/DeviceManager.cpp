@@ -610,8 +610,8 @@ void DeviceManager::listenDevices()
                         this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
 
                 m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration*1000);
-
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
                 if (m_discoveryAgent->isActive())
                 {
                     qDebug() << "Listening for BLE advertisement devices...";

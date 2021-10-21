@@ -19,15 +19,11 @@ Item {
         ////////////////
 
         Column {
-            id: column
             anchors.fill: parent
 
             topPadding: isMobile ? 12 : 0
             bottomPadding: 12
             spacing: 8
-
-            property int leftPad1: screenPaddingLeft + 16
-            property int leftPad2: 24
 
             Rectangle {
                 id: rectangleHeader
@@ -40,26 +36,34 @@ Item {
 
                 Text {
                     id: textTitle
-                    anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
                     anchors.top: parent.top
                     anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + 16
 
                     text: qsTr("Settings")
+                    textFormat: Text.PlainText
                     font.bold: false
                     font.pixelSize: Theme.fontSizeTitle
+                    elide: Text.ElideRight
                     color: Theme.colorText
                 }
 
                 Text {
                     id: textSubtitle
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + 16
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 14
 
                     text: qsTr("Change persistent settings here!")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContentBig
+                    elide: Text.ElideRight
                     color: Theme.colorSubText
                 }
             }
@@ -78,7 +82,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -88,10 +92,11 @@ Item {
                 Text {
                     id: text_appsettings
                     anchors.left: image_appsettings.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
@@ -103,17 +108,19 @@ Item {
             ////////////////
 
             Item {
-                id: element_theme
+                id: element_appTheme
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
-                    id: image_theme
+                    id: image_appTheme
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -121,15 +128,16 @@ Item {
                 }
 
                 Text {
-                    id: text_theme
+                    id: text_appTheme
                     height: 40
-                    anchors.left: image_theme.right
-                    anchors.leftMargin: column.leftPad2
-                    anchors.right: theme_selector.left
+                    anchors.left: image_appTheme.right
+                    anchors.leftMargin: 24
+                    anchors.right: appTheme_selector.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Theme")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -137,9 +145,9 @@ Item {
                 }
 
                 Row {
-                    id: theme_selector
+                    id: appTheme_selector
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 16
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
@@ -160,6 +168,7 @@ Item {
                             anchors.centerIn: parent
                             visible: wideWideMode
                             text: qsTr("snow")
+                            textFormat: Text.PlainText
                             color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : "#ccc"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
@@ -184,6 +193,7 @@ Item {
                             anchors.centerIn: parent
                             visible: wideWideMode
                             text: qsTr("plant")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
@@ -208,6 +218,7 @@ Item {
                             anchors.centerIn: parent
                             visible: wideWideMode
                             text: qsTr("day")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
@@ -232,6 +243,7 @@ Item {
                             anchors.centerIn: parent
                             visible: wideWideMode
                             text: qsTr("night")
+                            textFormat: Text.PlainText
                             color: (settingsManager.appTheme === "night") ? Theme.colorPrimary : "#ececec"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
@@ -250,14 +262,16 @@ Item {
                 id: element_appThemeAuto
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_appThemeAuto
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -268,12 +282,13 @@ Item {
                     id: text_appThemeAuto
                     height: 40
                     anchors.left: image_appThemeAuto.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_appThemeAuto.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -283,7 +298,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_appThemeAuto
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -296,14 +311,14 @@ Item {
             }
             Text {
                 id: legend_appThemeAuto
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+
                 topPadding: -12
                 bottomPadding: isMobile ? 12 : 0
-                anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
-                anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
-
-                visible: (element_appThemeAuto.visible && settingsManager.appThemeAuto)
+                visible: element_appThemeAuto.visible
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
                 textFormat: Text.PlainText
@@ -327,14 +342,16 @@ Item {
                 id: element_language
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_language
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -345,12 +362,13 @@ Item {
                     id: text_language
                     height: 40
                     anchors.left: image_language.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: combobox_language.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Language")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -362,7 +380,7 @@ Item {
                     width: wideMode ? 256 : 160
                     height: 36
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
@@ -420,7 +438,9 @@ Item {
                 id: element_bluetoothControl
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 // Android only
                 visible: (Qt.platform.os === "android")
@@ -430,7 +450,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -441,12 +461,13 @@ Item {
                     id: text_bluetoothControl
                     height: 40
                     anchors.left: image_bluetoothControl.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_bluetoothControl.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth control")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -456,7 +477,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bluetoothControl
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -467,12 +488,12 @@ Item {
             Text {
                 id: legend_bluetoothControl
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
+
                 topPadding: -12
                 bottomPadding: 0
-
                 visible: element_bluetoothControl.visible
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
@@ -488,14 +509,16 @@ Item {
                 id: element_bluetoothRange
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_bluetoothRange
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -506,12 +529,13 @@ Item {
                     id: text_bluetoothRange
                     height: 40
                     anchors.left: image_bluetoothRange.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_bluetoothRange.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Limit Bluetooth scanning range")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -521,7 +545,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_bluetoothRange
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -532,13 +556,13 @@ Item {
             Text {
                 id: legend_bluetoothRange
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
+
                 topPadding: -12
                 bottomPadding: 0
-
-                visible: (element_bluetoothRange.visible && settingsManager.bluetoothLimitScanningRange)
+                visible: element_bluetoothRange.visible
 
                 text: qsTr("Will only scan for sensors ~2m around you.")
                 textFormat: Text.PlainText
@@ -553,14 +577,16 @@ Item {
                 id: element_bluetoothSimUpdate
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_bluetoothSimUpdate
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -571,12 +597,13 @@ Item {
                     id: text_bluetoothSimUpdate
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: isDesktop ? null : spinBox_bluetoothSimUpdate.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Simultaneous updates")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeContent
@@ -607,7 +634,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: isMobile
@@ -625,9 +652,9 @@ Item {
             Text {
                 id: legend_bluetoothSimUpdate
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
                 topPadding: -12
                 bottomPadding: 12
 
@@ -656,7 +683,9 @@ Item {
                 id: element_minimized
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 visible: isDesktop
 
@@ -665,7 +694,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -676,12 +705,13 @@ Item {
                     id: text_minimized
                     height: 40
                     anchors.left: image_minimized.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_minimized.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Start application minimized")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -691,7 +721,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_minimized
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -706,7 +736,9 @@ Item {
                 id: element_worker
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 // desktop only // for now...
                 visible: isDesktop
@@ -716,7 +748,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -727,12 +759,13 @@ Item {
                     id: text_worker
                     height: 40
                     anchors.left: image_worker.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_worker.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable background updates")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -742,7 +775,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_worker
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -753,13 +786,13 @@ Item {
             Text {
                 id: legend_worker_mobile
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: (element_worker.visible && isMobile && settingsManager.systray)
+                visible: (element_worker.visible && isMobile)
 
                 text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
                 textFormat: Text.PlainText
@@ -770,13 +803,13 @@ Item {
             Text {
                 id: legend_worker_desktop
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: (element_worker.visible && isDesktop && settingsManager.systray)
+                visible: (element_worker.visible && isDesktop)
 
                 text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.")
                 textFormat: Text.PlainText
@@ -791,7 +824,9 @@ Item {
                 id: element_notifications
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 // desktop only // for now... // also, need the systray
                 visible: isDesktop && settingsManager.systray
@@ -801,7 +836,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -812,12 +847,13 @@ Item {
                     id: text_notifications
                     height: 40
                     anchors.left: image_notifications.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_notifications.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable notifications")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -838,13 +874,13 @@ Item {
             Text {
                 id: legend_notifications
                 anchors.left: parent.left
-                anchors.leftMargin: column.leftPad1 + 24 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
                 topPadding: -12
                 bottomPadding: 12
 
-                visible: (element_notifications.visible && settingsManager.notifications)
+                visible: (element_notifications.visible)
 
                 text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
                 textFormat: Text.PlainText
@@ -866,7 +902,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -876,10 +912,11 @@ Item {
                 Text {
                     id: text_plantsensor
                     anchors.left: image_plantsensor.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Plant sensors")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
@@ -894,14 +931,16 @@ Item {
                 id: element_update
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_update
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -912,12 +951,13 @@ Item {
                     id: text_update
                     height: 40
                     anchors.left: image_update.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: spinBox_update.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -929,7 +969,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -951,14 +991,16 @@ Item {
                 id: element_bigindicators
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_bigindicators
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -969,12 +1011,13 @@ Item {
                     id: text_bigindicators
                     height: 40
                     anchors.left: image_bigindicators.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: row_bigindicators.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Data indicators style")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -984,7 +1027,7 @@ Item {
                 Row {
                     id: row_bigindicators
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: text_bigindicators.verticalCenter
                     spacing: 12
 
@@ -1010,14 +1053,16 @@ Item {
                 id: element_dynascale
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_dynascale
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1028,12 +1073,13 @@ Item {
                     id: text_dynascale
                     height: 40
                     anchors.left: image_dynascale.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_dynascale.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Dynamic scale for indicators")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1043,7 +1089,7 @@ Item {
                 SwitchThemedMobile {
                     id: switch_dynascale
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1065,7 +1111,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1075,12 +1121,12 @@ Item {
                 Text {
                     id: text_thermometer
                     anchors.left: image_thermometer.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Thermometers")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -1093,14 +1139,16 @@ Item {
                 id: element_thermometer_update
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_thermometer_update
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1111,12 +1159,13 @@ Item {
                     id: text_thermometer_update
                     height: 40
                     anchors.left: image_thermometer_update.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: spinBox_thermometer_update.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Update interval")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1128,7 +1177,7 @@ Item {
                     width: 128
                     height: 34
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -1150,14 +1199,16 @@ Item {
                 id: element_thermometer_unit
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_thermometer_unit
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1168,12 +1219,13 @@ Item {
                     id: text_thermometer_unit
                     height: 40
                     anchors.left: image_thermometer_unit.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: row_thermometer_unit.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Temperature unit")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -1183,7 +1235,7 @@ Item {
                 Row {
                     id: row_thermometer_unit
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: text_thermometer_unit.verticalCenter
                     spacing: 12
 
@@ -1242,7 +1294,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1252,10 +1304,11 @@ Item {
                 Text {
                     id: text_database
                     anchors.left: image_database.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("External database")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
@@ -1279,9 +1332,9 @@ Item {
 
             Item {
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad2
+                anchors.leftMargin: 40 + 24
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: 16
                 height: UtilsNumber.alignTo(legend_database.contentHeight, 16)
 
                 visible: isDesktop
@@ -1330,7 +1383,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1340,10 +1393,11 @@ Item {
                 Text {
                     id: text_export
                     anchors.left: image_export.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Data archiving")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     font.bold: false
                     color: Theme.colorText
@@ -1356,7 +1410,7 @@ Item {
 
             Column {
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 16
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
 
@@ -1397,8 +1451,9 @@ Item {
             Row {
                 id: element_export
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad2
+                anchors.leftMargin: screenPaddingLeft + 16
                 anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 16
                 height: 48
                 spacing: 16
 
@@ -1479,9 +1534,9 @@ Item {
 
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad2
+                anchors.leftMargin: 40 + 24
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 12
+                anchors.rightMargin: 12
 
                 height: 36
                 spacing: 8
@@ -1534,9 +1589,9 @@ Item {
 
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + column.leftPad2
+                anchors.leftMargin: 40 + 24
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 12
+                anchors.rightMargin: 12
 
                 height: 36
                 spacing: 8
@@ -1596,7 +1651,9 @@ Item {
 
         Column {
             anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight
 
             Item {
                 id: element_database_host
@@ -1609,7 +1666,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1620,12 +1677,13 @@ Item {
                     id: text_database_host
                     height: 40
                     anchors.left: image_database_host.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_database_host.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Host")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1657,7 +1715,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1668,12 +1726,13 @@ Item {
                     id: text_database_port
                     height: 40
                     anchors.left: image_database_port.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_database_port.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Port")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1705,7 +1764,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1716,12 +1775,13 @@ Item {
                     id: text_database_user
                     height: 40
                     anchors.left: image_database_user.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 16
                     anchors.right: switch_database_user.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("User")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -1755,7 +1815,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: column.leftPad1
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
@@ -1766,12 +1826,13 @@ Item {
                     id: text_database_pwd
                     height: 40
                     anchors.left: image_database_pwd.right
-                    anchors.leftMargin: column.leftPad2
+                    anchors.leftMargin: 24
                     anchors.right: switch_database_pwd.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Password")
+                    textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
