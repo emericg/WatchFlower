@@ -89,22 +89,6 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
-                    id: text_gps
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Location")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 17
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
                 ItemImageButton {
                     id: button_gps_test
                     width: 32
@@ -122,6 +106,22 @@ Item {
                     background: true
 
                     onClicked: validperm = utilsApp.getMobileLocationPermission();
+                }
+
+                Text {
+                    id: text_gps
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Location")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
             Text {
@@ -178,23 +178,6 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
-                    id: text_storage
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Storage write")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 17
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
                 ItemImageButton {
                     id: button_storage_test
                     width: 32
@@ -212,6 +195,23 @@ Item {
                     background: true
 
                     onClicked: validperm = utilsApp.getMobileStoragePermissions();
+                }
+
+                Text {
+                    id: text_storage
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Storage write")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
             Text {
@@ -254,23 +254,6 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
-                    id: text_bluetooth
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Bluetooth control")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 17
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
                 ItemImageButton {
                     id: button_bluetooth_test
                     width: 32
@@ -287,6 +270,23 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
                 }
+
+                Text {
+                    id: text_bluetooth
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Bluetooth control")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
             Text {
                 id: legend_bluetooth
@@ -300,24 +300,6 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            Item {
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                }
             }
 
             ////////

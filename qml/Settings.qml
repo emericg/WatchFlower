@@ -1410,7 +1410,7 @@ Item {
 
             Column {
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 16
+                anchors.leftMargin: screenPaddingLeft + 16 + 48
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
 
@@ -1451,7 +1451,7 @@ Item {
             Row {
                 id: element_export
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 16
+                anchors.leftMargin: screenPaddingLeft + 16 + 48
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
                 height: 48

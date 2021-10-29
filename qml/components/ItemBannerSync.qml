@@ -6,7 +6,7 @@ import DeviceUtils 1.0
 Rectangle {
     id: statusBox
     width: parent.width
-    height: (connecting || syncing) ? (isPhone ? 40 : 48) : 0
+    height: (connecting || syncing) ? (isPhone ? 44 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
     clip: true
