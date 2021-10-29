@@ -51,6 +51,10 @@ Item {
             hovered = false
             bgRect.opacity = control.background ? 0.75 : 0
         }
+        onCanceled: {
+            hovered = false
+            bgRect.opacity = control.background ? 0.75 : 0
+        }
     }
 
     Rectangle {
@@ -70,8 +74,10 @@ Item {
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Text {
-        id: contentImage
+        id: contentText
         anchors.centerIn: bgRect
 
         text: control.text

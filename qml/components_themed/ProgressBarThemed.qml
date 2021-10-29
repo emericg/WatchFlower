@@ -14,7 +14,7 @@ ProgressBar {
     property var colorForeground: Theme.colorPrimary
 
     background: Rectangle {
-        radius: Theme.componentRadius/2
+        radius: (Theme.componentRadius / 2)
         color: control.colorBackground
     }
 
@@ -22,7 +22,7 @@ ProgressBar {
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
-            radius: Theme.componentRadius/2
+            radius: (Theme.componentRadius / 2)
             color: control.colorForeground
         }
     }

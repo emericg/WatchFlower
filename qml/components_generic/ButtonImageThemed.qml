@@ -25,6 +25,8 @@ Button {
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     contentItem: Item {
         Row {
             id: contentRow

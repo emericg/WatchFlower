@@ -10,6 +10,7 @@ Button {
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
+    font.bold: false
 
     focusPolicy: Qt.NoFocus
 
@@ -24,6 +25,8 @@ Button {
         opacity: enabled ? 1 : 0.33
         color: control.down ? "#c1c1c1" : "#DBDBDB"
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Item {
         Text {

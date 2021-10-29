@@ -10,7 +10,7 @@ ScrollBar {
 
     //size: 0.3
     //position: 0.2
-    //active: true
+    active: true
     orientation: Qt.Vertical
     policy: ScrollBar.AsNeeded
 
@@ -28,14 +28,7 @@ ScrollBar {
     onPositionChanged: {
         control.opacity = 1
         visibleTimer.start()
-    }/*
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        propagateComposedEvents: true
-        onEntered: control.opacity = 1
-        onExited: visibleTimer.start()
-    }*/
+    }
 
     ////////
 

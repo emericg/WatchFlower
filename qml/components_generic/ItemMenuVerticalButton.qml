@@ -45,6 +45,10 @@ Item {
             hovered = false
             bgFocus.opacity = 0
         }
+        onCanceled: {
+            hovered = false
+            bgFocus.opacity = 0
+        }
     }
 
     Rectangle {

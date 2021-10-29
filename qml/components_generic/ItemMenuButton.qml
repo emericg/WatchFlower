@@ -42,6 +42,7 @@ Item {
 
         onEntered: hovered = true
         onExited: hovered = false
+        onCanceled: hovered = false
     }
 
     Rectangle {
