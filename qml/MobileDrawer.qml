@@ -476,7 +476,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: deviceManager.bluetooth && !deviceManager.updating
+                    enabled: deviceManager.bluetooth && !deviceManager.updating && !deviceManager.syncing
 
                     MouseArea {
                         anchors.fill: parent
