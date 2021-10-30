@@ -451,7 +451,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: !deviceManager.updating
+            enabled: !deviceManager.updating && !deviceManager.syncing
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -469,7 +469,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: !deviceManager.syncing
+            enabled: !deviceManager.scanning
 
             source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
             iconColor: Theme.colorHeaderContent

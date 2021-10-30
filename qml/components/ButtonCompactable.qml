@@ -126,8 +126,8 @@ Item {
                 alwaysRunToEnd: true
                 loops: Animation.Infinite
 
-                PropertyAnimation { to: 0.33; duration: 750; }
-                PropertyAnimation { to: 1; duration: 750; }
+                PropertyAnimation { to: 0.5; duration: 666; }
+                PropertyAnimation { to: 1; duration: 666; }
             }
             NumberAnimation on rotation {
                 running: (animation === "rotate" && animationRunning)
