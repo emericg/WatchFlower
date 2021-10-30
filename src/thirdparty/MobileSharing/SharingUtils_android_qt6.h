@@ -27,16 +27,8 @@
 
 #include "SharingUtils.h"
 
-#include <QtGlobal>
 #include <QAndroidActivityResultReceiver>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #include <QCoreApplication>
-#include <QJniObject>
-#else
-#include <QtAndroid>
-#include <QAndroidJniObject>
-#endif
 
 /* ************************************************************************** */
 
@@ -62,11 +54,7 @@ public:
     void viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
     void editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     void handleActivityResult(int receiverRequestCode, int resultCode, const QJniObject &data) override;
-#else
-    void handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data) override;
-#endif
     void onActivityResult(int requestCode, int resultCode);
 
     void checkPendingIntents(const QString workingDirPath) override;

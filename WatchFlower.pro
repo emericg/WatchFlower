@@ -58,7 +58,7 @@ SOURCES  += src/main.cpp \
             src/devices/device_ess_generic.cpp \
             src/devices/device_wp6003.cpp \
             src/utils/utils_app.cpp \
-            src/utils/utils_android.cpp \
+            src/utils/utils_android_qt5.cpp \
             src/utils/utils_language.cpp \
             src/utils/utils_maths.cpp \
             src/utils/utils_screen.cpp \

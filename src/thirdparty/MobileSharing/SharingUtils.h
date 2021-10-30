@@ -44,6 +44,8 @@
 /* ************************************************************************** */
 
 #include <QObject>
+#include <QString>
+#include <QUrl>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -73,7 +75,7 @@ public:
         return true;
     }
     virtual void share(const QString &text, const QUrl &url) {
-        qDebug() << text << url;
+        qDebug() << text << url.url();
     }
     virtual void sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) {
         qDebug() << filePath << " - " << title << "requestId: " << requestId << " - " << mimeType;

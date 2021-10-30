@@ -27,8 +27,8 @@
 #include <QFileInfo>
 #include <QDateTime>
 
-#include <QtAndroidExtras/QAndroidJniObject>
-#include <jni.h>
+#include <QtAndroidExtras>
+#include <QAndroidJniObject>
 
 /* ************************************************************************** */
 

@@ -31,10 +31,6 @@
 
 #include <QDebug>
 
-#if defined(Q_OS_ANDROID)
-#include <QtAndroid>
-#endif
-
 /* ************************************************************************** */
 
 SharingApplication::SharingApplication(int &argc, char **argv) : QApplication(argc, argv)
