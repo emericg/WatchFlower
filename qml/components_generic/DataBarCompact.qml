@@ -1,5 +1,6 @@
 import QtQuick 2.12
-import QtGraphicalEffects 1.12
+import QtGraphicalEffects 1.12 // Qt5
+//import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
