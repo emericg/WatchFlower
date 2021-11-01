@@ -217,7 +217,7 @@ macx {
     #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
 
     # OS infos
-    #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
+    QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
     # macOS dock click handler
     SOURCES += src/utils/utils_macosdock.mm
