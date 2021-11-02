@@ -2,7 +2,7 @@
 <!-- Copyright 2020 Emeric Grange <emeric.grange@gmail.com> -->
 
 <component type="desktop-application">
-  <id>com.emeric.watchflower</id>
+  <id>io.emeric.watchflower</id>
   <name>WatchFlower</name>
   <launchable type="desktop-id">watchflower.desktop</launchable>
 
@@ -39,7 +39,7 @@
   <url type="donation">https://paypal.me/EmericGrange</url>
 
   <releases>
-    <release version="3.1" date="2021-11-01" />
+    <release version="3.1" date="2021-11-02" />
     <release version="3.0" date="2021-10-14" />
     <release version="2.1" date="2021-07-09" />
     <release version="2.0" date="2021-06-17" />

@@ -1,19 +1,19 @@
-app-id: com.emeric.watchflower
+app-id: io.emeric.watchflower
 runtime: org.kde.Platform
-runtime-version: '5.15'
+runtime-version: '5.15-21.08'
 sdk: org.kde.Sdk
 command: watchflower
 
 rename-desktop-file: watchflower.desktop
 rename-appdata-file: watchflower.appdata.xml
-#rename-icon: watchflower
+rename-icon: watchflower
 
 finish-args:
   # Our UI is GPU accelerated
   - --device=dri
   # X11 + XShm access
   - --share=ipc
-  - --socket=x11
+  - --socket=fallback-x11
   # Wayland access
   - --socket=wayland
   # We need Bluetooth support
@@ -83,9 +83,8 @@ modules:
         type: anitya
         project-id: 153467
         tag-template: v$version
-  build-commands:
-    - qmake
-    - make -j $FLATPAK_BUILDER_N_JOBS
+  buildsystem: qmake
+  post-install:
     - cp -r -n {bin,include,lib} /app # we need to deploy libs at the right place
     - mkdir -p /app/src/bluetooth
     - cp -r src/bluetooth /app/src/ # header files too
