@@ -70,6 +70,7 @@ modules:
         url-template: https://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
 
 - name: qtconnectivity
+  buildsystem: simple
   cleanup-platform:
     - /bin
     - /mkspecs
@@ -82,10 +83,11 @@ modules:
         type: anitya
         project-id: 153467
         tag-template: v$version
-  buildsystem: qmake
-  post-install:
-    - cp -r -n {bin,include,lib} /app # we need to deploy libs at the right place
+  build-commands:
+    - qmake
+    - make -j $FLATPAK_BUILDER_N_JOBS
     - mkdir -p /app/src/bluetooth
+    - cp -r -n {bin,include,lib} /app # we need to deploy libs at the right place
     - cp -r src/bluetooth /app/src/ # header files too
 
 - name: watchflower

@@ -172,7 +172,7 @@ linux:!android {
     target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path         = $${PREFIX}/bin/
     target_icon.files      += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).svg
-    target_icon.path        = $${PREFIX}/share/pixmaps/
+    target_icon.path        = $${PREFIX}/share/icons/hicolor/scalable/apps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
     target_appdata.files   += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).appdata.xml
