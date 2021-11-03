@@ -1169,8 +1169,8 @@ Item {
                     from: 0
                     to: 66
                     stepSize: 1
-                    first.onValueChanged: if (currentDevice) currentDevice.limitHygroMin = first.value.toFixed(0);
-                    second.onValueChanged: if (currentDevice) currentDevice.limitHygroMax = second.value.toFixed(0);
+                    first.onMoved: if (currentDevice) currentDevice.limitHygroMin = first.value.toFixed(0);
+                    second.onMoved: if (currentDevice) currentDevice.limitHygroMax = second.value.toFixed(0);
                 }
             }
             Text {
@@ -1243,7 +1243,7 @@ Item {
                     to: outsideMode ? 50 : 32
                     stepSize: 1
 
-                    first.onValueChanged: {
+                    first.onMoved: {
                         if (currentDevice) {
                             if ((first.value > rangeSlider_temp.from && first.value < rangeSlider_temp.to) ||
                                 (first.value >= rangeSlider_temp.from && first.value <= rangeSlider_temp.to &&
@@ -1252,7 +1252,7 @@ Item {
                             }
                         }
                     }
-                    second.onValueChanged: {
+                    second.onMoved: {
                         if (currentDevice) {
                             if ((second.value > rangeSlider_temp.from && second.value < rangeSlider_temp.to) ||
                                 (second.value >= rangeSlider_temp.from && second.value <= rangeSlider_temp.to &&
@@ -1334,7 +1334,7 @@ Item {
                     to: outsideMode ? 100000 : 10000
                     stepSize: outsideMode ? 5000 : 1000
 
-                    first.onValueChanged: {
+                    first.onMoved: {
                         if (currentDevice) {
                             if (first.value < rangeSlider_lumi.to ||
                                 (first.value <= rangeSlider_lumi.to && currentDevice.limitLuxMin <= rangeSlider_lumi.to)) {
@@ -1342,7 +1342,7 @@ Item {
                             }
                         }
                     }
-                    second.onValueChanged: {
+                    second.onMoved: {
                         if (currentDevice) {
                             if (second.value < rangeSlider_lumi.to ||
                                 (second.value <= rangeSlider_lumi.to && currentDevice.limitLuxMax <= rangeSlider_lumi.to)) {
@@ -1529,8 +1529,16 @@ Item {
                     from: 0
                     to: 2000
                     stepSize: 50
-                    first.onValueChanged: if (currentDevice) currentDevice.limitConduMin = first.value.toFixed(0);
-                    second.onValueChanged: if (currentDevice) currentDevice.limitConduMax = second.value.toFixed(0);
+                    first.onMoved: {
+                        if (currentDevice) {
+                            currentDevice.limitConduMin = first.value.toFixed(0)
+                        }
+                    }
+                    second.onMoved: {
+                        if (currentDevice) {
+                            currentDevice.limitConduMax = second.value.toFixed(0)
+                        }
+                    }
                 }
             }
             Text {

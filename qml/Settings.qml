@@ -627,7 +627,7 @@ Item {
                     wheelEnabled: false
 
                     value: settingsManager.bluetoothSimUpdates
-                    onValueChanged: settingsManager.bluetoothSimUpdates = value
+                    onMoved: settingsManager.bluetoothSimUpdates = value
                 }
                 SpinBoxThemed {
                     id: spinBox_bluetoothSimUpdate
@@ -646,7 +646,7 @@ Item {
                     editable: false
 
                     value: settingsManager.bluetoothSimUpdates
-                    onValueChanged: settingsManager.bluetoothSimUpdates = value
+                    onValueModified: settingsManager.bluetoothSimUpdates = value
                 }
             }
             Text {
@@ -981,7 +981,7 @@ Item {
                     wheelEnabled: isDesktop
 
                     value: (settingsManager.updateIntervalPlant / 60)
-                    onValueChanged: settingsManager.updateIntervalPlant = (value * 60)
+                    onValueModified: settingsManager.updateIntervalPlant = (value * 60)
                 }
             }
 
@@ -1189,7 +1189,7 @@ Item {
                     wheelEnabled: isDesktop
 
                     value: (settingsManager.updateIntervalThermo / 60)
-                    onValueChanged: settingsManager.updateIntervalThermo = (value * 60)
+                    onValueModified: settingsManager.updateIntervalThermo = (value * 60)
                 }
             }
 
