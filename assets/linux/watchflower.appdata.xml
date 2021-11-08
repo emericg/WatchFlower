@@ -27,7 +27,7 @@
   </description>
 
   <project_license>GPL-3.0+</project_license>
-  <metadata_license>CC0-1.1</metadata_license>
+  <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1" />
 
   <developer_name>Emeric Grange</developer_name>
@@ -35,7 +35,7 @@
   <url type="homepage">https://emeric.io/WatchFlower</url>
   <url type="contact">https://emeric.io/WatchFlower/support.html</url>
   <url type="bugtracker">https://github.com/emericg/WatchFlower/issues</url>
-  <url type="translate">https://github.com/emericg/WatchFlower</url>
+  <url type="translate">https://github.com/emericg/WatchFlower/blob/master/i18n/README.md</url>
   <url type="donation">https://paypal.me/EmericGrange</url>
 
   <releases>

@@ -171,13 +171,15 @@ linux:!android {
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path         = $${PREFIX}/bin/
-    target_icon.files      += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).svg
-    target_icon.path        = $${PREFIX}/share/icons/hicolor/scalable/apps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
     target_appdata.files   += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).appdata.xml
     target_appdata.path     = $${PREFIX}/share/appdata
-    INSTALLS += target_app target_icon target_appentry target_appdata
+    target_icon_appimage.files += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).svg
+    target_icon_appimage.path   = $${PREFIX}/share/pixmaps/
+    target_icon_flatpak.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).svg
+    target_icon_flatpak.path    = $${PREFIX}/share/icons/hicolor/scalable/apps/
+    INSTALLS += target_app target_appentry target_appdata target_icon_appimage target_icon_flatpak
 
     # Clean appdir/ and bin/ directories
     #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
