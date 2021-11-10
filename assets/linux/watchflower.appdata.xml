@@ -6,7 +6,7 @@
   <name>WatchFlower</name>
   <launchable type="desktop-id">watchflower.desktop</launchable>
 
-  <summary>A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi "Flower Care" or Parrot "Flower Power".</summary>
+  <summary>A plant monitoring application for Bluetooth sensors and thermometers</summary>
   <description>
     <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth sensors like Xiaomi "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!</p>
     <p>It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!</p>
@@ -26,6 +26,15 @@
     </ul>
   </description>
 
+  <releases>
+    <release version="3.2" date="2021-12-01" />
+    <release version="3.1" date="2021-11-02" />
+    <release version="3.0" date="2021-10-14" />
+    <release version="2.1" date="2021-07-09" />
+    <release version="2.0" date="2021-06-17" />
+    <release version="1.0" date="2021-04-02" />
+  </releases>
+
   <project_license>GPL-3.0+</project_license>
   <metadata_license>CC0-1.0</metadata_license>
   <content_rating type="oars-1.1" />
@@ -38,24 +47,41 @@
   <url type="translate">https://github.com/emericg/WatchFlower/blob/master/i18n/README.md</url>
   <url type="donation">https://paypal.me/EmericGrange</url>
 
-  <releases>
-    <release version="3.1" date="2021-11-02" />
-    <release version="3.0" date="2021-10-14" />
-    <release version="2.1" date="2021-07-09" />
-    <release version="2.0" date="2021-06-17" />
-    <release version="1.0" date="2021-04-02" />
-  </releases>
-
   <screenshots>
     <screenshot type="default">
-      <image>https://i.imgur.com/SYuxbCa.png</image>
-      <caption>Device screen</caption>
+      <image>https://i.imgur.com/1F666UF.png</image>
+      <caption>Device list screen</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/XBoM36H.png</image>
+      <caption>Plant sensor recap</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/vrA5YB3.png</image>
+      <caption>Plant sensor history</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/wGhtGXH.png</image>
+      <caption>Thermometer</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://i.imgur.com/Zu45MtM.png</image>
+      <caption>Air Quality sensor</caption>
     </screenshot>
     <screenshot>
       <image>https://i.imgur.com/nXotThA.png</image>
       <caption>Mobile screens</caption>
     </screenshot>
   </screenshots>
+
+  <requires>
+    <display_length compare="ge">480</display_length>
+  </requires>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
 
   <categories>
     <category>Utility</category>
@@ -72,15 +98,17 @@
     <keyword>parrot</keyword>
     <keyword>flowerpower</keyword>
     <keyword>flower power</keyword>
+    <keyword>thermobeacon</keyword>
+    <keyword>sensor</keyword>
+    <keyword>sensors</keyword>
     <keyword>thermometer</keyword>
     <keyword>thermometers</keyword>
     <keyword>hygrometer</keyword>
     <keyword>hygrometers</keyword>
-    <keyword>sensor</keyword>
-    <keyword>sensors</keyword>
     <keyword>plant</keyword>
     <keyword>plants</keyword>
     <keyword>ble</keyword>
     <keyword>bluetooth</keyword>
+    <keyword>bluetooth low energy</keyword>
   </keywords>
 </component>

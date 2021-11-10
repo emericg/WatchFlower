@@ -90,8 +90,8 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 ![GUI_MOBILE2](https://i.imgur.com/e1bXFXM.png)
 ![GUI_MOBILE3](https://i.imgur.com/UiirNMw.png)
-![GUI_DESKTOP1](https://i.imgur.com/1cAIta8.png)
-![GUI_DESKTOP2](https://i.imgur.com/joJB4pB.png)
+![GUI_DESKTOP1](https://i.imgur.com/1F666UF.png)
+![GUI_DESKTOP2](https://i.imgur.com/XBoM36H.png)
 
 
 ## Documentation
