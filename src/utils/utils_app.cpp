@@ -123,6 +123,17 @@ void UtilsApp::setAppPath(const QString &value)
 
 /* ************************************************************************** */
 
+void UtilsApp::vibrate(int ms)
+{
+#if defined(Q_OS_ANDROID)
+    return android_vibrate(ms);
+#else
+    Q_UNUSED(ms)
+#endif
+}
+
+/* ************************************************************************** */
+
 void UtilsApp::openWith(const QString &path)
 {
     QUrl url;
@@ -335,56 +346,55 @@ QString UtilsApp::getMobileDeviceSerial()
 
 /* ************************************************************************** */
 
-void UtilsApp::vibrate(int ms)
-{
-#if defined(Q_OS_ANDROID)
-    return android_vibrate(ms);
-#else
-    Q_UNUSED(ms)
-#endif
-}
-
-/* ************************************************************************** */
-
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-
 int UtilsApp::getMobileStorageCount()
 {
+#if defined(Q_OS_ANDROID)
     QStringList storages = android_get_storages_by_api();
     return storages.size();
+#endif
+
+    return 0;
 }
 
 QString UtilsApp::getMobileStorageInternal()
 {
     QString internal;
+
+#if defined(Q_OS_ANDROID)
     QStringList storages = android_get_storages_by_api();
 
     if (storages.size() > 0)
         internal = storages.at(0);
+#endif
 
     return internal;
 }
 
 QString UtilsApp::getMobileStorageExternal(int index)
 {
+#if defined(Q_OS_ANDROID)
     QStringList storages = android_get_storages_by_api();
 
     if (storages.size() > index)
         return storages.at(1 + index);
+#endif
 
+    Q_UNUSED(index)
     return QString();
 }
 
 QStringList UtilsApp::getMobileStorageExternals()
 {
+#if defined(Q_OS_ANDROID)
     QStringList storages = android_get_storages_by_api();
 
     if (storages.size() > 0)
         storages.removeFirst();
 
     return storages;
-}
+#endif
 
-#endif // defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    return QStringList();
+}
 
 /* ************************************************************************** */

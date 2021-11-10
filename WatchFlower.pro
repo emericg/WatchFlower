@@ -6,8 +6,6 @@ DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 CONFIG += c++11
 QT     += core bluetooth sql
 QT     += qml quick quickcontrols2 svg widgets charts
-android { QT += androidextras }
-ios { QT += gui-private }
 
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
@@ -58,7 +56,6 @@ SOURCES  += src/main.cpp \
             src/devices/device_ess_generic.cpp \
             src/devices/device_wp6003.cpp \
             src/utils/utils_app.cpp \
-            src/utils/utils_android_qt5.cpp \
             src/utils/utils_language.cpp \
             src/utils/utils_maths.cpp \
             src/utils/utils_screen.cpp \
@@ -89,7 +86,6 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_ess_generic.h \
             src/devices/device_wp6003.h \
             src/utils/utils_app.h \
-            src/utils/utils_android.h \
             src/utils/utils_language.h \
             src/utils/utils_maths.h \
             src/utils/utils_screen.h \
@@ -159,6 +155,11 @@ DESTDIR     = bin/
 linux:!android {
     TARGET = $$lower($${TARGET})
 
+    # Linux utils
+    SOURCES += src/utils/utils_os_linux.cpp
+    HEADERS += src/utils/utils_os_linux.h
+    QT += dbus
+
     # Automatic application packaging # Needs linuxdeployqt installed
     #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/)
 
@@ -190,9 +191,15 @@ android {
     # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
     #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
+    QT += androidextras
+
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
+
+    # android utils
+    SOURCES += src/utils/utils_os_android_qt5.cpp
+    HEADERS += src/utils/utils_os_android_qt5.h
 
     OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java \
                    assets/android/src/com/emeric/utils/QShareUtils.java \
@@ -221,9 +228,13 @@ macx {
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
+    # macOS utils
+    SOURCES += src/utils/utils_os_macos.mm
+    HEADERS += src/utils/utils_os_macos.h
+    LIBS    += -framework IOKit
     # macOS dock click handler
-    SOURCES += src/utils/utils_macosdock.mm
-    HEADERS += src/utils/utils_macosdock.h
+    SOURCES += src/utils/utils_os_macosdock.mm
+    HEADERS += src/utils/utils_os_macosdock.h
     LIBS    += -framework AppKit
 
     # OS entitlement (sandbox and stuff)
@@ -313,12 +324,12 @@ ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
-    # iOS utils
-    SOURCES += src/utils/utils_ios.mm
-    HEADERS += src/utils/utils_ios.h
-    LIBS    += -framework UIKit
-
     CONFIG += no_autoqmake
+
+    # iOS utils
+    SOURCES += src/utils/utils_os_ios.mm
+    HEADERS += src/utils/utils_os_ios.h
+    LIBS    += -framework UIKit
 
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
@@ -346,6 +357,10 @@ ios {
 }
 
 win32 {
+    # Windows utils
+    SOURCES += src/utils/utils_os_windows.cpp
+    HEADERS += src/utils/utils_os_windows.h
+
     # OS icon
     RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
 

@@ -14,6 +14,7 @@ android {
         SOURCES += $${PWD}/MobileUI_android_qt5.cpp
     }
 } else: ios {
+    QT += gui-private
     LIBS += -framework UIKit
     OBJECTIVE_SOURCES += $${PWD}/MobileUI_ios.mm
 } else {

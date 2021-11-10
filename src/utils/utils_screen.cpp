@@ -28,11 +28,20 @@
 #include <QDebug>
 
 #if defined(Q_OS_ANDROID)
-#include "utils_android.h"
+#include "utils_os_android.h"
 #endif
 #if defined(Q_OS_IOS)
-#include "utils_ios.h"
+#include "utils_os_ios.h"
 #include <QtGui/qpa/qplatformwindow.h>
+#endif
+#if defined(Q_OS_MACOS)
+#include "utils_os_macos.h"
+#endif
+#if defined(Q_OS_LINUX)
+#include "utils_os_linux.h"
+#endif
+#if defined(Q_OS_WINDOWS)
+#include "utils_os_windows.h"
 #endif
 
 /* ************************************************************************** */
@@ -155,13 +164,32 @@ QVariantMap UtilsScreen::getSafeAreaMargins(QQuickWindow *window)
 
 /* ************************************************************************** */
 
-void UtilsScreen::keepScreenOn(bool on)
+void UtilsScreen::keepScreenOn(bool on, const QString &application, const QString &explanation)
 {
 #if defined(Q_OS_ANDROID)
     android_screen_keep_on(on);
 #elif defined(Q_OS_IOS)
-    UtilsIos utils;
-    utils.keepScreenOn(on);
+    UtilsIOS::keepScreenOn(on);
+#elif defined(Q_OS_MACOS)
+    if (on && m_screensaverId <= 0)
+    {
+        m_screensaverId = UtilsMacOS::keepScreenOn(application, explanation);
+    }
+    else
+    {
+        UtilsMacOS::keepScreenAuto(m_screensaverId);
+    }
+#elif defined(Q_OS_LINUX)
+    if (on && m_screensaverId <= 0)
+    {
+        m_screensaverId = UtilsLinux::keepScreenOn(application, explanation);
+    }
+    else
+    {
+        UtilsLinux::keepScreenAuto(m_screensaverId);
+    }
+#elif defined(Q_OS_WINDOWS)
+    UtilsWindows::keepScreenOn(on);
 #else
     Q_UNUSED(on)
 #endif

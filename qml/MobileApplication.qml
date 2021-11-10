@@ -288,10 +288,10 @@ ApplicationWindow {
     FocusScope {
         id: appContent
         anchors.top: appHeader.bottom
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: appTabletMenu.visible ? appTabletMenu.height : 0
-        anchors.left: parent.left
 
         focus: true
         Keys.onBackPressed: {

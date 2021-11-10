@@ -18,10 +18,21 @@
  * \date      2020
  */
 
-#include "utils_ios.h"
-
+#ifndef UTILS_OS_IOS_H
+#define UTILS_OS_IOS_H
 /* ************************************************************************** */
 
-//
+#include <QtGlobal>
 
+#ifdef Q_OS_IOS
 /* ************************************************************************** */
+
+class UtilsIOS
+{
+public:
+    static void keepScreenOn(bool on);
+};
+
+#endif // Q_OS_IOS
+/* ************************************************************************** */
+#endif // UTILS_OS_IOS_H

@@ -41,6 +41,8 @@ class UtilsScreen: public QObject
     int m_screenDpi = -1;
     double m_screenSize = -1.0;
 
+    uint32_t m_screensaverId = 0;
+
     // Singleton
     static UtilsScreen *instance;
     UtilsScreen();
@@ -61,14 +63,18 @@ public:
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 
     /*!
-     * \note: Android only
-     * \param on: screen on or off.
+     * \param on: keep screen on or off.
+     * \param application: the name of the application requesting to disable screensaver.
+     * \param explanation: the reason why the application is requesting to disable screensaver.
      */
-    Q_INVOKABLE void keepScreenOn(bool on);
+    Q_INVOKABLE void keepScreenOn(bool on,
+                                  const QString &application = QString(),
+                                  const QString &explanation = QString());
 
     /*!
-     * \note: Android only
      * \param orientation: 0 is for landscape, 1 for portrait.
+     * \note: Android only
+     * \todo: iOS implementation?
      *
      * You can achieve similar functionality through application manifest or plist:
      * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen

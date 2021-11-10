@@ -18,7 +18,7 @@
  * \date      2019
  */
 
-#include "utils_android.h"
+#include "utils_os_android.h"
 
 #ifdef Q_OS_ANDROID
 #include <QtCore/private/qandroidextras_p.h>

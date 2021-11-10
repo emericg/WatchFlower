@@ -53,8 +53,10 @@ public:
 
     static Q_INVOKABLE bool isDebugBuild();
 
-    static Q_INVOKABLE void appExit();
+    static Q_INVOKABLE void vibrate(int ms);
     static Q_INVOKABLE void openWith(const QString &path);
+    static Q_INVOKABLE void appExit();
+
     static Q_INVOKABLE QUrl getStandardPath_url(const QString &type);
     static Q_INVOKABLE QString getStandardPath_string(const QString &type);
 
@@ -74,19 +76,10 @@ public:
     static Q_INVOKABLE QString getMobileDeviceModel();
     static Q_INVOKABLE QString getMobileDeviceSerial();
 
-    static Q_INVOKABLE void vibrate(int ms);
-
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     static Q_INVOKABLE int getMobileStorageCount();
     static Q_INVOKABLE QString getMobileStorageInternal();
     static Q_INVOKABLE QString getMobileStorageExternal(int index = 0);
     static Q_INVOKABLE QStringList getMobileStorageExternals();
-#else
-    static Q_INVOKABLE int getMobileStorageCount() { return 0; }
-    static Q_INVOKABLE QString getMobileStorageInternal() { return QString(); }
-    static Q_INVOKABLE QString getMobileStorageExternal(int index = 0) { Q_UNUSED(index) return QString(); }
-    static Q_INVOKABLE QStringList getMobileStorageExternals() { return QStringList(); }
-#endif
 };
 
 /* ************************************************************************** */

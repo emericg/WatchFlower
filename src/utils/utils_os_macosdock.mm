@@ -18,7 +18,7 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "utils_macosdock.h"
+#include "utils_os_macosdock.h"
 
 #ifdef Q_OS_MACOS
 

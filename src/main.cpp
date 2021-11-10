@@ -27,7 +27,7 @@
 #include "utils/utils_app.h"
 #include "utils/utils_screen.h"
 #include "utils/utils_language.h"
-#include "utils/utils_macosdock.h"
+#include "utils/utils_os_macosdock.h"
 
 #include <MobileUI.h>
 #include <SharingUtils.h>

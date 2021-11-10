@@ -14,36 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2019
  * \author    Emeric Grange <emeric.grange@gmail.com>
+ * \date      2021
  */
 
-#ifndef UTILS_MACOS_DOCK_H
-#define UTILS_MACOS_DOCK_H
-/* ************************************************************************** */
+#include "utils_os_windows.h"
 
-#include <QObject>
+#ifdef Q_OS_WINDOWS
+
+#include <windows.h>
+#include <QDebug>
 
 /* ************************************************************************** */
-#ifdef Q_OS_MACOS
 
 /*!
- * \brief macOS dock click handler
+ * \brief UtilsWindows::keepScreenOn
+ * \param on
  */
-class MacOSDockHandler : public QObject
+void UtilsWindows::keepScreenOn(bool on)
 {
-    Q_OBJECT
+    // ES_DISPLAY_REQUIRED prevents display sleep?
+    // ES_SYSTEM_REQUIRED prevents idle sleep
 
-    MacOSDockHandler();
-    ~MacOSDockHandler();
+    EXECUTION_STATE result;
+    if (on)
+    {
+        result = SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+    }
+    else
+    {
+        result = SetThreadExecutionState(ES_CONTINUOUS);
+    }
 
-signals:
-    void dockIconClicked();
+    if (result == NULL)
+    {
+        qDebug() << "keepScreenOn() failed";
+    }
+}
 
-public:
-    static MacOSDockHandler *getInstance();
-};
-
-#endif // Q_OS_MACOS
 /* ************************************************************************** */
-#endif // UTILS_MACOS_DOCK_H
+#endif // Q_OS_WINDOWS

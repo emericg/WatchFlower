@@ -18,8 +18,8 @@
  * \date      2019
  */
 
-#ifndef UTILS_ANDROID_H
-#define UTILS_ANDROID_H
+#ifndef UTILS_OS_ANDROID_H
+#define UTILS_OS_ANDROID_H
 /* ************************************************************************** */
 
 #include <QtGlobal>
@@ -170,4 +170,4 @@ void android_screen_lock_orientation(int orientation);
 void android_vibrate(int milliseconds);
 
 /* ************************************************************************** */
-#endif // UTILS_ANDROID_H
+#endif // UTILS_OS_ANDROID_H
