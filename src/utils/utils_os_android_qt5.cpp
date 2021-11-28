@@ -410,20 +410,72 @@ void android_screen_keep_on(bool on)
 #endif // Q_OS_ANDROID
 }
 
+/* ************************************************************************** */
+/*
+    enum ScreenOrientation_android {
+        SCREEN_ORIENTATION_UNSPECIFIED = -1,
+        SCREEN_ORIENTATION_LANDSCAPE = 0,
+        SCREEN_ORIENTATION_PORTRAIT = 1,
+        SCREEN_ORIENTATION_SENSOR_LANDSCAPE = 6,
+        SCREEN_ORIENTATION_SENSOR_PORTRAIT = 7,
+        SCREEN_ORIENTATION_REVERSE_LANDSCAPE = 8,
+        SCREEN_ORIENTATION_REVERSE_PORTRAIT = 9,
+    };
+*/
+
 void android_screen_lock_orientation(int orientation)
 {
 #ifdef Q_OS_ANDROID
 
     //qDebug() << "> android_screen_lock_orientation(" << orientation << ")";
 
+    int value = 1;
+    if (orientation != 0) value = 0;
+
     QAndroidJniObject activity = QtAndroid::androidActivity();
     if (activity.isValid())
     {
-        activity.callMethod<void>("setRequestedOrientation", "(I)V", orientation);
+        activity.callMethod<void>("setRequestedOrientation", "(I)V", value);
     }
 
 #else
     Q_UNUSED(orientation)
+#endif // Q_OS_ANDROID
+}
+
+void android_screen_lock_orientation(int orientation, bool autoRotate)
+{
+#ifdef Q_OS_ANDROID
+
+    //qDebug() << "> android_screen_lock_orientation(" << orientation << "-" << autoRotate << ")";
+
+    int value = -1;
+
+    if (orientation)
+    {
+        if (autoRotate)
+        {
+            if (orientation == 1 || orientation == 2) value = 7;
+            else if (orientation == 4 || orientation == 8) value = 6;
+        }
+        else
+        {
+            if (orientation == 1) value = 1;
+            else if (orientation == 2) value = 9;
+            else if (orientation == 4) value = 0;
+            else if (orientation == 8) value = 8;
+        }
+    }
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    if (activity.isValid())
+    {
+        activity.callMethod<void>("setRequestedOrientation", "(I)V", value);
+    }
+
+#else
+    Q_UNUSED(orientation)
+    Q_UNUSED(autoRotate)
 #endif // Q_OS_ANDROID
 }
 

@@ -63,6 +63,7 @@ public:
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 
     /*!
+     * \brief Screen saver inhibitor.
      * \param on: keep screen on or off.
      * \param application: the name of the application requesting to disable screensaver.
      * \param explanation: the reason why the application is requesting to disable screensaver.
@@ -72,25 +73,32 @@ public:
                                   const QString &explanation = QString());
 
     /*!
-     * \param orientation: 0 is for landscape, 1 for portrait.
-     * \note: Android only
-     * \todo: iOS implementation?
-     *
-     * You can achieve similar functionality through application manifest or plist:
-     * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
-     * - https://developer.apple.com/documentation/bundleresources/information_property_list/uisupportedinterfaceorientations
+     * \brief Simple orientation locker.
+     * \param orientation: 0 for portrait, 1 for landscape.
      */
     Q_INVOKABLE void lockScreenOrientation(int orientation);
 
     enum ScreenOrientation {
-        ScreenOrientation_LANDSCAPE = 0,
-        ScreenOrientation_PORTRAIT = 1,
-        ScreenOrientation_SENSOR_LANDSCAPE = 6,
-        ScreenOrientation_SENSOR_PORTRAIT = 7,
-        ScreenOrientation_REVERSE_LANDSCAPE = 8,
-        ScreenOrientation_REVERSE_PORTRAIT = 9,
+        ScreenOrientation_UNLOCKED = 0,
+
+        ScreenOrientation_PORTRAIT              = (1 << 0),
+        ScreenOrientation_PORTRAIT_UPSIDEDOWN   = (1 << 1),
+        ScreenOrientation_LANDSCAPE             = (1 << 2),
+        ScreenOrientation_LANDSCAPE_LEFT        = (1 << 3),
     };
     Q_ENUM(ScreenOrientation)
+
+    /*!
+     * \brief Complex orientation locker.
+     * \note Work in progress.
+     * \param orientation: see ScreenOrientation enum.
+     * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
+     *
+     * You can also achieve similar functionality through application manifest or plist:
+     * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
+     * - https://developer.apple.com/documentation/bundleresources/information_property_list/uisupportedinterfaceorientations
+     */
+    Q_INVOKABLE void lockScreenOrientation(UtilsScreen::ScreenOrientation orientation, bool autoRotate);
 };
 
 /* ************************************************************************** */

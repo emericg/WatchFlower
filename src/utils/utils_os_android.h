@@ -156,6 +156,13 @@ void android_screen_keep_on(bool on);
  */
 void android_screen_lock_orientation(int orientation);
 
+/*!
+ * \brief android_screen_lock_orientation
+ * \param orientation: see ScreenOrientation enum.
+ * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
+ */
+void android_screen_lock_orientation(int orientation, bool autoRotate);
+
 /* ************************************************************************** */
 
 /*!

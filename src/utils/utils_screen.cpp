@@ -195,12 +195,28 @@ void UtilsScreen::keepScreenOn(bool on, const QString &application, const QStrin
 #endif
 }
 
+/* ************************************************************************** */
+
 void UtilsScreen::lockScreenOrientation(int orientation)
 {
 #if defined(Q_OS_ANDROID)
     android_screen_lock_orientation(orientation);
+#elif defined(Q_OS_IOS)
+    UtilsIOS::lockScreenOrientation(orientation);
 #else
     Q_UNUSED(orientation)
+#endif
+}
+
+void UtilsScreen::lockScreenOrientation(UtilsScreen::ScreenOrientation orientation, bool autoRotate)
+{
+#if defined(Q_OS_ANDROID)
+    android_screen_lock_orientation(static_cast<int>(orientation), autoRotate);
+#elif defined(Q_OS_IOS)
+    UtilsIOS::lockScreenOrientation(static_cast<int>(orientation), autoRotate);
+#else
+    Q_UNUSED(orientation)
+    Q_UNUSED(autoRotate)
 #endif
 }
 

@@ -31,6 +31,9 @@ class UtilsIOS
 {
 public:
     static void keepScreenOn(bool on);
+
+    static void lockScreenOrientation(int orientation);
+    static void lockScreenOrientation(int orientation, bool autoRotate);
 };
 
 #endif // Q_OS_IOS

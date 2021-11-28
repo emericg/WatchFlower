@@ -21,8 +21,8 @@
 #include "utils_app.h"
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-#include "utils_android.h"
-#include "utils_ios.h"
+#include "utils_os_android.h"
+#include "utils_os_ios.h"
 #endif
 
 #include <cmath>
@@ -180,7 +180,7 @@ QUrl UtilsApp::getStandardPath_url(const QString &type)
 
 QString UtilsApp::getStandardPath_string(const QString &type)
 {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID)
     android_ask_storage_read_permission();
 #endif
 

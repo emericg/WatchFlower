@@ -13,11 +13,11 @@ android {
     versionAtLeast(QT_VERSION, 6.0) {
         QT += core-private
         SOURCES += $${PWD}/SharingUtils_android_qt6.cpp
-        HEADERS += $${PWD}/SharingUtils_android_qt6.h
+        HEADERS += $${PWD}/SharingUtils_android.h
     } else {
         QT += androidextras
         SOURCES += $${PWD}/SharingUtils_android_qt5.cpp
-        HEADERS += $${PWD}/SharingUtils_android_qt5.h
+        HEADERS += $${PWD}/SharingUtils_android.h
     }
 
     # Add this line to the dependencies {} section of 'build.gradle' file:

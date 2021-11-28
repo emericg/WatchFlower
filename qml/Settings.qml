@@ -1435,7 +1435,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    visible: (Qt.platform.os !== "ios")
+                    visible: isDesktop
 
                     text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
                     textFormat: Text.PlainText
@@ -1463,7 +1463,7 @@ Item {
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: (Qt.platform.os !== "ios")
+                    visible: isDesktop
                     fullColor: false
                     primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
