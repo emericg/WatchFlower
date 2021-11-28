@@ -649,8 +649,21 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             }
 #endif // Qt 5.12+
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0)) || defined(QT_BLUETOOTH_PATCHED)
+#if defined(QT5_BLUETOOTH_PATCHED)
             const QVector<quint16> &serviceIds = info.serviceIds();
+            for (const auto id: serviceIds)
+            {
+                //qDebug() << info.name() << info.address() << Qt::hex
+                //         << "ID" << id
+                //         << "data" << Qt::dec << info.serviceData(id).count() << Qt::hex
+                //         << "bytes:" << info.serviceData(id).toHex();
+
+                dd->parseAdvertisementData(info.serviceData(id));
+            }
+#endif // Qt 5 (with BLE patch)
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0))
+            const QList<QBluetoothUuid> &serviceIds = info.serviceIds();
             for (const auto id: serviceIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex

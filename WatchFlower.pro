@@ -27,7 +27,7 @@ include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
 # Qt patched with BLE advertising support?
-#DEFINES += QT_BLUETOOTH_PATCHED
+#DEFINES += QT5_BLUETOOTH_PATCHED
 
 # Project files ################################################################
 
