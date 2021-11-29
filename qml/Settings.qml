@@ -1510,7 +1510,7 @@ Item {
                     primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
 
-                    text: qsTr("Open with")
+                    text: qsTr("Send file")
                     onClicked: {
                         var file = deviceManager.exportDataOpen()
                         utilsShare.sendFile(file, "Send file", "text/csv", 0)
