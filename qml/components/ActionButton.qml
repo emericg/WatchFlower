@@ -23,8 +23,7 @@ Item {
 
     Rectangle {
         id: viewButton
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         color: "transparent"
 
         Text {
@@ -60,7 +59,10 @@ Item {
             onExited: viewButton.state = "normal"
             onCanceled: viewButton.state = "normal"
 
-            onClicked: buttonClicked()
+            onClicked: {
+                buttonClicked()
+                viewButton.state = "normal"
+            }
         }
 
         states: [
