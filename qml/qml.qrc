@@ -17,8 +17,11 @@
         <file>DevicePlantSensorLimits.qml</file>
         <file>DeviceThermometer.qml</file>
         <file>DeviceEnvironmental.qml</file>
-
         <file>ThemeEngine.qml</file>
+
+        <file alias="PopupCalibration.qml">popups/PopupCalibration.qml</file>
+        <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
+        <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
 
         <file alias="ActionButton.qml">components/ActionButton.qml</file>
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
@@ -37,9 +40,6 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
-        <file alias="PopupCalibration.qml">components/PopupCalibration.qml</file>
-        <file alias="PopupDeleteData.qml">components/PopupDeleteData.qml</file>
-        <file alias="PopupDeleteDevice.qml">components/PopupDeleteDevice.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
