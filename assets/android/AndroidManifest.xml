@@ -26,7 +26,7 @@
                  android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
 
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
-                  android:name="com.emeric.watchflower.NotificationDispatcher" android:label="WatchFlower"
+                  android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="WatchFlower"
                   android:screenOrientation="unspecified" android:launchMode="singleTop">
 
             <intent-filter>

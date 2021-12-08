@@ -201,8 +201,7 @@ android {
     SOURCES += src/utils/utils_os_android_qt5.cpp
     HEADERS += src/utils/utils_os_android.h
 
-    OTHER_FILES += assets/android/src/com/emeric/watchflower/NotificationDispatcher.java \
-                   assets/android/src/com/emeric/utils/QShareUtils.java \
+    OTHER_FILES += assets/android/src/com/emeric/utils/QShareUtils.java \
                    assets/android/src/com/emeric/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
