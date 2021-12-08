@@ -73,6 +73,8 @@ public:
     static Q_INVOKABLE bool checkMobilePhoneStatePermission();
     static Q_INVOKABLE bool getMobilePhoneStatePermission();
 
+    static Q_INVOKABLE bool isMobileGpsEnabled();
+
     static Q_INVOKABLE QString getMobileDeviceModel();
     static Q_INVOKABLE QString getMobileDeviceSerial();
 

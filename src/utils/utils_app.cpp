@@ -322,6 +322,17 @@ bool UtilsApp::getMobilePhoneStatePermission()
 
 /* ************************************************************************** */
 
+bool UtilsApp::isMobileGpsEnabled()
+{
+#if defined(Q_OS_ANDROID)
+    return android_is_gps_on();
+#else
+    return false;
+#endif
+}
+
+/* ************************************************************************** */
+
 QString UtilsApp::getMobileDeviceModel()
 {
 #if defined(Q_OS_ANDROID)

@@ -258,6 +258,36 @@ bool android_ask_phonestate_permission()
 
 /* ************************************************************************** */
 
+bool android_is_gps_on()
+{
+    bool status = false;
+
+#ifdef Q_OS_ANDROID
+
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    if (activity.isValid())
+    {
+        QJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+        if (appCtx.isValid())
+        {
+            QJniObject locationString = QAndroidJniObject::fromString("location");
+            QJniObject locationService = appCtx.callObjectMethod("getSystemService",
+                                                                 "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                 locationString.object<jstring>());
+            if (locationService.callMethod<jboolean>("isLocationEnabled", "()Z"))
+            {
+                status = true;
+            }
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+/* ************************************************************************** */
+
 QStringList android_get_storages_by_api()
 {
     QStringList storages;
@@ -265,12 +295,12 @@ QStringList android_get_storages_by_api()
 #ifdef Q_OS_ANDROID
 
     QJniObject activity = QJniObject::callStaticObjectMethod(
-                                      "org/qtproject/qt5/android/QtNative",
-                                      "activity", "()Landroid/app/Activity;");
+                                          "org/qtproject/qt6/android/QtNative",
+                                          "activity", "()Landroid/app/Activity;");
 
     QJniObject dirs = activity.callObjectMethod("getExternalFilesDirs",
-                                                       "(Ljava/lang/String;)[Ljava/io/File;",
-                                                       NULL);
+                                                "(Ljava/lang/String;)[Ljava/io/File;",
+                                                NULL);
     if (dirs.isValid())
     {
         QJniEnvironment env;
@@ -300,7 +330,7 @@ QStringList android_get_storages_by_env()
 #ifdef Q_OS_ANDROID
 
     QStringList systemEnvironment = QProcess::systemEnvironment();
-    for (auto s: systemEnvironment)
+    for (const auto &s: qAsConst(systemEnvironment))
     {
         if (s.contains("EXTERNAL_STORAGE="))
         {
@@ -327,8 +357,8 @@ QString android_get_external_storage()
 #ifdef Q_OS_ANDROID
 
     QJniObject mediaDir = QJniObject::callStaticObjectMethod("android/os/Environment",
-                                                                           "getExternalStorageDirectory",
-                                                                           "()Ljava/io/File;");
+                                                             "getExternalStorageDirectory",
+                                                             "()Ljava/io/File;");
     QJniObject mediaPath = mediaDir.callObjectMethod("getAbsolutePath", "()Ljava/lang/String;");
     external_storage = mediaPath.toString();
 
@@ -369,8 +399,8 @@ QString android_get_device_serial()
     device_serial = serialField.toString();
 */
     QJniObject serialField = QJniObject::callStaticObjectMethod("android/os/Build",
-                                                                              "getSerial",
-                                                                              "()Ljava/lang/String;");
+                                                                "getSerial",
+                                                                "()Ljava/lang/String;");
     device_serial = serialField.toString();
 
     //qDebug() << "> android_get_device_serial()" << device_serial;
@@ -495,19 +525,24 @@ void android_vibrate(int milliseconds)
         QJniObject activity = QNativeInterface::QAndroidApplication::context();
         if (activity.isValid())
         {
-            QJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
-            if (appctx.isValid())
+            QJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+            if (appCtx.isValid())
             {
-                QJniObject vibroString = QJniObject::fromString("vibrator");
-                QJniObject vibratorService = appctx.callObjectMethod("getSystemService",
-                                                                            "(Ljava/lang/String;)Ljava/lang/Object;",
-                                                                            vibroString.object<jstring>());
+                QJniObject vibratorString = QJniObject::fromString("vibrator");
+                QJniObject vibratorService = appCtx.callObjectMethod("getSystemService",
+                                                                     "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                     vibratorString.object<jstring>());
                 if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
                 {
                     jlong ms = milliseconds;
                     vibratorService.callMethod<void>("vibrate", "(J)V", ms);
                 }
             }
+        }
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck())
+        {
+            env->ExceptionClear();
         }
     });
 

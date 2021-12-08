@@ -109,6 +109,12 @@ QString android_get_device_serial();
 /* ************************************************************************** */
 
 /*!
+ * \brief android_is_gps_on
+ * \return True if device GPS is turned on.
+ */
+bool android_is_gps_on();
+
+/*!
  * \brief android_check_location_permission
  * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
  */

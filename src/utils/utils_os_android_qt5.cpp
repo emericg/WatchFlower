@@ -254,6 +254,36 @@ bool android_ask_phonestate_permission()
 
 /* ************************************************************************** */
 
+bool android_is_gps_on()
+{
+    bool status = false;
+
+#ifdef Q_OS_ANDROID
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    if (activity.isValid())
+    {
+        QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+        if (appCtx.isValid())
+        {
+            QAndroidJniObject locationString = QAndroidJniObject::fromString("location");
+            QAndroidJniObject locationService = appCtx.callObjectMethod("getSystemService",
+                                                                        "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                        locationString.object<jstring>());
+            if (locationService.callMethod<jboolean>("isLocationEnabled", "()Z"))
+            {
+                status = true;
+            }
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+/* ************************************************************************** */
+
 QStringList android_get_storages_by_api()
 {
     QStringList storages;
@@ -296,7 +326,7 @@ QStringList android_get_storages_by_env()
 #ifdef Q_OS_ANDROID
 
     QStringList systemEnvironment = QProcess::systemEnvironment();
-    for (auto s: systemEnvironment)
+    for (const auto &s: qAsConst(systemEnvironment))
     {
         if (s.contains("EXTERNAL_STORAGE="))
         {
@@ -491,19 +521,24 @@ void android_vibrate(int milliseconds)
         QAndroidJniObject activity = QtAndroid::androidActivity();
         if (activity.isValid())
         {
-            QAndroidJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
-            if (appctx.isValid())
+            QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+            if (appCtx.isValid())
             {
-                QAndroidJniObject vibroString = QAndroidJniObject::fromString("vibrator");
-                QAndroidJniObject vibratorService = appctx.callObjectMethod("getSystemService",
+                QAndroidJniObject vibratorString = QAndroidJniObject::fromString("vibrator");
+                QAndroidJniObject vibratorService = appCtx.callObjectMethod("getSystemService",
                                                                             "(Ljava/lang/String;)Ljava/lang/Object;",
-                                                                            vibroString.object<jstring>());
+                                                                            vibratorString.object<jstring>());
                 if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
                 {
                     jlong ms = milliseconds;
                     vibratorService.callMethod<void>("vibrate", "(J)V", ms);
                 }
             }
+        }
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck())
+        {
+            env->ExceptionClear();
         }
     });
 
