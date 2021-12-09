@@ -1470,8 +1470,6 @@ Item {
 
                     text: qsTr("Export file")
                     onClicked: {
-                        utilsApp.checkMobileStoragePermissions()
-
                         if (deviceManager.exportDataSave()) {
                             text = qsTr("Exported")
                             primaryColor = Theme.colorPrimary

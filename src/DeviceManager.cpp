@@ -1234,17 +1234,7 @@ bool DeviceManager::exportDataSave()
 
     if (!m_devices_model->hasDevices()) return status;
 
-    UtilsApp *utilsApp = UtilsApp::getInstance();
-    utilsApp->getMobileStorageWritePermission();
-
-    // Get directory path
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    UtilsApp *apputils = UtilsApp::getInstance();
-    apputils->getMobileStoragePermissions();
-    QString exportDirectory = apputils->getMobileStorageInternal() + "/WatchFlower";
-#else
     QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
-#endif
 
     // Create exportDirectory
     if (!exportDirectory.isEmpty())

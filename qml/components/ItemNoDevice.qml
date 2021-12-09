@@ -35,85 +35,125 @@ Item {
             }
         }
 
-        Text {
+        Column {
             anchors.left: parent.left
             anchors.right: parent.right
+            spacing: 24
 
-            visible: (Qt.platform.os === "android")
+            ////////
 
-            text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.")
-            textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeContentSmall
-            color: Theme.colorSubText
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-        }
+            Column {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                spacing: 4
 
-        Row {
-            id: row
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 16
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: (Qt.platform.os === "android")
 
-            ButtonWireframeImage {
-                visible: (Qt.platform.os === "android")
+                    text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices requires <b>location permission</b>.")
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: (Qt.platform.os === "android" && !utilsApp.isMobileGpsEnabled())
 
-                imgSize: 20
-                source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
-                text: qsTr("Official information")
-                primaryColor: Theme.colorSubText
-                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+                    text: qsTr("Some devices also require the actual <b>GPS to be turned on</b>.")
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: (Qt.platform.os === "android")
+
+                    text: qsTr("The application is neither using nor storing your location. Sorry for the inconvenience.")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: (Qt.platform.os === "ios")
+
+                    text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
             }
 
-            ButtonWireframe {
-                text: qsTr("Launch detection")
-                fullColor: true
-                primaryColor: Theme.colorPrimary
-                onClicked: {
-                    if (!deviceManager.updating) {
-                        if (deviceManager.scanning) {
-                            deviceManager.scanDevices_stop()
-                        } else {
-                            deviceManager.scanDevices_start()
+            ////////
+
+            Row {
+                id: row
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 16
+
+                ButtonWireframeImage {
+                    visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                    text: qsTr("Official information")
+                    primaryColor: Theme.colorSubText
+                    imgSize: 20
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+
+                    onClicked: {
+                        if (Qt.platform.os === "android") {
+                            Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+                        } else if (Qt.platform.os === "ios") {
+                            Qt.openUrlExternally("https://support.apple.com/HT210578")
+                        }
+                    }
+                }
+
+                ButtonWireframe {
+                    text: qsTr("Launch detection")
+                    fullColor: true
+                    primaryColor: Theme.colorPrimary
+                    onClicked: {
+                        if (!deviceManager.updating) {
+                            if (deviceManager.scanning) {
+                                deviceManager.scanDevices_stop()
+                            } else {
+                                deviceManager.scanDevices_start()
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Item { // spacer
-            width: 1; height: 24;
-            anchors.horizontalCenter: parent.horizontalCenter;
-            visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-        }
+            ////////
 
-        Text {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            Text {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                visible: settingsManager.bluetoothLimitScanningRange
 
-            visible: (Qt.platform.os === "ios")
-
-            text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
-            textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeContentSmall
-            color: Theme.colorSubText
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Text {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: contentHeight + 16
-
-            visible: settingsManager.bluetoothLimitScanningRange
-
-            text: qsTr("Please keep your device close to the sensors you want to scan.")
-            textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeContentSmall
-            color: Theme.colorSubText
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignBottom
+                text: qsTr("Please keep your device close to the sensors you want to scan.")
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeContentSmall
+                color: Theme.colorSubText
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignBottom
+            }
         }
     }
 }

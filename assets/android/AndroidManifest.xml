@@ -9,9 +9,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
 
     <!-- Request new Bluetooth permissions (Android 12+) -->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
-                     android:usesPermissionFlags="neverForLocation"
-                     android:minSdkVersion="31"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" android:minSdkVersion="31"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:minSdkVersion="31"/>
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:minSdkVersion="29"/>

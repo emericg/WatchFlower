@@ -29,9 +29,6 @@
 #endif
 #include <QDebug>
 
-// Qt6 needs this in the project file:
-// android { QT += core-private }
-
 /* ************************************************************************** */
 
 bool android_check_storage_permissions()
@@ -90,7 +87,7 @@ bool android_ask_storage_read_permission()
         r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
         if (r == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qDebug() << "STORAGE READ PERMISSION DENIED";
+            qWarning() << "STORAGE READ PERMISSION DENIED";
             status = false;
         }
     }
@@ -113,7 +110,7 @@ bool android_ask_storage_write_permission()
         w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
         if (w == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qDebug() << "STORAGE WRITE PERMISSION DENIED";
+            qWarning() << "STORAGE WRITE PERMISSION DENIED";
             status = false;
         }
     }
@@ -161,7 +158,55 @@ bool android_ask_location_permission()
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
         if (loc == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qDebug() << "LOCATION READ PERMISSION DENIED";
+            qWarning() << "LOCATION READ PERMISSION DENIED";
+            status = false;
+        }
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_check_ble_location_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    QtAndroidPrivate::PermissionResult loc;
+
+    if (QAndroidApplication::sdkVersion() >= 29)
+        loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+    else
+        loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_COARSE_LOCATION");
+
+    if (loc == QtAndroidPrivate::PermissionResult::Denied)
+    {
+        status = false;
+    }
+
+#endif // Q_OS_ANDROID
+
+    return status;
+}
+
+bool android_ask_ble_location_permission()
+{
+    bool status = true;
+
+#ifdef Q_OS_ANDROID
+
+    if (!android_check_ble_location_permission())
+    {
+        if (QAndroidApplication::sdkVersion() >= 29)
+            QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.ACCESS_FINE_LOCATION");
+        else
+            QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.ACCESS_COARSE_LOCATION");
+
+        if (!android_check_ble_location_permission())
+        {
+            qWarning() << "LOCATION READ PERMISSION DENIED";
             status = false;
         }
     }
@@ -204,7 +249,7 @@ bool android_ask_camera_permission()
         cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
         if (cam == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qDebug() << "CAMERA PERMISSION DENIED";
+            qWarning() << "CAMERA PERMISSION DENIED";
             status = false;
         }
     }
@@ -246,7 +291,7 @@ bool android_ask_phonestate_permission()
         ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
         if (ps == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qDebug() << "READ_PHONE_STATE PERMISSION DENIED";
+            qWarning() << "READ_PHONE_STATE PERMISSION DENIED";
             status = false;
         }
     }

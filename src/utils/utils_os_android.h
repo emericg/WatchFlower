@@ -28,6 +28,14 @@
 
 /* ************************************************************************** */
 
+// Qt5 needs this in the project file:
+// android { QT += androidextras }
+
+// Qt6 needs this in the project file:
+// android { QT += core-private }
+
+/* ************************************************************************** */
+
 /*!
  * \brief android_check_storage_permissions
  * \return True if R/W permissions on main storage have been previously obtained.
@@ -125,6 +133,18 @@ bool android_check_location_permission();
  * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
  */
 bool android_ask_location_permission();
+
+/*!
+ * \brief android_check_ble_location_permission
+ * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been previously obtained.
+ */
+bool android_check_ble_location_permission();
+
+/*!
+ * \brief android_ask_ble_location_permission
+ * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been explicitly obtained.
+ */
+bool android_ask_ble_location_permission();
 
 /* ************************************************************************** */
 

@@ -212,7 +212,7 @@ QString UtilsApp::getStandardPath_string(const QString &type)
 
 bool UtilsApp::checkMobileLocationPermission()
 {
-#if defined (Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID)
     return android_check_location_permission();
 #elif defined(Q_OS_IOS)
     return false;
@@ -223,8 +223,30 @@ bool UtilsApp::checkMobileLocationPermission()
 
 bool UtilsApp::getMobileLocationPermission()
 {
-#if defined (Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID)
     return android_ask_location_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::checkMobileBleLocationPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_check_ble_location_permission();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileBleLocationPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return android_ask_ble_location_permission();
 #elif defined(Q_OS_IOS)
     return false;
 #else

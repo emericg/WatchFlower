@@ -13,8 +13,8 @@ Item {
 
     function loadScreen() {
         // Refresh permissions
-        button_gps_test.validperm = utilsApp.checkMobileLocationPermission()
-        button_storage_test.validperm = utilsApp.checkMobileStoragePermissions()
+        button_location_test.validperm = utilsApp.checkMobileBleLocationPermission()
+        button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
 
         // Load screen
         appContent.state = "Permissions"
@@ -84,19 +84,18 @@ Item {
             ////////
 
             Item {
-                id: element_gps
+                id: element_location
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 ItemImageButton {
-                    id: button_gps_test
+                    id: button_location_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    z: 1
 
                     property bool validperm: false
 
@@ -105,11 +104,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileLocationPermission();
+                    onClicked: validperm = utilsApp.getMobileBleLocationPermission()
                 }
 
                 Text {
-                    id: text_gps
+                    id: text_location
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 64
@@ -118,6 +117,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Location")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 17
                     color: Theme.colorText
@@ -125,11 +125,11 @@ Item {
                 }
             }
             Text {
-                id: legend_gps
+                id: legend_location
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 8
 
                 text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.<br>" +
                            "This permission is only needed while scanning for new sensors.<br>" +
@@ -173,19 +173,18 @@ Item {
             ////////
 
             Item {
-                id: element_storage
+                id: element_gps
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 ItemImageButton {
-                    id: button_storage_test
+                    id: button_gps_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    z: 1
 
                     property bool validperm: false
 
@@ -194,11 +193,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileStoragePermissions();
+                    onClicked: validperm = utilsApp.isMobileGpsEnabled()
                 }
 
                 Text {
-                    id: text_storage
+                    id: text_gps
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: 64
@@ -206,7 +205,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Storage write")
+                    text: qsTr("GPS")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 17
@@ -215,14 +214,14 @@ Item {
                 }
             }
             Text {
-                id: legend_storage
+                id: legend_gps
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 8
 
-                text: qsTr("Storage write permission can be needed for exporting sensors data to the SD card.")
-                textFormat: Text.PlainText
+                text: qsTr("Some devices also require the GPS to be turned on.")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -261,7 +260,6 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    z: 1
 
                     property bool validperm: true
 
@@ -293,7 +291,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 8
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 textFormat: Text.PlainText
