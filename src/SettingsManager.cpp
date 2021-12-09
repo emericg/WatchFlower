@@ -62,6 +62,7 @@ bool SettingsManager::readSettings()
 
     if (settings.status() == QSettings::NoError)
     {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
         if (settings.contains("ApplicationWindow/x"))
             m_appPosition.setWidth(settings.value("ApplicationWindow/x").toInt());
         if (settings.contains("ApplicationWindow/y"))
@@ -72,6 +73,13 @@ bool SettingsManager::readSettings()
             m_appSize.setHeight(settings.value("ApplicationWindow/height").toInt());
         if (settings.contains("ApplicationWindow/visibility"))
             m_appVisibility = settings.value("ApplicationWindow/visibility").toUInt();
+
+        if (m_appPosition.width() > 8192) m_appPosition.setWidth(100);
+        if (m_appPosition.height() > 8192) m_appPosition.setHeight(100);
+        if (m_appSize.width() > 8192) m_appSize.setWidth(1920);
+        if (m_appSize.height() > 8192) m_appSize.setHeight(1080);
+        if (m_appVisibility < 1 || m_appVisibility > 5) m_appVisibility = 1;
+#endif
 
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
