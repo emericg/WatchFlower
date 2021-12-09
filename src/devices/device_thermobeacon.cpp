@@ -523,7 +523,7 @@ bool DeviceThermoBeacon::addDatabaseRecord(const int64_t timestamp, const float 
             }
             else
             {
-                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceThermoBeacon addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }

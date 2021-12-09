@@ -321,8 +321,7 @@ bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
             addData.bindValue(":pres", m_pressure);
             addData.bindValue(":voc", m_voc);
             addData.bindValue(":co2", m_co2);
-            if (addData.exec() == false)
-                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+            status = addData.exec();
 
             if (status)
             {
@@ -330,7 +329,7 @@ bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
             }
             else
             {
-                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceEsp32AirQualityMonitor addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }

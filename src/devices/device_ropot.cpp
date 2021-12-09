@@ -726,7 +726,7 @@ bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
             }
             else
             {
-                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceRopot addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }

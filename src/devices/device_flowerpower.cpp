@@ -416,7 +416,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                     addData.bindValue(":atemp", m_temperature);
                     addData.bindValue(":lumi", m_luminosityLux);
                     if (addData.exec() == false)
-                        qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                        qWarning() << "> DeviceFlowerPower addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
                 }
             }
             else

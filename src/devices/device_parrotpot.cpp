@@ -438,7 +438,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                     addData.bindValue(":lumi", m_luminosityLux);
                     addData.bindValue(":tank", m_watertank_level);
                     if (addData.exec() == false)
-                        qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                        qWarning() << "> DeviceParrotPot addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
                 }
             }
             else

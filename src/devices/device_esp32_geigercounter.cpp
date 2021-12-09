@@ -247,7 +247,7 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
                 addData.bindValue(":ts", tsStr);
                 addData.bindValue(":geiger", m_rm);
                 if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                    qWarning() << "> DeviceEsp32GeigerCounter addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
                 m_lastUpdateDatabase = m_lastUpdate;
             }

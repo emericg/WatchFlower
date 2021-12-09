@@ -236,10 +236,15 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
                 addData.bindValue(":co2", m_co2);
                 addData.bindValue(":voc", m_voc);
                 addData.bindValue(":hcho", m_hcho);
-                if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
 
-                m_lastUpdateDatabase = m_lastUpdate;
+                if (addData.exec())
+                {
+                    m_lastUpdateDatabase = m_lastUpdate;
+                }
+                else
+                {
+                    qWarning() << "> DeviceWP6003 addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                }
             }
 
             refreshDataFinished(true);

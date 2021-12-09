@@ -264,7 +264,7 @@ void DeviceHygrotempLCD::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":humi", m_humidity);
                 if (addData.exec() == false)
-                    qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                    qWarning() << "> DeviceHygrotempLCD addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)

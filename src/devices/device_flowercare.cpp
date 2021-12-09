@@ -819,7 +819,7 @@ bool DeviceFlowerCare::addDatabaseRecord(const int64_t timestamp,
             }
             else
             {
-                qWarning() << "> addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceFlowerCare addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }
