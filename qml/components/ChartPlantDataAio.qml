@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtCharts 2.3
+import QtQuick 2.15
+import QtCharts 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber

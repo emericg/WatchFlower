@@ -1,5 +1,4 @@
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
