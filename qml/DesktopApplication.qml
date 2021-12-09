@@ -79,55 +79,55 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        onBackButtonClicked: {
+        function onBackButtonClicked() {
             if (appContent.state !== "DeviceList") {
                 appContent.state = "DeviceList"
             }
         }
 
-        onDeviceLedButtonClicked: {
+        function onDeviceLedButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionLedBlink()
             }
         }
-        onDeviceWateringButtonClicked: {
+        function onDeviceWateringButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionWatering()
             }
         }
-        onDeviceCalibrateButtonClicked: {
+        function onDeviceCalibrateButtonClicked() {
             if (selectedDevice) {
                 popupCalibration.open()
             }
         }
-        onDeviceRebootButtonClicked: {
+        function onDeviceRebootButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionReboot()
             }
         }
 
-        onDeviceClearButtonClicked: {
+        function onDeviceClearButtonClicked() {
             if (selectedDevice) {
                 popupDeleteData.open()
             }
         }
-        onDeviceRefreshHistoryButtonClicked: {
+        function onDeviceRefreshHistoryButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.refreshStartHistory()
             }
         }
 
-        onDeviceRefreshRealtimeButtonClicked: {
+        function onDeviceRefreshRealtimeButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.refreshStartRealtime()
             }
         }
-        onDeviceRefreshButtonClicked: {
+        function onDeviceRefreshButtonClicked() {
             if (selectedDevice) {
                 deviceManager.updateDevice(selectedDevice.deviceAddress)
             }
         }
-        onRefreshButtonClicked: {
+        function onRefreshButtonClicked() {
             if (!deviceManager.scanning) {
                 if (deviceManager.updating) {
                     deviceManager.refreshDevices_stop()
@@ -136,7 +136,7 @@ ApplicationWindow {
                 }
             }
         }
-        onSyncButtonClicked: {
+        function onSyncButtonClicked() {
             if (!deviceManager.scanning) {
                 if (deviceManager.syncing) {
                     deviceManager.syncDevices_stop()
@@ -145,7 +145,7 @@ ApplicationWindow {
                 }
             }
         }
-        onRescanButtonClicked: {
+        function onRescanButtonClicked() {
             if (!deviceManager.updating) {
                 if (deviceManager.scanning) {
                     deviceManager.scanDevices_stop()
@@ -155,19 +155,19 @@ ApplicationWindow {
             }
         }
 
-        onPlantsButtonClicked: { appContent.state = "DeviceList" }
-        onSettingsButtonClicked: { appContent.state = "Settings" }
-        onAboutButtonClicked: { appContent.state = "About" }
+        function onPlantsButtonClicked() { appContent.state = "DeviceList" }
+        function onSettingsButtonClicked() { appContent.state = "Settings" }
+        function onAboutButtonClicked() { appContent.state = "About" }
     }
 
     Connections {
         target: systrayManager
-        onSettingsClicked: { appContent.state = "Settings" }
+        function onSettingsClicked() { appContent.state = "Settings" }
     }
 
     Connections {
         target: Qt.application
-        onStateChanged: {
+        function onStateChanged() {
             switch (Qt.application.state) {
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")

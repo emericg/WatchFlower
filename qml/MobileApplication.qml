@@ -159,7 +159,7 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        onLeftMenuClicked: {
+        function onLeftMenuClicked() {
             if (appContent.state === "DeviceList") {
                 appDrawer.open()
             } else {
@@ -171,48 +171,48 @@ ApplicationWindow {
                     appContent.state = "DeviceList"
             }
         }
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
 
-        onDeviceLedButtonClicked: {
+        function onDeviceLedButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionLedBlink()
             }
         }
-        onDeviceWateringButtonClicked: {
+        function onDeviceWateringButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionWatering()
             }
         }
-        onDeviceCalibrateButtonClicked: {
+        function onDeviceCalibrateButtonClicked() {
             if (selectedDevice) {
                 popupCalibration.open()
             }
         }
-        onDeviceRebootButtonClicked: {
+        function onDeviceRebootButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.actionReboot()
             }
         }
 
-        onDeviceClearButtonClicked: {
+        function onDeviceClearButtonClicked() {
             if (selectedDevice) {
                 popupDeleteData.open()
             }
         }
-        onDeviceRefreshHistoryButtonClicked: {
+        function onDeviceRefreshHistoryButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.refreshStartHistory()
             }
         }
 
-        onDeviceRefreshRealtimeButtonClicked: {
+        function onDeviceRefreshRealtimeButtonClicked() {
             if (selectedDevice) {
                 selectedDevice.refreshStartRealtime()
             }
         }
-        onDeviceRefreshButtonClicked: {
+        function onDeviceRefreshButtonClicked() {
             if (selectedDevice) {
                 deviceManager.updateDevice(selectedDevice.deviceAddress)
             }
@@ -221,7 +221,7 @@ ApplicationWindow {
 
     Connections {
         target: Qt.application
-        onStateChanged: {
+        function onStateChanged() {
             switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")

@@ -174,7 +174,7 @@ Item {
 
                             Connections {
                                 target: deviceEnvironmental
-                                onPrimaryChanged: loadValues()
+                                function onPrimaryChanged() { loadValues() }
                             }
 
                             Rectangle {

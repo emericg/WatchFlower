@@ -403,8 +403,8 @@ Rectangle {
             Component.onCompleted: buttonSort.setText()
             Connections {
                 target: settingsManager
-                onOrderByChanged: buttonSort.setText()
-                onAppLanguageChanged: buttonSort.setText()
+                function onOrderByChanged() { buttonSort.setText() }
+                function onAppLanguageChanged() { buttonSort.setText() }
             }
 
             property var sortmode: {

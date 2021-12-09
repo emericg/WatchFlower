@@ -61,7 +61,7 @@ Item {
 
     Connections {
         target: ThemeEngine
-        onCurrentThemeChanged: canvas.requestPaint()
+        function onCurrentThemeChanged() { canvas.requestPaint() }
     }
 
     Behavior on arcBegin {

@@ -19,18 +19,18 @@ Item {
 
     Connections {
         target: boxDevice
-        onSensorUpdated: { initBoxData() }
-        onSensorsUpdated: { initBoxData() }
-        onCapabilitiesUpdated: { initBoxData() }
-        onStatusUpdated: { updateSensorStatus() }
-        onSettingsUpdated: { updateSensorSettings() }
-        onDataUpdated: { updateSensorData() }
-        onRefreshUpdated: { updateSensorData() }
-        onLimitsUpdated: { updateSensorData() }
+        function onSensorUpdated() { initBoxData() }
+        function onSensorsUpdated() { initBoxData() }
+        function onCapabilitiesUpdated() { initBoxData() }
+        function onStatusUpdated() { updateSensorStatus() }
+        function onSettingsUpdated() { updateSensorSettings() }
+        function onDataUpdated() { updateSensorData() }
+        function onRefreshUpdated() { updateSensorData() }
+        function onLimitsUpdated() { updateSensorData() }
     }
     Connections {
         target: ThemeEngine
-        onCurrentThemeChanged: {
+        function onCurrentThemeChanged() {
             updateSensorSettings()
             updateSensorStatus()
             updateSensorData()
@@ -38,12 +38,12 @@ Item {
     }
     Connections {
         target: settingsManager
-        onAppLanguageChanged: {
+        function onAppLanguageChanged() {
             updateSensorSettings()
             updateSensorStatus()
             updateSensorData()
         }
-        onTempUnitChanged: {
+        function onTempUnitChanged() {
             if (loaderIndicators.item) {
                 loaderIndicators.item.updateData()
             }

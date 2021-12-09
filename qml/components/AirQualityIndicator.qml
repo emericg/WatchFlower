@@ -118,7 +118,7 @@ Item {
 
         Connections {
             target: indicatorAirQuality
-            onValueChanged: {
+            function onValueChanged() {
                 lungsAnimation.restart()
             }
         }

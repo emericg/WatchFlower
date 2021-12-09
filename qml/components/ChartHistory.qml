@@ -69,7 +69,7 @@ Item {
 
         Connections {
             target: graphGrid
-            onBarSelectionIndexChanged: {
+            function onBarSelectionIndexChanged() {
                 var txt = ""
                 if (graphGrid.barSelectionIndex >= 0) {
                     if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {

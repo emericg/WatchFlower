@@ -1341,7 +1341,7 @@ bool DeviceManager::exportData(const QString &path)
         QString legend = "Timestamp (YYYY-MM-DD hh:mm:ss), Soil moisture (%), Soil conductivity (μs/cm), Temperature (";
         legend += (isCelcius ? "℃" : "℉");
         legend += "), Humidity (%RH), Luminosity (lux)";
-        eout << legend << endl;
+        eout << legend << Qt::endl;
 
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
@@ -1349,7 +1349,7 @@ bool DeviceManager::exportData(const QString &path)
             if (dd)
             {
                 QString l = "> " + dd->getName() + " (" + dd->getAddress() + ")";
-                eout << l << endl;
+                eout << l << Qt::endl;
 
                 QSqlQuery data;
                 if (m_dbInternal) // sqlite
@@ -1388,7 +1388,7 @@ bool DeviceManager::exportData(const QString &path)
                         if (dd->hasLuminositySensor()) eout << data.value(6).toString();
                         eout << ",";
 
-                        eout << endl;
+                        eout << Qt::endl;
                     }
                 }
             }

@@ -8,7 +8,7 @@ QT     += core bluetooth sql
 QT     += qml quick quickcontrols2 svg widgets charts
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
+!versionAtLeast(QT_VERSION, 5.15) : error("You need at least Qt version 5.15 for $${TARGET}")
 !versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for $${TARGET}")
 
 # Project features #############################################################

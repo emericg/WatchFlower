@@ -274,11 +274,11 @@ Rectangle {
 
         Connections {
             target: appDrawer
-            onVisibleChanged: actionMenu.close()
+            function onVisibleChanged() { actionMenu.close() }
         }
         Connections {
             target: deviceManager
-            onBluetoothChanged: {
+            function onBluetoothChanged() {
                 if (!deviceManager.bluetooth) actionMenu.close()
             }
         }

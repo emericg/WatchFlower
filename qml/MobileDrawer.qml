@@ -33,11 +33,11 @@ Drawer {
 
             Connections {
                 target: appWindow
-                onScreenPaddingStatusbarChanged: rectangleHeader.updateIOSHeader()
+                function onScreenPaddingStatusbarChanged() { rectangleHeader.updateIOSHeader() }
             }
             Connections {
                 target: ThemeEngine
-                onCurrentThemeChanged: rectangleHeader.updateIOSHeader()
+                function onCurrentThemeChanged() { rectangleHeader.updateIOSHeader() }
             }
 
             function updateIOSHeader() {
@@ -324,8 +324,8 @@ Drawer {
                         Component.onCompleted: textOrderBy.setText()
                         Connections {
                             target: settingsManager
-                            onOrderByChanged: textOrderBy.setText()
-                            onAppLanguageChanged: textOrderBy.setText()
+                            function onOrderByChanged() { textOrderBy.setText() }
+                            function onAppLanguageChanged() { textOrderBy.setText() }
                         }
 
                         font.pixelSize: 13

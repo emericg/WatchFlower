@@ -19,32 +19,32 @@ Item {
 
     Connections {
         target: currentDevice
-        onSensorUpdated: { updateHeader() }
-        onSensorsUpdated: { updateHeader() }
-        onCapabilitiesUpdated: { updateHeader() }
-        onStatusUpdated: { updateHeader() }
-        onDataUpdated: {
+        function onSensorUpdated() { updateHeader() }
+        function onSensorsUpdated() { updateHeader() }
+        function onCapabilitiesUpdated() { updateHeader() }
+        function onStatusUpdated() { updateHeader() }
+        function onDataUpdated() {
             updateData()
         }
-        onRefreshUpdated: {
+        function onRefreshUpdated() {
             updateData()
             updateGraph()
         }
-        onHistoryUpdated: {
+        function onHistoryUpdated() {
             updateGraph()
         }
     }
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: {
+        function onTempUnitChanged() {
             updateData()
         }
-        onAppLanguageChanged: {
+        function onAppLanguageChanged() {
             updateData()
             updateStatusText()
         }
-        onGraphThermometerChanged: {
+        function onGraphThermometerChanged() {
             loadGraph()
         }
     }
@@ -52,14 +52,14 @@ Item {
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             appHeader.setActiveDeviceData()
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
         }
         // mobile only
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
     }

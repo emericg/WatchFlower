@@ -25,20 +25,20 @@ Item {
 
     Connections {
         target: currentDevice
-        onSensorUpdated: { updateHeader() }
-        onSensorsUpdated: { updateHeader() }
-        onCapabilitiesUpdated: { updateHeader() }
-        onStatusUpdated: { updateHeader() }
-        onDataUpdated: {
+        function onSensorUpdated() { updateHeader() }
+        function onSensorsUpdated() { updateHeader() }
+        function onCapabilitiesUpdated() { updateHeader() }
+        function onStatusUpdated() { updateHeader() }
+        function onDataUpdated() {
             updateHeader()
             updateData()
         }
-        onRefreshUpdated: {
+        function onRefreshUpdated() {
             updateHeader()
             updateData()
             updateGraph()
         }
-        onHistoryUpdated: {
+        function onHistoryUpdated() {
             updateHeader()
             updateGraph()
         }
@@ -46,10 +46,10 @@ Item {
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: {
+        function onTempUnitChanged() {
             updateData()
         }
-        onAppLanguageChanged: {
+        function onAppLanguageChanged() {
             updateData()
             updateStatusText()
         }
@@ -58,14 +58,14 @@ Item {
     Connections {
         target: appHeader
         // desktop only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             appHeader.setActiveDeviceData()
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
         }
         // mobile only
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
     }

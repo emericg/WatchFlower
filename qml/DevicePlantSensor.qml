@@ -13,23 +13,23 @@ Item {
     Connections {
         target: currentDevice
 
-        onStatusUpdated: {
+        function onStatusUpdated() {
             plantSensorData.updateHeader()
         }
-        onSensorUpdated: {
-            plantSensorData.updateHeader()
-            plantSensorLimits.updateHeader()
-        }
-        onSensorsUpdated: {
+        function onSensorUpdated() {
             plantSensorData.updateHeader()
             plantSensorLimits.updateHeader()
         }
-        onRefreshUpdated: {
+        function onSensorsUpdated() {
+            plantSensorData.updateHeader()
+            plantSensorLimits.updateHeader()
+        }
+        function onRefreshUpdated() {
             plantSensorData.resetHistoryMode()
             plantSensorData.updateGraph()
             plantSensorHistory.updateData()
         }
-        onHistoryUpdated: {
+        function onHistoryUpdated() {
             plantSensorData.updateGraph()
             plantSensorHistory.updateData()
         }
@@ -38,21 +38,21 @@ Item {
     Connections {
         target: settingsManager
 
-        onBigIndicatorChanged: {
+        function onBigIndicatorChanged() {
             plantSensorData.reloadIndicators()
         }
-        onAppLanguageChanged: {
+        function onAppLanguageChanged() {
             plantSensorData.updateStatusText()
             plantSensorData.updateLegendSizes()
         }
-        onGraphHistoryChanged: {
+        function onGraphHistoryChanged() {
             plantSensorHistory.updateHistoryMode()
         }
     }
 
     Connections {
         target: ThemeEngine
-        onCurrentThemeChanged: {
+        function onCurrentThemeChanged() {
             plantSensorData.updateHeader()
             plantSensorHistory.updateHeader()
             plantSensorHistory.updateColors()
@@ -64,15 +64,15 @@ Item {
         target: appHeader
 
         // desktop only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             appHeader.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
-        onDeviceHistoryButtonClicked: {
+        function onDeviceHistoryButtonClicked() {
             appHeader.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
             sensorPages.currentIndex = 2
         }
@@ -82,15 +82,15 @@ Item {
         target: tabletMenuDevice
 
         // mobile only
-        onDeviceDataButtonClicked: {
+        function onDeviceDataButtonClicked() {
             tabletMenuDevice.setActiveDeviceData()
             sensorPages.currentIndex = 0
         }
-        onDeviceHistoryButtonClicked: {
+        function onDeviceHistoryButtonClicked() {
             tabletMenuDevice.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
-        onDeviceSettingsButtonClicked: {
+        function onDeviceSettingsButtonClicked() {
             tabletMenuDevice.setActiveDeviceSettings()
             sensorPages.currentIndex = 2
         }

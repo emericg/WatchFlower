@@ -18,7 +18,7 @@ Item {
 
     Connections {
         target: settingsManager
-        onTempUnitChanged: setTemp()
+        function onTempUnitChanged() { setTemp() }
     }
 
     onHeightChanged: computeSize()

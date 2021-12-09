@@ -98,7 +98,7 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++11 compiler and Qt 5.12+ (with Qt Charts). Qt 6+ won't be supported for a while.  
+You will need a C++11 compiler and Qt 5.15 (with Qt Charts). Qt 6+ is not supported yet.  
 For Android builds, you'll need the appropriates SDK and NDK (21+).  
 
 #### Building WatchFlower
