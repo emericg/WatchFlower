@@ -129,7 +129,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 12
 
                 text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.<br>" +
                            "This permission is only needed while scanning for new sensors.<br>" +
@@ -218,7 +218,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 12
 
                 text: qsTr("Some devices also require the GPS to be turned on.")
                 textFormat: Text.StyledText
@@ -291,7 +291,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 12
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 textFormat: Text.PlainText
