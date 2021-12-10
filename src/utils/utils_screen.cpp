@@ -167,13 +167,13 @@ QVariantMap UtilsScreen::getSafeAreaMargins(QQuickWindow *window)
 void UtilsScreen::keepScreenOn(bool on, const QString &application, const QString &explanation)
 {
 #if defined(Q_OS_ANDROID)
-    android_screen_keep_on(on);
+    UtilsAndroid::screenKeepOn(on);
 #elif defined(Q_OS_IOS)
-    UtilsIOS::keepScreenOn(on);
+    UtilsIOS::screenKeepOn(on);
 #elif defined(Q_OS_MACOS)
     if (on && m_screensaverId <= 0)
     {
-        m_screensaverId = UtilsMacOS::keepScreenOn(application, explanation);
+        m_screensaverId = UtilsMacOS::screenKeepOn(application, explanation);
     }
     else
     {
@@ -182,14 +182,14 @@ void UtilsScreen::keepScreenOn(bool on, const QString &application, const QStrin
 #elif defined(Q_OS_LINUX)
     if (on && m_screensaverId <= 0)
     {
-        m_screensaverId = UtilsLinux::keepScreenOn(application, explanation);
+        m_screensaverId = UtilsLinux::screenKeepOn(application, explanation);
     }
     else
     {
         UtilsLinux::keepScreenAuto(m_screensaverId);
     }
 #elif defined(Q_OS_WINDOWS)
-    UtilsWindows::keepScreenOn(on);
+    UtilsWindows::screenKeepOn(on);
 #else
     Q_UNUSED(on)
 #endif
@@ -200,9 +200,9 @@ void UtilsScreen::keepScreenOn(bool on, const QString &application, const QStrin
 void UtilsScreen::lockScreenOrientation(int orientation)
 {
 #if defined(Q_OS_ANDROID)
-    android_screen_lock_orientation(orientation);
+    UtilsAndroid::screenLockOrientation(orientation);
 #elif defined(Q_OS_IOS)
-    UtilsIOS::lockScreenOrientation(orientation);
+    UtilsIOS::screenLockOrientation(orientation);
 #else
     Q_UNUSED(orientation)
 #endif
@@ -211,9 +211,9 @@ void UtilsScreen::lockScreenOrientation(int orientation)
 void UtilsScreen::lockScreenOrientation(UtilsScreen::ScreenOrientation orientation, bool autoRotate)
 {
 #if defined(Q_OS_ANDROID)
-    android_screen_lock_orientation(static_cast<int>(orientation), autoRotate);
+    UtilsAndroid::screenLockOrientation(static_cast<int>(orientation), autoRotate);
 #elif defined(Q_OS_IOS)
-    UtilsIOS::lockScreenOrientation(static_cast<int>(orientation), autoRotate);
+    UtilsIOS::screenLockOrientation(static_cast<int>(orientation), autoRotate);
 #else
     Q_UNUSED(orientation)
     Q_UNUSED(autoRotate)

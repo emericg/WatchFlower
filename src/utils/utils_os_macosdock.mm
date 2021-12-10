@@ -20,7 +20,7 @@
 
 #include "utils_os_macosdock.h"
 
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS)
 
 #include <AppKit/AppKit.h>
 #include <objc/runtime.h>

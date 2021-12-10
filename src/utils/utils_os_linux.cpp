@@ -20,7 +20,7 @@
 
 #include "utils_os_linux.h"
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX)
 
 #include <QDBusConnection>
 #include <QDBusInterface>
@@ -31,7 +31,7 @@
 
 /* ************************************************************************** */
 
-uint32_t UtilsLinux::keepScreenOn(const QString &application, const QString &reason)
+uint32_t UtilsLinux::screenKeepOn(const QString &application, const QString &reason)
 {
     QDBusConnection bus = QDBusConnection::sessionBus();
     if (bus.isConnected())
@@ -57,13 +57,13 @@ uint32_t UtilsLinux::keepScreenOn(const QString &application, const QString &rea
             QDBusReply<uint> reply = screenSaverInterface.call("Inhibit", application, reason);
             if (reply.isValid())
             {
-                //qDebug() << "keepScreenOn() succesful:" << reply << " from " << services[i];
+                //qDebug() << "screenKeepOn() succesful:" << reply << " from " << services[i];
                 return reply.value();
             }
             else
             {
                 QDBusError error = reply.error();
-                qDebug() << "keepScreenOn() error:" << error.message() << error.name();
+                qWarning() << "screenKeepOn() error:" << error.message() << error.name();
             }
         }
     }
@@ -71,7 +71,7 @@ uint32_t UtilsLinux::keepScreenOn(const QString &application, const QString &rea
     return 0;
 }
 
-void UtilsLinux::keepScreenAuto(uint32_t screensaverId)
+void UtilsLinux::screenKeepAuto(uint32_t screensaverId)
 {
     QDBusConnection bus = QDBusConnection::sessionBus();
     if (bus.isConnected())
@@ -97,13 +97,13 @@ void UtilsLinux::keepScreenAuto(uint32_t screensaverId)
             QDBusReply<uint> reply = screenSaverInterface.call("UnInhibit", screensaverId);
             if (reply.isValid())
             {
-                //qDebug() << "keepScreenAuto() succesful:" << reply << " from " << reply.value();
+                //qDebug() << "screenKeepOn() succesful:" << reply << " from " << reply.value();
                 break;
             }
             else
             {
                 QDBusError error = reply.error();
-                qDebug() << "keepScreenAuto() error:" << error.message() << error.name();
+                qWarning() << "keepScreenAuto() error:" << error.message() << error.name();
             }
         }
     }

@@ -20,14 +20,14 @@
 
 #include "utils_os_ios.h"
 
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS)
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 /* ************************************************************************** */
 
-void UtilsIOS::keepScreenOn(bool on)
+void UtilsIOS::screenKeepOn(bool on)
 {
     if (on)
     {
@@ -50,7 +50,7 @@ void UtilsIOS::keepScreenOn(bool on)
     };
 */
 
-void UtilsIOS::lockScreenOrientation(int orientation)
+void UtilsIOS::screenLockOrientation(int orientation)
 {
     NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
     if (orientation != 0) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
@@ -58,7 +58,7 @@ void UtilsIOS::lockScreenOrientation(int orientation)
     [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
-void UtilsIOS::lockScreenOrientation(int orientation, bool autoRotate)
+void UtilsIOS::screenLockOrientation(int orientation, bool autoRotate)
 {
     NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
 

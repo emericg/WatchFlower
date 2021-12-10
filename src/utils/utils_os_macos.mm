@@ -20,20 +20,15 @@
 
 #include "utils_os_macos.h"
 
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS)
 
 #include <objc/runtime.h>
 #include <IOKit/pwr_mgt/IOPMLib.h>
 
 /* ************************************************************************** */
 
-/*!
- * \brief UtilsMacOS::keepScreenOn
- */
-uint32_t UtilsMacOS::keepScreenOn(const QString &application, const QString &reason)
+uint32_t UtilsMacOS::screenKeepOn(const QString &application, const QString &reason)
 {
-    // https://developer.apple.com/library/archive/qa/qa1340/_index.html
-
     // kIOPMAssertionTypeNoDisplaySleep prevents display sleep
     // kIOPMAssertionTypeNoIdleSleep prevents idle sleep
 

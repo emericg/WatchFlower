@@ -20,14 +20,13 @@
 
 #ifndef UTILS_MACOS_H
 #define UTILS_MACOS_H
-/* ************************************************************************** */
 
 #include <QtGlobal>
-#ifdef Q_OS_MACOS
+
+#if defined(Q_OS_MACOS)
+/* ************************************************************************** */
 
 #include <QString>
-
-/* ************************************************************************** */
 
 /*!
  * \brief macOS utils
@@ -37,10 +36,13 @@
 class UtilsMacOS
 {
 public:
-    static uint32_t keepScreenOn(const QString &application, const QString &reason);
-    static void keepScreenAuto(uint32_t screensaverId);
+    /*!
+     * - https://developer.apple.com/library/archive/qa/qa1340/_index.html
+     */
+    static uint32_t screenKeepOn(const QString &application, const QString &reason);
+    static void screenKeepAuto(uint32_t screensaverId);
 };
 
-#endif // Q_OS_MACOS
 /* ************************************************************************** */
+#endif // Q_OS_MACOS
 #endif // UTILS_MACOS_H

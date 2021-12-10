@@ -20,187 +20,173 @@
 
 #ifndef UTILS_OS_ANDROID_H
 #define UTILS_OS_ANDROID_H
-/* ************************************************************************** */
 
 #include <QtGlobal>
+
+#if defined(Q_OS_ANDROID)
+/* ************************************************************************** */
+
 #include <QString>
 #include <QStringList>
 
-/* ************************************************************************** */
-
-// Qt5 needs this in the project file:
-// android { QT += androidextras }
-
-// Qt6 needs this in the project file:
-// android { QT += core-private }
-
-/* ************************************************************************** */
-
 /*!
- * \brief android_check_storage_permissions
- * \return True if R/W permissions on main storage have been previously obtained.
- */
-bool android_check_storage_permissions();
-bool android_check_storage_read_permission();
-bool android_check_storage_write_permission();
-
-/*!
- * \brief android_ask_storage_permissions
- * \return True if R/W permissions on main storage have been explicitly obtained.
- */
-bool android_ask_storage_permissions();
-bool android_ask_storage_read_permission();
-bool android_ask_storage_write_permission();
-
-/*!
- * \brief android_get_storages_by_api
- * \return The path to the external storage.
+ * \brief Android utils
  *
- * Search for storage devices using native API, using:
- * - https://developer.android.com/reference/android/content/Context.html#getExternalFilesDir(java.lang.String)
- */
-QStringList android_get_storages_by_api();
-
-/*!
- * \brief android_get_storages_by_env
- * \return The path to the external storage.
+ * Qt5 needs this in the project file:
+ * android { QT += androidextras }
  *
- * Search for storage devices in the Android specific environment variables.
+ * Qt6 needs this in the project file:
+ * android { QT += core-private }
  */
-QStringList android_get_storages_by_env();
+class UtilsAndroid
+{
+public:
+    /*!
+     * \note DEPRECATED in Android 12
+     * \return True if R/W permissions on main storage have been previously obtained.
+     */
+    static bool checkPermissions_storage();
+    static bool checkPermission_storage_read();
+    static bool checkPermission_storage_write();
 
-/*!
- * \brief android_get_external_storage
- * \return The path to the external storage.
- *
- * Search for storage devices using native API, using:
- * - https://developer.android.com/reference/android/os/Environment#getExternalStorageDirectory()
- *
- * It might get complicated:
- * - https://source.android.com/devices/storage/
- */
-QString android_get_external_storage();
+    /*!
+     * \note DEPRECATED in Android 12
+     * \return True if R/W permissions on main storage have been explicitly obtained.
+     */
+    static bool getPermissions_storage();
+    static bool getPermission_storage_read();
+    static bool getPermission_storage_write();
 
-/* ************************************************************************** */
+    /*!
+     * \return True if CAMERA permission has been previously obtained.
+     */
+    static bool checkPermission_camera();
 
-/*!
- * \brief android_ask_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been previously obtained.
- */
-bool android_check_phonestate_permission();
+    /*!
+     * \return True if CAMERA permission has been explicitly obtained.
+     */
+    static bool getPermission_camera();
 
-/*!
- * \brief android_ask_phonestate_permission
- * \return True if READ_PHONE_STATE permission has been explicitly obtained.
- */
-bool android_ask_phonestate_permission();
+    /*!
+     * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
+     */
+    static bool checkPermission_location();
 
-/*!
- * \brief android_get_device_model
- * \return The device manufacturer + model.
- *
- * - https://developer.android.com/reference/android/os/Build.html
- */
-QString android_get_device_model();
+    /*!
+     * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
+     */
+    static bool getPermission_location();
 
-/*!
- * \brief android_get_device_serial
- * \return The device serial number.
- *
- * Need READ_PHONE_STATE permission.
- * Only work before Android 10 (API < 29).
- *
- * - https://developer.android.com/reference/android/os/Build#getSerial()
- */
-QString android_get_device_serial();
+    /*!
+     * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been previously obtained.
+     */
+    static bool checkPermission_location_ble();
 
-/* ************************************************************************** */
+    /*!
+     * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been explicitly obtained.
+     */
+    static bool getPermission_location_ble();
 
-/*!
- * \brief android_is_gps_on
- * \return True if device GPS is turned on.
- */
-bool android_is_gps_on();
+    /*!
+     * \return True if READ_PHONE_STATE permission has been previously obtained.
+     */
+    static bool checkPermission_phonestate();
 
-/*!
- * \brief android_check_location_permission
- * \return True if ACCESS_FINE_LOCATION permission has been previously obtained.
- */
-bool android_check_location_permission();
+    /*!
+     * \return True if READ_PHONE_STATE permission has been explicitly obtained.
+     */
+    static bool getPermission_phonestate();
 
-/*!
- * \brief android_ask_location_permission
- * \return True if ACCESS_FINE_LOCATION permission has been explicitly obtained.
- */
-bool android_ask_location_permission();
+    /* ********************************************************************** */
 
-/*!
- * \brief android_check_ble_location_permission
- * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been previously obtained.
- */
-bool android_check_ble_location_permission();
+    /*!
+     * \return The path to the app internal storage folder.
+     */
+    static QString getAppInternalStorage();
 
-/*!
- * \brief android_ask_ble_location_permission
- * \return True if location permission (FINE for Android 10+, COARSE for Android 6+) has been explicitly obtained.
- */
-bool android_ask_ble_location_permission();
+    /*!
+     * \return The path to the app external storage folder.
+     */
+    static QString getAppExternalStorage();
 
-/* ************************************************************************** */
+    /*!
+     * \note DEPRECATED
+     * \return The path to the external storage.
+     *
+     * Search for storage devices using native API, using:
+     * - https://developer.android.com/reference/android/content/Context.html#getExternalFilesDir(java.lang.String)
+     */
+    static QStringList get_storages_by_api();
 
-/*!
- * \brief android_check_camera_permission
- * \return True if CAMERA permission has been previously obtained.
- */
-bool android_check_camera_permission();
+    /*!
+     * \note DEPRECATED
+     * \return The path to the external storage.
+     *
+     * Search for storage devices using native API, using:
+     * - https://developer.android.com/reference/android/os/Environment#getExternalStorageDirectory()
+     *
+     * It might get complicated:
+     * - https://source.android.com/devices/storage/
+     */
+    static QString get_external_storage();
 
-/*!
- * \brief android_ask_camera_permission
- * \return True if CAMERA permission has been explicitly obtained.
- */
-bool android_ask_camera_permission();
+    /* ********************************************************************** */
 
-/* ************************************************************************** */
+    /*!
+     * \return The device manufacturer + model.
+     *
+     * - https://developer.android.com/reference/android/os/Build.html
+     */
+    static QString getDeviceModel();
 
-/*!
- * \brief android_screen_keep_on
- * \param on: screen on or off.
- */
-void android_screen_keep_on(bool on);
+    /*!
+     * \return The device serial number.
+     *
+     * Need READ_PHONE_STATE permission.
+     * Only work before Android 10 (API < 29).
+     *
+     * - https://developer.android.com/reference/android/os/Build#getSerial()
+     */
+    static QString getDeviceSerial();
 
-/* ************************************************************************** */
+    /*!
+     * \param milliseconds: vibration duration.
+     *
+     * Need VIBRATE permission.
+     *
+     * - 25 is a small 'keyboard like' vibration
+     * - 100 is a regular 'notification' vibration
+     */
+    static void vibrate(int milliseconds);
 
-/*!
- * \brief android_screen_lock_orientation
- * \param orientation: 0 is for landscape, 1 for portrait.
- *
- * Lock screen orientation, using:
- * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
- *
- * You can achieve similar functionality through application manifest:
- * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
- */
-void android_screen_lock_orientation(int orientation);
+    /*!
+     * \return True if device GPS is turned on.
+     */
+    static bool isGpsEnabled();
 
-/*!
- * \brief android_screen_lock_orientation
- * \param orientation: see ScreenOrientation enum.
- * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
- */
-void android_screen_lock_orientation(int orientation, bool autoRotate);
+    /*!
+     * \param on: screen on or off.
+     */
+    static void screenKeepOn(bool on);
+
+    /*!
+     * \param orientation: 0 is for landscape, 1 for portrait.
+     *
+     * Lock screen orientation, using:
+     * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
+     *
+     * You can achieve similar functionality through application manifest:
+     * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
+     */
+    static void screenLockOrientation(int orientation);
+
+    /*!
+     * \param orientation: see ScreenOrientation enum.
+     * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
+     */
+    static void screenLockOrientation(int orientation, bool autoRotate);
+};
 
 /* ************************************************************************** */
-
-/*!
- * \brief android_vibrate
- * \param milliseconds: vibration duration.
- *
- * Need VIBRATE permission.
- *
- * - 25 is a small 'keyboard like' vibration
- * - 100 is a regular 'notification' vibration
- */
-void android_vibrate(int milliseconds);
-
-/* ************************************************************************** */
+#endif // Q_OS_ANDROID
 #endif // UTILS_OS_ANDROID_H
