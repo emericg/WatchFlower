@@ -97,13 +97,13 @@ void UtilsLinux::screenKeepAuto(uint32_t screensaverId)
             QDBusReply<uint> reply = screenSaverInterface.call("UnInhibit", screensaverId);
             if (reply.isValid())
             {
-                //qDebug() << "screenKeepOn() succesful:" << reply << " from " << reply.value();
+                //qDebug() << "screenKeepAuto() succesful:" << reply << " from " << reply.value();
                 break;
             }
             else
             {
                 QDBusError error = reply.error();
-                qWarning() << "keepScreenAuto() error:" << error.message() << error.name();
+                qWarning() << "screenKeepAuto() error:" << error.message() << error.name();
             }
         }
     }

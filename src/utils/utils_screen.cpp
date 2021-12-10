@@ -177,7 +177,7 @@ void UtilsScreen::keepScreenOn(bool on, const QString &application, const QStrin
     }
     else
     {
-        UtilsMacOS::keepScreenAuto(m_screensaverId);
+        UtilsMacOS::screenKeepAuto(m_screensaverId);
     }
 #elif defined(Q_OS_LINUX)
     if (on && m_screensaverId <= 0)
@@ -186,13 +186,15 @@ void UtilsScreen::keepScreenOn(bool on, const QString &application, const QStrin
     }
     else
     {
-        UtilsLinux::keepScreenAuto(m_screensaverId);
+        UtilsLinux::screenKeepAuto(m_screensaverId);
     }
 #elif defined(Q_OS_WINDOWS)
     UtilsWindows::screenKeepOn(on);
-#else
-    Q_UNUSED(on)
 #endif
+
+    Q_UNUSED(on)
+    Q_UNUSED(application)
+    Q_UNUSED(explanation)
 }
 
 /* ************************************************************************** */

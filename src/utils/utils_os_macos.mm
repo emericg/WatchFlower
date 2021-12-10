@@ -52,7 +52,7 @@ uint32_t UtilsMacOS::screenKeepOn(const QString &application, const QString &rea
     return 0;
 }
 
-void UtilsMacOS::keepScreenAuto(uint32_t screensaverId)
+void UtilsMacOS::screenKeepAuto(uint32_t screensaverId)
 {
     IOReturn status = IOPMAssertionRelease(screensaverId);
     if (status == kIOReturnSuccess)
