@@ -59,18 +59,15 @@ Item {
             onExited: viewButton.state = "normal"
             onCanceled: viewButton.state = "normal"
 
-            onClicked: {
-                buttonClicked()
-                viewButton.state = "normal"
-            }
+            onClicked: buttonClicked()
         }
 
         states: [
             State {
                 name: "normal";
                 PropertyChanges { target: viewButton; color: "transparent"; }
-                PropertyChanges { target: tButton; color: "#3d3d3d"; }
-                PropertyChanges { target: iButton; color: "#3d3d3d"; }
+                PropertyChanges { target: tButton; color: Theme.colorText; }
+                PropertyChanges { target: iButton; color: Theme.colorSubText; }
             },
             State {
                 name: "hovered";
