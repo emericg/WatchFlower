@@ -83,9 +83,9 @@ fi
 ## UPLOAD ######################################################################
 
 if [[ $upload_package = true ]] ; then
-  echo '---- Uploading to transfer.sh'
+  printf "---- Uploading to transfer.sh"
   curl --upload-file $APP_NAME*.zip https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.zip;
-  echo '\n'
+  printf "\n"
   curl --upload-file $APP_NAME*.exe https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.exe;
-  echo '\n'
+  printf "\n"
 fi

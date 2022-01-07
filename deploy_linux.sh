@@ -74,17 +74,19 @@ if [ -z "$QTDIR" ]; then
   QTDIR=/usr/lib/qt;
 fi
 
-echo '---- Downloading linuxdeployqt'
-if [ ! -x contribs/src/linuxdeployqt-6-x86_64.AppImage ]; then
-  wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/6/linuxdeployqt-6-x86_64.AppImage" -P contribs/src/;
+echo '---- Downloading linuxdeploy + plugins'
+if [ ! -x contribs/deploy/linuxdeploy-x86_64.AppImage.AppImage ]; then
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -P contribs/deploy/;
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -P contribs/deploy/;
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -P contribs/deploy/;
 fi
-chmod a+x contribs/src/linuxdeployqt-6-x86_64.AppImage;
+chmod a+x contribs/deploy/linuxdeploy-x86_64.AppImage;
+chmod a+x contribs/deploy/linuxdeploy-plugin-appimage-x86_64.AppImage;
+chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage;
 
-echo '---- Running linuxdeployqt'
-mkdir -p appdir/$USRDIR/plugins/imageformats/ appdir/$USRDIR/plugins/iconengines/;
-cp $QTDIR/plugins/imageformats/libqsvg.so appdir/$USRDIR/plugins/imageformats/;
-cp $QTDIR/plugins/iconengines/libqsvgicon.so appdir/$USRDIR/plugins/iconengines/;
-./contribs/src/linuxdeployqt-6-x86_64.AppImage appdir/$USRDIR/share/applications/*.desktop -qmldir=qml/ -unsupported-allow-new-glibc -bundle-non-qt-libs -extra-plugins=imageformats/libqsvg.so,iconengines/libqsvgicon.so;
+# linuxdeploy settings
+export QML_SOURCES_PATHS="$(pwd)/qml/"
+export EXTRA_QT_PLUGINS="svg;"
 
 #echo '---- Installation directory content recap:'
 #find appdir/;
@@ -93,7 +95,7 @@ cp $QTDIR/plugins/iconengines/libqsvgicon.so appdir/$USRDIR/plugins/iconengines/
 
 if [[ $create_package = true ]] ; then
   echo '---- Running AppImage packager'
-  ./contribs/src/linuxdeployqt-6-x86_64.AppImage appdir/$USRDIR/share/applications/*.desktop -qmldir=qml/ -unsupported-allow-new-glibc -appimage;
+  ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir appdir --plugin qt --output appimage
 fi
 
 ## PACKAGE (ZIP) ###############################################################
@@ -103,7 +105,8 @@ fi
 ## UPLOAD ######################################################################
 
 if [[ $upload_package = true ]] ; then
-  echo '---- Uploading to transfer.sh'
+  printf "---- Uploading to transfer.sh"
   find appdir -executable -type f -exec ldd {} \; | grep " => $USRDIR" | cut -d " " -f 2-3 | sort | uniq;
   curl --upload-file $APP_NAME*.AppImage https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-linux64.AppImage;
+  printf "\n"
 fi

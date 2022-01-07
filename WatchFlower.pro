@@ -168,7 +168,7 @@ linux:!android {
     #install.depends = deploy
     #QMAKE_EXTRA_TARGETS += install deploy
 
-    # Installation
+    # Installation steps
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path         = $${PREFIX}/bin/
@@ -185,30 +185,6 @@ linux:!android {
     # Clean appdir/ and bin/ directories
     #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     #QMAKE_CLEAN += $${OUT_PWD}/appdir/
-}
-
-android {
-    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
-    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
-
-    QT += androidextras
-
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
-    QMAKE_BUNDLE = watchflower
-
-    # android utils
-    SOURCES += src/utils/utils_os_android_qt5.cpp
-    HEADERS += src/utils/utils_os_android.h
-
-    OTHER_FILES += assets/android/src/com/emeric/utils/QShareUtils.java \
-                   assets/android/src/com/emeric/utils/QSharePathResolver.java
-
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
-                 $${PWD}/assets/android/gradle.properties \
-                 $${PWD}/assets/android/build.gradle
-
-    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
 }
 
 macx {
@@ -319,6 +295,50 @@ macx {
     }
 }
 
+win32 {
+    # Windows utils
+    SOURCES += src/utils/utils_os_windows.cpp
+    HEADERS += src/utils/utils_os_windows.h
+
+    # OS icon
+    RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
+
+    # Deploy step
+    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
+    install.depends = deploy
+    QMAKE_EXTRA_TARGETS += install deploy
+
+    # Installation step
+    # TODO
+
+    # Clean step
+    # TODO
+}
+
+android {
+    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
+    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
+
+    QT += androidextras
+
+    # Bundle name
+    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
+    QMAKE_BUNDLE = watchflower
+
+    # android utils
+    SOURCES += src/utils/utils_os_android_qt5.cpp
+    HEADERS += src/utils/utils_os_android.h
+
+    OTHER_FILES += assets/android/src/com/emeric/utils/QShareUtils.java \
+                   assets/android/src/com/emeric/utils/QSharePathResolver.java
+
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
+                 $${PWD}/assets/android/gradle.properties \
+                 $${PWD}/assets/android/build.gradle
+
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+}
+
 ios {
     #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
@@ -353,24 +373,4 @@ ios {
         # QMAKE_PROVISIONING_PROFILE
         include($${PWD}/assets/ios/ios_signature.pri)
     }
-}
-
-win32 {
-    # Windows utils
-    SOURCES += src/utils/utils_os_windows.cpp
-    HEADERS += src/utils/utils_os_windows.h
-
-    # OS icon
-    RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
-
-    # Deploy step
-    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
-    install.depends = deploy
-    QMAKE_EXTRA_TARGETS += install deploy
-
-    # Installation step
-    # TODO?
-
-    # Clean step
-    # TODO
 }
