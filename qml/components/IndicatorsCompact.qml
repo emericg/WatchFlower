@@ -130,6 +130,65 @@ Item {
         ////////
 
         DataBarCompact {
+            id: soil_conductivity
+            width: parent.width
+
+            legend: qsTr("Fertility")
+            legendWidth: indicatorsCompact.legendWidth
+            suffix: " " + qsTr("µS/cm")
+            colorForeground: Theme.colorRed
+            colorBackground: indicatorsCompact.colorBackground
+
+            value: currentDevice.soilConductivity
+            valueMin: 0
+            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
+            limitMin: currentDevice.limitConduMin
+            limitMax: currentDevice.limitConduMax
+        }
+
+        ////////
+
+        DataBarCompact {
+            id: soil_temperature
+            width: parent.width
+
+            legend: qsTr("Soil temp.")
+            legendWidth: indicatorsCompact.legendWidth
+            suffix: "°" + settingsManager.tempUnit
+            colorForeground: Theme.colorGreen
+            colorBackground: indicatorsCompact.colorBackground
+
+            floatprecision: 1
+            value: tempHelper(currentDevice.soilTemperature)
+            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
+            limitMin: 0
+            limitMax: 0
+        }
+
+        ////////
+
+        DataBarCompact {
+            id: water_tank
+            width: parent.width
+
+            legend: qsTr("Water tank")
+            legendWidth: indicatorsCompact.legendWidth
+            suffix: "L"
+            colorForeground: Theme.colorBlue
+            colorBackground: indicatorsCompact.colorBackground
+
+            floatprecision: 1
+            value: currentDevice.waterTankLevel
+            valueMin: 0
+            valueMax: currentDevice.waterTankCapacity
+            limitMin: currentDevice.waterTankCapacity * 0.15
+            limitMax: currentDevice.waterTankCapacity
+        }
+
+        ////////
+
+        DataBarCompact {
             id: temp
             width: parent.width
 
@@ -187,62 +246,5 @@ Item {
         }
 
         ////////
-
-        DataBarCompact {
-            id: soil_conductivity
-            width: parent.width
-
-            legend: qsTr("Fertility")
-            legendWidth: indicatorsCompact.legendWidth
-            suffix: " " + qsTr("µS/cm")
-            colorForeground: Theme.colorRed
-            colorBackground: indicatorsCompact.colorBackground
-
-            value: currentDevice.soilConductivity
-            valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
-            limitMin: currentDevice.limitConduMin
-            limitMax: currentDevice.limitConduMax
-        }
-
-        ////////
-
-        DataBarCompact {
-            id: soil_temperature
-            width: parent.width
-
-            legend: qsTr("Soil temp.")
-            legendWidth: indicatorsCompact.legendWidth
-            suffix: "°" + settingsManager.tempUnit
-            colorForeground: Theme.colorGreen
-            colorBackground: indicatorsCompact.colorBackground
-
-            floatprecision: 1
-            value: tempHelper(currentDevice.soilTemperature)
-            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
-            limitMin: 0
-            limitMax: 0
-        }
-
-        ////////
-
-        DataBarCompact {
-            id: water_tank
-            width: parent.width
-
-            legend: qsTr("Water tank")
-            legendWidth: indicatorsCompact.legendWidth
-            suffix: "L"
-            colorForeground: Theme.colorBlue
-            colorBackground: indicatorsCompact.colorBackground
-
-            floatprecision: 1
-            value: currentDevice.waterTankLevel
-            valueMin: 0
-            valueMax: currentDevice.waterTankCapacity
-            limitMin: currentDevice.waterTankCapacity * 0.15
-            limitMax: currentDevice.waterTankCapacity
-        }
     }
 }

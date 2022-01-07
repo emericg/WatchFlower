@@ -135,20 +135,20 @@ Item {
         animationOptions: ChartView.NoAnimation
 
         ValueAxis { id: axisHygro; visible: false; gridVisible: false; }
+        ValueAxis { id: axisCondu; visible: false; gridVisible: false; }
         ValueAxis { id: axisTemp; visible: false; gridVisible: false; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
-        ValueAxis { id: axisCondu; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
                        labelsFont.pixelSize: Theme.fontSizeContentSmall-1; labelsColor: legendColor;
                        color: legendColor;
                        gridLineColor: Theme.colorSeparator; }
 
         LineSeries {
-            id: lumiData
+            id: hygroData
             useOpenGL: useOpenGL
             pointsVisible: showGraphDots
-            color: Theme.colorYellow; width: 2;
-            axisY: axisLumi; axisX: axisTime;
+            color: Theme.colorBlue; width: 2;
+            axisY: axisHygro; axisX: axisTime;
         }
         LineSeries {
             id: conduData
@@ -165,11 +165,11 @@ Item {
             axisY: axisTemp; axisX: axisTime;
         }
         LineSeries {
-            id: hygroData
+            id: lumiData
             useOpenGL: useOpenGL
             pointsVisible: showGraphDots
-            color: Theme.colorBlue; width: 2;
-            axisY: axisHygro; axisX: axisTime;
+            color: Theme.colorYellow; width: 2;
+            axisY: axisLumi; axisX: axisTime;
         }
 
         MouseArea {

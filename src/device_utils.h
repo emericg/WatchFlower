@@ -161,19 +161,19 @@ class ChartDataHistory: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool today READ isToday NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
-    Q_PROPERTY(int hour READ getHour NOTIFY updated)
-    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
+    Q_PROPERTY(bool today READ isToday CONSTANT)
+    Q_PROPERTY(int day READ getDay CONSTANT)
+    Q_PROPERTY(int hour READ getHour CONSTANT)
+    Q_PROPERTY(QDateTime datetime READ getDateTime CONSTANT)
 
-    Q_PROPERTY(float soilMoisture READ getSoilMoisture NOTIFY updated)
-    Q_PROPERTY(float soilConductivity READ getSoilCondu NOTIFY updated)
-    Q_PROPERTY(float soilTemperature READ getSoilTemperature NOTIFY updated)
-    Q_PROPERTY(float soilPH READ getSoilPH NOTIFY updated)
-    Q_PROPERTY(float temperature READ getTemperature NOTIFY updated)
-    Q_PROPERTY(float humidity READ getHumidity NOTIFY updated)
-    Q_PROPERTY(float luminosityLux READ getLuminosityLux NOTIFY updated)
-    Q_PROPERTY(float luminosityMmol READ getLuminosityMmol NOTIFY updated)
+    Q_PROPERTY(float soilMoisture READ getSoilMoisture CONSTANT)
+    Q_PROPERTY(float soilConductivity READ getSoilCondu CONSTANT)
+    Q_PROPERTY(float soilTemperature READ getSoilTemperature CONSTANT)
+    Q_PROPERTY(float soilPH READ getSoilPH CONSTANT)
+    Q_PROPERTY(float temperature READ getTemperature CONSTANT)
+    Q_PROPERTY(float humidity READ getHumidity CONSTANT)
+    Q_PROPERTY(float luminosityLux READ getLuminosityLux CONSTANT)
+    Q_PROPERTY(float luminosityMmol READ getLuminosityMmol CONSTANT)
 
     QDateTime datetime;
 
@@ -185,9 +185,6 @@ class ChartDataHistory: public QObject
     float humidity = -99.f;
     float luminosityLux = -99.f;
     float luminosityMmol = -99.f;
-
-signals:
-    void updated();
 
 public:
     ChartDataHistory(const QDateTime &dt,
@@ -227,16 +224,16 @@ class ChartDataMinMax: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool today READ isToday NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
-    Q_PROPERTY(int hour READ getHour NOTIFY updated)
-    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
+    Q_PROPERTY(bool today READ isToday CONSTANT)
+    Q_PROPERTY(int day READ getDay CONSTANT)
+    Q_PROPERTY(int hour READ getHour CONSTANT)
+    Q_PROPERTY(QDateTime datetime READ getDateTime CONSTANT)
 
-    Q_PROPERTY(float tempMin READ getTempMin NOTIFY updated)
-    Q_PROPERTY(float tempMean READ getTempMean NOTIFY updated)
-    Q_PROPERTY(float tempMax READ getTempMax NOTIFY updated)
-    Q_PROPERTY(int hygroMin READ getHygroMin NOTIFY updated)
-    Q_PROPERTY(int hygroMax READ getHygroMax NOTIFY updated)
+    Q_PROPERTY(float tempMin READ getTempMin CONSTANT)
+    Q_PROPERTY(float tempMean READ getTempMean CONSTANT)
+    Q_PROPERTY(float tempMax READ getTempMax CONSTANT)
+    Q_PROPERTY(int hygroMin READ getHygroMin CONSTANT)
+    Q_PROPERTY(int hygroMax READ getHygroMax CONSTANT)
 
     QDateTime datetime;
 
@@ -245,9 +242,6 @@ class ChartDataMinMax: public QObject
     float tempMax;
     int hygroMin;
     int hygroMax;
-
-signals:
-    void updated();
 
 public:
     ChartDataMinMax(const QDateTime &dt,
@@ -280,22 +274,22 @@ class ChartDataVoc: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool today READ isToday NOTIFY updated)
-    Q_PROPERTY(int day READ getDay NOTIFY updated)
-    Q_PROPERTY(int hour READ getHour NOTIFY updated)
-    Q_PROPERTY(QDateTime datetime READ getDateTime NOTIFY updated)
+    Q_PROPERTY(bool today READ isToday CONSTANT)
+    Q_PROPERTY(int day READ getDay CONSTANT)
+    Q_PROPERTY(int hour READ getHour CONSTANT)
+    Q_PROPERTY(QDateTime datetime READ getDateTime CONSTANT)
 
-    Q_PROPERTY(float vocMin READ getVocMin NOTIFY updated)
-    Q_PROPERTY(float vocMean READ getVocMean NOTIFY updated)
-    Q_PROPERTY(float vocMax READ getVocMax NOTIFY updated)
+    Q_PROPERTY(float vocMin READ getVocMin CONSTANT)
+    Q_PROPERTY(float vocMean READ getVocMean CONSTANT)
+    Q_PROPERTY(float vocMax READ getVocMax CONSTANT)
 
-    Q_PROPERTY(float hchoMin READ getHchoMin NOTIFY updated)
-    Q_PROPERTY(float hchoMean READ getHchoMean NOTIFY updated)
-    Q_PROPERTY(float hchoMax READ getHchoMax NOTIFY updated)
+    Q_PROPERTY(float hchoMin READ getHchoMin CONSTANT)
+    Q_PROPERTY(float hchoMean READ getHchoMean CONSTANT)
+    Q_PROPERTY(float hchoMax READ getHchoMax CONSTANT)
 
-    Q_PROPERTY(float co2Min READ getCo2Min NOTIFY updated)
-    Q_PROPERTY(float co2Mean READ getCo2Mean NOTIFY updated)
-    Q_PROPERTY(float co2Max READ getCo2Max NOTIFY updated)
+    Q_PROPERTY(float co2Min READ getCo2Min CONSTANT)
+    Q_PROPERTY(float co2Mean READ getCo2Mean CONSTANT)
+    Q_PROPERTY(float co2Max READ getCo2Max CONSTANT)
 
     QDateTime datetime;
 
@@ -310,9 +304,6 @@ class ChartDataVoc: public QObject
     float co2Min;
     float co2Mean = -99.f;
     float co2Max;
-
-signals:
-    void updated();
 
 public:
     ChartDataVoc(const QDateTime &dt,

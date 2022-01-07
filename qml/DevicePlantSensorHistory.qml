@@ -307,6 +307,27 @@ Item {
 
         ////////
 
+        ChartHistory { // graph
+            id: conduChart
+            width: graphWidth * duo
+            height: graphHeight
+            property int duo: 1
+
+            title: qsTr("Fertility")
+            ddd: graphGrid.mode
+            uuu: ChartHistory.Data.SoilConductivity
+            color: Theme.colorRed
+            suffix: " " + "<br>" + qsTr("µs/cm")
+            floatprecision: 0
+
+            valueMax: currentDevice.conduMax*1.2
+            valueMin: currentDevice.conduMin*0.8
+            limitMin: currentDevice.limitConduMin
+            limitMax: currentDevice.limitConduMax
+        }
+
+        ////////
+
         ChartHistory {
             id: tempChart
             width: graphWidth * duo
@@ -345,27 +366,6 @@ Item {
             valueMin: currentDevice.luxMin*0.8
             limitMin: currentDevice.limitLuxMin
             limitMax: currentDevice.limitLuxMax
-        }
-
-        ////////
-
-        ChartHistory { // graph
-            id: conduChart
-            width: graphWidth * duo
-            height: graphHeight
-            property int duo: 1
-
-            title: qsTr("Fertility")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.SoilConductivity
-            color: Theme.colorRed
-            suffix: " " + "<br>" + qsTr("µs/cm")
-            floatprecision: 0
-
-            valueMax: currentDevice.conduMax*1.2
-            valueMin: currentDevice.conduMin*0.8
-            limitMin: currentDevice.limitConduMin
-            limitMax: currentDevice.limitConduMax
         }
 
         ////////
