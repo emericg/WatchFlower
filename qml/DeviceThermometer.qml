@@ -93,6 +93,8 @@ Item {
         heatIndex.visible = false
         sensorHygro.visible = false
 
+        graphLoader.source = "" // force graph reload
+
         loadGraph()
         updateHeader()
         updateData()

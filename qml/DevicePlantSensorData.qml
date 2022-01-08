@@ -23,6 +23,8 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
+        indicatorsLoader.source = "" // force graph reload
+
         loadIndicators()
         loadGraph()
 

@@ -148,6 +148,8 @@ Item {
         //isGeigerCounter = true
         //isWeatherStation = true
 
+        chartEnvLoader.source = "" // force graph reload
+
         //
         loadIndicator()
         loadGraph()
