@@ -3,7 +3,7 @@
 echo "> WatchFlower packager (Linux x86_64)"
 
 export APP_NAME="WatchFlower";
-export APP_VERSION=3.2;
+export APP_VERSION=4.0;
 export GIT_VERSION=$(git rev-parse --short HEAD);
 
 ## CHECKS ######################################################################
