@@ -656,6 +656,30 @@ Item {
             }
 
             Item {
+                id: cond
+                width: rectangleSensors.sensorWidth
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: Theme.colorRed
+                    opacity: 0.33
+                    radius: rectangleSensors.sensorRadius
+                }
+                Rectangle {
+                    id: cond_data
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+
+                    color: Theme.colorRed
+                    radius: rectangleSensors.sensorRadius
+                    Behavior on height { NumberAnimation { duration: 333 } }
+                }
+            }
+
+            Item {
                 id: temp
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
@@ -698,30 +722,6 @@ Item {
                     anchors.bottom: parent.bottom
 
                     color: Theme.colorYellow
-                    radius: rectangleSensors.sensorRadius
-                    Behavior on height { NumberAnimation { duration: 333 } }
-                }
-            }
-
-            Item {
-                id: cond
-                width: rectangleSensors.sensorWidth
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: Theme.colorRed
-                    opacity: 0.33
-                    radius: rectangleSensors.sensorRadius
-                }
-                Rectangle {
-                    id: cond_data
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-
-                    color: Theme.colorRed
                     radius: rectangleSensors.sensorRadius
                     Behavior on height { NumberAnimation { duration: 333 } }
                 }

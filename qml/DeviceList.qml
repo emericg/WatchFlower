@@ -228,6 +228,20 @@ Item {
                 spacing: 8
 
                 ButtonCompactable {
+                    id: buttonDelete
+                    height: compact ? 36 : 34
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    compact: !wideMode
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
+                    onClicked: confirmDeleteDevice.open()
+
+                    text: qsTr("Delete")
+                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
+                }
+
+                ButtonCompactable {
                     id: buttonSync
                     height: !wideMode ? 36 : 34
                     anchors.verticalCenter: parent.verticalCenter
@@ -240,9 +254,6 @@ Item {
 
                     text: qsTr("Synchronize history")
                     source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-
-                    animation: "fade"
-                    animationRunning: deviceManager.syncing
                 }
 
                 ButtonCompactable {
@@ -258,23 +269,6 @@ Item {
 
                     text: qsTr("Refresh")
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-
-                    animation: "rotate"
-                    animationRunning: deviceManager.updating
-                }
-
-                ButtonCompactable {
-                    id: buttonDelete
-                    height: compact ? 36 : 34
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    compact: !wideMode
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: confirmDeleteDevice.open()
-
-                    text: qsTr("Delete")
-                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
                 }
             }
         }
