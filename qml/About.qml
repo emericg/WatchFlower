@@ -476,10 +476,10 @@ Item {
                 anchors.rightMargin: 8
 
                 visible: isPhone
+                source: isPhone ? "qrc:/assets/tutorial/welcome-devices.svg" : ""
 
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/assets/devices/welcome-devices.svg"
                 color: Theme.colorPrimary
+                fillMode: Image.PreserveAspectFit
             }
 
             ////////

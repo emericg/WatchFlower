@@ -370,8 +370,15 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        // Start on the tutorial?
+        Component.onCompleted: {
+            if (!deviceManager.areDevicesAvailable()) {
+                screenTutorial.open()
+            }
+        }
+
         // Initial state
-        state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
+        state: "DeviceList"
 
         onStateChanged: {
             screenDeviceList.exitSelectionMode()

@@ -11,6 +11,11 @@
         <file>menus/menu_close.svg</file>
         <file>menus/menu_infos.svg</file>
 
+        <file>tutorial/welcome-devices.svg</file>
+        <file>tutorial/welcome-bluetooth-searching.svg</file>
+        <file>tutorial/welcome-app-connected.svg</file>
+        <file>tutorial/welcome-limits.svg</file>
+
         <file>icons_fontawesome/lungs-solid.svg</file>
         <file>icons_custom/duotone-date_all-24px.svg</file>
         <file>icons_custom/indicators-24px.svg</file>
@@ -106,10 +111,5 @@
         <file>icons_material/duotone-water_full-24px.svg</file>
         <file>icons_material/duotone-water_mid-24px.svg</file>
         <file>icons_material/duotone-wb_sunny-24px.svg</file>
-
-        <file>devices/welcome-devices.svg</file>
-        <file>devices/welcome-bluetooth-searching.svg</file>
-        <file>devices/welcome-app-connected.svg</file>
-        <file>devices/welcome-limits.svg</file>
     </qresource>
 </RCC>

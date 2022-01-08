@@ -367,14 +367,21 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        // Start on the tutorial?
+        Component.onCompleted: {
+            if (!deviceManager.areDevicesAvailable()) {
+                screenTutorial.open()
+            }
+        }
+
         // Initial state
-        state: deviceManager.areDevicesAvailable() ? "DeviceList" : "Tutorial"
+        state: "DeviceList"
 
         property var previousStates: []
 
         onStateChanged: {
-            appHeader.setActiveMenu()
             screenDeviceList.exitSelectionMode()
+            appHeader.setActiveMenu()
 
             if (previousStates[previousStates.length-1] !== state) previousStates.push(state)
             if (previousStates.length > 4) previousStates.splice(0, 1)
