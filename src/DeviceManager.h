@@ -137,7 +137,7 @@ public:
     Q_INVOKABLE bool exportDataSave();
     Q_INVOKABLE QString exportDataOpen();
     Q_INVOKABLE QString exportDataFolder();
-    bool exportData(const QString &path);
+    bool exportData(const QString &exportFilePath);
 
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 

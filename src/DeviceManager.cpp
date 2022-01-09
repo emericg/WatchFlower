@@ -1234,28 +1234,28 @@ bool DeviceManager::exportDataSave()
 
     if (!m_devices_model->hasDevices()) return status;
 
-    QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
 
     // Create exportDirectory
-    if (!exportDirectory.isEmpty())
+    if (!exportDirectoryPath.isEmpty())
     {
-        QDir edir(exportDirectory);
+        QDir exportDirectory(exportDirectoryPath);
 
         // check if directory creation is needed
-        if (!edir.exists())
+        if (!exportDirectory.exists())
         {
-            edir.mkpath(exportDirectory);
+            exportDirectory.mkpath(exportDirectoryPath);
         }
         // retry
-        if (edir.exists())
+        if (exportDirectory.exists())
         {
             // Get file name
-            QString exportFile = exportDirectory;
-            exportFile += "/watchflower_";
-            exportFile += QDateTime::currentDateTime().toString("yyyy-MM-dd");
-            exportFile += ".csv";
+            QString exportFilePath = exportDirectoryPath;
+            exportFilePath += "/watchflower_";
+            exportFilePath += QDateTime::currentDateTime().toString("yyyy-MM-dd");
+            exportFilePath += ".csv";
 
-            if (exportData(exportFile))
+            if (exportData(exportFilePath))
             {
                 status = true;
             }
@@ -1288,13 +1288,13 @@ QString DeviceManager::exportDataOpen()
     if (!m_devices_model->hasDevices()) return exportFilePath;
 
     // Get temp directory path
-    QString exportDirectory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+    QString exportDirectoryPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
 
-    QDir ddd(exportDirectory + "/export");
-    if (!ddd.exists()) ddd.mkpath(exportDirectory + "/export");
+    QDir exportDirectory(exportDirectoryPath + "/export");
+    if (!exportDirectory.exists()) exportDirectory.mkpath(exportDirectoryPath + "/export");
 
     // Get temp file path
-    exportFilePath = exportDirectory + "/export/watchflower_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
+    exportFilePath = exportDirectoryPath + "/export/watchflower_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
 
     if (!exportData(exportFilePath))
     {
@@ -1307,21 +1307,21 @@ QString DeviceManager::exportDataOpen()
 QString DeviceManager::exportDataFolder()
 {
     // Get temp directory path
-    QString exportDirectory = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
 
     // check if directory exist
-    QDir edir(exportDirectory);
-    if (!edir.exists())
+    QDir exportDirectory(exportDirectoryPath);
+    if (!exportDirectory.exists())
     {
-        exportDirectory = "";
+        exportDirectoryPath = "";
     }
 
-    return exportDirectory;
+    return exportDirectoryPath;
 }
 
 /* ************************************************************************** */
 
-bool DeviceManager::exportData(const QString &path)
+bool DeviceManager::exportData(const QString &exportFilePath)
 {
     bool status = false;
 
@@ -1332,7 +1332,7 @@ bool DeviceManager::exportData(const QString &path)
     bool isCelcius = (sm->getTempUnit() == "C");
 
     QFile efile;
-    efile.setFileName(path);
+    efile.setFileName(exportFilePath);
     if (efile.open(QIODevice::WriteOnly))
     {
         status = true;
@@ -1398,7 +1398,7 @@ bool DeviceManager::exportData(const QString &path)
     }
     else
     {
-        qWarning() << "DeviceManager::exportData() cannot open export file: " << path;
+        qWarning() << "DeviceManager::exportData() cannot open export file: " << exportFilePath;
         status = false;
     }
 
