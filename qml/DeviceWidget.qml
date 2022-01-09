@@ -591,14 +591,15 @@ Item {
 
             visible: !boxDevice.hasDataToday
             color: Theme.colorIcon
+            opacity: 0.8
 
             SequentialAnimation on opacity {
                 id: refreshAnimation
                 loops: Animation.Infinite
                 running: false
                 alwaysRunToEnd: true
-                OpacityAnimator { from: 1; to: 0; duration: 750 }
-                OpacityAnimator { from: 0; to: 1; duration: 750 }
+                OpacityAnimator { from: 0.8; to: 0; duration: 750 }
+                OpacityAnimator { from: 0; to: 0.8; duration: 750 }
             }
         }
     }
