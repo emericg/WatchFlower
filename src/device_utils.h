@@ -175,6 +175,9 @@ class ChartDataHistory: public QObject
     Q_PROPERTY(float luminosityLux READ getLuminosityLux CONSTANT)
     Q_PROPERTY(float luminosityMmol READ getLuminosityMmol CONSTANT)
 
+    Q_PROPERTY(float temperatureMax READ getTemperatureMax CONSTANT)
+    Q_PROPERTY(float luminosityLuxMax READ getLuminosityLuxMax CONSTANT)
+
     QDateTime datetime;
 
     float soilMoisture = -99.f;
@@ -185,6 +188,9 @@ class ChartDataHistory: public QObject
     float humidity = -99.f;
     float luminosityLux = -99.f;
     float luminosityMmol = -99.f;
+
+    float temperatureMax = -99.f;
+    float luminosityLuxMax = -99.f;
 
 public:
     ChartDataHistory(const QDateTime &dt,
@@ -202,6 +208,25 @@ public:
         luminosityLux = l;
     }
 
+    ChartDataHistory(const QDateTime &dt,
+                     float sm, float sc, float st,
+                     float t, float h, float l,
+                     float tm, float lm,
+                     QObject *parent) : QObject(parent)
+    {
+        datetime = dt;
+
+        soilMoisture = sm;
+        soilConductivity = sc;
+        soilTemperature = st;
+        temperature = t;
+        humidity = h;
+        luminosityLux = l;
+
+        temperatureMax = tm;
+        luminosityLuxMax = lm;
+    }
+
 public slots:
     bool isToday() { return (datetime.date() == QDate::currentDate()); }
     int getDay() { return datetime.date().day(); }
@@ -216,6 +241,9 @@ public slots:
     float getHumidity() { return humidity; }
     float getLuminosityLux() { return luminosityLux; }
     float getLuminosityMmol() { return luminosityMmol; }
+
+    float getTemperatureMax() { return temperatureMax; }
+    float getLuminosityLuxMax() { return luminosityLuxMax; }
 };
 
 /* ************************************************************************** */

@@ -1173,7 +1173,8 @@ void DeviceSensor::updateChartData_history_month(int maxDays)
         {
             graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+                              " avg(temperature), avg(humidity), avg(luminosity), " \
+                              " max(temperature), max(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', ts) " \
@@ -1184,7 +1185,8 @@ void DeviceSensor::updateChartData_history_month(int maxDays)
         {
             graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d'), " \
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+                              " avg(temperature), avg(humidity), avg(luminosity), " \
+                              " max(temperature), max(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
@@ -1240,6 +1242,7 @@ void DeviceSensor::updateChartData_history_month(int maxDays)
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
                                                            graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
                                                            graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
                                                            this);
                 m_chartData_history_month.push_front(d);
                 previousdata = d;

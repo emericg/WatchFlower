@@ -193,6 +193,11 @@ Item {
                         if (uuu === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
                         return -99
                     }
+                    property real value2: {
+                        if (uuu === ChartHistory.Data.Temperature) return modelData.temperatureMax
+                        if (uuu === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
+                        return -99
+                    }
 
                     ////
 
@@ -239,6 +244,24 @@ Item {
                     }
 
                     ////
+
+                    Rectangle {
+                        id: graphBarFg2
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        width: parent.width
+                        height: UtilsNumber.normalize(value2, valueMin, valueMax) * parent.height
+
+                        border.width: (graphRow.barSpacing/2)
+                        border.color: Theme.colorBackground
+
+                        clip: false
+                        visible: (value2 > -80)
+                        radius: graphRow.barRadius
+                        color: chartHistory.color // Qt.lighter(chartHistory.color, 1.33)
+                        opacity: 0.33
+                    }
 
                     Rectangle {
                         id: graphBarFg
