@@ -24,6 +24,7 @@
 /* ************************************************************************** */
 
 #include "device_utils.h"
+#include "device_infos.h"
 
 #include <QObject>
 #include <QList>
@@ -117,6 +118,7 @@ class Device: public QObject
 
     Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
     Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
+    Q_PROPERTY(QDateTime lastUpdate READ getLastUpdate NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
 
@@ -298,6 +300,7 @@ public:
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
 
+    QDateTime getLastUpdate() const;
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastUpdateDbInt() const;

@@ -38,6 +38,7 @@ SOURCES  += src/main.cpp \
             src/NotificationManager.cpp \
             src/DeviceManager.cpp \
             src/device.cpp \
+            src/device_infos.cpp \
             src/device_filter.cpp \
             src/device_sensor.cpp \
             src/devices/device_flowercare.cpp \
@@ -68,6 +69,7 @@ HEADERS  += src/SettingsManager.h \
             src/DeviceManager.h \
             src/device.h \
             src/device_utils.h \
+            src/device_infos.h \
             src/device_filter.h \
             src/device_sensor.h \
             src/devices/device_flowercare.h \
@@ -96,7 +98,8 @@ INCLUDEPATH += src/
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
-               assets/assets.qrc
+               assets/assets.qrc \
+               assets/devices.qrc
 
 OTHER_FILES += .gitignore \
                .github/workflows/builds.yml \

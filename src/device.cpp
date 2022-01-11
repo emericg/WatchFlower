@@ -598,6 +598,11 @@ float Device::getDeviceUptime_days() const
     return days;
 }
 
+QDateTime Device::getLastUpdate() const
+{
+    return m_lastUpdate;
+}
+
 QDateTime Device::getLastHistorySync() const
 {
     return m_lastHistorySync;

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/devices">
+        <file alias="devices_sensors.json">devices/devices_sensors.json</file>
+        <file alias="flowercare.svg">../docs/flowercare.svg</file>
+        <file alias="flowercaremax.svg">../docs/flowercaremax.svg</file>
+        <file alias="flowerpower.svg">../docs/flowerpower.svg</file>
+        <file alias="higrow.svg">../docs/higrow.svg</file>
+        <file alias="ropot.svg">../docs/ropot.svg</file>
+        <file alias="parrotpot.svg">../docs/parrotpot.svg</file>
+    </qresource>
+</RCC>

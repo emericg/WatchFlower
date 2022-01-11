@@ -1,0 +1,76 @@
+{
+  "devices": [
+  {
+    "model": "Flower Care",
+    "manufacturer": "HHCC Plant Technology",
+    "ID": ["HHCCJCY01", "HHCCJCY10"],
+    "year": 2016,
+    "battery": "1 x CR2032",
+    "ipx": "IPX5",
+    "sensors": [
+      ["Soil moisture", "0 → 100%"],
+      ["Soil conductivity", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
+      ["Luminosity", "0 → 100k lux (± 100 lux)"]
+    ]
+  },
+  {
+    "model": "Flower Care Max",
+    "manufacturer": "HHCC Plant Technology",
+    "ID": ["HHCCJCY09", "GCLS002"],
+    "year": 2018,
+    "battery": "Lithium Polymer (embeded)",
+    "ipx": "IPX6",
+    "sensors": [
+      ["Soil moisture", "0 → 100%"],
+      ["Soil conductivity", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
+      ["Luminosity", "0 → 100k lux (± 100 lux)"]
+    ]
+  },
+  {
+    "model": "RoPot",
+    "manufacturer": "HHCC Plant Technology",
+    "ID": ["HHCCPOT002"],
+    "year": 2016,
+    "battery": "Lithium Polymer (embeded)",
+    "ipx": "IPX6",
+    "sensors": [
+      ["Soil moisture", "0 → 100%"],
+      ["Soil conductivity", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"]
+    ]
+  },
+  {
+    "model": "Flower Power",
+    "manufacturer": "Parrot",
+    "ID": ["RKXHAWAII"],
+    "year": 2015,
+    "battery": "1 x AAA",
+    "ipx": "IPX5",
+    "sensors": [
+      ["Soil moisture", "0 → 50%"],
+      ["Soil conductivity", ""],
+      ["Soil temperature", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
+      ["Luminosity", "0 → 1000 μmole.m-2.s-1"]
+    ]
+  },
+  {
+    "model": "Parrot Pot",
+    "manufacturer": "Parrot",
+    "ID": ["2AG61POT"],
+    "year": 2015,
+    "battery": "4 x AA",
+    "ipx": "IPX5",
+    "sensors": [
+      ["Soil moisture", "0 → 50%"],
+      ["Soil conductivity", ""],
+      ["Soil temperature", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
+      ["Luminosity", "0 → 1000 μmole.m-2.s-1"],
+      ["Water tank", "2.2l"]
+    ]
+  }
+  ]
+}

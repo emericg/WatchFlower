@@ -64,6 +64,10 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
 
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
+
+    // Device infos
+    di = new DeviceInfos(this);
+    di->load(deviceName);
 }
 
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
@@ -95,6 +99,10 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
 
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
+
+    // Device infos
+    di = new DeviceInfos(this);
+    di->load(d.name());
 }
 
 DeviceSensor::~DeviceSensor()

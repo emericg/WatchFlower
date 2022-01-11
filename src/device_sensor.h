@@ -251,6 +251,11 @@ protected:
     QVariant getChartData_env() const { return QVariant::fromValue(m_chartData_env); }
     QVariant getChartData_minmax() const { return QVariant::fromValue(m_chartData_minmax); }
 
+    // device infos
+    DeviceInfos *di = nullptr;
+    DeviceInfos *getDeviceInfos() { return di; }
+    Q_PROPERTY(DeviceInfos *deviceInfos READ getDeviceInfos CONSTANT)
+
 protected:
     virtual void refreshDataFinished(bool status, bool cached = false);
     virtual void refreshHistoryFinished(bool status);
