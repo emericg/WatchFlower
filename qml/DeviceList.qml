@@ -7,7 +7,7 @@ Item {
     id: screenDeviceList
     anchors.fill: parent
 
-    property bool deviceAvailable: deviceManager.devices
+    property bool deviceAvailable: deviceManager.hasDevices
     property bool bluetoothAvailable: deviceManager.bluetooth
 
     Component.onCompleted: checkStatus()
@@ -19,7 +19,7 @@ Item {
 
     function checkStatus() {
         if (deviceManager.bluetooth) {
-            if (deviceManager.devices === false) {
+            if (deviceManager.hasDevices === false) {
                 rectangleStatus.setDeviceWarning()
             } else {
                 rectangleStatus.hide()
@@ -160,7 +160,7 @@ Item {
                 itemStatus.source = ""
             }
             function setBluetoothWarning() {
-                if (deviceManager.devices) {
+                if (deviceManager.hasDevices) {
                     rectangleStatus.height = 48
 
                     textStatus.text = qsTr("Bluetooth disabled...");

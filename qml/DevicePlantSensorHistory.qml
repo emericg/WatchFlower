@@ -166,10 +166,10 @@ Item {
 
         Row {
             id: buttonPanel
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 12
             anchors.top: parent.top
             anchors.topMargin: isMobile ? 8 : 52
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 12
 
             ButtonWireframe {
                 width: 100

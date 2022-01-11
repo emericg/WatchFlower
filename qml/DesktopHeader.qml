@@ -297,8 +297,6 @@ Rectangle {
             onClicked: deviceRefreshRealtimeButtonClicked()
 
             tooltipText: qsTr("Real time data")
-            //animation: "fade"
-            //nimationRunning: selectedDevice.updating
         }
         ButtonCompactable {
             id: buttonRefreshData

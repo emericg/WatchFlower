@@ -98,8 +98,7 @@ RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc
 
-OTHER_FILES += .travis.yml \
-               .gitignore \
+OTHER_FILES += .gitignore \
                .github/workflows/builds.yml \
                deploy_linux.sh \
                deploy_macos.sh \
