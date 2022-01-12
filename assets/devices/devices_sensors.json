@@ -12,6 +12,11 @@
       ["Soil conductivity", ""],
       ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
       ["Luminosity", "0 → 100k lux (± 100 lux)"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", ""],
+      ["history", "30 days"]
     ]
   },
   {
@@ -26,6 +31,11 @@
       ["Soil conductivity", ""],
       ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
       ["Luminosity", "0 → 100k lux (± 100 lux)"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", ""],
+      ["history", "30 days"]
     ]
   },
   {
@@ -39,6 +49,11 @@
       ["Soil moisture", "0 → 100%"],
       ["Soil conductivity", ""],
       ["Temperature", "-15 → 50 °C (± 0.5 °C)"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", ""],
+      ["history", "unsupported"]
     ]
   },
   {
@@ -54,6 +69,12 @@
       ["Soil temperature", ""],
       ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
       ["Luminosity", "0 → 1000 μmole.m-2.s-1"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", "unsupported"],
+      ["history", "unsupported"],
+      ["last_move", "unsupported"]
     ]
   },
   {
@@ -70,6 +91,13 @@
       ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
       ["Luminosity", "0 → 1000 μmole.m-2.s-1"],
       ["Water tank", "2.2l"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", "unsupported"],
+      ["history", "unsupported"],
+      ["last_move", "unsupported"],
+      ["water_tank", "manual trigger supported"]
     ]
   }
   ]

@@ -131,25 +131,25 @@ function getDeviceCapabilityIcon(capabilityId) {
     if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_REALTIME) {
         src = "qrc:/assets/icons_material/duotone-update-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_HISTORY) {
-        src = "qrc:/assets/icons_material_custom/duotone-date_all-24px.svg"
+        src = "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_BATTERY) {
-        src = "qrc:/assets/icons_material_custom/baseline-battery_full-24px.svg"
+        src = "qrc:/assets/icons_material/baseline-battery_full-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_CLOCK) {
-        src = "qrc:/assets/icons_material_custom/duotone-timer-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-timer-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_LED_STATUS) {
-        src = "qrc:/assets/icons_material_custom/duotone-emoji_objects-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_LED_RGB) {
-        src = "qrc:/assets/icons_material_custom/duotone-emoji_objects-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_BUTTONS) {
-        src = "qrc:/assets/icons_material_custom/duotone-touch_app-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_LAST_MOVE) {
-        src = "qrc:/assets/icons_material_custom/duotone-pin_drop-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_WATER_TANK) {
-        src = "qrc:/assets/icons_material_custom/duotone-local_drink-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_CALIBRATION) {
-        src = "qrc:/assets/icons_material_custom/duotone-model_training-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-model_training-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_REBOOT) {
-        src = "qrc:/assets/icons_material_custom/baseline-restart_alt-24px.svg"
+        src = "qrc:/assets/icons_material/baseline-restart_alt-24px.svg"
     }
 
     return src
@@ -271,7 +271,7 @@ function getDeviceSensorIcon(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_HCHO) {
         src = "qrc:/assets/icons_material/baseline-air-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_GEIGER) {
-        src = "qrc:/assets/icons_material_custom/nuclear_icon.svg"
+        src = "qrc:/assets/icons_custom/nuclear_icon.svg"
     }
 
     return src
