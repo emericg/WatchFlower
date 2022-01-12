@@ -164,6 +164,26 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
+        Text {
+            id: textDeviceName
+            height: 32
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+
+            visible: isDesktop
+
+            text: currentDevice.deviceName + " - " + currentDevice.devicePlantName
+            color: Theme.colorText
+            font.pixelSize: 22
+            font.capitalization: Font.Capitalize
+            horizontalAlignment: wideMode ? Text.AlignLeft : Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
         Row {
             id: buttonPanel
             anchors.top: parent.top
@@ -205,37 +225,6 @@ Item {
 
                 text: qsTr("Day")
                 onClicked: settingsManager.graphHistory = "daily"
-            }
-        }
-
-        Text {
-            id: textDeviceName
-            height: 32
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-
-            visible: isDesktop
-
-            text: currentDevice.deviceName
-            color: Theme.colorText
-            font.pixelSize: Theme.fontSizeTitle
-            font.capitalization: Font.AllUppercase
-            verticalAlignment: Text.AlignVCenter
-
-            ImageSvg {
-                id: imageBattery
-                width: 32
-                height: 32
-                rotation: 90
-                anchors.verticalCenter: textDeviceName.verticalCenter
-                anchors.left: textDeviceName.right
-                anchors.leftMargin: 16
-
-                visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-                source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-                color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
             }
         }
 

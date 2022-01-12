@@ -68,13 +68,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        id: scrollView
+        anchors.fill: parent
         contentWidth: -1
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
 
         Column {
             anchors.fill: parent

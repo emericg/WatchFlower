@@ -975,7 +975,7 @@ Item {
 
                     legend: " " + qsTr("h.", "short for hours")
                     from: 1
-                    to: 12
+                    to: 24
                     stepSize: 1
                     editable: false
                     wheelEnabled: isDesktop
@@ -1183,7 +1183,7 @@ Item {
 
                     legend: " " + qsTr("h.", "short for hours")
                     from: 1
-                    to: 12
+                    to: 24
                     stepSize: 1
                     editable: false
                     wheelEnabled: isDesktop

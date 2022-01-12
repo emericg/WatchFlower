@@ -100,7 +100,7 @@ class SettingsManager: public QObject
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
     unsigned m_updateIntervalThermo = THERMO_UPDATE_INTERVAL;
     QString m_tempUnit = "C";
-    QString m_graphHistogram = "monthly";
+    QString m_graphHistogram = "weekly";
     QString m_graphThermometer = "minmax";
     bool m_graphShowDots = true;
     bool m_compactView = true;
