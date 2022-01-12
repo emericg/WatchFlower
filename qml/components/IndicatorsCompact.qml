@@ -43,18 +43,18 @@ Item {
 
         // Has data? always display them
         if (currentDevice.isDataToday()) {
-            var hasHygro = (currentDevice.soilMoisture > 0 || currentDevice.soilConductivity > 0) ||
-                           (currentDevice.hasDataNamed("soilMoisture") || currentDevice.hasDataNamed("soilConductivity"))
+            //var hasHygro = (currentDevice.soilMoisture > 0 || currentDevice.soilConductivity > 0) ||
+            //               (currentDevice.hasDataNamed("soilMoisture") || currentDevice.hasDataNamed("soilConductivity"))
 
-            soil_moisture.visible = hasHygro
-            soil_conductivity.visible = hasHygro
+            soil_moisture.visible = currentDevice.hasSoilMoistureSensor
+            soil_conductivity.visible = currentDevice.hasSoilConductivitySensor
             soil_temperature.visible = currentDevice.hasSoilTemperatureSensor
             temp.visible = currentDevice.hasTemperatureSensor
             humi.visible = currentDevice.hasHumiditySensor
             lumi.visible = currentDevice.hasLuminositySensor
             water_tank.visible = currentDevice.hasWaterLevelSensor
         } else {
-            soil_moisture.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
+            soil_moisture.visible = currentDevice.hasSoilMoistureSensor
             soil_conductivity.visible = currentDevice.hasSoilConductivitySensor
             soil_temperature.visible = currentDevice.hasSoilTemperatureSensor
             temp.visible = currentDevice.hasTemperatureSensor
