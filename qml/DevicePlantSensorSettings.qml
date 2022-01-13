@@ -638,16 +638,14 @@ Item {
 
                     Rectangle {
                         id: itemMacAddr
-                        height: rowMacAddr.height + 16 + legendMacAddr.contentHeight
                         anchors.left: parent.left
                         anchors.leftMargin: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 0
 
-                        color: Theme.colorBackground
-
                         visible: false
-                        enabled: visible
+                        color: Theme.colorBackground
+                        height: rowMacAddr.height + 16 + legendMacAddr.contentHeight
 
                         ImageSvg {
                             anchors.top: parent.top

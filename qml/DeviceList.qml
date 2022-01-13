@@ -35,29 +35,29 @@ Item {
 
     function selectDevice(index) {
         // make sure it's not already selected
-        if (deviceManager.getDeviceByProxyIndex(index).selected) return;
+        if (deviceManager.getDeviceByProxyIndex(index).selected) return
 
         // then add
-        selectionMode = true;
-        selectionList.push(index);
-        selectionCount++;
+        selectionMode = true
+        selectionList.push(index)
+        selectionCount++
 
-        deviceManager.getDeviceByProxyIndex(index).selected = true;
+        deviceManager.getDeviceByProxyIndex(index).selected = true
     }
     function deselectDevice(index) {
-        var i = selectionList.indexOf(index);
+        var i = selectionList.indexOf(index)
         if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
         if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
 
-        deviceManager.getDeviceByProxyIndex(index).selected = false;
+        deviceManager.getDeviceByProxyIndex(index).selected = false
     }
     function exitSelectionMode() {
-        selectionMode = false;
-        selectionList = [];
-        selectionCount = 0;
+        selectionMode = false
+        selectionList = []
+        selectionCount = 0
 
         for (var i = 0; i < devicesView.count; i++) {
-            deviceManager.getDeviceByProxyIndex(i).selected = false;
+            deviceManager.getDeviceByProxyIndex(i).selected = false
         }
     }
 
@@ -78,7 +78,7 @@ Item {
         exitSelectionMode()
     }
     function removeSelectedDevice() {
-        var devicesAddr = [];
+        var devicesAddr = []
         for (var i = 0; i < devicesView.count; i++) {
             if (deviceManager.getDeviceByProxyIndex(i).selected) {
                 devicesAddr.push(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
