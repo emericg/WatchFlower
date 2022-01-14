@@ -765,7 +765,7 @@ Item {
 
                 color: Theme.colorText
                 font.letterSpacing: -1.4
-                font.pixelSize: bigAssMode ? 32 : 30
+                font.pixelSize: bigAssMode ? 32 : 28
                 font.family: "Tahoma"
             }
 
@@ -775,7 +775,7 @@ Item {
                 anchors.rightMargin: 0
 
                 color: Theme.colorSubText
-                font.pixelSize: bigAssMode ? 26 : 24
+                font.pixelSize: bigAssMode ? 26 : 22
                 font.family: "Tahoma"
             }
         }

@@ -257,9 +257,9 @@ Item {
                         border.color: Theme.colorBackground
 
                         clip: false
-                        visible: (value2 > -80)
+                        visible: (value2 > -80 && value2 > value+1)
                         radius: graphRow.barRadius
-                        color: chartHistory.color // Qt.lighter(chartHistory.color, 1.33)
+                        color: chartHistory.color
                         opacity: 0.33
                     }
 
