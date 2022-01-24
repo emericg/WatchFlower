@@ -66,7 +66,6 @@
         <file>icons_material/baseline-pin-24px.svg</file>
         <file>icons_material/baseline-radar-24px.svg</file>
         <file>icons_material/baseline-refresh-24px.svg</file>
-        <file>icons_material/baseline-restart_alt-24px.svg</file>
         <file>icons_material/baseline-search-24px.svg</file>
         <file>icons_material/baseline-settings-20px.svg</file>
         <file>icons_material/baseline-sort-24px.svg</file>
@@ -103,6 +102,7 @@
         <file>icons_material/duotone-minimize-24px.svg</file>
         <file>icons_material/duotone-model_training-24px.svg</file>
         <file>icons_material/duotone-pin_drop-24px.svg</file>
+        <file>icons_material/duotone-restart_alt-24px.svg</file>
         <file>icons_material/duotone-schedule-24px.svg</file>
         <file>icons_material/duotone-settings_bluetooth-24px.svg</file>
         <file>icons_material/duotone-speed-24px.svg</file>

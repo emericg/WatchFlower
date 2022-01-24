@@ -32,6 +32,7 @@
 /* ************************************************************************** */
 
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.2.2"
+#define LATEST_KNOWN_FIRMWARE_FLOWERCAREMAX     "3.6.6"
 #define LATEST_KNOWN_FIRMWARE_FLOWERPOWER       "2.0.3"
 #define LATEST_KNOWN_FIRMWARE_ROPOT             "1.1.5"
 #define LATEST_KNOWN_FIRMWARE_PARROTPOT         "0.29.1"

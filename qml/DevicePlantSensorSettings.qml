@@ -49,7 +49,7 @@ Item {
             id: flow
             anchors.left: parent.left
             anchors.right: parent.right
-            height: wideMode ? devicePlantSensorSettings.height : maxheight
+            height: singleColumn ? maxheight : devicePlantSensorSettings.height
 
             property int maxheight: 3*12 + itemDevice.height + itemDeviceInfos.height + itemDeviceSensors.height + itemDeviceSettings.height
 
@@ -541,7 +541,7 @@ Item {
                         font.capitalization: Font.AllUppercase
                     }
 
-                    SwitchThemedMobile {
+                    SwitchThemedDesktop {
                         text: "Device is enabled"
                         checked: true
                         enabled: false

@@ -132,6 +132,7 @@ Item {
                 anchors.leftMargin: 16
                 anchors.rightMargin: 16
 
+                text: qsTr("Bluetooth disabled...")
                 color: Theme.colorActionbarContent
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
@@ -162,8 +163,6 @@ Item {
             function setBluetoothWarning() {
                 if (deviceManager.hasDevices) {
                     rectangleStatus.height = 48
-
-                    textStatus.text = qsTr("Bluetooth disabled...");
                     buttonBluetooth.visible = true
                 } else {
                     itemStatus.source = "ItemNoBluetooth.qml"

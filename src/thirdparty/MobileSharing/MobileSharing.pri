@@ -29,9 +29,9 @@ android {
 
     # These files are from the parent project:
     #ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/android
-    #OTHER_FILES += $${PWD}/src/com/watchflower/infos/QShareActivity.java \
-    #               $${PWD}/src/com/watchflower/utils/QShareUtils.java \
-    #               $${PWD}/src/com/watchflower/utils/QSharePathResolver.java
+    #OTHER_FILES += $${PWD}/src/com/emeric/watchflower/QShareActivity.java \
+    #               $${PWD}/src/com/emeric/utils/QShareUtils.java \
+    #               $${PWD}/src/com/emeric/utils/QSharePathResolver.java
 
     # Rename these to match your project:
     #com/emeric/utils

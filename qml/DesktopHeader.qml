@@ -207,7 +207,7 @@ Rectangle {
                        appContent.state === "DeviceThermometer" ||
                        appContent.state === "DeviceEnvironmental"))
 
-            source: "qrc:/assets/icons_material/baseline-restart_alt-24px.svg"
+            source: "qrc:/assets/icons_material/duotone-restart_alt-24px.svg"
             iconColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
             onClicked: deviceRebootButtonClicked()

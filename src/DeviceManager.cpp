@@ -93,9 +93,9 @@ DeviceManager::DeviceManager()
         m_dbExternal = db->hasDatabaseExternal();
     }
 
-    // Load saved devices
     if (m_dbInternal || m_dbExternal)
     {
+        // Load saved devices
         qDebug() << "Scanning (database) for devices...";
 
         QSqlQuery queryDevices;
@@ -464,8 +464,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
     if (m_scanning)
     {
         m_scanning = false;
-
-        Q_EMIT devicesListUpdated();
         Q_EMIT scanningChanged();
     }
 }
@@ -475,8 +473,6 @@ void DeviceManager::deviceDiscoveryFinished()
     //qDebug() << "DeviceManager::deviceDiscoveryFinished()";
 
     m_scanning = false;
-
-    Q_EMIT devicesListUpdated();
     Q_EMIT scanningChanged();
 
     // Now refresh devices data
@@ -490,8 +486,6 @@ void DeviceManager::deviceDiscoveryStopped()
     if (m_scanning)
     {
         m_scanning = false;
-
-        Q_EMIT devicesListUpdated();
         Q_EMIT scanningChanged();
     }
 }
@@ -675,8 +669,13 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             }
 #endif // Qt 6.3+
 
-            break;
+            return;
         }
+    }
+
+    if (m_scanning)
+    {
+        addBleDevice(info);
     }
 }
 
@@ -1053,7 +1052,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
     if (info.rssi() >= 0) return; // we probably just hit the device cache
     SettingsManager *sm = SettingsManager::getInstance();
-    if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device too far away
+    if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
 
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {

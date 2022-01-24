@@ -149,7 +149,7 @@ function getDeviceCapabilityIcon(capabilityId) {
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_CALIBRATION) {
         src = "qrc:/assets/icons_material/duotone-model_training-24px.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_REBOOT) {
-        src = "qrc:/assets/icons_material/baseline-restart_alt-24px.svg"
+        src = "qrc:/assets/icons_material/duotone-restart_alt-24px.svg"
     }
 
     return src

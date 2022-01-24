@@ -85,7 +85,8 @@ class DeviceManager: public QObject
     bool m_scanning = false;
     bool isScanning() const;
 
-    static const int ble_scanning_duration = 15;
+    static const int ble_scanning_duration = 20;
+    static const int ble_scanning_nearby_duration = 30;
     static const int ble_listening_duration = 60;
 
     bool hasBluetooth() const;
@@ -163,7 +164,7 @@ private slots:
 
 Q_SIGNALS:
     void devicesListUpdated();
-    void devicesNearUpdated();
+    void devicesNearbyUpdated();
 
     void bluetoothChanged();
     void scanningChanged();

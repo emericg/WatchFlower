@@ -100,6 +100,17 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 
     if (m_bleDevice.isValid() == false)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+
+    // Configure timeout timer
+    m_timeoutTimer.setSingleShot(true);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
+
+    // Configure update timer (only started on desktop)
+    connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
+
+    m_rssiTimer.setSingleShot(true);
+    m_rssiTimer.setInterval(10*1000); // 10s
+    connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 
 Device::~Device()
@@ -942,15 +953,15 @@ void Device::setRssi(const int rssi)
     if (m_rssi != rssi)
     {
         m_rssi = rssi;
+        Q_EMIT rssiUpdated();
     }
 
-    Q_EMIT rssiUpdated();
     m_rssiTimer.start();
 }
 
 void Device::cleanRssi()
 {
-    m_rssi = 0;
+    m_rssi = std::abs(m_rssi);
     Q_EMIT rssiUpdated();
 }
 
