@@ -11,6 +11,8 @@
         <file>Tutorial.qml</file>
         <file>DeviceList.qml</file>
         <file>DeviceWidget.qml</file>
+        <file>DeviceBrowser.qml</file>
+        <file>DeviceNearbyWidget.qml</file>
         <file>DevicePlantSensor.qml</file>
         <file>DevicePlantSensorData.qml</file>
         <file>DevicePlantSensorHistory.qml</file>
@@ -22,6 +24,7 @@
         <file alias="PopupCalibration.qml">popups/PopupCalibration.qml</file>
         <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
+        <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>
 
         <file alias="ActionButton.qml">components/ActionButton.qml</file>
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
@@ -67,6 +70,6 @@
 
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
-        <file alias="UtilsDeviceBLE.js">components_js/UtilsDeviceBLE.js</file>
+        <file alias="UtilsDeviceSensors.js">components_js/UtilsDeviceSensors.js</file>
     </qresource>
 </RCC>

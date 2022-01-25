@@ -353,6 +353,19 @@ void DatabaseManager::createDatabase()
             qWarning() << "> createDevices.exec() ERROR" << createDevices.lastError().type() << ":" << createDevices.lastError().text();
     }
 
+    if (!tableExists("devicesBlacklist"))
+    {
+        qDebug() << "+ Adding 'devicesBlacklist' table to local database";
+
+        QSqlQuery createDevicesBlacklist;
+        createDevicesBlacklist.prepare("CREATE TABLE devicesBlacklist (" \
+                              "deviceAddr CHAR(38)" \
+                              ");");
+
+        if (createDevicesBlacklist.exec() == false)
+            qWarning() << "> createDevicesBlacklist.exec() ERROR" << createDevicesBlacklist.lastError().type() << ":" << createDevicesBlacklist.lastError().text();
+    }
+
     if (!tableExists("plantData"))
     {
         qDebug() << "+ Adding 'plantData' table to local database";

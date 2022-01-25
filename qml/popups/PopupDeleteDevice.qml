@@ -8,7 +8,7 @@ Popup {
     x: (appWindow.width / 2) - (width / 2)
     y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (height / 2) - (appHeader.height))
 
-    width: singleColumn ? parent.width : 600
+    width: singleColumn ? parent.width : 640
     height: columnContent.height + padding*2
     padding: singleColumn ? 20 : 24
 

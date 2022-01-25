@@ -3,7 +3,7 @@ import QtQuick 2.15
 import ThemeEngine 1.0
 import DeviceUtils 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: deviceWidget
@@ -123,8 +123,8 @@ Item {
 
     function updateSensorStatus() {
         // Text
-        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(boxDevice.status)
-        textStatus.color = UtilsDeviceBLE.getDeviceStatusColor(boxDevice.status)
+        textStatus.text = UtilsDeviceSensors.getDeviceStatusText(boxDevice.status)
+        textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
             if (boxDevice.isDataFresh()) {
@@ -445,7 +445,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
-                        source: UtilsDeviceBLE.getDeviceBatteryIcon(boxDevice.deviceBattery)
+                        source: UtilsDeviceSensors.getDeviceBatteryIcon(boxDevice.deviceBattery)
                         color: Theme.colorIcon
                         rotation: 90
                         fillMode: Image.PreserveAspectCrop

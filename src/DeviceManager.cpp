@@ -95,6 +95,14 @@ DeviceManager::DeviceManager()
 
     if (m_dbInternal || m_dbExternal)
     {
+        // Load blacklist
+        QSqlQuery queryBlacklist;
+        queryBlacklist.exec("SELECT deviceAddr FROM devicesBlacklist");
+        while (queryBlacklist.next())
+        {
+            m_devices_blacklist.push_back(queryBlacklist.value(0).toString());
+        }
+
         // Load saved devices
         qDebug() << "Scanning (database) for devices...";
 
@@ -153,6 +161,9 @@ DeviceManager::~DeviceManager()
     delete m_bluetoothAdapter;
     delete m_discoveryAgent;
     delete m_ble_params;
+
+    delete m_devices_nearby_filter;
+    delete m_devices_nearby_model;
 
     delete m_devices_filter;
     delete m_devices_model;
@@ -505,6 +516,148 @@ void DeviceManager::bluetoothModeChangedIos()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceManager::scanNearby_start()
+{
+    qDebug() << "DeviceManager::scanNearby_start()";
+
+    if (hasBluetooth())
+    {
+        if (!m_devices_nearby_model)
+        {
+            m_devices_nearby_model = new DeviceModel(this);
+            m_devices_nearby_filter = new DeviceFilter(this);
+            m_devices_nearby_filter->setSourceModel(m_devices_nearby_model);
+
+            m_devices_nearby_filter->setSortRole(DeviceModel::DeviceRssiRole);
+            m_devices_nearby_filter->sort(0, Qt::AscendingOrder);
+            m_devices_nearby_filter->invalidate();
+        }
+
+        if (!m_discoveryAgent)
+        {
+            startBleAgent();
+        }
+        if (m_discoveryAgent)
+        {
+/*
+            if (m_discoveryAgent->isActive() && !m_scanning)
+            {
+                qDebug() << "already active?";
+                m_discoveryAgent->stop();
+            }
+            else // (!m_discoveryAgent->isActive())
+*/
+            {
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                        this, &DeviceManager::addNearbyBleDevice, Qt::UniqueConnection);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                        this, &DeviceManager::updateNearbyBleDevice, Qt::UniqueConnection);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
+                        this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
+                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
+                        this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
+
+                m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_scanning_nearby_duration*1000);
+                m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
+                if (m_discoveryAgent->isActive())
+                {
+                    m_scanning = true;
+                    Q_EMIT scanningChanged();
+                    qDebug() << "Scanning (Bluetooth) for devices...";
+                }
+            }
+        }
+    }
+}
+
+void DeviceManager::scanNearby_stop()
+{
+    qDebug() << "DeviceManager::scanNearby_stop()";
+
+    if (hasBluetooth())
+    {
+        if (m_discoveryAgent)
+        {
+            if (m_discoveryAgent->isActive())
+            {
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                           this, &DeviceManager::addNearbyBleDevice);
+                disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                           this, &DeviceManager::updateNearbyBleDevice);
+
+                m_discoveryAgent->stop();
+
+                m_scanning = false;
+                Q_EMIT scanningChanged();
+            }
+        }
+    }
+}
+
+void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
+{
+    //qDebug() << "DeviceManager::addNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
+
+    if (info.rssi() >= 0) return; // we probably just hit the device cache
+
+    if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
+    {
+        // Check if it's not already in the UI
+        for (auto ed: qAsConst(m_devices_nearby_model->m_devices))
+        {
+            Device *edd = qobject_cast<Device*>(ed);
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+            if (edd && edd->getAddress() == info.deviceUuid().toString())
+#else
+            if (edd && edd->getAddress() == info.address().toString())
+#endif
+            {
+                return;
+            }
+        }
+
+        // Create the device
+        Device *d = new Device(info, this);
+        if (!d) return;
+        d->setRssi(info.rssi());
+
+        //connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+
+        // Add it to the UI
+        m_devices_nearby_model->addDevice(d);
+        Q_EMIT devicesNearbyUpdated();
+
+        qDebug() << "Device nearby added: " << d->getName() << "/" << d->getAddress();
+    }
+}
+
+void DeviceManager::updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
+{
+    //qDebug() << "DeviceManager::updateNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
+    Q_UNUSED(updatedFields)
+
+    // Check if it's not already in the UI
+    for (auto d: qAsConst(m_devices_nearby_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        if (dd && dd->getAddress() == info.deviceUuid().toString())
+#else
+        if (dd && dd->getAddress() == info.address().toString())
+#endif
+        {
+            dd->setRssi(info.rssi());
+            return;
+        }
+    }
+
+    addNearbyBleDevice(info);
+}
+
 /* ************************************************************************** */
 
 void DeviceManager::scanDevices_start()
@@ -1046,11 +1199,80 @@ void DeviceManager::syncDevices_stop()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void DeviceManager::blacklistBleDevice(const QString &addr)
+{
+    qDebug() << "DeviceManager::blacklistBleDevice(" << addr << ")";
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        // if
+        QSqlQuery queryDevice;
+        queryDevice.prepare("SELECT deviceAddr FROM devicesBlacklist WHERE deviceAddr = :deviceAddr");
+        queryDevice.bindValue(":deviceAddr", addr);
+        queryDevice.exec();
+
+        // then
+        if (queryDevice.last() == false)
+        {
+            qDebug() << "+ Blacklisting device: " << addr;
+
+            QSqlQuery blacklistDevice;
+            blacklistDevice.prepare("INSERT INTO devicesBlacklist (deviceAddr) VALUES (:deviceAddr)");
+            blacklistDevice.bindValue(":deviceAddr", addr);
+
+            if (blacklistDevice.exec() == true)
+            {
+                m_devices_blacklist.push_back(addr);
+                Q_EMIT devicesBlacklistUpdated();
+            }
+        }
+    }
+}
+
+void DeviceManager::whitelistBleDevice(const QString &addr)
+{
+    qDebug() << "DeviceManager::whitelistBleDevice(" << addr << ")";
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery whitelistDevice;
+        whitelistDevice.prepare("DELETE FROM devicesBlacklist WHERE deviceAddr = :deviceAddr");
+        whitelistDevice.bindValue(":deviceAddr", addr);
+
+        if (whitelistDevice.exec() == true)
+        {
+            m_devices_blacklist.removeAll(addr);
+            Q_EMIT devicesBlacklistUpdated();
+        }
+    }
+}
+
+bool DeviceManager::isBleDeviceBlacklisted(const QString &addr)
+{
+    if (m_dbInternal || m_dbExternal)
+    {
+        // if
+        QSqlQuery queryDevice;
+        queryDevice.prepare("SELECT deviceAddr FROM devicesBlacklist WHERE deviceAddr = :deviceAddr");
+        queryDevice.bindValue(":deviceAddr", addr);
+        queryDevice.exec();
+
+        // then
+        return queryDevice.last();
+    }
+
+    return false;
+}
+
+/* ************************************************************************** */
+
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
     //qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
     if (info.rssi() >= 0) return; // we probably just hit the device cache
+    if (m_devices_blacklist.contains(info.address().toString()))return; // device is blacklisted
+
     SettingsManager *sm = SettingsManager::getInstance();
     if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
 

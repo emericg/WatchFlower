@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import DeviceUtils 1.0
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: deviceEnvironmental
@@ -258,8 +258,8 @@ Item {
 
         // Battery level
         //imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-        //imageBattery.source = UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-        //imageBattery.color = UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
+        //imageBattery.source = UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
+        //imageBattery.color = UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
 
         // Status
         updateStatusText()
@@ -276,7 +276,7 @@ Item {
         if (!currentDevice.isEnvironmentalSensor) return
         //console.log("DeviceEnvironmental // updateStatusText() >> " + currentDevice)
 
-        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
+        textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
             (currentDevice.isDataFresh() || currentDevice.isDataToday())) {

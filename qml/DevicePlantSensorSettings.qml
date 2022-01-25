@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: devicePlantSensorSettings
@@ -192,8 +192,8 @@ Item {
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-                                    source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-                                    color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
+                                    source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                                    color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                                 }
                             }
                         }
@@ -339,68 +339,76 @@ Item {
                         }
                     }
 
-                    Column {
-                        Text {
-                            text: qsTr("Year")
-                            color: Theme.colorSubText
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            font.capitalization: Font.AllUppercase
+                    Row {
+                        spacing: 32
+
+                        Column {
+                            Text {
+                                text: qsTr("Year")
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                text: currentDevice.deviceInfos.deviceYear
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorHighContrast
+                            }
                         }
-                        Text {
-                            text: currentDevice.deviceInfos.deviceYear
-                            font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+
+                        Column {
+                            Text {
+                                text: qsTr("IP Rating")
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                text: currentDevice.deviceInfos.deviceIPrating
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorHighContrast
+                            }
                         }
                     }
 
-                    Column {
-                        visible: dbatt.text
+                    Row {
+                        spacing: 32
 
-                        Text {
-                            text: qsTr("Battery")
-                            color: Theme.colorSubText
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            font.capitalization: Font.AllUppercase
-                        }
-                        Text {
-                            id: dbatt
-                            text: currentDevice.deviceInfos.deviceBattery
-                            font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
-                        }
-                    }
+                        Column {
+                            visible: dbatt.text
 
-                    Column {
-                        visible: dscreen.text
-                        Text {
-                            text: qsTr("Screen")
-                            color: Theme.colorSubText
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            font.capitalization: Font.AllUppercase
+                            Text {
+                                text: qsTr("Battery")
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                id: dbatt
+                                text: currentDevice.deviceInfos.deviceBattery
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorHighContrast
+                            }
                         }
-                        Text {
-                            id: dscreen
-                            text: currentDevice.deviceInfos.deviceScreen
-                            font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
-                        }
-                    }
 
-                    Column {
-                        Text {
-                            text: qsTr("IP Rating")
-                            color: Theme.colorSubText
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            font.capitalization: Font.AllUppercase
-                        }
-                        Text {
-                            text: currentDevice.deviceInfos.deviceIPrating
-                            font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                        Column {
+                            visible: dscreen.text
+                            Text {
+                                text: qsTr("Screen")
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                id: dscreen
+                                text: currentDevice.deviceInfos.deviceScreen
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorHighContrast
+                            }
                         }
                     }
                 }
@@ -449,12 +457,12 @@ Item {
                                 background: true
                                 backgroundColor: Theme.colorBackground
                                 iconColor: Theme.colorText
-                                source: UtilsDeviceBLE.getDeviceSensorIcon(modelData.sensorId)
+                                source: UtilsDeviceSensors.getDeviceSensorIcon(modelData.sensorId)
                             }
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text {
-                                    text: UtilsDeviceBLE.getDeviceSensorName(modelData.sensorId)
+                                    text: UtilsDeviceSensors.getDeviceSensorName(modelData.sensorId)
                                     font.pixelSize: Theme.fontSizeContent
                                     color: Theme.colorText
                                 }
@@ -492,12 +500,12 @@ Item {
                                 background: true
                                 backgroundColor: Theme.colorBackground
                                 iconColor: Theme.colorText
-                                source: UtilsDeviceBLE.getDeviceCapabilityIcon(modelData.capabilityId)
+                                source: UtilsDeviceSensors.getDeviceCapabilityIcon(modelData.capabilityId)
                             }
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text {
-                                    text: UtilsDeviceBLE.getDeviceCapabilityName(modelData.capabilityId)
+                                    text: UtilsDeviceSensors.getDeviceCapabilityName(modelData.capabilityId)
                                     font.pixelSize: Theme.fontSizeContent
                                     color: Theme.colorText
                                 }
@@ -542,9 +550,8 @@ Item {
                     }
 
                     SwitchThemedDesktop {
-                        text: "Device is enabled"
+                        text: checked ? qsTr("Device is enabled") : qsTr("Device is disabled")
                         checked: true
-                        enabled: false
                     }
 
                     Row {

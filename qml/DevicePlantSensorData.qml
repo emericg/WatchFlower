@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import DeviceUtils 1.0
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: devicePlantSensorData
@@ -85,7 +85,7 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // updateStatusText() >> " + currentDevice)
 
-        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
+        textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
         textStatus.color = Theme.colorHighContrast
         textStatus.font.bold = false
 
@@ -200,8 +200,8 @@ Item {
                             anchors.leftMargin: 16
 
                             visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-                            source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-                            color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
+                            source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                            color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                         }
                     }
 

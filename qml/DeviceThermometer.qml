@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import DeviceUtils 1.0
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: deviceThermometer
@@ -150,7 +150,7 @@ Item {
         //console.log("DeviceThermometer // updateStatusText() >> " + currentDevice)
 
         // Status
-        textStatus.text = UtilsDeviceBLE.getDeviceStatusText(currentDevice.status)
+        textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
             (currentDevice.isDataFresh() || currentDevice.isDataToday())) {
@@ -258,7 +258,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-                    source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                    source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
                     fillMode: Image.PreserveAspectCrop
                     color: cccc
                 }

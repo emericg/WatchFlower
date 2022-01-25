@@ -1,4 +1,4 @@
-// UtilsDeviceBLE.js
+// UtilsDeviceSensors.js
 // Version 1
 
 .import ThemeEngine 1.0 as ThemeEngine

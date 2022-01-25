@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
-import "qrc:/js/UtilsDeviceBLE.js" as UtilsDeviceBLE
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: devicePlantSensorLimits
@@ -119,8 +119,8 @@ Item {
                             anchors.leftMargin: 16
 
                             visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-                            source: UtilsDeviceBLE.getDeviceBatteryIcon(currentDevice.deviceBattery)
-                            color: UtilsDeviceBLE.getDeviceBatteryColor(currentDevice.deviceBattery)
+                            source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                            color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                         }
                     }
 

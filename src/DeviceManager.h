@@ -58,6 +58,8 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
 
+    Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
+
     bool m_dbInternal = false;
     bool m_dbExternal = false;
     bool m_btA = false;
@@ -66,6 +68,11 @@ class DeviceManager: public QObject
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyConnectionParameters *m_ble_params = nullptr;
+
+    QList <QString> m_devices_blacklist;
+
+    DeviceModel *m_devices_nearby_model = nullptr;
+    DeviceFilter *m_devices_nearby_filter = nullptr;
 
     DeviceModel *m_devices_model = nullptr;
     DeviceFilter *m_devices_filter = nullptr;
@@ -110,6 +117,15 @@ public:
     Q_INVOKABLE void removeDevice(const QString &address);
     Q_INVOKABLE void removeDeviceData(const QString &address);
 
+    Q_INVOKABLE void scanNearby_start();
+    Q_INVOKABLE void scanNearby_stop();
+    void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
+    void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+
+    Q_INVOKABLE void blacklistBleDevice(const QString &addr);
+    Q_INVOKABLE void whitelistBleDevice(const QString &addr);
+    Q_INVOKABLE bool isBleDeviceBlacklisted(const QString &addr);
+
     Q_INVOKABLE void scanDevices_start();
     Q_INVOKABLE void scanDevices_stop();
     Q_INVOKABLE void listenDevices();
@@ -139,6 +155,8 @@ public:
     Q_INVOKABLE QString exportDataFolder();
     bool exportData(const QString &exportFilePath);
 
+    DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }
+
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
 
     Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index) const
@@ -165,6 +183,7 @@ private slots:
 Q_SIGNALS:
     void devicesListUpdated();
     void devicesNearbyUpdated();
+    void devicesBlacklistUpdated();
 
     void bluetoothChanged();
     void scanningChanged();
