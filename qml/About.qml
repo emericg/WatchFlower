@@ -21,7 +21,7 @@ Item {
             anchors.leftMargin: screenPaddingLeft + 16
             anchors.rightMargin: screenPaddingRight + 16
 
-            topPadding: isMobile ? 8 : 0
+            topPadding: 0
             bottomPadding: 8
             spacing: 8
 
@@ -34,79 +34,87 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: -(screenPaddingRight + 16)
 
-                height: 80
-                visible: isDesktop
+                height: 88
                 color: Theme.colorDeviceHeader
 
-                Text {
-                    id: textTitle
+                Row {
+                    id: logo
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
-
-                    text: qsTr("About")
-                    font.bold: false
-                    font.pixelSize: Theme.fontSizeTitle
-                    color: Theme.colorText
-                }
-
-                Text {
-                    id: textSubtitle
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 14
-
-                    text: qsTr("What do you want to know?")
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentBig
-                }
-            }
-
-            ////////
-
-            Item {
-                id: logo
-                height: 80
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Image {
-                    id: imageLogo
-                    width: 80
-                    height: 80
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/logos/logo.svg"
-                    sourceSize: Qt.size(width, height)
-                }
-
-                Text {
-                    id: textName
-                    anchors.top: parent.top
-                    anchors.topMargin: 18
-                    anchors.left: imageLogo.right
                     anchors.leftMargin: 16
 
-                    text: "WatchFlower"
-                    color: Theme.colorText
-                    font.pixelSize: 28
+                    z: 2
+                    height: 88
+                    spacing: 24
+
+                    Image {
+                        id: imageLogo
+                        width: 88
+                        height: 88
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        source: "qrc:/assets/logos/logo.svg"
+                        sourceSize: Qt.size(width, height)
+                    }
+
+                    Column {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: 2
+                        spacing: 0
+
+                        Text {
+                            text: "WatchFlower"
+                            color: Theme.colorText
+                            font.pixelSize: 28
+                        }
+                        Text {
+                            color: Theme.colorSubText
+                            text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                            font.pixelSize: Theme.fontSizeContentBig
+                        }
+                    }
                 }
 
-                Text {
-                    id: textVersion
-                    anchors.left: imageLogo.right
-                    anchors.leftMargin: 18
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 8
+                Row {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
 
-                    color: Theme.colorSubText
-                    text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
-                    font.pixelSize: Theme.fontSizeContentBig
+                    visible: wideWideMode
+                    spacing: 16
+
+                    ButtonWireframeImage {
+                        width: 160
+                        imgSize: 28
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("WEBSITE")
+                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
+                    }
+
+                    ButtonWireframeImage {
+                        width: 160
+                        imgSize: 22
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("SUPPORT")
+                        source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                        onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
+                    }
+
+                    ButtonWireframeImage {
+                        visible: (appWindow.width > 800)
+                        width: 160
+                        imgSize: 22
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("GitHub")
+                        source: "qrc:/assets/logos/github.svg"
+                        onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
+                    }
                 }
             }
 
@@ -121,11 +129,10 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: isMobile
+                visible: !wideWideMode
                 spacing: 16
 
                 ButtonWireframeImage {
-                    id: websiteBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -138,7 +145,6 @@ Item {
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
                 ButtonWireframeImage {
-                    id: supportBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -168,9 +174,9 @@ Item {
                     id: descImg
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.verticalCenter: desc.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorText
@@ -184,7 +190,7 @@ Item {
                     anchors.rightMargin: 0
                     anchors.verticalCenter: desc.verticalCenter
 
-                    text: qsTr("A plant monitoring application for Xiaomi 'Flower Care' and 'RoPot' Bluetooth sensors and thermometers.")
+                    text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
@@ -355,118 +361,6 @@ Item {
 
             ////////
 
-            Item {
-                id: website
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                visible: !isMobile
-
-                ImageSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: -1
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
-                    color: Theme.colorText
-                }
-
-                Text {
-                    id: websiteTxt
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-
-                    text: qsTr("Website")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                }
-
-                ImageSvg {
-                    width: 20
-                    height: 20
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: singleColumn
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
-                }
-
-                MouseArea {
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: singleColumn ? parent.right : websiteTxt.right
-                    anchors.rightMargin: singleColumn ? 0 : -24
-                    anchors.bottom: parent.bottom
-                    onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
-                }
-            }
-
-            ////////
-
-            Item {
-                id: github
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                visible: !isPhone
-
-                ImageSvg {
-                    width: 26
-                    height: 26
-                    anchors.left: parent.left
-                    anchors.leftMargin: 2
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/logos/github.svg"
-                    color: Theme.colorText
-                }
-
-                Text {
-                    id: githubTxt
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("GitHub page")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                }
-
-                ImageSvg {
-                    width: 20
-                    height: 20
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: singleColumn
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
-                }
-
-                MouseArea {
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: singleColumn ? parent.right : githubTxt.right
-                    anchors.rightMargin: singleColumn ? 0 : -24
-                    anchors.bottom: parent.bottom
-                    onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
-                }
-            }
-
-            ////////
-
             ImageSvg {
                 id: imageDevices
                 height: 96
@@ -583,10 +477,9 @@ Item {
                     id: dependenciesImg
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
                     anchors.left: parent.left
                     anchors.leftMargin: 4
+                    anchors.verticalCenter: dependenciesLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                     color: Theme.colorText

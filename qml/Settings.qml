@@ -21,52 +21,9 @@ Item {
         Column {
             anchors.fill: parent
 
-            topPadding: isMobile ? 12 : 0
+            topPadding: 12
             bottomPadding: 12
             spacing: 8
-
-            Rectangle {
-                id: rectangleHeader
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                height: 80
-                visible: isDesktop
-                color: Theme.colorDeviceHeader
-
-                Text {
-                    id: textTitle
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 16
-
-                    text: qsTr("Settings")
-                    textFormat: Text.PlainText
-                    font.bold: false
-                    font.pixelSize: Theme.fontSizeTitle
-                    elide: Text.ElideRight
-                    color: Theme.colorText
-                }
-
-                Text {
-                    id: textSubtitle
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 16
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 14
-
-                    text: qsTr("Change persistent settings here!")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContentBig
-                    elide: Text.ElideRight
-                    color: Theme.colorSubText
-                }
-            }
 
             ////////////////
 
