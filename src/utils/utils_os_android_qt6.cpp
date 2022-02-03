@@ -256,11 +256,29 @@ QString UtilsAndroid::getDeviceModel()
 
 QString UtilsAndroid::getDeviceSerial()
 {
-    QJniObject serialField = QJniObject::callStaticObjectMethod("android/os/Build",
-                                                                "getSerial",
-                                                                "()Ljava/lang/String;");
+    QString device_serial;
 
-    QString device_serial = serialField.toString();
+    if (QtAndroid::androidSdkVersion() >= 29)
+    {
+        QJniObject activity = QNativeInterface::QAndroidApplication::context();
+        QJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+        QJniObject contentR = appctx.callObjectMethod("getContentResolver", "()Landroid/content/ContentResolver;");
+
+        QJniObject aidString = QJniObject::fromString("android_id");
+        QJniObject aidService = QJniObject::callStaticObjectMethod("android/provider/Settings$Secure","getString",
+                                                                   "(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+                                                                   contentR.object<jobject>(),
+                                                                   aidString.object<jstring>());
+        device_serial = aidService.toString();
+    }
+    else
+    {
+        QJniObject serialField = QJniObject::callStaticObjectMethod("android/os/Build",
+                                                                    "getSerial",
+                                                                    "()Ljava/lang/String;");
+        QString device_serial = serialField.toString();
+    }
+
     //qDebug() << "> getDeviceSerial()" << device_serial;
     return device_serial;
 }

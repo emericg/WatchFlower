@@ -287,11 +287,33 @@ QString UtilsAndroid::getDeviceModel()
 
 QString UtilsAndroid::getDeviceSerial()
 {
-    QAndroidJniObject serialField = QAndroidJniObject::callStaticObjectMethod("android/os/Build",
-                                                                              "getSerial",
-                                                                              "()Ljava/lang/String;");
+    QString device_serial;
 
-    QString device_serial = serialField.toString();
+    if (QtAndroid::androidSdkVersion() >= 29)
+    {
+        QAndroidJniObject activity = QtAndroid::androidActivity();
+        QAndroidJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+        QAndroidJniObject contentR = appctx.callObjectMethod("getContentResolver", "()Landroid/content/ContentResolver;");
+
+        QAndroidJniObject aidString = QAndroidJniObject::fromString("android_id");
+        QAndroidJniObject aidService = QAndroidJniObject::callStaticObjectMethod("android/provider/Settings$Secure","getString",
+                                                                                 "(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+                                                                                 contentR.object<jobject>(),
+                                                                                 aidString.object<jstring>());
+        device_serial = aidService.toString();
+    }
+    else
+    {
+        // Deprecated method
+        //QAndroidJniObject serialField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "SERIAL");
+        //device_serial = serialField.toString();
+
+        QAndroidJniObject serialField = QAndroidJniObject::callStaticObjectMethod("android/os/Build",
+                                                                                  "getSerial",
+                                                                                  "()Ljava/lang/String;");
+        device_serial = serialField.toString();
+    }
+
     //qDebug() << "> getDeviceSerial()" << device_serial;
     return device_serial;
 }

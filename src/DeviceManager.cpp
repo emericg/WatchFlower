@@ -1517,12 +1517,12 @@ QString DeviceManager::exportDataOpen()
     // Get temp file path
     exportFilePath = exportDirectoryPath + "/export/watchflower_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".csv";
 
-    if (!exportData(exportFilePath))
+    if (exportData(exportFilePath))
     {
-        exportFilePath = "";
+        return exportFilePath;
     }
 
-    return exportFilePath;
+    return QString();
 }
 
 QString DeviceManager::exportDataFolder()
@@ -1532,12 +1532,12 @@ QString DeviceManager::exportDataFolder()
 
     // check if directory exist
     QDir exportDirectory(exportDirectoryPath);
-    if (!exportDirectory.exists())
+    if (exportDirectory.exists())
     {
-        exportDirectoryPath = "";
+        return exportDirectoryPath;
     }
 
-    return exportDirectoryPath;
+    return QString();
 }
 
 /* ************************************************************************** */
