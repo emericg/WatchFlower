@@ -8,8 +8,8 @@ TextArea {
     implicitWidth: 128
     implicitHeight: Theme.componentHeight*2
 
-    topPadding: 8
-    bottomPadding: 8
+    topPadding: 12
+    bottomPadding: 12
 
     property string colorText: Theme.colorComponentContent
     property string colorPlaceholderText: Theme.colorSubText

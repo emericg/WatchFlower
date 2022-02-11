@@ -46,6 +46,6 @@ RangeSlider {
         height: width
         radius: (width / 2)
         color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
-        border.color: first.pressed ? Theme.colorSecondary : Theme.colorPrimary
+        border.color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
     }
 }

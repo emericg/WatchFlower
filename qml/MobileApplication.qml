@@ -55,8 +55,8 @@ ApplicationWindow {
 */
         if (Qt.platform.os !== "ios") return
         if (typeof quickWindow === "undefined" || !quickWindow) {
-            handleNotchesTimer.restart();
-            return;
+            handleNotchesTimer.restart()
+            return
         }
 
         // Statusbar text color hack (iOS)
@@ -226,14 +226,14 @@ ApplicationWindow {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")
                 deviceManager.refreshDevices_stop()
-                break;
+                break
             case Qt.ApplicationHidden:
                 //console.log("Qt.ApplicationHidden")
                 deviceManager.refreshDevices_stop()
-                break;
+                break
             case Qt.ApplicationInactive:
                 //console.log("Qt.ApplicationInactive")
-                break;
+                break
             case Qt.ApplicationActive:
                 //console.log("Qt.ApplicationActive")
 
@@ -243,7 +243,7 @@ ApplicationWindow {
                 // Needs to check if a refresh could be useful
                 deviceManager.refreshDevices_check()
 
-                break;
+                break
             }
         }
     }
@@ -295,7 +295,7 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.exitTo === "DeviceList") return; // do nothing
+            if (appContent.state === "Tutorial" && screenTutorial.exitTo === "DeviceList") return // do nothing
 
             if (appContent.state === "DeviceList") {
                 if (screenDeviceList.selectionList.length !== 0) {

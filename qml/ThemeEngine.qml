@@ -339,11 +339,11 @@ Item {
             componentBorderWidth = 2
 
             colorComponent = "#757575"
-            colorComponentText = "#222"
+            colorComponentText = "#eee"
             colorComponentContent = "white"
             colorComponentBorder = "#777"
             colorComponentDown = "#595959"
-            colorComponentBackground = "#DDD"
+            colorComponentBackground = "#292929"
 
         }
 
