@@ -42,14 +42,14 @@ Item {
             }
 
             ImageSvg {
-                width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+                width: singleColumn ? (parent.width*0.6) : (parent.height*0.6)
                 height: width
                 anchors.centerIn: parent
-                visible: devicesView.count <= 0
 
+                visible: (devicesView.count <= 0)
                 source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
                 fillMode: Image.PreserveAspectFit
-                color: Theme.colorIcon
+                color: Theme.colorSubText
             }
 
             ListView {
@@ -98,14 +98,14 @@ Item {
                 }
 
                 ImageSvg {
-                    width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+                    width: singleColumn ? (parent.width*0.6) : (parent.height*0.6)
                     height: width
                     anchors.centerIn: parent
-                    visible: (devicesView.count <= 0)
 
+                    visible: (devicesView.count <= 0)
                     source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
                     fillMode: Image.PreserveAspectFit
-                    color: Theme.colorIcon
+                    color: Theme.colorSubText
                 }
             }
 
@@ -123,7 +123,7 @@ Item {
 
                 Rectangle {
                     anchors.centerIn: cc
-                    width: parent.width*1.5
+                    width: (parent.width * 1.5)
                     height: width
                     radius: width
                     color: Theme.colorForeground
@@ -143,7 +143,7 @@ Item {
                 }
                 Rectangle {
                     anchors.centerIn: cc
-                    width: parent.width/1.5
+                    width: (parent.width / 1.5)
                     height: width
                     radius: width
                     color: Theme.colorForeground
@@ -153,7 +153,7 @@ Item {
                 }
                 Rectangle {
                     anchors.centerIn: cc
-                    width: parent.width/3
+                    width: (parent.width / 3)
                     height: width
                     radius: width
                     color: Theme.colorForeground
@@ -173,8 +173,8 @@ Item {
                         alwaysRunToEnd: true
                         loops: Animation.Infinite
                         running: (appContent.state === "DeviceBrowser" && deviceManager.scanning)
-                        NumberAnimation { target: ra; property: "width"; from: 0; to: radar.width*2; duration: 2000; }
-                        NumberAnimation { target: ra; property: "opacity"; from: 0.8; to: 0.2; duration: 2000; }
+                        NumberAnimation { target: ra; property: "width"; from: 0; to: radar.height*2; duration: 2500; }
+                        NumberAnimation { target: ra; property: "opacity"; from: 0.8; to: 0.2; duration: 2500; }
                     }
                 }
 
@@ -207,16 +207,15 @@ Item {
                     delegate: Rectangle {
                         property var boxDevice: pointer
 
-                        property real c: radar.height * Math.abs(((boxDevice.deviceRssi)+10) / 100)
+                        // Using pythagores
+                        //property int a: Math.floor(Math.random() * radar.width - (radar.width / 2))
+                        //property int b: Math.sqrt(Math.pow(c, 2) - Math.pow(a, 2))
 
                         // Using angle
                         property real alpha: Math.random() * (3.14/2) + (3.14/4)
                         property real a: c * Math.cos(alpha)
                         property real b: c * Math.sin(alpha)
-
-                        // Using pythagores
-                        //property int a: Math.floor(Math.random() * radar.width - (radar.width / 2))
-                        //property int b: Math.sqrt(Math.pow(c, 2) - Math.pow(a, 2))
+                        property real c: radar.height * Math.abs(((boxDevice.deviceRssi)+10) / 100)
 
                         x: (radar.width / 2) - a
                         y: radar.height - b

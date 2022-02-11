@@ -78,7 +78,7 @@ Device::Device(QString &deviceAddr, QString &deviceName, QObject *parent) : QObj
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 
     m_rssiTimer.setSingleShot(true);
-    m_rssiTimer.setInterval(10*1000); // 10s
+    m_rssiTimer.setInterval(12*1000); // 12s
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 
@@ -109,7 +109,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 
     m_rssiTimer.setSingleShot(true);
-    m_rssiTimer.setInterval(10*1000); // 10s
+    m_rssiTimer.setInterval(12*1000); // 12s
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 

@@ -192,6 +192,11 @@ bool DeviceManager::isScanning() const
     return m_scanning;
 }
 
+bool DeviceManager::isSearching() const
+{
+    return m_scanning;
+}
+
 /* ************************************************************************** */
 
 bool DeviceManager::checkBluetooth()

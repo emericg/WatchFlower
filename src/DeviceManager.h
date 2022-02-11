@@ -50,9 +50,10 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
+    Q_PROPERTY(bool searching READ isSearching NOTIFY scanningChanged)
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
-    Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
+    Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
@@ -91,6 +92,9 @@ class DeviceManager: public QObject
 
     bool m_scanning = false;
     bool isScanning() const;
+
+    bool m_searching = false;
+    bool isSearching() const;
 
     static const int ble_scanning_duration = 20;
     static const int ble_scanning_nearby_duration = 30;
