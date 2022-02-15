@@ -126,9 +126,9 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.<br>" +
-                           "This permission is only needed while scanning for new sensors.<br>" +
-                           "WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
+                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "<br>" +
+                      qsTr("This permission is only needed while scanning for new sensors.") + "<br>" +
+                      qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -215,7 +215,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("Some devices also require the GPS to be turned on.")
+                text: qsTr("Some Android devices also require the GPS to be turned on.") + "<br>" +
+                      qsTr("This permission is only needed while scanning for new sensors.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

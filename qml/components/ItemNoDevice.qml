@@ -65,7 +65,7 @@ Item {
                     anchors.right: parent.right
                     visible: (Qt.platform.os === "android" && !utilsApp.isMobileGpsEnabled())
 
-                    text: qsTr("Some devices also require the actual <b>GPS to be turned on</b>.")
+                    text: qsTr("Some Android devices also require the actual <b>GPS to be turned on</b>.")
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText

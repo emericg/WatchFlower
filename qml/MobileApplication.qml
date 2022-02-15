@@ -291,7 +291,6 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: appTabletMenu.visible ? appTabletMenu.height : 0
 
         focus: true
         Keys.onBackPressed: {
@@ -348,6 +347,7 @@ ApplicationWindow {
         }
         DevicePlantSensor {
             anchors.fill: parent
+            anchors.bottomMargin: appTabletMenu.height
             id: screenDevicePlantSensor
         }
         DeviceThermometer {
