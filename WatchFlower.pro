@@ -36,6 +36,7 @@ SOURCES  += src/main.cpp \
             src/DatabaseManager.cpp \
             src/SystrayManager.cpp \
             src/NotificationManager.cpp \
+            src/Journal.cpp \
             src/DeviceManager.cpp \
             src/device.cpp \
             src/device_infos.cpp \
@@ -66,6 +67,7 @@ HEADERS  += src/SettingsManager.h \
             src/DatabaseManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
+            src/Journal.h \
             src/DeviceManager.h \
             src/device.h \
             src/device_utils.h \

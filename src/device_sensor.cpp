@@ -966,6 +966,19 @@ float DeviceSensor::getLastMove_days() const
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void DeviceSensor::addJournalEntry(const int type, const QDateTime &date, const QString &comment)
+{
+    JournalEntry *j = new JournalEntry(type, date, comment, this);
+    if (j)
+    {
+        m_journal_entries.push_back(j);
+        Q_EMIT journalUpdated();
+    }
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
 void DeviceSensor::updateChartData_history_day()
 {
     int maxHours = 24;

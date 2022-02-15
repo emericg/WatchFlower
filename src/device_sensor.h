@@ -27,6 +27,7 @@
 #include <QString>
 
 #include "device.h"
+#include "Journal.h"
 
 /* ************************************************************************** */
 
@@ -122,6 +123,9 @@ class DeviceSensor: public Device
     // sensor history
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
 
+    // journal entries
+    Q_PROPERTY(QVariant journalEntries READ getJournalEntries NOTIFY journalUpdated)
+
     // graphs
     Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryMonthsUpdated)
     Q_PROPERTY(QVariant aioHistoryData_week READ getChartData_history_week NOTIFY chartDataHistoryWeeksUpdated)
@@ -134,6 +138,7 @@ Q_SIGNALS:
     void limitsUpdated();
     void minmaxUpdated();
     void progressUpdated();
+    void journalUpdated();
     void chartDataHistoryMonthsUpdated();
     void chartDataHistoryWeeksUpdated();
     void chartDataHistoryDaysUpdated();
@@ -237,6 +242,10 @@ protected:
 
     // device clock
     int64_t m_device_lastmove = -1;
+
+    // journal entries
+    QList <QObject *> m_journal_entries;
+    QVariant getJournalEntries() const { return QVariant::fromValue(m_journal_entries); }
 
     // graphs data
     QList <QObject *> m_chartData_history_month;
@@ -397,6 +406,9 @@ public:
 
     // History sync
     int getHistoryUpdatePercent() const;
+
+    // Journal
+    Q_INVOKABLE void addJournalEntry(const int type, const QDateTime &date, const QString &comment);
 
     // Chart history
     Q_INVOKABLE void updateChartData_history_month(int maxDays);

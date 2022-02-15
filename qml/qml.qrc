@@ -9,22 +9,28 @@
         <file>Settings.qml</file>
         <file>Permissions.qml</file>
         <file>Tutorial.qml</file>
-        <file>DeviceList.qml</file>
+        <file>JournalWidget.qml</file>
         <file>DeviceWidget.qml</file>
+        <file>DeviceList.qml</file>
         <file>DeviceBrowser.qml</file>
         <file>DeviceNearbyWidget.qml</file>
         <file>DevicePlantSensor.qml</file>
         <file>DevicePlantSensorData.qml</file>
         <file>DevicePlantSensorHistory.qml</file>
-        <file>DevicePlantSensorLimits.qml</file>
+        <file>DevicePlantSensorCare.qml</file>
+        <file>PlantCareInfos.qml</file>
+        <file>PlantCareLimits.qml</file>
+        <file>PlantCareJournal.qml</file>
+        <file>DevicePlantSensorSettings.qml</file>
         <file>DeviceThermometer.qml</file>
         <file>DeviceEnvironmental.qml</file>
         <file>ThemeEngine.qml</file>
 
+        <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>
         <file alias="PopupCalibration.qml">popups/PopupCalibration.qml</file>
+        <file alias="PopupDate.qml">popups/PopupDate.qml</file>
         <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
-        <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>
 
         <file alias="ActionButton.qml">components/ActionButton.qml</file>
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
@@ -43,6 +49,7 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+        <file alias="DatePicker.qml">components/DatePicker.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
@@ -50,6 +57,7 @@
         <file alias="DataBarSolid.qml">components_generic/DataBarSolid.qml</file>
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
+        <file alias="ItemImageButtonShadow.qml">components_generic/ItemImageButtonShadow.qml</file>
         <file alias="ItemImageButtonTooltip.qml">components_generic/ItemImageButtonTooltip.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
         <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
@@ -65,11 +73,13 @@
         <file alias="SpinBoxThemed.qml">components_themed/SpinBoxThemed.qml</file>
         <file alias="SwitchThemedDesktop.qml">components_themed/SwitchThemed_desktop.qml</file>
         <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
+        <file alias="TextAreaThemed.qml">components_themed/TextAreaThemed.qml</file>
         <file alias="TextFieldThemed.qml">components_themed/TextFieldThemed.qml</file>
     </qresource>
 
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
         <file alias="UtilsDeviceSensors.js">components_js/UtilsDeviceSensors.js</file>
+        <file alias="UtilsPlantJournal.js">components_js/UtilsPlantJournal.js</file>
     </qresource>
 </RCC>

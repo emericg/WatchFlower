@@ -44,10 +44,12 @@ Rectangle {
     signal deviceClearButtonClicked()
     signal deviceDataButtonClicked() // compatibility
     signal deviceHistoryButtonClicked() // compatibility
+    signal devicePlantButtonClicked() // compatibility
     signal deviceSettingsButtonClicked() // compatibility
 
     function setActiveDeviceData() { } // compatibility
     function setActiveDeviceHistory() { } // compatibility
+    function setActiveDevicePlant() { } // compatibility
     function setActiveDeviceSettings() { } // compatibility
 
     ////////////////////////////////////////////////////////////////////////////

@@ -68,6 +68,7 @@ ApplicationWindow {
         id: tabletMenuDevice
         signal deviceDataButtonClicked()
         signal deviceHistoryButtonClicked()
+        signal devicePlantButtonClicked()
         signal deviceSettingsButtonClicked()
     }
 

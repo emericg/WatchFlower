@@ -613,6 +613,7 @@ ApplicationWindow {
 
             signal deviceDataButtonClicked()
             signal deviceHistoryButtonClicked()
+            signal devicePlantButtonClicked()
             signal deviceSettingsButtonClicked()
 
             visible: (appContent.state === "DevicePlantSensor")
@@ -620,16 +621,25 @@ ApplicationWindow {
             function setActiveDeviceData() {
                 menuDeviceData.selected = true
                 menuDeviceHistory.selected = false
+                menuDevicePlant.selected = false
                 menuDeviceSettings.selected = false
             }
             function setActiveDeviceHistory() {
                 menuDeviceData.selected = false
                 menuDeviceHistory.selected = true
+                menuDevicePlant.selected = false
+                menuDeviceSettings.selected = false
+            }
+            function setActiveDevicePlant() {
+                menuDeviceData.selected = false
+                menuDeviceHistory.selected = false
+                menuDevicePlant.selected = true
                 menuDeviceSettings.selected = false
             }
             function setActiveDeviceSettings() {
                 menuDeviceData.selected = false
                 menuDeviceHistory.selected = false
+                menuDevicePlant.selected = false
                 menuDeviceSettings.selected = true
             }
 
@@ -660,6 +670,20 @@ ApplicationWindow {
                 onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
             }
             ItemMenuButton {
+                id: menuDevicePlant
+                imgSize: appTabletMenu.hhi
+
+                colorBackground: Theme.colorTabletmenuContent
+                colorContent: Theme.colorTabletmenuHighlight
+                highlightMode: "text"
+
+                menuText: qsTr("Plant")
+                //selected: (appContent.state === "DevicePlantSensor")
+                //source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                onClicked: tabletMenuDevice.devicePlantButtonClicked()
+            }
+            ItemMenuButton {
                 id: menuDeviceSettings
                 imgSize: appTabletMenu.hhi
 
@@ -669,7 +693,7 @@ ApplicationWindow {
 
                 menuText: qsTr("Settings")
                 //selected: (appContent.state === "DevicePlantSensor")
-                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
                 onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
             }
         }

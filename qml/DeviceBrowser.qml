@@ -4,9 +4,9 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 
 Item {
-    width: 480
-    height: 640
-    anchors.fill: parent
+    id: deviceBrowser
+    implicitWidth: 480
+    implicitHeight: 800
 
     ////////////////////////////////////////////////////////////////////////////
 

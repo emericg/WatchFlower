@@ -24,8 +24,10 @@ Rectangle {
     signal deviceRefreshRealtimeButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
     signal deviceClearButtonClicked()
+
     signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
+    signal devicePlantButtonClicked()
     signal deviceSettingsButtonClicked()
 
     signal refreshButtonClicked()
@@ -38,16 +40,25 @@ Rectangle {
     function setActiveDeviceData() {
         menuDeviceData.selected = true
         menuDeviceHistory.selected = false
+        menuDevicePlant.selected = false
         menuDeviceSettings.selected = false
     }
     function setActiveDeviceHistory() {
         menuDeviceData.selected = false
         menuDeviceHistory.selected = true
+        menuDevicePlant.selected = false
+        menuDeviceSettings.selected = false
+    }
+    function setActiveDevicePlant() {
+        menuDeviceData.selected = false
+        menuDeviceHistory.selected = false
+        menuDevicePlant.selected = true
         menuDeviceSettings.selected = false
     }
     function setActiveDeviceSettings() {
         menuDeviceData.selected = false
         menuDeviceHistory.selected = false
+        menuDevicePlant.selected = false
         menuDeviceSettings.selected = true
     }
 
@@ -361,13 +372,23 @@ Rectangle {
                 onClicked: deviceHistoryButtonClicked()
             }
             ItemMenuButton {
-                id: menuDeviceSettings
+                id: menuDevicePlant
                 width: headerHeight
                 height: headerHeight
                 colorBackground: Theme.colorHeaderHighlight
                 colorHighlight: Theme.colorHeaderHighlight
                 colorContent: Theme.colorHeaderContent
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                onClicked: devicePlantButtonClicked()
+            }
+            ItemMenuButton {
+                id: menuDeviceSettings
+                width: headerHeight
+                height: headerHeight
+                colorBackground: Theme.colorHeaderHighlight
+                colorHighlight: Theme.colorHeaderHighlight
+                colorContent: Theme.colorHeaderContent
+                source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
                 onClicked: deviceSettingsButtonClicked()
             }
         }

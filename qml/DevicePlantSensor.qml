@@ -18,11 +18,11 @@ Item {
         }
         function onSensorUpdated() {
             plantSensorData.updateHeader()
-            plantSensorLimits.updateHeader()
+            plantSensorCare.updateHeader()
         }
         function onSensorsUpdated() {
             plantSensorData.updateHeader()
-            plantSensorLimits.updateHeader()
+            plantSensorCare.updateHeader()
         }
         function onRefreshUpdated() {
             plantSensorData.resetHistoryMode()
@@ -56,7 +56,7 @@ Item {
             plantSensorData.updateHeader()
             plantSensorHistory.updateHeader()
             plantSensorHistory.updateColors()
-            plantSensorLimits.updateHeader()
+            plantSensorCare.updateHeader()
         }
     }
 
@@ -72,9 +72,13 @@ Item {
             appHeader.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
+        function onDevicePlantButtonClicked() {
+            appHeader.setActiveDevicePlant()
+            sensorPages.currentIndex = 2
+        }
         function onDeviceSettingsButtonClicked() {
             appHeader.setActiveDeviceSettings()
-            sensorPages.currentIndex = 2
+            sensorPages.currentIndex = 3
         }
     }
 
@@ -90,9 +94,13 @@ Item {
             tabletMenuDevice.setActiveDeviceHistory()
             sensorPages.currentIndex = 1
         }
+        function onDevicePlantButtonClicked() {
+            tabletMenuDevice.setActiveDevicePlant()
+            sensorPages.currentIndex = 2
+        }
         function onDeviceSettingsButtonClicked() {
             tabletMenuDevice.setActiveDeviceSettings()
-            sensorPages.currentIndex = 2
+            sensorPages.currentIndex = 3
         }
     }
 
@@ -138,10 +146,11 @@ Item {
         sensorPages.enableAnimation()
 
         plantSensorData.loadData()
-        plantSensorHistory.updateHeader()
         plantSensorHistory.loadData()
-        plantSensorLimits.updateHeader()
-        plantSensorLimits.updateLimits()
+        plantSensorHistory.updateHeader()
+        plantSensorCare.loadData()
+        plantSensorCare.updateHeader()
+        plantSensorCare.updateLimits()
 
         if (isMobile) tabletMenuDevice.setActiveDeviceData()
         if (isDesktop) appHeader.setActiveDeviceData()
@@ -178,6 +187,8 @@ Item {
                     else if (sensorPages.currentIndex === 1)
                         appHeader.setActiveDeviceHistory()
                     else if (sensorPages.currentIndex === 2)
+                        appHeader.setActiveDevicePlant()
+                    else if (sensorPages.currentIndex === 3)
                         appHeader.setActiveDeviceSettings()
                 } else {
                     if (sensorPages.currentIndex === 0)
@@ -185,6 +196,8 @@ Item {
                     else if (sensorPages.currentIndex === 1)
                         tabletMenuDevice.setActiveDeviceHistory()
                     else if (sensorPages.currentIndex === 2)
+                        tabletMenuDevice.setActiveDevicePlant()
+                    else if (sensorPages.currentIndex === 3)
                         tabletMenuDevice.setActiveDeviceSettings()
                 }
             }
@@ -204,9 +217,13 @@ Item {
                 clip: true
                 id: plantSensorHistory
             }
-            DevicePlantSensorLimits {
+            DevicePlantSensorCare {
                 clip: false
-                id: plantSensorLimits
+                id: plantSensorCare
+            }
+            DevicePlantSensorSettings {
+                clip: false
+                id: plantSensorSettings
             }
         }
     }
