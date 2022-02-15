@@ -343,11 +343,12 @@ ApplicationWindow {
 
         DeviceList {
             anchors.fill: parent
+            anchors.bottomMargin: appTabletMenu.hhv
             id: screenDeviceList
         }
         DevicePlantSensor {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.height
+            anchors.bottomMargin: appTabletMenu.hhv
             id: screenDevicePlantSensor
         }
         DeviceThermometer {
@@ -360,6 +361,7 @@ ApplicationWindow {
         }
         Settings {
             anchors.fill: parent
+            anchors.bottomMargin: appTabletMenu.hhv
             id: screenSettings
         }
         Permissions {
@@ -368,6 +370,7 @@ ApplicationWindow {
         }
         About {
             anchors.fill: parent
+            anchors.bottomMargin: appTabletMenu.hhv
             id: screenAbout
         }
 
@@ -533,6 +536,7 @@ ApplicationWindow {
 
         property int hhh: (isPhone ? 36 : 48)
         property int hhi: (hhh * 0.666)
+        property int hhv: visible ? hhh : 0
 
         height: hhh + screenPaddingBottom
         color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
@@ -549,7 +553,10 @@ ApplicationWindow {
         // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-        visible: (isTablet && appContent.state !== "Tutorial" && appContent.state !== "DeviceThermometer" && appContent.state !== "DeviceEnvironmental") ||
+        visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
+                               appContent.state === "DeviceList" ||
+                               appContent.state === "Settings" ||
+                               appContent.state === "About")) ||
                  (isPhone && appContent.state === "DevicePlantSensor" && screenOrientation === Qt.PortraitOrientation)
 
         Row {

@@ -49,6 +49,7 @@
         <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
+        <file alias="ItemNoDeviceNearby.qml">components/ItemNoDeviceNearby.qml</file>
         <file alias="DatePicker.qml">components/DatePicker.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>

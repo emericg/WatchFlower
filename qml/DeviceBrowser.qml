@@ -41,17 +41,6 @@ Item {
                 id: confirmBlacklistDevice
             }
 
-            ImageSvg {
-                width: singleColumn ? (parent.width*0.6) : (parent.height*0.6)
-                height: width
-                anchors.centerIn: parent
-
-                visible: (devicesView.count <= 0)
-                source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-                fillMode: Image.PreserveAspectFit
-                color: Theme.colorSubText
-            }
-
             ListView {
                 id: devicesView
                 anchors.fill: parent
@@ -63,6 +52,11 @@ Item {
                 delegate: DeviceNearbyWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
+                }
+
+                ItemNoDeviceNearby {
+                    anchors.centerIn: parent
+                    visible: (devicesView.count <= 0)
                 }
             }
         }
@@ -97,31 +91,9 @@ Item {
                     anchors.right: parent.right
                 }
 
-                Rectangle {
-                    id: r
-                    width: singleColumn ? (parent.width*0.5) : (parent.height*0.5)
-                    height: width
-                    radius: width
+                ItemNoDeviceNearby {
                     anchors.centerIn: parent
-                    color: Theme.colorForeground
-
-                    ImageSvg {
-                        anchors.centerIn: parent
-                        width: r.height*0.66
-                        height: width
-
-                        source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-                        fillMode: Image.PreserveAspectFit
-                        color: Theme.colorSubText
-                    }
-                    Text {
-                        anchors.top: parent.bottom
-                        anchors.topMargin: 24
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Looking for nearby devices...")
-                        color: Theme.colorText
-                        font.pixelSize: Theme.fontSizeContent
-                    }
+                    visible: (devicesView.count <= 0)
                 }
             }
 
@@ -261,4 +233,6 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

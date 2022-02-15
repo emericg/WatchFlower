@@ -88,7 +88,7 @@ Item {
         anchors.right: parent.right
 
         z: 5
-        height: isMobile ? 96 : 48
+        height: isPhone ? 96 : 48
         color: Theme.colorDeviceHeader
 
         Text {
