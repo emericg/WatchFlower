@@ -228,6 +228,11 @@ Item {
                             }
                             return Theme.colorRed
                         }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: boxDevice.selected = !boxDevice.selected
+                        }
                     }
                 }
             }

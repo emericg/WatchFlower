@@ -51,9 +51,11 @@ Item {
             anchors.right: parent.right
             height: singleColumn ? maxheight : devicePlantSensorSettings.height
 
-            property int maxheight: 3*12 + itemDevice.height + itemDeviceInfos.height + itemDeviceSensors.height + itemDeviceSettings.height
+            property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height + itemDeviceSensors.height + itemDeviceSettings.height
 
+            topPadding: 14
             padding: 12
+            bottomPadding: 14
             spacing: 12
             flow: Flow.TopToBottom
 
@@ -64,19 +66,19 @@ Item {
                 width: www
                 height: itemDeviceContent.height + 24
 
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
-                border.width: (isDesktop) ? 2 : 0
+                border.width: (isDesktop) ? 2 : 2
                 border.color: Theme.colorSeparator
 
                 ImageSvg {
                     anchors.top: parent.top
-                    //anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     anchors.margins: 0
 
-                    width: parent.height
-                    height: parent.height
+                    width: parent.height * 0.9
+                    height: parent.height * 0.9
 
                     asynchronous: true
                     smooth: true
@@ -132,7 +134,9 @@ Item {
                             font.capitalization: Font.AllUppercase
                         }
                         Text {
-                            text: "[" + currentDevice.deviceAddress + "]"
+                            text: (Qt.platform.os === "osx" || Qt.platform.os === "ios") ?
+                                      currentDevice.deviceAddress :
+                                      "[" + currentDevice.deviceAddress + "]"
                             color: Theme.colorHighContrast
                             font.pixelSize: Theme.fontSizeContentBig
                             font.capitalization: Font.AllUppercase
@@ -280,8 +284,9 @@ Item {
                 width: www
                 height: itemDeviceInfosContent.height + 24
 
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
-                border.width: (isDesktop) ? 2 : 0
+                border.width: 2
                 border.color: Theme.colorSeparator
 
                 Column {
@@ -293,21 +298,6 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     spacing: 8
-
-                    Column {
-                        Text {
-                            text: qsTr("Model")
-                            color: Theme.colorSubText
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            font.capitalization: Font.AllUppercase
-                        }
-                        Text {
-                            text: currentDevice.deviceInfos.deviceModel
-                            font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
-                        }
-                    }
 
                     Column {
                         Text {
@@ -421,8 +411,9 @@ Item {
                 width: www
                 height: itemDeviceSensorsContent.height + 24
 
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
-                border.width: (isDesktop) ? 2 : 0
+                border.width: 2
                 border.color: Theme.colorSeparator
 
                 Column {
@@ -527,8 +518,9 @@ Item {
                 width: www
                 height: itemDeviceSettingsContent.height + 24
 
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
-                border.width: (isDesktop) ? 2 : 0
+                border.width: 2
                 border.color: Theme.colorSeparator
 
                 Column {
@@ -566,7 +558,7 @@ Item {
                             anchors.bottom: parent.bottom
 
                             color: Theme.colorBackground
-                            border.width: (insideMode && isDesktop) ? 2 : 0
+                            border.width: (insideMode) ? 2 : 0
                             border.color: Theme.colorSeparator
 
                             opacity: insideMode ? 1 : 0.5
@@ -608,7 +600,7 @@ Item {
                             anchors.bottom: parent.bottom
 
                             color: Theme.colorBackground
-                            border.width: (outsideMode && isDesktop) ? 2 : 0
+                            border.width: (outsideMode) ? 2 : 0
                             border.color: Theme.colorSeparator
 
                             opacity: outsideMode ? 1 : 0.5

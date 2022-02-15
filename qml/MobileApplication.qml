@@ -348,7 +348,7 @@ ApplicationWindow {
         }
         DevicePlantSensor {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.hhv
+            anchors.bottomMargin: appTabletMenu.height
             id: screenDevicePlantSensor
         }
         DeviceThermometer {
@@ -616,7 +616,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
 
             signal deviceDataButtonClicked()
             signal deviceHistoryButtonClicked()
@@ -686,7 +686,6 @@ ApplicationWindow {
 
                 menuText: qsTr("Plant")
                 //selected: (appContent.state === "DevicePlantSensor")
-                //source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
                 onClicked: tabletMenuDevice.devicePlantButtonClicked()
             }
