@@ -35,7 +35,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 8
 
-        ImageSvg {
+        IconSvg {
             width: 24
             height: 24
             anchors.verticalCenter: parent.verticalCenter

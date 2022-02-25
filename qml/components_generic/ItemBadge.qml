@@ -3,7 +3,7 @@ import QtQuick 2.15
 import ThemeEngine 1.0
 
 Item {
-    id: badge
+    id: control
     implicitWidth: 128
     implicitHeight: 22
 
@@ -47,7 +47,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         color: "white"
-        text: badge.legend
+        text: control.legend
         textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -62,7 +62,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         color: "white"
-        text: badge.text
+        text: control.text
         textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
@@ -72,6 +72,6 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: badge.clicked()
+        onClicked: control.clicked()
     }
 }

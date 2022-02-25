@@ -6,7 +6,7 @@ import ThemeEngine 1.0
 
 Popup {
     id: popupDate
-    width: appWindow.width * 0.9
+    width: appWindow.width * 0.85
     x: (appWindow.width / 2) - (width / 2)
     y: (appWindow.height / 2) - (height / 2) // - (appHeader.height / 2)
 
@@ -119,7 +119,7 @@ Popup {
                 }
             }
 
-            ItemImageButton {
+            ButtonIcon {
                 anchors.right: parent.right
                 anchors.rightMargin: 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -151,7 +151,7 @@ Popup {
                 anchors.right: parent.right
                 color: "#66dddddd"
 
-                ItemImageButton {
+                ButtonIcon {
                     width: 48; height: 48;
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +176,7 @@ Popup {
                     font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                 }
-                ItemImageButton {
+                ButtonIcon {
                     anchors.right: parent.right
                     width: 48; height: 48;
                     anchors.verticalCenter: parent.verticalCenter
@@ -245,7 +245,7 @@ Popup {
                     }
                 }
 
-                onClicked: {
+                onClicked: (date) => {
                     if (date.getMonth() === grid.month) {
                         // validate date (min / max)
                         if (minDate && maxDate) {

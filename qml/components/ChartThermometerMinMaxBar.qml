@@ -24,6 +24,8 @@ Item {
     onHeightChanged: computeSize()
 
     function computeSize() {
+        if (typeof mmd === "undefined" || !mmd) return
+
         if (mmd.tempMean < -10) {
             rectangle_temp.visible = false
             rectangle_water_low.visible = false
@@ -61,6 +63,8 @@ Item {
     }
 
     function setTemp() {
+        if (typeof mmd === "undefined" || !mmd) return
+
         var th = mmd.tempMax
         var tl = mmd.tempMin
 
@@ -82,7 +86,7 @@ Item {
         opacity: 0.66
     }
 
-    ImageSvg {
+    IconSvg {
         id: nodata
         width: 20; height: 20;
         anchors.bottom: dayoftheweek.top

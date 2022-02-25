@@ -1,15 +1,18 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
+
 import QtGraphicalEffects 1.15 // Qt5
 //import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Button {
+T.Button {
     id: control
-    implicitWidth: contentText.width + 24
-    implicitHeight: 58
+    implicitWidth: 256
+    implicitHeight: 56
+    width: contentText.contentWidth + 16
 
     focusPolicy: Qt.NoFocus
 
@@ -17,53 +20,44 @@ Button {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    MouseArea {
+        id: mousearea
+        anchors.fill: control
+
+        hoverEnabled: false
+        propagateComposedEvents: false
+        acceptedButtons: Qt.AllButtons
+
+        onClicked: control.clicked()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     background: Item {
-        MouseArea {
-            id: mmmm
-            anchors.fill: parent
+        anchors.fill: control
 
-            enabled: true
-            visible: true
-            hoverEnabled: false
-            acceptedButtons: Qt.LeftButton
-            propagateComposedEvents: true
+        Rectangle { // mouseBackground
+            width: mousearea.pressed ? control.width*2 : 0
+            height: width
+            radius: width
 
-            onClicked: control.clicked()
+            x: mousearea.mouseX + 4 - (width / 2)
+            y: mousearea.mouseY + 4 - (width / 2)
 
-            onPressed: {
-                mouseBackground.width = mmmm.width*2
-                mouseBackground.opacity = 0.1
-            }
-            onReleased: {
-                mouseBackground.width = 0
-                mouseBackground.opacity = 0
-            }
-            onCanceled: {
-                mouseBackground.width = 0
-                mouseBackground.opacity = 0
-            }
+            color: control.primaryColor
+            opacity: mousearea.pressed ? 0.1 : 0
+            Behavior on opacity { NumberAnimation { duration: 333 } }
+            Behavior on width { NumberAnimation { duration: 333 } }
+        }
 
-            Rectangle {
-                id: mouseBackground
-                width: 0; height: width; radius: width;
-                x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
-                y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
-
-                color: control.primaryColor
-                opacity: 0
-                Behavior on opacity { NumberAnimation { duration: 333 } }
-                Behavior on width { NumberAnimation { duration: 333 } }
-            }
-
-            layer.enabled: true
-            layer.effect: OpacityMask {
-                maskSource: Rectangle {
-                    x: background.x
-                    y: background.y
-                    width: background.width
-                    height: background.height
-                    radius: Theme.componentRadius
-                }
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                x: background.x
+                y: background.y
+                width: background.width
+                height: background.height
+                radius: 8
             }
         }
     }
@@ -73,22 +67,16 @@ Button {
     contentItem: Item {
         Text {
             id: contentText
-            height: parent.height
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
 
             text: control.text
             textFormat: Text.PlainText
             font.bold: false
             font.pixelSize: Theme.fontSizeComponent
-            font.family: fontTextMedium.name
             font.capitalization: Font.AllUppercase
 
             color: control.primaryColor
             opacity: enabled ? 1.0 : 0.33
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
         }
     }
 }

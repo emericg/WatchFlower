@@ -395,7 +395,7 @@ Item {
 
             spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
 
-            ImageSvg {
+            IconSvg {
                 id: imageDevice
                 width: bigAssMode ? 32 : 24
                 height: bigAssMode ? 32 : 24
@@ -438,7 +438,7 @@ Item {
                     anchors.left: parent.left
                     spacing: 8
 
-                    ImageSvg {
+                    IconSvg {
                         id: imageBattery
                         width: bigAssMode ? 30 : 28
                         height: bigAssMode ? 32 : 30
@@ -487,7 +487,7 @@ Item {
 
             visible: boxDevice.hasDataToday
 
-            ImageSvg {
+            IconSvg {
                 id: water
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
@@ -498,7 +498,7 @@ Item {
                 color: Theme.colorBlue
             }
 
-            ImageSvg {
+            IconSvg {
                 id: temp
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
@@ -508,7 +508,7 @@ Item {
                 source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 color: Theme.colorYellow
             }
-            ImageSvg {
+            IconSvg {
                 id: ventilate
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
@@ -518,7 +518,7 @@ Item {
                 source: "qrc:/assets/icons_material/baseline-air-24px.svg"
                 color: Theme.colorYellow
             }
-            ImageSvg {
+            IconSvg {
                 id: nuclear
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
@@ -528,7 +528,7 @@ Item {
                 source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                 color: Theme.colorYellow
             }
-            ImageSvg {
+            IconSvg {
                 id: warning
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
@@ -567,7 +567,7 @@ Item {
 
             ////
 
-            ImageSvg {
+            IconSvg {
                 id: imageForward
                 width: 32
                 height: 32
@@ -581,7 +581,7 @@ Item {
 
         ////////////////
 
-        ImageSvg {
+        IconSvg {
             id: imageStatus
             width: 32
             height: 32

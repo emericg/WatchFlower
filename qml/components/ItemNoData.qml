@@ -16,7 +16,7 @@ Item {
         anchors.verticalCenterOffset: -12
         spacing: -8
 
-        ImageSvg {
+        IconSvg {
             width: (isDesktop || isTablet) ? 128 : (parent.width*0.333)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter

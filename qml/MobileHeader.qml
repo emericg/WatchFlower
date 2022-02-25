@@ -9,6 +9,9 @@ Rectangle {
     z: 10
     color: Theme.colorHeader
 
+    // prevent clicks below this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
     property int headerHeight: 52
     property string title: "WatchFlower"
 
@@ -54,8 +57,18 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    // prevent clicks below this area
-    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+    ActionMenuFixed {
+        id: actionMenu
+
+        x: parent.width - actionMenu.width - 12
+        y: screenPaddingStatusbar + screenPaddingNotch + 16
+
+        onMenuSelected: (index) => {
+            //console.log("ActionMenu clicked #" + index)
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Item {
         anchors.fill: parent
@@ -72,10 +85,10 @@ Rectangle {
             visible: true
             onClicked: leftMenuClicked()
 
-            ImageSvg {
+            IconSvg {
                 id: leftMenuImg
-                width: (headerHeight/2)
-                height: (headerHeight/2)
+                width: (headerHeight / 2)
+                height: (headerHeight / 2)
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -116,7 +129,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: (appContent.state === "DeviceList")
 
-                ImageSvg {
+                IconSvg {
                     id: workingIndicator
                     width: 24; height: 24;
                     anchors.centerIn: parent
@@ -157,73 +170,6 @@ Rectangle {
             }
 
             ////////////
-/*
-            ItemImageButton {
-                id: buttonThermoChart
-                width: 36; height: 36;
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: (appContent.state === "DeviceThermometer")
-                source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
-                iconColor: Theme.colorHeaderContent
-                backgroundColor: Theme.colorHeaderHighlight
-
-                onClicked: {
-                    if (settingsManager.graphThermometer === "lines")
-                        settingsManager.graphThermometer = "minmax"
-                    else
-                        settingsManager.graphThermometer = "lines"
-                }
-            }
-            ItemImageButton {
-                id: buttonLed
-                width: 36; height: 36;
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED) && appContent.state === "DevicePlantSensor")
-                source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-                iconColor: Theme.colorHeaderContent
-                backgroundColor: Theme.colorHeaderHighlight
-
-                onClicked: deviceLedButtonClicked()
-            }
-            ItemImageButton {
-                id: buttonRefreshHistory
-                width: 36; height: 36;
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory) &&
-                          ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
-                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-                iconColor: Theme.colorHeaderContent
-                backgroundColor: Theme.colorHeaderHighlight
-                onClicked: deviceRefreshHistoryButtonClicked()
-            }
-            ItemImageButton {
-                id: buttonRefreshData
-                width: 36; height: 36;
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: (deviceManager.bluetooth && ((appContent.state === "DevicePlantSensor") || (appContent.state === "DeviceThermometer")))
-                source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                iconColor: Theme.colorHeaderContent
-                backgroundColor: Theme.colorHeaderHighlight
-
-                onClicked: deviceRefreshButtonClicked()
-
-                NumberAnimation on rotation {
-                    id: refreshAnimation
-                    duration: 2000
-                    from: 0
-                    to: 360
-                    loops: Animation.Infinite
-                    running: selectedDevice.updating
-                    alwaysRunToEnd: true
-                    easing.type: Easing.Linear
-                }
-            }
-*/
-            ////////////
 
             MouseArea {
                 id: rightMenu
@@ -234,12 +180,13 @@ Rectangle {
                           (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceThermometer" ||
                            appContent.state === "DeviceEnvironmental"))
+
                 onClicked: {
                     rightMenuClicked()
                     actionMenu.open()
                 }
 
-                ImageSvg {
+                IconSvg {
                     id: rightMenuImg
                     width: (headerHeight/2)
                     height: (headerHeight/2)
@@ -253,36 +200,5 @@ Rectangle {
         }
     }
 
-    ////////////
-
-    MouseArea {
-        id: actionMenuCloseArea
-        width: appWindow.width
-        height: appWindow.height
-        //anchors.fill: appWindow
-
-        enabled: actionMenu.isOpen
-        onClicked: actionMenu.close()
-    }
-
-    ActionMenu {
-        id: actionMenu
-        anchors.top: parent.top
-        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch + 8
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-
-        //onMenuSelected: console.log(" MENU " + index)
-
-        Connections {
-            target: appDrawer
-            function onVisibleChanged() { actionMenu.close() }
-        }
-        Connections {
-            target: deviceManager
-            function onBluetoothChanged() {
-                if (!deviceManager.bluetooth) actionMenu.close()
-            }
-        }
-    }
+    ////////////////////////////////////////////////////////////////////////////
 }

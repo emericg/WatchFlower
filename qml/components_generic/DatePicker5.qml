@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 
 import Qt.labs.calendar 1.0
 
@@ -7,8 +6,8 @@ import ThemeEngine 1.0
 
 Item {
     id: datePicker
-    implicitWidth: 400
-    implicitHeight: 640
+    implicitWidth: 320
+    implicitHeight: 480
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -51,14 +50,15 @@ Item {
         isToday = (today.toLocaleString(locale, "dd MMMM yyyy") === currentDate.toLocaleString(locale, "dd MMMM yyyy"))
     }
 
+    Component.onCompleted: {
+        openDate(new Date())
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: bgbgbg
-        anchors.top: parent.top
-        anchors.left:  parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        id: background
+        anchors.fill: parent
 
         clip: true
         radius: Theme.componentRadius*2
@@ -82,11 +82,11 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                height: parent.radius
+                height: (parent.height / 2)
                 color: parent.color
             }
 
-            ItemImageButton {
+            ButtonIcon {
                 width: 48; height: 48;
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -111,7 +111,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentBig
                 color: Theme.colorText
             }
-            ItemImageButton {
+            ButtonIcon {
                 anchors.right: parent.right
                 width: 48; height: 48;
                 anchors.verticalCenter: parent.verticalCenter
@@ -201,16 +201,16 @@ Item {
                 }
             }
 
-            onClicked: {
+            onClicked: (date) => {
                 if (date.getMonth() === grid.month) {
                     // validate date (min / max)
                     if (minDate && maxDate) {
-                        const diffMinTime = (minDate - date);
-                        const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1);
-                        //console.log(diffMinDays + " diffMinDays");
-                        const diffMaxTime = (minDate - date);
-                        const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1);
-                        //console.log(diffMaxDays + " diffMaxDays");
+                        const diffMinTime = (minDate - date)
+                        const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1)
+                        //console.log(diffMinDays + " diffMinDays")
+                        const diffMaxTime = (minDate - date)
+                        const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1)
+                        //console.log(diffMaxDays + " diffMaxDays")
 
                         if (diffMinDays > -1 && diffMaxDays < 1) {
                             date.setHours(currentDate.getHours(),
@@ -220,8 +220,8 @@ Item {
                             updateDate(currentDate)
                         }
                     } else {
-                        const diffTime = (today - date);
-                        const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1);
+                        const diffTime = (today - date)
+                        const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1)
                         //console.log(diffDays + " days");
 
                         // validate date (-15 / today)

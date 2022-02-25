@@ -94,7 +94,7 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             horizontalAlignment: Text.AlignHCenter
                         }
-                        ImageSvg {
+                        IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                             height: width*0.229
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -142,7 +142,7 @@ Rectangle {
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
                         }
-                        ImageSvg {
+                        IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                             height: width*0.777
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -189,7 +189,7 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeContentBig
                         }
-                        ImageSvg {
+                        IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                             height: width*0.229
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -236,7 +236,7 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeContentBig
                         }
-                        ImageSvg {
+                        IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                             height: width*0.328
                             anchors.horizontalCenter: parent.horizontalCenter

@@ -227,7 +227,7 @@ bool DatabaseManager::openDatabase_mysql()
     }
     else
     {
-        qWarning() << "> MySQL is NOT available";
+        qDebug() << "> MySQL is NOT available";
         m_dbExternalAvailable = false;
     }
 

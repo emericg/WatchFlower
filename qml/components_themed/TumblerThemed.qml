@@ -1,10 +1,15 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+//import QtQuick.Controls.impl 2.15
+//import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
 Tumbler {
     id: control
+    implicitWidth: Theme.componentHeight
+    implicitHeight: Theme.componentHeight * 2
+
     model: 24
 
     background: Item {
@@ -13,11 +18,13 @@ Tumbler {
 
     delegate: Text {
         text: modelData
-        font.pixelSize: (Tumbler.tumbler.currentIndex === modelData) ? 20 : 18
-        font.bold: false
-        color: (Tumbler.tumbler.currentIndex === modelData) ? Theme.colorPrimary : "black"
-        opacity: 1.0 - Math.abs(Tumbler.displacement) / (control.visibleItemCount / 2)
+        textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+
+        color: (control.currentIndex === modelData) ? Theme.colorPrimary : Theme.colorText
+        opacity: 1.0 - (Math.abs(Tumbler.displacement) / (control.visibleItemCount * 0.55))
+        font.pixelSize: (control.currentIndex === modelData) ? Theme.fontSizeComponent+2 : Theme.fontSizeComponent
+        font.bold: false
     }
 }

@@ -214,7 +214,7 @@ Item {
                 anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
                 spacing: 2
 
-                ImageSvg {
+                IconSvg {
                     id: sensorDisconnected
                     width: isMobile ? 96 : 128
                     height: isMobile ? 96 : 128
@@ -250,7 +250,7 @@ Item {
                     color: cccc
                 }
 
-                ImageSvg {
+                IconSvg {
                     id: imageBattery
                     width: isPhone ? 20 : 24
                     height: isPhone ? 32 : 36
@@ -278,7 +278,7 @@ Item {
                 height: 24
                 spacing: 8
 
-                ImageSvg {
+                IconSvg {
                     id: imageStatus
                     width: 24
                     height: 24
@@ -312,7 +312,7 @@ Item {
                 height: 24
                 spacing: 4
 
-                ImageSvg {
+                IconSvg {
                     id: imageEditLocation
                     width: 20
                     height: 20
@@ -360,7 +360,7 @@ Item {
                         }
                     }
                 }
-                ImageSvg {
+                IconSvg {
                     id: imageLocation
                     width: 24
                     height: 24

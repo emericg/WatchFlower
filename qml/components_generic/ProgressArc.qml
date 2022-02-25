@@ -7,29 +7,29 @@ import ThemeEngine 1.0
 Item {
     id: control
     width: 256
-    height: width
+    height: width*0.85
 
     property real from: 0
-    property real to: 100
-    property real value: 50
+    property real to: 1
+    property real value: 0.5
 
     property real arcOffset: 0              // rotation (0 means starts at bottom center)
     property real arcSpan: 270              // arc span (in degree)
     property real arcWidth: 16              // width of the arc (in pixel)
     property real arcOpacity: 1
-    property string arcColor: "white"
+    property string arcColor: Theme.colorPrimary
 
     property bool background: true          // draw a background arc (full arc span)
     property real backgroundOpacity: 1
-    property string backgroundColor: "#33000000"
+    property string backgroundColor: Theme.colorForeground
 
     property alias animation: animationArcValue.enabled
-    property int animationDuration: 233
+    property int animationDuration: 333
 
     // private
-    property real arcValue: mapNumber(value, from, to, arcBegin, arcEnd)
     property real arcBegin: ((360 - arcSpan) / 2)
     property real arcEnd: (360 - arcBegin)
+    property real arcValue: mapNumber(value, from, to, arcBegin, arcEnd)
 
     function mapNumber(n, srcMin, srcMax, dstMin, dstMax) {
         if (n < srcMin) n = srcMin
@@ -76,7 +76,7 @@ Item {
         onPaint: {
             var ctx = getContext("2d")
             var x = (width / 2)
-            var y = (height / 2)
+            var y = (width / 2)
             var start = Math.PI * ((control.arcBegin + control.arcOffset + 90) / 180)
             var end = Math.PI * ((control.arcEnd + control.arcOffset + 90) / 180)
             var end_value = Math.PI * ((control.arcValue + control.arcOffset + 90) / 180)

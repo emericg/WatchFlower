@@ -14,7 +14,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -20
 
-        ImageSvg {
+        IconSvg {
             id: imageSearch
             width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
@@ -106,7 +106,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 16
 
-                ButtonWireframeImage {
+                ButtonWireframeIcon {
                     visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                     text: qsTr("Official information")

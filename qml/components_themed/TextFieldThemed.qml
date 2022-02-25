@@ -1,26 +1,31 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-TextField {
+T.TextField {
     id: control
-    implicitWidth: 128
+    implicitWidth: 256
     implicitHeight: Theme.componentHeight
 
+    padding: 12
+
+    // colors
     property string colorText: Theme.colorComponentText
     property string colorPlaceholderText: Theme.colorSubText
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
-    property string colorSelectedText: "white"
+    property string colorSelectedText: Theme.colorHighContrast
     property string colorSelection: Theme.colorPrimary
-
-    placeholderText: ""
-    placeholderTextColor: colorPlaceholderText
 
     text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
+    verticalAlignment: Text.AlignVCenter
+
+    placeholderText: ""
+    placeholderTextColor: colorPlaceholderText
 
     selectByMouse: false
     selectedTextColor: colorSelectedText
@@ -30,7 +35,7 @@ TextField {
 
     background: Rectangle {
         border.width: 2
-        border.color: control.activeFocus ? Theme.colorPrimary : control.colorBorder
+        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
         radius: Theme.componentRadius
         color: control.colorBackground
     }

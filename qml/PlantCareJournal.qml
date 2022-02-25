@@ -31,7 +31,7 @@ Item {
             anchors.verticalCenterOffset: -28
             visible: (entries.count <= 0)
 
-            ImageSvg {
+            IconSvg {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
                 height: width
@@ -51,7 +51,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ItemImageButtonShadow {
+    ButtonIcon {
         id: add
         width: 48
         height: 48
@@ -99,9 +99,13 @@ Item {
         color: Theme.colorForeground
         //height: parent.height * 0.66
 
+        property var currentLocale: Qt.locale()
+        property var currentDateTime: new Date()
+        property int entryType: JournalUtils.JOURNAL_WATER
+
         PopupDate {
             id: popupDate
-            locale: currentLocale
+            locale: newEntry.currentLocale
             onUpdateDate: {
                 //console.log("onUpdateDate(" + newdate + ")")
                 newEntry.currentDateTime = newdate
@@ -113,10 +117,6 @@ Item {
             entryType = JournalUtils.JOURNAL_WATER
             entryComment.text = ""
         }
-
-        property var currentLocale: Qt.locale()
-        property var currentDateTime: new Date()
-        property int entryType: JournalUtils.JOURNAL_WATER
 
         ////////////////
 
@@ -186,7 +186,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
 
@@ -212,7 +212,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_FERTILIZE)
@@ -237,10 +237,10 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
-                                    imgSize: 32
+                                    sourceSize: 32
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_PRUNE)
                                     iconColor: Theme.colorSubText
                                     background: true
@@ -269,10 +269,10 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
-                                    imgSize: 32
+                                    sourceSize: 32
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_COMMENT)
                                     iconColor: Theme.colorSubText
                                     background: true
@@ -296,7 +296,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_PHOTO)
@@ -326,7 +326,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_ROTATE)
@@ -352,7 +352,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_MOVE)
@@ -378,7 +378,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ItemImageButton {
+                                ButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_REPOT)
@@ -431,7 +431,7 @@ Item {
                 onClicked: newEntry.visible = false
             }
 
-            ButtonWireframeImage {
+            ButtonWireframeIcon {
                 fullColor: true
                 primaryColor: Theme.colorPrimary
                 source: "qrc:/assets/icons_material/baseline-add-24px.svg"

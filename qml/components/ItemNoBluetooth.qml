@@ -15,7 +15,7 @@ Item {
         anchors.verticalCenterOffset: -20
         spacing: 16
 
-        ImageSvg {
+        IconSvg {
             width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter

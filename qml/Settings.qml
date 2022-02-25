@@ -38,7 +38,7 @@ Item {
 
                 color: Theme.colorForeground
 
-                ImageSvg {
+                IconSvg {
                     id: image_appsettings
                     width: 24
                     height: 24
@@ -46,7 +46,7 @@ Item {
                     anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
@@ -76,7 +76,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_appTheme
                     width: 24
                     height: 24
@@ -84,7 +84,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-style-24px.svg"
                 }
 
@@ -227,7 +227,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_appThemeAuto
                     width: 24
                     height: 24
@@ -235,7 +235,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
                 }
 
@@ -307,7 +307,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_language
                     width: 24
                     height: 24
@@ -315,7 +315,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
                 }
 
@@ -406,7 +406,7 @@ Item {
                 // Android only
                 visible: (Qt.platform.os === "android")
 
-                ImageSvg {
+                IconSvg {
                     id: image_bluetoothControl
                     width: 24
                     height: 24
@@ -414,7 +414,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                 }
 
@@ -474,7 +474,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_bluetoothRange
                     width: 24
                     height: 24
@@ -482,7 +482,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
                 }
 
@@ -542,7 +542,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_bluetoothSimUpdate
                     width: 24
                     height: 24
@@ -550,7 +550,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 }
 
@@ -559,7 +559,7 @@ Item {
                     height: 40
                     anchors.left: image_bluetoothSimUpdate.right
                     anchors.leftMargin: 24
-                    anchors.right: isDesktop ? null : spinBox_bluetoothSimUpdate.left
+                    anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -593,7 +593,7 @@ Item {
                 SpinBoxThemed {
                     id: spinBox_bluetoothSimUpdate
                     width: 128
-                    height: 34
+                    height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -650,7 +650,7 @@ Item {
 
                 visible: isDesktop
 
-                ImageSvg {
+                IconSvg {
                     id: image_minimized
                     width: 24
                     height: 24
@@ -658,7 +658,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-minimize-24px.svg"
                 }
 
@@ -704,7 +704,7 @@ Item {
                 // desktop only // for now...
                 visible: isDesktop
 
-                ImageSvg {
+                IconSvg {
                     id: image_worker
                     width: 24
                     height: 24
@@ -712,7 +712,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                 }
 
@@ -792,7 +792,7 @@ Item {
                 // desktop only // for now... // also, need the systray
                 visible: isDesktop && settingsManager.systray
 
-                ImageSvg {
+                IconSvg {
                     id: image_notifications
                     width: 24
                     height: 24
@@ -800,7 +800,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                 }
 
@@ -858,7 +858,7 @@ Item {
                 anchors.right: parent.right
                 color: Theme.colorForeground
 
-                ImageSvg {
+                IconSvg {
                     id: image_plantsensor
                     width: 24
                     height: 24
@@ -866,7 +866,7 @@ Item {
                     anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 }
 
@@ -896,7 +896,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_update
                     width: 24
                     height: 24
@@ -904,7 +904,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                 }
 
@@ -928,7 +928,7 @@ Item {
                 SpinBoxThemed {
                     id: spinBox_update
                     width: 128
-                    height: 34
+                    height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -956,7 +956,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_bigindicators
                     width: 24
                     height: 24
@@ -964,7 +964,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_custom/indicators-24px.svg"
                 }
 
@@ -1018,7 +1018,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_dynascale
                     width: 24
                     height: 24
@@ -1026,7 +1026,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
                 }
 
@@ -1067,7 +1067,7 @@ Item {
                 anchors.right: parent.right
                 color: Theme.colorForeground
 
-                ImageSvg {
+                IconSvg {
                     id: image_thermometer
                     width: 24
                     height: 24
@@ -1075,7 +1075,7 @@ Item {
                     anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
 
@@ -1104,7 +1104,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_thermometer_update
                     width: 24
                     height: 24
@@ -1112,7 +1112,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                 }
 
@@ -1136,7 +1136,7 @@ Item {
                 SpinBoxThemed {
                     id: spinBox_thermometer_update
                     width: 128
-                    height: 34
+                    height: 36
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
@@ -1164,7 +1164,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_thermometer_unit
                     width: 24
                     height: 24
@@ -1172,7 +1172,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                 }
 
@@ -1250,7 +1250,7 @@ Item {
                 visible: isDesktop
                 color: Theme.colorForeground
 
-                ImageSvg {
+                IconSvg {
                     id: image_database
                     width: 24
                     height: 24
@@ -1258,7 +1258,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
@@ -1339,7 +1339,7 @@ Item {
                 visible: deviceManager.hasDevices
                 color: Theme.colorForeground
 
-                ImageSvg {
+                IconSvg {
                     id: image_export
                     width: 24
                     height: 24
@@ -1347,7 +1347,7 @@ Item {
                     anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                 }
 
@@ -1511,7 +1511,7 @@ Item {
                     onEditingFinished: settingsManager.externalDbHost = text
                     selectByMouse: true
 
-                    ImageSvg {
+                    IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
                         anchors.rightMargin: 12
@@ -1534,7 +1534,7 @@ Item {
                     validator: IntValidator { bottom: 1; top: 65535; }
                     selectByMouse: true
 
-                    ImageSvg {
+                    IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
                         anchors.rightMargin: 12
@@ -1566,7 +1566,7 @@ Item {
                     onEditingFinished: settingsManager.externalDbUser = text
                     selectByMouse: true
 
-                    ImageSvg {
+                    IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
                         anchors.rightMargin: 12
@@ -1589,7 +1589,7 @@ Item {
                     selectByMouse: true
                     echoMode: TextInput.PasswordEchoOnEdit
 
-                    ImageSvg {
+                    IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
                         anchors.rightMargin: 12
@@ -1620,7 +1620,7 @@ Item {
                 anchors.right: parent.right
                 height: 48
 
-                ImageSvg {
+                IconSvg {
                     id: image_database_host
                     width: 24
                     height: 24
@@ -1669,7 +1669,7 @@ Item {
                 anchors.right: parent.right
                 height: 48
 
-                ImageSvg {
+                IconSvg {
                     id: image_database_port
                     width: 24
                     height: 24
@@ -1718,7 +1718,7 @@ Item {
                 anchors.right: parent.right
                 height: 48
 
-                ImageSvg {
+                IconSvg {
                     id: image_database_user
                     width: 24
                     height: 24
@@ -1769,7 +1769,7 @@ Item {
                 anchors.right: parent.right
                 height: 48
 
-                ImageSvg {
+                IconSvg {
                     id: image_database_pwd
                     width: 24
                     height: 24

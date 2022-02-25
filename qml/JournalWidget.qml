@@ -14,7 +14,7 @@ Rectangle {
     border.width: 2
     border.color: UtilsPlantJournal.getJournalEntryColor(modelData.type)
 
-    ItemImageButton {
+    ButtonIcon {
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter

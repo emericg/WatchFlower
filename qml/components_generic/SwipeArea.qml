@@ -1,8 +1,6 @@
 import QtQuick 2.15
 
 MouseArea {
-    id: swipeArea
-
     preventStealing: false
     propagateComposedEvents: false
 
@@ -40,18 +38,18 @@ MouseArea {
         prevX = mouse.x
         prevY = mouse.y
 
-        if (velocityX > 15 && mouse.x > swipeArea.width * 0.25) {
+        if (velocityX > 15 && mouse.x > width * 0.25) {
             tracing = false
-            swipeArea.swipeRight()
-        } else if (velocityX < -15 && mouse.x < swipeArea.width * 0.75) {
+            swipeRight()
+        } else if (velocityX < -15 && mouse.x < width * 0.75) {
             tracing = false
-            swipeArea.swipeLeft()
-        } else if (velocityY > 15 && mouse.y > swipeArea.height * 0.25) {
+            swipeLeft()
+        } else if (velocityY > 15 && mouse.y > height * 0.25) {
             tracing = false
-            swipeArea.swipeDown()
-        } else if (velocityY < -15 && mouse.y < swipeArea.height * 0.75) {
+            swipeDown()
+        } else if (velocityY < -15 && mouse.y < height * 0.75) {
             tracing = false
-            swipeArea.swipeUp()
+            swipeUp()
         }
     }
 }

@@ -1,16 +1,17 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-RangeSlider {
+T.RangeSlider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
 
     first.value: 0.25
     second.value: 0.75
-    snapMode: RangeSlider.SnapAlways
+    snapMode: T.RangeSlider.SnapAlways
 
     background: Rectangle {
         x: control.leftPadding

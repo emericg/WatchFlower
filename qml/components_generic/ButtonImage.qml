@@ -1,61 +1,101 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+
+//import QtGraphicalEffects 1.12 // Qt5
+//import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Button {
+Item {
     id: control
-    implicitWidth: contentText.width + imgSize*3
+    implicitWidth: Theme.componentHeight
     implicitHeight: Theme.componentHeight
 
-    font.pixelSize: Theme.fontSizeComponent
-    font.bold: false
+    // actions
+    signal clicked()
+    signal pressAndHold()
 
-    focusPolicy: Qt.NoFocus
+    // states
+    property bool hovered: false
+    property bool pressed: false
 
-    property url source: ""
-    property int imgSize: UtilsNumber.alignTo(height * 0.666, 2)
+    // image
+    property url source
+    property int sourceSize: 32
+
+    // settings
+    property string hoverMode: "off" // available: off, circle, glow
+    property string highlightMode: "off" // available: off
+
+    // colors
+    property string highlightColor: Theme.colorPrimary
 
     ////////////////////////////////////////////////////////////////////////////
 
-    background: Rectangle {
-        implicitWidth: 128
-        implicitHeight: 40
-        opacity: enabled ? 1 : 0.33
-        color: control.down ? "#c1c1c1" : "#DBDBDB"
+    MouseArea {
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: isDesktop
+
+        onClicked: control.clicked()
+        onPressAndHold: control.pressAndHold()
+
+        onPressed: control.pressed = true
+        onReleased: control.pressed = false
+
+        onEntered: control.hovered = true
+        onExited: control.hovered = false
+        onCanceled: {
+            control.hovered = false
+            control.pressed = false
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    contentItem: Item {
-        Text {
-            id: contentText
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: ((imgSize / 2) + (imgSize / 6))
+    Rectangle {
+        id: bgRect
+        anchors.fill: contentImage
+        anchors.margins: -8
+        enabled: (control.hoverMode === "circle")
+        visible: (control.hoverMode === "circle")
 
-            text: control.text
-            textFormat: Text.PlainText
-            font: control.font
-            opacity: enabled ? 1.0 : 0.33
-            color: control.down ? "black" : "black"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            elide: Text.ElideRight
-        }
-        ImageSvg {
-            id: contentImage
-            width: imgSize
-            height: imgSize
+        radius: control.width
+        color: control.highlightColor
 
-            anchors.right: contentText.left
-            anchors.rightMargin: (imgSize / 3)
-            anchors.verticalCenter: parent.verticalCenter
+        opacity: control.hovered ? 0.33 : 0
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
+    }
+    Glow {
+        id: bgGlow
+        anchors.fill: contentImage
+        enabled: (control.hoverMode === "glow")
+        visible: (control.hoverMode === "glow")
 
-            opacity: enabled ? 1.0 : 0.33
-            source: control.source
-            color: control.down ? "black" : "black"
-        }
+        source: contentImage
+        color: control.highlightColor
+        radius: 24
+        cached: true
+        //samples: 16
+        transparentBorder: true
+
+        opacity: control.hovered ? 1 : 0
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Image {
+        id: contentImage
+        anchors.centerIn: parent
+
+        width: Math.round(control.sourceSize * (control.pressed ? 0.9 : 1))
+        height: Math.round(control.sourceSize * (control.pressed ? 0.9 : 1))
+
+        source: control.source
+        sourceSize: Qt.size(control.sourceSize, control.sourceSize)
+        fillMode: Image.PreserveAspectFit
+
+        opacity: enabled ? 1.0 : 0.4
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
     }
 }

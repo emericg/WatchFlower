@@ -45,7 +45,7 @@ Rectangle {
                 color: Theme.colorText
             }
 
-            ImageSvg {
+            IconSvg {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: singleColumn
 
@@ -86,7 +86,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 12
 
-        ImageSvg {
+        IconSvg {
             anchors.verticalCenter: parent.verticalCenter
 
             width: 20
@@ -131,7 +131,7 @@ Rectangle {
 
         ////////
 
-        ImageSvg {
+        IconSvg {
             anchors.verticalCenter: parent.verticalCenter
             visible: !singleColumn
 

@@ -178,7 +178,7 @@ Item {
                     border.width: 2
                     border.color: Theme.colorSeparator
 
-                    ImageSvg {
+                    IconSvg {
                         anchors.centerIn: parent
                         source: "qrc:/assets/icons_material/duotone-devices-24px.svg"
                         color: Theme.colorIcon

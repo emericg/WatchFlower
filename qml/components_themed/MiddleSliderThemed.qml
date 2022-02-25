@@ -1,12 +1,14 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-Slider {
+T.Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
+    padding: 4
 
     value: 0.5
 
@@ -33,7 +35,7 @@ Slider {
         width: 18
         height: width
         radius: (width / 2)
-        color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
-        border.color: Theme.colorPrimary
+        color: control.pressed ? Theme.colorSecondary : Theme.colorPrimary
+        border.color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
     }
 }

@@ -1,10 +1,11 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-RangeSlider {
+T.RangeSlider {
     id: control
     implicitWidth: 200
     implicitHeight: 4
@@ -12,14 +13,15 @@ RangeSlider {
 
     first.value: 0.25
     second.value: 0.75
-    snapMode: RangeSlider.SnapAlways
+    snapMode: T.RangeSlider.SnapAlways
 
+    // settings
     property int hhh: 18
-    property string unit: ""
+    property string unit
     property bool kshort: false
 
     // colors
-    property string colorBg: Theme.colorComponent
+    property string colorBg: Theme.colorForeground
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
 
@@ -28,28 +30,25 @@ RangeSlider {
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
-        implicitWidth: 200
-        implicitHeight: hhh
         width: control.availableWidth
 
         height: hhh
         radius: hhh
-        color: colorBg
         opacity: 1
+        color: control.colorBg
 
         Rectangle {
-            x: (h1.x + (h1.width / 3))
-            width: ((h2.x + (h2.width / 3)) - (h1.x + (h1.width / 3)))
+            x: (first.handle.x + (first.handle.width / 4))
+            width: ((second.handle.x + (second.handle.width / 2)) - x)
             height: parent.height
-            color: colorFg
             radius: hhh
+            color: control.colorFg
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     first.handle: Rectangle {
-        id: h1
         x: control.leftPadding + first.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
@@ -57,8 +56,8 @@ RangeSlider {
         width: t1.width + 16
 
         radius: hhh
-        color: colorFg
-        border.color: colorFg
+        color: control.colorFg
+        border.color: control.colorFg
         opacity: first.pressed ? 1 : 1
 
         Text {
@@ -69,14 +68,14 @@ RangeSlider {
 
             text: {
                 var vvalue = first.value
-                if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
+                if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + unit
+                return ((control.kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            color: colorTxt
             font.pixelSize: 10
             font.bold: true
+            color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
@@ -85,7 +84,6 @@ RangeSlider {
     ////////////////////////////////////////////////////////////////////////////
 
     second.handle: Rectangle {
-        id: h2
         x: control.leftPadding + second.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
@@ -93,8 +91,8 @@ RangeSlider {
         width: t2.width + 16
 
         radius: hhh
-        color: colorFg
-        border.color: colorFg
+        color: control.colorFg
+        border.color: control.colorFg
         opacity: second.pressed ? 1 : 1
 
         Text {
@@ -105,14 +103,18 @@ RangeSlider {
 
             text: {
                 var vvalue = second.value
-                if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
+                if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + unit
+                return ((control.kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
             font.pixelSize: 10
             font.bold: true
-            color: colorTxt
+            color: control.colorTxt
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

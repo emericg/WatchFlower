@@ -1,17 +1,21 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+//import QtQuick.Controls.impl 2.15
+//import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
 Switch {
     id: control
-    implicitHeight: Theme.componentHeight
 
     padding: 4
     spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
+        implicitWidth: 48
+        implicitHeight: Theme.componentHeight
+
         x: control.leftPadding
         y: (parent.height / 2) - (height / 2)
         width: 40
@@ -36,8 +40,6 @@ Switch {
     }
 
     contentItem: Text {
-        id: contentText
-
         leftPadding: control.indicator.width + control.spacing
         verticalAlignment: Text.AlignVCenter
 

@@ -88,9 +88,9 @@ Item {
                     visible: wideWideMode
                     spacing: 16
 
-                    ButtonWireframeImage {
+                    ButtonWireframeIcon {
                         width: 160
-                        imgSize: 28
+                        sourceSize: 28
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -99,9 +99,9 @@ Item {
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
 
-                    ButtonWireframeImage {
+                    ButtonWireframeIcon {
                         width: 160
-                        imgSize: 22
+                        sourceSize: 22
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -110,10 +110,10 @@ Item {
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                     }
 
-                    ButtonWireframeImage {
+                    ButtonWireframeIcon {
                         visible: (appWindow.width > 800)
                         width: 160
-                        imgSize: 22
+                        sourceSize: 22
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -138,11 +138,11 @@ Item {
                 visible: !wideWideMode
                 spacing: 16
 
-                ButtonWireframeImage {
+                ButtonWireframeIcon {
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 28
+                    sourceSize: 28
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -150,11 +150,11 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
-                ButtonWireframeImage {
+                ButtonWireframeIcon {
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 22
+                    sourceSize: 22
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -176,7 +176,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: descImg
                     width: 32
                     height: 32
@@ -185,7 +185,7 @@ Item {
                     anchors.left: parent.left
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -214,7 +214,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: authorImg
                     width: 31
                     height: 31
@@ -223,7 +223,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -248,15 +248,16 @@ Item {
                     }
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 20
                     height: 20
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     visible: singleColumn
-                    color: Theme.colorText
+
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
                 }
             }
 
@@ -272,7 +273,7 @@ Item {
 
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
-                ImageSvg {
+                IconSvg {
                     id: rateImg
                     width: 31
                     height: 31
@@ -281,7 +282,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-stars-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -296,15 +297,16 @@ Item {
                     color: Theme.colorText
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 20
                     height: 20
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
                     visible: singleColumn
-                    color: Theme.colorText
+
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
                 }
 
                 MouseArea {
@@ -332,7 +334,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 27
                     height: 27
                     anchors.left: parent.left
@@ -340,7 +342,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -367,7 +369,7 @@ Item {
 
             ////////
 
-            ImageSvg {
+            IconSvg {
                 id: imageDevices
                 height: 96
                 anchors.left: parent.left
@@ -412,7 +414,7 @@ Item {
 
                 visible: (Qt.platform.os === "android")
 
-                ImageSvg {
+                IconSvg {
                     id: permissionsImg
                     width: 24
                     height: 24
@@ -421,7 +423,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -436,7 +438,7 @@ Item {
                     color: Theme.colorText
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 24
                     height: 24
                     anchors.right: parent.right
@@ -444,7 +446,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 MouseArea {
@@ -479,7 +481,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: dependenciesImg
                     width: 24
                     height: 24
@@ -488,7 +490,7 @@ Item {
                     anchors.verticalCenter: dependenciesLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -590,7 +592,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: translatorsImg
                     width: 24
                     height: 24
@@ -599,7 +601,7 @@ Item {
                     anchors.verticalCenter: translatorsLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {

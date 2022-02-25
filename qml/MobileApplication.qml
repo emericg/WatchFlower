@@ -540,6 +540,8 @@ ApplicationWindow {
         height: hhh + screenPaddingBottom
         color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
+        ////////////////////////////////////////////////////////////////////////////
+
         Rectangle {
             anchors.top: parent.top
             width: parent.width
@@ -551,6 +553,8 @@ ApplicationWindow {
 
         // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
+        ////////////////////////////////////////////////////////////////////////////
 
         visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
                                appContent.state === "DeviceList" ||
@@ -569,43 +573,46 @@ ApplicationWindow {
                       appContent.state === "Settings" ||
                       appContent.state === "About")
 
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuPlants
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Sensors")
-                selected: (appContent.state === "DeviceList")
+                text: qsTr("Sensors")
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                selected: (appContent.state === "DeviceList")
                 onClicked: appContent.state = "DeviceList"
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuSettings
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Settings")
-                selected: (appContent.state === "Settings")
+                text: qsTr("Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                selected: (appContent.state === "Settings")
                 onClicked: appContent.state = "Settings"
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuAbout
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("About")
-                selected: (appContent.state === "About")
+                text: qsTr("About")
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                selected: (appContent.state === "About")
                 onClicked: appContent.state = "About"
             }
         }
@@ -649,56 +656,60 @@ ApplicationWindow {
                 menuDeviceSettings.selected = true
             }
 
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuDeviceData
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Data")
-                //selected: (appContent.state === "DevicePlantSensor")
+                text: qsTr("Data")
                 source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                //selected: (appContent.state === "DevicePlantSensor")
                 onClicked: tabletMenuDevice.deviceDataButtonClicked()
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuDeviceHistory
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("History")
-                //selected: (appContent.state === "DevicePlantSensor")
+                text: qsTr("History")
                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                //selected: (appContent.state === "DevicePlantSensor")
                 onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuDevicePlant
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Plant")
-                //selected: (appContent.state === "DevicePlantSensor")
+                text: qsTr("Plant")
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                //selected: (appContent.state === "DevicePlantSensor")
                 onClicked: tabletMenuDevice.devicePlantButtonClicked()
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuDeviceSettings
-                imgSize: appTabletMenu.hhi
+                height: appTabletMenu.hhh
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Settings")
-                //selected: (appContent.state === "DevicePlantSensor")
+                text: qsTr("Settings")
                 source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
+                sourceSize: appTabletMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                //selected: (appContent.state === "DevicePlantSensor")
                 onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
             }
         }

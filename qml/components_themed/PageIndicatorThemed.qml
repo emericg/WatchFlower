@@ -1,10 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+//import QtQuick.Controls.impl 2.15
+//import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
 PageIndicator {
     id: control
+    implicitWidth: 12
+    implicitHeight: 12
 
     count: 1
     currentIndex: 1
@@ -12,7 +16,7 @@ PageIndicator {
     delegate: Rectangle {
         implicitWidth: 12
         implicitHeight: 12
-        radius: (width / 2)
+        radius: 6
 
         color: Theme.colorHeaderContent
         opacity: (index === control.currentIndex) ? (0.95) : (control.pressed ? 0.7 : 0.45)

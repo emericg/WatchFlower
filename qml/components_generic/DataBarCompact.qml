@@ -1,4 +1,5 @@
 import QtQuick 2.15
+
 import QtGraphicalEffects 1.15 // Qt5
 //import Qt5Compat.GraphicalEffects // Qt6
 
@@ -10,19 +11,6 @@ Item {
     implicitWidth: 128
     implicitHeight: 32
 
-    property string legend: ""
-    property int legendWidth: 80
-    property int legendContentWidth: item_legend.contentWidth
-
-    property string prefix: ""
-    property string suffix: ""
-    property int floatprecision: 0
-    property bool warning: false
-
-    property string colorText: Theme.colorText
-    property string colorForeground: Theme.colorPrimary
-    property string colorBackground: Theme.colorForeground
-
     property int hhh: 8
     property bool animated: true
 
@@ -31,6 +19,20 @@ Item {
     property real valueMax: 100
     property real limitMin: -1
     property real limitMax: -1
+
+    property string prefix
+    property string suffix
+    property int floatprecision: 0
+    property bool warning: false
+
+    property string legend
+    property int legendWidth: 80
+    property int legendContentWidth: item_legend.contentWidth
+
+    // colors
+    property string colorText: Theme.colorText
+    property string colorForeground: Theme.colorPrimary
+    property string colorBackground: Theme.colorForeground
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -205,7 +207,7 @@ Item {
                 }
             }
 
-            ImageSvg {
+            IconSvg {
                 id: warningIndicator
                 width: 15
                 height: 15

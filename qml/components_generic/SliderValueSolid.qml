@@ -1,20 +1,22 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Slider {
+T.Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
     padding: 4
 
     value: 0.5
-    snapMode: RangeSlider.SnapAlways
+    snapMode: T.RangeSlider.SnapAlways
 
-    property int hhh: 16
-    property string unit: ""
+    // settings
+    property int hhh: 18
+    property string unit
     property bool kshort: false
 
     // colors
@@ -31,14 +33,14 @@ Slider {
 
         height: hhh
         radius: hhh
-        color: colorBg
         opacity: 1
+        color: control.colorBg
 
         Rectangle {
-            visible: h2.x > 4
-            width: (h2.x + (h2.width / 3))
+            visible: (handle.x > 4)
+            width: (handle.x + (handle.width / 2))
             height: parent.height
-            color: colorFg
+            color: control.colorFg
             radius: hhh
         }
     }
@@ -46,7 +48,6 @@ Slider {
     ////////////////////////////////////////////////////////////////////////////
 
     handle: Rectangle {
-        id: h2
         x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
@@ -54,8 +55,8 @@ Slider {
         width: t2.width + 16
 
         radius: hhh
-        color: colorFg
-        border.color: colorFg
+        color: control.colorFg
+        border.color: control.colorFg
         opacity: control.pressed ? 1 : 1
 
         Text {
@@ -66,14 +67,18 @@ Slider {
 
             text: {
                 var vvalue = control.value
-                if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
+                if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
-                return ((kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + unit
+                return ((control.kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
             font.pixelSize: 10
             font.bold: true
-            color: colorTxt
+            color: control.colorTxt
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

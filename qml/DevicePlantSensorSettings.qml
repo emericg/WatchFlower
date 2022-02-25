@@ -70,7 +70,7 @@ Item {
                 border.width: (isDesktop) ? 2 : 2
                 border.color: Theme.colorSeparator
 
-                ImageSvg {
+                IconSvg {
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -158,7 +158,7 @@ Item {
                                 font.pixelSize: Theme.fontSizeContentBig
                                 color: Theme.colorHighContrast
 
-                                ImageSvg {
+                                IconSvg {
                                     id: imageFwUpdate
                                     //width: 32; height: 32;
                                     width: parent.height - 4; height: parent.height - 4;
@@ -186,7 +186,7 @@ Item {
                                 font.pixelSize: Theme.fontSizeContentBig
                                 color: Theme.colorHighContrast
 
-                                ImageSvg {
+                                IconSvg {
                                     id: imageBattery
                                     width: 32; height: 32;
                                     rotation: 90
@@ -441,7 +441,7 @@ Item {
                         Row {
                             spacing: 12
 
-                            ItemImageButton {
+                            ButtonIcon {
                                 width: 40; height: 40;
                                 border: true
                                 background: true
@@ -484,7 +484,7 @@ Item {
                         Row {
                             spacing: 12
 
-                            ItemImageButton {
+                            ButtonIcon {
                                 width: 40; height: 40;
                                 border: true
                                 background: true
@@ -575,7 +575,7 @@ Item {
                             Column {
                                 anchors.centerIn: parent
 
-                                ImageSvg {
+                                IconSvg {
                                     id: insideImage
                                     width: 40; height: 40;
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -617,7 +617,7 @@ Item {
                             Column {
                                 anchors.centerIn: parent
 
-                                ImageSvg {
+                                IconSvg {
                                     id: outsideImage
                                     width: 40; height: 40;
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -645,7 +645,7 @@ Item {
                         color: Theme.colorBackground
                         height: rowMacAddr.height + 16 + legendMacAddr.contentHeight
 
-                        ImageSvg {
+                        IconSvg {
                             anchors.top: parent.top
                             anchors.topMargin: 8
                             anchors.right: parent.right
@@ -720,7 +720,7 @@ Item {
                                         }
                                     }
 
-                                    ImageSvg {
+                                    IconSvg {
                                         id: imageEditMacAddr
                                         width: 20
                                         height: 20

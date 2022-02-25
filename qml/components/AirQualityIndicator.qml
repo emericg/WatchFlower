@@ -96,7 +96,7 @@ Item {
 
     ////////////////
 
-    ImageSvg {
+    IconSvg {
         id: lungsIcon
         width: parent.width * 0.58
         height: parent.height * 0.58

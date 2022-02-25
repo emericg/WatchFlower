@@ -1,17 +1,21 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+//import QtQuick.Controls.impl 2.15
+//import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
 RadioButton {
     id: control
-    implicitHeight: Theme.componentHeight
 
     padding: 4
-    spacing: 8
+    spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
+        implicitWidth: Theme.componentHeight
+        implicitHeight: Theme.componentHeight
+
         x: control.leftPadding
         y: (parent.height / 2) - (height / 2)
         width: 24

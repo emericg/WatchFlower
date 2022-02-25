@@ -1,12 +1,13 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-ProgressBar {
+T.ProgressBar {
     id: control
     implicitWidth: 200
-    implicitHeight: 6
+    implicitHeight: 12
 
     value: 0.5
 

@@ -1,10 +1,11 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-RangeSlider {
+T.RangeSlider {
     id: control
     implicitWidth: 200
     implicitHeight: 4
@@ -14,7 +15,8 @@ RangeSlider {
     second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
-    property string unit: ""
+    // settings
+    property string unit
 
     // colors
     property string colorBg: Theme.colorComponent
@@ -105,4 +107,6 @@ RangeSlider {
             color: colorTxt
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

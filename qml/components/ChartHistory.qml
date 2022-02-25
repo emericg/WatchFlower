@@ -442,7 +442,7 @@ Item {
     Component {
         id: legendImage
 
-        ImageSvg {
+        IconSvg {
             width: 20
             height: 20
 

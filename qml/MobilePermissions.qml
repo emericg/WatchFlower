@@ -87,7 +87,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                ButtonIcon {
                     id: button_location_test
                     width: 32
                     height: 32
@@ -137,12 +137,12 @@ Item {
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
             }
-            ButtonWireframeImage {
+            ButtonWireframeIcon {
                 height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 64
 
-                imgSize: 20
+                sourceSize: 20
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
                 source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
@@ -176,7 +176,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                ButtonIcon {
                     id: button_gps_test
                     width: 32
                     height: 32
@@ -252,7 +252,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                ButtonIcon {
                     id: button_bluetooth_test
                     width: 32
                     height: 32

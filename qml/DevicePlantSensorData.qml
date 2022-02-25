@@ -190,7 +190,7 @@ Item {
                         font.capitalization: Font.AllUppercase
                         verticalAlignment: Text.AlignVCenter
 
-                        ImageSvg {
+                        IconSvg {
                             id: imageBattery
                             width: 32
                             height: 32
@@ -263,7 +263,7 @@ Item {
                             }
                         }
 
-                        ImageSvg {
+                        IconSvg {
                             id: imageEditPlant
                             width: 20
                             height: 20
@@ -337,7 +337,7 @@ Item {
                             }
                         }
 
-                        ImageSvg {
+                        IconSvg {
                             id: imageEditLocation
                             width: 20
                             height: 20

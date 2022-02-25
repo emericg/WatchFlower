@@ -117,7 +117,7 @@ Rectangle {
             Behavior on opacity { OpacityAnimator { duration: 333 } }
         }
 
-        ImageSvg {
+        IconSvg {
             id: buttonBack
             width: 24
             height: width
@@ -165,15 +165,17 @@ Rectangle {
             visible: (appContent.state === "DeviceThermometer")
 
             source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
+            tooltipText: qsTr("Switch graph")
             iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
+
             onClicked: {
                 if (settingsManager.graphThermometer === "lines")
                     settingsManager.graphThermometer = "minmax"
                 else
                     settingsManager.graphThermometer = "lines"
             }
-            tooltipText: qsTr("Switch graph")
         }
         ButtonCompactable {
             id: buttonWatering
@@ -185,10 +187,12 @@ Rectangle {
                       (appContent.state === "DevicePlantSensor"))
 
             source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceWateringButtonClicked()
             tooltipText: qsTr("Watering")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceWateringButtonClicked()
         }
         ButtonCompactable {
             id: buttonCalibrate
@@ -202,10 +206,12 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceCalibrateButtonClicked()
             tooltipText: qsTr("Calibrate")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceCalibrateButtonClicked()
         }
         ButtonCompactable {
             id: buttonReboot
@@ -219,10 +225,12 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-restart_alt-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceRebootButtonClicked()
             tooltipText: qsTr("Reboot")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceRebootButtonClicked()
         }
         ButtonCompactable {
             id: buttonLed
@@ -236,10 +244,12 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceLedButtonClicked()
             tooltipText: qsTr("Blink LED")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceLedButtonClicked()
         }
 
         Rectangle { // separator
@@ -264,10 +274,12 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceRefreshHistoryButtonClicked()
             tooltipText: qsTr("Synchronize history")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceRefreshHistoryButtonClicked()
         }
         ButtonCompactable {
             id: buttonClearHistory
@@ -277,10 +289,12 @@ Rectangle {
             visible: buttonRefreshHistory.visible
 
             source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceClearButtonClicked()
             tooltipText: qsTr("Clear history")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceClearButtonClicked()
         }
 
         Rectangle { // separator
@@ -303,11 +317,12 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/duotone-update-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: deviceRefreshRealtimeButtonClicked()
-
             tooltipText: qsTr("Real time data")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: deviceRefreshRealtimeButtonClicked()
         }
         ButtonCompactable {
             id: buttonRefreshData
@@ -320,11 +335,13 @@ Rectangle {
                        appContent.state === "DeviceEnvironmental"))
 
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+            tooltipText: qsTr("Refresh sensor")
             iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
+
             onClicked: deviceRefreshButtonClicked()
 
-            tooltipText: qsTr("Refresh sensor")
             animation: "rotate"
             animationRunning: selectedDevice.updating
         }
@@ -351,44 +368,48 @@ Rectangle {
 
             visible: (appContent.state === "DevicePlantSensor")
 
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuDeviceData
                 width: headerHeight
                 height: headerHeight
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
                 onClicked: deviceDataButtonClicked()
             }
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuDeviceHistory
                 width: headerHeight
                 height: headerHeight
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
                 onClicked: deviceHistoryButtonClicked()
             }
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuDevicePlant
                 width: headerHeight
                 height: headerHeight
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
                 onClicked: devicePlantButtonClicked()
             }
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuDeviceSettings
                 width: headerHeight
                 height: headerHeight
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
                 onClicked: deviceSettingsButtonClicked()
             }
         }
@@ -399,10 +420,11 @@ Rectangle {
             id: buttonSort
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
-
             visible: (appContent.state === "DeviceList")
+
             source: "qrc:/assets/icons_material/baseline-filter_list-24px.svg"
             iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
             function setText() {
@@ -472,12 +494,14 @@ Rectangle {
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: !deviceManager.updating && !deviceManager.syncing
 
-            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: rescanButtonClicked()
             text: qsTr("Search for new sensors")
             tooltipText: text
+            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: rescanButtonClicked()
 
             animation: "fade"
             animationRunning: deviceManager.scanning
@@ -490,12 +514,14 @@ Rectangle {
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: !deviceManager.scanning
 
-            source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: syncButtonClicked()
             text: qsTr("Sync sensors history")
             tooltipText: text
+            source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: syncButtonClicked()
 
             animation: "fade"
             animationRunning: deviceManager.syncing
@@ -508,12 +534,14 @@ Rectangle {
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: !deviceManager.scanning
 
-            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-            iconColor: Theme.colorHeaderContent
-            backgroundColor: Theme.colorHeaderHighlight
-            onClicked: refreshButtonClicked()
             text: qsTr("Refresh sensors data")
             tooltipText: text
+            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: refreshButtonClicked()
 
             animation: "rotate"
             animationRunning: deviceManager.updating
@@ -536,37 +564,40 @@ Rectangle {
                       appContent.state === "About")
             spacing: 0
 
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuPlants
                 width: headerHeight
                 height: headerHeight
-                selected: (appContent.state === "DeviceList")
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
+                selected: (appContent.state === "DeviceList")
                 onClicked: plantsButtonClicked()
             }
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuSettings
                 width: headerHeight
                 height: headerHeight
-                selected: (appContent.state === "Settings")
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
+                selected: (appContent.state === "Settings")
                 onClicked: settingsButtonClicked()
             }
-            ItemMenuButton {
+            DesktopHeaderItem {
                 id: menuAbout
                 width: headerHeight
                 height: headerHeight
-                selected: (appContent.state === "About")
-                colorBackground: Theme.colorHeaderHighlight
-                colorHighlight: Theme.colorHeaderHighlight
-                colorContent: Theme.colorHeaderContent
+
                 source: "qrc:/assets/menus/menu_infos.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
+                selected: (appContent.state === "About")
                 onClicked: aboutButtonClicked()
             }
         }

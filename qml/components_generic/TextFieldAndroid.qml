@@ -1,28 +1,33 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls.impl 2.15
+import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-TextField {
+T.TextField {
     id: control
-    implicitWidth: 128
-    implicitHeight: Theme.componentHeight
+    implicitWidth: 256
+    implicitHeight: 56
 
-    property string title: ""
+    padding: 12
 
+    // colors
     property string colorText: Theme.colorComponentContent
     property string colorPlaceholderText: Theme.colorSubText
-    property string colorBorder: Theme.colorComponentBorder
+    property string colorBorder: Theme.colorSubText
     property string colorBackground: Theme.colorBackground
-    property string colorSelectedText: "white"
+    property string colorSelectedText: Theme.colorHighContrast
     property string colorSelection: Theme.colorPrimary
 
-    placeholderText: ""
-    placeholderTextColor: colorPlaceholderText
+    property string title: ""
 
     text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
+    verticalAlignment: Text.AlignVCenter
+
+    placeholderText: ""
+    placeholderTextColor: colorPlaceholderText
 
     selectByMouse: false
     selectedTextColor: colorSelectedText
@@ -31,26 +36,26 @@ TextField {
     onEditingFinished: focus = false
 
     background: Rectangle {
+        radius: 8
+        color: control.colorBackground
         border.width: 1
-        border.color: control.activeFocus ? Theme.colorPrimary : colorBorder
-        radius: Theme.componentRadius
-        color: colorBackground
+        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
 
-        Rectangle {
-            width: textTitle.width + 8
-            height: textTitle.height + 8
-            x: 12
-            y: (-textTitle.height / 2) - 1
-            visible: title
-            color: Theme.colorBackground
+        Text { // textTitle
+            x: 16
+            y: (-height / 2)
 
-            Text {
-                x: 4
-                id: textTitle
-                text: control.title
-                textFormat: Text.PlainText
-                font: control.font
-                color: control.activeFocus ? Theme.colorPrimary : colorBorder
+            text: control.title
+            textFormat: Text.PlainText
+            color: control.activeFocus ? control.colorSelection : control.colorBorder
+            font: control.font
+
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: -6
+                z: -1
+                visible: control.title
+                color: control.colorBackground
             }
         }
     }

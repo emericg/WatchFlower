@@ -167,7 +167,7 @@ Item {
 
             colorText = "#474747"
             colorSubText = "#666666"
-            colorIcon = "#606060"
+            colorIcon = "#474747"
             colorSeparator = colorMaterialDarkGrey
             colorLowContrast = "white"
             colorHighContrast = "#303030"
@@ -220,7 +220,7 @@ Item {
 
             colorText = "#333333"
             colorSubText = "#666666"
-            colorIcon = "#606060"
+            colorIcon = "#333333"
             colorSeparator = colorMaterialDarkGrey
             colorLowContrast = "white"
             colorHighContrast = "black"
@@ -273,7 +273,7 @@ Item {
 
             colorText = "#474747"
             colorSubText = "#666666"
-            colorIcon = "#606060"
+            colorIcon = "#474747"
             colorSeparator = colorMaterialDarkGrey
             colorLowContrast = "white"
             colorHighContrast = "#303030"

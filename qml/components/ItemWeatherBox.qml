@@ -45,7 +45,7 @@ Rectangle {
         anchors.rightMargin: 6
         spacing: 6
 
-        ImageSvg {
+        IconSvg {
             width: isDesktop ? 32 : 24
             height: isDesktop ? 32 : 24
             source: icon

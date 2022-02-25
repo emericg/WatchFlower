@@ -10,21 +10,19 @@ Item {
     height: width
 
     property real from: 0
-    property real to: 100
-    property real value: 50
+    property real to: 1
+    property real value: 0.5
 
     property bool isPie: false              // paint a pie instead of an arc
 
     property real arcOffset: 0              // rotation (0 means starts at top center)
-    property real arcBegin: 0
-    property real arcEnd: 360
     property real arcWidth: 16              // width of the arc
     property real arcOpacity: 1
-    property string arcColor: "white"
+    property string arcColor: Theme.colorPrimary
 
-    property bool background: false         // a full circle as a background of the arc
+    property bool background: true          // a full circle as a background of the arc
     property real backgroundOpacity: 1
-    property string backgroundColor: "#33000000"
+    property string backgroundColor: Theme.colorForeground
 
     property alias animationBegin: animationArcBegin.enabled
     property alias animationEnd: animationArcEnd.enabled
@@ -32,6 +30,8 @@ Item {
     property int animationDuration: 333
 
     // private
+    property real arcBegin: 0
+    property real arcEnd: 360
     property real arcValue: mapNumber(value, from, to, arcBegin, arcEnd)
 
     function mapNumber(n, srcMin, srcMax, dstMin, dstMax) {

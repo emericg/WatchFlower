@@ -3,47 +3,41 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
-Rectangle {
+Popup {
     id: actionMenu
-    width: 220
-    height: menuHolder.height
-    visible: isOpen
-    focus: isOpen && !isMobile
+    width: 200
 
-    color: Theme.colorBackground
-    radius: Theme.componentRadius
-    border.color: Theme.colorSeparator
-    border.width: Theme.componentBorderWidth
+    padding: 0
+    margins: 0
+
+    parent: Overlay.overlay
+    modal: true
+    dim: false
+    focus: isMobile
+    locale: Qt.locale()
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }
+    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; } }
+
+    property int layoutDirection: Qt.RightToLeft
 
     signal menuSelected(var index)
-    property int menuWidth: 0
-    property bool isOpen: false
 
-    function open() { isOpen = true; updateSize(); }
-    function close() { isOpen = false; }
-    function openClose() { isOpen = !isOpen; updateSize(); }
+    ////////////////////////////////////////////////////////////////////////////
 
-    function updateSize() {
-        if (isOpen) {
-            menuWidth = 0
-            if (actionUpdate.visible && menuWidth < actionUpdate.contentWidth) menuWidth = actionUpdate.contentWidth
-            if (actionRealtime.visible && menuWidth < actionRealtime.contentWidth) menuWidth = actionRealtime.contentWidth
-            if (actionHistoryRefresh.visible && menuWidth < actionHistoryRefresh.contentWidth) menuWidth = actionHistoryRefresh.contentWidth
-            if (actionHistoryClear.visible && menuWidth < actionHistoryClear.contentWidth) menuWidth = actionHistoryClear.contentWidth
-            if (actionLed.visible && menuWidth < actionLed.contentWidth) menuWidth = actionLed.contentWidth
-            if (actionWatering.visible && menuWidth < actionWatering.contentWidth) menuWidth = actionWatering.contentWidth
-            if (actionGraphMode.visible && menuWidth < actionGraphMode.contentWidth) menuWidth = actionGraphMode.contentWidth
-            menuWidth += 96
-            actionMenu.width = menuWidth
-        }
+    background: Rectangle {
+        color: Theme.colorBackground
+        radius: Theme.componentRadius
+        border.color: Theme.colorSeparator
+        border.width: Theme.componentBorderWidth
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        id: menuHolder
-        width: parent.width
-        height: children.height * children.length
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         topPadding: 8
         bottomPadding: 8
@@ -51,11 +45,14 @@ Rectangle {
 
         ActionMenuItem {
             id: actionUpdate
+
             index: 0
+            text: qsTr("Update data")
+            source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && selectedDevice)
-            button_text: qsTr("Update data")
-            button_source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-            onButtonClicked: {
+
+            onClicked: {
                 deviceRefreshButtonClicked()
                 menuSelected(index)
                 close()
@@ -64,11 +61,14 @@ Rectangle {
 
         ActionMenuItem {
             id: actionRealtime
+
             index: 1
+            text: qsTr("Real time data")
+            source: "qrc:/assets/icons_material/duotone-update-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
-            button_text: qsTr("Real time data")
-            button_source: "qrc:/assets/icons_material/duotone-update-24px.svg"
-            onButtonClicked: {
+
+            onClicked: {
                 deviceRefreshRealtimeButtonClicked()
                 menuSelected(index)
                 close()
@@ -85,11 +85,14 @@ Rectangle {
 
         ActionMenuItem {
             id: actionHistoryRefresh
+
             index: 2
+            text: qsTr("Update history")
+            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
-            button_text: qsTr("Update history")
-            button_source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-            onButtonClicked: {
+
+            onClicked: {
                 deviceRefreshHistoryButtonClicked()
                 menuSelected(index)
                 close()
@@ -98,11 +101,14 @@ Rectangle {
 
         ActionMenuItem {
             id: actionHistoryClear
+
             index: 3
+            text: qsTr("Clear history")
+            source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
-            button_text: qsTr("Clear history")
-            button_source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
-            onButtonClicked: {
+
+            onClicked: {
                 deviceClearButtonClicked()
                 menuSelected(index)
                 close()
@@ -119,24 +125,30 @@ Rectangle {
 
         ActionMenuItem {
             id: actionLed
-            index: 4
-            button_text: qsTr("Blink LED")
-            button_source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+
+            index: 5
+            text: qsTr("Blink LED")
+            source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
-            onButtonClicked: {
+
+            onClicked: {
                 deviceLedButtonClicked()
                 menuSelected(index)
                 close()
             }
         }
 
-        actionMenuItem {
+        ActionMenuItem {
             id: actionWatering
-            index: 1
-            button_text: qsTr("Watering")
-            button_source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+
+            index: 6
+            text: qsTr("Watering")
+            source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
-            onButtonClicked: {
+
+            onClicked: {
                 deviceWateringButtonClicked()
                 menuSelected(index)
                 close()
@@ -145,11 +157,14 @@ Rectangle {
 
         ActionMenuItem {
             id: actionGraphMode
-            index: 5
-            button_text: qsTr("Switch graph")
-            button_source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg"
+
+            index: 7
+            text: qsTr("Switch graph")
+            source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (appContent.state === "DeviceThermometer")
-            onButtonClicked: {
+
+            onClicked: {
                 if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
                 else settingsManager.graphThermometer = "minmax"
                 menuSelected(index)
@@ -159,24 +174,30 @@ Rectangle {
 
         ActionMenuItem {
             id: actionCalibrate
-            index: 6
-            button_text: qsTr("Calibrate sensor")
-            button_source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+
+            index: 8
+            text: qsTr("Calibrate sensor")
+            source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
-            onButtonClicked: {
+
+            onClicked: {
                 deviceCalibrateButtonClicked()
                 menuSelected(index)
                 close()
             }
         }
 
-        actionMenuItem {
+        ActionMenuItem {
             id: actionReboot
-            index: 7
-            button_text: qsTr("Reboot sensor")
-            button_source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+
+            index: 9
+            text: qsTr("Reboot sensor")
+            source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasReboot))
-            onButtonClicked: {
+
+            onClicked: {
                 deviceRebootButtonClicked()
                 menuSelected(index)
                 close()

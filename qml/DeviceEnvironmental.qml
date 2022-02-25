@@ -351,7 +351,7 @@ Item {
                 anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : -(appHeader.height/4)
                 spacing: 48
 
-                ImageSvg {
+                IconSvg {
                     id: indicatorDisconnected
                     width: isMobile ? 96 : 128
                     height: isMobile ? 96 : 128
@@ -412,7 +412,7 @@ Item {
 
                 ////////////////
 
-                ImageSvg {
+                IconSvg {
                     id: indicatorRadioactivity
                     width: isMobile ? 128 : 160
                     height: isMobile ? 128 : 160
@@ -452,7 +452,7 @@ Item {
                 height: 24
                 spacing: 8
 
-                ImageSvg {
+                IconSvg {
                     id: imageStatus
                     width: 24
                     height: 24
@@ -486,7 +486,7 @@ Item {
                 height: 24
                 spacing: 4
 
-                ImageSvg {
+                IconSvg {
                     id: imageEditLocation
                     width: 20
                     height: 20
@@ -534,7 +534,7 @@ Item {
                         }
                     }
                 }
-                ImageSvg {
+                IconSvg {
                     id: imageLocation
                     width: 24
                     height: 24

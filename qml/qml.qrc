@@ -25,6 +25,7 @@
         <file>DeviceThermometer.qml</file>
         <file>DeviceEnvironmental.qml</file>
         <file>ThemeEngine.qml</file>
+        <file>WindowGeometrySaver.qml</file>
 
         <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>
         <file alias="PopupCalibration.qml">popups/PopupCalibration.qml</file>
@@ -32,9 +33,7 @@
         <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
 
-        <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
-        <file alias="ActionMenuItem.qml">components/ActionMenuItem.qml</file>
-        <file alias="ButtonCompactable.qml">components/ButtonCompactable.qml</file>
+        <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
         <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>
         <file alias="ChartHistory.qml">components/ChartHistory.qml</file>
@@ -50,22 +49,23 @@
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
         <file alias="ItemNoDeviceNearby.qml">components/ItemNoDeviceNearby.qml</file>
-        <file alias="DatePicker.qml">components/DatePicker.qml</file>
 
+        <file alias="ActionMenuItem.qml">components_generic/ActionMenuItem.qml</file>
+        <file alias="ButtonCompactable.qml">components_generic/ButtonCompactable.qml</file>
+        <file alias="ButtonIcon.qml">components_generic/ButtonIcon.qml</file>
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
-        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
+        <file alias="ButtonWireframeIcon.qml">components_generic/ButtonWireframeIcon.qml</file>
         <file alias="DataBarCompact.qml">components_generic/DataBarCompact.qml</file>
         <file alias="DataBarSolid.qml">components_generic/DataBarSolid.qml</file>
-        <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
-        <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
-        <file alias="ItemImageButtonShadow.qml">components_generic/ItemImageButtonShadow.qml</file>
-        <file alias="ItemImageButtonTooltip.qml">components_generic/ItemImageButtonTooltip.qml</file>
-        <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
+        <file alias="DatePicker.qml">components_generic/DatePicker5.qml</file>
+        <file alias="DesktopHeaderItem.qml">components_generic/DesktopHeaderItem.qml</file>
+        <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
+        <file alias="MobileMenuItem.qml">components_generic/MobileMenuItem.qml</file>
         <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
         <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
         <file alias="SliderValueSolid.qml">components_generic/SliderValueSolid.qml</file>
-        <file alias="WindowGeometrySaver.qml">components_generic/WindowGeometrySaver.qml</file>
+        <file alias="ToolTipFlat.qml">components_generic/ToolTipFlat.qml</file>
 
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>

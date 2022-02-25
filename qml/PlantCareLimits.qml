@@ -45,7 +45,7 @@ Flickable {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            ImageSvg {
+            IconSvg {
                 id: imageHygro
                 width: 24
                 height: 24
@@ -118,7 +118,7 @@ Flickable {
             anchors.left: parent.left
             anchors.leftMargin: 0
 
-            ImageSvg {
+            IconSvg {
                 id: imageTemp
                 width: 24
                 height: 24
@@ -208,7 +208,7 @@ Flickable {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            ImageSvg {
+            IconSvg {
                 id: imageLumi
                 width: 24
                 height: 24
@@ -405,7 +405,7 @@ Flickable {
             anchors.right: parent.right
             anchors.rightMargin: 0
 
-            ImageSvg {
+            IconSvg {
                 id: imageCondu
                 width: 24
                 height: 24

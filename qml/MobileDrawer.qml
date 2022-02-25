@@ -132,7 +132,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -171,7 +171,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -208,7 +208,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -292,7 +292,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -378,7 +378,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         id: buttonRefresh
                         width: 24
                         height: 24
@@ -436,7 +436,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         id: buttonSync
                         width: 24
                         height: 24
@@ -492,7 +492,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         id: buttonRescan
                         width: 24
                         height: 24
@@ -551,7 +551,7 @@ Drawer {
                     }
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 24
                     height: 24
                     anchors.left: parent.left
