@@ -65,12 +65,15 @@ Item {
 */
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Flickable {
         anchors.fill: parent
         contentWidth: -1
+        contentHeight: column.height
 
         Column {
-            anchors.fill: parent
+            id: column
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             topPadding: 16
             bottomPadding: 16

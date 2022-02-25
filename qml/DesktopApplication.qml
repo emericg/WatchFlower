@@ -170,19 +170,18 @@ ApplicationWindow {
         target: Qt.application
         function onStateChanged() {
             switch (Qt.application.state) {
-            case Qt.ApplicationActive:
-                //console.log("Qt.ApplicationActive")
+                case Qt.ApplicationActive:
+                    //console.log("Qt.ApplicationActive")
 
-                // Check if we need an 'automatic' theme change
-                Theme.loadTheme(settingsManager.appTheme)
+                    // Check if we need an 'automatic' theme change
+                    Theme.loadTheme(settingsManager.appTheme)
 
-                // Check Bluetooth anyway (on macOS)
-                //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
+                    // Check Bluetooth anyway (on macOS)
+                    //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
 
-                // Needs to check if a refresh could be useful
-                deviceManager.refreshDevices_check()
-
-                break;
+                    // Needs to check if a refresh could be useful
+                    deviceManager.refreshDevices_check()
+                    break
             }
         }
     }
@@ -257,9 +256,9 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
-        z: 10
+        z: 99
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
+        onClicked: (mouse) => {
             if (mouse.button === Qt.BackButton) {
                 backAction()
             } else if (mouse.button === Qt.ForwardButton) {
@@ -323,12 +322,6 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
-    DesktopHeader {
-        id: appHeader
-        width: parent.width
-        anchors.top: parent.top
-    }
-
     PopupCalibration {
         id: popupCalibration
     }
@@ -336,12 +329,21 @@ ApplicationWindow {
         id: popupDeleteData
     }
 
+    DesktopHeader {
+        id: appHeader
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
+
     Item {
         id: appContent
+
         anchors.top: appHeader.bottom
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
 
         Tutorial {
             anchors.fill: parent

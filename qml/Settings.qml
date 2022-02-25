@@ -12,14 +12,18 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Flickable {
         anchors.fill: parent
         contentWidth: -1
+        contentHeight: column.height
 
-        ////////////////
+        boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+        ScrollBar.vertical: ScrollBar { visible: isDesktop; }
 
         Column {
-            anchors.fill: parent
+            id: column
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             topPadding: 12
             bottomPadding: 12

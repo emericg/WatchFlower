@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 
 Item {
-    id: actionButton
+    id: actionMenuItem
     height: isPhone ? 36 : 40
     anchors.left: parent.left
     anchors.leftMargin: Theme.componentBorderWidth

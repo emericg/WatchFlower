@@ -3,12 +3,13 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
-ScrollView {
+Flickable {
     id: plantCareLimits
     implicitWidth: 480
     implicitHeight: 800
 
     contentWidth: -1
+    contentHeight: column.height
 
     function updateLimits() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -26,7 +27,9 @@ ScrollView {
     }
 
     Column {
-        anchors.fill: parent
+        id: column
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         topPadding: 16
         bottomPadding: 16

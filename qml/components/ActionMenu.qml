@@ -49,7 +49,7 @@ Rectangle {
         bottomPadding: 8
         spacing: 4
 
-        ActionButton {
+        ActionMenuItem {
             id: actionUpdate
             index: 0
             visible: (deviceManager.bluetooth && selectedDevice)
@@ -62,7 +62,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionRealtime
             index: 1
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
@@ -83,7 +83,7 @@ Rectangle {
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionHistoryRefresh
             index: 2
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
@@ -96,7 +96,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionHistoryClear
             index: 3
             visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
@@ -117,7 +117,7 @@ Rectangle {
             visible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible)
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionLed
             index: 4
             button_text: qsTr("Blink LED")
@@ -130,7 +130,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        actionMenuItem {
             id: actionWatering
             index: 1
             button_text: qsTr("Watering")
@@ -143,7 +143,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionGraphMode
             index: 5
             button_text: qsTr("Switch graph")
@@ -157,7 +157,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        ActionMenuItem {
             id: actionCalibrate
             index: 6
             button_text: qsTr("Calibrate sensor")
@@ -170,7 +170,7 @@ Rectangle {
             }
         }
 
-        ActionButton {
+        actionMenuItem {
             id: actionReboot
             index: 7
             button_text: qsTr("Reboot sensor")

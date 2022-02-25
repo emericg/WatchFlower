@@ -12,20 +12,26 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Flickable {
         anchors.fill: parent
-        contentWidth: -1
+        contentWidth: parent.width
+        contentHeight: column.height
+
+        boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+        ScrollBar.vertical: ScrollBar { visible: isDesktop; }
 
         Column {
-            anchors.fill: parent
+            id: column
+            anchors.left: parent.left
             anchors.leftMargin: screenPaddingLeft + 16
+            anchors.right: parent.right
             anchors.rightMargin: screenPaddingRight + 16
 
             topPadding: 0
             bottomPadding: 8
             spacing: 8
 
-            ////////
+            ////////////////
 
             Rectangle {
                 id: rectangleHeader
@@ -75,9 +81,9 @@ Item {
                 }
 
                 Row {
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     visible: wideWideMode
                     spacing: 16
@@ -118,7 +124,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Row {
                 id: buttonsRow
@@ -158,7 +164,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Item { height: 1; width: 1; visible: isDesktop; } // spacer
 

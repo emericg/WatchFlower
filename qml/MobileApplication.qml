@@ -223,27 +223,26 @@ ApplicationWindow {
         target: Qt.application
         function onStateChanged() {
             switch (Qt.application.state) {
-            case Qt.ApplicationSuspended:
-                //console.log("Qt.ApplicationSuspended")
-                deviceManager.refreshDevices_stop()
-                break
-            case Qt.ApplicationHidden:
-                //console.log("Qt.ApplicationHidden")
-                deviceManager.refreshDevices_stop()
-                break
-            case Qt.ApplicationInactive:
-                //console.log("Qt.ApplicationInactive")
-                break
-            case Qt.ApplicationActive:
-                //console.log("Qt.ApplicationActive")
+                case Qt.ApplicationSuspended:
+                    //console.log("Qt.ApplicationSuspended")
+                    deviceManager.refreshDevices_stop()
+                    break
+                case Qt.ApplicationHidden:
+                    //console.log("Qt.ApplicationHidden")
+                    deviceManager.refreshDevices_stop()
+                    break
+                case Qt.ApplicationInactive:
+                    //console.log("Qt.ApplicationInactive")
+                    break
+                case Qt.ApplicationActive:
+                    //console.log("Qt.ApplicationActive")
 
-                // Check if we need an 'automatic' theme change
-                Theme.loadTheme(settingsManager.appTheme)
+                    // Check if we need an 'automatic' theme change
+                    Theme.loadTheme(settingsManager.appTheme)
 
-                // Needs to check if a refresh could be useful
-                deviceManager.refreshDevices_check()
-
-                break
+                    // Needs to check if a refresh could be useful
+                    deviceManager.refreshDevices_check()
+                    break
             }
         }
     }
@@ -364,7 +363,7 @@ ApplicationWindow {
             anchors.bottomMargin: appTabletMenu.hhv
             id: screenSettings
         }
-        Permissions {
+        MobilePermissions {
             anchors.fill: parent
             id: screenPermissions
         }

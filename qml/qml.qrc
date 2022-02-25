@@ -3,11 +3,11 @@
         <file>MobileApplication.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
+        <file>MobilePermissions.qml</file>
         <file>DesktopApplication.qml</file>
         <file>DesktopHeader.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
-        <file>Permissions.qml</file>
         <file>Tutorial.qml</file>
         <file>JournalWidget.qml</file>
         <file>DeviceWidget.qml</file>
@@ -32,8 +32,8 @@
         <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
 
-        <file alias="ActionButton.qml">components/ActionButton.qml</file>
         <file alias="ActionMenu.qml">components/ActionMenu.qml</file>
+        <file alias="ActionMenuItem.qml">components/ActionMenuItem.qml</file>
         <file alias="ButtonCompactable.qml">components/ButtonCompactable.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
         <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>

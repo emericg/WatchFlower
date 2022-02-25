@@ -3,7 +3,7 @@ TARGET  = WatchFlower
 VERSION = 4.0
 DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
-CONFIG += c++11
+CONFIG += c++17
 QT     += core bluetooth sql
 QT     += qml quick quickcontrols2 svg widgets charts
 

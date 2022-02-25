@@ -131,7 +131,11 @@ QString SingleApplicationPrivate::getUsername()
 void SingleApplicationPrivate::genBlockServerName()
 {
     QCryptographicHash appData( QCryptographicHash::Sha256 );
+#if QT_VERSION < QT_VERSION_CHECK(6, 3, 0)
     appData.addData( "SingleApplication", 17 );
+#else
+    appData.addData( QByteArrayView{"SingleApplication"} );    
+#endif
     appData.addData( SingleApplication::app_t::applicationName().toUtf8() );
     appData.addData( SingleApplication::app_t::organizationName().toUtf8() );
     appData.addData( SingleApplication::app_t::organizationDomain().toUtf8() );
@@ -503,12 +507,14 @@ void SingleApplicationPrivate::slotDataAvailable( QLocalSocket *dataSocket, quin
     if ( !isFrameComplete( dataSocket ) )
         return;
 
-    Q_EMIT q->receivedMessage( instanceId, dataSocket->readAll() );
+    const QByteArray message = dataSocket->readAll();
 
     writeAck( dataSocket );
 
     ConnectionInfo &info = connectionMap[dataSocket];
     info.stage = StageConnectedHeader;
+
+    Q_EMIT q->receivedMessage( instanceId, message);
 }
 
 void SingleApplicationPrivate::slotClientConnectionClosed( QLocalSocket *closedSocket, quint32 instanceId )

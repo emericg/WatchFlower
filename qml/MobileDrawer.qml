@@ -56,14 +56,14 @@ Drawer {
                 height: screenPaddingStatusbar
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorBackground // "red" // to hide scrollview content
+                color: Theme.colorBackground // "red" // to hide flickable content
             }
             Rectangle {
                 id: rectangleNotch
                 height: screenPaddingNotch
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorBackground // "yellow" // to hide scrollview content
+                color: Theme.colorBackground // "yellow" // to hide flickable content
             }
             Rectangle {
                 id: rectangleLogo
@@ -101,17 +101,19 @@ Drawer {
 
         ////////////////////////////////////////////////////////////////////////////
 
-        ScrollView {
-            id: scrollView
-            contentWidth: -1
-
+        Flickable {
             anchors.top: rectangleHeader.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
+            contentWidth: -1
+            contentHeight: column.height
+
             Column {
-                anchors.fill: parent
+                id: column
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 ////////
 
@@ -131,7 +133,6 @@ Drawer {
                     }
 
                     ImageSvg {
-                        id: buttonPlantsImg
                         width: 24
                         height: 24
                         anchors.left: parent.left
