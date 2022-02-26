@@ -50,10 +50,7 @@ Item {
                     text: txt ?? ""
                     source: src ?? ""
                     sourceSize: sz ?? 32
-                    onClicked: {
-                        selectorMenu.currentSelection = idx
-                        selectorMenu.menuSelected(idx)
-                    }
+                    onClicked: selectorMenu.menuSelected(idx)
                 }
             }
         }

@@ -441,7 +441,7 @@ Item {
                         Row {
                             spacing: 12
 
-                            ButtonIcon {
+                            RoundButtonIcon {
                                 width: 40; height: 40;
                                 border: true
                                 background: true
@@ -484,7 +484,7 @@ Item {
                         Row {
                             spacing: 12
 
-                            ButtonIcon {
+                            RoundButtonIcon {
                                 width: 40; height: 40;
                                 border: true
                                 background: true

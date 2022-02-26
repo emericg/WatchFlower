@@ -52,10 +52,8 @@ Rectangle {
             id: iButton
             width: actionMenuItem.sourceSize
             height: actionMenuItem.sourceSize
-
             Layout.maximumWidth: actionMenuItem.sourceSize
-            Layout.minimumHeight: actionMenuItem.sourceSize
-            Layout.fillWidth: false
+            Layout.maximumHeight: actionMenuItem.sourceSize
 
             source: actionMenuItem.source
             color: Theme.colorIcon

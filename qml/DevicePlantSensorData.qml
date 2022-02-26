@@ -127,7 +127,7 @@ Item {
 
     Rectangle {
         id: rectangleHeaderBackground
-        color: Theme.colorDeviceHeader
+        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
         width: parent.width
         height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
         visible: (uiMode !== 3)

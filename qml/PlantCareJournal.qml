@@ -51,7 +51,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ButtonIcon {
+    RoundButtonIcon {
         id: add
         width: 48
         height: 48
@@ -186,7 +186,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
 
@@ -212,7 +212,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_FERTILIZE)
@@ -237,7 +237,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     sourceSize: 32
@@ -269,7 +269,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     sourceSize: 32
@@ -296,7 +296,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_PHOTO)
@@ -326,7 +326,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_ROTATE)
@@ -352,7 +352,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_MOVE)
@@ -378,7 +378,7 @@ Item {
                                 width: 52
                                 spacing: 4
 
-                                ButtonIcon {
+                                RoundButtonIcon {
                                     width: 52
                                     height: 52
                                     source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_REPOT)

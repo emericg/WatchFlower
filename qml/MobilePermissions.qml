@@ -21,49 +21,6 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-/*
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorDeviceHeader
-        height: 80
-        z: 5
-
-        visible: isDesktop
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Text {
-            id: textTitle
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.top: parent.top
-            anchors.topMargin: 12
-
-            text: qsTr("Permissions")
-            font.bold: true
-            font.pixelSize: Theme.fontSizeTitle
-            color: Theme.colorText
-        }
-
-        Text {
-            id: textSubtitle
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
-
-            text: qsTr("Why are we using these permissions?")
-            color: Theme.colorSubText
-            font.pixelSize: Theme.fontSizeContentBig
-        }
-    }
-*/
-    ////////////////////////////////////////////////////////////////////////////
 
     Flickable {
         anchors.fill: parent
@@ -87,7 +44,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ButtonIcon {
+                RoundButtonIcon {
                     id: button_location_test
                     width: 32
                     height: 32
@@ -176,7 +133,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ButtonIcon {
+                RoundButtonIcon {
                     id: button_gps_test
                     width: 32
                     height: 32
@@ -252,7 +209,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ButtonIcon {
+                RoundButtonIcon {
                     id: button_bluetooth_test
                     width: 32
                     height: 32

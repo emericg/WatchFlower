@@ -265,7 +265,7 @@ bool SettingsManager::writeSettings()
 
 void SettingsManager::resetSettings()
 {
-    m_appTheme = "green";
+    m_appTheme = "THEME_PLANT";
     Q_EMIT appThemeChanged();
     m_appThemeAuto = false;
     Q_EMIT appThemeAutoChanged();

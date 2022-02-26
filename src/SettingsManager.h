@@ -82,7 +82,7 @@ class SettingsManager: public QObject
     unsigned m_appVisibility = 1;               //!< QWindow::Visibility
 
     // Application generic
-    QString m_appTheme = "green";
+    QString m_appTheme = "THEME_PLANT";
     bool m_appThemeAuto = false;
     bool m_appThemeCSD = false;
     unsigned m_appUnits = 0;                    //!< QLocale::MeasurementSystem

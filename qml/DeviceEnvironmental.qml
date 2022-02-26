@@ -609,7 +609,7 @@ Item {
                         height: airFlow.height + (airFlow.anchors.topMargin*2)
 
                         visible: isAirMonitor
-                        color: Theme.colorDeviceHeader
+                        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
                         z: 3
 
                         Flow {
@@ -798,7 +798,7 @@ Item {
                         height: radFlow.height + (radFlow.anchors.topMargin*2)
 
                         visible: isGeigerCounter
-                        color: Theme.colorDeviceHeader
+                        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
                         z: 3
 
                         Flow {

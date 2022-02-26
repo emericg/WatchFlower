@@ -161,7 +161,7 @@ Item {
 
         z: 5
         height: isPhone ? 96 : 48
-        color: Theme.colorDeviceHeader
+        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
         Text {
             id: textDeviceName

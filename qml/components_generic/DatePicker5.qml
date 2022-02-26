@@ -86,7 +86,7 @@ Item {
                 color: parent.color
             }
 
-            ButtonIcon {
+            RoundButtonIcon {
                 width: 48; height: 48;
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -111,7 +111,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentBig
                 color: Theme.colorText
             }
-            ButtonIcon {
+            RoundButtonIcon {
                 anchors.right: parent.right
                 width: 48; height: 48;
                 anchors.verticalCenter: parent.verticalCenter

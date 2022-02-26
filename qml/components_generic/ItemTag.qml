@@ -7,19 +7,19 @@ Rectangle {
     implicitWidth: 80
     implicitHeight: 28
 
-    width: txt.contentWidth + 24
+    width: contentText.contentWidth + 24
 
     radius: Theme.componentRadius
     color: backgroundColor
 
-    property string backgroundColor: Theme.colorForeground
-    property string textColor: Theme.colorText
-
     property string text: "TAG"
+    property string textColor: Theme.colorText
     property int textSize: Theme.fontSizeComponent
 
+    property string backgroundColor: Theme.colorForeground
+
     Text {
-        id: txt
+        id: contentText
         anchors.centerIn: parent
 
         text: control.text

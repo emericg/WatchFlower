@@ -41,7 +41,7 @@ Item {
                 anchors.rightMargin: -(screenPaddingRight + 16)
 
                 height: 88
-                color: Theme.colorDeviceHeader
+                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
                 Row {
                     id: logo

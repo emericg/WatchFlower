@@ -119,7 +119,7 @@ Popup {
                 }
             }
 
-            ButtonIcon {
+            RoundButtonIcon {
                 anchors.right: parent.right
                 anchors.rightMargin: 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -151,7 +151,7 @@ Popup {
                 anchors.right: parent.right
                 color: "#66dddddd"
 
-                ButtonIcon {
+                RoundButtonIcon {
                     width: 48; height: 48;
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +176,7 @@ Popup {
                     font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                 }
-                ButtonIcon {
+                RoundButtonIcon {
                     anchors.right: parent.right
                     width: 48; height: 48;
                     anchors.verticalCenter: parent.verticalCenter

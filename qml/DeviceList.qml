@@ -196,7 +196,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
-                ButtonIcon {
+                RoundButtonIcon {
                     id: buttonClear
                     width: 36
                     height: 36

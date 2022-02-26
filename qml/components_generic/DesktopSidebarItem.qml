@@ -8,7 +8,8 @@ Item {
     implicitWidth: 80
     implicitHeight: 64
 
-    width: parent.width
+    anchors.left: parent.left
+    anchors.right: parent.right
     height: Math.max(implicitHeight, content.height + 24)
 
     // actions
@@ -22,13 +23,17 @@ Item {
 
     // settings
     property url source
-    property int sourceSize: 64
+    property int sourceSize: 32
     property string text
     property string highlightMode: "background" // available: background, indicator, circle, content
 
     // colors
     property string colorContent: Theme.colorSidebarContent
     property string colorHighlight: Theme.colorSidebarHighlight
+
+    // indicator
+    property url indicatorSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+    property bool indicatorAnimated: false
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -71,9 +76,8 @@ Item {
         }
         Behavior on opacity { OpacityAnimator { duration: 233 } }
     }
-
     Rectangle {
-        id: indicator
+        id: backgroundIndicator
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -87,14 +91,19 @@ Item {
 
     ColumnLayout {
         id: content
-        anchors.centerIn: parent
-        spacing: 8
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: -4
 
         IconSvg {
             id: contentImage
             width: control.sourceSize
             height: control.sourceSize
 
+            Layout.alignment: Qt.AlignHCenter
+            Layout.minimumWidth: control.sourceSize
+            Layout.minimumHeight: control.sourceSize
             Layout.maximumWidth: control.sourceSize
             Layout.maximumHeight: control.sourceSize
 
@@ -103,19 +112,52 @@ Item {
             source: control.source
             color: (!control.selected && control.highlightMode === "content") ? control.colorHighlight : control.colorContent
             opacity: control.enabled ? 1.0 : 0.33
+
+            Item {
+                id: contentIndicator
+                width: 24; height: 24;
+                anchors.right: parent.right
+                anchors.rightMargin: -4
+                anchors.bottom: parent.bottom
+
+                opacity: control.indicatorAnimated ? 1 : 0
+                Behavior on opacity { OpacityAnimator { duration: 500 } }
+
+                Rectangle {
+                    width: 24; height: 24; radius: 12;
+                    opacity: 0.66
+                    color: Theme.colorHighContrast
+                }
+
+                IconSvg {
+                    width: 20; height: 20;
+                    anchors.centerIn: parent
+                    source: control.indicatorSource
+                    color: Theme.colorLowContrast
+
+                    NumberAnimation on rotation {
+                        running: control.indicatorAnimated
+                        loops: Animation.Infinite
+                        alwaysRunToEnd: true
+                        duration: 1000
+                        from: 0
+                        to: 360
+                    }
+                }
+            }
         }
 
         Text {
             id: contentText
-            height: parent.height
+            width: parent.width
 
-            visible: text
-
+            visible: control.text
             text: control.text
             textFormat: Text.PlainText
             color: (!control.selected && control.highlightMode === "content") ? control.colorHighlight : control.colorContent
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.fontSizeContentVerySmall
             font.bold: true
+            horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
     }

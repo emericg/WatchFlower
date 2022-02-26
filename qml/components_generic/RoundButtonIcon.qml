@@ -21,9 +21,10 @@ Item {
     property url source
     property int sourceSize: UtilsNumber.alignTo(height * 0.666, 2)
     property int rotation: 0
+    property string highlightMode: "circle" // available: border, circle, color, both (circle+color), off
+
     property bool border: false
     property bool background: false
-    property string highlightMode: "circle" // available: border, circle, color, both (circle+color), off
 
     // colors
     property string iconColor: Theme.colorIcon
@@ -36,7 +37,7 @@ Item {
     property bool animationRunning: false
 
     // tooltip
-    property bool tooltipEnabled: true
+    property bool tooltipEnabled: false
     property string tooltipPosition: "bottom"
     property string tooltipText
 

@@ -122,7 +122,7 @@ Item {
 
                         radius: 2
                         color: "white"
-                        border.color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : "#ccc"
+                        border.color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
                         border.width: 2
 
                         Text {
@@ -130,13 +130,13 @@ Item {
                             visible: wideWideMode
                             text: qsTr("snow")
                             textFormat: Text.PlainText
-                            color: (settingsManager.appTheme === "snow") ? Theme.colorSubText : "#ccc"
+                            color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: settingsManager.appTheme = "snow"
+                            onClicked: settingsManager.appTheme = "THEME_SNOW"
                         }
                     }
                     Rectangle {
@@ -148,7 +148,7 @@ Item {
                         radius: 2
                         color: "#09debc" // green theme colorSecondary
                         border.color: Theme.colorPrimary
-                        border.width: (settingsManager.appTheme === "green") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "THEME_PLANT") ? 2 : 0
 
                         Text {
                             anchors.centerIn: parent
@@ -161,7 +161,7 @@ Item {
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: settingsManager.appTheme = "green"
+                            onClicked: settingsManager.appTheme = "THEME_PLANT"
                         }
                     }
                     Rectangle {
@@ -173,7 +173,7 @@ Item {
                         radius: 2
                         color: "#FFE400" // day theme colorSecondary
                         border.color: Theme.colorPrimary
-                        border.width: (settingsManager.appTheme === "day") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "THEME_DAY") ? 2 : 0
 
                         Text {
                             anchors.centerIn: parent
@@ -186,7 +186,7 @@ Item {
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: settingsManager.appTheme = "day"
+                            onClicked: settingsManager.appTheme = "THEME_DAY"
                         }
                     }
                     Rectangle {
@@ -198,20 +198,20 @@ Item {
                         radius: 2
                         color: "#555151"
                         border.color: Theme.colorPrimary
-                        border.width: (settingsManager.appTheme === "night") ? 2 : 0
+                        border.width: (settingsManager.appTheme === "THEME_NIGHT") ? 2 : 0
 
                         Text {
                             anchors.centerIn: parent
                             visible: wideWideMode
                             text: qsTr("night")
                             textFormat: Text.PlainText
-                            color: (settingsManager.appTheme === "night") ? Theme.colorPrimary : "#ececec"
+                            color: (settingsManager.appTheme === "THEME_NIGHT") ? Theme.colorPrimary : "#ececec"
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentSmall
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: settingsManager.appTheme = "night"
+                            onClicked: settingsManager.appTheme = "THEME_NIGHT"
                         }
                     }
                 }
