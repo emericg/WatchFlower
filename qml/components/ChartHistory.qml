@@ -12,6 +12,7 @@ Item {
     property string suffix: ""
     property int floatprecision: 0
     property string color: Theme.colorBlue
+    property bool animated: false
 
     property real valueMin: limitMin - (25 * ((limitMax-limitMin) / 50))
     property real valueMax: limitMax + (25 * ((limitMax-limitMin) / 50))

@@ -23,7 +23,7 @@ T.Button {
     property string colorHovered: Theme.colorHeader
 
     background: Rectangle {
-        implicitWidth: 128
+        implicitWidth: 80
         implicitHeight: Theme.componentHeight
 
         radius: 2

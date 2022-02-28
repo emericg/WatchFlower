@@ -41,6 +41,7 @@ Rectangle {
             Text {
                 id: deviceTitle
                 text: device.deviceName
+                textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorText
             }
@@ -71,10 +72,25 @@ Rectangle {
                 }
             }
         }
-        Text {
-            text: qsTr("RSSI -%1 db").arg(Math.abs(device.deviceRssi))
-            font.pixelSize: Theme.fontSizeContentSmall
-            color: Theme.colorSubText
+
+        Row {
+            spacing: 16
+
+            Text {
+                text: device.deviceAddress
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeContentSmall
+                color: Theme.colorSubText
+                visible: !(Qt.platform.os === "osx" || Qt.platform.os === "ios")
+            }
+/*
+            Text {
+                text: qsTr("RSSI -%1 dB").arg(Math.abs(device.deviceRssi))
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeContentSmall
+                color: Theme.colorSubText
+            }
+*/
         }
     }
 
@@ -162,7 +178,7 @@ Rectangle {
             id: barbg
             anchors.verticalCenter: parent.verticalCenter
 
-            width: singleColumn ? 96 : 128
+            width: 128
             height: 16
             radius: 3
             color: Theme.colorSeparator
@@ -184,6 +200,17 @@ Rectangle {
                         if (device.deviceRssi < 100) return Theme.colorRed
                     }
                     return Theme.colorRed
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("-%1 dB").arg(Math.abs(device.deviceRssi))
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContentVerySmall
+                    color: "white"
                 }
             }
 

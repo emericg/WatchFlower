@@ -34,6 +34,8 @@ Item {
             mmGraph.visible = false
             noDataIndicator.visible = true
         }
+
+        //mmGraphFlick.contentX = mmGraphFlick.width // WIP
     }
 
     onWidthChanged: updateGraph()

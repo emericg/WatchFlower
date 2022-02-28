@@ -77,7 +77,7 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
-        implicitWidth: 128
+        implicitWidth: 80
         implicitHeight: Theme.componentHeight
 
         radius: Theme.componentRadius
