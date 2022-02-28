@@ -6,10 +6,29 @@ import ThemeEngine 1.0
 
 T.TextField {
     id: control
-    implicitWidth: 256
-    implicitHeight: Theme.componentHeight
+
+    implicitWidth: implicitBackgroundWidth + leftInset + rightInset
+                   || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding,
+                             placeholder.implicitHeight + topPadding + bottomPadding)
 
     padding: 12
+    leftPadding: padding + 4
+
+    text: ""
+    color: colorText
+    font.pixelSize: Theme.fontSizeComponent
+    verticalAlignment: TextInput.AlignVCenter
+
+    placeholderText: ""
+    placeholderTextColor: colorPlaceholderText
+
+    selectByMouse: false
+    selectionColor: colorSelection
+    selectedTextColor: colorSelectedText
+
+    onEditingFinished: focus = false
 
     // colors
     property string colorText: Theme.colorComponentText
@@ -19,24 +38,30 @@ T.TextField {
     property string colorSelectedText: Theme.colorHighContrast
     property string colorSelection: Theme.colorPrimary
 
-    text: ""
-    color: colorText
-    font.pixelSize: Theme.fontSizeComponent
-    verticalAlignment: Text.AlignVCenter
+    PlaceholderText {
+        id: placeholder
+        x: control.leftPadding
+        y: control.topPadding
+        width: control.width - (control.leftPadding + control.rightPadding)
+        height: control.height - (control.topPadding + control.bottomPadding)
 
-    placeholderText: ""
-    placeholderTextColor: colorPlaceholderText
-
-    selectByMouse: false
-    selectedTextColor: colorSelectedText
-    selectionColor: colorSelection
-
-    onEditingFinished: focus = false
+        text: control.placeholderText
+        font: control.font
+        color: control.placeholderTextColor
+        verticalAlignment: control.verticalAlignment
+        visible: !control.length && !control.preeditText && (!control.activeFocus || control.horizontalAlignment !== Qt.AlignHCenter)
+        elide: Text.ElideRight
+        renderType: control.renderType
+    }
 
     background: Rectangle {
-        border.width: 2
-        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
+        implicitWidth: 256
+        implicitHeight: Theme.componentHeight
+
         radius: Theme.componentRadius
         color: control.colorBackground
+
+        border.width: 2
+        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
     }
 }

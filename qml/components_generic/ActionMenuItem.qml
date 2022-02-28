@@ -41,10 +41,10 @@ Rectangle {
     }
 
     RowLayout {
-        id: layout
         anchors.fill: parent
         anchors.leftMargin: 12
         anchors.rightMargin: 12
+
         spacing: 6
         layoutDirection: actionMenuItem.layoutDirection
 

@@ -69,21 +69,21 @@ Popup {
                 spacing: 16
 
                 ButtonWireframe {
-                    id: buttonCancel
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
+
                     onClicked: popupDeleteData.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm1
                     width: parent.btnSize
 
                     text: qsTr("Delete local data")
                     primaryColor: Theme.colorOrange
                     fullColor: true
+
                     onClicked: {
                         if (selectedDevice) {
                             selectedDevice.actionClearData()
@@ -93,12 +93,12 @@ Popup {
                     }
                 }
                 ButtonWireframe {
-                    id: buttonConfirm2
                     width: parent.btnSize
 
                     text: qsTr("Delete sensor data")
                     primaryColor: Theme.colorRed
                     fullColor: true
+
                     onClicked: {
                         if (selectedDevice) {
                              selectedDevice.actionClearHistory()

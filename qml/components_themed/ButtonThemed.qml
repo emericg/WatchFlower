@@ -6,13 +6,15 @@ import ThemeEngine 1.0
 
 T.Button {
     id: control
-    implicitWidth: 128
-    implicitHeight: Theme.componentHeight
 
-    width: contentItem.contentWidth + 24
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding)
 
-    leftPadding: 12
-    rightPadding: 12
+    width: contentItem.contentWidth + leftPadding + rightPadding
+
+    padding: 12
 
     font.pixelSize: Theme.fontSizeComponent
 
@@ -30,8 +32,10 @@ T.Button {
     contentItem: Text {
         text: control.text
         textFormat: Text.PlainText
+
         font: control.font
-        elide: Text.ElideRight
+        elide: Text.ElideMiddle
+        //wrapMode: Text.WordWrap
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
 

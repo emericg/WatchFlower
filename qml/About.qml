@@ -88,7 +88,7 @@ Item {
                     visible: wideWideMode
                     spacing: 16
 
-                    ButtonWireframeIcon {
+                    ButtonWireframeIconCentered {
                         width: 160
                         sourceSize: 28
                         fullColor: true
@@ -99,7 +99,7 @@ Item {
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonWireframeIconCentered {
                         width: 160
                         sourceSize: 22
                         fullColor: true
@@ -110,7 +110,7 @@ Item {
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonWireframeIconCentered {
                         visible: (appWindow.width > 800)
                         width: 160
                         sourceSize: 22
@@ -138,7 +138,7 @@ Item {
                 visible: !wideWideMode
                 spacing: 16
 
-                ButtonWireframeIcon {
+                ButtonWireframeIconCentered {
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -150,7 +150,7 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
-                ButtonWireframeIcon {
+                ButtonWireframeIconCentered {
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 

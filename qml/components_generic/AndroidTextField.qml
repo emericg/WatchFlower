@@ -4,14 +4,14 @@ import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-T.TextArea {
+T.TextField {
     id: control
 
-    implicitWidth: Math.max(contentWidth + leftPadding + rightPadding,
-                            implicitBackgroundWidth + leftInset + rightInset,
-                            placeholder.implicitWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(contentHeight + topPadding + bottomPadding,
-                             implicitBackgroundHeight + topInset + bottomInset,
+
+    implicitWidth: implicitBackgroundWidth + leftInset + rightInset
+                   || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     padding: 12
@@ -20,7 +20,7 @@ T.TextArea {
     text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
-    verticalAlignment: Text.AlignTop
+    verticalAlignment: Text.AlignVCenter
 
     placeholderText: ""
     placeholderTextColor: colorPlaceholderText
@@ -31,11 +31,14 @@ T.TextArea {
 
     onEditingFinished: focus = false
 
+    // settings
+    property string title: ""
+
     // colors
     property string colorText: Theme.colorComponentContent
     property string colorPlaceholderText: Theme.colorSubText
-    property string colorBorder: Theme.colorComponentBorder
-    property string colorBackground: Theme.colorComponentBackground
+    property string colorBorder: Theme.colorSubText
+    property string colorBackground: Theme.colorBackground
     property string colorSelectedText: Theme.colorHighContrast
     property string colorSelection: Theme.colorPrimary
 
@@ -57,12 +60,29 @@ T.TextArea {
 
     background: Rectangle {
         implicitWidth: 256
-        implicitHeight: Theme.componentHeight*2
+        implicitHeight: 56
 
-        radius: Theme.componentRadius
+        radius: 8
         color: control.colorBackground
-
-        border.width: 2
+        border.width: 1
         border.color: control.activeFocus ? control.colorSelection : control.colorBorder
+
+        Text { // textTitle
+            x: 16
+            y: (-height / 2)
+
+            text: control.title
+            textFormat: Text.PlainText
+            color: control.activeFocus ? control.colorSelection : control.colorBorder
+            font: control.font
+
+            Rectangle { // textTitleBackground
+                anchors.fill: parent
+                anchors.margins: -6
+                z: -1
+                visible: control.title
+                color: control.colorBackground
+            }
+        }
     }
 }

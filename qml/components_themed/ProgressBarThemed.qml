@@ -15,14 +15,17 @@ T.ProgressBar {
     property var colorForeground: Theme.colorPrimary
 
     background: Rectangle {
+        implicitWidth: 200
+        implicitHeight: 12
+
         radius: (Theme.componentRadius / 2)
         color: control.colorBackground
     }
 
     contentItem: Item {
         Rectangle {
-            width: control.visualPosition * parent.width
-            height: parent.height
+            width: control.visualPosition * control.width
+            height: control.height
             radius: (Theme.componentRadius / 2)
             color: control.colorForeground
         }

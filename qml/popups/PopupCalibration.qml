@@ -94,21 +94,21 @@ Popup {
                 spacing: 16
 
                 ButtonWireframe {
-                    id: buttonCancel
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
+
                     onClicked: popupCalibration.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm
                     width: parent.btnSize
 
                     text: qsTr("Start calibration")
                     primaryColor: Theme.colorPrimary
                     fullColor: true
+
                     onClicked: {
                         if (selectedDevice) {
                              selectedDevice.actionCalibrate()

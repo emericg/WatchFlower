@@ -7,8 +7,11 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 T.Button {
     id: control
-    implicitWidth: Theme.componentHeight
-    implicitHeight: Theme.componentHeight
+
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding)
 
     focusPolicy: Qt.NoFocus
 
@@ -16,7 +19,9 @@ T.Button {
     property int sourceSize: UtilsNumber.alignTo(height * 0.666, 2)
 
     background: Rectangle {
-        anchors.fill: control
+        implicitWidth: Theme.componentHeight
+        implicitHeight: Theme.componentHeight
+
         radius: Theme.componentHeight
         opacity: enabled ? 1 : 0.33
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent

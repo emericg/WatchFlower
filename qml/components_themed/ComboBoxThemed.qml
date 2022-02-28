@@ -6,12 +6,17 @@ import ThemeEngine 1.0
 
 T.ComboBox {
     id: control
-    implicitHeight: Theme.componentHeight
 
-    font.pixelSize: Theme.fontSizeComponent
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding,
+                             implicitIndicatorHeight + topPadding + bottomPadding)
 
     leftPadding: 12
     rightPadding: 12
+
+    font.pixelSize: Theme.fontSizeComponent
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -30,10 +35,12 @@ T.ComboBox {
     contentItem: Text {
         text: control.displayText
         textFormat: Text.PlainText
+
         font: control.font
-        color: Theme.colorComponentContent
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
+
+        color: Theme.colorComponentContent
     }
 
     ////////////////////////////////////////////////////////////////////////////

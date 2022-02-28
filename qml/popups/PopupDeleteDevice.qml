@@ -69,21 +69,21 @@ Popup {
                 spacing: 16
 
                 ButtonWireframe {
-                    id: buttonCancel
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
+
                     onClicked: popupDeleteDevice.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm
                     width: parent.btnSize
 
                     text: qsTr("Delete")
                     primaryColor: Theme.colorRed
                     fullColor: true
+
                     onClicked: {
                         popupDeleteDevice.confirmed()
                         popupDeleteDevice.close()

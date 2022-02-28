@@ -22,6 +22,9 @@ T.SpinBox {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
+        implicitWidth: 128
+        implicitHeight: Theme.componentHeight
+
         radius: Theme.componentRadius
         color: Theme.colorComponentBackground
 
@@ -111,6 +114,7 @@ T.SpinBox {
     up.indicator: Item {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
+
         width: control.height
         height: control.height
         anchors.verticalCenter: control.verticalCenter
@@ -135,6 +139,7 @@ T.SpinBox {
     down.indicator: Item {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
+
         width: control.height
         height: control.height
         anchors.verticalCenter: control.verticalCenter

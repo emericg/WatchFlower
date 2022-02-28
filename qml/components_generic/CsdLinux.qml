@@ -6,42 +6,41 @@ import ThemeEngine 1.0
 
 Loader {
     anchors.top: parent.top
-    anchors.topMargin: 0
+    anchors.topMargin: 6
     anchors.right: parent.right
-    anchors.rightMargin: 0
+    anchors.rightMargin: 6
 
-    width: 138
-    height: 28
+    width: 94
+    height: 26
 
-    //enabled: (settingsManager.appThemeCSD && Qt.platform.os === "windows")
-    //visible: (settingsManager.appThemeCSD && Qt.platform.os === "windows")
+    //enabled: (settingsManager.appThemeCSD && Qt.platform.os !== "windows" && Qt.platform.os !== "osx")
+    //visible: (settingsManager.appThemeCSD && Qt.platform.os !== "windows" && Qt.platform.os !== "osx")
 
     asynchronous: true
-    sourceComponent: (settingsManager.appThemeCSD && Qt.platform.os === "windows")
-                         ? componentCsdWindows : null
+    sourceComponent: (settingsManager.appThemeCSD && Qt.platform.os !== "windows" && Qt.platform.os !== "osx")
+                         ? componentCsdLinux : null
 
     Component {
-        id: componentCsdWindows
+        id: componentCsdLinux
 
         Row {
-            id: csdWindows
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            spacing: 0
+            id: csdLinux
+            spacing: 8
 
             ////////
 
             Rectangle { // button minimize
-                width: 46; height: 28;
-                color: hovered ? "#33aaaaaa" : "transparent"
+                width: 26; height: 26; radius: 26;
+                color: hovered ? "#66aaaaaa" : "#33aaaaaa"
+                Behavior on color { ColorAnimation { duration: 233; easing.type: Easing.InOutCirc; } }
 
                 property bool hovered: false
 
                 Rectangle {
-                    width: 10; height: 1;
-                    anchors.centerIn: parent
+                    width: 10; height: 2;
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: 4
                     color: parent.hovered ? Theme.colorHighContrast : Theme.colorIcon
                 }
 
@@ -59,8 +58,9 @@ Loader {
             ////////
 
             Rectangle { // button maximize
-                width: 46; height: 28;
-                color: hovered ? "#33aaaaaa" : "transparent"
+                width: 26; height: 26; radius: 26;
+                color: hovered ? "#66aaaaaa" : "#33aaaaaa"
+                Behavior on color { ColorAnimation { duration: 233; easing.type: Easing.InOutCirc; } }
 
                 property bool hovered: false
 
@@ -68,7 +68,7 @@ Loader {
                     width: 10; height: 10;
                     anchors.centerIn: parent
                     color: "transparent"
-                    border.width: 1
+                    border.width: 2
                     border.color: parent.hovered ? Theme.colorHighContrast : Theme.colorIcon
                 }
 
@@ -91,32 +91,25 @@ Loader {
             ////////
 
             Rectangle { // button close
-                width: 46; height: 28;
-                color: hovered ? "red" : "transparent"
+                width: 26; height: 26; radius: 26;
+                color: hovered ? "red" : "#33aaaaaa"
+                Behavior on color { ColorAnimation { duration: 233; easing.type: Easing.InOutCirc; } }
 
                 property bool hovered: false
 
-                IconSvg {
-                    width: 16; height: 16;
-                    anchors.centerIn: parent
-
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    color: parent.hovered ? "white" : Theme.colorIcon
-                }
-        /*
                 Rectangle {
-                    width: 12; height: 1;
+                    width: 13; height: 2; radius: 2;
                     anchors.centerIn: parent
                     rotation: 45
                     color: parent.hovered ? "white" : Theme.colorIcon
                 }
                 Rectangle {
-                    width: 12; height: 1;
+                    width: 13; height: 2; radius: 2;
                     anchors.centerIn: parent
                     rotation: -45
                     color: parent.hovered ? "white" : Theme.colorIcon
                 }
-        */
+
                 MouseArea {
                     anchors.fill: parent
 

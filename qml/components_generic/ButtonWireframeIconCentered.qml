@@ -122,39 +122,34 @@ T.Button {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    contentItem: RowLayout {
-        spacing: control.spacing
-        layoutDirection: control.layoutDirection
+    contentItem: Item {
+        Row {
+            anchors.centerIn: parent
+            spacing: control.spacing
+            layoutDirection: control.layoutDirection
 
-        IconSvg {
-            source: control.source
-            width: control.sourceSize
-            height: control.sourceSize
+            IconSvg {
+                anchors.verticalCenter: parent.verticalCenter
+                visible: control.source.toString().length
 
-            visible: control.source.toString().length
-            Layout.maximumWidth: control.sourceSize
-            Layout.maximumHeight: control.sourceSize
-            Layout.alignment: Qt.AlignVCenter
+                source: control.source
+                width: control.sourceSize
+                height: control.sourceSize
 
-            opacity: enabled ? 1.0 : 0.66
-            color: control.fullColor ? control.fulltextColor : control.primaryColor
-        }
-        Text {
-            text: control.text
-            textFormat: Text.PlainText
+                opacity: enabled ? 1.0 : 0.66
+                color: control.fullColor ? control.fulltextColor : control.primaryColor
+            }
 
-            visible: control.text
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignVCenter
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                visible: control.text
 
-            font: control.font
-            elide: Text.ElideMiddle
-            //wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-
-            opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.66
-            color: control.fullColor ? control.fulltextColor : control.primaryColor
+                text: control.text
+                textFormat: Text.PlainText
+                font: control.font
+                opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.66
+                color: control.fullColor ? control.fulltextColor : control.primaryColor
+            }
         }
     }
 

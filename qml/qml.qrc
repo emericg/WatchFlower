@@ -55,6 +55,7 @@
         <file alias="RoundButtonIcon.qml">components_generic/RoundButtonIcon.qml</file>
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeIcon.qml">components_generic/ButtonWireframeIcon.qml</file>
+        <file alias="ButtonWireframeIconCentered.qml">components_generic/ButtonWireframeIconCentered.qml</file>
         <file alias="DataBarCompact.qml">components_generic/DataBarCompact.qml</file>
         <file alias="DataBarSolid.qml">components_generic/DataBarSolid.qml</file>
         <file alias="DatePicker.qml">components_generic/DatePicker5.qml</file>

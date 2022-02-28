@@ -10,12 +10,15 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 T.Button {
     id: control
-    implicitWidth: 256
-    implicitHeight: 56
-    width: contentText.contentWidth + 16
+
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding)
 
     focusPolicy: Qt.NoFocus
 
+    // colors
     property string primaryColor: Theme.colorPrimary
 
     ////////////////////////////////////////////////////////////////////////////
@@ -26,7 +29,6 @@ T.Button {
 
         hoverEnabled: false
         propagateComposedEvents: false
-        acceptedButtons: Qt.AllButtons
 
         onClicked: control.clicked()
     }
@@ -34,7 +36,8 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        anchors.fill: control
+        implicitWidth: 256
+        implicitHeight: 56
 
         Rectangle { // mouseBackground
             width: mousearea.pressed ? control.width*2 : 0
@@ -64,19 +67,20 @@ T.Button {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    contentItem: Item {
-        Text {
-            id: contentText
-            anchors.centerIn: parent
+    contentItem: Text {
+        text: control.text
+        textFormat: Text.PlainText
 
-            text: control.text
-            textFormat: Text.PlainText
-            font.bold: false
-            font.pixelSize: Theme.fontSizeComponent
-            font.capitalization: Font.AllUppercase
+        font.bold: false
+        font.pixelSize: Theme.fontSizeComponent
+        font.capitalization: Font.AllUppercase
 
-            color: control.primaryColor
-            opacity: enabled ? 1.0 : 0.33
-        }
+        elide: Text.ElideMiddle
+        //wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+
+        color: control.primaryColor
+        opacity: enabled ? 1.0 : 0.33
     }
 }

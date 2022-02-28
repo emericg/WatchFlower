@@ -290,7 +290,7 @@ Popup {
 
                 ButtonWireframe {
                     height: 36
-                    text: qsTr("Annuler")
+                    text: qsTr("Cancel")
 
                     primaryColor: Theme.colorSecondary
                     fullColor: true
@@ -300,7 +300,7 @@ Popup {
 
                 ButtonWireframe {
                     height: 36
-                    text: qsTr("Valider")
+                    text: qsTr("Validate")
 
                     primaryColor: Theme.colorPrimary
                     fullColor: true

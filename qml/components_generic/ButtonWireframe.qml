@@ -9,10 +9,14 @@ import ThemeEngine 1.0
 
 T.Button {
     id: control
-    implicitWidth: 128
-    implicitHeight: Theme.componentHeight
 
-    width: contentTextInvisible.contentWidth + 24
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            implicitContentWidth + leftPadding + rightPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             implicitContentHeight + topPadding + bottomPadding)
+
+    leftPadding: 12
+    rightPadding: 12
 
     font.pixelSize: Theme.fontSizeComponent
     font.bold: fullColor ? true : false
@@ -73,14 +77,16 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
-        anchors.fill: control
+        implicitWidth: 128
+        implicitHeight: Theme.componentHeight
+
         radius: Theme.componentRadius
         opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.4
         color: control.fullColor ? control.primaryColor : control.secondaryColor
         border.width: Theme.componentBorderWidth
         border.color: control.fullColor ? control.primaryColor : Theme.colorComponentBorder
 
-        Rectangle {
+        Rectangle { // mouseBackground
             id: mouseBackground
             width: 0; height: width; radius: width;
             x: mousearea.mouseX - (width / 2)
@@ -107,28 +113,17 @@ T.Button {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    contentItem: Item {
-        Text { // this one is just used for size reference
-            id: contentTextInvisible
-            text: control.text
-            textFormat: Text.PlainText
-            font: control.font
-            visible: false
-        }
-        Text {
-            id: contentText
-            anchors.fill: parent
+    contentItem: Text {
+        text: control.text
+        textFormat: Text.PlainText
 
-            text: control.text
-            textFormat: Text.PlainText
-            font: control.font
-            opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.66
-            color: control.fullColor ? control.fulltextColor : control.primaryColor
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+        font: control.font
+        elide: Text.ElideMiddle
+        //wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
 
-            //elide: Text.ElideMiddle
-            wrapMode: Text.WordWrap
-        }
+        opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.66
+        color: control.fullColor ? control.fulltextColor : control.primaryColor
     }
 }

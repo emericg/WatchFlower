@@ -23,7 +23,7 @@ Item {
 
     // settings
     property url source
-    property int sourceSize: 32
+    property int sourceSize: 40
     property string text
     property string highlightMode: "background" // available: background, indicator, circle, content
 
@@ -157,6 +157,8 @@ Item {
             color: (!control.selected && control.highlightMode === "content") ? control.colorHighlight : control.colorContent
             font.pixelSize: Theme.fontSizeContentVerySmall
             font.bold: true
+
+            Layout.alignment: Qt.AlignHCenter
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }

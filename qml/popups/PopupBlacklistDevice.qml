@@ -110,21 +110,21 @@ Popup {
                 spacing: 16
 
                 ButtonWireframe {
-                    id: buttonCancel
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
                     primaryColor: Theme.colorSubText
                     secondaryColor: Theme.colorForeground
+
                     onClicked: popupBlacklistDevice.close()
                 }
                 ButtonWireframe {
-                    id: buttonConfirm
                     width: parent.btnSize
 
                     text: !deviceIsBlacklisted ? qsTr("Blacklist") : qsTr("Whitelist")
                     primaryColor: !deviceIsBlacklisted ? Theme.colorRed : Theme.colorGreen
                     fullColor: true
+
                     onClicked: {
                         if (deviceIsBlacklisted)
                             deviceManager.whitelistBleDevice(deviceAddress)
