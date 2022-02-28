@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 
         if (dm->areDevicesAvailable())
         {
-            dm->refreshDevices_check();
+            dm->refreshDevices_listen();
         }
 
         return app.exec();

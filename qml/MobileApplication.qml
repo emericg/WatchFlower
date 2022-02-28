@@ -240,8 +240,11 @@ ApplicationWindow {
                     // Check if we need an 'automatic' theme change
                     Theme.loadTheme(settingsManager.appTheme)
 
-                    // Needs to check if a refresh could be useful
-                    deviceManager.refreshDevices_check()
+                    if (appContent.state === "DeviceBrowser")
+                        deviceManager.scanNearby_start()
+                    else
+                        deviceManager.refreshDevices_listen()
+
                     break
             }
         }

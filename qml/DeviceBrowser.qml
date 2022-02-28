@@ -17,6 +17,7 @@ Item {
 
     function backAction() {
         deviceManager.scanNearby_stop()
+        deviceManager.listenDevices()
     }
 
     Loader {
@@ -160,7 +161,7 @@ Item {
                     ParallelAnimation {
                         alwaysRunToEnd: true
                         loops: Animation.Infinite
-                        running: (appContent.state === "DeviceBrowser" && deviceManager.scanning)
+                        running: (appContent.state === "DeviceBrowser" && deviceManager.listening)
                         NumberAnimation { target: ra; property: "width"; from: 0; to: radar.height*2; duration: 2500; }
                         NumberAnimation { target: ra; property: "opacity"; from: 0.8; to: 0.2; duration: 2500; }
                     }

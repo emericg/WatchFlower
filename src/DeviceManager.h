@@ -50,7 +50,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
-    Q_PROPERTY(bool searching READ isSearching NOTIFY scanningChanged)
+    Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
     Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
@@ -84,17 +84,17 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_syncing_queue;
     QList <QObject *> m_devices_syncing;
 
+    bool m_listening = false;
+    bool isListening() const;
+
+    bool m_scanning = false;
+    bool isScanning() const;
+
     bool m_updating = false;
     bool isUpdating() const;
 
     bool m_syncing = false;
     bool isSyncing() const;
-
-    bool m_scanning = false;
-    bool isScanning() const;
-
-    bool m_searching = false;
-    bool isSearching() const;
 
     static const int ble_scanning_duration = 20;
     static const int ble_scanning_nearby_duration = 30;
@@ -123,8 +123,6 @@ public:
 
     Q_INVOKABLE void scanNearby_start();
     Q_INVOKABLE void scanNearby_stop();
-    void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
-    void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
 
     Q_INVOKABLE void blacklistBleDevice(const QString &addr);
     Q_INVOKABLE void whitelistBleDevice(const QString &addr);
@@ -134,14 +132,15 @@ public:
     Q_INVOKABLE void scanDevices_stop();
     Q_INVOKABLE void listenDevices();
 
-    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old necessary?
-    Q_INVOKABLE void refreshDevices_start();    //!< Refresh every devices
+    Q_INVOKABLE void refreshDevices_listen();   //!< Refresh devices with data >xh old (as they appear nearby)
+    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old (if necessary)
+    Q_INVOKABLE void refreshDevices_start();    //!< Refresh every device
     void refreshDevices_continue();
     void refreshDevices_finished(Device *dev);
     Q_INVOKABLE void refreshDevices_stop();
 
-    Q_INVOKABLE void syncDevices_check();       //!< Sync history for devices necessary?
-    Q_INVOKABLE void syncDevices_start();       //!< Sync history for every devices
+    Q_INVOKABLE void syncDevices_check();       //!< Sync history for devices (if necessary)
+    Q_INVOKABLE void syncDevices_start();       //!< Sync history for every device
     void syncDevices_continue();
     void syncDevices_finished(Device *dev);
     Q_INVOKABLE void syncDevices_stop();
@@ -178,7 +177,10 @@ private slots:
 
     // QBluetoothDeviceDiscoveryAgent related
     void bluetoothModeChangedIos();
+    void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
+    void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void addBleDevice(const QBluetoothDeviceInfo &info);
+    void detectBleDevice(const QBluetoothDeviceInfo &info);
     void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
     void deviceDiscoveryFinished();
@@ -190,6 +192,7 @@ Q_SIGNALS:
     void devicesBlacklistUpdated();
 
     void bluetoothChanged();
+    void listeningChanged();
     void scanningChanged();
     void updatingChanged();
     void syncingChanged();

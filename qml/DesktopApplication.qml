@@ -179,8 +179,11 @@ ApplicationWindow {
                     // Check Bluetooth anyway (on macOS)
                     //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
 
-                    // Needs to check if a refresh could be useful
-                    deviceManager.refreshDevices_check()
+                    if (appContent.state === "DeviceBrowser")
+                        deviceManager.scanNearby_start()
+                    else
+                        deviceManager.refreshDevices_listen()
+
                     break
             }
         }
