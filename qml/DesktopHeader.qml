@@ -123,6 +123,7 @@ Rectangle {
             height: width
             anchors.centerIn: parent
 
+            asynchronous: true
             source: "qrc:/assets/menus/menu_logo_large.svg"
             color: Theme.colorHeaderContent
         }
@@ -343,7 +344,7 @@ Rectangle {
             onClicked: deviceRefreshButtonClicked()
 
             animation: "rotate"
-            animationRunning: selectedDevice.updating
+            animationRunning: selectedDevice ? selectedDevice.updating : false
         }
 
         Rectangle { // separator

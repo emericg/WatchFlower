@@ -292,7 +292,7 @@ bool DeviceEsp32GeigerCounter::hasData() const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+            qWarning() << "> hasData.exec(Esp32Geiger) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
 
         while (hasData.next())
         {

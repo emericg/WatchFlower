@@ -26,11 +26,11 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartEnvironmentalVoc // updateGraph() >> " + currentDevice)
 
-        if (deviceEnvironmental.primary === "voc" || deviceEnvironmental.primary === "hcho") {
+        if (itemDeviceEnvironmental.primary === "voc" || itemDeviceEnvironmental.primary === "hcho") {
             limitMin = 500
             limitMax = 1000
             scaleMax = 1500
-        } else if (deviceEnvironmental.primary === "co2") {
+        } else if (itemDeviceEnvironmental.primary === "co2") {
             limitMin = 850
             limitMax = 1500
             scaleMax = 2000
@@ -158,12 +158,12 @@ Item {
                             property int valueMax
 
                             function loadValues() {
-                                if (deviceEnvironmental.primary === "voc" ||
-                                    deviceEnvironmental.primary === "hcho") {
+                                if (itemDeviceEnvironmental.primary === "voc" ||
+                                    itemDeviceEnvironmental.primary === "hcho") {
                                     valueMin = modelData.vocMin
                                     valueMean = modelData.vocMean
                                     valueMax = modelData.vocMax
-                                } else if (deviceEnvironmental.primary === "co2") {
+                                } else if (itemDeviceEnvironmental.primary === "co2") {
                                     valueMin = modelData.co2Min
                                     valueMean = modelData.co2Mean
                                     valueMax = modelData.co2Max
@@ -173,7 +173,7 @@ Item {
                             Component.onCompleted: loadValues()
 
                             Connections {
-                                target: deviceEnvironmental
+                                target: itemDeviceEnvironmental
                                 function onPrimaryChanged() { loadValues() }
                             }
 

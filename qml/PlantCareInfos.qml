@@ -5,8 +5,6 @@ import ThemeEngine 1.0
 
 Flickable {
     id: plantCareInfos
-    implicitWidth: 480
-    implicitHeight: 800
 
     contentWidth: -1
     contentHeight: column.height

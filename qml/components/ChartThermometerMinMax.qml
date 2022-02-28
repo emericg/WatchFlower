@@ -68,7 +68,7 @@ Item {
 
             Repeater {
                 model: currentDevice.aioMinMaxData
-                ChartThermometerMinMaxBar { mmd: modelData; width: widgetWidth; }
+                ChartThermometerMinMaxBar { width: widgetWidth; }
             }
         }
     //}

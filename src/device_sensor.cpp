@@ -653,7 +653,10 @@ void DeviceSensor::checkDataAvailability()
             hasData.bindValue(":deviceAddr", getAddress());
 
             if (hasData.exec() == false)
-                qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+            {
+                qWarning() << "> hasData.exec(1) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+                qWarning() << "> hasData.exec(1) >" << hasData.lastQuery();
+            }
 
             while (hasData.next())
             {
@@ -674,6 +677,8 @@ void DeviceSensor::checkDataAvailability()
 
 bool DeviceSensor::hasDataNamed(const QString &dataName) const
 {
+    if (dataName.isEmpty()) return false;
+
     QString tableName;
 
     if (isPlantSensor() || isThermometer())
@@ -708,6 +713,10 @@ bool DeviceSensor::hasDataNamed(const QString &dataName) const
 
         tableName = "sensorData";
     }
+    else
+    {
+        return false;
+    }
 
     // Otherwise, check if we have stored data
     if (m_dbInternal || m_dbExternal)
@@ -717,7 +726,10 @@ bool DeviceSensor::hasDataNamed(const QString &dataName) const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+        {
+            qWarning() << "> hasData.exec(2) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+            qWarning() << "> hasData.exec(2) >" << hasData.lastQuery();
+        }
 
         while (hasData.next())
         {
@@ -731,6 +743,8 @@ bool DeviceSensor::hasDataNamed(const QString &dataName) const
 
 int DeviceSensor::countDataNamed(const QString &dataName, int days) const
 {
+    if (dataName.isEmpty()) return false;
+
     // Count stored data
     if (m_dbInternal || m_dbExternal)
     {
@@ -795,6 +809,10 @@ bool DeviceSensor::hasData() const
 
         tableName = "sensorData";
     }
+    else
+    {
+        return false;
+    }
 
     // Otherwise, check if we have stored data
     if (m_dbInternal || m_dbExternal)
@@ -804,7 +822,10 @@ bool DeviceSensor::hasData() const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+        {
+            qWarning() << "> hasData.exec(3) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+            qWarning() << "> hasData.exec(3) >" << hasData.lastQuery();
+        }
 
         while (hasData.next())
         {

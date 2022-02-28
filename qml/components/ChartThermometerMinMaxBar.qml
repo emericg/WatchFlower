@@ -8,7 +8,6 @@ Item {
     width: 64
     height: parent.height
 
-    property var mmd: null
     property int www: 20
 
     Component.onCompleted: {
@@ -24,9 +23,9 @@ Item {
     onHeightChanged: computeSize()
 
     function computeSize() {
-        if (typeof mmd === "undefined" || !mmd) return
+        if (typeof modelData === "undefined" || !modelData) return
 
-        if (mmd.tempMean < -10) {
+        if (modelData.tempMean < -10) {
             rectangle_temp.visible = false
             rectangle_water_low.visible = false
             rectangle_water_high.visible = false
@@ -35,9 +34,9 @@ Item {
             var bbb = 0.85
             var base = containerbar.height
             var base2 = containerbar.height - rectangle_temp_mean.height
-            var h = UtilsNumber.normalize(mmd.tempMax, graphMin*bbb, graphMax*ttt)
-            var m = UtilsNumber.normalize(mmd.tempMean, graphMin*bbb, graphMax*ttt)
-            var l = UtilsNumber.normalize(mmd.tempMin, graphMin*bbb, graphMax*ttt)
+            var h = UtilsNumber.normalize(modelData.tempMax, graphMin*bbb, graphMax*ttt)
+            var m = UtilsNumber.normalize(modelData.tempMean, graphMin*bbb, graphMax*ttt)
+            var l = UtilsNumber.normalize(modelData.tempMin, graphMin*bbb, graphMax*ttt)
 
             rectangle_temp.visible = true
             rectangle_temp.y = base - (base * h)
@@ -48,10 +47,10 @@ Item {
                 rectangle_temp.height = www
             }
 
-            rectangle_temp_mean.visible = ((mmd.tempMax - mmd.tempMin) > 0.5)
+            rectangle_temp_mean.visible = ((modelData.tempMax - modelData.tempMin) > 0.5)
             rectangle_temp_mean.y = base2 - ((base2) * m) - rectangle_temp.y
 
-            if ((mmd.tempMax === mmd.tempMin && mmd.hygroMax === mmd.hygroMin)) {
+            if ((modelData.tempMax === modelData.tempMin && modelData.hygroMax === modelData.hygroMin)) {
                 text_temp_low.visible = false
                 rectangle_water_low.visible = false
             } else {
@@ -63,14 +62,14 @@ Item {
     }
 
     function setTemp() {
-        if (typeof mmd === "undefined" || !mmd) return
+        if (typeof modelData === "undefined" || !modelData) return
 
-        var th = mmd.tempMax
-        var tl = mmd.tempMin
+        var th = modelData.tempMax
+        var tl = modelData.tempMin
 
         if (settingsManager.tempUnit === "F") {
-            th = UtilsNumber.tempCelsiusToFahrenheit(mmd.tempMax)
-            tl = UtilsNumber.tempCelsiusToFahrenheit(mmd.tempMin)
+            th = UtilsNumber.tempCelsiusToFahrenheit(modelData.tempMax)
+            tl = UtilsNumber.tempCelsiusToFahrenheit(modelData.tempMin)
         }
 
         text_temp_high.text = th.toFixed(1) + "°"
@@ -95,7 +94,7 @@ Item {
 
         asynchronous: true
         color: Theme.colorSubText
-        source: (mmd.tempMean < -40) ? "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg" : ""
+        source: (modelData.tempMean < -40) ? "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg" : ""
     }
 
     Text {
@@ -104,10 +103,10 @@ Item {
         anchors.bottomMargin: isPhone ? 10 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
-        text: mmd.day
+        text: modelData.day
         textFormat: Text.PlainText
         font.pixelSize: Theme.fontSizeContent
-        font.bold: mmd.today
+        font.bold: modelData.today
         color: Theme.colorText
     }
 
@@ -191,7 +190,7 @@ Item {
                     id: element_water_high
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
-                    text: mmd.hygroMax
+                    text: modelData.hygroMax
                     font.pixelSize: 12
                 }
                 Text {
@@ -225,7 +224,7 @@ Item {
                     id: text_water_low
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
-                    text: mmd.hygroMin
+                    text: modelData.hygroMin
                     font.pixelSize: 12
                 }
                 Text {

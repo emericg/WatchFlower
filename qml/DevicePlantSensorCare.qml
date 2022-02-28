@@ -163,6 +163,7 @@ Item {
                     plantInfos.visible = false
                     plantLimits.visible = false
                     plantJournal.visible = true
+                    plantJournal.load()
                 }
             }
         }

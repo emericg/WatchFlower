@@ -273,7 +273,7 @@ bool DeviceEsp32AirQualityMonitor::hasData() const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec() ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+            qWarning() << "> hasData.exec(AQI) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
 
         while (hasData.next())
         {
