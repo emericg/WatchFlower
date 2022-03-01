@@ -11,7 +11,9 @@ Item {
     implicitHeight: 128
 
     property var boxDevice: pointer
-    property bool hasHygro: false
+    property bool hasHygro: boxDevice.isPlantSensor &&
+                            ((boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0) ||
+                             (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity")))
 
     property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
     property bool bigAssMode: false
@@ -44,9 +46,7 @@ Item {
             updateSensorData()
         }
         function onTempUnitChanged() {
-            if (loaderIndicators.item) {
-                loaderIndicators.item.updateData()
-            }
+            if (loaderIndicators.item) loaderIndicators.item.updateData()
         }
     }
 
@@ -57,10 +57,6 @@ Item {
     function initBoxData() {
         // Set icon
         if (boxDevice.isPlantSensor) {
-            var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
-            var hasHygro_long = (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity"))
-            hasHygro = hasHygro_short || hasHygro_long
-
             if (hasHygro) {
                 if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                     imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
@@ -127,13 +123,9 @@ Item {
         textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isDataFresh()) {
-                textStatus.color = Theme.colorGreen
-                textStatus.text = qsTr("Synced")
-            } else if (boxDevice.isDataToday()) {
-                textStatus.color = Theme.colorYellow
-                textStatus.text = qsTr("Synced")
-            }
+            if (boxDevice.isDataFresh()) textStatus.color = Theme.colorGreen
+            else if (boxDevice.isDataToday()) textStatus.color = Theme.colorYellow
+            textStatus.text = qsTr("Synced")
         }
         // Image
         if (!boxDevice.isDataToday()) {
@@ -201,16 +193,14 @@ Item {
     }
 
     function updateSensorWarnings() {
-        water.visible = false
-        temp.visible = false
-        ventilate.visible = false
-        nuclear.visible = false
-        warning.visible = false
 
         // Warnings icons (for sensors with available data)
         if (boxDevice.isDataToday()) {
 
             if (boxDevice.isPlantSensor) {
+
+                water.visible = false
+                temp.visible = false
 
                 // Water me notif
                 if (hasHygro && boxDevice.soilMoisture < boxDevice.limitHygroMin) {
@@ -242,6 +232,10 @@ Item {
 
             } else if (boxDevice.isEnvironmentalSensor) {
 
+                ventilate.visible = false
+                //nuclear.visible = false
+                //warning.visible = false
+
                 // Air warning
                 if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
                     (boxDevice.hasCo2Sensor && boxDevice.co2 > 1500)) {
@@ -256,12 +250,11 @@ Item {
                 // Radiation warning
                 if (boxDevice.hasGeigerCounter) {
                     if (boxDevice.radioactivityM > 1) {
-                        nuclear.visible = true
-
-                        if (boxDevice.radioactivityM > 10)
-                            nuclear.color = Theme.colorRed
-                        else
-                            nuclear.color = Theme.colorYellow
+                        //nuclear.visible = true
+                        //if (boxDevice.radioactivityM > 10)
+                        //    nuclear.color = Theme.colorRed
+                        //else
+                        //    nuclear.color = Theme.colorYellow
                     }
                 }
             }
@@ -269,12 +262,6 @@ Item {
     }
 
     function updateSensorData() {
-        if (boxDevice.isPlantSensor) {
-            var hasHygro_short = (boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0)
-            var hasHygro_long = (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity"))
-            hasHygro = hasHygro_short || hasHygro_long
-        }
-
         updateSensorIcon()
         updateSensorWarnings()
         if (loaderIndicators.item) loaderIndicators.item.updateData()
@@ -404,6 +391,7 @@ Item {
                 color: Theme.colorHighContrast
                 visible: (wideAssMode || bigAssMode)
                 fillMode: Image.PreserveAspectFit
+                asynchronous: true
             }
 
             Column {
@@ -497,7 +485,6 @@ Item {
                 source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                 color: Theme.colorBlue
             }
-
             IconSvg {
                 id: temp
                 width: bigAssMode ? 28 : 24
@@ -518,6 +505,7 @@ Item {
                 source: "qrc:/assets/icons_material/baseline-air-24px.svg"
                 color: Theme.colorYellow
             }
+/*
             IconSvg {
                 id: nuclear
                 width: bigAssMode ? 28 : 24
@@ -525,6 +513,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: false
+                asynchronous: true
                 source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                 color: Theme.colorYellow
             }
@@ -535,9 +524,11 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: false
+                asynchronous: true
                 source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
                 color: Theme.colorYellow
             }
+*/
         }
 
         ////////////////
@@ -619,17 +610,10 @@ Item {
             property int sensorRadius: bigAssMode ? 3 : 2
 
             function initData() {
-                lumi.visible = boxDevice.hasLuminositySensor
+                //
             }
-
             function updateData() {
-                hygro.visible = hasHygro
-                cond.visible = hasHygro
-
-                hygro_data.height = UtilsNumber.normalize(boxDevice.soilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
-                temp_data.height = UtilsNumber.normalize(boxDevice.temperatureC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
-                lumi_data.height = UtilsNumber.normalize(boxDevice.luminosityLux, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
-                cond_data.height = UtilsNumber.normalize(boxDevice.soilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
+                //
             }
 
             Item {
@@ -637,6 +621,8 @@ Item {
                 width: rectangleSensors.sensorWidth
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+
+                visible: hasHygro
 
                 Rectangle {
                     anchors.fill: parent
@@ -650,6 +636,8 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
+                    height: UtilsNumber.normalize(boxDevice.soilMoisture, boxDevice.limitHygroMin - 1, boxDevice.limitHygroMax) * rowRight.height
+
                     color: Theme.colorBlue
                     radius: rectangleSensors.sensorRadius
                     Behavior on height { NumberAnimation { duration: 333 } }
@@ -662,6 +650,8 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
+                visible: hasHygro
+
                 Rectangle {
                     anchors.fill: parent
                     color: Theme.colorRed
@@ -673,6 +663,8 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
+
+                    height: UtilsNumber.normalize(boxDevice.soilConductivity, boxDevice.limitConduMin, boxDevice.limitConduMax) * rowRight.height
 
                     color: Theme.colorRed
                     radius: rectangleSensors.sensorRadius
@@ -698,6 +690,8 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
+                    height: UtilsNumber.normalize(boxDevice.temperatureC, boxDevice.limitTempMin - 1, boxDevice.limitTempMax) * rowRight.height
+
                     color: Theme.colorGreen
                     radius: rectangleSensors.sensorRadius
                     Behavior on height { NumberAnimation { duration: 333 } }
@@ -710,6 +704,8 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
+                visible: boxDevice.hasLuminositySensor
+
                 Rectangle {
                     anchors.fill: parent
                     color: Theme.colorYellow
@@ -721,6 +717,8 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
+
+                    height: UtilsNumber.normalize(boxDevice.luminosityLux, boxDevice.limitLuxMin, boxDevice.limitLuxMax) * rowRight.height
 
                     color: Theme.colorYellow
                     radius: rectangleSensors.sensorRadius
@@ -766,7 +764,7 @@ Item {
                 color: Theme.colorText
                 font.letterSpacing: -1.4
                 font.pixelSize: bigAssMode ? 32 : 28
-                font.family: "Tahoma"
+                //font.family: "Tahoma"
             }
 
             Text {
@@ -776,7 +774,7 @@ Item {
 
                 color: Theme.colorSubText
                 font.pixelSize: bigAssMode ? 26 : 22
-                font.family: "Tahoma"
+                //font.family: "Tahoma"
             }
         }
     }

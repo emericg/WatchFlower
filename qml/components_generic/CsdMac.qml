@@ -5,90 +5,82 @@ import QtQuick.Window 2.15
 import ThemeEngine 1.0
 
 Loader {
-    width: 48
-    height: 24
+    width: active ? 48 : 0
+    height: active ? 24 : 0
 
-    //enabled: (settingsManager.appThemeCSD && Qt.platform.os === "osx")
-    //visible: (settingsManager.appThemeCSD && Qt.platform.os === "osx")
+    active: (settingsManager.appThemeCSD && Qt.platform.os === "osx")
 
     asynchronous: true
-    sourceComponent: (settingsManager.appThemeCSD && Qt.platform.os === "osx")
-                         ? componentCsdMac : null
+    sourceComponent: Item {
+        id: csdMac
+        implicitWidth: 48
+        implicitHeight: 24
 
-    Component {
-        id: componentCsdMac
+        property bool hovered: false
 
-        Item {
-            id: csdMac
-            implicitWidth: 48
-            implicitHeight: 24
+        ////////
 
-            property bool hovered: false
+        MouseArea {
+            id: buttonsArea
+            anchors.fill: buttonsRow
 
-            ////////
+            hoverEnabled: visible
+            onEntered: csdMac.hovered = true
+            onExited: csdMac.hovered = false
+            onCanceled: csdMac.hovered = false
+        }
 
-            MouseArea {
-                id: buttonsArea
-                anchors.fill: buttonsRow
+        ////////
 
-                hoverEnabled: visible
-                onEntered: csdMac.hovered = true
-                onExited: csdMac.hovered = false
-                onCanceled: csdMac.hovered = false
+        Row {
+            id: buttonsRow
+            anchors.centerIn: parent
+            spacing: 8
+
+            Rectangle {
+                width: 12; height: 12; radius: 12;
+                color: "#FE5F57"
+                border.color: "#E24037"
+
+                IconSvg {
+                    width: 10; height: 10;
+                    anchors.centerIn: parent
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    opacity: csdMac.hovered ? 0.6 : 0
+                    //Behavior on opacity { OpacityAnimator { duration: 133 } }
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: appWindow.close()
+                }
             }
-
-            ////////
-
-            Row {
-                id: buttonsRow
-                anchors.centerIn: parent
-                spacing: 8
-
+            Rectangle {
+                width: 12; height: 12; radius: 12;
+                color: "#FEBC2F"
+                border.color: "#E19D17"
                 Rectangle {
-                    width: 12; height: 12; radius: 12;
-                    color: "#FE5F57"
-                    border.color: "#E24037"
-
-                    IconSvg {
-                        width: 10; height: 10;
-                        anchors.centerIn: parent
-                        source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                        opacity: csdMac.hovered ? 0.6 : 0
-                        //Behavior on opacity { OpacityAnimator { duration: 133 } }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: appWindow.close()
-                    }
+                    width: 8; height: 1;
+                    anchors.centerIn: parent
+                    color: "grey"
+                    opacity: csdMac.hovered ? 0.8 : 0
+                    //Behavior on opacity { OpacityAnimator { duration: 133 } }
                 }
-                Rectangle {
-                    width: 12; height: 12; radius: 12;
-                    color: "#FEBC2F"
-                    border.color: "#E19D17"
-                    Rectangle {
-                        width: 8; height: 1;
-                        anchors.centerIn: parent
-                        color: "grey"
-                        opacity: csdMac.hovered ? 0.8 : 0
-                        //Behavior on opacity { OpacityAnimator { duration: 133 } }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: appWindow.showMinimized()
-                    }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: appWindow.showMinimized()
                 }
-                Rectangle {
-                    width: 12; height: 12; radius: 12;
-                    color: "#28C940"
-                    border.color: "#10A923"
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            if (appWindow.visibility === ApplicationWindow.Maximized)
-                                appWindow.showNormal()
-                            else
-                                appWindow.showMaximized()
-                        }
+            }
+            Rectangle {
+                width: 12; height: 12; radius: 12;
+                color: "#28C940"
+                border.color: "#10A923"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if (appWindow.visibility === ApplicationWindow.Maximized)
+                            appWindow.showNormal()
+                        else
+                            appWindow.showMaximized()
                     }
                 }
             }

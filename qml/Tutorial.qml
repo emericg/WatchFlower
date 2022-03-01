@@ -5,18 +5,18 @@ import ThemeEngine 1.0
 
 Rectangle {
     width: 480
-    height: 640
+    height: 720
     anchors.fill: parent
 
     color: Theme.colorHeader
 
     property int lastPage: 3
-    property string exitTo: "DeviceList"
+    property string entryPoint: "DeviceList"
 
     ////////////////////////////////////////////////////////////////////////////
 
     function open() {
-        exitTo = "DeviceList"
+        entryPoint = "DeviceList"
 
         if (!tutorialLoader.sourceComponent) {
             tutorialLoader.sourceComponent = componentTutorial
@@ -26,11 +26,13 @@ Rectangle {
     }
 
     function reopen() {
-        exitTo = "About"
+        entryPoint = "About"
 
         if (!tutorialLoader.sourceComponent) {
             tutorialLoader.sourceComponent = componentTutorial
         }
+
+        tutorialLoader.item.reset()
 
         appContent.state = "Tutorial"
     }
@@ -42,7 +44,7 @@ Rectangle {
         anchors.fill: parent
 
         sourceComponent: null
-        asynchronous: true
+        asynchronous: false
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -52,6 +54,12 @@ Rectangle {
 
         Item {
             id: itemTutorial
+
+            function reset() {
+                tutorialPages.disableAnimation()
+                tutorialPages.currentIndex = 0
+                tutorialPages.enableAnimation()
+            }
 
             SwipeView {
                 id: tutorialPages
@@ -65,8 +73,15 @@ Rectangle {
                     if (currentIndex < 0) currentIndex = 0
                     if (currentIndex > lastPage) {
                         currentIndex = 0 // reset
-                        appContent.state = exitTo
+                        appContent.state = entryPoint
                     }
+                }
+
+                function enableAnimation() {
+                    contentItem.highlightMoveDuration = 333
+                }
+                function disableAnimation() {
+                    contentItem.highlightMoveDuration = 0
                 }
 
                 ////////

@@ -46,8 +46,10 @@ Loader {
 
         Item {
             id: itemDeviceThermometer
-            width: 450
-            height: 700
+            width: 480
+            height: 720
+
+            focus: parent.focus
 
             property alias thermoChart: graphLoader.item
 

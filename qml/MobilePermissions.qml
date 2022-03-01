@@ -6,10 +6,12 @@ import ThemeEngine 1.0
 Item {
     id: permissionsScreen
     width: 480
-    height: 640
+    height: 720
     anchors.fill: parent
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
         // Refresh permissions
@@ -24,6 +26,7 @@ Item {
 
     Flickable {
         anchors.fill: parent
+
         contentWidth: -1
         contentHeight: column.height
 

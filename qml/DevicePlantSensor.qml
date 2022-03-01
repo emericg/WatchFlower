@@ -45,8 +45,10 @@ Loader {
 
         Item {
             id: itemDevicePlantSensor
-            width: 450
-            height: 700
+            width: 480
+            height: 720
+
+            focus: parent.focus
 
             Connections {
                 target: currentDevice

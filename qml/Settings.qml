@@ -7,13 +7,14 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: settingsScreen
     width: 480
-    height: 640
+    height: 720
     anchors.fill: parent
 
     ////////////////////////////////////////////////////////////////////////////
 
     Flickable {
         anchors.fill: parent
+
         contentWidth: -1
         contentHeight: column.height
 

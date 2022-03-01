@@ -46,8 +46,10 @@ Loader {
 
         Item {
             id: itemDeviceEnvironmental
-            width: 450
-            height: 700
+            width: 480
+            height: 720
+
+            focus: parent.focus
 
             property bool isAirMonitor: false
             property bool isWeatherStation: false
@@ -149,6 +151,7 @@ Loader {
                     if (currentDevice.hasVocSensor) primary = "voc"
                     else if (currentDevice.hasCo2Sensor) primary = "co2"
                     else if (currentDevice.hasPM10Sensor) primary = "pm10"
+                    else if (currentDevice.hasGeigerCounter) primary = "nuclear"
                     else primary = "hygrometer"
                 }
 

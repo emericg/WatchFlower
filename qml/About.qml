@@ -7,7 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Item {
     id: aboutScreen
     width: 480
-    height: 640
+    height: 720
     anchors.fill: parent
 
     ////////////////////////////////////////////////////////////////////////////
