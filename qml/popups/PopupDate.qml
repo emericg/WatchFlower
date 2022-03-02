@@ -18,8 +18,6 @@ Popup {
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     parent: Overlay.overlay
 
-    locale: Qt.locale()
-
     ////////////////////////////////////////////////////////////////////////////
 
     property var today: new Date()
@@ -202,7 +200,7 @@ Popup {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
 
-                locale: popupDate.locale
+                //locale: popupDate.locale
 
                 delegate: Text {
                     text: model.shortName.substring(0, 1).toUpperCase()
@@ -219,7 +217,7 @@ Popup {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
 
-                locale: popupDate.locale
+                //locale: popupDate.locale
 
                 delegate: Text {
                     width: (grid.width / 7)

@@ -110,13 +110,11 @@ Loader {
                 color: Theme.colorForeground
                 //height: parent.height * 0.66
 
-                property var currentLocale: Qt.locale()
                 property var currentDateTime: new Date()
                 property int entryType: JournalUtils.JOURNAL_WATER
 
                 PopupDate {
                     id: popupDate
-                    locale: newEntry.currentLocale
                     onUpdateDate: {
                         //console.log("onUpdateDate(" + newdate + ")")
                         newEntry.currentDateTime = newdate
@@ -163,7 +161,7 @@ Loader {
 
                             //visible: singleColumn
                             fullColor: true
-                            text: newEntry.currentDateTime.toLocaleDateString(newEntry.currentLocale)
+                            text: newEntry.currentDateTime.toLocaleDateString(Qt.locale())
                             primaryColor: Theme.colorSecondary
                             onClicked: {
                                 if (singleColumn)

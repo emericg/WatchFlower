@@ -104,7 +104,6 @@ Item {
 
         PopupDate {
             id: popupDate
-            locale: currentLocale
             onUpdateDate: {
                 //console.log("onUpdateDate(" + newdate + ")")
                 newEntry.currentDateTime = newdate
@@ -117,7 +116,6 @@ Item {
             entryComment.text = ""
         }
 
-        property var currentLocale: Qt.locale()
         property var currentDateTime: new Date()
         property int entryType: JournalUtils.JOURNAL_WATER
 
@@ -155,7 +153,7 @@ Item {
 
                     //visible: singleColumn
                     fullColor: true
-                    text: newEntry.currentDateTime.toLocaleDateString(newEntry.currentLocale)
+                    text: newEntry.currentDateTime.toLocaleDateString(Qt.locale())
                     primaryColor: Theme.colorSecondary
                     onClicked: {
                         if (singleColumn)

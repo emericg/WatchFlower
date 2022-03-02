@@ -23,6 +23,7 @@
 #include <QCoreApplication>
 #include <QLibraryInfo>
 #include <QTranslator>
+#include <QLocale>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -90,40 +91,51 @@ void UtilsLanguage::loadLanguage(const QString &lng)
         delete m_appTranslator;
     }
 
-    //
-    QString localefull;
-    m_appLanguage = lng;
+    QString locale_str_full;
+    QString locale_str_short;
 
-    if (m_appLanguage == "Chinese (traditional)") localefull = "zh_TW";
-    else if (m_appLanguage == "Chinese (simplified)") localefull = "zh_CN";
-    else if (m_appLanguage == "Dansk") localefull = "da_DK";
-    else if (m_appLanguage == "Deutsch") localefull = "de_DE";
-    else if (m_appLanguage == "English") localefull = "en_EN";
-    else if (m_appLanguage == "Español") localefull = "es_ES";
-    else if (m_appLanguage == "Français") localefull = "fr_FR";
-    else if (m_appLanguage == "Frysk") localefull = "fy_NL";
-    else if (m_appLanguage == "Nederlands") localefull = "nl_NL";
-    else if (m_appLanguage == "Norsk (Bokmål)") localefull = "nb_NO";
-    else if (m_appLanguage == "Norsk (Nynorsk)") localefull = "nn_NO";
-    else if (m_appLanguage == "Pусский") localefull = "ru_RU";
+    m_appLanguage = lng;
+    if (m_appLanguage == "Chinese (traditional)") locale_str_full = "zh_TW";
+    else if (m_appLanguage == "Chinese (simplified)") locale_str_full = "zh_CN";
+    else if (m_appLanguage == "Dansk") locale_str_full = "da_DK";
+    else if (m_appLanguage == "Deutsch") locale_str_full = "de_DE";
+    else if (m_appLanguage == "English") locale_str_full = "en_EN";
+    else if (m_appLanguage == "Español") locale_str_full = "es_ES";
+    else if (m_appLanguage == "Français") locale_str_full = "fr_FR";
+    else if (m_appLanguage == "Frysk") locale_str_full = "fy_NL";
+    else if (m_appLanguage == "Nederlands") locale_str_full = "nl_NL";
+    else if (m_appLanguage == "Norsk (Bokmål)") locale_str_full = "nb_NO";
+    else if (m_appLanguage == "Norsk (Nynorsk)") locale_str_full = "nn_NO";
+    else if (m_appLanguage == "Pусский") locale_str_full = "ru_RU";
     else
     {
-        localefull = QLocale::system().name();
+        locale_str_full = QLocale::system().name();
         m_appLanguage = "auto";
     }
 
-    QString localeshort = localefull;
-    localeshort.truncate(localefull.lastIndexOf('_'));
+    locale_str_short = locale_str_full;
+    locale_str_short.truncate(locale_str_full.lastIndexOf('_'));
+
+    QLocale locale(locale_str_full);
+    QLocale::setDefault(locale);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QString translationpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
+    QString translationpath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
 
     m_qtTranslator = new QTranslator;
-    m_qtTranslator->load("qt_" + localefull, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    if (m_qtTranslator)
+        if (m_qtTranslator->load("qt_" + locale_str_full, translationpath))
+            m_qt_app->installTranslator(m_qtTranslator);
 
     m_appTranslator = new QTranslator;
-    m_appTranslator->load(":/i18n/" + m_appName + "_" + localefull + ".qm");
+    if (m_qtTranslator)
+        if (m_appTranslator->load(":/i18n/" + m_appName + "_" + locale_str_full + ".qm"))
+            m_qt_app->installTranslator(m_appTranslator);
 
     // Install new language
-    if (m_qtTranslator) m_qt_app->installTranslator(m_qtTranslator);
-    if (m_appTranslator) m_qt_app->installTranslator(m_appTranslator);
     if (m_qml_engine) m_qml_engine->retranslate();
 }
 

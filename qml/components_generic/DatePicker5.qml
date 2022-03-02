@@ -11,8 +11,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property var locale: Qt.locale()
-
     property var today: new Date()
     property bool isToday: false
 
@@ -148,7 +146,7 @@ Item {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
 
-                locale: datePicker.locale
+                //locale: datePicker.locale
 
                 delegate: Text {
                     anchors.bottom: parent.bottom
@@ -172,7 +170,7 @@ Item {
             anchors.rightMargin: 4
             anchors.bottom: parent.bottom
 
-            locale: datePicker.locale
+            //locale: datePicker.locale
 
             delegate: Text {
                 width: (grid.width / 7)

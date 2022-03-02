@@ -34,7 +34,7 @@ Rectangle {
         spacing: 0
 
         Text {
-            text: modelData.date.toLocaleString(locale, "dd MMMM yyyy")
+            text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM yyyy")
             color: Theme.colorLowContrast
             font.pixelSize: Theme.fontSizeContentVeryBig
         }
