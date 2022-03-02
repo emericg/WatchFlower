@@ -6,8 +6,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: chartPlantDataAio
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
 
     property bool useOpenGL: true
     property bool showGraphDots: settingsManager.graphShowDots
@@ -131,7 +130,7 @@ Item {
         antialiasing: true
         legend.visible: false
         backgroundRoundness: 0
-        backgroundColor: "transparent"
+        backgroundColor: Theme.colorBackground
         animationOptions: ChartView.NoAnimation
 
         ValueAxis { id: axisHygro; visible: false; gridVisible: false; }

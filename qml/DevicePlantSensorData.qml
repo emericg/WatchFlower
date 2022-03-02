@@ -159,6 +159,7 @@ Item {
             columns: (uiMode === 2) ? 3 : 1
             rows: (uiMode === 2) ? 1 : 3
             spacing: 0
+            z: 5
 
             ////////
 

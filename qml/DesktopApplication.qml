@@ -65,7 +65,7 @@ ApplicationWindow {
     property int screenPaddingBottom: 0
 
     Item { // compatibility
-        id: tabletMenuDevice
+        id: mobileMenu
         signal deviceDataButtonClicked()
         signal deviceHistoryButtonClicked()
         signal devicePlantButtonClicked()

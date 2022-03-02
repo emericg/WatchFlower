@@ -402,6 +402,7 @@ Item {
                     id: textTitle
                     width: rowLeft.width - imageDevice.width - rowLeft.spacing
 
+                    textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: bigAssMode ? 22 : 20
                     font.capitalization: Font.Capitalize
@@ -413,6 +414,7 @@ Item {
                     id: textLocation
                     width: rowLeft.width - imageDevice.width - rowLeft.spacing
 
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: bigAssMode ? 20 : 18
                     font.capitalization: Font.Capitalize
@@ -443,6 +445,7 @@ Item {
                         id: textStatus
                         anchors.verticalCenter: parent.verticalCenter
 
+                        textFormat: Text.PlainText
                         color: Theme.colorGreen
                         font.pixelSize: bigAssMode ? 16 : 15
 
@@ -761,6 +764,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.letterSpacing: -1.4
                 font.pixelSize: bigAssMode ? 32 : 28
@@ -772,6 +776,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
+                textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: bigAssMode ? 26 : 22
                 //font.family: "Tahoma"
@@ -851,6 +856,8 @@ Item {
             Text {
                 id: gaugeLegend
                 anchors.centerIn: parent
+
+                textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorSubText
             }

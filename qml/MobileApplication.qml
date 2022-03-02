@@ -351,12 +351,12 @@ ApplicationWindow {
 
         DeviceList {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.hhv
+            anchors.bottomMargin: mobileMenu.hhv
             id: screenDeviceList
         }
         DevicePlantSensor {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.height
+            anchors.bottomMargin: mobileMenu.height
             id: screenDevicePlantSensor
         }
         DeviceThermometer {
@@ -369,7 +369,7 @@ ApplicationWindow {
         }
         Settings {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.hhv
+            anchors.bottomMargin: mobileMenu.hhv
             id: screenSettings
         }
         MobilePermissions {
@@ -378,7 +378,7 @@ ApplicationWindow {
         }
         About {
             anchors.fill: parent
-            anchors.bottomMargin: appTabletMenu.hhv
+            anchors.bottomMargin: mobileMenu.hhv
             id: screenAbout
         }
 
@@ -536,192 +536,8 @@ ApplicationWindow {
 
     ////////////////
 
-    Rectangle {
-        id: appTabletMenu
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        property int hhh: (isPhone ? 36 : 48)
-        property int hhi: (hhh * 0.666)
-        property int hhv: visible ? hhh : 0
-
-        height: hhh + screenPaddingBottom
-        color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
-
-        ////////////////////////////////////////////////////////////////////////////
-
-        Rectangle {
-            anchors.top: parent.top
-            width: parent.width
-            height: 1
-            opacity: 0.5
-            visible: isTablet
-            color: Theme.colorTabletmenuContent
-        }
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        ////////////////////////////////////////////////////////////////////////////
-
-        visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
-                               appContent.state === "DeviceList" ||
-                               appContent.state === "Settings" ||
-                               appContent.state === "About")) ||
-                 (isPhone && appContent.state === "DevicePlantSensor" && screenOrientation === Qt.PortraitOrientation)
-
-        Row {
-            id: tabletMenuScreen
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
-
-            visible: (appContent.state === "DeviceList" ||
-                      appContent.state === "Settings" ||
-                      appContent.state === "About")
-
-            MobileMenuItem {
-                id: menuPlants
-                height: appTabletMenu.hhh
-
-                text: qsTr("Sensors")
-                source: "qrc:/assets/logos/watchflower_tray_dark.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                selected: (appContent.state === "DeviceList")
-                onClicked: appContent.state = "DeviceList"
-            }
-            MobileMenuItem {
-                id: menuSettings
-                height: appTabletMenu.hhh
-
-                text: qsTr("Settings")
-                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                selected: (appContent.state === "Settings")
-                onClicked: appContent.state = "Settings"
-            }
-            MobileMenuItem {
-                id: menuAbout
-                height: appTabletMenu.hhh
-
-                text: qsTr("About")
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                selected: (appContent.state === "About")
-                onClicked: appContent.state = "About"
-            }
-        }
-
-        Row {
-            id: tabletMenuDevice
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -screenPaddingBottom
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
-
-            signal deviceDataButtonClicked()
-            signal deviceHistoryButtonClicked()
-            signal devicePlantButtonClicked()
-            signal deviceSettingsButtonClicked()
-
-            visible: (appContent.state === "DevicePlantSensor")
-
-            function setActiveDeviceData() {
-                menuDeviceData.selected = true
-                menuDeviceHistory.selected = false
-                menuDevicePlant.selected = false
-                menuDeviceSettings.selected = false
-            }
-            function setActiveDeviceHistory() {
-                menuDeviceData.selected = false
-                menuDeviceHistory.selected = true
-                menuDevicePlant.selected = false
-                menuDeviceSettings.selected = false
-            }
-            function setActiveDevicePlant() {
-                menuDeviceData.selected = false
-                menuDeviceHistory.selected = false
-                menuDevicePlant.selected = true
-                menuDeviceSettings.selected = false
-            }
-            function setActiveDeviceSettings() {
-                menuDeviceData.selected = false
-                menuDeviceHistory.selected = false
-                menuDevicePlant.selected = false
-                menuDeviceSettings.selected = true
-            }
-
-            MobileMenuItem {
-                id: menuDeviceData
-                height: appTabletMenu.hhh
-
-                text: qsTr("Data")
-                source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                //selected: (appContent.state === "DevicePlantSensor")
-                onClicked: tabletMenuDevice.deviceDataButtonClicked()
-            }
-            MobileMenuItem {
-                id: menuDeviceHistory
-                height: appTabletMenu.hhh
-
-                text: qsTr("History")
-                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                //selected: (appContent.state === "DevicePlantSensor")
-                onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
-            }
-            MobileMenuItem {
-                id: menuDevicePlant
-                height: appTabletMenu.hhh
-
-                text: qsTr("Plant")
-                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                //selected: (appContent.state === "DevicePlantSensor")
-                onClicked: tabletMenuDevice.devicePlantButtonClicked()
-            }
-            MobileMenuItem {
-                id: menuDeviceSettings
-                height: appTabletMenu.hhh
-
-                text: qsTr("Settings")
-                source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
-                sourceSize: appTabletMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                //selected: (appContent.state === "DevicePlantSensor")
-                onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
-            }
-        }
+    MobileMenu {
+        id: mobileMenu
     }
 
     ////////////////

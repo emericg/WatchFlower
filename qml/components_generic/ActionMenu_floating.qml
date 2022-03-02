@@ -15,7 +15,6 @@ Popup {
     modal: true
     dim: false
     focus: isMobile
-    locale: Qt.locale()
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
     enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }

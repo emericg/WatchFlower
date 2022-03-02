@@ -123,23 +123,23 @@ Loader {
             }
 
             Connections {
-                target: tabletMenuDevice
+                target: mobileMenu
 
                 // mobile only
                 function onDeviceDataButtonClicked() {
-                    tabletMenuDevice.setActiveDeviceData()
+                    mobileMenu.setActiveDeviceData()
                     sensorPages.currentIndex = 0
                 }
                 function onDeviceHistoryButtonClicked() {
-                    tabletMenuDevice.setActiveDeviceHistory()
+                    mobileMenu.setActiveDeviceHistory()
                     sensorPages.currentIndex = 1
                 }
                 function onDevicePlantButtonClicked() {
-                    tabletMenuDevice.setActiveDevicePlant()
+                    mobileMenu.setActiveDevicePlant()
                     sensorPages.currentIndex = 2
                 }
                 function onDeviceSettingsButtonClicked() {
-                    tabletMenuDevice.setActiveDeviceSettings()
+                    mobileMenu.setActiveDeviceSettings()
                     sensorPages.currentIndex = 3
                 }
             }
@@ -187,7 +187,7 @@ Loader {
                 plantSensorCare.updateHeader()
                 plantSensorCare.updateLimits()
 
-                if (isMobile) tabletMenuDevice.setActiveDeviceData()
+                if (isMobile) mobileMenu.setActiveDeviceData()
                 if (isDesktop) appHeader.setActiveDeviceData()
             }
 
@@ -227,13 +227,13 @@ Loader {
                                 appHeader.setActiveDeviceSettings()
                         } else {
                             if (sensorPages.currentIndex === 0)
-                                tabletMenuDevice.setActiveDeviceData()
+                                mobileMenu.setActiveDeviceData()
                             else if (sensorPages.currentIndex === 1)
-                                tabletMenuDevice.setActiveDeviceHistory()
+                                mobileMenu.setActiveDeviceHistory()
                             else if (sensorPages.currentIndex === 2)
-                                tabletMenuDevice.setActiveDevicePlant()
+                                mobileMenu.setActiveDevicePlant()
                             else if (sensorPages.currentIndex === 3)
-                                tabletMenuDevice.setActiveDeviceSettings()
+                                mobileMenu.setActiveDeviceSettings()
                         }
                     }
 
