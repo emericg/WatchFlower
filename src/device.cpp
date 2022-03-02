@@ -186,15 +186,26 @@ void Device::actionClearData()
 
     if (!isBusy())
     {
+        QSqlQuery resetDeviceLastSync;
+        resetDeviceLastSync.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
+        resetDeviceLastSync.bindValue(":sync", QDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        resetDeviceLastSync.bindValue(":deviceAddr", getAddress());
+        if (resetDeviceLastSync.exec())
+        {
+            m_lastHistorySync = QDateTime();
+            Q_EMIT statusUpdated();
+        }
+        else
+        {
+            qWarning() << "> resetDeviceLastSync.exec() ERROR" << resetDeviceLastSync.lastError().type() << ":" << resetDeviceLastSync.lastError().text();
+        }
+
         QSqlQuery deleteData;
         if (isEnvironmentalSensor()) deleteData.prepare("DELETE FROM sensorData WHERE deviceAddr = :deviceAddr");
         else deleteData.prepare("DELETE FROM plantData WHERE deviceAddr = :deviceAddr");
         deleteData.bindValue(":deviceAddr", getAddress());
         if (deleteData.exec())
         {
-            m_lastHistorySync = QDateTime();
-            Q_EMIT statusUpdated();
-
             Q_EMIT dataUpdated();
             Q_EMIT historyUpdated();
         }
@@ -205,9 +216,9 @@ void Device::actionClearData()
     }
 }
 
-void Device::actionClearHistory()
+void Device::actionClearDeviceData()
 {
-    //qDebug() << "Device::actionClearHistory()" << getAddress() << getName();
+    //qDebug() << "Device::actionClearDeviceData()" << getAddress() << getName();
 
     if (!isBusy())
     {

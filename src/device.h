@@ -334,7 +334,7 @@ public:
 
     // Start actions
     Q_INVOKABLE void actionClearData();
-    Q_INVOKABLE void actionClearHistory();
+    Q_INVOKABLE void actionClearDeviceData();
     Q_INVOKABLE void actionLedBlink();
     Q_INVOKABLE void actionWatering();
     Q_INVOKABLE void actionCalibrate();

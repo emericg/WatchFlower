@@ -101,7 +101,7 @@ Popup {
 
                     onClicked: {
                         if (selectedDevice) {
-                             selectedDevice.actionClearHistory()
+                             selectedDevice.actionClearDeviceData()
                         }
                         popupDeleteData.confirmed()
                         popupDeleteData.close()
