@@ -114,7 +114,7 @@ jobs:
   ## Windows build #############################################################
   build-windows:
     name: "Windows CI build"
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       # Checkout the repository
       - name: Checkout repository and submodules
