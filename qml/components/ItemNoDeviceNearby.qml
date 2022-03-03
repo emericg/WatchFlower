@@ -8,6 +8,7 @@ Rectangle {
     height: width
     radius: width
     anchors.centerIn: parent
+    anchors.verticalCenterOffset: -20
     color: Theme.colorForeground
 
     IconSvg {
@@ -23,8 +24,10 @@ Rectangle {
         anchors.top: parent.bottom
         anchors.topMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
+
         text: qsTr("Looking for nearby devices...")
-        color: Theme.colorText
+        textFormat: Text.PlainText
         font.pixelSize: Theme.fontSizeContent
+        color: Theme.colorText
     }
 }

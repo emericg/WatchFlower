@@ -123,9 +123,13 @@ Item {
         textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isDataFresh()) textStatus.color = Theme.colorGreen
-            else if (boxDevice.isDataToday()) textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Synced")
+            if (boxDevice.isDataFresh()) {
+                textStatus.color = Theme.colorGreen
+                textStatus.text = qsTr("Synced")
+            } else if (boxDevice.isDataToday()) {
+                textStatus.color = Theme.colorYellow
+                textStatus.text = qsTr("Synced")
+            }
         }
         // Image
         if (!boxDevice.isDataToday()) {
@@ -323,7 +327,7 @@ Item {
                     } else {
                         screenDeviceList.deselectDevice(index)
                     }
-                    return;
+                    return
                 }
 
                 if (mouse.button === Qt.LeftButton) {
@@ -335,7 +339,7 @@ Item {
                         } else {
                             screenDeviceList.deselectDevice(index)
                         }
-                        return;
+                        return
                     }
 
                     // regular click

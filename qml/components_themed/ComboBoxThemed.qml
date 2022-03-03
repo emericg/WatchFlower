@@ -82,7 +82,7 @@ T.ComboBox {
 
             radius: Theme.componentRadius
             opacity: enabled ? 1 : 0.3
-            color: highlighted ? "#F6F6F6" : Theme.colorBackground
+            color: highlighted ? "#F6F6F6" : "white"
         }
 
         contentItem: Text {

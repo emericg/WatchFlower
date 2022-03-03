@@ -20,12 +20,14 @@ Item {
             width: (isDesktop || isTablet) ? 128 : (parent.width*0.333)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
+
             source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
             color: Theme.colorSubText
         }
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
+
             text: qsTr("Not enough data")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContent

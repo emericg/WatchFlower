@@ -8,7 +8,7 @@ Item {
     implicitWidth: 48
     implicitHeight: 48
 
-    width: Math.max(parent.height, content.width + 24)
+    width: Math.max(parent.height, content.width + 4)
     height: parent.height
 
     // actions
@@ -22,7 +22,7 @@ Item {
     // settings
     property string text
     property url source
-    property int sourceSize: 24
+    property int sourceSize: 26
 
     // colors
     property string colorContent: Theme.colorTabletmenuContent
@@ -31,7 +31,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
-        anchors.fill: parent
+        anchors.fill: control
         hoverEnabled: false
 
         onClicked: control.clicked()
@@ -40,16 +40,17 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    RowLayout {
+    ColumnLayout {
         id: content
         anchors.centerIn: control
-        spacing: isPhone ? 6 : 12
+        spacing: 0
 
         IconSvg { // contentImage
             width: control.sourceSize
             height: control.sourceSize
             Layout.maximumWidth: control.sourceSize
             Layout.maximumHeight: control.sourceSize
+            Layout.alignment: Qt.AlignHCenter
             visible: source.toString().length
 
             source: control.source
@@ -59,14 +60,14 @@ Item {
         }
 
         Text { // contentText
-            height: control.height
-            Layout.alignment: Qt.AlignVCenter
+            width: control.width
+            Layout.alignment: Qt.AlignHCenter
             visible: text
 
             text: control.text
             textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeComponent
-            font.bold: true
+            font.pixelSize: Theme.fontSizeContentVerySmall
+            font.bold: false
             color: control.selected ? control.colorHighlight : control.colorContent
             Behavior on color { ColorAnimation { duration: 133 } }
         }

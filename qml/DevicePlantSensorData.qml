@@ -159,7 +159,6 @@ Item {
             columns: (uiMode === 2) ? 3 : 1
             rows: (uiMode === 2) ? 1 : 3
             spacing: 0
-            z: 5
 
             ////////
 
@@ -416,6 +415,7 @@ Item {
         Item {
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
             height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height) : contentGrid_lvl1.height
+            clip: true
 
             Loader {
                 id: chartAioLoader
