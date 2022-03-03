@@ -18,8 +18,8 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'androidx.core:core:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.core:core:1.3.0'
 }
 
 android {
@@ -27,7 +27,7 @@ android {
      * The following variables:
      * - androidBuildToolsVersion,
      * - androidCompileSdkVersion
-     * - qt5AndroidDir - holds the path to qt android files
+     * - qtAndroidDir - holds the path to qt android files
      *                   needed to build any Qt application
      *                   on Android.
      *
@@ -37,8 +37,8 @@ android {
      *******************************************************/
 
     compileSdkVersion androidCompileSdkVersion.toInteger()
-
     buildToolsVersion androidBuildToolsVersion
+    ndkVersion androidNdkVersion
 
     sourceSets {
         main {
@@ -73,7 +73,7 @@ android {
 
     defaultConfig {
         resConfig "en"
-        minSdkVersion = qtMinSdkVersion
-        targetSdkVersion = qtTargetSdkVersion
+        minSdkVersion qtMinSdkVersion
+        targetSdkVersion qtTargetSdkVersion
     }
 }
