@@ -34,7 +34,6 @@ Item {
             ////////////////
 
             Rectangle {
-                id: rectangleHeader
                 anchors.left: parent.left
                 anchors.leftMargin: -(screenPaddingLeft + 16)
                 anchors.right: parent.right

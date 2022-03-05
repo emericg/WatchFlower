@@ -126,7 +126,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: rectangleHeaderBackground
+        id: subHeaderBackground
         color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
         width: parent.width
         height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height

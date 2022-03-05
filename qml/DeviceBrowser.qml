@@ -56,7 +56,6 @@ Item {
                 }
 
                 ItemNoDeviceNearby {
-                    anchors.centerIn: parent
                     visible: (devicesView.count <= 0)
                 }
             }
@@ -93,7 +92,6 @@ Item {
                 }
 
                 ItemNoDeviceNearby {
-                    anchors.centerIn: parent
                     visible: (devicesView.count <= 0)
                 }
             }
@@ -118,7 +116,7 @@ Item {
                     color: Theme.colorForeground
                     opacity: 0.5
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
@@ -128,7 +126,7 @@ Item {
                     color: Theme.colorForeground
                     opacity: 0.66
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
@@ -138,7 +136,7 @@ Item {
                     color: Theme.colorForeground
                     opacity: 0.8
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
@@ -147,7 +145,7 @@ Item {
                     radius: width
                     color: Theme.colorForeground
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Theme.colorLowContrast
                 }
 
                 Rectangle {

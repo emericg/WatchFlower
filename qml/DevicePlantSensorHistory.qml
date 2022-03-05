@@ -100,12 +100,12 @@ Item {
             if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
                     graphGrid.columns = 1
-                    rectangleHeader.visible = true
-                    rectangleHeader.height = 48
+                    subHeader.visible = true
+                    subHeader.height = 48
                 } else {
                     graphGrid.columns = 2
-                    rectangleHeader.visible = false
-                    rectangleHeader.height = 0
+                    subHeader.visible = false
+                    subHeader.height = 0
                 }
             }
             if (isTablet) {
@@ -125,14 +125,14 @@ Item {
                 buttonPanel.anchors.topMargin = 52
                 buttonPanel.anchors.rightMargin = 0
                 buttonPanel.anchors.right = undefined
-                buttonPanel.anchors.horizontalCenter = rectangleHeader.horizontalCenter
-                rectangleHeader.height = 96
+                buttonPanel.anchors.horizontalCenter = subHeader.horizontalCenter
+                subHeader.height = 96
             } else {
                 buttonPanel.anchors.topMargin = 8
                 buttonPanel.anchors.rightMargin = 8
                 buttonPanel.anchors.horizontalCenter = undefined
-                buttonPanel.anchors.right = rectangleHeader.right
-                rectangleHeader.height = 48
+                buttonPanel.anchors.right = subHeader.right
+                subHeader.height = 48
             }
         }
 
@@ -154,7 +154,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: rectangleHeader
+        id: subHeader
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -248,7 +248,7 @@ Item {
     Flow {
         id: graphGrid
 
-        anchors.top: rectangleHeader.bottom
+        anchors.top: subHeader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

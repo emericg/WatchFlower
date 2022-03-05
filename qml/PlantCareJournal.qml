@@ -25,7 +25,7 @@ Loader {
 
         Item {
             ListView {
-                id: entries
+                id: entriesView
                 anchors.fill: parent
                 anchors.margins: 16
                 spacing: 16
@@ -36,27 +36,8 @@ Loader {
                     anchors.right: parent.right
                 }
 
-                Column {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: -28
-                    visible: (entries.count <= 0)
-
-                    IconSvg {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
-                        height: width
-
-                        source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                        fillMode: Image.PreserveAspectFit
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("There is no entry in the journal...")
-                        font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorText
-                    }
+                ItemNoJournalEntry {
+                    visible: (entriesView.count <= 0)
                 }
             }
 
@@ -83,7 +64,7 @@ Loader {
                     anchors.rightMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: (entries.count <= 0)
+                    visible: (entriesView.count <= 0)
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeComponent
                     text: qsTr("You can add new entries here!")

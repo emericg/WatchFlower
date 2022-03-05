@@ -396,7 +396,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+                source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
