@@ -4,11 +4,21 @@ import QtQuick.Templates 2.15 as T
 
 import ThemeEngine 1.0
 
-T.ToolTip {
+T.Popup {
     id: control
 
-    x: parent ? (parent.width - implicitWidth) / 2 : 0
-    y: -implicitHeight - 8
+    x: {
+        if (tooltipPosition === "left") return -(implicitWidth + 10)
+        if (tooltipPosition === "right") return +(parent.width + 10)
+        if (tooltipPosition === "topRight" || tooltipPosition === "bottomRight") return 0
+        if (tooltipPosition === "topLeft" || tooltipPosition === "bottomLeft") return (parent.width - implicitWidth)
+        return (parent.width - implicitWidth) / 2
+    }
+    y: {
+        if (tooltipPosition === "top" || tooltipPosition === "topLeft" || tooltipPosition === "topRight") return -(implicitHeight + 10)
+        if (tooltipPosition === "bottom" || tooltipPosition === "bottomLeft" || tooltipPosition === "bottomRight") return (parent.height + 10)
+        return ((parent.height / 2) - (implicitHeight / 2))
+    }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding)
@@ -18,11 +28,42 @@ T.ToolTip {
     margins: 6
     padding: 6
 
-    closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent | T.Popup.CloseOnReleaseOutsideParent
+    // settings
+    property string text
+    property string tooltipPosition
 
     // colors
     property string textColor: Theme.colorText
     property string backgroundColor: Theme.colorComponent
+
+    onVisibleChanged: {
+        if (!visible) return
+
+        var obj = mapToItem(appContent, x, y)
+        var thestart = obj.x
+        var theend = obj.x + implicitWidth + 24
+        //console.log("checking tooltip position: " + thestart + " > " + theend)
+
+        if (tooltipPosition === "top") {
+            if (thestart < 0) {
+                tooltipPosition = "topRight"
+            } else if (theend > appContent.width) {
+                tooltipPosition = "topLeft"
+            } else {
+                tooltipPosition = "top"
+            }
+        } else if (tooltipPosition === "bottom") {
+            if (thestart < 0) {
+                tooltipPosition = "bottomRight"
+            } else if (theend > appContent.width) {
+                tooltipPosition = "bottomLeft"
+            } else {
+                tooltipPosition = "bottom"
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }
     exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; } }
@@ -45,186 +86,27 @@ T.ToolTip {
         radius: 4
 
         Rectangle { // arrow
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.top
-
-            width: 12; height: 12; rotation: 45
+            width: 12; height: 12; rotation: 45;
             color: control.backgroundColor
+
+            anchors.horizontalCenter: {
+                if (tooltipPosition === "left") return parent.right
+                if (tooltipPosition === "right") return parent.left
+                return parent.horizontalCenter
+            }
+            anchors.horizontalCenterOffset: {
+                if (tooltipPosition === "topLeft" || tooltipPosition === "bottomLeft") return (control.implicitWidth / 2) - (control.parent.width / 2)
+                if (tooltipPosition === "topRight" || tooltipPosition === "bottomRight") return -(control.implicitWidth / 2) + (control.parent.width / 2)
+                return 0
+            }
+            anchors.verticalCenter: {
+                if (tooltipPosition === "bottom" || tooltipPosition === "bottomLeft" || tooltipPosition === "bottomRight") return parent.top
+                if (tooltipPosition === "top" || tooltipPosition === "topLeft" || tooltipPosition === "topRight") return parent.bottom
+                if (tooltipPosition === "left" || tooltipPosition === "right") return parent.verticalCenter
+                return parent.top
+            }
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 }
-/*
-Item { // fully manual implementation // deprecated
-    id: tooltip
-    anchors.fill: parent
-
-    visible: control.tooltipText
-    property bool tooltipVisible: (control.compact && control.hovered)
-    onTooltipVisibleChanged: ttT.checkPosition()
-
-    opacity: (tooltipVisible) ? 1 : 0
-    Behavior on opacity { OpacityAnimator { duration: 133 } }
-
-    state: "left"//control.tooltipPosition
-    states: [
-        State {
-            name: "top"
-            AnchorChanges {
-                target: ttA
-                anchors.bottom: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.bottom: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        },
-        State {
-            name: "topLeft"
-            AnchorChanges {
-                target: ttA
-                anchors.bottom: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.top: parent.bottom
-                anchors.left: parent.left
-            }
-        },
-        State {
-            name: "topRight"
-            AnchorChanges {
-                target: ttA
-                anchors.bottom: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.top: parent.bottom
-                anchors.right: parent.right
-            }
-        },
-        State {
-            name: "bottom"
-            AnchorChanges {
-                target: ttA
-                anchors.top: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.top: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-        },
-        State {
-            name: "bottomLeft"
-            AnchorChanges {
-                target: ttA
-                anchors.top: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.top: parent.bottom
-                anchors.left: parent.left
-            }
-        },
-        State {
-            name: "bottomRight"
-            AnchorChanges {
-                target: ttA
-                anchors.top: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.top: parent.bottom
-                anchors.right: parent.right
-            }
-        },
-        State {
-            name: "left"
-            AnchorChanges {
-                target: ttA
-                anchors.right: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.right: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        },
-        State {
-            name: "right"
-            AnchorChanges {
-                target: ttA
-                anchors.left: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-            AnchorChanges {
-                target: ttT
-                anchors.left: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-    ]
-
-    Rectangle {
-        id: ttA
-        anchors.margins: 4
-        width: 12; height: 12; rotation: 45
-        color: control.backgroundColor
-    }
-    Rectangle {
-        id: ttBg
-        anchors.fill: ttT
-        anchors.margins: -6
-        radius: 4
-        color: control.backgroundColor
-    }
-    Text {
-        id: ttT
-        anchors.topMargin: 16
-        anchors.leftMargin: (tooltip.state === "topLeft" || tooltip.state === "bottomLeft") ? 8 : 16
-        anchors.rightMargin: (tooltip.state === "topRight" || tooltip.state === "bottomRight") ? 8 : 16
-        anchors.bottomMargin: 16
-
-        text: control.tooltipText
-        textFormat: Text.PlainText
-        color: control.textColor
-
-        function checkPosition() {
-            if (!control.tooltipText) return
-            if (!control.hovered) return
-
-            var obj = mapToItem(appContent, x, y)
-            var thestart = obj.x
-            var theend = obj.x + 12*2 + ttT.width
-
-            if (tooltip.state === "top") {
-                if (thestart < 0) {
-                    tooltip.state = "topLeft"
-                } else if (theend > appContent.width) {
-                    tooltip.state = "topRight"
-                } else {
-                    tooltip.state = "top"
-                }
-            } else if (tooltip.state === "bottom") {
-                if (thestart < 0) {
-                    tooltip.state = "bottomLeft"
-                } else if (theend > appContent.width) {
-                    tooltip.state = "bottomRight"
-                } else {
-                    tooltip.state = "bottom"
-                }
-            }
-        }
-    }
-}
-*/

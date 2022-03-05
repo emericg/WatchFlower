@@ -173,12 +173,17 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ToolTipFlat {
-        visible: (control.tooltipText && control.hovered)
-        text: control.tooltipText
+    Loader {
+        anchors.fill: control
+        active: control.tooltipText
 
-        textColor: control.textColor
-        backgroundColor: control.backgroundColor
+        sourceComponent: ToolTipFlat {
+            visible: control.hovered
+            text: control.tooltipText
+            textColor: control.textColor
+            tooltipPosition: control.tooltipPosition
+            backgroundColor: control.backgroundColor
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

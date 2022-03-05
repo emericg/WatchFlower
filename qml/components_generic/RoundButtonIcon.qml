@@ -37,9 +37,8 @@ Item {
     property bool animationRunning: false
 
     // tooltip
-    property bool tooltipEnabled: false
-    property string tooltipPosition: "bottom"
     property string tooltipText
+    property string tooltipPosition: "bottom"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -89,6 +88,7 @@ Item {
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
+
     ////////////////////////////////////////////////////////////////////////////
 
     IconSvg { // contentItem
@@ -130,12 +130,17 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ToolTipFlat {
-        visible: (control.tooltipText && control.hovered)
-        text: control.tooltipText
+    Loader {
+        anchors.fill: control
+        active: control.tooltipText
 
-        textColor: control.iconColor
-        backgroundColor: control.backgroundColor
+        sourceComponent: ToolTipFlat {
+            visible: control.hovered
+            text: control.tooltipText
+            textColor: control.iconColor
+            tooltipPosition: control.tooltipPosition
+            backgroundColor: control.backgroundColor
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

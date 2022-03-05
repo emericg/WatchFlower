@@ -32,9 +32,8 @@ Item {
     property string backgroundColor: Theme.colorComponent
 
     // tooltip
-    property bool tooltipEnabled: false
-    property string tooltipPosition: "bottom"
     property string tooltipText
+    property string tooltipPosition: "bottom"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -111,12 +110,17 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ToolTipFlat {
-        visible: (control.tooltipText && control.hovered)
-        text: control.tooltipText
+    Loader {
+        anchors.fill: control
+        active: control.tooltipText
 
-        textColor: control.textColor
-        backgroundColor: control.backgroundColor
+        sourceComponent: ToolTipFlat {
+            visible: control.hovered
+            text: control.tooltipText
+            textColor: control.textColor
+            tooltipPosition: control.tooltipPosition
+            backgroundColor: control.backgroundColor
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
