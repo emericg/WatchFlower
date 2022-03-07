@@ -388,7 +388,7 @@ void DeviceManager::startBleAgent()
         m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
         if (m_discoveryAgent)
         {
-            connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
+            connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::errorOccurred),
                     this, &DeviceManager::deviceDiscoveryError, Qt::UniqueConnection);
         }
         else
@@ -820,7 +820,6 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
         if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
             const QVector<quint16> &manufacturerIds = info.manufacturerIds();
             for (const auto id: manufacturerIds)
             {
@@ -831,22 +830,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 
                 dd->parseAdvertisementData(info.manufacturerData(id));
             }
-#endif // Qt 5.12+
 
-#if defined(QT5_BLUETOOTH_PATCHED)
-            const QVector<quint16> &serviceIds = info.serviceIds();
-            for (const auto id: serviceIds)
-            {
-                //qDebug() << info.name() << info.address() << Qt::hex
-                //         << "ID" << id
-                //         << "data" << Qt::dec << info.serviceData(id).count() << Qt::hex
-                //         << "bytes:" << info.serviceData(id).toHex();
-
-                dd->parseAdvertisementData(info.serviceData(id));
-            }
-#endif // Qt 5 (with BLE patch)
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0))
             const QList<QBluetoothUuid> &serviceIds = info.serviceIds();
             for (const auto id: serviceIds)
             {
@@ -857,7 +841,6 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
 
                 dd->parseAdvertisementData(info.serviceData(id));
             }
-#endif // Qt 6.3+
 
             // Dynamic updates
             if (m_listening)

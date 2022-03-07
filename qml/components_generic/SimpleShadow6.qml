@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Item {
     anchors.fill: parent
@@ -25,7 +25,8 @@ Item {
         source: shadowarea
         cached: true
         radius: 16.0
-        samples: (radius*2 + 1)
+        //spread: 24
+        //samples: 25 // (radius*2 + 1)
         color: parent.color
         horizontalOffset: 0
         verticalOffset: 0

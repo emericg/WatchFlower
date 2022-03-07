@@ -94,7 +94,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_infos);
             //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -106,7 +106,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_battery);
             //connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -118,7 +118,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceClock)
     {
-        if (serviceClock->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceClock->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceClock, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_clock);
             //connect(serviceClock, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -130,7 +130,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceHistory)
     {
-        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHistory->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_history);
             //connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -143,7 +143,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceWatering)
     {
-        if (serviceWatering->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceWatering->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceWatering, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_watering);
             //connect(serviceWatering, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -155,7 +155,7 @@ void DeviceParrotPot::serviceScanDone()
 
     if (serviceLive)
     {
-        if (serviceLive->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceLive->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceLive, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_live);
             //connect(serviceLive, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
@@ -257,7 +257,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -296,7 +296,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
 void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -317,7 +317,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
 
 void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -473,7 +473,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
 void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_watering(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -503,7 +503,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
 
 void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -527,7 +527,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceS
 
 void DeviceParrotPot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         if (serviceHistory)
         {

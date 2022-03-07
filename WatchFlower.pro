@@ -8,8 +8,7 @@ QT     += core bluetooth sql
 QT     += qml quick quickcontrols2 svg widgets charts
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 5.15) : error("You need at least Qt version 5.15 for $${TARGET}")
-!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for $${TARGET}")
+!versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
 
 # Project features #############################################################
 
@@ -25,9 +24,6 @@ include(src/thirdparty/MobileSharing/MobileSharing.pri)
 # SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
-
-# Qt5 patched with BLE advertising support?
-#DEFINES += QT5_BLUETOOTH_PATCHED
 
 # Project files ################################################################
 
@@ -323,14 +319,13 @@ android {
     # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
     #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
-    QT += androidextras
-
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
 
     # android utils
-    SOURCES += src/utils/utils_os_android_qt5.cpp
+    QT += core-private
+    SOURCES += src/utils/utils_os_android_qt6.cpp
     HEADERS += src/utils/utils_os_android.h
 
     OTHER_FILES += assets/android/src/com/emeric/utils/QShareUtils.java \

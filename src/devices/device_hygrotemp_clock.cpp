@@ -75,7 +75,7 @@ void DeviceHygrotempClock::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempClock::bleReadNotify);
@@ -87,7 +87,7 @@ void DeviceHygrotempClock::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempClock::serviceDetailsDiscovered_infos);
 
@@ -131,7 +131,7 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -208,7 +208,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
             {
                 QBluetoothUuid b(QString("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6"));
                 QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-                m_notificationDesc = chb.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                m_notificationDesc = chb.clientCharacteristicConfiguration();
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
             }
 
@@ -226,7 +226,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 
 void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 

@@ -51,7 +51,7 @@ uint32_t UtilsLinux::screenKeepOn(const QString &application, const QString &rea
 
         for (int i = 0; i < MAX_SERVICES ; i++)
         {
-            QDBusInterface screenSaverInterface(services[i], paths[i], services[i], bus, nullptr);
+            QDBusInterface screenSaverInterface(services[i], paths[i], services[i], bus);
             if (!screenSaverInterface.isValid()) continue;
 
             QDBusReply<uint> reply = screenSaverInterface.call("Inhibit", application, reason);

@@ -98,8 +98,8 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++17 compiler and Qt 5.15 (with Qt Charts). Qt 6+ is not supported yet.  
-For Android builds, you'll need the appropriates SDK and NDK (21+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+You will need a C++17 compiler and Qt 6.3+ (with Qt Charts).  
+For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (22+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
 
 #### Building WatchFlower
 
@@ -122,12 +122,6 @@ Some devices also require the GPS to be turned on while scanning for new sensors
 ##### iOS
 
 The application will ask you for permission to use Bluetooth. You can learn more on Apple [website](https://support.apple.com/HT210578).
-
-##### macOS and iOS ('live mode' and 'historical data')
-
-Due to a (bad) combination of factors, these platform need a patched version of Qt in order to work with FlowerCare live mode and history data.  
-The apps published on the app stores are using such patched version, but if you are building it yourself you can get these patches [here](https://github.com/emericg/qtconnectivity).
-Without it, these two features will just be disabled.
 
 ##### Linux ('live mode' and 'historical data')
 

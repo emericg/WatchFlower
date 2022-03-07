@@ -29,6 +29,8 @@
 
 uint32_t UtilsMacOS::screenKeepOn(const QString &application, const QString &reason)
 {
+    Q_UNUSED(application)
+
     // kIOPMAssertionTypeNoDisplaySleep prevents display sleep
     // kIOPMAssertionTypeNoIdleSleep prevents idle sleep
 

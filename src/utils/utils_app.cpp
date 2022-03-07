@@ -192,7 +192,9 @@ QString UtilsApp::getStandardPath_string(const QString &type)
     else
     {
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-        // DEPRECATED
+        paths = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation); // DEPRECATED
+#else
+        paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
 #endif
     }
 

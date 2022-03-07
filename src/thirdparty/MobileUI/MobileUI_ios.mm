@@ -101,6 +101,7 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme)
                      qApp, [](Qt::ApplicationState state) { if (state == Qt::ApplicationActive) updatePreferredStatusBarStyle(); },
                      Qt::UniqueConnection);
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     QScreen *screen = qApp->primaryScreen();
     if (screen) {
         screen->setOrientationUpdateMask(Qt::PortraitOrientation | Qt::LandscapeOrientation | Qt::InvertedPortraitOrientation | Qt::InvertedLandscapeOrientation);
@@ -108,6 +109,7 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme)
                          qApp, [](Qt::ScreenOrientation) { togglePreferredStatusBarStyle(); },
                          Qt::UniqueConnection);
     }
+#endif
 }
 
 void MobileUIPrivate::setColor_navbar(const QColor &color)

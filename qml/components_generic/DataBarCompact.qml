@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
-import QtGraphicalEffects 1.15 // Qt5
-//import Qt5Compat.GraphicalEffects // Qt6
+//import QtGraphicalEffects 1.15 // Qt5
+import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -213,7 +213,7 @@ Item {
                 height: 15
                 anchors.verticalCenter: textIndicator.verticalCenter
                 anchors.leftMargin: 8
-                anchors.left:  textIndicator.right
+                anchors.left: textIndicator.right
 
                 color: Theme.colorRed
                 opacity: (warning && value > -20 && value < limitMin) ? 1 : 0

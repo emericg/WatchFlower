@@ -23,11 +23,13 @@
 #define DEVICE_SENSOR_H
 /* ************************************************************************** */
 
-#include <QObject>
-#include <QString>
-
 #include "device.h"
 #include "Journal.h"
+
+#include <QObject>
+#include <QString>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
 
 /* ************************************************************************** */
 
@@ -423,9 +425,9 @@ public:
     Q_INVOKABLE void updateChartData_thermometerMinMax(int maxDays);
 
     // Chart plant AIO
-    Q_INVOKABLE void getChartData_plantAIO(int maxDays, QtCharts::QDateTimeAxis *axis,
-                                           QtCharts::QLineSeries *hygro, QtCharts::QLineSeries *condu,
-                                           QtCharts::QLineSeries *temp, QtCharts::QLineSeries *lumi);
+    Q_INVOKABLE void getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
+                                           QLineSeries *hygro, QLineSeries *condu,
+                                           QLineSeries *temp, QLineSeries *lumi);
 };
 
 /* ************************************************************************** */

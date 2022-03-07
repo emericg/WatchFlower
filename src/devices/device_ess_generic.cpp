@@ -66,7 +66,7 @@ void DeviceEssGeneric::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEssGeneric::serviceDetailsDiscovered_battery);
 
@@ -77,7 +77,7 @@ void DeviceEssGeneric::serviceScanDone()
 
     if (serviceEnvironmentalSensing)
     {
-        if (serviceEnvironmentalSensing->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceEnvironmentalSensing->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceEnvironmentalSensing, &QLowEnergyService::stateChanged, this, &DeviceEssGeneric::serviceDetailsDiscovered_ess);
             //connect(serviceEnvironmentalSensing, &QLowEnergyService::characteristicChanged, this, &DeviceEssGeneric::bleReadNotify);
@@ -121,7 +121,7 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -142,7 +142,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::Servi
 
 void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_ess(" << m_deviceAddress << ") > ServiceDiscovered";
 

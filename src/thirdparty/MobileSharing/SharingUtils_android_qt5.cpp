@@ -89,10 +89,10 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
     QAndroidJniObject jsText = QAndroidJniObject::fromString(text);
     QAndroidJniObject jsUrl = QAndroidJniObject::fromString(url.toString());
     jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
-                                        "com/emeric/utils/QShareUtils",
-                                        "share",
-                                        "(Ljava/lang/String;Ljava/lang/String;)Z",
-                                        jsText.object<jstring>(), jsUrl.object<jstring>());
+                      "com/emeric/utils/QShareUtils",
+                      "share",
+                      "(Ljava/lang/String;Ljava/lang/String;)Z",
+                      jsText.object<jstring>(), jsUrl.object<jstring>());
 
     if (!ok)
     {
@@ -121,10 +121,10 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
         QAndroidJniObject jsMimeType = QAndroidJniObject::fromString(mimeType);
         jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
-                                            "com/emeric/utils/QShareUtils",
-                                            "sendFile",
-                                            "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                          "com/emeric/utils/QShareUtils",
+                          "sendFile",
+                          "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                          jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
@@ -198,7 +198,8 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     // THE EXTRA STREAM
     // create a Java String for the EXTRA
     QAndroidJniObject jniExtra = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
-    if (!jniExtra.isValid()) {
+    if (!jniExtra.isValid())
+    {
         qWarning() << "QAndroidJniObject jniExtra not valid.";
         Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
@@ -206,7 +207,8 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     // put Extra (EXTRA_STREAM and URI)
     QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniUri.object<jobject>());
     //QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniExtra.object<jstring>());
-    if (!jniExtraStreamUri.isValid()) {
+    if (!jniExtraStreamUri.isValid())
+    {
         qWarning() << "QAndroidJniObject jniExtraStreamUri not valid.";
         Q_EMIT shareError(requestId, "Share: an Error occured");
         return;

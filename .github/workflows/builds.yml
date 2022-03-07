@@ -45,15 +45,17 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.15.2'
-          modules: qtcharts
-          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          modules: qt5compat qtimageformats qtcharts
+          cached: 'false'
 
       # Install dependencies (from package manager)
       - name: Install dependencies (from package manager)
         run: |
              sudo apt-get install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev -y;
              sudo apt-get install libgl1-mesa-dev -y;
+             sudo apt-get install appstream -y;
 
       # Build application
       - name: Build application
@@ -88,7 +90,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-             brew install qt5
+             brew install qt6
 
       # Build application
       - name: Build application
@@ -141,9 +143,10 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.15.2'
-          modules: qtcharts
-          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          modules: qt5compat qtimageformats qtcharts
+          cached: 'false'
 
       # Install NSIS
       - name: Install NSIS

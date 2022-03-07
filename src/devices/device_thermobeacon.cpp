@@ -86,7 +86,7 @@ void DeviceThermoBeacon::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceThermoBeacon::serviceDetailsDiscovered_infos);
 
@@ -97,7 +97,7 @@ void DeviceThermoBeacon::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceThermoBeacon::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceThermoBeacon::bleReadNotify);
@@ -144,7 +144,7 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -157,7 +157,7 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
 
 void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -169,7 +169,7 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::Servic
             // Characteristic "RX" // NOTIFY
             {
                 QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
-                m_notificationDesc = crx.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                m_notificationDesc = crx.clientCharacteristicConfiguration();
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
             }
 

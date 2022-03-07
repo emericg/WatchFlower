@@ -105,7 +105,7 @@ void DeviceInfos::load(const QString &model)
         file.close();
 
         QJsonArray deviceArray = capsObject["devices"].toArray();
-        foreach (const QJsonValue &value, deviceArray)
+        for (const auto &value: deviceArray)
         {
             QJsonObject obj = value.toObject();
             if (model.toLower() == obj["model"].toString().toLower())

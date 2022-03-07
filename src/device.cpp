@@ -131,7 +131,7 @@ void Device::deviceConnect()
 
     if (!m_bleController)
     {
-        m_bleController = new QLowEnergyController(m_bleDevice);
+        m_bleController = m_bleController->createCentral(m_bleDevice);
         if (m_bleController)
         {
             if (m_bleController->role() == QLowEnergyController::CentralRole)
@@ -143,7 +143,7 @@ void Device::deviceConnect()
                 connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
                 connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
                 connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
-                connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error), this, &Device::deviceErrored);
+                connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::errorOccurred), this, &Device::deviceErrored);
                 connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::deviceStateChanged);
             }
             else

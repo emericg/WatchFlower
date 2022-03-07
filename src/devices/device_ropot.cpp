@@ -90,7 +90,7 @@ void DeviceRopot::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
@@ -102,7 +102,7 @@ void DeviceRopot::serviceScanDone()
 
     if (serviceHandshake)
     {
-        if (serviceHandshake->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHandshake->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHandshake, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_handshake);
             connect(serviceHandshake, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
@@ -115,7 +115,7 @@ void DeviceRopot::serviceScanDone()
 
     if (serviceHistory)
     {
-        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHistory->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceRopot::serviceDetailsDiscovered_history);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceRopot::bleReadDone);
@@ -190,7 +190,7 @@ void DeviceRopot::askForReading()
 
 void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -240,7 +240,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
 void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -297,7 +297,7 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
 
 void DeviceRopot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceRopot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 

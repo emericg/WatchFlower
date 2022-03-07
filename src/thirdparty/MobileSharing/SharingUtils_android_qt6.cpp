@@ -90,10 +90,10 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
     QJniObject jsText = QJniObject::fromString(text);
     QJniObject jsUrl = QJniObject::fromString(url.toString());
     jboolean ok = QJniObject::callStaticMethod<jboolean>(
-                                        "com/emeric/utils/QShareUtils",
-                                        "share",
-                                        "(Ljava/lang/String;Ljava/lang/String;)Z",
-                                        jsText.object<jstring>(), jsUrl.object<jstring>());
+                      "com/emeric/utils/QShareUtils",
+                      "share",
+                      "(Ljava/lang/String;Ljava/lang/String;)Z",
+                      jsText.object<jstring>(), jsUrl.object<jstring>());
 
     if (!ok)
     {
@@ -199,26 +199,28 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     // THE EXTRA STREAM
     // create a Java String for the EXTRA
     QJniObject jniExtra = QJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
-    if (!jniExtra.isValid()) {
+    if (!jniExtra.isValid())
+    {
         qWarning() << "QJniObject jniExtra not valid.";
         Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // put Extra (EXTRA_STREAM and URI)
-    QJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniUri.object<jobject>());
     //QJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniExtra.object<jstring>());
-    if (!jniExtraStreamUri.isValid()) {
+    QJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniUri.object<jobject>());
+    if (!jniExtraStreamUri.isValid())
+    {
         qWarning() << "QJniObject jniExtraStreamUri not valid.";
         Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
-    QJniObject activity = QtAndroid::androidActivity();
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
     QJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
+                                                          "()Landroid/content/pm/PackageManager;");
     QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
@@ -229,7 +231,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (requestId <= 0)
     {
         // we dont need a result if there's no requestId
-        QtAndroid::startActivity(jniIntent, requestId);
+        QtAndroidPrivate::startActivity(jniIntent, requestId);
     }
     else
     {
@@ -237,7 +239,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
         // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
-        QtAndroid::startActivity(jniIntent, requestId, this);
+        QtAndroidPrivate::startActivity(jniIntent, requestId, this);
     }
 }
 
@@ -261,9 +263,9 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         QJniObject jsTitle = QJniObject::fromString(title);
         QJniObject jsMimeType = QJniObject::fromString(mimeType);
         jboolean ok = QJniObject::callStaticMethod<jboolean>("com/emeric/utils/QShareUtils",
-                                                  "viewFile",
-                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                          "viewFile",
+                          "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                          jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
@@ -327,8 +329,8 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     }
     // set Data (the URI) and Type (MimeType)
     QJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
-                                                             "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
-                                                             jniUri.object<jobject>(), jniType.object<jstring>());
+                                                      "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
+                                                      jniUri.object<jobject>(), jniType.object<jstring>());
     if (!jniResult.isValid())
     {
         qWarning() << "QJniObject jniResult not valid.";
@@ -336,12 +338,12 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         return;
     }
 
-    QJniObject activity = QtAndroid::androidActivity();
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
     QJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
+                                                          "()Landroid/content/pm/PackageManager;");
     QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
@@ -352,7 +354,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (requestId <= 0)
     {
         // we dont need a result if there's no requestId
-        QtAndroid::startActivity(jniIntent, requestId);
+        QtAndroidPrivate::startActivity(jniIntent, requestId);
     }
     else
     {
@@ -360,7 +362,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
         // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
-        QtAndroid::startActivity(jniIntent, requestId, this);
+        QtAndroidPrivate::startActivity(jniIntent, requestId, this);
     }
 }
 
@@ -390,9 +392,9 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         QJniObject jsMimeType = QJniObject::fromString(mimeType);
 
         jboolean ok = QJniObject::callStaticMethod<jboolean>("com/emeric/utils/QShareUtils",
-                                                  "editFile",
-                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                                                             "editFile",
+                                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                                                             jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
 
         if (!ok)
         {
@@ -457,9 +459,9 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     }
     // set Data (the URI) and Type (MimeType)
     QJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
-                                                             "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
-                                                             jniUri.object<jobject>(),
-                                                             jniType.object<jstring>());
+                                                      "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
+                                                      jniUri.object<jobject>(),
+                                                      jniType.object<jstring>());
     if (!jniResult.isValid())
     {
         qWarning() << "QJniObject jniResult not valid.";
@@ -467,12 +469,12 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         return;
     }
 
-    QJniObject activity = QtAndroid::androidActivity();
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
     QJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
+                                                          "()Landroid/content/pm/PackageManager;");
     QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
@@ -549,7 +551,7 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
 
 void AndroidShareUtils::checkPendingIntents(const QString workingDirPath)
 {
-    QJniObject activity = QtAndroid::androidActivity();
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
     if (activity.isValid())
     {
         // create a Java String for the Working Dir Path

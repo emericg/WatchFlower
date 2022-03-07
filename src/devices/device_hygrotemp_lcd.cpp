@@ -68,7 +68,7 @@ void DeviceHygrotempLCD::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_infos); // custom
 
@@ -79,7 +79,7 @@ void DeviceHygrotempLCD::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_battery);
 
@@ -90,7 +90,7 @@ void DeviceHygrotempLCD::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceHygrotempLCD::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceHygrotempLCD::bleReadNotify);
@@ -145,7 +145,7 @@ void DeviceHygrotempLCD::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempLCD::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -174,7 +174,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
 
 void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -195,7 +195,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_battery(QLowEnergyService::Ser
 
 void DeviceHygrotempLCD::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempLCD::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -204,7 +204,7 @@ void DeviceHygrotempLCD::serviceDetailsDiscovered_data(QLowEnergyService::Servic
             // Characteristic "Temp&Humi"
             QBluetoothUuid a(QString("226caa55-6476-4566-7562-66734470666d"));
             QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-            m_notificationDesc = cha.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            m_notificationDesc = cha.clientCharacteristicConfiguration();
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
 
             // Characteristic "Message"

@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
+ * COPYRIGHT (C) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,21 +32,29 @@
 
 bool UtilsAndroid::checkPermissions_storage()
 {
-    QtAndroidPrivate::PermissionResult r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-    QtAndroidPrivate::PermissionResult w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    return (r == QtAndroidPrivate::PermissionResult::Granted && w == QtAndroidPrivate::PermissionResult::Granted)
+    QFuture<QtAndroidPrivate::PermissionResult> r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    QFuture<QtAndroidPrivate::PermissionResult> w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
+    r.waitForFinished();
+    w.waitForFinished();
+
+    return (r.result() == QtAndroidPrivate::PermissionResult::Authorized && w.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::checkPermission_storage_read()
 {
-    QtAndroidPrivate::PermissionResult r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-    return (r == QtAndroidPrivate::PermissionResult::Granted);
+    QFuture<QtAndroidPrivate::PermissionResult> r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    r.waitForFinished();
+
+    return (r.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::checkPermission_storage_write()
 {
-    QtAndroidPrivate::PermissionResult w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    return (w == QtAndroidPrivate::PermissionResult::Granted);
+    QFuture<QtAndroidPrivate::PermissionResult> w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+    w.waitForFinished();
+
+    return (w.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::getPermissions_storage()
@@ -58,12 +66,17 @@ bool UtilsAndroid::getPermission_storage_read()
 {
     bool status = true;
 
-    QtAndroidPrivate::PermissionResult r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-    if (r == QtAndroidPrivate::PermissionResult::Denied)
+    QFuture<QtAndroidPrivate::PermissionResult> r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
+    r.waitForFinished();
+
+    if (r.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
-        QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.READ_EXTERNAL_STORAGE");
+        QtAndroidPrivate::requestPermission("android.permission.READ_EXTERNAL_STORAGE");
+
         r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
-        if (r == QtAndroidPrivate::PermissionResult::Denied)
+        r.waitForFinished();
+
+        if (r.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "STORAGE READ PERMISSION DENIED";
             status = false;
@@ -77,12 +90,17 @@ bool UtilsAndroid::getPermission_storage_write()
 {
     bool status = true;
 
-    QtAndroidPrivate::PermissionResult w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    if (w == QtAndroidPrivate::PermissionResult::Denied)
+    QFuture<QtAndroidPrivate::PermissionResult> w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+    w.waitForFinished();
+
+    if (w.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
-        QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.WRITE_EXTERNAL_STORAGE");
+        QtAndroidPrivate::requestPermission("android.permission.WRITE_EXTERNAL_STORAGE");
+
         w = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-        if (w == QtAndroidPrivate::PermissionResult::Denied)
+        w.waitForFinished();
+
+        if (w.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "STORAGE WRITE PERMISSION DENIED";
             status = false;
@@ -96,20 +114,23 @@ bool UtilsAndroid::getPermission_storage_write()
 
 bool UtilsAndroid::checkPermission_camera()
 {
-    QtAndroidPrivate::PermissionResult cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
-    return (cam == QtAndroidPrivate::PermissionResult::Granted)
+    QFuture<QtAndroidPrivate::PermissionResult> cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
+    cam.waitForFinished();
+    return (cam.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::getPermission_camera()
 {
     bool status = true;
 
-    QtAndroidPrivate::PermissionResult cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
-    if (cam == QtAndroidPrivate::PermissionResult::Denied)
+    QFuture<QtAndroidPrivate::PermissionResult> cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
+    cam.waitForFinished();
+    if (cam.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
-        QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.CAMERA");
+        QtAndroidPrivate::requestPermission("android.permission.CAMERA");
         cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
-        if (cam == QtAndroidPrivate::PermissionResult::Denied)
+        cam.waitForFinished();
+        if (cam.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "CAMERA PERMISSION DENIED";
             status = false;
@@ -123,20 +144,23 @@ bool UtilsAndroid::getPermission_camera()
 
 bool UtilsAndroid::checkPermission_location()
 {
-    QtAndroidPrivate::PermissionResult loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
-    return (loc == QtAndroidPrivate::PermissionResult::Granted)
+    QFuture<QtAndroidPrivate::PermissionResult> loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+    loc.waitForFinished();
+    return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::getPermission_location()
 {
     bool status = true;
 
-    QtAndroidPrivate::PermissionResult loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
-    if (loc == QtAndroidPrivate::PermissionResult::Denied)
+    QFuture<QtAndroidPrivate::PermissionResult> loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
+    loc.waitForFinished();
+    if (loc.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
-        QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.ACCESS_FINE_LOCATION");
+        QtAndroidPrivate::requestPermission("android.permission.ACCESS_FINE_LOCATION");
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
-        if (loc == QtAndroidPrivate::PermissionResult::Denied)
+        loc.waitForFinished();
+        if (loc.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "LOCATION READ PERMISSION DENIED";
             status = false;
@@ -148,14 +172,14 @@ bool UtilsAndroid::getPermission_location()
 
 bool UtilsAndroid::checkPermission_location_ble()
 {
-    QtAndroidPrivate::PermissionResult loc;
+    QFuture<QtAndroidPrivate::PermissionResult> loc;
 
-    if (QAndroidApplication::sdkVersion() >= 29)
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
     else
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_COARSE_LOCATION");
 
-    return (loc == QtAndroid::PermissionResult::Granted);
+    return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::getPermission_location_ble()
@@ -164,12 +188,12 @@ bool UtilsAndroid::getPermission_location_ble()
 
     if (!UtilsAndroid::checkPermission_location_ble())
     {
-        if (QAndroidApplication::sdkVersion() >= 29)
-            QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.ACCESS_FINE_LOCATION");
+        if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
+            QtAndroidPrivate::requestPermission("android.permission.ACCESS_FINE_LOCATION");
         else
-            QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.ACCESS_COARSE_LOCATION");
+            QtAndroidPrivate::requestPermission("android.permission.ACCESS_COARSE_LOCATION");
 
-        if (!android_check_ble_location_permission())
+        if (!UtilsAndroid::checkPermission_location_ble())
         {
             qWarning() << "LOCATION READ PERMISSION DENIED";
             status = false;
@@ -183,20 +207,23 @@ bool UtilsAndroid::getPermission_location_ble()
 
 bool UtilsAndroid::checkPermission_phonestate()
 {
-    QtAndroidPrivate::PermissionResult ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
-    if (ps == QtAndroidPrivate::PermissionResult::Granted)
+    QFuture<QtAndroidPrivate::PermissionResult> ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
+    ps.waitForFinished();
+    return (ps.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
 bool UtilsAndroid::getPermission_phonestate()
 {
     bool status = true;
 
-    QtAndroidPrivate::PermissionResult ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
-    if (ps == QtAndroidPrivate::PermissionResult::Denied)
+    QFuture<QtAndroidPrivate::PermissionResult> ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
+    ps.waitForFinished();
+    if (ps.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
-        QtAndroidPrivate::requestPermissionsSync(QStringList() << "android.permission.READ_PHONE_STATE");
+        QtAndroidPrivate::requestPermission("android.permission.READ_PHONE_STATE");
         ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
-        if (ps == QtAndroidPrivate::PermissionResult::Denied)
+        ps.waitForFinished();
+        if (ps.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "READ_PHONE_STATE PERMISSION DENIED";
             status = false;
@@ -218,14 +245,13 @@ QString UtilsAndroid::getAppExternalStorage()
 {
     QString storage;
 
-    QAndroidJniObject context = QtAndroid::androidContext();
-
-    if (context.isValid())
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    if (activity.isValid())
     {
-        QAndroidJniObject dir = QAndroidJniObject::fromString(QString(""));
-        QAndroidJniObject path = context.callObjectMethod("getExternalFilesDir",
-                                                          "(Ljava/lang/String;)Ljava/io/File;",
-                                                          dir.object());
+        QJniObject dir = QJniObject::fromString(QString(""));
+        QJniObject path = activity.callObjectMethod("getExternalFilesDir",
+                                                    "(Ljava/lang/String;)Ljava/io/File;",
+                                                    dir.object());
         storage = path.toString();
     }
 
@@ -258,7 +284,7 @@ QString UtilsAndroid::getDeviceSerial()
 {
     QString device_serial;
 
-    if (QtAndroid::androidSdkVersion() >= 29)
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
     {
         QJniObject activity = QNativeInterface::QAndroidApplication::context();
         QJniObject appctx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
@@ -307,7 +333,7 @@ void UtilsAndroid::vibrate(int milliseconds)
                 }
             }
         }
-        QAndroidJniEnvironment env;
+        QJniEnvironment env;
         if (env->ExceptionCheck())
         {
             env->ExceptionClear();
@@ -325,7 +351,7 @@ bool UtilsAndroid::isGpsEnabled()
         QJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
         if (appCtx.isValid())
         {
-            QJniObject locationString = QAndroidJniObject::fromString("location");
+            QJniObject locationString = QJniObject::fromString("location");
             QJniObject locationService = appCtx.callObjectMethod("getSystemService",
                                                                  "(Ljava/lang/String;)Ljava/lang/Object;",
                                                                  locationString.object<jstring>());

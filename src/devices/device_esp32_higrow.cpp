@@ -80,7 +80,7 @@ void DeviceEsp32HiGrow::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered_infos);
 
@@ -91,7 +91,7 @@ void DeviceEsp32HiGrow::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered_battery);
 
@@ -102,7 +102,7 @@ void DeviceEsp32HiGrow::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32HiGrow::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceEsp32HiGrow::bleReadDone);
@@ -155,7 +155,7 @@ void DeviceEsp32HiGrow::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -175,7 +175,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
 void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -196,7 +196,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
 
 void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32HiGrow::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -204,7 +204,7 @@ void DeviceEsp32HiGrow::serviceDetailsDiscovered_data(QLowEnergyService::Service
         {
             QBluetoothUuid rt(QString("eeee9a32-a0c0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
-            m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            m_notificationDesc = chrt.clientCharacteristicConfiguration();
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
         }
     }

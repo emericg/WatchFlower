@@ -70,7 +70,7 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos);
 
@@ -81,7 +81,7 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery);
 
@@ -92,7 +92,7 @@ void DeviceEsp32GeigerCounter::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceEsp32GeigerCounter::bleReadNotify);
@@ -136,7 +136,7 @@ void DeviceEsp32GeigerCounter::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -156,7 +156,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(QLowEnergyService:
 
 void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -177,7 +177,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(QLowEnergyServic
 
 void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -194,7 +194,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::
 */
             QBluetoothUuid rt(QString("eeee9a32-a0d0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
-            m_notificationDesc = chrt.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            m_notificationDesc = chrt.clientCharacteristicConfiguration();
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
         }
     }

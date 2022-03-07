@@ -43,10 +43,6 @@
 #include <QQuickWindow>
 #include <QSurfaceFormat>
 
-#if defined(Q_OS_ANDROID)
-#include <QtAndroid>
-#endif
-
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
@@ -103,9 +99,6 @@ int main(int argc, char *argv[])
     }
 
     // GUI application /////////////////////////////////////////////////////////
-
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 #if defined(Q_OS_LINUX)
     // NVIDIA suspend&resume hack
@@ -220,7 +213,7 @@ int main(int argc, char *argv[])
 #endif // desktop section
 
 #if defined(Q_OS_ANDROID)
-    QtAndroid::hideSplashScreen(333);
+    QNativeInterface::QAndroidApplication::hideSplashScreen(333);
 #endif
 
     return app.exec();

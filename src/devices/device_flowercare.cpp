@@ -94,7 +94,7 @@ void DeviceFlowerCare::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
@@ -106,7 +106,7 @@ void DeviceFlowerCare::serviceScanDone()
 
     if (serviceHandshake)
     {
-        if (serviceHandshake->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHandshake->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHandshake, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_handshake);
             connect(serviceHandshake, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
@@ -119,7 +119,7 @@ void DeviceFlowerCare::serviceScanDone()
 
     if (serviceHistory)
     {
-        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHistory->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowerCare::serviceDetailsDiscovered_history);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowerCare::bleReadDone);
@@ -194,7 +194,7 @@ void DeviceFlowerCare::askForReading()
 
 void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -265,7 +265,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 
 void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -330,7 +330,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
 
 void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerCare::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -364,7 +364,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
             // Enable notification for 0x12 handle?
             QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x13
             QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
-            m_notificationHandshake = chh.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+            m_notificationHandshake = chh.clientCharacteristicConfiguration();
             serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
 */
             // Send challenge key
@@ -396,7 +396,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
                 // Enable notification for 0x3e handle
                 QBluetoothUuid n(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x3f
                 QLowEnergyCharacteristic chn = serviceHistory->characteristic(n);
-                m_notificationHistory = chn.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                m_notificationHistory = chn.clientCharacteristicConfiguration();
                 serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
 */
                 if (m_device_time < 0)

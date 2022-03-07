@@ -25,10 +25,6 @@
 #include <QDebug>
 #include <QString>
 
-#if defined(Q_OS_ANDROID)
-#include <QtAndroidExtras/QAndroidJniObject>
-#endif
-
 /* ************************************************************************** */
 
 NotificationManager *NotificationManager::instance = nullptr;

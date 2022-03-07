@@ -74,7 +74,7 @@ void DeviceWP6003::serviceScanDone()
 
     if (serviceData)
     {
-        if (serviceData->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceData->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceData, &QLowEnergyService::stateChanged, this, &DeviceWP6003::serviceDetailsDiscovered_data);
             connect(serviceData, &QLowEnergyService::characteristicChanged, this, &DeviceWP6003::bleReadNotify);
@@ -108,7 +108,7 @@ void DeviceWP6003::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceWP6003::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -120,7 +120,7 @@ void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState
             // Characteristic "RX" // NOTIFY
             {
                 QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
-                m_notificationDesc = crx.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+                m_notificationDesc = crx.clientCharacteristicConfiguration();
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
             }
 

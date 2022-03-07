@@ -60,7 +60,7 @@
         <file alias="ButtonWireframeIconCentered.qml">components_generic/ButtonWireframeIconCentered.qml</file>
         <file alias="DataBarCompact.qml">components_generic/DataBarCompact.qml</file>
         <file alias="DataBarSolid.qml">components_generic/DataBarSolid.qml</file>
-        <file alias="DatePicker.qml">components_generic/DatePicker5.qml</file>
+        <file alias="DatePicker.qml">components_generic/DatePicker6.qml</file>
         <file alias="DesktopHeaderItem.qml">components_generic/DesktopHeaderItem.qml</file>
         <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
         <file alias="MobileMenuItem_horizontal.qml">components_generic/MobileMenuItem_horizontal.qml</file>

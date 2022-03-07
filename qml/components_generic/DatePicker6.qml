@@ -1,6 +1,5 @@
-import QtQuick 2.15
-
-import Qt.labs.calendar 1.0
+import QtQuick
+import QtQuick.Controls
 
 import ThemeEngine 1.0
 
@@ -10,6 +9,8 @@ Item {
     implicitHeight: 480
 
     ////////////////////////////////////////////////////////////////////////////
+
+    //property var locale: Qt.locale()
 
     property var today: new Date()
     property bool isToday: false
@@ -218,9 +219,9 @@ Item {
                             updateDate(currentDate)
                         }
                     } else {
-                        const diffTime = (today - date)
+                        const diffTime = (today - date);
                         const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1)
-                        //console.log(diffDays + " days");
+                        //console.log(diffDays + " days")
 
                         // validate date (-15 / today)
                         if (diffDays > -15 && diffDays < 1) {

@@ -87,7 +87,7 @@ void DeviceFlowerPower::serviceScanDone()
 
     if (serviceInfos)
     {
-        if (serviceInfos->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_infos);
 
@@ -98,7 +98,7 @@ void DeviceFlowerPower::serviceScanDone()
 
     if (serviceBattery)
     {
-        if (serviceBattery->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_battery);
 
@@ -109,7 +109,7 @@ void DeviceFlowerPower::serviceScanDone()
 
     if (serviceClock)
     {
-        if (serviceClock->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceClock->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceClock, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_clock);
 
@@ -120,7 +120,7 @@ void DeviceFlowerPower::serviceScanDone()
 
     if (serviceHistory)
     {
-        if (serviceHistory->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceHistory->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_history);
             connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceFlowerPower::bleReadDone);
@@ -133,7 +133,7 @@ void DeviceFlowerPower::serviceScanDone()
 
     if (serviceLive)
     {
-        if (serviceLive->state() == QLowEnergyService::DiscoveryRequired)
+        if (serviceLive->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceLive, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_live);
 
@@ -227,7 +227,7 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -266,7 +266,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
 void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -287,7 +287,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
 
 void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -452,7 +452,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
 void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
 
@@ -476,7 +476,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::Servic
 
 void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::ServiceDiscovered)
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 

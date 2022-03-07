@@ -317,7 +317,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
-            onClicked: {
+            onClicked: (mouse) => {
                 if (typeof boxDevice === "undefined" || !boxDevice) return
 
                 // multi selection

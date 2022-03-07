@@ -28,14 +28,15 @@
 #include "SharingUtils.h"
 
 #include <QtGlobal>
-#include <QAndroidActivityResultReceiver>
 
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #include <QCoreApplication>
+#include <QtCore/private/qandroidextras_p.h>
 #include <QJniObject>
 #else
 #include <QtAndroid>
 #include <QAndroidJniObject>
+#include <QAndroidActivityResultReceiver>
 #endif
 
 /* ************************************************************************** */

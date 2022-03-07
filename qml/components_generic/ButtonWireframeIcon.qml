@@ -3,8 +3,8 @@ import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Layouts 1.15
 
-import QtGraphicalEffects 1.15 // Qt5
-//import Qt5Compat.GraphicalEffects // Qt6
+//import QtGraphicalEffects 1.15 // Qt5
+import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber

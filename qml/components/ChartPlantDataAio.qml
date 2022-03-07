@@ -177,7 +177,7 @@ Item {
 
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-            onClicked: {
+            onClicked: (mouse) => {
                 if (mouse.button === Qt.LeftButton) {
                     aioGraph.moveIndicator(mouse, false)
                     mouse.accepted = true
