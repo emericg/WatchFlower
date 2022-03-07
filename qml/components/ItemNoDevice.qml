@@ -111,7 +111,7 @@ Item {
 
                     text: qsTr("Official information")
                     primaryColor: Theme.colorSubText
-                    imgSize: 20
+                    sourceSize: 20
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
 
                     onClicked: {

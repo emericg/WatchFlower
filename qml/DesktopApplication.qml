@@ -287,7 +287,7 @@ ApplicationWindow {
         onActivated: backAction()
     }
     Shortcut {
-        sequence: StandardKey.Forward
+        sequences: [StandardKey.Forward]
         onActivated: forwardAction()
     }
     Shortcut {
@@ -307,7 +307,7 @@ ApplicationWindow {
         onActivated: appContent.state = "Settings"
     }
     Shortcut {
-        sequence: StandardKey.Close
+        sequences: [StandardKey.Close]
         onActivated: appWindow.close()
     }
     Shortcut {

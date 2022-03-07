@@ -1465,7 +1465,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
             // try to get the MAC address immediately
-            updateBleDevice(info, 0);
+            updateBleDevice(info, QBluetoothDeviceInfo::Field::None);
 #endif
         }
         else
