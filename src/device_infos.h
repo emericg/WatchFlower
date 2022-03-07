@@ -40,10 +40,10 @@ class DeviceInfosSensor: public QObject
     DeviceUtils::DeviceSensors m_sensor;
     QString m_string;
 
-    QChar value_type;
-    float value_min;
-    float value_max;
-    float value_precision;
+    QChar m_value_type;
+    float m_value_min;
+    float m_value_max;
+    float m_value_precision;
 
     int getSensorId() { return m_sensor; }
     QString getSensorString() { return m_string; }

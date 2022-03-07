@@ -261,8 +261,8 @@ protected:
     QVariant getChartData_minmax() const { return QVariant::fromValue(m_chartData_minmax); }
 
     // device infos
-    DeviceInfos *di = nullptr;
-    DeviceInfos *getDeviceInfos() { return di; }
+    DeviceInfos *m_deviceInfos = nullptr;
+    DeviceInfos *getDeviceInfos() { return m_deviceInfos; }
     Q_PROPERTY(DeviceInfos *deviceInfos READ getDeviceInfos CONSTANT)
 
 protected:

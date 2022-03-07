@@ -94,6 +94,8 @@ DeviceInfos::~DeviceInfos()
 
 void DeviceInfos::load(const QString &model)
 {
+    //qDebug() << "DeviceInfos::load(" << model << ")";
+
     QFile file(":/devices/devices_sensors.json");
 
     if (file.open(QIODevice::ReadOnly))

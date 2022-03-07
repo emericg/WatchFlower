@@ -291,7 +291,7 @@ ApplicationWindow {
         onActivated: forwardAction()
     }
     Shortcut {
-        sequence: StandardKey.Refresh
+        sequences: [StandardKey.Refresh]
         onActivated: deviceManager.refreshDevices_check()
     }
     Shortcut {

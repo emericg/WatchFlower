@@ -66,8 +66,8 @@ DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *pa
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 
     // Device infos
-    di = new DeviceInfos(this);
-    di->load(deviceName);
+    m_deviceInfos = new DeviceInfos(this);
+    m_deviceInfos->load(m_deviceName);
 }
 
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
@@ -101,13 +101,16 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 
     // Device infos
-    di = new DeviceInfos(this);
-    di->load(d.name());
+    m_deviceInfos = new DeviceInfos(this);
+    if (m_deviceInfos) m_deviceInfos->load(m_deviceName);
 }
 
 DeviceSensor::~DeviceSensor()
 {
-    //
+    qDeleteAll(m_journal_entries);
+    m_journal_entries.clear();
+
+    delete m_deviceInfos;
 }
 
 /* ************************************************************************** */

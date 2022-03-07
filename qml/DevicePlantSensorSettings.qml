@@ -67,23 +67,24 @@ Item {
 
                 radius: Theme.componentRadius
                 color: Theme.colorForeground
-                border.width: (isDesktop) ? 2 : 2
+                border.width: 2
                 border.color: Theme.colorSeparator
 
                 IconSvg {
                     anchors.top: parent.top
                     anchors.right: parent.right
+                    anchors.rightMargin: 12
                     anchors.bottom: parent.bottom
                     anchors.margins: 0
 
-                    width: parent.height * 0.9
-                    height: parent.height * 0.9
+                    width: parent.height * 0.85
+                    height: parent.height * 0.85
 
                     asynchronous: true
                     smooth: true
                     opacity: 0.15
                     //rotation: 45
-                    //color: Theme.colorSubText
+                    color: Theme.colorSubText
                     fillMode: Image.PreserveAspectFit
 
                     source: {
@@ -385,6 +386,7 @@ Item {
 
                         Column {
                             visible: dscreen.text
+
                             Text {
                                 text: qsTr("Screen")
                                 color: Theme.colorSubText
