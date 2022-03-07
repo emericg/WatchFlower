@@ -25,7 +25,7 @@ jobs:
   ## GNU/Linux build ###########################################################
   build-linux:
     name: "Linux CI build"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       # Checkout the repository
       - name: Checkout repository and submodules
@@ -33,21 +33,13 @@ jobs:
         with:
           submodules: recursive
 
-      # Cache Qt
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1
-        with:
-          path: ../Qt
-          key: ${{runner.os}}-QtCache
-
       # Install Qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
           aqtversion: '==2.0.6'
           version: '6.3.0'
-          modules: qt5compat qtimageformats qtcharts
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
 
       # Install dependencies (from package manager)
@@ -88,9 +80,18 @@ jobs:
           submodules: recursive
 
       # Install dependencies
-      - name: Install dependencies
-        run: |
-             brew install qt6
+      #- name: Install dependencies
+      #  run: |
+      #       brew install qt6
+
+      # Install Qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          cached: 'false'
 
       # Build application
       - name: Build application
@@ -131,21 +132,13 @@ jobs:
           arch: x64
           spectre: true
 
-      # Cache Qt
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1
-        with:
-          path: ../Qt
-          key: ${{runner.os}}-QtCache
-
       # Install Qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
           aqtversion: '==2.0.6'
           version: '6.3.0'
-          modules: qt5compat qtimageformats qtcharts
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
 
       # Install NSIS

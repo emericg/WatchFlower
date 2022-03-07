@@ -114,7 +114,7 @@ void DeviceInfos::load(const QString &model)
 
                 m_model = obj["model"].toString();
                 m_manufacturer = obj["manufacturer"].toString();
-                foreach (const QJsonValue &vv, obj["ID"].toArray())
+                for (const auto &vv: obj["ID"].toArray())
                 {
                     if (!m_id.isEmpty()) m_id += ", ";
                     m_id += vv.toString();
@@ -125,7 +125,7 @@ void DeviceInfos::load(const QString &model)
                 m_screen = obj["screen"].toString();
                 m_ipx = obj["ipx"].toString();
 
-                foreach (const QJsonValue &vv, obj["sensors"].toArray())
+                for (const auto &vv: obj["sensors"].toArray())
                 {
                     QJsonArray vvv = vv.toArray();
                     if (vvv.size() == 2)
@@ -137,7 +137,7 @@ void DeviceInfos::load(const QString &model)
                     }
                 }
 
-                foreach (const QJsonValue &vv, obj["capabilities"].toArray())
+                for (const auto &vv: obj["capabilities"].toArray())
                 {
                     QJsonArray vvv = vv.toArray();
                     if (vvv.size() == 2)
