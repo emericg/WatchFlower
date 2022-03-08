@@ -15,51 +15,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2019
+ * \date      2022
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef NOTIFICATION_MANAGER_H
-#define NOTIFICATION_MANAGER_H
+#ifndef ANDROID_SERVICE_H
+#define ANDROID_SERVICE_H
 /* ************************************************************************** */
 
 #include <QObject>
+#include <QTimer>
+
+class DeviceManager;
 
 /* ************************************************************************** */
 
 /*!
- * \brief The NotificationManager class
+ * \brief The AndroidService class
  */
-class NotificationManager : public QObject
+class AndroidService: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString notification READ getNotification WRITE setNotification NOTIFY notificationChanged)
+    QTimer m_workTimer;
+    void setWorkTimer(int workInterval = 60);
 
-    static NotificationManager *instance;
-
-    NotificationManager();
-    ~NotificationManager();
-
-public:
-    static NotificationManager *getInstance();
-
-    void setNotification2(const QString &title, const QString &message);
-    void setNotification(const QString &message);
-    QString getNotification() const;
-
-signals:
-    void notificationChanged();
+    DeviceManager *m_deviceManager = nullptr;
 
 private slots:
-    void updateNotificationAndroid();
-    void updateNotificationIos();
-    void updateNotificationDesktop();
+    void gotowork();
 
-private:
-    QString m_title;
-    QString m_message;
+public:
+    AndroidService(DeviceManager *devicemanager, QObject *parent = nullptr);
+    ~AndroidService();
+
+    static void service_start();
+    static void service_stop();
+    static void service_registerCommService();
 };
 
 /* ************************************************************************** */
-#endif // NOTIFICATION_MANAGER_H
+#endif // ANDROID_SERVICE_H

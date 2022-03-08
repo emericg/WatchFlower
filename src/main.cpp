@@ -43,6 +43,11 @@
 #include <QQuickWindow>
 #include <QSurfaceFormat>
 
+#if defined(Q_OS_ANDROID)
+#include "AndroidService.h"
+#include "private/qandroidextras_p.h" // for QAndroidService
+#endif
+
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
@@ -73,13 +78,15 @@ int main(int argc, char *argv[])
     if (refresh_only)
     {
         QCoreApplication app(argc, argv);
+        app.setApplicationName("WatchFlower");
+        app.setOrganizationName("WatchFlower");
+        app.setOrganizationDomain("WatchFlower");
 
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
-        SystrayManager *st = SystrayManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
         DeviceManager *dm = new DeviceManager;
-        if (!sm || !db || !st || !nm || !dm) return EXIT_FAILURE;
+        if (!sm || !db || !nm || !dm) return EXIT_FAILURE;
 
         if (dm->areDevicesAvailable())
         {
@@ -89,12 +96,25 @@ int main(int argc, char *argv[])
         return app.exec();
     }
 
+    // Android daemon
     if (background_service)
     {
 #if defined(Q_OS_ANDROID)
-        //QAndroidService app(argc, argv);
-        // TODO
-        //return app.exec();
+        QAndroidService app(argc, argv);
+        app.setApplicationName("WatchFlower");
+        app.setOrganizationName("WatchFlower");
+        app.setOrganizationDomain("WatchFlower");
+
+        SettingsManager *sm = SettingsManager::getInstance();
+        DatabaseManager *db = DatabaseManager::getInstance();
+        NotificationManager *nm = NotificationManager::getInstance();
+        DeviceManager *dm = new DeviceManager;
+        if (!sm || !db || !nm || !dm) return EXIT_FAILURE;
+
+        AndroidService *as = new AndroidService(dm);
+        if (!as) return EXIT_FAILURE;
+
+        return app.exec();
 #endif
     }
 

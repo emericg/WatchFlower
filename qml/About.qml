@@ -18,7 +18,7 @@ Item {
         contentHeight: column.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar { visible: isDesktop }
 
         Column {
             id: column

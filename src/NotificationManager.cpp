@@ -22,8 +22,9 @@
 #include "NotificationManager.h"
 #include "SystrayManager.h"
 
-#include <QDebug>
 #include <QString>
+#include <QtCore/qjniobject.h>
+#include <QtCore/qcoreapplication.h>
 
 /* ************************************************************************** */
 
@@ -42,11 +43,11 @@ NotificationManager *NotificationManager::getInstance()
 NotificationManager::NotificationManager()
 {
 #if defined(Q_OS_ANDROID)
-    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateAndroidNotification()));
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotificationAndroid()));
 #elif defined(Q_OS_IOS)
-    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateIosNotification()));
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotificationIos()));
 #else
-    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateDesktopNotification()));
+    connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotificationDesktop()));
 #endif
 }
 
@@ -58,42 +59,63 @@ NotificationManager::~NotificationManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void NotificationManager::setNotification(const QString &notification)
+void NotificationManager::setNotification2(const QString &title, const QString &message)
+{
+    //if (m_title == title && m_notification == notification)
+    //    return;
+
+    m_title = title;
+    m_message = message;
+
+    Q_EMIT notificationChanged();
+}
+
+void NotificationManager::setNotification(const QString &message)
 {
     //if (m_notification == notification)
     //    return;
 
-    m_notification = notification;
+    m_message = message;
+
     Q_EMIT notificationChanged();
 }
 
-QString NotificationManager::notification() const
+QString NotificationManager::getNotification() const
 {
-    return m_notification;
+    return m_message;
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void NotificationManager::updateDesktopNotification()
+void NotificationManager::updateNotificationDesktop()
 {
     SystrayManager *st = SystrayManager::getInstance();
     if (st)
     {
-        st->sendNotification(m_notification);
+        st->sendNotification(m_message);
     }
 }
 
-void NotificationManager::updateIosNotification()
+void NotificationManager::updateNotificationIos()
 {
 #if defined(Q_OS_IOS)
     //
 #endif
 }
 
-void NotificationManager::updateAndroidNotification()
+void NotificationManager::updateNotificationAndroid()
 {
 #if defined(Q_OS_ANDROID)
-    //
+    QJniObject javaTitle = QJniObject::fromString(m_title);
+    QJniObject javaMessage = QJniObject::fromString(m_message);
+
+    QJniObject::callStaticMethod<void>(
+                    "com/emeric/watchflower/WatchFlowerAndroidNotifier",
+                    "notify",
+                    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+                    QNativeInterface::QAndroidApplication::context(),
+                    javaTitle.object<jstring>(),
+                    javaMessage.object<jstring>());
 #endif
 }

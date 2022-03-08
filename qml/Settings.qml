@@ -19,7 +19,7 @@ Item {
         contentHeight: column.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar { visible: isDesktop }
 
         Column {
             id: column
@@ -276,7 +276,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
 
                 topPadding: -12
                 bottomPadding: isMobile ? 12 : 0
@@ -452,7 +452,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
 
                 topPadding: -12
                 bottomPadding: 0
@@ -520,7 +520,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
 
                 topPadding: -12
                 bottomPadding: 0
@@ -616,13 +616,13 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 topPadding: -12
                 bottomPadding: 12
 
                 visible: element_bluetoothSimUpdate.visible
 
-                text: qsTr("How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
+                text: qsTr("How many sensors should be updated at once. A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -636,7 +636,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorSeparator
-                visible: isDesktop
+                visible: (Qt.platform.os !== "ios")
             }
 
             ////////
@@ -702,8 +702,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                // desktop only // for now...
-                visible: isDesktop
+                // every platforms except iOS
+                visible: (Qt.platform.os !== "ios")
 
                 IconSvg {
                     id: image_worker
@@ -750,11 +750,11 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 topPadding: -12
-                bottomPadding: 12
+                bottomPadding: 0
 
-                visible: (element_worker.visible && isMobile)
+                visible: (element_worker.visible && Qt.platform.os === "android")
 
                 text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
                 textFormat: Text.PlainText
@@ -767,7 +767,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 topPadding: -12
                 bottomPadding: 12
 
@@ -790,8 +790,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                // desktop only // for now... // also, need the systray
-                visible: isDesktop && settingsManager.systray
+                // every platforms except iOS // also, need the systray
+                visible: (Qt.platform.os !== "ios") && settingsManager.systray
 
                 IconSvg {
                     id: image_notifications
@@ -838,7 +838,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 topPadding: -12
                 bottomPadding: 12
 
@@ -1296,7 +1296,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 40 + 24
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 height: UtilsNumber.alignTo(legend_database.contentHeight, 16)
 
                 visible: isDesktop

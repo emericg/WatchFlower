@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
 
-import android.net.Uri;
 import android.util.Log;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.os.Build;
 import android.database.Cursor;

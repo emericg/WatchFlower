@@ -152,7 +152,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                         else
                             message = tr("You need to water one of your (unnamed) plants!");
 
-                        nm->setNotification(message);
+                        nm->setNotification2("Plant Alarm", message);
                     }
                 }
             }

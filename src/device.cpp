@@ -22,7 +22,6 @@
 #include "device.h"
 #include "SettingsManager.h"
 #include "DeviceManager.h"
-#include "NotificationManager.h"
 #include "utils/utils_screen.h"
 #include "utils/utils_versionchecker.h"
 
@@ -488,36 +487,36 @@ void Device::refreshRealtimeFinished()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::setUpdateTimer(int updateInterval)
+void Device::setUpdateTimer(int updateIntervalMin)
 {
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     return; // we do not update every x hours on mobile, we update everytime the app is on the foreground
 #endif
 
     // If no interval is provided, load the one from settings
-    if (updateInterval <= 0)
+    if (updateIntervalMin <= 0)
     {
         SettingsManager *sm = SettingsManager::getInstance();
 
         if (getDeviceType() == DeviceUtils::DEVICE_PLANTSENSOR)
-            updateInterval = sm->getUpdateIntervalPlant();
+            updateIntervalMin = sm->getUpdateIntervalPlant();
         else
-            updateInterval = sm->getUpdateIntervalThermo();
+            updateIntervalMin = sm->getUpdateIntervalThermo();
     }
 
     // Validate the interval
-    if (updateInterval < 5 || updateInterval > 120)
+    if (updateIntervalMin < 5 || updateIntervalMin > 120)
     {
         if (getDeviceType() == DeviceUtils::DEVICE_PLANTSENSOR)
-            updateInterval = PLANT_UPDATE_INTERVAL;
+            updateIntervalMin = PLANT_UPDATE_INTERVAL;
         else
-            updateInterval = THERMO_UPDATE_INTERVAL;
+            updateIntervalMin = THERMO_UPDATE_INTERVAL;
     }
 
     // Is our timer already set to this particular interval?
-    if (m_updateTimer.interval() != updateInterval*60*1000)
+    if (m_updateTimer.interval() != updateIntervalMin*60*1000)
     {
-        m_updateTimer.setInterval(updateInterval*60*1000);
+        m_updateTimer.setInterval(updateIntervalMin*60*1000);
         m_updateTimer.start();
     }
 }

@@ -32,6 +32,7 @@ SOURCES  += src/main.cpp \
             src/DatabaseManager.cpp \
             src/SystrayManager.cpp \
             src/NotificationManager.cpp \
+            src/AndroidService.cpp \
             src/Journal.cpp \
             src/DeviceManager.cpp \
             src/device.cpp \
@@ -63,6 +64,7 @@ HEADERS  += src/SettingsManager.h \
             src/DatabaseManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
+            src/AndroidService.h \
             src/Journal.h \
             src/DeviceManager.h \
             src/device.h \
@@ -328,8 +330,11 @@ android {
     SOURCES += src/utils/utils_os_android_qt6.cpp
     HEADERS += src/utils/utils_os_android.h
 
-    OTHER_FILES += assets/android/src/com/emeric/utils/QShareUtils.java \
-                   assets/android/src/com/emeric/utils/QSharePathResolver.java
+    OTHER_FILES += $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerBootServiceBroadcastReceiver.java \
+                   $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidService.java \
+                   $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidNotifier.java \
+                   $${PWD}/assets/android/src/com/emeric/utils/QShareUtils.java \
+                   $${PWD}/assets/android/src/com/emeric/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
                  $${PWD}/assets/android/gradle.properties \
