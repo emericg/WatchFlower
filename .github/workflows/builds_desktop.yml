@@ -13,7 +13,7 @@ on:
 
 env:
   VERSION: "4.0"
-  EXECUTABLE: "WatchFlower"
+  APPLICATION: "WatchFlower"
   QMAKE_PROJECT: "WatchFlower.pro"
 
 #--------------------------------------------------------------------------------
@@ -57,15 +57,14 @@ jobs:
 
       # Deploy application
       - name: Deploy application
-        run: |
-             ./deploy_linux.sh -c -i -p
+        run: ./deploy_linux.sh -c -i -p
 
       # Upload AppImage
       - name: Upload AppImage
         uses: actions/upload-artifact@v2
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-linux64.AppImage
-          path: ${{env.EXECUTABLE}}*.AppImage
+          name: ${{env.APPLICATION}}-${{env.VERSION}}-linux64.AppImage
+          path: ${{env.APPLICATION}}*.AppImage
 
   ## macOS build ###############################################################
   build-mac:
@@ -102,16 +101,14 @@ jobs:
 
       # Deploy application
       - name: Deploy application
-        run: |
-             export PATH=$PATH:/usr/local/opt/qt@5/bin:/usr/local/bin
-             ./deploy_macos.sh -c -p
+        run: ./deploy_macos.sh -c -p
 
       # Upload app zip
       - name: Upload app zip
         uses: actions/upload-artifact@v2
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
-          path: bin/${{env.EXECUTABLE}}-${{env.VERSION}}-macOS.zip
+          name: ${{env.APPLICATION}}-${{env.VERSION}}-macOS.zip
+          path: bin/${{env.APPLICATION}}-${{env.VERSION}}-macOS.zip
 
   ## Windows build #############################################################
   build-windows:
@@ -156,19 +153,18 @@ jobs:
 
       # Deploy application
       - name: Deploy application
-        run: |
-             sh deploy_windows.sh -c -p
+        run: sh deploy_windows.sh -c -p
 
       # Upload ZIP
       - name: Upload ZIP
         uses: actions/upload-artifact@v2
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.zip
-          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.zip
+          name: ${{env.APPLICATION}}-${{env.VERSION}}-win64.zip
+          path: ${{env.APPLICATION}}-${{env.VERSION}}-win64.zip
 
       # Upload NSIS installer
       - name: Upload NSIS installer
         uses: actions/upload-artifact@v2
         with:
-          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.exe
-          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.exe
+          name: ${{env.APPLICATION}}-${{env.VERSION}}-win64.exe
+          path: ${{env.APPLICATION}}-${{env.VERSION}}-win64.exe
