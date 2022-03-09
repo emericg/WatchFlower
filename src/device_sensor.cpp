@@ -1016,7 +1016,7 @@ void DeviceSensor::updateChartData_history_day()
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts), " \
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
@@ -1027,7 +1027,7 @@ void DeviceSensor::updateChartData_history_day()
         }
         else if (m_dbExternal) // mysql
         {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%m:%s'), " \
+            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%M'), " \
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
@@ -1120,7 +1120,7 @@ void DeviceSensor::updateChartData_history_day(const QDateTime &d)
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%m:%s', ts), " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts), " \
                               " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
                               " avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \

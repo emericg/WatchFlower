@@ -159,7 +159,7 @@ Item {
 
             property int barCount: graphRepeater.count
 
-            property real barWidth: ((width - ((barCount-1)*spacing)) / (barCount))
+            property real barWidth: ((width - ((barCount-1) * spacing)) / (barCount))
             property int barHeight: height
             property int barRadius: isPhone ? 0 : 4
             property int barSpacing: {
@@ -272,7 +272,7 @@ Item {
                         width: parent.width
                         height: UtilsNumber.normalize(value, valueMin, valueMax) * parent.height
 
-                        border.width: (graphRow.barSpacing/2)
+                        border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
 
                         clip: false
