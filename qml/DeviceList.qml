@@ -320,4 +320,21 @@ Item {
         anchors.fill: parent
         asynchronous: true
     }
+
+    Row {
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 12
+        spacing: 12
+
+        visible: isDesktop
+
+        ButtonWireframe {
+            text: "devices"
+            fullColor: true
+            primaryColor: Theme.colorSecondary
+            onClicked: screenDeviceBrowser.open()
+        }
+    }
 }
