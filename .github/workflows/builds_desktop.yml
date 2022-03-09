@@ -2,7 +2,7 @@
 # Workflow configuration
 #--------------------------------------------------------------------------------
 
-name: "CI builds"
+name: "Desktop CI builds"
 on:
   push:
   pull_request:
@@ -14,7 +14,6 @@ on:
 env:
   VERSION: "4.0"
   EXECUTABLE: "WatchFlower"
-  APPLICATION: "WatchFlower"
   QMAKE_PROJECT: "WatchFlower.pro"
 
 #--------------------------------------------------------------------------------
@@ -141,12 +140,12 @@ jobs:
           modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
 
-      # Install NSIS
-      - name: Install NSIS
-        run: |
-             Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-             scoop bucket add extras
-             scoop install nsis
+      # Install NSIS (already installed in 'windows-2022')
+      #- name: Install NSIS
+      #  run: |
+      #       Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+      #       scoop bucket add extras
+      #       scoop install nsis
 
       # Build application
       - name: Build application
@@ -159,6 +158,13 @@ jobs:
       - name: Deploy application
         run: |
              sh deploy_windows.sh -c -p
+
+      # Upload ZIP
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.zip
+          path: ${{env.EXECUTABLE}}-${{env.VERSION}}-win64.zip
 
       # Upload NSIS installer
       - name: Upload NSIS installer

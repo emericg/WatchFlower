@@ -1,7 +1,7 @@
 # ![WatchFlower](assets/android/res/drawable-xhdpi/splashicon.png)
 
 [![GitHub release](https://img.shields.io/github/release/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/releases)
-[![GitHub action](https://img.shields.io/github/workflow/status/emericg/WatchFlower/CI%20builds.svg?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
+[![GitHub action](https://img.shields.io/github/workflow/status/emericg/WatchFlower/Desktop%20CI%20builds.svg?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
 [![GitHub issues](https://img.shields.io/github/issues/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/issues)
 [![GitHub contributors](https://img.shields.io/github/contributors/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/graphs/contributors)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)

@@ -1,0 +1,118 @@
+#-------------------------------------------------------------------------------
+# Workflow configuration
+#-------------------------------------------------------------------------------
+
+name: "Mobile CI builds"
+on:
+  push:
+  pull_request:
+
+#-------------------------------------------------------------------------------
+# Define application name & version
+#-------------------------------------------------------------------------------
+
+env:
+  VERSION: "4.0"
+  EXECUTABLE: "WatchFlower"
+  QMAKE_PROJECT: "WatchFlower.pro"
+
+#-------------------------------------------------------------------------------
+# Workflow jobs
+#-------------------------------------------------------------------------------
+
+jobs:
+  ## Android build #############################################################
+  build-android:
+    name: "Android CI build"
+    runs-on: ubuntu-20.04
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Java environment (already installed in 'ubuntu-20.04')
+      #- name: Install JDK environment
+      #  uses: actions/setup-java@v2
+      #  with:
+      #    distribution: 'zulu'
+      #    java-version: '11'
+
+      # Android environment (already installed in 'ubuntu-20.04')
+      #- name: Setup Android SDK
+      #  uses: android-actions/setup-android@v2
+      #- name: Install Android SDK / NDK / tools
+      #  run: |
+      #       sdkmanager "platforms;android-32"
+      #       sdkmanager "ndk;23.1.7779620"
+      #       sdkmanager "build-tools;30.0.3"
+
+      # Install Qt (desktop)
+      - name: Install Qt (desktop)
+        uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          cached: 'false'
+
+      # Install Qt (Android)
+      - name: Install Qt (Android)
+        uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          host: 'linux'
+          target: 'android'
+          arch: 'android_arm64_v8a'
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          cached: 'false'
+
+      # Build application
+      - name: Build application
+        run: |
+             export PATH=$Qt6_DIR/bin:$PATH
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             make -j$(nproc)
+
+  ## iOS build #################################################################
+  build-ios:
+    name: "iOS CI build"
+    runs-on: macos-11
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Install Qt (desktop)
+      - name: Install Qt (desktop)
+        uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          cached: 'false'
+
+      # Install Qt (iOS)
+      - name: Install Qt (iOS)
+        uses: jurplel/install-qt-action@v2
+        with:
+          aqtversion: '==2.0.6'
+          version: '6.3.0'
+          host: 'mac'
+          target: 'ios'
+          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          cached: 'false'
+
+      # Build application
+      - name: Build application
+        run: |
+             export PATH=$Qt6_DIR/bin:$PATH
+             ln -s /Users/runner/work/QmlAppTemplate/Qt/6.3.0/macos /Users/runner/work/QmlAppTemplate/Qt/6.3.0/clang_64
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             make -j$(nproc)
