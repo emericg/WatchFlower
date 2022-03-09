@@ -104,7 +104,7 @@ DeviceManager::DeviceManager()
         }
 
         // Load saved devices
-        qDebug() << "Scanning (database) for devices...";
+        //qDebug() << "Scanning (database) for devices...";
 
         QSqlQuery queryDevices;
         queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
@@ -490,7 +490,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
 void DeviceManager::deviceDiscoveryFinished()
 {
-    qDebug() << "DeviceManager::deviceDiscoveryFinished()";
+    //qDebug() << "DeviceManager::deviceDiscoveryFinished()";
 
     // Now refresh devices data
     refreshDevices_check();
@@ -799,7 +799,7 @@ void DeviceManager::listenDevices()
             {
                 m_listening = true;
                 Q_EMIT listeningChanged();
-                qDebug() << "Listening for BLE advertisement devices...";
+                //qDebug() << "Listening for BLE advertisement devices...";
             }
         }
     }

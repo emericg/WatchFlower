@@ -88,7 +88,6 @@ Item {
         Behavior on opacity { NumberAnimation { duration: 333 } }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////
 
     IconSvg { // contentItem

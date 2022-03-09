@@ -251,12 +251,12 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             m_bleController->disconnectFromDevice();
 
 #ifndef QT_NO_DEBUG
-            //qDebug() << "* DeviceWP6003 update:" << getAddress();
-            //qDebug() << "- timecode:" << QDateTime(d, t);
-            //qDebug() << "- temperature:" << m_temperature;
-            //qDebug() << "- TVOC:" << m_voc;
-            //qDebug() << "- HCHO:" << m_hcho;
-            //qDebug() << "- eCO2:" << m_co2;
+            qDebug() << "* DeviceWP6003 update:" << getAddress();
+            qDebug() << "- timecode:" << QDateTime(d, t);
+            qDebug() << "- temperature:" << m_temperature;
+            qDebug() << "- TVOC:" << m_voc;
+            qDebug() << "- HCHO:" << m_hcho;
+            qDebug() << "- eCO2:" << m_co2;
 #endif
         }
     }

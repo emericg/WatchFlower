@@ -109,7 +109,7 @@ Loader {
                 onTriggered: updateStatusText()
             }
 
-            Keys.onPressed: {
+            Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_F5) {
                     event.accepted = true
                     deviceManager.updateDevice(currentDevice.deviceAddress)

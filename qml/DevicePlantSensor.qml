@@ -144,7 +144,7 @@ Loader {
                 }
             }
 
-            Keys.onPressed: {
+            Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Left) {
                     event.accepted = true
                     if (sensorPages.currentIndex > 0)

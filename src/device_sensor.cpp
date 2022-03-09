@@ -345,9 +345,7 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     }
     else
     {
-#ifndef QT_NO_DEBUG
-        qDebug() << "* Device loaded:" << getAddress();
-#endif
+        //qDebug() << "* Device loaded:" << getAddress();
     }
 
     while (cachedData.next())
@@ -526,9 +524,7 @@ bool DeviceSensor::getSqlSensorData(int minutes)
     }
     else
     {
-#ifndef QT_NO_DEBUG
-        qDebug() << "* Device loaded:" << getAddress();
-#endif
+        //qDebug() << "* Device loaded:" << getAddress();
     }
 
     while (cachedData.next())
