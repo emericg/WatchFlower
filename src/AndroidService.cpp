@@ -20,13 +20,15 @@
  */
 
 #include "AndroidService.h"
+
+#if defined(Q_OS_ANDROID)
+
 #include "DeviceManager.h"
 #include "SettingsManager.h"
 #include "NotificationManager.h"
 
 #include <QtCore/private/qandroidextras_p.h>
 #include <QCoreApplication>
-
 #include <QDateTime>
 #include <QTimer>
 #include <QDebug>
@@ -93,3 +95,4 @@ void AndroidService::service_registerCommService()
 }
 
 /* ************************************************************************** */
+#endif // Q_OS_ANDROID

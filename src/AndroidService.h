@@ -23,11 +23,13 @@
 #define ANDROID_SERVICE_H
 /* ************************************************************************** */
 
+#include <QtGlobal>
 #include <QObject>
 #include <QTimer>
 
 class DeviceManager;
 
+#if defined(Q_OS_ANDROID)
 /* ************************************************************************** */
 
 /*!
@@ -55,4 +57,5 @@ public:
 };
 
 /* ************************************************************************** */
+#endif // Q_OS_ANDROID
 #endif // ANDROID_SERVICE_H
