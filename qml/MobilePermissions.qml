@@ -16,6 +16,7 @@ Item {
     function loadScreen() {
         // Refresh permissions
         button_location_test.validperm = utilsApp.checkMobileBleLocationPermission()
+        button_location_background_test.validperm = utilsApp.checkMobileBackgroundLocationPermission()
         button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
 
         // Load screen
@@ -90,7 +91,6 @@ Item {
                 anchors.rightMargin: 12
 
                 text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "<br>" +
-                      qsTr("This permission is only needed while scanning for new sensors.") + "<br>" +
                       qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
@@ -108,6 +108,81 @@ Item {
                 source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 text: qsTr("Official information")
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: -screenPaddingRight
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_location_background
+                height: 24
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                RoundButtonIcon {
+                    id: button_location_background_test
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    property bool validperm: false
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    background: true
+
+                    onClicked: validperm = utilsApp.getMobileBackgroundLocationPermission()
+                }
+
+                Text {
+                    id: text_location_background
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Background location")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+            Text {
+                id: legend_location_background
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("Background location is needed if you want to get infos from sensors in the background.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -178,8 +253,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("Some Android devices also require the GPS to be turned on.") + "<br>" +
-                      qsTr("This permission is only needed while scanning for new sensors.")
+                text: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

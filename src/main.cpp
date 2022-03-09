@@ -106,15 +106,20 @@ int main(int argc, char *argv[])
         app.setOrganizationDomain("WatchFlower");
 
         SettingsManager *sm = SettingsManager::getInstance();
-        DatabaseManager *db = DatabaseManager::getInstance();
-        NotificationManager *nm = NotificationManager::getInstance();
-        DeviceManager *dm = new DeviceManager;
-        if (!sm || !db || !nm || !dm) return EXIT_FAILURE;
+        if (sm && sm->getSysTray())
+        {
+            DatabaseManager *db = DatabaseManager::getInstance();
+            NotificationManager *nm = NotificationManager::getInstance();
+            DeviceManager *dm = new DeviceManager;
+            if (!db || !nm || !dm) return EXIT_FAILURE;
 
-        AndroidService *as = new AndroidService(dm);
-        if (!as) return EXIT_FAILURE;
+            AndroidService *as = new AndroidService(dm);
+            if (!as) return EXIT_FAILURE;
 
-        return app.exec();
+            return app.exec();
+        }
+
+        return EXIT_SUCCESS;
 #endif
     }
 

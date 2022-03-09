@@ -116,6 +116,7 @@ bool UtilsAndroid::checkPermission_camera()
 {
     QFuture<QtAndroidPrivate::PermissionResult> cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
     cam.waitForFinished();
+
     return (cam.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
@@ -125,11 +126,13 @@ bool UtilsAndroid::getPermission_camera()
 
     QFuture<QtAndroidPrivate::PermissionResult> cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
     cam.waitForFinished();
+
     if (cam.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
         QtAndroidPrivate::requestPermission("android.permission.CAMERA");
         cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");
         cam.waitForFinished();
+
         if (cam.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
             qWarning() << "CAMERA PERMISSION DENIED";
@@ -146,6 +149,7 @@ bool UtilsAndroid::checkPermission_location()
 {
     QFuture<QtAndroidPrivate::PermissionResult> loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
     loc.waitForFinished();
+
     return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
@@ -155,14 +159,16 @@ bool UtilsAndroid::getPermission_location()
 
     QFuture<QtAndroidPrivate::PermissionResult> loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
     loc.waitForFinished();
+
     if (loc.result() == QtAndroidPrivate::PermissionResult::Denied)
     {
         QtAndroidPrivate::requestPermission("android.permission.ACCESS_FINE_LOCATION");
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_FINE_LOCATION");
         loc.waitForFinished();
+
         if (loc.result() == QtAndroidPrivate::PermissionResult::Denied)
         {
-            qWarning() << "LOCATION READ PERMISSION DENIED";
+            qWarning() << "FINE LOCATION PERMISSION DENIED";
             status = false;
         }
     }
@@ -179,6 +185,8 @@ bool UtilsAndroid::checkPermission_location_ble()
     else
         loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_COARSE_LOCATION");
 
+    loc.waitForFinished();
+
     return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
@@ -188,15 +196,56 @@ bool UtilsAndroid::getPermission_location_ble()
 
     if (!UtilsAndroid::checkPermission_location_ble())
     {
+        QFuture<QtAndroidPrivate::PermissionResult> res;
+
         if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
-            QtAndroidPrivate::requestPermission("android.permission.ACCESS_FINE_LOCATION");
+            res = QtAndroidPrivate::requestPermission("android.permission.ACCESS_FINE_LOCATION");
         else
-            QtAndroidPrivate::requestPermission("android.permission.ACCESS_COARSE_LOCATION");
+            res = QtAndroidPrivate::requestPermission("android.permission.ACCESS_COARSE_LOCATION");
+
+        res.waitForFinished();
 
         if (!UtilsAndroid::checkPermission_location_ble())
         {
-            qWarning() << "LOCATION READ PERMISSION DENIED";
+            qWarning() << "FINE/COARSE LOCATION PERMISSION DENIED";
             status = false;
+        }
+    }
+
+    return status;
+}
+
+bool UtilsAndroid::checkPermission_location_background()
+{
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
+    {
+        QFuture<QtAndroidPrivate::PermissionResult> loc;
+        loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_BACKGROUD_LOCATION");
+        loc.waitForFinished();
+
+        return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
+    }
+
+    return true;
+}
+
+bool UtilsAndroid::getPermission_location_background()
+{
+    bool status = true;
+
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
+    {
+        if (!UtilsAndroid::checkPermission_location_background())
+        {
+            QFuture<QtAndroidPrivate::PermissionResult> res;
+            res = QtAndroidPrivate::requestPermission("android.permission.ACCESS_BACKGROUD_LOCATION");
+            res.waitForFinished();
+
+            if (!UtilsAndroid::checkPermission_location_background())
+            {
+                qWarning() << "ACCESS_BACKGROUD_LOCATION PERMISSION DENIED";
+                status = false;
+            }
         }
     }
 
@@ -207,8 +256,10 @@ bool UtilsAndroid::getPermission_location_ble()
 
 bool UtilsAndroid::checkPermission_phonestate()
 {
-    QFuture<QtAndroidPrivate::PermissionResult> ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
+    QFuture<QtAndroidPrivate::PermissionResult> ps;
+    ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
     ps.waitForFinished();
+
     return (ps.result() == QtAndroidPrivate::PermissionResult::Authorized);
 }
 
@@ -216,14 +267,13 @@ bool UtilsAndroid::getPermission_phonestate()
 {
     bool status = true;
 
-    QFuture<QtAndroidPrivate::PermissionResult> ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
-    ps.waitForFinished();
-    if (ps.result() == QtAndroidPrivate::PermissionResult::Denied)
+    if (!checkPermission_phonestate())
     {
-        QtAndroidPrivate::requestPermission("android.permission.READ_PHONE_STATE");
-        ps = QtAndroidPrivate::checkPermission("android.permission.READ_PHONE_STATE");
-        ps.waitForFinished();
-        if (ps.result() == QtAndroidPrivate::PermissionResult::Denied)
+        QFuture<QtAndroidPrivate::PermissionResult> req;
+        req = QtAndroidPrivate::requestPermission("android.permission.READ_PHONE_STATE");
+        req.waitForFinished();
+
+        if (!checkPermission_phonestate())
         {
             qWarning() << "READ_PHONE_STATE PERMISSION DENIED";
             status = false;
@@ -302,7 +352,7 @@ QString UtilsAndroid::getDeviceSerial()
         QJniObject serialField = QJniObject::callStaticObjectMethod("android/os/Build",
                                                                     "getSerial",
                                                                     "()Ljava/lang/String;");
-        QString device_serial = serialField.toString();
+        device_serial = serialField.toString();
     }
 
     //qDebug() << "> getDeviceSerial()" << device_serial;

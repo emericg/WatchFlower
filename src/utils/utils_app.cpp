@@ -250,6 +250,28 @@ bool UtilsApp::getMobileBleLocationPermission()
 #endif
 }
 
+bool UtilsApp::checkMobileBackgroundLocationPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::checkPermission_location_background();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileBackgroundLocationPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::getPermission_location_background();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
 bool UtilsApp::checkMobileStoragePermissions()
 {
 #if defined(Q_OS_ANDROID)

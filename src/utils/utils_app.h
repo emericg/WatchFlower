@@ -73,6 +73,9 @@ public:
     static Q_INVOKABLE bool checkMobileBleLocationPermission();
     static Q_INVOKABLE bool getMobileBleLocationPermission();
 
+    static Q_INVOKABLE bool checkMobileBackgroundLocationPermission();
+    static Q_INVOKABLE bool getMobileBackgroundLocationPermission();
+
     static Q_INVOKABLE bool checkMobilePhoneStatePermission();
     static Q_INVOKABLE bool getMobilePhoneStatePermission();
 
