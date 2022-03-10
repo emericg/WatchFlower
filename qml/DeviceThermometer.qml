@@ -385,11 +385,7 @@ Loader {
                                 hoverEnabled: true
                                 propagateComposedEvents: true
 
-                                onClicked: {
-                                    textInputLocation.forceActiveFocus()
-                                    mouse.accepted = false
-                                }
-                                onPressed: {
+                                onPressed: (mouse) => {
                                     textInputLocation.forceActiveFocus()
                                     mouse.accepted = false
                                 }

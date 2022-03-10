@@ -17,7 +17,7 @@ MouseArea {
     signal swipeUp()
     signal swipeDown()
 
-    onPressed: {
+    onPressed: (mouse) => {
         startX = mouse.x
         startY = mouse.y
         prevX = mouse.x
@@ -27,7 +27,7 @@ MouseArea {
         tracing = true
     }
 
-    onPositionChanged: {
+    onPositionChanged: (mouse) => {
         if (!tracing) return
         var currVelX = (mouse.x - prevX)
         var currVelY = (mouse.y - prevY)

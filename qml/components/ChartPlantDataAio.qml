@@ -271,7 +271,7 @@ Item {
                 if (typeof (sensorPages) !== "undefined") sensorPages.interactive = isPhone
                 vanim.duration = 266
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse) => {
                 if (typeof (sensorPages) !== "undefined") {
                     // So we don't swipe pages as we drag the indicator
                     sensorPages.interactive = false

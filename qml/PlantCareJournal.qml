@@ -64,7 +64,7 @@ Loader {
                     anchors.rightMargin: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: (entriesView.count <= 0)
+                    visible: (isDesktop && !singleColumn && entriesView.count <= 0)
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeComponent
                     text: qsTr("You can add new entries here!")

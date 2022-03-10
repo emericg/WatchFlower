@@ -712,11 +712,7 @@ Item {
                                         hoverEnabled: true
                                         propagateComposedEvents: true
 
-                                        onClicked: {
-                                            textInputMacAddr.forceActiveFocus()
-                                            mouse.accepted = false
-                                        }
-                                        onPressed: {
+                                        onPressed: (mouse) => {
                                             textInputMacAddr.forceActiveFocus()
                                             mouse.accepted = false
                                         }

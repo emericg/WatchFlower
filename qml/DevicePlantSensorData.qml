@@ -252,11 +252,7 @@ Item {
                                 hoverEnabled: true
                                 propagateComposedEvents: true
 
-                                onClicked: {
-                                    textInputPlant.forceActiveFocus()
-                                    mouse.accepted = false
-                                }
-                                onPressed: {
+                                onPressed: (mouse) => {
                                     textInputPlant.forceActiveFocus()
                                     mouse.accepted = false
                                 }
@@ -326,11 +322,7 @@ Item {
                                 hoverEnabled: true
                                 propagateComposedEvents: true
 
-                                onClicked: {
-                                    textInputLocation.forceActiveFocus()
-                                    mouse.accepted = false
-                                }
-                                onPressed: {
+                                onPressed: (mouse) => {
                                     textInputLocation.forceActiveFocus()
                                     mouse.accepted = false
                                 }
