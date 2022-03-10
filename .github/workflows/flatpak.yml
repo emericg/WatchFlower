@@ -3,9 +3,7 @@
 #--------------------------------------------------------------------------------
 
 name: "Flatpak build"
-on:
-  push:
-    branches: [master]
+on: workflow_dispatch
 
 #--------------------------------------------------------------------------------
 # Workflow jobs
@@ -14,9 +12,9 @@ on:
 jobs:
   ## GNU/Linux build ###########################################################
   build-flatpak:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
-      image: bilelmoussaoui/flatpak-github-actions:kde-5.15
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-21.08
       options: --privileged
     steps:
     - uses: actions/checkout@v2

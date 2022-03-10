@@ -1,7 +1,7 @@
 app-id: io.emeric.watchflower
-runtime: org.kde.Platform
-runtime-version: 5.15-21.08
-sdk: org.kde.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
 command: watchflower
 
 rename-desktop-file: watchflower.desktop
@@ -36,28 +36,24 @@ cleanup:
 - '*.a'
 - '*.la'
 
+build-options:
+  append-ld-library-path: /app/lib
+
 modules:
 
-- name: python3-docutils # required to build bluez
-  buildsystem: simple
-  sources:
-    - type: file
-      url: https://files.pythonhosted.org/packages/57/b1/b880503681ea1b64df05106fc7e3c4e3801736cf63deffc6fa7fc5404cf5/docutils-0.18.1.tar.gz
-      sha256: 679987caf361a7539d76e584cbeddc311e3aee937877c87346f31debc63e9d06
-  build-commands:
-    - pip3 install --no-index --find-links="file://${PWD}" --prefix="${FLATPAK_DEST}" docutils
-
 - name: bluez # required by qtconnectivity
+  buildsystem: autotools
   config-opts:
-    - --disable-datafiles
+    - --disable-tools
+    - --disable-cups
+    - --disable-monitor
+    - --disable-client
     - --disable-systemd
+    - --disable-udev
+    - --disable-manpages
+    - --disable-datafiles
     - --enable-experimental
     - --enable-library
-    - --disable-client
-    - --disable-mesh
-    - --disable-tools
-    - --disable-monitor
-    - --disable-udev
     - --prefix=/app
     - --sysconfdir=/app/etc
   sources:
@@ -69,30 +65,126 @@ modules:
         project-id: 10029
         url-template: https://www.kernel.org/pub/linux/bluetooth/bluez-$version.tar.xz
 
-- name: qtconnectivity
-  buildsystem: simple
-  cleanup-platform:
-    - /bin
-    - /mkspecs
+- name: qt-base
+  buildsystem: cmake-ninja
+  builddir: true
+  config-opts:
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
   sources:
-    - type: git
-      url: https://github.com/qt/qtconnectivity
-      tag: v5.15.2
-      commit: ca6cc606d9fc0947ea6c27738a1ca8f12f3258ea
-      x-checker-data:
-        type: anitya
-        project-id: 153467
-        tag-template: v$version
-  build-commands:
-    - qmake
-    - make -j $FLATPAK_BUILDER_N_JOBS
-    - mkdir -p /app/src/bluetooth
-    - cp -r -n {bin,include,lib} /app # we need to deploy libs at the right place
-    - cp -r src/bluetooth /app/src/ # header files too
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtbase-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 3913e15adf6fe83ff377566e7effcbf5304f889dba18c6c67a8ce4f51af58674
+  cleanup:
+    - /bin
+
+- name: qt-tools
+  buildsystem: cmake-ninja
+  builddir: true
+  config-opts:
+    - -DCMAKE_PREFIX_PATH=/app
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qttools-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 982cafe9ab73a685a7343472d6db86ab794f8f307a7245234935a77adffe8622
+
+- name: qt-shadertools
+  buildsystem: cmake-ninja
+  builddir: true
+  config-opts:
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtshadertools-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 7237e3f04bd2ac585f98cece0cf97ead0d45082429d776539da9838195bf14e4
+
+- name: qtdeclarative
+  buildsystem: cmake-ninja
+  builddir: true
+  config-opts:
+    - -DCMAKE_PREFIX_PATH=/app
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtdeclarative-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: f64b20bb801a353c3cd51d174a181078cee78d018ffe1b29e20b87476bc047e0
+
+- name: qtwayland
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtwayland-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 3b4469f6a9ab8906b3b4bba4020ff501d8468b62e4000483fa5191d0d9d434e7
+  cleanup:
+    - /bin
+
+- name: qtimageformats
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtimageformats-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 13d306bc6427ae182871343489ea8393a33646438780caa479c865d9d23919ef
+
+- name: qtsvg
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtsvg-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 7e137694dd93dc205093dcf0ba386c80dddde915ce8e09667ea10c6057fe6736
+
+- name: qtconnectivity
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtconnectivity-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: 8bfc20851575c636b3e95e03ba54fef11835efc6c0289bd6f18b25802f0a093d
+
+- name: qtcharts
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qtcharts-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: c06df00a22df532d11e4bf5e6db2497bbc923753cfe4f43f5fb8e91f782769e7
+
+- name: qt5compat
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DQT_BUILD_EXAMPLES=OFF
+    - -DQT_BUILD_TESTS=OFF
+  sources:
+    - type: archive
+      url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qt5compat-everywhere-src-6.3.0-beta2.tar.xz
+      sha256: fb2719630d9ae3ca16a8c9f2226b38492d88fc9df04dd74d70e5a83452877088
+
 
 - name: watchflower
   buildsystem: qmake
   sources:
     - type: archive
       url: https://github.com/emericg/WatchFlower/archive/refs/tags/v3.2.tar.gz
-      sha256: fdfd5c5bf18a4a10f34d60b41d238521c766f834234784fd3a086fbb1192c465
