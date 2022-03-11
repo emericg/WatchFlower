@@ -13,7 +13,7 @@ T.TextField {
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
-    padding: 12
+    padding: 8
     leftPadding: padding + 4
 
     text: ""

@@ -161,14 +161,13 @@ Item {
 
                                 IconSvg {
                                     id: imageFwUpdate
-                                    //width: 32; height: 32;
                                     width: parent.height - 4; height: parent.height - 4;
                                     anchors.left: parent.right
                                     anchors.leftMargin: 6
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                                    color: Theme.colorIcon
+                                    color: Theme.colorSubText
                                     visible: !currentDevice.deviceFirmwareUpToDate
                                 }
                             }

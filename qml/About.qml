@@ -390,6 +390,75 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: releasenotes
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                IconSvg {
+                    id: releasenotesImg
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                Text {
+                    id: releasenotesTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Release notes")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                }
+
+                IconSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
+                }
+            }
+
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
                 visible: (Qt.platform.os === "android")
 
                 Rectangle {
