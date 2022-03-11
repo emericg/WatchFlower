@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
-        DeviceManager *dm = new DeviceManager;
+        DeviceManager *dm = new DeviceManager();
         if (!sm || !db || !nm || !dm) return EXIT_FAILURE;
 
         if (dm->areDevicesAvailable())
@@ -110,10 +110,10 @@ int main(int argc, char *argv[])
         {
             DatabaseManager *db = DatabaseManager::getInstance();
             NotificationManager *nm = NotificationManager::getInstance();
-            DeviceManager *dm = new DeviceManager;
+            DeviceManager *dm = new DeviceManager(true);
             if (!db || !nm || !dm) return EXIT_FAILURE;
 
-            AndroidService *as = new AndroidService(dm);
+            AndroidService *as = new AndroidService(dm, nm);
             if (!as) return EXIT_FAILURE;
 
             return app.exec();
@@ -239,6 +239,7 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
+    if (sm->getSysTray()) AndroidService::service_start();
 #endif
 
     return app.exec();

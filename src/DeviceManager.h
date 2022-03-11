@@ -66,6 +66,8 @@ class DeviceManager: public QObject
     bool m_btA = false;
     bool m_btE = false;
 
+    bool m_daemonMode = false;
+
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QLowEnergyConnectionParameters *m_ble_params = nullptr;
@@ -97,8 +99,9 @@ class DeviceManager: public QObject
     bool isSyncing() const;
 
     static const int ble_scanning_duration = 20;
-    static const int ble_scanning_nearby_duration = 30;
     static const int ble_listening_duration = 60;
+    static const int ble_listening_duration_nearby = 30;
+    static const int ble_listening_duration_background = 30;
 
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;
@@ -108,7 +111,7 @@ class DeviceManager: public QObject
     void startBleAgent();
 
 public:
-    DeviceManager();
+    DeviceManager(bool daemon = false);
     ~DeviceManager();
 
     Q_INVOKABLE bool checkBluetooth();

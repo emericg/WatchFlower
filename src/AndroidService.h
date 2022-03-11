@@ -28,6 +28,7 @@
 #include <QTimer>
 
 class DeviceManager;
+class NotificationManager;
 
 #if defined(Q_OS_ANDROID)
 /* ************************************************************************** */
@@ -43,12 +44,13 @@ class AndroidService: public QObject
     void setWorkTimer(int workInterval = 60);
 
     DeviceManager *m_deviceManager = nullptr;
+    NotificationManager *m_notificationManager = nullptr;
 
 private slots:
     void gotowork();
 
 public:
-    AndroidService(DeviceManager *devicemanager, QObject *parent = nullptr);
+    AndroidService(DeviceManager *dm, NotificationManager *nm, QObject *parent = nullptr);
     ~AndroidService();
 
     static void service_start();

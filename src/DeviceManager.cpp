@@ -63,7 +63,7 @@
 
 /* ************************************************************************** */
 
-DeviceManager::DeviceManager()
+DeviceManager::DeviceManager(bool daemon)
 {
     // Data model init
     m_devices_model = new DeviceModel(this);
@@ -82,7 +82,7 @@ DeviceManager::DeviceManager()
 
     // BLE init
     startBleAgent();
-    enableBluetooth(true); // Enables adapter // ONLY if off and permission given
+    if (!daemon) enableBluetooth(true); // Enables adapter // ONLY if off and permission given
     checkBluetooth();
 
     // Database
@@ -96,16 +96,17 @@ DeviceManager::DeviceManager()
     if (m_dbInternal || m_dbExternal)
     {
         // Load blacklist
-        QSqlQuery queryBlacklist;
-        queryBlacklist.exec("SELECT deviceAddr FROM devicesBlacklist");
-        while (queryBlacklist.next())
+        if (!daemon)
         {
-            m_devices_blacklist.push_back(queryBlacklist.value(0).toString());
+            QSqlQuery queryBlacklist;
+            queryBlacklist.exec("SELECT deviceAddr FROM devicesBlacklist");
+            while (queryBlacklist.next())
+            {
+                m_devices_blacklist.push_back(queryBlacklist.value(0).toString());
+            }
         }
 
         // Load saved devices
-        //qDebug() << "Scanning (database) for devices...";
-
         QSqlQuery queryDevices;
         queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
         while (queryDevices.next())
@@ -574,7 +575,7 @@ void DeviceManager::scanNearby_start()
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
                     this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
-            m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_scanning_nearby_duration*1000);
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration_nearby*1000);
             m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
             if (m_discoveryAgent->isActive())
@@ -792,7 +793,10 @@ void DeviceManager::listenDevices()
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
                     this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
 
-            m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration*1000);
+            int duration = ble_listening_duration*1000;
+            if (m_daemonMode) duration = ble_listening_duration_background*1000;
+
+            m_discoveryAgent->setLowEnergyDiscoveryTimeout(duration);
             m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
             if (m_discoveryAgent->isActive())

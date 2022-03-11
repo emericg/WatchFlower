@@ -35,10 +35,11 @@
 
 /* ************************************************************************** */
 
-AndroidService::AndroidService(DeviceManager *devicemanager, QObject *parent) : QObject(parent)
+AndroidService::AndroidService(DeviceManager *dm, NotificationManager *nm, QObject *parent) : QObject(parent)
 {
-    // Save the device manager
-    m_deviceManager = devicemanager;
+    // Save the managers
+    m_deviceManager = dm;
+    m_notificationManager = nm;
 
     // Configure update timer (only started on desktop)
     connect(&m_workTimer, &QTimer::timeout, this, &AndroidService::gotowork);
