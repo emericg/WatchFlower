@@ -135,6 +135,7 @@ public:
     Q_INVOKABLE void scanDevices_stop();
     Q_INVOKABLE void listenDevices();
 
+    Q_INVOKABLE void refreshDevices_background(); //!< Refresh devices on the background
     Q_INVOKABLE void refreshDevices_listen();   //!< Refresh devices with data >xh old (as they appear nearby)
     Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old (if necessary)
     Q_INVOKABLE void refreshDevices_start();    //!< Refresh every device

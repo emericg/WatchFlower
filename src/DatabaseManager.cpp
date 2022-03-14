@@ -300,7 +300,7 @@ bool DatabaseManager::tableExists(const QString &tableName)
             checkTable.exec("SELECT * FROM information_schema.tables WHERE table_schema = 'watchflower' AND table_name = '" + tableName + "' LIMIT 1;");
             //checkTable.exec("SELECT * FROM information_schema.TABLES WHERE TABLE_NAME = '" + tableName + "' AND TABLE_SCHEMA in (SELECT DATABASE());");
         }
-        if (checkTable.next())
+        if (checkTable.first())
         {
             result = true;
         }
@@ -315,9 +315,9 @@ void DatabaseManager::createDatabase()
     {
         qDebug() << "+ Adding 'version' table to local database";
 
-        QSqlQuery createVersion;
-        createVersion.prepare("CREATE TABLE version (dbVersion INT);");
-        if (createVersion.exec())
+        QSqlQuery createDbVersion;
+        createDbVersion.prepare("CREATE TABLE version (dbVersion INT);");
+        if (createDbVersion.exec())
         {
             QSqlQuery addVersion;
             addVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
@@ -326,7 +326,26 @@ void DatabaseManager::createDatabase()
         }
         else
         {
-            qWarning() << "> createVersion.exec() ERROR" << createVersion.lastError().type() << ":" << createVersion.lastError().text();
+            qWarning() << "> createDbVersion.exec() ERROR" << createDbVersion.lastError().type() << ":" << createDbVersion.lastError().text();
+        }
+    }
+
+    if (!tableExists("lastSync"))
+    {
+        qDebug() << "+ Adding 'lastSync' table to local database";
+
+        QSqlQuery createLastSync;
+        createLastSync.prepare("CREATE TABLE lastSync (lastSync DATETIME);");
+        if (createLastSync.exec())
+        {
+            QSqlQuery writeLastSync;
+            writeLastSync.prepare("INSERT INTO lastSync (lastSync) VALUES (:lastSync)");
+            writeLastSync.bindValue(":lastSync", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            writeLastSync.exec();
+        }
+        else
+        {
+            qWarning() << "> createLastSync.exec() ERROR" << createLastSync.lastError().type() << ":" << createLastSync.lastError().text();
         }
     }
 
@@ -488,7 +507,7 @@ void DatabaseManager::migrateDatabase()
     QSqlQuery readVersion;
     readVersion.prepare("SELECT dbVersion FROM version");
     readVersion.exec();
-    if (readVersion.next())
+    if (readVersion.first())
     {
         dbVersion = readVersion.value(0).toInt();
         //qDebug() << "dbVersion is #" << dbVersion;

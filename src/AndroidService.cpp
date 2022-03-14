@@ -63,9 +63,7 @@ void AndroidService::gotowork()
 {
     if (m_deviceManager && m_deviceManager->areDevicesAvailable())
     {
-        //m_deviceManager->refreshDevices_listen();
-        m_deviceManager->refreshDevices_check();
-        //m_deviceManager->refreshDevices_start();
+        m_deviceManager->refreshDevices_background();
     }
 }
 

@@ -82,7 +82,7 @@ DeviceManager::DeviceManager(bool daemon)
 
     // BLE init
     startBleAgent();
-    if (!daemon) enableBluetooth(true); // Enables adapter // ONLY if off and permission given
+    enableBluetooth(true); // Enables adapter // ONLY if off and permission given
     checkBluetooth();
 
     // Database
@@ -927,6 +927,55 @@ void DeviceManager::updateDevice(const QString &address)
     }
 }
 
+void DeviceManager::refreshDevices_background()
+{
+    //qDebug() << "DeviceManager::refreshDevices_background()";
+
+    QSqlQuery readLastSync;
+    readLastSync.prepare("SELECT lastSync FROM lastSync");
+    readLastSync.exec();
+    if (readLastSync.first())
+    {
+        QDateTime lastSync = readLastSync.value(0).toDateTime();
+        if (lastSync.isValid())
+        {
+            int mins = static_cast<int>(std::floor(lastSync.secsTo(QDateTime::currentDateTime()) / 60.0));
+            if (mins < 60) return;
+        }
+    }
+
+    // Make sure we have Bluetooth
+    if (!checkBluetooth())
+    {
+        return;
+    }
+
+    // Background refresh (if background location permission)
+    //listenDevices();
+
+    // Start refresh (if needed)
+    m_devices_updating_queue.clear();
+    m_devices_updating.clear();
+    for (int i = 0; i < m_devices_model->rowCount(); i++)
+    {
+        QModelIndex e = m_devices_filter->index(i, 0);
+        Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+
+        if (dd)
+        {
+            if (dd->getName() == "ThermoBeacon") continue;
+
+            if (dd->needsUpdateRt())
+            {
+                // old or no data: go for refresh
+                m_devices_updating_queue.push_back(dd);
+                dd->refreshQueue();
+            }
+        }
+    }
+    refreshDevices_continue();
+}
+
 void DeviceManager::refreshDevices_listen()
 {
     //qDebug() << "DeviceManager::refreshDevices_listen()";
@@ -1067,6 +1116,11 @@ void DeviceManager::refreshDevices_continue()
         {
             m_updating = false;
             Q_EMIT updatingChanged();
+
+            QSqlQuery writeLastSync;
+            writeLastSync.prepare("INSERT INTO lastSync (lastSync) VALUES (:lastSync)");
+            writeLastSync.bindValue(":lastSync", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            writeLastSync.exec();
         }
     }
 }
