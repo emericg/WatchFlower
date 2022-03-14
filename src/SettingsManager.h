@@ -236,7 +236,6 @@ public:
     QString getExternalDbUser() const { return m_externalDbUser; }
     void setExternalDbUser(const QString &value);
 
-
     QString getExternalDbPassword() const { return m_externalDbPassword; }
     void setExternalDbPassword(const QString &value);
 

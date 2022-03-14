@@ -1531,7 +1531,7 @@ Item {
 
                     placeholderText: qsTr("Port")
                     text: settingsManager.externalDbPort
-                    onEditingFinished: settingsManager.externalDbPort = text
+                    onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
                     validator: IntValidator { bottom: 1; top: 65535; }
                     selectByMouse: true
 
@@ -1638,7 +1638,7 @@ Item {
                     height: 40
                     anchors.left: image_database_host.right
                     anchors.leftMargin: 24
-                    anchors.right: switch_database_host.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1687,7 +1687,7 @@ Item {
                     height: 40
                     anchors.left: image_database_port.right
                     anchors.leftMargin: 24
-                    anchors.right: switch_database_port.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1709,7 +1709,7 @@ Item {
 
                     placeholderText: qsTr("Port")
                     text: settingsManager.externalDbPort
-                    onEditingFinished: settingsManager.externalDbPort = text
+                    onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
                 }
             }
 
@@ -1735,8 +1735,8 @@ Item {
                     id: text_database_user
                     height: 40
                     anchors.left: image_database_user.right
-                    anchors.leftMargin: 16
-                    anchors.right: switch_database_user.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1787,7 +1787,7 @@ Item {
                     height: 40
                     anchors.left: image_database_pwd.right
                     anchors.leftMargin: 24
-                    anchors.right: switch_database_pwd.left
+                    anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -1807,6 +1807,7 @@ Item {
                     width: 256
                     height: 36
 
+                    placeholderText: qsTr("Password")
                     text: settingsManager.externalDbPassword
                     onEditingFinished: settingsManager.externalDbPassword = text
                     echoMode: TextInput.PasswordEchoOnEdit
