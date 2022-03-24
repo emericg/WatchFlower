@@ -10,7 +10,6 @@ Rectangle {
 
     color: Theme.colorHeader
 
-    property int lastPage: 3
     property string entryPoint: "DeviceList"
 
     ////////////////////////////////////////////////////////////////////////////
@@ -71,7 +70,7 @@ Rectangle {
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     if (currentIndex < 0) currentIndex = 0
-                    if (currentIndex > lastPage) {
+                    if (currentIndex > count-1) {
                         currentIndex = 0 // reset
                         appContent.state = entryPoint
                     }
@@ -285,7 +284,7 @@ Rectangle {
                 anchors.leftMargin: 32
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                visible: (tutorialPages.currentIndex != 0)
+                visible: (tutorialPages.currentIndex !== 0)
 
                 text: qsTr("Previous")
                 textFormat: Text.PlainText
@@ -293,13 +292,14 @@ Rectangle {
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContent
 
+                opacity: 0.8
                 Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
-                    onEntered: parent.opacity = 0.8
-                    onExited: parent.opacity = 1
+                    onEntered: parent.opacity = 1
+                    onExited: parent.opacity = 0.8
                     onClicked: tutorialPages.currentIndex--
                 }
             }
@@ -320,19 +320,20 @@ Rectangle {
                 anchors.rightMargin: 32
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                text: (tutorialPages.currentIndex === lastPage) ? qsTr("All right!") : qsTr("Next")
+                text: (tutorialPages.currentIndex === count-1) ? qsTr("All right!") : qsTr("Next")
                 textFormat: Text.PlainText
                 color: Theme.colorHeaderContent
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContent
 
+                opacity: 0.8
                 Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
-                    onEntered: parent.opacity = 0.8
-                    onExited: parent.opacity = 1
+                    onEntered: parent.opacity = 1
+                    onExited: parent.opacity = 0.8
                     onClicked: tutorialPages.currentIndex++
                 }
             }
