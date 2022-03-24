@@ -137,7 +137,6 @@ unix {
 }
 
 DEFINES += QT_DEPRECATED_WARNINGS
-QT_LOGGING_RULES="qt.qml.connections=false"
 
 CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 
@@ -204,6 +203,9 @@ macx {
 
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
+
+    # Target architecture
+    #QMAKE_APPLE_DEVICE_ARCHS = "x86_64;arm64"
 
     # macOS utils
     SOURCES += src/utils/utils_os_macos.mm

@@ -94,7 +94,6 @@ jobs:
       # Build application
       - name: Build application
         run: |
-             export PATH=$PATH:/usr/local/opt/qt@5/bin:/usr/local/bin
              qmake --version
              qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
              make -j$(nproc)

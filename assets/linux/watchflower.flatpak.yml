@@ -59,7 +59,7 @@ modules:
   sources:
     - type: archive
       url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.63.tar.xz
-      sha256: 9349e11e8160bb3d720835d271250d8a7424d3690f5289e6db6fe07cc66c6d76
+      sha256: ae437e65b6b3070c198bc5b0109fe9cdeb9eaa387380e2072f9de65fe8a1de34
       x-checker-data:
         type: anitya
         project-id: 10029
@@ -182,9 +182,8 @@ modules:
       url: https://download.qt.io/development_releases/qt/6.3/6.3.0-beta2/submodules/qt5compat-everywhere-src-6.3.0-beta2.tar.xz
       sha256: fb2719630d9ae3ca16a8c9f2226b38492d88fc9df04dd74d70e5a83452877088
 
-
 - name: watchflower
   buildsystem: qmake
   sources:
     - type: archive
-      url: https://github.com/emericg/WatchFlower/archive/refs/tags/v3.2.tar.gz
+      url: https://github.com/emericg/WatchFlower/archive/refs/tags/v4.0.tar.gz
