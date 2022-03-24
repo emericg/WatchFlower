@@ -95,15 +95,6 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/bluetoothLimitScanningRange"))
             m_bluetoothLimitScanningRange = settings.value("settings/bluetoothLimitScanningRange").toBool();
-        else
-        {
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-            // these platforms may not be mobile device
-            m_bluetoothLimitScanningRange = false;
-#else
-            m_bluetoothLimitScanningRange = true;
-#endif
-        }
 
         if (settings.contains("settings/bluetoothSimUpdates"))
             m_bluetoothSimUpdates = settings.value("settings/bluetoothSimUpdates").toUInt();
@@ -180,22 +171,30 @@ bool SettingsManager::readSettings()
             m_orderBy = settings.value("settings/orderBy").toString();
 
         if (settings.contains("database/enabled"))
-            m_externalDb = settings.value("database/enabled").toBool();
-
+            m_mysql = settings.value("database/enabled").toBool();
         if (settings.contains("database/host"))
-            m_externalDbHost = settings.value("database/host").toString();
-
+            m_mysqlHost = settings.value("database/host").toString();
         if (settings.contains("database/port"))
-            m_externalDbPort = settings.value("database/port").toInt();
-
+            m_mysqlPort = settings.value("database/port").toInt();
         if (settings.contains("database/name"))
-            m_externalDbName = settings.value("database/name").toString();
-
+            m_mysqlName = settings.value("database/name").toString();
         if (settings.contains("database/user"))
-            m_externalDbUser = settings.value("database/user").toString();
-
+            m_mysqlUser = settings.value("database/user").toString();
         if (settings.contains("database/password"))
-            m_externalDbPassword = settings.value("database/password").toString();
+            m_mysqlPassword = settings.value("database/password").toString();
+
+        if (settings.contains("mqtt/enabled"))
+            m_mqtt = settings.value("mqtt/enabled").toBool();
+        if (settings.contains("mqtt/host"))
+            m_mqttHost = settings.value("mqtt/host").toString();
+        if (settings.contains("mqtt/port"))
+            m_mqttPort = settings.value("mqtt/port").toInt();
+        if (settings.contains("mqtt/name"))
+            m_mqttName = settings.value("mqtt/name").toString();
+        if (settings.contains("mqtt/user"))
+            m_mqttUser = settings.value("mqtt/user").toString();
+        if (settings.contains("mqtt/password"))
+            m_mqttPassword = settings.value("mqtt/password").toString();
 
         status = true;
     }
@@ -237,12 +236,19 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/orderBy", m_orderBy);
 
-        settings.setValue("database/enabled", m_externalDb);
-        settings.setValue("database/host", m_externalDbHost);
-        settings.setValue("database/port", m_externalDbPort);
-        settings.setValue("database/name", m_externalDbName);
-        settings.setValue("database/user", m_externalDbUser);
-        settings.setValue("database/password", m_externalDbPassword);
+        settings.setValue("database/enabled", m_mysql);
+        settings.setValue("database/host", m_mysqlHost);
+        settings.setValue("database/port", m_mysqlPort);
+        settings.setValue("database/name", m_mysqlName);
+        settings.setValue("database/user", m_mysqlUser);
+        settings.setValue("database/password", m_mysqlPassword);
+
+        settings.setValue("mqtt/enabled", m_mqtt);
+        settings.setValue("mqtt/host", m_mqttHost);
+        settings.setValue("mqtt/port", m_mqttPort);
+        settings.setValue("mqtt/name", m_mqttName);
+        settings.setValue("mqtt/user", m_mqttUser);
+        settings.setValue("mqtt/password", m_mqttPassword);
 
         if (settings.status() == QSettings::NoError)
         {
@@ -289,13 +295,7 @@ void SettingsManager::resetSettings()
 
     m_bluetoothControl = false;
     Q_EMIT bluetoothControlChanged();
-
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-    // these platforms may not be mobile device
     m_bluetoothLimitScanningRange = false;
-#else
-    m_bluetoothLimitScanningRange = true;
-#endif
     Q_EMIT bluetoothLimitScanningRangeChanged();
     m_bluetoothSimUpdates = 2;
     Q_EMIT bluetoothSimUpdatesChanged();
@@ -329,13 +329,22 @@ void SettingsManager::resetSettings()
     m_orderBy = "model";
     Q_EMIT orderByChanged();
 
-    m_externalDb = false;
-    m_externalDbHost = "";
-    m_externalDbPort = 3306;
-    m_externalDbName = "watchflower";
-    m_externalDbUser = "watchflower";
-    m_externalDbPassword = "watchflower";
-    Q_EMIT externalDbChanged();
+    m_mysql = false;
+    m_mysqlHost = "";
+    m_mysqlPort = 3306;
+    m_mysqlName = "watchflower";
+    m_mysqlUser = "watchflower";
+    m_mysqlPassword = "watchflower";
+    Q_EMIT mysqlChanged();
+
+    m_mqtt = false;
+    m_mqttHost = "";
+    m_mqttPort = 3306;
+    m_mqttName = "watchflower";
+    m_mqttUser = "watchflower";
+    m_mqttPassword = "watchflower";
+    m_mqttTopics = "watchflower";
+    Q_EMIT mqttChanged();
 }
 
 /* ************************************************************************** */
@@ -565,53 +574,115 @@ void SettingsManager::setOrderBy(const QString &value)
     }
 }
 
-void SettingsManager::setExternalDb(const bool value)
+/* ************************************************************************** */
+
+void SettingsManager::setMySQL(const bool value)
 {
-    if (m_externalDb != value)
+    if (m_mysql != value)
     {
-        m_externalDb = value;
+        m_mysql = value;
         writeSettings();
-        Q_EMIT externalDbChanged();
+        Q_EMIT mysqlChanged();
     }
 }
 
-void SettingsManager::setExternalDbHost(const QString &value)
+void SettingsManager::setMysqlHost(const QString &value)
 {
-    if (m_externalDbHost != value)
+    if (m_mysqlHost != value)
     {
-        m_externalDbHost = value;
+        m_mysqlHost = value;
         writeSettings();
-        Q_EMIT externalDbChanged();
+        Q_EMIT mysqlChanged();
     }
 }
 
-void SettingsManager::setExternalDbPort(const int value)
+void SettingsManager::setMysqlPort(const int value)
 {
-    if (m_externalDbPort != value)
+    if (m_mysqlPort != value)
     {
-        m_externalDbPort = value;
+        m_mysqlPort = value;
         writeSettings();
-        Q_EMIT externalDbChanged();
+        Q_EMIT mysqlChanged();
     }
 }
 
-void SettingsManager::setExternalDbUser(const QString &value)
+void SettingsManager::setMysqlUser(const QString &value)
 {
-    if (m_externalDbUser != value)
+    if (m_mysqlUser != value)
     {
-        m_externalDbUser = value;
+        m_mysqlUser = value;
         writeSettings();
-        Q_EMIT externalDbChanged();
+        Q_EMIT mysqlChanged();
     }
 }
 
-void SettingsManager::setExternalDbPassword(const QString &value)
+void SettingsManager::setMysqlPassword(const QString &value)
 {
-    if (m_externalDbPassword != value)
+    if (m_mysqlPassword != value)
     {
-        m_externalDbPassword = value;
+        m_mysqlPassword = value;
         writeSettings();
-        Q_EMIT externalDbChanged();
+        Q_EMIT mysqlChanged();
+    }
+}
+
+void SettingsManager::setMQTT(const bool value)
+{
+    if (m_mqtt != value)
+    {
+        m_mqtt = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
+    }
+}
+
+void SettingsManager::setMqttHost(const QString &value)
+{
+    if (m_mqttHost != value)
+    {
+        m_mqttHost = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
+    }
+}
+
+void SettingsManager::setMqttPort(const int value)
+{
+    if (m_mqttPort != value)
+    {
+        m_mqttPort = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
+    }
+}
+
+void SettingsManager::setMqttUser(const QString &value)
+{
+    if (m_mqttUser != value)
+    {
+        m_mqttUser = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
+    }
+}
+
+void SettingsManager::setMqttPassword(const QString &value)
+{
+    if (m_mqttPassword != value)
+    {
+        m_mqttPassword = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
+    }
+}
+
+void SettingsManager::setMqttTopics(const QString &value)
+{
+    if (m_mqttTopics != value)
+    {
+        m_mqttTopics = value;
+        writeSettings();
+        Q_EMIT mqttChanged();
     }
 }
 

@@ -180,14 +180,14 @@ bool DatabaseManager::openDatabase_mysql()
 
         SettingsManager *sm = SettingsManager::getInstance();
 
-        if (sm->getExternalDb())
+        if (sm->getMySQL())
         {
             QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-            db.setHostName(sm->getExternalDbHost());
-            db.setPort(sm->getExternalDbPort());
-            db.setDatabaseName(sm->getExternalDbName());
-            db.setUserName(sm->getExternalDbUser());
-            db.setPassword(sm->getExternalDbPassword());
+            db.setHostName(sm->getMysqlHost());
+            db.setPort(sm->getMysqlPort());
+            db.setDatabaseName(sm->getMysqlName());
+            db.setUserName(sm->getMysqlUser());
+            db.setPassword(sm->getMysqlPassword());
 
             if (db.isOpen())
             {

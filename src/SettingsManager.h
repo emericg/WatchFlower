@@ -68,11 +68,19 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool compactView READ getCompactView WRITE setCompactView NOTIFY compactViewChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
-    Q_PROPERTY(bool externalDb READ getExternalDb WRITE setExternalDb NOTIFY externalDbChanged)
-    Q_PROPERTY(QString externalDbHost READ getExternalDbHost WRITE setExternalDbHost NOTIFY externalDbChanged)
-    Q_PROPERTY(uint externalDbPort READ getExternalDbPort WRITE setExternalDbPort NOTIFY externalDbChanged)
-    Q_PROPERTY(QString externalDbUser READ getExternalDbUser WRITE setExternalDbUser NOTIFY externalDbChanged)
-    Q_PROPERTY(QString externalDbPassword READ getExternalDbPassword WRITE setExternalDbPassword NOTIFY externalDbChanged)
+
+    Q_PROPERTY(bool mysql READ getMySQL WRITE setMySQL NOTIFY mysqlChanged)
+    Q_PROPERTY(QString mysqlHost READ getMysqlHost WRITE setMysqlHost NOTIFY mysqlChanged)
+    Q_PROPERTY(uint mysqlPort READ getMysqlPort WRITE setMysqlPort NOTIFY mysqlChanged)
+    Q_PROPERTY(QString mysqlUser READ getMysqlUser WRITE setMysqlUser NOTIFY mysqlChanged)
+    Q_PROPERTY(QString mysqlPassword READ getMysqlPassword WRITE setMysqlPassword NOTIFY mysqlChanged)
+
+    Q_PROPERTY(bool mqtt READ getMQTT WRITE setMQTT NOTIFY mqttChanged)
+    Q_PROPERTY(QString mqttHost READ getMqttHost WRITE setMqttHost NOTIFY mqttChanged)
+    Q_PROPERTY(uint mqttPort READ getMqttPort WRITE setMqttPort NOTIFY mqttChanged)
+    Q_PROPERTY(QString mqttUser READ getMqttUser WRITE setMqttUser NOTIFY mqttChanged)
+    Q_PROPERTY(QString mqttPassword READ getMqttPassword WRITE setMqttPassword NOTIFY mqttChanged)
+    Q_PROPERTY(QString mqttTopics READ getMqttTopics WRITE setMqttTopics NOTIFY mqttChanged)
 
     bool m_firstlaunch = true;
 
@@ -94,7 +102,7 @@ class SettingsManager: public QObject
     bool m_notificationsEnabled = true;
 
     bool m_bluetoothControl = false;
-    bool m_bluetoothLimitScanningRange = true;
+    bool m_bluetoothLimitScanningRange = false;
     unsigned m_bluetoothSimUpdates = 2;
 
     unsigned m_updateIntervalPlant = PLANT_UPDATE_INTERVAL;
@@ -108,12 +116,20 @@ class SettingsManager: public QObject
     bool m_dynaScale = true;
     QString m_orderBy = "model";
 
-    bool m_externalDb = false;
-    QString m_externalDbHost;
-    int m_externalDbPort = 3306;
-    QString m_externalDbName = "watchflower";
-    QString m_externalDbUser = "watchflower";
-    QString m_externalDbPassword = "watchflower";
+    bool m_mysql = false;
+    QString m_mysqlHost;
+    int m_mysqlPort = 3306;
+    QString m_mysqlName = "watchflower";
+    QString m_mysqlUser = "watchflower";
+    QString m_mysqlPassword = "watchflower";
+
+    bool m_mqtt = false;
+    QString m_mqttHost;
+    int m_mqttPort = 1883;
+    QString m_mqttName = "watchflower";
+    QString m_mqttUser = "watchflower";
+    QString m_mqttPassword = "watchflower";
+    QString m_mqttTopics = "watchflower";
 
     // Singleton
     static SettingsManager *instance;
@@ -147,7 +163,8 @@ Q_SIGNALS:
     void bigIndicatorChanged();
     void dynaScaleChanged();
     void orderByChanged();
-    void externalDbChanged();
+    void mysqlChanged();
+    void mqttChanged();
 
 public:
     static SettingsManager *getInstance();
@@ -221,23 +238,44 @@ public:
     QString getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);
 
-    bool getExternalDb() const { return m_externalDb; }
-    void setExternalDb(const bool value);
+    bool getMySQL() const { return m_mysql; }
+    void setMySQL(const bool value);
 
-    QString getExternalDbHost() const { return m_externalDbHost; }
-    void setExternalDbHost(const QString &value);
+    QString getMysqlHost() const { return m_mysqlHost; }
+    void setMysqlHost(const QString &value);
 
-    int getExternalDbPort() const { return m_externalDbPort; }
-    void setExternalDbPort(const int value);
+    int getMysqlPort() const { return m_mysqlPort; }
+    void setMysqlPort(const int value);
 
-    QString getExternalDbName() const { return m_externalDbName; }
-    void setExternalDbName(const QString &value);
+    QString getMysqlName() const { return m_mysqlName; }
+    void setMysqlName(const QString &value);
 
-    QString getExternalDbUser() const { return m_externalDbUser; }
-    void setExternalDbUser(const QString &value);
+    QString getMysqlUser() const { return m_mysqlUser; }
+    void setMysqlUser(const QString &value);
 
-    QString getExternalDbPassword() const { return m_externalDbPassword; }
-    void setExternalDbPassword(const QString &value);
+    QString getMysqlPassword() const { return m_mysqlPassword; }
+    void setMysqlPassword(const QString &value);
+
+    bool getMQTT() const { return m_mqtt; }
+    void setMQTT(const bool value);
+
+    QString getMqttHost() const { return m_mqttHost; }
+    void setMqttHost(const QString &value);
+
+    int getMqttPort() const { return m_mqttPort; }
+    void setMqttPort(const int value);
+
+    QString getMqttName() const { return m_mqttName; }
+    void setMqttName(const QString &value);
+
+    QString getMqttUser() const { return m_mqttUser; }
+    void setMqttUser(const QString &value);
+
+    QString getMqttPassword() const { return m_mqttPassword; }
+    void setMqttPassword(const QString &value);
+
+    QString getMqttTopics() const { return m_mqttTopics; }
+    void setMqttTopics(const QString &value);
 
     // Utils
     Q_INVOKABLE void resetSettings();

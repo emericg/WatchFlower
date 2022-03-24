@@ -1322,12 +1322,9 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
+                active: false
                 asynchronous: true
-                Component.onCompleted: {
-                    if (isDesktop) {
-                        sourceComponent = wideMode ? dbSettingsDesktop : dbSettingsMobile
-                    }
-                }
+                sourceComponent: dbSettingsScalable
             }
 */
             ////////////////
@@ -1483,336 +1480,112 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Component {
-        id: dbSettingsDesktop
+        id: dbSettingsScalable
 
-        Column {
+        Grid {
+            id: grid
             anchors.left: parent.left
+            anchors.leftMargin: 16
             anchors.right: parent.right
+            anchors.rightMargin: 16
 
-            spacing: 8
-            bottomPadding: 8
+            rows: 4
+            columns: singleColumn ? 1 : 2
+            spacing: 12
 
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 40 + 24
-                anchors.right: parent.right
-                anchors.rightMargin: 12
+            property int sz: singleColumn ? grid.width : Math.min((grid.width / 2), 512) - 4
 
+            TextFieldThemed {
+                id: tf_database_host
+                anchors.verticalCenter: parent.verticalCenter
+                width: grid.sz
                 height: 36
-                spacing: 8
 
-                TextFieldThemed {
-                    id: tf_database_host
+                placeholderText: qsTr("Host")
+                text: settingsManager.externalDbHost
+                onEditingFinished: settingsManager.externalDbHost = text
+                selectByMouse: true
+
+                IconSvg {
+                    width: 20; height: 20;
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min((parent.width / 2), 512) - 4
-                    height: 36
 
-                    placeholderText: qsTr("Host")
-                    text: settingsManager.externalDbHost
-                    onEditingFinished: settingsManager.externalDbHost = text
-                    selectByMouse: true
-
-                    IconSvg {
-                        width: 20; height: 20;
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
-                    }
-                }
-
-                TextFieldThemed {
-                    id: tf_database_port
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min((parent.width / 2), 512) - 4
-                    height: 36
-
-                    placeholderText: qsTr("Port")
-                    text: settingsManager.externalDbPort
-                    onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
-                    validator: IntValidator { bottom: 1; top: 65535; }
-                    selectByMouse: true
-
-                    IconSvg {
-                        width: 20; height: 20;
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
-                    }
+                    color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
             }
 
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 40 + 24
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-
+            TextFieldThemed {
+                id: tf_database_port
+                anchors.verticalCenter: parent.verticalCenter
+                width: grid.sz
                 height: 36
-                spacing: 8
 
-                TextFieldThemed {
-                    id: tf_database_user
+                placeholderText: qsTr("Port")
+                text: settingsManager.externalDbPort
+                onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
+                validator: IntValidator { bottom: 1; top: 65535; }
+                selectByMouse: true
+
+                IconSvg {
+                    width: 20; height: 20;
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min((parent.width / 2), 512) - 4
-                    height: 36
 
-                    placeholderText: qsTr("User")
-                    text: settingsManager.externalDbUser
-                    onEditingFinished: settingsManager.externalDbUser = text
-                    selectByMouse: true
-
-                    IconSvg {
-                        width: 20; height: 20;
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
-                    }
+                    color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
                 }
+            }
 
-                TextFieldThemed {
-                    id: tf_database_pwd
+            TextFieldThemed {
+                id: tf_database_user
+                anchors.verticalCenter: parent.verticalCenter
+                width: grid.sz
+                height: 36
+
+                placeholderText: qsTr("User")
+                text: settingsManager.externalDbUser
+                onEditingFinished: settingsManager.externalDbUser = text
+                selectByMouse: true
+
+                IconSvg {
+                    width: 20; height: 20;
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min((parent.width / 2), 512) - 4
-                    height: 36
 
-                    placeholderText: qsTr("Password")
-                    text: settingsManager.externalDbPassword
-                    onEditingFinished: settingsManager.externalDbPassword = text
-                    selectByMouse: true
-                    echoMode: TextInput.PasswordEchoOnEdit
+                    color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
+                }
+            }
 
-                    IconSvg {
-                        width: 20; height: 20;
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
+            TextFieldThemed {
+                id: tf_database_pwd
+                anchors.verticalCenter: parent.verticalCenter
+                width: grid.sz
+                height: 36
 
-                        color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/baseline-password-24px.svg"
-                    }
+                placeholderText: qsTr("Password")
+                text: settingsManager.externalDbPassword
+                onEditingFinished: settingsManager.externalDbPassword = text
+                selectByMouse: true
+                echoMode: TextInput.PasswordEchoOnEdit
+
+                IconSvg {
+                    width: 20; height: 20;
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-password-24px.svg"
                 }
             }
         }
     }
 
     ////////
-
-    Component {
-        id: dbSettingsMobile
-
-        Column {
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft
-            anchors.right: parent.right
-            anchors.rightMargin: screenPaddingRight
-
-            Item {
-                id: element_database_host
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 48
-
-                IconSvg {
-                    id: image_database_host
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
-                }
-
-                Text {
-                    id: text_database_host
-                    height: 40
-                    anchors.left: image_database_host.right
-                    anchors.leftMargin: 24
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Host")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                TextFieldThemed {
-                    id: tf_database_host
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 256
-                    height: 36
-
-                    placeholderText: qsTr("Host")
-                    text: settingsManager.externalDbHost
-                    onEditingFinished: settingsManager.externalDbHost = text
-                }
-            }
-
-            Item {
-                id: element_database_port
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 48
-
-                IconSvg {
-                    id: image_database_port
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
-                }
-
-                Text {
-                    id: text_database_port
-                    height: 40
-                    anchors.left: image_database_port.right
-                    anchors.leftMargin: 24
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Port")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                TextFieldThemed {
-                    id: tf_database_port
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 256
-                    height: 36
-
-                    placeholderText: qsTr("Port")
-                    text: settingsManager.externalDbPort
-                    onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
-                }
-            }
-
-            Item {
-                id: element_database_user
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 48
-
-                IconSvg {
-                    id: image_database_user
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
-                }
-
-                Text {
-                    id: text_database_user
-                    height: 40
-                    anchors.left: image_database_user.right
-                    anchors.leftMargin: 24
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("User")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                TextFieldThemed {
-                    id: tf_database_user
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 256
-                    height: 36
-
-                    placeholderText: qsTr("User")
-                    text: settingsManager.externalDbUser
-                    onEditingFinished: settingsManager.externalDbUser = text
-                }
-            }
-
-            ////////
-
-            Item {
-                id: element_database_pwd
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 48
-
-                IconSvg {
-                    id: image_database_pwd
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-password-24px.svg"
-                }
-
-                Text {
-                    id: text_database_pwd
-                    height: 40
-                    anchors.left: image_database_pwd.right
-                    anchors.leftMargin: 24
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Password")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                TextFieldThemed {
-                    id: tf_database_pwd
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 256
-                    height: 36
-
-                    placeholderText: qsTr("Password")
-                    text: settingsManager.externalDbPassword
-                    onEditingFinished: settingsManager.externalDbPassword = text
-                    echoMode: TextInput.PasswordEchoOnEdit
-                }
-            }
-        }
-    }
 }
