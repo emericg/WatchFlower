@@ -824,7 +824,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
         if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
-            const QVector<quint16> &manufacturerIds = info.manufacturerIds();
+            const QList<quint16> &manufacturerIds = info.manufacturerIds();
             for (const auto id: manufacturerIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex

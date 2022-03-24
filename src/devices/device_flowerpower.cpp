@@ -440,11 +440,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
             qDebug() << "- m_device_lastmove : " << QDateTime::fromSecsSinceEpoch(m_device_lastmove);
-            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
-            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
-            qDebug() << "- m_soil_temperature : " << m_soilTemperature;
+            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
+            qDebug() << "- m_soilTemperature : " << m_soilTemperature;
             qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosityLux;
+            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
 #endif
         }
     }

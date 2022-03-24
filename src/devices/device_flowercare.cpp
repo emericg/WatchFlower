@@ -280,18 +280,17 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
             QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
 
             // Generate token
+            uint8_t pid[2] = {0x98, 0x00};
             uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
             uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
             uint8_t token2[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
 
             // HHCCJCY01: {0x98, 0x00};
             // HHCCJCY09: {0xBC, 0x03};
-            // HHCCPOT002: {0x01, 0x5D};
-            uint8_t pid[2] = {0x98, 0x00};
-            if (m_deviceName == "Grow care garden") {
-                pid[0] = 0xBC;
-                pid[1] = 0x03;
-            }
+            // HHCCPOT002: {0x5D, 0x01};
+            if (m_deviceName == "Flower care") { pid[0] = 0x98; pid[1] = 0x00; }
+            if (m_deviceName == "Grow care garden") { pid[0] = 0xBC; pid[1] = 0x03; }
+            if (m_deviceName == "ropot") { pid[0] = 0x5D; pid[1] = 0x01; }
 
             uint8_t mixa[8] = {0};
             mixa[0] = mac[5];
@@ -612,10 +611,10 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             qDebug() << "* DeviceFlowerCare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
-            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
+            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
             qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosityLux;
+            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
 #endif
         }
 
@@ -636,12 +635,6 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
         QString mac;
-        int batt = -99;
-        float temp = -99;
-        float hygro = -99;
-        int moist = -99;
-        int lumi = -99;
-        int fert = -99;
 
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         // Save mac address
@@ -664,6 +657,13 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
 
         if (value.size() >= 16)
         {
+            int batt = -99;
+            float temp = -99;
+            float hygro = -99;
+            int moist = -99;
+            int lumi = -99;
+            int fert = -99;
+
             // get data
             if (data[12] == 4 && value.size() >= 17)
             {
@@ -746,7 +746,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 }
             }
 /*
-            if (m_temperature > -99 && m_luminosity > -99 && m_soil_moisture && m_soil_conductivity)
+            if (m_temperature > -99 && m_luminosityLux > -99 && m_soilMoisture > -99 && m_soilConductivity > -99)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
@@ -759,16 +759,17 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 }
             }
 */
-#ifndef QT_NO_DEBUG
-            //qDebug() << "* DeviceFlowerCare service data:" << getAddress();
-            //qDebug() << "- MAC:" << mac;
-            //qDebug() << "- battery:" << batt;
-            //qDebug() << "- temperature:" << temp;
-            //qDebug() << "- humidity:" << hygro;
-            //qDebug() << "- luminosity:" << lumi;
-            //qDebug() << "- moisture:" << moist;
-            //qDebug() << "- fertility:" << fert;
-#endif
+            if (temp > -99 || lumi > -99 || moist > -99 || fert > -99)
+            {
+                qDebug() << "* DeviceFlowerCare service data:" << getAddress() << value.size() << "bytes";
+                if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
+                if (batt > -99) qDebug() << "- battery:" << batt;
+                if (temp > -99) qDebug() << "- temperature:" << temp;
+                if (hygro > -99) qDebug() << "- humidity:" << hygro;
+                if (lumi > -99) qDebug() << "- luminosity:" << lumi;
+                if (moist > -99) qDebug() << "- moisture:" << moist;
+                if (fert > -99) qDebug() << "- fertility:" << fert;
+            }
         }
     }
 }

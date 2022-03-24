@@ -363,13 +363,13 @@ bool DeviceSensor::getSqlPlantData(int minutes)
         m_lastUpdateDatabase = m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
 /*
         qDebug() << ">> timestamp" << m_lastUpdate;
-        qDebug() << "- m_soil_moisture:" << m_soil_moisture;
-        qDebug() << "- m_soil_conductivity:" << m_soil_conductivity;
-        qDebug() << "- m_soil_temperature:" << m_soil_temperature;
-        qDebug() << "- m_soil_ph:" << m_soil_ph;
+        qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+        qDebug() << "- m_soilConductivity:" << m_soilConductivity;
+        qDebug() << "- m_soilTemperature:" << m_soilTemperature;
+        qDebug() << "- m_soilPH:" << m_soilPH;
         qDebug() << "- m_temperature:" << m_temperature;
         qDebug() << "- m_humidity:" << m_humidity;
-        qDebug() << "- m_luminosity:" << m_luminosity;
+        qDebug() << "- m_luminosityLux:" << m_luminosityLux;
         qDebug() << "- m_watertank_level:" << m_watertank_level;
 */
         status = true;
@@ -560,9 +560,8 @@ bool DeviceSensor::getSqlSensorData(int minutes)
         qDebug() << "- m_temperature:" << m_temperature;
         qDebug() << "- m_humidity:" << m_humidity;
         qDebug() << "- m_pressure:" << m_pressure;
-        qDebug() << "- m_luminosity:" << m_luminosity;
+        qDebug() << "- m_luminosityLux:" << m_luminosityLux;
         qDebug() << "- m_uv:" << m_uv;
-        qDebug() << "- m_luminosity:" << m_luminosity;
         qDebug() << "- m_water_level:" << m_water_level;
         qDebug() << "- m_sound_level:" << m_sound_level;
         qDebug() << "- m_wind_direction:" << m_wind_direction;

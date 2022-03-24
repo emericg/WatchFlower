@@ -386,7 +386,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             double hygro2 = 100.0 * (0.0000045 * std::pow(hygro1, 3.0) - 0.00055 * std::pow(hygro1, 2.0) + 0.0292 * hygro1 - 0.053);
             if (hygro2 < 0.0) hygro2 = 0.0;
             if (hygro2 > 60.0) hygro2 = 60.0;
-            m_soil_moisture = std::round(hygro2);
+            m_soilMoisture = std::round(hygro2);
 */
             /////////
 
@@ -461,11 +461,11 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             qDebug() << "* DeviceParrotPot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
-            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
-            qDebug() << "- m_soil_temperature:" << m_soilTemperature;
+            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
+            qDebug() << "- m_soilTemperature:" << m_soilTemperature;
             qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosity:" << m_luminosityLux;
+            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
 #endif
         }
     }

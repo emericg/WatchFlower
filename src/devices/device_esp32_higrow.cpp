@@ -227,7 +227,7 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
         {
             m_soilMoisture = data[0];
             m_soilConductivity = static_cast<uint16_t>(data[1] + (data[2] << 8));
-            //m_soil_temperature = static_cast<uint16_t>(data[3] + (data[4] << 8));
+            //m_soilTemperature = static_cast<uint16_t>(data[3] + (data[4] << 8));
             m_temperature = static_cast<uint16_t>(data[5] + (data[6] << 8)) / 10.f;
             m_humidity = data[7];
             m_luminosityLux = static_cast<uint32_t>(data[8] + (data[9] << 8) + (data[10] << 16));
@@ -280,11 +280,11 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soil_moisture:" << m_soilMoisture;
-            qDebug() << "- m_soil_conductivity:" << m_soilConductivity;
+            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_humidity:" << m_humidity;
-            qDebug() << "- m_luminosity:" << m_luminosityLux;
+            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
 #endif
         }
     }
