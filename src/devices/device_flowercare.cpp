@@ -759,6 +759,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 }
             }
 */
+/*
             if (temp > -99 || lumi > -99 || moist > -99 || fert > -99)
             {
                 qDebug() << "* DeviceFlowerCare service data:" << getAddress() << value.size() << "bytes";
@@ -770,6 +771,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 if (moist > -99) qDebug() << "- moisture:" << moist;
                 if (fert > -99) qDebug() << "- fertility:" << fert;
             }
+*/
         }
     }
 }

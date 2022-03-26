@@ -53,7 +53,7 @@
     "capabilities": [
       ["led_status", ""],
       ["realtime", ""],
-      ["history", "unsupported"]
+      ["history", "30 days"]
     ]
   },
   {

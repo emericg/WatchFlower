@@ -81,10 +81,13 @@ private:
 
     bool areValuesValid(const int soilMoisture, const int soilConductivity,
                         const float temperature) const;
-
     bool addDatabaseRecord(const int64_t timestamp,
                            const int soilMoisture, const int soilConductivity,
                            const float temperature);
+
+    bool areValuesValid2(const int soilMoisture, const int soilConductivity) const;
+    bool addDatabaseRecord2(const int64_t timestamp,
+                            const int soilMoisture, const int soilConductivity);
 
 private slots:
     void askForReading();
