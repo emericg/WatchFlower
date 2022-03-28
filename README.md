@@ -58,13 +58,13 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 | Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | QingPing Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
-| ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_cgg1.svg) | ![HygroTemp](docs/hygrotemp_cgdk2.svg) |
+| ![LYWSDCGQ](docs/hygrotemp_lywsdcgq.svg) | ![CGG1](docs/hygrotemp_cgg1.svg) | ![CGDK2](docs/hygrotemp_cgdk2.svg) |
 | LYWSDCGQ | CGG1 | CGDK2 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
 
 | Miaomiaoce Digital Hygrometer Clock / Alarm | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer (EInk) |
 | :---------------------------: | :-------------------------------: | :------------------------------------: |
-| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
+| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) |
 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
 | [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
 
