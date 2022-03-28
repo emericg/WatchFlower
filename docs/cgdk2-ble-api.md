@@ -1,9 +1,9 @@
 
-<img src="hygrotemp_cgdk2.svg" width="400px" alt="Digital Hygrometer" align="right" />
+<img src="hygrotemp_cgdk2.svg" width="400px" alt="Temp and RH Monitor Lite" align="right" />
 
 ## About CGDK2
 
-* QinPing 'Temp RH Lite' [CGDK2]() are hygrometers
+* Qingping 'Temp & RH Monitor Lite' [CGDK2](https://www.qingping.co/temp-rh-monitor-lite/overview) are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2430 coin cell battery is used as power source
@@ -65,7 +65,7 @@ TODO
 
 ## Reference
 
-[1] -
+[1] TODO
 
 ## License
 

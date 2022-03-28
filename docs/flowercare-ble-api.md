@@ -8,7 +8,7 @@
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2032 coin cell battery is used as power source
 
-Xiaomi MiJia **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01)  
+Xiaomi MiJia **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01, HHCCJCY10)  
 Xiaomi MiJia **Flower Care Max** (HHCCJCY09)  
 VegTrug **Grow Care Garden** (GCLS002)  
 

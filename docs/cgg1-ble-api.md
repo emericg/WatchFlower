@@ -1,17 +1,17 @@
 
-<img src="hygrotemp_cgg1.svg" width="400px" alt="Digital Hygrometer" align="right" />
+<img src="hygrotemp_cgg1.svg" width="400px" alt="Temp and RH Monitor" align="right" />
 
 ## About CGG1
 
-* ClearGrass 'Temp and RH' [CGG1]() are hygrometers
+* ClearGrass 'Temp & RH Monitor' [CGG1](https://www.qingping.co/temp-rh-monitor/overview) are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2430 coin cell battery is used as power source
 
-There are multiple variant of this device, sold under various names but the same FCC ID:
-- ClearGrass **Temp and RH** (CGG1)  
-- QingPing **Temp and RH M** (CGG1-M) (NOT COMPATIBLE)  
-- QingPing **Temp and RH H** HomeKit edition (CGG1-H) (NOT COMPATIBLE)  
+There are multiple variant of this device, sold under various names but the same product ID:
+- ClearGrass **Temp and RH Monitor** (CGG1)  
+- Qingping **Temp and RH M Monitor** (CGG1-M) (NOT COMPATIBLE)  
+- Qingping **Temp and RH H Monitor** HomeKit edition (CGG1-H) (NOT COMPATIBLE)  
 
 ## Features
 
@@ -46,7 +46,7 @@ The name advertised by the devices (CGG1-H) is unknown.
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
 
-(Only for QingPing variants)
+(Only for Qingping variants)
 
 ##### Data service (UUID 22210000-554a-4546-5542-46534450464d)
 
@@ -75,7 +75,7 @@ TODO
 
 ## Reference
 
-[1] -
+[1] TODO
 
 ## License
 

@@ -1,12 +1,13 @@
 
-<img src="hygrotemp_lywsd03mmc.svg" width="400px" alt="Thermo-Hygrometer 2" align="right" />
+<img src="hygrotemp_cgd1.svg" width="400px" alt="Bluetooth Alarm Clock" align="right" />
 
-## About
+## About CGD1
 
-* Miaomiaoce (MMC) 'Thermo-Hygrometer' [LYWSDO3MMC]() are hygrometers
+* Qingping (formerly ClearGrass) 'Bluetooth Alarm Clock' [CGD1](https://www.qingping.co/bluetooth-alarm-clock/overview) are alarm clock with hygrometers
+* Has onboard clock and alarm
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A CR2032 coin cell battery is used as power source
+* 2 * AA batteries are used as power source
 
 ## Features
 
@@ -28,8 +29,6 @@ In general you have to know about services and characteristics to talk to a BLE 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
 ## Services, characteristics and handles
-
-The name advertised by the devices is `LYWSD03MMC`.
 
 TODO
 

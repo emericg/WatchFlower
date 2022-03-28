@@ -56,13 +56,13 @@ Please note that most Chinese devices have many names, usually no official manuf
 | Xiaomi / VegTrug / WANFEI<br>(International and Chinese versions) | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
-| Xiaomi Digital Hygrometer (LCD) | ClearGrass Digital Hygrometer (EInk) | QingPing Temp RH Lite (LCD) |
+| Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | QingPing Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
 | ![HygroTemp](docs/hygrotemp_lcd.svg) | ![HygroTemp](docs/hygrotemp_cgg1.svg) | ![HygroTemp](docs/hygrotemp_cgdk2.svg) |
 | LYWSDCGQ | CGG1 | CGDK2 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
 
-| Xiaomi Smart Hygrometer Clock | Xiaomi Digital Hygrometer 2 (LCD) | Miaomiaoce Digital Hygrometer 2 (EInk) |
+| Miaomiaoce Digital Hygrometer Clock / Alarm | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer (EInk) |
 | :---------------------------: | :-------------------------------: | :------------------------------------: |
 | ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTemp2](docs/hygrotemp_square_lcd.svg) | ![HygroTemp2](docs/hygrotemp_square_eink.svg) |
 | LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |

@@ -1,12 +1,12 @@
 
-<img src="hygrotemp_lywsd03mmc.svg" width="400px" alt="Thermo-Hygrometer 2" align="right" />
+<img src="hygrotemp_xmwsdjo4mmc.svg" width="400px" alt="Thermo-Hygrometer" align="right" />
 
-## About
+## About XMWSDJO4MMC
 
-* Miaomiaoce (MMC) 'Thermo-Hygrometer' [LYWSDO3MMC]() are hygrometers
+* Miaomiaoce (MMC) 'Thermo-Hygrometer' [XMWSDJO4MMC]() are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A CR2032 coin cell battery is used as power source
+* A CR2450 coin cell battery is used as power source
 
 ## Features
 
@@ -29,7 +29,7 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `LYWSD03MMC`.
+The name advertised by the devices is `XMWSDJO4MMC`.
 
 TODO
 
