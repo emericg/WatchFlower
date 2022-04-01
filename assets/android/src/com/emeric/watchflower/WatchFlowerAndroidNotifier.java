@@ -21,44 +21,59 @@
 
 package com.emeric.watchflower;
 
+import android.content.Context;
+import android.content.Intent;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.NotificationChannel;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 
 public class WatchFlowerAndroidNotifier {
 
+    private static String channelId = "WatchFlower";
+    private static String channelName = "WatchFlower Notifier";
+    private static int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
+
     public static void notify(Context context, String title, String message) {
         try {
-            NotificationManager m_notificationManager = (NotificationManager)
-                    context.getSystemService(Context.NOTIFICATION_SERVICE);
+            //Context context = getApplicationContext();
+            NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification.Builder builder;
 
-            Notification.Builder m_builder;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                NotificationChannel notificationChannel;
-                notificationChannel = new NotificationChannel("WatchFlower", "WatchFlower Notifier", importance);
-                m_notificationManager.createNotificationChannel(notificationChannel);
-                m_builder = new Notification.Builder(context, notificationChannel.getId());
+                NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, channelImportance);
+                notificationChannel.enableLights(true);
+                notificationChannel.enableVibration(false);
+                notificationChannel.setLightColor(Color.GREEN);
+                //notificationChannel.setVibrationPattern(new long[]{500,500,500,500,500});
+                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                notificationManager.createNotificationChannel(notificationChannel);
+
+                builder = new Notification.Builder(context, notificationChannel.getId());
             } else {
-                m_builder = new Notification.Builder(context);
+                builder = new Notification.Builder(context);
             }
 
-            Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stat_logo);
+            String packageName = context.getApplicationContext().getPackageName();
+            Intent resultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            m_builder.setSmallIcon(R.drawable.ic_stat_logo)
-                     .setContentTitle(title)
-                     .setContentText(message)
-                     .setDefaults(Notification.DEFAULT_SOUND)
-                     .setAutoCancel(true);
+            builder.setSmallIcon(R.drawable.ic_stat_logo);
+            //Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stat_logo);
+            //builder.setLargeIcon(icon);
+            //builder.setColor(Color.WHITE);
+            builder.setContentTitle(title);
+            builder.setContentText(message);
+            builder.setContentIntent(resultPendingIntent);
+            builder.setDefaults(Notification.DEFAULT_SOUND);
+            builder.setAutoCancel(true);
 
-                     //.setLargeIcon(icon)
-                     //.setColor(Color.GREEN)
-
-            m_notificationManager.notify(0, m_builder.build());
+            notificationManager.notify(0, builder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }

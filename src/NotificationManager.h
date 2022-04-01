@@ -44,8 +44,8 @@ class NotificationManager : public QObject
 public:
     static NotificationManager *getInstance();
 
-    void setNotification2(const QString &title, const QString &message);
     void setNotification(const QString &message);
+    void setNotification2(const QString &title, const QString &message);
     QString getNotification() const;
 
 signals:
