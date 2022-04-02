@@ -195,8 +195,8 @@ protected:
     int m_limit_soilMoistureMax = 50;
     int m_limit_soilConduMin = 100;
     int m_limit_soilConduMax = 500;
-    float m_limit_soilPhMin = 6.5;
-    float m_limit_soilPhMax = 7.5;
+    float m_limit_soilPhMin = 6.5f;
+    float m_limit_soilPhMax = 7.5f;
     // hygrometer limits
     int m_limit_tempMin = 14;
     int m_limit_tempMax = 28;
@@ -312,6 +312,8 @@ public:
     Q_INVOKABLE QString getTempString() const;
     Q_INVOKABLE float getHeatIndex() const;
     Q_INVOKABLE QString getHeatIndexString() const;
+    Q_INVOKABLE float getDewPoint() const;
+    Q_INVOKABLE QString getDewPointString() const;
     float getHumidity() const { return m_humidity; }
     // Environmental
     int getPressure() const { return m_pressure; }

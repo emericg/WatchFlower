@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2019
+ * \date      2022
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_HYGROTEMP_CLOCK_H
-#define DEVICE_HYGROTEMP_CLOCK_H
+#ifndef DEVICE_HYGROTEMP_CGD1_H
+#define DEVICE_HYGROTEMP_CGD1_H
 /* ************************************************************************** */
 
 #include "device_sensor.h"
@@ -34,41 +34,28 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi "Digital Hygrometer Clock"
- * LYWSD02 device / rectangular body / E-Ink
- *
- * Miaomiaoce "Smart Hygrometer Alarm Clock"
- * MHO-C303 device / rectangular body / E-Ink
+ * Qingping (formerly ClearGrass) "Bluetooth Alarm Clock"
+ * CGD1 device / squared body / LCD
  *
  * Protocol infos:
- * - WatchFlower/docs/lywsd02-ble-api.md
- * - WatchFlower/docs/mchohc303-ble-api.md
+ * - WatchFlower/docs/cgd1-ble-api.md
  */
-class DeviceHygrotempClock: public DeviceSensor
+class DeviceHygrotempCGD1: public DeviceSensor
 {
     Q_OBJECT
 
+    void parseAdvertisementData(const QByteArray &value);
+
 public:
-    DeviceHygrotempClock(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceHygrotempClock();
+    DeviceHygrotempCGD1(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempCGD1(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceHygrotempCGD1();
 
 private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
-
-    QLowEnergyService *serviceData = nullptr;
-    QLowEnergyService *serviceInfos = nullptr;
-    QLowEnergyDescriptor m_notificationDesc;
-    void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
-
-    void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_HYGROTEMP_CLOCK_H
+#endif // DEVICE_HYGROTEMP_CGD1_H

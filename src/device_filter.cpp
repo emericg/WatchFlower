@@ -155,12 +155,14 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "k";
             } else if (device->getName() == "MHO-C401") {
                 return "l";
-            } else if (device->getName() == "AirQualityMonitor") { // other sensors
+            } else if (device->getName() == "XMWSDJO4MMC") {
                 return "m";
-            } else if (device->getName().startsWith("6003#")) {
+            } else if (device->getName() == "AirQualityMonitor") { // other sensors
                 return "n";
-            } else if (device->getName() == "GeigerCounter") {
+            } else if (device->getName().startsWith("6003#")) {
                 return "o";
+            } else if (device->getName() == "GeigerCounter") {
+                return "p";
             } else {
                 return "zzz";
             }

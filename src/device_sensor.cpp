@@ -206,14 +206,6 @@ bool DeviceSensor::getSqlDeviceInfos()
             Q_EMIT sensorUpdated();
         }
     }
-    else if ((m_deviceName.startsWith("Parrot pot")) && (m_deviceFirmware.size() == 6))
-    {
-        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
-        {
-            m_firmware_uptodate = true;
-            Q_EMIT sensorUpdated();
-        }
-    }
     else if ((m_deviceName == "ropot") && (m_deviceFirmware.size() == 5))
     {
         if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
@@ -222,9 +214,17 @@ bool DeviceSensor::getSqlDeviceInfos()
             Q_EMIT sensorUpdated();
         }
     }
+    else if ((m_deviceName.startsWith("Parrot pot")) && (m_deviceFirmware.size() == 6))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
     else if ((m_deviceName == "MJ_HT_V1") && (m_deviceFirmware.size() == 8))
     {
-        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LCD))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSDCGQ))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -256,7 +256,15 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "LYWSD03MMC") && (m_deviceFirmware.size() == 10))
     {
-        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
+    else if ((m_deviceName == "XMWSDJO4MMC") && (m_deviceFirmware.size() == 10))
+    {
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_XMWSDJO4MMC))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -265,14 +273,6 @@ bool DeviceSensor::getSqlDeviceInfos()
     else if ((m_deviceName == "MHO-C401") && (m_deviceFirmware.size() == 10))
     {
         if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK2))
-        {
-            m_firmware_uptodate = true;
-            Q_EMIT sensorUpdated();
-        }
-    }
-    else if ((m_deviceName == "MHO-303") && (m_deviceFirmware.size() == 10))
-    {
-        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_ALARM))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -802,7 +802,7 @@ bool DeviceSensor::hasData() const
     {
         // If we have immediate data (<12h old)
         if (m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0 ||
-            m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
+            m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_hcho > 0 || m_rm > 0)
             return true;
 
         tableName = "sensorData";
@@ -943,6 +943,38 @@ QString DeviceSensor::getHeatIndexString() const
         hiString = QString::number(getHeatIndex(), 'f', 1) + "°C";
 
     return hiString;
+}
+
+/* ************************************************************************** */
+
+float DeviceSensor::getDewPoint() const
+{
+    float dew = (m_temperature - ((14.55 + 0.114 * m_temperature) * (1 - (0.01 * m_humidity)))
+                               - (pow(((2.5 + 0.007 * m_temperature) * (1 - (0.01 * m_humidity))), 3))
+                               - ((15.9 + 0.117 * m_temperature) * pow((1 - (0.01 * m_humidity)), 14)));
+
+    SettingsManager *s = SettingsManager::getInstance();
+    if (s->getTempUnit() == "F")
+    {
+        return ((dew - 32) / 1.8f);
+    }
+    else
+    {
+        return dew;
+    }
+}
+
+QString DeviceSensor::getDewPointString() const
+{
+    QString dewString;
+
+    SettingsManager *s = SettingsManager::getInstance();
+    if (s->getTempUnit() == "F")
+        dewString = QString::number(getDewPoint(), 'f', 1) + "°F";
+    else
+        dewString = QString::number(getDewPoint(), 'f', 1) + "°C";
+
+    return dewString;
 }
 
 /* ************************************************************************** */

@@ -433,7 +433,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         int battv = static_cast<uint16_t>(data[8] + (data[9] << 8));
         float temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;
-        float hygro = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
+        float humi = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
         m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
@@ -445,11 +445,11 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
                 Q_EMIT dataUpdated();
             }
         }
-        if (hygro != m_humidity)
+        if (humi != m_humidity)
         {
-            if (hygro >= 0.f && hygro <= 100.f)
+            if (humi >= 0.f && humi <= 100.f)
             {
-                m_humidity = hygro;
+                m_humidity = humi;
                 Q_EMIT dataUpdated();
             }
         }
@@ -472,13 +472,14 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         refreshDataFinished(true);
 
-#ifndef QT_NO_DEBUG
-        //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
-        //qDebug() << "- battery:" << m_deviceBattery;
-        //qDebug() << "- temperature:" << temp;
-        //qDebug() << "- humidity:" << hygro;
-        //qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
-#endif
+        if (temp > -99 || humi > -99)
+        {
+            qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
+            qDebug() << "- battery:" << m_deviceBattery;
+            qDebug() << "- temperature:" << temp;
+            qDebug() << "- humidity:" << humi;
+            qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
+        }
     }
 }
 

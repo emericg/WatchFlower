@@ -482,8 +482,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
             m_lastHistorySync.setSecsSinceEpoch(m_device_wall_time + tmcd);
 
-            float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)) / 10.f;
-            if (temperature > 100.f) temperature = 0.f; // FIXME negative temperatures aren't properly coded?
             int soil_moisture = data[11];
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
 
@@ -491,9 +489,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
 #ifndef QT_NO_DEBUG
             qDebug() << "* History entry" << m_history_entryIndex-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
-            //qDebug() << "- soil_moisture:" << soil_moisture;
-            //qDebug() << "- soil_conductivity:" << soil_conductivity;
-            //qDebug() << "- temperature:" << temperature;
+            qDebug() << "DATA: 0x" << value.toHex();
+            qDebug() << "- soil_moisture:" << soil_moisture;
+            qDebug() << "- soil_conductivity:" << soil_conductivity;
 #endif
 
             // Update progress
@@ -616,9 +614,10 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
         {
             int batt = -99;
             float temp = -99;
-            float hygro = -99;
-            int moist = -99;
+            float humi = -99;
             int lumi = -99;
+            float form = -99;
+            int moist = -99;
             int fert = -99;
 
             // get data
@@ -636,12 +635,12 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
             }
             else if (data[12] == 6 && value.size() >= 17)
             {
-                hygro = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                if (hygro != m_humidity)
+                humi = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                if (humi != m_humidity)
                 {
-                    if (hygro >= 0.f && hygro <= 100.f)
+                    if (humi >= 0.f && humi <= 100.f)
                     {
-                        m_humidity = hygro;
+                        m_humidity = humi;
                         Q_EMIT dataUpdated();
                     }
                 }
@@ -695,15 +694,27 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                     m_temperature = temp;
                     Q_EMIT dataUpdated();
                 }
-                hygro = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
-                if (hygro != m_humidity)
+                humi = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
+                if (humi != m_humidity)
                 {
-                    m_humidity = hygro;
+                    m_humidity = humi;
                     Q_EMIT dataUpdated();
                 }
             }
+            else if (data[12] == 16 && value.size() >= 17)
+            {
+                form = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
+                if (form != m_hcho)
+                {
+                    if (form >= 0.f && form <= 100.f)
+                    {
+                        m_hcho = form;
+                        Q_EMIT dataUpdated();
+                    }
+                }
+            }
 /*
-            if (m_temperature > -99 && m_luminosityLux > -99 && m_soilMoisture > -99 && m_soilConductivity > -99)
+            if (m_soilMoisture > -99 && m_soilConductivity > -99)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
@@ -715,18 +726,18 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
                     Q_EMIT statusUpdated();
                 }
             }
-*/
-/*
-            if (temp > -99 || lumi > -99 || moist > -99 || fert > -99)
+*/ /*
+            if (temp > -99 || humi > -99 || lumi > -99 || form > -99 || moist > -99 || fert > -99)
             {
-                qDebug() << "* DeviceRopot service data:" << getAddress() << value.size() << "bytes";
+                qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
                 if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
                 if (batt > -99) qDebug() << "- battery:" << batt;
                 if (temp > -99) qDebug() << "- temperature:" << temp;
-                if (hygro > -99) qDebug() << "- humidity:" << hygro;
+                if (humi > -99) qDebug() << "- humidity:" << humi;
                 if (lumi > -99) qDebug() << "- luminosity:" << lumi;
-                if (moist > -99) qDebug() << "- moisture:" << moist;
-                if (fert > -99) qDebug() << "- fertility:" << fert;
+                if (form > -99) qDebug() << "- formaldehyde:" << form;
+                if (moist > -99) qDebug() << "- soil moisture:" << moist;
+                if (fert > -99) qDebug() << "- soil fertility:" << fert;
             }
 */
         }

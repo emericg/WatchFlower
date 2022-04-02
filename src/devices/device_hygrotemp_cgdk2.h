@@ -34,7 +34,7 @@
 /* ************************************************************************** */
 
 /*!
- * QingPing "Temp RH Lite"
+ * Qingping "Temp RH Lite"
  * CGDK2 device / round body / LCD screen
  *
  * Protocol infos:

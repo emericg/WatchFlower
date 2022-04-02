@@ -20,26 +20,27 @@
  */
 
 #include "DeviceManager.h"
+#include "DatabaseManager.h"
+
 #include "device.h"
 #include "devices/device_flowercare.h"
 #include "devices/device_flowerpower.h"
 #include "devices/device_parrotpot.h"
 #include "devices/device_ropot.h"
-#include "devices/device_hygrotemp_lcd.h"
+#include "devices/device_hygrotemp_cgd1.h"
+#include "devices/device_hygrotemp_cgdk2.h"
 #include "devices/device_hygrotemp_cgg1.h"
+#include "devices/device_hygrotemp_cgp1w.h"
 #include "devices/device_hygrotemp_clock.h"
 #include "devices/device_hygrotemp_square.h"
-#include "devices/device_hygrotemp_cgdk2.h"
+#include "devices/device_hygrotemp_lywsdcgq.h"
 #include "devices/device_thermobeacon.h"
+#include "devices/device_jqjcy01ym.h"
+#include "devices/device_wp6003.h"
 #include "devices/device_esp32_airqualitymonitor.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geigercounter.h"
 #include "devices/device_ess_generic.h"
-#include "devices/device_wp6003.h"
-
-#include "utils/utils_app.h"
-
-#include "DatabaseManager.h"
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
@@ -122,7 +123,7 @@ DeviceManager::DeviceManager(bool daemon)
             else if (deviceName == "HiGrow")
                 d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
-                d = new DeviceHygrotempLCD(deviceAddr, deviceName, this);
+                d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "ClearGrass Temp & RH")
                 d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
             else if (deviceName == "Qingping Temp RH Lite")
@@ -1397,7 +1398,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             else if (info.name() == "HiGrow")
                 d = new DeviceEsp32HiGrow(info, this);
             else if (info.name() == "MJ_HT_V1")
-                d = new DeviceHygrotempLCD(info, this);
+                d = new DeviceHygrotempLYWSDCGQ(info, this);
             else if (info.name() == "ClearGrass Temp & RH")
                 d = new DeviceHygrotempCGG1(info, this);
             else if (info.name() == "Qingping Temp RH Lite")

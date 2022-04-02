@@ -179,12 +179,6 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_data(QLowEnergyService::Ser
             // History
             //UUID_HISTORY = 'EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6'   # Last idx 152          READ NOTIFY
 
-            // Characteristic "Time" // 5 bytes READ WRITE
-            {
-                //QBluetoothUuid a(QString("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6"));
-                //QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-            }
-
             // Characteristic "Temp&Humi" // 3 bytes, READ NOTIFY
             {
                 QBluetoothUuid th(QString("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6"));
@@ -215,7 +209,7 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_infos(QLowEnergyService::Se
 
             if (m_deviceFirmware.size() == 10)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_SQUARE))
+                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

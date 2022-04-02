@@ -40,8 +40,13 @@
  * MMC "Digital Hygrometer"
  * MHO-C401 device / square body / E-Ink
  *
+ * Miaomiaoce "?"
+ * XMWSDJO4MMC device / rectangular body / E-Ink
+ *
  * Protocol infos:
  * - WatchFlower/docs/lywsd03mmc-ble-api.md
+ * - WatchFlower/docs/mchoh401-ble-api.md
+ * - WatchFlower/docs/xmwsdjo4mmc-ble-api.md
  */
 class DeviceHygrotempSquare: public DeviceSensor
 {

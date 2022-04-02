@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2022
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_HYGROTEMP_LCD_H
-#define DEVICE_HYGROTEMP_LCD_H
+#ifndef DEVICE_HYGROTEMP_CGP1W_H
+#define DEVICE_HYGROTEMP_CGP1W_H
 /* ************************************************************************** */
 
 #include "device_sensor.h"
@@ -34,41 +34,28 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi "Bluetooth Temperature and Humidity sensor with LCD"
- * ClearGrass "Digital Bluetooth Thermometer and Hygrometer"
- * LYWSDCGQ device / round body / LCD
+ * Qingping (formerly ClearGrass) "Temp & RH Barometer Pro S" / "Temp & RH Monitor Pro S"
+ * CGP1W device / squared body / LCD
  *
  * Protocol infos:
- * - WatchFlower/docs/lywsdcgq-ble-api.md
+ * - WatchFlower/docs/cgp1w-ble-api.md
  */
-class DeviceHygrotempLCD: public DeviceSensor
+class DeviceHygrotempCGP1W: public DeviceSensor
 {
     Q_OBJECT
 
+    void parseAdvertisementData(const QByteArray &value);
+
 public:
-    DeviceHygrotempLCD(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
-    DeviceHygrotempLCD(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceHygrotempLCD();
+    DeviceHygrotempCGP1W(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceHygrotempCGP1W();
 
 private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
-    void serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
-
-    QLowEnergyService *serviceInfos = nullptr;
-    QLowEnergyService *serviceBattery = nullptr;
-    QLowEnergyService *serviceData = nullptr;
-
-    QLowEnergyDescriptor m_notificationDesc;
-    void confirmedDescriptorWrite(const QLowEnergyDescriptor &d, const QByteArray &value);
-
-    void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_HYGROTEMP_LCD_H
+#endif // DEVICE_HYGROTEMP_CGP1W_H
