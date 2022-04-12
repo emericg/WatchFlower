@@ -21,17 +21,13 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 * Support many plant sensors and thermometers
 * Support a couple of environmental sensors
 * Name your plants and set your own limits for optimal care
-* Background updates and notifications (desktop ONLY for now)
-* Synchronize sensors history (FlowerCare and ThermoBeacon ONLY for now)
+* Background updates and notifications (excluding iOS)
+* Synchronize sensors history (FlowerCare, RoPot and ThermoBeacon ONLY for now)
 * Configurable update intervals
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
 * 90 days CSV data export
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
-
-### TODOs
-
-* Background updates and notifications for Android and iOS
 
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
@@ -98,8 +94,9 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++17 compiler and Qt 6.3+ (with Qt Charts).  
+You will need a C++17 compiler and Qt 6.3+ (with Qt Connectivity and Qt Charts modules).  
 For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (22+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+For Windows builds, you'll need the MSVC 2019+ compiler.  
 
 #### Building WatchFlower
 
@@ -110,7 +107,7 @@ $ qmake
 $ make
 ```
 
-#### Using FlowerCare
+#### Using WatchFlower
 
 ##### Android
 
@@ -125,7 +122,7 @@ The application will ask you for permission to use Bluetooth. You can learn more
 
 ##### Linux ('live mode' and 'historical data')
 
-While reading FlowerCare historical entry count, the sensors usually freeze for up to a second, and the Linux kernel consider that to be a connection timeout.  
+While reading Flower Care and RoPot historical entry count, the sensors usually freeze for up to a second, and the Linux kernel consider that to be a connection timeout.  
 To be able to get the historical data working on Linux, you'll need to increase the "supervision timeout" value (while root):
 
 ```bash
