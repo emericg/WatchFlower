@@ -139,6 +139,8 @@ Rectangle {
                             return "qrc:/assets/icons_material/baseline-search-24px.svg"
                         else if (deviceManager.syncing)
                             return "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+                        else if (deviceManager.listening)
+                            return "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                         else
                             return "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                     }
@@ -161,7 +163,7 @@ Rectangle {
                     SequentialAnimation on opacity {
                         //id: rescanAnimation
                         loops: Animation.Infinite
-                        running: deviceManager.scanning || deviceManager.syncing
+                        running: (deviceManager.scanning || deviceManager.listening || deviceManager.syncing)
                         onStopped: workingIndicator.opacity = 0
                         PropertyAnimation { to: 1; duration: 750; }
                         PropertyAnimation { to: 0.33; duration: 750; }

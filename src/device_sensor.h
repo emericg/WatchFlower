@@ -281,7 +281,7 @@ protected:
     virtual bool hasData() const;
 
 public:
-    DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 

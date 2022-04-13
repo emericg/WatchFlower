@@ -45,7 +45,7 @@ class DeviceHygrotempCGDK2: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceHygrotempCGDK2(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempCGDK2(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempCGDK2(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGDK2();
 

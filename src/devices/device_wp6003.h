@@ -44,11 +44,11 @@ class DeviceWP6003: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceWP6003(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceWP6003();
 
-    Q_INVOKABLE virtual bool hasData() const;
+    Q_INVOKABLE bool hasData() const;
 
 private:
     // QLowEnergyController related

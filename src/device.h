@@ -49,6 +49,7 @@ class Device: public QObject
     Q_OBJECT
 
     Q_PROPERTY(int deviceType READ getDeviceType CONSTANT)
+    Q_PROPERTY(int deviceBluetoothMode READ getBluetoothMode CONSTANT)
     Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY capabilitiesUpdated)
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorsUpdated)
 
@@ -61,6 +62,9 @@ class Device: public QObject
     Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)
     Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
     Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
+
+    Q_PROPERTY(bool hasBluetoothConnection READ hasBluetoothConnection CONSTANT)
+    Q_PROPERTY(bool hasBluetoothAdvertisement READ hasBluetoothAdvertisement CONSTANT)
 
     Q_PROPERTY(bool hasRealTime READ hasRealTime NOTIFY capabilitiesUpdated)
     Q_PROPERTY(bool hasHistory READ hasHistory NOTIFY capabilitiesUpdated)
@@ -106,6 +110,7 @@ class Device: public QObject
     Q_PROPERTY(QString deviceLocationName READ getLocationName WRITE setLocationName NOTIFY settingsUpdated)
     Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated)
     Q_PROPERTY(QString devicePlantName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated) // legacy
+    Q_PROPERTY(bool deviceEnabled READ isEnabled WRITE setEnabled NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY settingsUpdated)
 
@@ -152,6 +157,7 @@ protected:
     int m_deviceType = 0;           //!< See DeviceType enum
     int m_deviceCapabilities = 0;   //!< See DeviceCapabilities enum
     int m_deviceSensors = 0;        //!< See DeviceSensors enum
+    int m_deviceBluetoothMode = 0;  //!< See BluetoothMode enum
 
     // Device data
     QString m_deviceAddress;
@@ -168,6 +174,7 @@ protected:
     QString m_associatedName;
     QString m_locationName;
     int m_manualOrderIndex = -1;
+    bool m_isEnabled = true;
     bool m_isOutside = false;
     QJsonObject m_additionalSettings;
 
@@ -227,7 +234,7 @@ protected:
     void setBatteryFirmware(const int battery, const QString &firmware);
 
 public:
-    Device(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    Device(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
@@ -242,6 +249,10 @@ public:
     int getDeviceType() const { return m_deviceType; }
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
+
+    int getBluetoothMode() const { return m_deviceBluetoothMode; }
+    bool hasBluetoothConnection() const { return (m_deviceBluetoothMode & DeviceUtils::DEVICE_BLE_CONNECTION); }
+    bool hasBluetoothAdvertisement() const { return (m_deviceBluetoothMode & DeviceUtils::DEVICE_BLE_ADVERTISEMENT); }
 
     bool isPlantSensor() const { return (m_deviceType == DeviceUtils::DEVICE_PLANTSENSOR); }
     bool isThermometer() const { return (m_deviceType == DeviceUtils::DEVICE_THERMOMETER); }
@@ -324,6 +335,8 @@ public:
     QString getAssociatedName() { return m_associatedName; }
     void setAssociatedName(const QString &name);
     int getManualIndex() const { return m_manualOrderIndex; }
+    bool isEnabled() const { return m_isEnabled; }
+    void setEnabled(const bool enabled);
     bool isInside() const { return !m_isOutside; }
     bool isOutside() const { return m_isOutside; }
     Q_INVOKABLE void setOutside(const bool outside);

@@ -47,7 +47,7 @@ class DeviceEssGeneric: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceEssGeneric(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEssGeneric(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceEssGeneric();
 

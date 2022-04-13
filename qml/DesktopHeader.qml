@@ -331,6 +331,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasBluetoothConnection) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
                        appContent.state === "DeviceEnvironmental"))
@@ -421,7 +422,9 @@ Rectangle {
             id: buttonSort
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
+
             visible: (appContent.state === "DeviceList")
+            enabled: visible
 
             source: "qrc:/assets/icons_material/baseline-filter_list-24px.svg"
             iconColor: Theme.colorHeaderContent
@@ -544,8 +547,8 @@ Rectangle {
 
             onClicked: refreshButtonClicked()
 
-            animation: "rotate"
-            animationRunning: deviceManager.updating
+            animation: deviceManager.updating ? "rotate" : "fade"
+            animationRunning: (deviceManager.updating || deviceManager.listening)
         }
         Rectangle { // separator
             anchors.verticalCenter: parent.verticalCenter

@@ -42,9 +42,11 @@ class DeviceJQJCY01YM: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceJQJCY01YM(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceJQJCY01YM(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceJQJCY01YM(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceJQJCY01YM();
+
+    Q_INVOKABLE bool hasData() const;
 
     void parseAdvertisementData(const QByteArray &value);
 

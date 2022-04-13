@@ -79,9 +79,8 @@ Drawer {
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-
                     source: "qrc:/assets/logos/logo.svg"
-                    sourceSize: Qt.size(width, height)
+                    //sourceSize: Qt.size(width, height)
                 }
                 Text {
                     id: textHeader
@@ -362,7 +361,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: deviceManager.bluetooth && !deviceManager.scanning
+                    enabled: (deviceManager.bluetooth && !deviceManager.scanning)
 
                     MouseArea {
                         anchors.fill: parent
@@ -488,6 +487,7 @@ Drawer {
                                 } else {
                                     deviceManager.scanDevices_start()
                                 }
+                                appDrawer.close()
                             }
                         }
                     }

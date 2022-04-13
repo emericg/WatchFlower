@@ -47,7 +47,7 @@ class DeviceFlowerCare: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowerCare(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowerCare();
 

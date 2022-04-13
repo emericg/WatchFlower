@@ -220,7 +220,7 @@ bool UtilsAndroid::checkPermission_location_background()
     if (QNativeInterface::QAndroidApplication::sdkVersion() >= 29)
     {
         QFuture<QtAndroidPrivate::PermissionResult> loc;
-        loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_BACKGROUD_LOCATION");
+        loc = QtAndroidPrivate::checkPermission("android.permission.ACCESS_BACKGROUND_LOCATION");
         //loc.waitForFinished();
 
         return (loc.result() == QtAndroidPrivate::PermissionResult::Authorized);
@@ -238,12 +238,12 @@ bool UtilsAndroid::getPermission_location_background()
         if (!UtilsAndroid::checkPermission_location_background())
         {
             QFuture<QtAndroidPrivate::PermissionResult> res;
-            res = QtAndroidPrivate::requestPermission("android.permission.ACCESS_BACKGROUD_LOCATION");
+            res = QtAndroidPrivate::requestPermission("android.permission.ACCESS_BACKGROUND_LOCATION");
             //res.waitForFinished();
 
             if (!UtilsAndroid::checkPermission_location_background())
             {
-                qWarning() << "ACCESS_BACKGROUD_LOCATION PERMISSION DENIED";
+                qWarning() << "ACCESS_BACKGROUND_LOCATION PERMISSION DENIED";
                 status = false;
             }
         }

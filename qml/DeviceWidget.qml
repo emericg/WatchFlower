@@ -79,7 +79,8 @@ Item {
                        boxDevice.deviceName === "MHO-C303") {
                 imageDevice.source = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
             } else if (boxDevice.deviceName === "LYWSD03MMC" ||
-                       boxDevice.deviceName === "MHO-C401") {
+                       boxDevice.deviceName === "MHO-C401" ||
+                       boxDevice.deviceName === "XMWSDJO4MMC") {
                 imageDevice.source = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
             } else {
                 imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
@@ -106,6 +107,7 @@ Item {
                 else
                     loaderIndicators.sourceComponent = componentEnvironmentalGauge
             }
+
             if (loaderIndicators.item) {
                 loaderIndicators.item.initData()
                 loaderIndicators.item.updateData()
@@ -152,8 +154,8 @@ Item {
     function updateSensorSettings() {
         // Title
         if (boxDevice.isPlantSensor) {
-            if (boxDevice.devicePlantName !== "")
-                textTitle.text = boxDevice.devicePlantName
+            if (boxDevice.deviceAssociatedName !== "")
+                textTitle.text = boxDevice.deviceAssociatedName
             else
                 textTitle.text = boxDevice.deviceName
         } else if (boxDevice.isThermometer) {
@@ -203,62 +205,62 @@ Item {
 
             if (boxDevice.isPlantSensor) {
 
-                water.visible = false
-                temp.visible = false
+                alarmWater.visible = false
+                alarmFreeze.visible = false
 
                 // Water me notif
                 if (hasHygro && boxDevice.soilMoisture < boxDevice.limitHygroMin) {
-                    water.visible = true
-                    water.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                    temp.color = Theme.colorBlue
+                    alarmWater.visible = true
+                    alarmWater.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                    alarmFreeze.color = Theme.colorBlue
                 } else if (boxDevice.soilMoisture > boxDevice.limitHygroMax) {
-                    water.visible = true
-                    water.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                    temp.color = Theme.colorYellow
+                    alarmWater.visible = true
+                    alarmWater.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
+                    alarmFreeze.color = Theme.colorYellow
                 }
 
                 // Extreme temperature notif
                 if (boxDevice.temperatureC > 40) {
-                    temp.visible = true
-                    temp.color = Theme.colorYellow
-                    temp.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                    alarmFreeze.visible = true
+                    alarmFreeze.color = Theme.colorYellow
+                    alarmFreeze.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
                 } else if (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80) {
-                    temp.visible = true
-                    temp.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    alarmFreeze.visible = true
+                    alarmFreeze.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
 
                     if (boxDevice.temperatureC <= -4)
-                        temp.color = Theme.colorRed
+                        alarmFreeze.color = Theme.colorRed
                     else if (boxDevice.temperatureC <= -2)
-                        temp.color = Theme.colorYellow
+                        alarmFreeze.color = Theme.colorYellow
                     else
-                        temp.color = Theme.colorBlue
+                        alarmFreeze.color = Theme.colorBlue
                 }
 
             } else if (boxDevice.isEnvironmentalSensor) {
 
-                ventilate.visible = false
-                //nuclear.visible = false
-                //warning.visible = false
+                alarmVentilate.visible = false
+                //alarmRadiation.visible = false
+                //alarmWarning.visible = false
 
                 // Air warning
                 if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
                     (boxDevice.hasCo2Sensor && boxDevice.co2 > 1500)) {
-                    ventilate.visible = true
-                    ventilate.color = Theme.colorRed
+                    alarmVentilate.visible = true
+                    alarmVentilate.color = Theme.colorRed
                 } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
                            (boxDevice.hasCo2Sensor && boxDevice.co2 > 850)) {
-                    ventilate.visible = true
-                    ventilate.color = Theme.colorYellow
+                    alarmVentilate.visible = true
+                    alarmVentilate.color = Theme.colorYellow
                 }
 
                 // Radiation warning
                 if (boxDevice.hasGeigerCounter) {
                     if (boxDevice.radioactivityM > 1) {
-                        //nuclear.visible = true
+                        //alarmRadiation.visible = true
                         //if (boxDevice.radioactivityM > 10)
-                        //    nuclear.color = Theme.colorRed
+                        //    alarmRadiation.color = Theme.colorRed
                         //else
-                        //    nuclear.color = Theme.colorYellow
+                        //    alarmRadiation.color = Theme.colorYellow
                     }
                 }
             }
@@ -471,8 +473,7 @@ Item {
 
         ////////////////
 
-        Row {
-            id: lilIcons
+        Row { // alarms icons
             height: 24
             spacing: 8
             anchors.right: rowRight.left
@@ -483,7 +484,7 @@ Item {
             visible: boxDevice.hasDataToday
 
             IconSvg {
-                id: water
+                id: alarmWater
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -493,7 +494,7 @@ Item {
                 color: Theme.colorBlue
             }
             IconSvg {
-                id: temp
+                id: alarmFreeze
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -503,7 +504,7 @@ Item {
                 color: Theme.colorYellow
             }
             IconSvg {
-                id: ventilate
+                id: alarmVentilate
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -514,7 +515,7 @@ Item {
             }
 /*
             IconSvg {
-                id: nuclear
+                id: alarmRadiation
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -525,7 +526,7 @@ Item {
                 color: Theme.colorYellow
             }
             IconSvg {
-                id: warning
+                id: alarmWarning
                 width: bigAssMode ? 28 : 24
                 height: bigAssMode ? 28 : 24
                 anchors.verticalCenter: parent.verticalCenter
@@ -749,14 +750,19 @@ Item {
             }
 
             function updateData() {
-                if (boxDevice.hasGeigerCounter) {
-                    textTemp.text = ""
-                    textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                    textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + qsTr("µSv/h")
-                } else if (boxDevice.hasVocSensor) {
-                    textTemp.font.pixelSize = bigAssMode ? 28 : 26
-                    textTemp.text = (boxDevice.voc).toFixed(0) + " " + qsTr("µg/m³")
-                    textHygro.text = boxDevice.temperature.toFixed(1) + "°"
+                if (boxDevice.isThermometer) {
+                    textTemp.text = boxDevice.temperature.toFixed(1) + "°"
+                    if (boxDevice.humidity > 0) textHygro.text = boxDevice.humidity.toFixed(0) + "%"
+                } else if (boxDevice.isEnvironmentalSensor) {
+                    if (boxDevice.hasGeigerCounter) {
+                        textTemp.text = ""
+                        textHygro.font.pixelSize = bigAssMode ? 24 : 22
+                        textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + qsTr("µSv/h")
+                    } else if (boxDevice.hasVocSensor) {
+                        textTemp.font.pixelSize = bigAssMode ? 28 : 26
+                        textTemp.text = (boxDevice.voc).toFixed(0) + " " + qsTr("µg/m³")
+                        textHygro.text = boxDevice.temperature.toFixed(1) + "°"
+                    }
                 } else {
                     textTemp.text = boxDevice.temperature.toFixed(1) + "°"
                     textHygro.text = boxDevice.humidity.toFixed(0) + "%"
@@ -806,6 +812,13 @@ Item {
             function initData() {
                 if (boxDevice.hasSetting("primary")) {
                     primaryValue = boxDevice.getSetting("primary")
+                } else {
+                    if (boxDevice.hasVocSensor) primaryValue = "voc"
+                    else if (boxDevice.hasCo2Sensor) primaryValue = "co2"
+                    else if (boxDevice.hasPM10Sensor) primaryValue = "pm10"
+                    else if (boxDevice.hasHchoSensor) primaryValue = "hcho"
+                    else if (boxDevice.hasGeigerCounter) primaryValue = "nuclear"
+                    else primaryValue = "hygrometer"
                 }
 
                 if (primaryValue === "voc") {
@@ -818,9 +831,9 @@ Item {
                 } else if (primaryValue === "hcho") {
                     gaugeLegend.text = qsTr("HCHO")
                     gaugeValue.from = 0
-                    gaugeValue.to = 1500
-                    limitMin = 500
-                    limitMax = 1000
+                    gaugeValue.to = 1000
+                    limitMin = 250
+                    limitMax = 750
                     gaugeValue.value = boxDevice.hcho
                 } else if (primaryValue === "co2") {
                     gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))

@@ -46,7 +46,7 @@ class DeviceRopot: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceRopot(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceRopot(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceRopot();
 

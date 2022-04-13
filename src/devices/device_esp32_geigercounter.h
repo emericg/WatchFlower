@@ -45,7 +45,7 @@ class DeviceEsp32GeigerCounter: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceEsp32GeigerCounter(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEsp32GeigerCounter(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceEsp32GeigerCounter();
 

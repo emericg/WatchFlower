@@ -45,7 +45,7 @@ class DeviceEsp32AirQualityMonitor: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceEsp32AirQualityMonitor(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEsp32AirQualityMonitor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceEsp32AirQualityMonitor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceEsp32AirQualityMonitor();
 

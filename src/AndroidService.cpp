@@ -23,8 +23,9 @@
 
 #if defined(Q_OS_ANDROID)
 
-#include "DeviceManager.h"
+#include "DatabaseManager.h"
 #include "SettingsManager.h"
+#include "DeviceManager.h"
 #include "NotificationManager.h"
 
 #include <QtCore/private/qandroidextras_p.h>
@@ -35,15 +36,20 @@
 
 /* ************************************************************************** */
 
-AndroidService::AndroidService(DeviceManager *dm, NotificationManager *nm, QObject *parent) : QObject(parent)
+AndroidService::AndroidService(QObject *parent) : QObject(parent)
 {
-    // Save the managers
-    m_deviceManager = dm;
-    m_notificationManager = nm;
+    DatabaseManager *db = DatabaseManager::getInstance();
 
-    // Configure update timer (only started on desktop)
+    m_settingsManager = SettingsManager::getInstance();
+
+    //m_notificationManager = NotificationManager::getInstance();
+    //m_notificationManager->setNotification2("Theengs AndroidService", QDateTime::currentDateTime().toString());
+
+    m_deviceManager = new DeviceManager(true);
+
+    // Configure update timer
     connect(&m_workTimer, &QTimer::timeout, this, &AndroidService::gotowork);
-    setWorkTimer();
+    setWorkTimer(5);
 }
 
 AndroidService::~AndroidService()
@@ -53,16 +59,30 @@ AndroidService::~AndroidService()
 
 /* ************************************************************************** */
 
-void AndroidService::setWorkTimer(int workInterval)
+void AndroidService::setWorkTimer(int workInterval_mins)
 {
-    m_workTimer.setInterval(workInterval*60*1000);
+    m_workTimer.setInterval(workInterval_mins*60*1000);
     m_workTimer.start();
 }
 
 void AndroidService::gotowork()
 {
+    if (m_deviceManager)
+    {
+        delete m_deviceManager;
+        m_deviceManager = new DeviceManager(true);
+    }
+
     if (m_deviceManager && m_deviceManager->areDevicesAvailable())
     {
+        // Restart timer
+        //setWorkTimer(m_settingsManager->getUpdateIntervalBackground());
+        setWorkTimer(15);
+
+        // Reload a few things
+        m_settingsManager->reloadSettings();
+
+        // Start background refresh process
         m_deviceManager->refreshDevices_background();
     }
 }

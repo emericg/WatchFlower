@@ -38,10 +38,12 @@
 
 /* ************************************************************************** */
 
-DeviceFlowerCare::DeviceFlowerCare(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceFlowerCare::DeviceFlowerCare(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
@@ -56,6 +58,8 @@ DeviceFlowerCare::DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *paren
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
@@ -459,14 +463,12 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         {
             // Parse entry count
             m_history_entryCount = static_cast<int16_t>(data[0] + (data[1] << 8));
-
-#ifndef QT_NO_DEBUG
+/*
             qDebug() << "* DeviceFlowerCare history sync  > " << getAddress();
             qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
             qDebug() << "- last_sync    :" << m_lastHistorySync;
             qDebug() << "- entry_count  :" << m_history_entryCount;
-#endif
-
+*/
             // We read entry from older to newer (entry_count to 0)
             int entries_to_read = m_history_entryCount;
 
@@ -529,15 +531,13 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             addDatabaseRecord(m_device_wall_time + tmcd,
                               soil_moisture, soil_conductivity,
                               temperature, luminosity);
-
-#ifndef QT_NO_DEBUG
+/*
             qDebug() << "* History entry" << m_history_entryIndex-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
-            //qDebug() << "- soil_moisture:" << soil_moisture;
-            //qDebug() << "- soil_conductivity:" << soil_conductivity;
-            //qDebug() << "- temperature:" << temperature;
-            //qDebug() << "- luminosity:" << luminosity;
-#endif
-
+            qDebug() << "- soil_moisture:" << soil_moisture;
+            qDebug() << "- soil_conductivity:" << soil_conductivity;
+            qDebug() << "- temperature:" << temperature;
+            qDebug() << "- luminosity:" << luminosity;
+*/
             // Update progress
             m_history_entryIndex--;
             m_history_sessionRead++;
@@ -569,9 +569,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
         m_device_time = static_cast<int32_t>(data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
-#ifndef QT_NO_DEBUG
         qDebug() << "* DeviceFlowerCare clock:" << m_device_time;
-#endif
         return;
     }
 
@@ -608,8 +606,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
             }
-
-#ifndef QT_NO_DEBUG
+/*
             qDebug() << "* DeviceFlowerCare update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
@@ -617,7 +614,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             qDebug() << "- m_soilConductivity:" << m_soilConductivity;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_luminosityLux:" << m_luminosityLux;
-#endif
+*/
         }
 
         return;

@@ -36,10 +36,11 @@
 
 /* ************************************************************************** */
 
-DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceSensors += DeviceUtils::SENSOR_GEIGER;
 }
@@ -48,6 +49,7 @@ DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     m_deviceSensors += DeviceUtils::SENSOR_GEIGER;
 }
@@ -261,14 +263,13 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
                 refreshDataFinished(true);
                 m_bleController->disconnectFromDevice();
             }
-
-#ifndef QT_NO_DEBUG
-            //qDebug() << "* DeviceEsp32GeigerCounter update:" << getAddress();
-            //qDebug() << "- m_firmware:" << m_deviceFirmware;
-            //qDebug() << "- m_battery:" << m_deviceBattery;
-            //qDebug() << "- radioactivity min:" << m_rm;
-            //qDebug() << "- radioactivity sec:" << m_rs;
-#endif
+/*
+            qDebug() << "* DeviceEsp32GeigerCounter update:" << getAddress();
+            qDebug() << "- m_firmware:" << m_deviceFirmware;
+            qDebug() << "- m_battery:" << m_deviceBattery;
+            qDebug() << "- radioactivity min:" << m_rm;
+            qDebug() << "- radioactivity sec:" << m_rs;
+*/
         }
     }
 }

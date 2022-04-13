@@ -37,10 +37,11 @@
 
 /* ************************************************************************** */
 
-DeviceFlowerPower::DeviceFlowerPower(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceFlowerPower::DeviceFlowerPower(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     //m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
@@ -57,6 +58,7 @@ DeviceFlowerPower::DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *par
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     //m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
     //m_deviceCapabilities += DeviceUtils::DEVICE_HISTORY;
     m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
@@ -434,8 +436,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 refreshDataFinished(true);
                 m_bleController->disconnectFromDevice();
             }
-
-#ifndef QT_NO_DEBUG
+/*
             qDebug() << "* DeviceFlowerPower update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
             qDebug() << "- m_battery:" << m_deviceBattery;
@@ -445,7 +446,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             qDebug() << "- m_soilTemperature : " << m_soilTemperature;
             qDebug() << "- m_temperature:" << m_temperature;
             qDebug() << "- m_luminosityLux:" << m_luminosityLux;
-#endif
+*/
         }
     }
 }
@@ -466,9 +467,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::Servic
                 m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
                 m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
-#ifndef QT_NO_DEBUG
                 qDebug() << "* DeviceFlowerPower clock: " << m_device_time;
-#endif
             }
         }
     }

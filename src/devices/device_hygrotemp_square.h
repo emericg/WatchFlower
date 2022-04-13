@@ -53,7 +53,7 @@ class DeviceHygrotempSquare: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceHygrotempSquare(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempSquare(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempSquare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempSquare();
 

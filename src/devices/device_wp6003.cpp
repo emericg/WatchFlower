@@ -37,10 +37,11 @@
 
 /* ************************************************************************** */
 
-DeviceWP6003::DeviceWP6003(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceWP6003::DeviceWP6003(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     m_deviceCapabilities += DeviceUtils::DEVICE_CALIBRATION;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_eCO2;
@@ -52,6 +53,7 @@ DeviceWP6003::DeviceWP6003(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
     m_deviceCapabilities += DeviceUtils::DEVICE_CALIBRATION;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_eCO2;
@@ -249,15 +251,14 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
 
             refreshDataFinished(true);
             m_bleController->disconnectFromDevice();
-
-#ifndef QT_NO_DEBUG
+/*
             qDebug() << "* DeviceWP6003 update:" << getAddress();
             qDebug() << "- timecode:" << QDateTime(d, t);
             qDebug() << "- temperature:" << m_temperature;
             qDebug() << "- TVOC:" << m_voc;
             qDebug() << "- HCHO:" << m_hcho;
             qDebug() << "- eCO2:" << m_co2;
-#endif
+*/
         }
     }
 }

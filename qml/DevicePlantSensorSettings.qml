@@ -147,6 +147,8 @@ Item {
                         spacing: 32
 
                         Column {
+                            visible: (currentDevice.deviceFirmware)
+
                             Text {
                                 text: qsTr("Firmware")
                                 color: Theme.colorSubText
@@ -174,6 +176,8 @@ Item {
                         }
 
                         Column {
+                            visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+
                             Text {
                                 text: qsTr("Battery")
                                 color: Theme.colorSubText
@@ -194,7 +198,6 @@ Item {
                                     anchors.leftMargin: 6
                                     anchors.verticalCenter: parent.verticalCenter
 
-                                    visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
                                     source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
                                     color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                                 }
@@ -543,7 +546,8 @@ Item {
 
                     SwitchThemedDesktop {
                         text: checked ? qsTr("Device is enabled") : qsTr("Device is disabled")
-                        checked: true
+                        checked: currentDevice.deviceEnabled
+                        onClicked: currentDevice.deviceEnabled = checked
                     }
 
                     Row {

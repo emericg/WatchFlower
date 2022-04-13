@@ -49,7 +49,7 @@ class DeviceHygrotempClock: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceHygrotempClock(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempClock(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempClock();
 

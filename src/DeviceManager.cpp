@@ -42,15 +42,15 @@
 #include "devices/device_esp32_geigercounter.h"
 #include "devices/device_ess_generic.h"
 
+#include <QList>
+#include <QDateTime>
+#include <QDebug>
+
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QBluetoothAddress>
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyConnectionParameters>
-
-#include <QList>
-#include <QDateTime>
-#include <QDebug>
 
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -61,6 +61,8 @@
 
 DeviceManager::DeviceManager(bool daemon)
 {
+    m_daemonMode = daemon;
+
     // Data model init
     m_devices_model = new DeviceModel(this);
     m_devices_filter = new DeviceFilter(this);
@@ -92,7 +94,7 @@ DeviceManager::DeviceManager(bool daemon)
     if (m_dbInternal || m_dbExternal)
     {
         // Load blacklist
-        if (!daemon)
+        if (!m_daemonMode)
         {
             QSqlQuery queryBlacklist;
             queryBlacklist.exec("SELECT deviceAddr FROM devicesBlacklist");
@@ -122,18 +124,26 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceParrotPot(deviceAddr, deviceName, this);
             else if (deviceName == "HiGrow")
                 d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
-            else if (deviceName == "MJ_HT_V1")
-                d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
-            else if (deviceName == "ClearGrass Temp & RH")
-                d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
+
+            else if (deviceName == "CGD1")
+                d = new DeviceHygrotempCGD1(deviceAddr, deviceName, this);
             else if (deviceName == "Qingping Temp RH Lite")
                 d = new DeviceHygrotempCGDK2(deviceAddr, deviceName, this);
+            else if (deviceName == "ClearGrass Temp & RH")
+                d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
+            else if (deviceName == "CGP1W")
+                d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
+            else if (deviceName == "MJ_HT_V1")
+                d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401")
+            else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401" || deviceName == "XMWSDJO4MMC")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
             else if (deviceName == "ThermoBeacon")
                 d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
+
+            else if (deviceName.startsWith("JQJCY01YM"))
+                d = new DeviceJQJCY01YM(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
             else if (deviceName == "AirQualityMonitor")
@@ -145,8 +155,8 @@ DeviceManager::DeviceManager(bool daemon)
             {
                 connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
                 connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
-                m_devices_model->addDevice(d);
 
+                m_devices_model->addDevice(d);
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
             }
         }
@@ -192,6 +202,16 @@ bool DeviceManager::isListening() const
 bool DeviceManager::isScanning() const
 {
     return m_scanning;
+}
+
+bool DeviceManager::isUpdating() const
+{
+    return !m_devices_updating.empty();
+}
+
+bool DeviceManager::isSyncing() const
+{
+    return !m_devices_syncing.empty();
 }
 
 /* ************************************************************************** */
@@ -644,6 +664,7 @@ void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
         d->setRssi(info.rssi());
 
         //connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+        //connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
 
         // Add it to the UI
         m_devices_nearby_model->addDevice(d);
@@ -819,6 +840,7 @@ void DeviceManager::detectBleDevice(const QBluetoothDeviceInfo &info)
         if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
+            if (!dd->hasBluetoothConnection()) return;
             if (dd->getName() == "ThermoBeacon") return;
 
             if (dd->needsUpdateRt())
@@ -837,11 +859,6 @@ void DeviceManager::detectBleDevice(const QBluetoothDeviceInfo &info)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool DeviceManager::isUpdating() const
-{
-    return !m_devices_updating.empty();
-}
-
 void DeviceManager::updateDevice(const QString &address)
 {
     //qDebug() << "DeviceManager::updateDevice() " << address;
@@ -851,7 +868,10 @@ void DeviceManager::updateDevice(const QString &address)
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && dd->getAddress() == address)
+            if (dd &&
+                dd->getAddress() == address &&
+                dd->isEnabled() &&
+                dd->hasBluetoothConnection())
             {
                 m_devices_updating_queue += dd;
                 dd->refreshQueue();
@@ -964,6 +984,8 @@ void DeviceManager::refreshDevices_check()
             if (dd)
             {
                 if (dd->getName() == "ThermoBeacon") continue;
+                if (!dd->isEnabled()) continue;
+                if (!dd->hasBluetoothConnection()) continue;
 
                 if (dd->needsUpdateRt())
                 {
@@ -1002,7 +1024,10 @@ void DeviceManager::refreshDevices_start()
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
-            if (dd && (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
+            if (dd &&
+                dd->isEnabled() &&
+                dd->hasBluetoothConnection() &&
+                (dd->getLastUpdateInt() < 0 || dd->getLastUpdateInt() > 2))
             {
                 if (dd->getName() == "ThermoBeacon") continue;
 
@@ -1032,14 +1057,18 @@ void DeviceManager::refreshDevices_continue()
                 if (d)
                 {
                     m_devices_updating_queue.removeFirst();
-                    m_devices_updating.push_back(d);
-                    if (!m_updating)
-                    {
-                        m_updating = true;
-                        Q_EMIT updatingChanged();
-                    }
 
-                    d->refreshStart();
+                    if (d->needsUpdateRt())
+                    {
+                        m_devices_updating.push_back(d);
+                        if (!m_updating)
+                        {
+                            m_updating = true;
+                            Q_EMIT updatingChanged();
+                        }
+
+                        d->refreshStart();
+                    }
                 }
             }
         }
@@ -1077,6 +1106,20 @@ void DeviceManager::refreshDevices_stop()
 {
     //qDebug() << "DeviceManager::refreshDevices_stop()";
 
+    if (m_discoveryAgent->isActive())
+    {
+        m_discoveryAgent->stop();
+
+        if (m_listening) {
+            m_listening = false;
+            Q_EMIT listeningChanged();
+        }
+        if (m_scanning) {
+            m_scanning = false;
+            Q_EMIT scanningChanged();
+        }
+    }
+
     if (!m_devices_updating_queue.empty())
     {
         for (auto d: qAsConst(m_devices_updating))
@@ -1087,19 +1130,14 @@ void DeviceManager::refreshDevices_stop()
 
         m_devices_updating_queue.clear();
         m_devices_updating.clear();
-        m_updating = false;
 
+        m_updating = false;
         Q_EMIT updatingChanged();
     }
 }
 
 /* ************************************************************************** */
 /* ************************************************************************** */
-
-bool DeviceManager::isSyncing() const
-{
-    return !m_devices_syncing.empty();
-}
 
 void DeviceManager::syncDevice(const QString &address)
 {
@@ -1347,79 +1385,116 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
     //qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
-    if (info.rssi() >= 0) return; // we probably just hit the device cache
-    if (m_devices_blacklist.contains(info.address().toString()))return; // device is blacklisted
-
-    SettingsManager *sm = SettingsManager::getInstance();
-    if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
-
-    if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
+    // Various sanity checks
     {
-        if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden" ||
-            info.name().startsWith("Flower power") ||
-            info.name().startsWith("Parrot pot") ||
-            info.name() == "ropot" ||
-            info.name() == "MJ_HT_V1" ||
-            info.name() == "ClearGrass Temp & RH" ||
-            info.name() == "Qingping Temp RH Lite" ||
-            info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
-            info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
-            info.name() == "ThermoBeacon" ||
-            info.name().startsWith("6003#") ||
-            info.name() == "AirQualityMonitor" ||
-            info.name() == "GeigerCounter" ||
-            info.name() == "HiGrow")
+        if (info.rssi() >= 0) return; // we probably just hit the device cache
+
+        if (m_devices_blacklist.contains(info.address().toString()))return; // device is blacklisted
+
+        SettingsManager *sm = SettingsManager::getInstance();
+        if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
+
+        if ((info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration) == false) return; // not a BLE device
+
+        for (auto ed: qAsConst(m_devices_model->m_devices))
         {
-            // Check if it's not already in the UI
-            for (auto ed: qAsConst(m_devices_model->m_devices))
+            Device *edd = qobject_cast<Device*>(ed);
+            if (edd && (edd->getAddress() == info.address().toString() ||
+                        edd->getAddress() == info.deviceUuid().toString()))
             {
-                Device *edd = qobject_cast<Device*>(ed);
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-                if (edd && edd->getAddress() == info.deviceUuid().toString())
-#else
-                if (edd && edd->getAddress() == info.address().toString())
-#endif
-                {
-                    return;
-                }
+                return; // device is already in the UI
             }
+        }
+    }
 
-            // Create the device
-            Device *d = nullptr;
+    Device *d = nullptr;
 
-            if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
-                d = new DeviceFlowerCare(info, this);
-            else if (info.name() == "ropot")
-                d = new DeviceRopot(info, this);
-            else if (info.name().startsWith("Flower power"))
-                d = new DeviceFlowerPower(info, this);
-            else if (info.name().startsWith("Parrot pot"))
-                d = new DeviceParrotPot(info, this);
-            else if (info.name() == "HiGrow")
-                d = new DeviceEsp32HiGrow(info, this);
-            else if (info.name() == "MJ_HT_V1")
-                d = new DeviceHygrotempLYWSDCGQ(info, this);
-            else if (info.name() == "ClearGrass Temp & RH")
-                d = new DeviceHygrotempCGG1(info, this);
-            else if (info.name() == "Qingping Temp RH Lite")
-                d = new DeviceHygrotempCGDK2(info, this);
-            else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")
-                d = new DeviceHygrotempClock(info, this);
-            else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401")
-                d = new DeviceHygrotempSquare(info, this);
-            else if (info.name() == "ThermoBeacon")
-                d = new DeviceThermoBeacon(info, this);
-            else if (info.name().startsWith("6003#"))
-                d = new DeviceWP6003(info, this);
-            else if (info.name() == "AirQualityMonitor")
-                d = new DeviceEsp32AirQualityMonitor(info, this);
-            else if (info.name() == "GeigerCounter")
-                d = new DeviceEsp32GeigerCounter(info, this);
+    // Regular WatchFlower device
+    if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden" ||
+        info.name().startsWith("Flower power") ||
+        info.name().startsWith("Parrot pot") ||
+        info.name() == "ropot" ||
+        info.name() == "MJ_HT_V1" ||
+        info.name() == "ClearGrass Temp & RH" ||
+        info.name() == "Qingping Temp RH Lite" ||
+        info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
+        info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC" ||
+        info.name() == "ThermoBeacon" ||
+        info.name().startsWith("6003#") ||
+        info.name() == "AirQualityMonitor" ||
+        info.name() == "GeigerCounter" ||
+        info.name() == "HiGrow")
+    {
+        // Create the device
+        if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
+            d = new DeviceFlowerCare(info, this);
+        else if (info.name() == "ropot")
+            d = new DeviceRopot(info, this);
+        else if (info.name().startsWith("Flower power"))
+            d = new DeviceFlowerPower(info, this);
+        else if (info.name().startsWith("Parrot pot"))
+            d = new DeviceParrotPot(info, this);
+        else if (info.name() == "HiGrow")
+            d = new DeviceEsp32HiGrow(info, this);
 
-            if (!d) return;
+        else if (info.name() == "CGD1")
+            d = new DeviceHygrotempCGD1(info, this);
+        else if (info.name() == "Qingping Temp RH Lite")
+            d = new DeviceHygrotempCGDK2(info, this);
+        else if (info.name() == "ClearGrass Temp & RH")
+            d = new DeviceHygrotempCGG1(info, this);
+        else if (info.name() == "CGP1W")
+            d = new DeviceHygrotempCGP1W(info, this);
+        else if (info.name() == "MJ_HT_V1")
+            d = new DeviceHygrotempLYWSDCGQ(info, this);
+        else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")
+            d = new DeviceHygrotempClock(info, this);
+        else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC")
+            d = new DeviceHygrotempSquare(info, this);
+        else if (info.name() == "ThermoBeacon")
+            d = new DeviceThermoBeacon(info, this);
 
-            connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+        else if (info.name().startsWith("JQJCY01YM"))
+            d = new DeviceJQJCY01YM(info, this);
+        else if (info.name().startsWith("6003#"))
+            d = new DeviceWP6003(info, this);
+        else if (info.name() == "AirQualityMonitor")
+            d = new DeviceEsp32AirQualityMonitor(info, this);
+        else if (info.name() == "GeigerCounter")
+            d = new DeviceEsp32GeigerCounter(info, this);
+    }
 
+    if (d)
+    {
+        // Add it to the database?
+        if (m_dbInternal || m_dbExternal)
+        {
+            // if
+            QSqlQuery queryDevice;
+            queryDevice.prepare("SELECT deviceName FROM devices WHERE deviceAddr = :deviceAddr");
+            queryDevice.bindValue(":deviceAddr", d->getAddress());
+            queryDevice.exec();
+
+            // then
+            if (queryDevice.last() == false)
+            {
+                qDebug() << "+ Adding device: " << d->getName() << "/" << d->getAddress() << "to local database";
+
+                QSqlQuery addDevice;
+                addDevice.prepare("INSERT INTO devices (deviceAddr, deviceModel, deviceName) VALUES (:deviceAddr, :deviceModel, :deviceName)");
+                addDevice.bindValue(":deviceAddr", d->getAddress());
+                addDevice.bindValue(":deviceModel", d->getModel());
+                addDevice.bindValue(":deviceName", d->getName());
+                addDevice.exec();
+            }
+        }
+
+        //
+        connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+        connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
+
+        if (d->hasBluetoothConnection())
+        {
             SettingsManager *sm = SettingsManager::getInstance();
             if (d->getLastUpdateInt() < 0 ||
                 d->getLastUpdateInt() > (int)(d->isPlantSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo()))
@@ -1427,44 +1502,17 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 // Old or no data: mark it as queued until the deviceManager sync new devices
                 d->refreshQueue();
             }
-
-            // Add it to the database?
-            if (m_dbInternal || m_dbExternal)
-            {
-                // if
-                QSqlQuery queryDevice;
-                queryDevice.prepare("SELECT deviceName FROM devices WHERE deviceAddr = :deviceAddr");
-                queryDevice.bindValue(":deviceAddr", d->getAddress());
-                queryDevice.exec();
-
-                // then
-                if (queryDevice.last() == false)
-                {
-                    qDebug() << "+ Adding device: " << d->getName() << "/" << d->getAddress() << "to local database";
-
-                    QSqlQuery addDevice;
-                    addDevice.prepare("INSERT INTO devices (deviceAddr, deviceName) VALUES (:deviceAddr, :deviceName)");
-                    addDevice.bindValue(":deviceAddr", d->getAddress());
-                    addDevice.bindValue(":deviceName", d->getName());
-                    addDevice.exec();
-                }
-            }
-
-            // Add it to the UI
-            m_devices_model->addDevice(d);
-            Q_EMIT devicesListUpdated();
-
-            qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
-
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-            // try to get the MAC address immediately
-            updateBleDevice(info, QBluetoothDeviceInfo::Field::None);
-#endif
         }
-        else
-        {
-            //qDebug() << "Unsupported device: " << info.name() << "/" << info.address();
-        }
+
+        // Add it to the UI
+        m_devices_model->addDevice(d);
+        Q_EMIT devicesListUpdated();
+
+        qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
+    }
+    else
+    {
+        //qDebug() << "Unsupported device: " << info.name() << "/" << info.address();
     }
 }
 
@@ -1480,6 +1528,7 @@ void DeviceManager::removeDevice(const QString &address)
 
             // Make sure its not being used
             disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
+            disconnect(dd, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
             dd->refreshStop();
             refreshDevices_finished(dd);
 

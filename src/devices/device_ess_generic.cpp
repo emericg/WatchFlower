@@ -36,7 +36,7 @@
 
 /* ************************************************************************** */
 
-DeviceEssGeneric::DeviceEssGeneric(QString &deviceAddr, QString &deviceName, QObject *parent):
+DeviceEssGeneric::DeviceEssGeneric(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;

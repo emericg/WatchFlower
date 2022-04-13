@@ -47,7 +47,7 @@ class DeviceHygrotempCGD1: public DeviceSensor
     void parseAdvertisementData(const QByteArray &value);
 
 public:
-    DeviceHygrotempCGD1(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceHygrotempCGD1(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempCGD1(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGD1();
 

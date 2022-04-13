@@ -45,7 +45,7 @@ class DeviceFlowerPower: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceFlowerPower(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowerPower(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceFlowerPower(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowerPower();
 

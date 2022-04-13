@@ -45,7 +45,7 @@ class DeviceEsp32HiGrow: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceEsp32HiGrow(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceEsp32HiGrow(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceEsp32HiGrow(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceEsp32HiGrow();
 

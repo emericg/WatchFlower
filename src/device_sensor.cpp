@@ -35,7 +35,7 @@
 
 /* ************************************************************************** */
 
-DeviceSensor::DeviceSensor(QString &deviceAddr, QString &deviceName, QObject *parent) :
+DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent) :
     Device(deviceAddr, deviceName, parent)
 {
     // Database
@@ -110,7 +110,7 @@ DeviceSensor::~DeviceSensor()
     qDeleteAll(m_journal_entries);
     m_journal_entries.clear();
 
-    delete m_deviceInfos;
+    if (m_deviceInfos) delete m_deviceInfos;
 }
 
 /* ************************************************************************** */
@@ -150,7 +150,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                         else if (!m_locationName.isEmpty())
                             message = tr("You need to water the plant near '%1'").arg(m_locationName);
                         else
-                            message = tr("You need to water one of your (unnamed) plants!");
+                            message = tr("You need to water one of your plant!");
 
                         nm->setNotification2("Plant Alarm", message);
                     }
@@ -272,7 +272,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "MHO-C401") && (m_deviceFirmware.size() == 10))
     {
-        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK2))
+        if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC401))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();

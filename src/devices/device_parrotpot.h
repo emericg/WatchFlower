@@ -44,7 +44,7 @@ class DeviceParrotPot: public DeviceSensor
     Q_OBJECT
 
 public:
-    DeviceParrotPot(QString &deviceAddr, QString &deviceName, QObject *parent = nullptr);
+    DeviceParrotPot(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceParrotPot();
 
