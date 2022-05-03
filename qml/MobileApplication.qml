@@ -158,6 +158,13 @@ ApplicationWindow {
     }
 
     Connections {
+        target: ThemeEngine
+        function onCurrentThemeChanged() {
+            mobileUI.statusbarTheme = Theme.themeStatusbar
+        }
+    }
+
+    Connections {
         target: appHeader
         function onLeftMenuClicked() {
             if (appContent.state === "DeviceList") {
@@ -241,10 +248,13 @@ ApplicationWindow {
                     // Check if we need an 'automatic' theme change
                     Theme.loadTheme(settingsManager.appTheme)
 
-                    if (appContent.state === "DeviceBrowser")
+                    if (appContent.state === "DeviceBrowser") {
+                        // Restart the device browser
                         deviceManager.scanNearby_start()
-                    else
+                    } else {
+                        // Listen for nearby devices
                         deviceManager.refreshDevices_listen()
+                    }
 
                     break
             }
@@ -545,15 +555,19 @@ ApplicationWindow {
 
     Rectangle {
         id: exitWarning
-        height: 40
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 12
 
+        height: 40
         radius: 4
-        color: Theme.colorSeparator
+
+        color: Theme.colorComponentBackground
+        border.color: Theme.colorSeparator
+        border.width: 1
+
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 233 } }
 

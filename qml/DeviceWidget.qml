@@ -100,10 +100,13 @@ Item {
             if (boxDevice.isPlantSensor) {
                 loaderIndicators.sourceComponent = componentPlantSensor
             } else if (boxDevice.isThermometer) {
-                loaderIndicators.sourceComponent = componentThermometer
+                if (boxDevice.hasHumiditySensor)
+                    loaderIndicators.sourceComponent = componentText_2l
+                else
+                    loaderIndicators.sourceComponent = componentText_1l
             } else if (boxDevice.isEnvironmentalSensor) {
                 if (boxDevice.deviceName === "GeigerCounter")
-                    loaderIndicators.sourceComponent = componentThermometer
+                    loaderIndicators.sourceComponent = componentText_1l
                 else
                     loaderIndicators.sourceComponent = componentEnvironmentalGauge
             }
@@ -138,11 +141,14 @@ Item {
             if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                 refreshAnimation.running = false
-            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING || boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
+            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                refreshAnimation.running = true
+            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
                 refreshAnimation.running = true
             } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
                 refreshAnimation.running = true
             } else {
                 imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
@@ -199,8 +205,8 @@ Item {
     }
 
     function updateSensorWarnings() {
-
         // Warnings icons (for sensors with available data)
+
         if (boxDevice.isDataToday()) {
 
             if (boxDevice.isPlantSensor) {
@@ -322,16 +328,6 @@ Item {
             onClicked: (mouse) => {
                 if (typeof boxDevice === "undefined" || !boxDevice) return
 
-                // multi selection
-                if (mouse.button === Qt.MiddleButton) {
-                    if (!boxDevice.selected) {
-                        screenDeviceList.selectDevice(index)
-                    } else {
-                        screenDeviceList.deselectDevice(index)
-                    }
-                    return
-                }
-
                 if (mouse.button === Qt.LeftButton) {
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
@@ -359,6 +355,16 @@ Item {
                             appContent.state = "DeviceEnvironmental"
                         }
                     }
+                }
+
+                if (mouse.button === Qt.MiddleButton) {
+                   // multi selection
+                   if (!boxDevice.selected) {
+                       screenDeviceList.selectDevice(index)
+                   } else {
+                       screenDeviceList.deselectDevice(index)
+                   }
+                   return
                 }
             }
 
@@ -739,40 +745,73 @@ Item {
     ////////////////
 
     Component {
-        id: componentThermometer
+        id: componentText_1l
 
-        Column {
-            id: rectangleHygroTemp
+        Row {
             anchors.verticalCenter: parent.verticalCenter
+            spacing: 4
 
-            function initData() {
-                //
-            }
+            function initData() { }
 
             function updateData() {
                 if (boxDevice.isThermometer) {
-                    textTemp.text = boxDevice.temperature.toFixed(1) + "°"
-                    if (boxDevice.humidity > 0) textHygro.text = boxDevice.humidity.toFixed(0) + "%"
+                    text.text = boxDevice.temperature.toFixed(1)
+                    unit.text = "°"
                 } else if (boxDevice.isEnvironmentalSensor) {
                     if (boxDevice.hasGeigerCounter) {
-                        textTemp.text = ""
-                        textHygro.font.pixelSize = bigAssMode ? 24 : 22
-                        textHygro.text = boxDevice.radioactivityH.toFixed(2) + " " + qsTr("µSv/h")
-                    } else if (boxDevice.hasVocSensor) {
-                        textTemp.font.pixelSize = bigAssMode ? 28 : 26
-                        textTemp.text = (boxDevice.voc).toFixed(0) + " " + qsTr("µg/m³")
-                        textHygro.text = boxDevice.temperature.toFixed(1) + "°"
+                        text.text = boxDevice.radioactivityH.toFixed(2)
+                        unit.text = qsTr("µSv/h")
                     }
-                } else {
-                    textTemp.text = boxDevice.temperature.toFixed(1) + "°"
-                    textHygro.text = boxDevice.humidity.toFixed(0) + "%"
                 }
             }
 
             Text {
-                id: textTemp
+                id: text
+                anchors.verticalCenter: parent.verticalCenter
+
+                textFormat: Text.PlainText
+                color: Theme.colorText
+                font.letterSpacing: -1.4
+                font.pixelSize: bigAssMode ? 28 : 24
+            }
+            Text {
+                id: unit
+                anchors.verticalCenter: parent.verticalCenter
+
+                textFormat: Text.PlainText
+                color: Theme.colorSubText
+                font.letterSpacing: -1.4
+                font.pixelSize: bigAssMode ? 24 : 20
+            }
+        }
+    }
+
+    ////////////////
+
+    Component {
+        id: componentText_2l
+
+        Column {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 0
+
+            function initData() { }
+
+            function updateData() {
+                if (boxDevice.isThermometer) {
+                    textOne.text = boxDevice.temperature.toFixed(1) + "°"
+                    if (boxDevice.humidity > 0) textTwo.text = boxDevice.humidity.toFixed(0) + "%"
+                } else if (boxDevice.isEnvironmentalSensor) {
+                    //
+                } else {
+                    textOne.text = boxDevice.temperature.toFixed(1) + "°"
+                    textTwo.text = boxDevice.humidity.toFixed(0) + "%"
+                }
+            }
+
+            Text {
+                id: textOne
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 textFormat: Text.PlainText
                 color: Theme.colorText
@@ -782,9 +821,8 @@ Item {
             }
 
             Text {
-                id: textHygro
+                id: textTwo
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 textFormat: Text.PlainText
                 color: Theme.colorSubText

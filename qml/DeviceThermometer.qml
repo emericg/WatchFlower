@@ -166,7 +166,7 @@ Loader {
                         sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
                         sensorHygro.visible = true
                     }
-                    if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
+                    if (currentDevice.hasHumiditySensor && currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
                         if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
                             heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
                             heatIndex.visible = true
@@ -283,6 +283,7 @@ Loader {
                             font.bold: false
                             font.pixelSize: isPhone ? 22 : 24
                             color: cccc
+                            opacity: 0.8
                         }
 
                         IconSvg {

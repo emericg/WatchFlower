@@ -172,6 +172,10 @@ ApplicationWindow {
         target: Qt.application
         function onStateChanged() {
             switch (Qt.application.state) {
+                case Qt.ApplicationInactive:
+                    //console.log("Qt.ApplicationInactive")
+                    break
+
                 case Qt.ApplicationActive:
                     //console.log("Qt.ApplicationActive")
 
@@ -179,19 +183,30 @@ ApplicationWindow {
                     Theme.loadTheme(settingsManager.appTheme)
 
                     // Check Bluetooth anyway (on macOS)
-                    //if (Qt.platform.os === "osx") deviceManager.checkBluetooth();
+                    //if (Qt.platform.os === "osx") deviceManager.checkBluetooth()
 
-                    if (appContent.state === "DeviceBrowser")
+                    if (appContent.state === "DeviceBrowser") {
+                        // Restart the device browser
                         deviceManager.scanNearby_start()
-                    else
+                    } else {
+                        // Listen for nearby devices
                         deviceManager.refreshDevices_listen()
+                    }
 
                     break
             }
         }
     }
 
+    onVisibilityChanged: (visibility) => {
+        //console.log("onVisibilityChanged(" + visibility + ")")
+        if (visibility === Window.Minimized || visibility === Window.Hidden) {
+            deviceManager.refreshDevices_stop()
+        }
+    }
+
     onClosing: (close) => {
+        //console.log("onClosing(" + close + ")")
         if (settingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false
             appWindow.hide()

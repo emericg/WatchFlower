@@ -7,6 +7,8 @@ Item {
     id: screenDeviceList
     anchors.fill: parent
 
+    ////////////////////////////////////////////////////////////////////////////
+
     property bool deviceAvailable: deviceManager.hasDevices
     property bool bluetoothAvailable: deviceManager.bluetooth
 
@@ -102,11 +104,8 @@ Item {
     Column {
         id: rowbar
         anchors.top: parent.top
-        anchors.topMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
         z: 2
 
         ////////////////
@@ -273,7 +272,7 @@ Item {
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     GridView {
         id: devicesView

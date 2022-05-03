@@ -50,6 +50,79 @@ Item {
             ////////
 
             Item {
+                id: element_bluetooth
+                height: 24
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                RoundButtonIcon {
+                    id: button_bluetooth_test
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    property bool validperm: true
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
+                    background: true
+                }
+
+                Text {
+                    id: text_bluetooth
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Bluetooth control")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+            Text {
+                id: legend_bluetooth
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            Item { // separator
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: -screenPaddingRight
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            ////////
+
+            Item {
                 id: element_location
                 height: 24
                 anchors.left: parent.left
@@ -67,7 +140,7 @@ Item {
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
                     onClicked: validperm = utilsApp.getMobileBleLocationPermission()
@@ -119,7 +192,7 @@ Item {
 
             ////////
 
-            Item {
+            Item { // separator
                 height: 16
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -155,7 +228,7 @@ Item {
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
                     onClicked: validperm = utilsApp.getMobileBackgroundLocationPermission()
@@ -194,7 +267,7 @@ Item {
 
             ////////
 
-            Item {
+            Item { // separator
                 height: 16
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -230,7 +303,7 @@ Item {
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
                     onClicked: validperm = utilsApp.isMobileGpsEnabled()
@@ -269,7 +342,7 @@ Item {
 
             ////////
 
-            Item {
+            Item { // separator
                 height: 16
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -287,54 +360,38 @@ Item {
 
             ////////
 
-            Item {
-                id: element_bluetooth
-                height: 24
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                RoundButtonIcon {
-                    id: button_bluetooth_test
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    property bool validperm: true
-
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
-                    background: true
-                }
-
-                Text {
-                    id: text_bluetooth
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Bluetooth control")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 17
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
             Text {
-                id: legend_bluetooth
                 anchors.left: parent.left
                 anchors.leftMargin: 64
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
-                textFormat: Text.PlainText
+                text: qsTr("Click on the icons to ask for permission.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: -48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+            }
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("If it has no effect, you may have previously clicked on \"don't ask again\". Go to Android application settings to fix that.")
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
