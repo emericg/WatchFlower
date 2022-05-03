@@ -291,6 +291,9 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
+    PopupBackgroundData {
+        id: popupBackgroundData
+    }
     PopupCalibration {
         id: popupCalibration
     }

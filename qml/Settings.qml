@@ -742,7 +742,17 @@ Item {
                     z: 1
 
                     checked: settingsManager.systray
-                    onClicked: settingsManager.systray = checked
+                    onClicked: {
+                        settingsManager.systray = checked
+
+                        if (isMobile) {
+                            if (settingsManager.systray) {
+                                popupBackgroundData.open()
+                            }
+
+                            utilsApp.getMobileBackgroundLocationPermission()
+                        }
+                    }
                 }
             }
             Text {

@@ -28,6 +28,7 @@
         <file>ThemeEngine.qml</file>
         <file>WindowGeometrySaver.qml</file>
 
+        <file alias="PopupBackgroundData.qml">popups/PopupBackgroundData.qml</file>
         <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>
         <file alias="PopupCalibration.qml">popups/PopupCalibration.qml</file>
         <file alias="PopupDate.qml">popups/PopupDate.qml</file>
