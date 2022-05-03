@@ -268,13 +268,13 @@ Item {
             hoverEnabled: false
 
             onReleased: {
-                if (typeof (sensorPages) !== "undefined") sensorPages.interactive = isPhone
+                if (typeof (plantSensorPages) !== "undefined") plantSensorPages.interactive = isPhone
                 vanim.duration = 266
             }
             onPositionChanged: (mouse) => {
-                if (typeof (sensorPages) !== "undefined") {
+                if (typeof (plantSensorPages) !== "undefined") {
                     // So we don't swipe pages as we drag the indicator
-                    sensorPages.interactive = false
+                    plantSensorPages.interactive = false
                 }
                 vanim.duration = 16
 

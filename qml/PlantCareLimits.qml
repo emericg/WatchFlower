@@ -70,7 +70,7 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_hygro
-                height: 20
+                height: 24
                 anchors.top: imageHygro.bottom
                 anchors.topMargin: 2
                 anchors.left: parent.left
@@ -84,7 +84,11 @@ Flickable {
                 from: 0
                 to: 66
                 stepSize: 1
+
+                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
                 first.onMoved: if (currentDevice) currentDevice.limitHygroMin = first.value.toFixed(0)
+
+                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
                 second.onMoved: if (currentDevice) currentDevice.limitHygroMax = second.value.toFixed(0)
             }
         }
@@ -143,7 +147,7 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_temp
-                height: 20
+                height: 24
                 anchors.top: imageTemp.bottom
                 anchors.topMargin: 2
                 anchors.left: parent.left
@@ -158,6 +162,7 @@ Flickable {
                 to: outsideMode ? 50 : 32
                 stepSize: 1
 
+                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
                 first.onMoved: {
                     if (currentDevice) {
                         if ((first.value > rangeSlider_temp.from && first.value < rangeSlider_temp.to) ||
@@ -167,6 +172,8 @@ Flickable {
                         }
                     }
                 }
+
+                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
                 second.onMoved: {
                     if (currentDevice) {
                         if ((second.value > rangeSlider_temp.from && second.value < rangeSlider_temp.to) ||
@@ -233,7 +240,7 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_lumi
-                height: 20
+                height: 24
                 anchors.top: imageLumi.bottom
                 anchors.topMargin: 0
                 anchors.left: parent.left
@@ -249,6 +256,7 @@ Flickable {
                 to: outsideMode ? 100000 : 10000
                 stepSize: outsideMode ? 5000 : 1000
 
+                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
                 first.onMoved: {
                     if (currentDevice) {
                         if (first.value < rangeSlider_lumi.to ||
@@ -257,6 +265,8 @@ Flickable {
                         }
                     }
                 }
+
+                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
                 second.onMoved: {
                     if (currentDevice) {
                         if (second.value < rangeSlider_lumi.to ||
@@ -431,7 +441,7 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_condu
-                height: 20
+                height: 24
                 anchors.top: imageCondu.bottom
                 anchors.topMargin: 0
                 anchors.left: parent.left
@@ -444,16 +454,12 @@ Flickable {
                 from: 0
                 to: 2000
                 stepSize: 50
-                first.onMoved: {
-                    if (currentDevice) {
-                        currentDevice.limitConduMin = first.value.toFixed(0)
-                    }
-                }
-                second.onMoved: {
-                    if (currentDevice) {
-                        currentDevice.limitConduMax = second.value.toFixed(0)
-                    }
-                }
+
+                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
+                first.onMoved: if (currentDevice) currentDevice.limitConduMin = first.value.toFixed(0)
+
+                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
+                second.onMoved: if (currentDevice) currentDevice.limitConduMax = second.value.toFixed(0)
             }
         }
         Text {

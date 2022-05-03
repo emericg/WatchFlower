@@ -12,6 +12,7 @@ on: workflow_dispatch
 jobs:
   ## GNU/Linux build ###########################################################
   build-flatpak:
+    name: "Flatpak build"
     runs-on: ubuntu-20.04
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-21.08
@@ -19,7 +20,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-      name: "Flatpak build"
       with:
         bundle: watchflower.flatpak
         manifest-path: assets/linux/watchflower.flatpak.yml

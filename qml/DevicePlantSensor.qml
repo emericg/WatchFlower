@@ -106,19 +106,19 @@ Loader {
                 // desktop only
                 function onDeviceDataButtonClicked() {
                     appHeader.setActiveDeviceData()
-                    sensorPages.currentIndex = 0
+                    plantSensorPages.currentIndex = 0
                 }
                 function onDeviceHistoryButtonClicked() {
                     appHeader.setActiveDeviceHistory()
-                    sensorPages.currentIndex = 1
+                    plantSensorPages.currentIndex = 1
                 }
                 function onDevicePlantButtonClicked() {
                     appHeader.setActiveDevicePlant()
-                    sensorPages.currentIndex = 2
+                    plantSensorPages.currentIndex = 2
                 }
                 function onDeviceSettingsButtonClicked() {
                     appHeader.setActiveDeviceSettings()
-                    sensorPages.currentIndex = 3
+                    plantSensorPages.currentIndex = 3
                 }
             }
 
@@ -128,31 +128,31 @@ Loader {
                 // mobile only
                 function onDeviceDataButtonClicked() {
                     mobileMenu.setActiveDeviceData()
-                    sensorPages.currentIndex = 0
+                    plantSensorPages.currentIndex = 0
                 }
                 function onDeviceHistoryButtonClicked() {
                     mobileMenu.setActiveDeviceHistory()
-                    sensorPages.currentIndex = 1
+                    plantSensorPages.currentIndex = 1
                 }
                 function onDevicePlantButtonClicked() {
                     mobileMenu.setActiveDevicePlant()
-                    sensorPages.currentIndex = 2
+                    plantSensorPages.currentIndex = 2
                 }
                 function onDeviceSettingsButtonClicked() {
                     mobileMenu.setActiveDeviceSettings()
-                    sensorPages.currentIndex = 3
+                    plantSensorPages.currentIndex = 3
                 }
             }
 
             Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Left) {
                     event.accepted = true
-                    if (sensorPages.currentIndex > 0)
-                        sensorPages.currentIndex--
+                    if (plantSensorPages.currentIndex > 0)
+                        plantSensorPages.currentIndex--
                 } else if (event.key === Qt.Key_Right) {
                     event.accepted = true
-                    if (sensorPages.currentIndex+1 < sensorPages.count)
-                        sensorPages.currentIndex++
+                    if (plantSensorPages.currentIndex+1 < plantSensorPages.count)
+                        plantSensorPages.currentIndex++
                 } else if (event.key === Qt.Key_F5) {
                     event.accepted = true
                     deviceManager.updateDevice(currentDevice.deviceAddress)
@@ -175,10 +175,10 @@ Loader {
             function loadDevice() {
                 //console.log("DevicePlantSensor // loadDevice() >> " + currentDevice)
 
-                sensorPages.disableAnimation()
-                sensorPages.currentIndex = 0
-                sensorPages.interactive = isPhone
-                sensorPages.enableAnimation()
+                plantSensorPages.disableAnimation()
+                plantSensorPages.currentIndex = 0
+                plantSensorPages.interactive = isPhone
+                plantSensorPages.enableAnimation()
 
                 plantSensorData.loadData()
                 plantSensorHistory.loadData()
@@ -209,7 +209,7 @@ Loader {
                 anchors.bottom: parent.bottom
 
                 SwipeView {
-                    id: sensorPages
+                    id: plantSensorPages
                     anchors.fill: parent
 
                     interactive: isPhone
@@ -217,22 +217,22 @@ Loader {
                     currentIndex: 0
                     onCurrentIndexChanged: {
                         if (isDesktop) {
-                            if (sensorPages.currentIndex === 0)
+                            if (plantSensorPages.currentIndex === 0)
                                 appHeader.setActiveDeviceData()
-                            else if (sensorPages.currentIndex === 1)
+                            else if (plantSensorPages.currentIndex === 1)
                                 appHeader.setActiveDeviceHistory()
-                            else if (sensorPages.currentIndex === 2)
+                            else if (plantSensorPages.currentIndex === 2)
                                 appHeader.setActiveDevicePlant()
-                            else if (sensorPages.currentIndex === 3)
+                            else if (plantSensorPages.currentIndex === 3)
                                 appHeader.setActiveDeviceSettings()
                         } else {
-                            if (sensorPages.currentIndex === 0)
+                            if (plantSensorPages.currentIndex === 0)
                                 mobileMenu.setActiveDeviceData()
-                            else if (sensorPages.currentIndex === 1)
+                            else if (plantSensorPages.currentIndex === 1)
                                 mobileMenu.setActiveDeviceHistory()
-                            else if (sensorPages.currentIndex === 2)
+                            else if (plantSensorPages.currentIndex === 2)
                                 mobileMenu.setActiveDevicePlant()
-                            else if (sensorPages.currentIndex === 3)
+                            else if (plantSensorPages.currentIndex === 3)
                                 mobileMenu.setActiveDeviceSettings()
                         }
                     }

@@ -42,8 +42,8 @@ AndroidService::AndroidService(QObject *parent) : QObject(parent)
 
     m_settingsManager = SettingsManager::getInstance();
 
-    //m_notificationManager = NotificationManager::getInstance();
-    //m_notificationManager->setNotification2("Theengs AndroidService", QDateTime::currentDateTime().toString());
+    //m_notificationManager = NotificationManager::getInstance(); // DEBUG
+    //m_notificationManager->setNotification2("AndroidService starting", QDateTime::currentDateTime().toString());
 
     m_deviceManager = new DeviceManager(true);
 
@@ -81,6 +81,9 @@ void AndroidService::gotowork()
 
         // Reload a few things
         m_settingsManager->reloadSettings();
+
+        //m_notificationManager = NotificationManager::getInstance(); // DEBUG
+        //m_notificationManager->setNotification2("AndroidService gotowork", QDateTime::currentDateTime().toString());
 
         // Start background refresh process
         m_deviceManager->refreshDevices_background();

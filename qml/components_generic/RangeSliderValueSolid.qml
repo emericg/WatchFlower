@@ -8,7 +8,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 T.RangeSlider {
     id: control
     implicitWidth: 200
-    implicitHeight: 4
+    implicitHeight: 20
     padding: 4
 
     first.value: 0.25

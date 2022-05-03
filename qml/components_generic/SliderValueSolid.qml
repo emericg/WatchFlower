@@ -8,7 +8,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 T.Slider {
     id: control
     implicitWidth: 200
-    implicitHeight: Theme.componentHeight
+    implicitHeight: 20
     padding: 4
 
     value: 0.5

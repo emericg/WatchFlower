@@ -13,8 +13,8 @@ T.ComboBox {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    leftPadding: 12
-    rightPadding: 12
+    leftPadding: 16
+    rightPadding: 16
 
     font.pixelSize: Theme.fontSizeComponent
 
@@ -64,7 +64,7 @@ T.ComboBox {
             ctx.lineTo(width, 0)
             ctx.lineTo(width / 2, height)
             ctx.closePath()
-            ctx.fillStyle = Theme.colorComponentContent
+            ctx.fillStyle = Theme.colorIcon
             ctx.fill()
         }
     }

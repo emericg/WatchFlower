@@ -139,9 +139,8 @@ lupdate_only {
 unix {
     # Enables AddressSanitizer
     #QMAKE_CXXFLAGS += -fsanitize=address,undefined
-    #QMAKE_LFLAGS += -fsanitize=address,undefined
-
     #QMAKE_CXXFLAGS += -Wno-nullability-completeness
+    #QMAKE_LFLAGS += -fsanitize=address,undefined
 }
 
 DEFINES += QT_DEPRECATED_WARNINGS

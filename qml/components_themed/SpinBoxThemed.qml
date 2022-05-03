@@ -66,35 +66,35 @@ T.SpinBox {
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Item {
-        TextInput {
-            width: parent.width - (control.height * 2)
-            height: parent.height
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: control.legend ? -(contentWidth / 2) : 0
-            anchors.verticalCenter: parent.verticalCenter
+        Row {
+            anchors.centerIn: parent
+            spacing: -2
 
-            color: Theme.colorComponentText
-            selectionColor: Theme.colorText
-            selectedTextColor: "white"
+            TextInput {
+                height: control.height
+                anchors.verticalCenter: parent.verticalCenter
 
-            text: control.textFromValue(control.value, control.locale)
-            font: control.font
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
+                color: Theme.colorComponentText
+                selectionColor: Theme.colorText
+                selectedTextColor: "white"
 
-            readOnly: !control.editable
-            validator: control.validator
-            inputMethodHints: Qt.ImhFormattedNumbersOnly
+                text: control.textFromValue(control.value, control.locale)
+                font: control.font
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
 
-            onEditingFinished: {
-                control.value = control.valueFromText(text, control.locale)
-                control.focus = false
+                readOnly: !control.editable
+                validator: control.validator
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+
+                onEditingFinished: {
+                    control.value = control.valueFromText(text, control.locale)
+                    control.focus = false
+                }
             }
 
             Text {
-                height: parent.height
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.horizontalCenterOffset: parent.contentWidth
+                height: control.height
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: control.legend

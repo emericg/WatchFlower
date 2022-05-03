@@ -554,9 +554,8 @@ ApplicationWindow {
 
         radius: 4
         color: Theme.colorSeparator
-        visible: opacity
         opacity: 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 233 } }
 
         Text {
             anchors.centerIn: parent
