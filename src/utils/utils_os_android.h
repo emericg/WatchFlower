@@ -42,6 +42,12 @@ class UtilsAndroid
 {
 public:
     /*!
+     * \brief getSdkVersion
+     * \return
+     */
+    static int getSdkVersion();
+
+    /*!
      * \note DEPRECATED in Android 12
      * \return True if R/W permissions on main storage have been previously obtained.
      */
@@ -88,12 +94,12 @@ public:
     static bool getPermission_location_ble();
 
     /*!
-     * \return True if ACCESS_BACKGROUD_LOCATION permission has been previously obtained (for Android 10+).
+     * \return True if ACCESS_BACKGROUND_LOCATION permission has been previously obtained (for Android 10+).
      */
     static bool checkPermission_location_background();
 
     /*!
-     * \return True if ACCESS_BACKGROUD_LOCATION permission has been explicitly obtained (for Android 10+).
+     * \return True if ACCESS_BACKGROUND_LOCATION permission has been explicitly obtained (for Android 10+).
      */
     static bool getPermission_location_background();
 

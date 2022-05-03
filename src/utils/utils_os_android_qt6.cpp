@@ -30,6 +30,13 @@
 
 /* ************************************************************************** */
 
+int UtilsAndroid::getSdkVersion()
+{
+    return QNativeInterface::QAndroidApplication::sdkVersion();
+}
+
+/* ************************************************************************** */
+
 bool UtilsAndroid::checkPermissions_storage()
 {
     QFuture<QtAndroidPrivate::PermissionResult> r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE");

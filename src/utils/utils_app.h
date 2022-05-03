@@ -46,6 +46,8 @@ public:
     QString getAppPath() const { return m_appPath; }
     void setAppPath(const QString &value);
 
+    // app related
+
     static Q_INVOKABLE QString appVersion();
     static Q_INVOKABLE QString appBuildDate();
     static Q_INVOKABLE QString appBuildDateTime();
@@ -59,6 +61,10 @@ public:
 
     static Q_INVOKABLE QUrl getStandardPath_url(const QString &type);
     static Q_INVOKABLE QString getStandardPath_string(const QString &type);
+
+    // mobile related
+
+    static Q_INVOKABLE int getAndroidSdkVersion();
 
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
