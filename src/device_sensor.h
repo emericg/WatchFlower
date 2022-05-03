@@ -272,11 +272,12 @@ protected:
     virtual void refreshHistoryFinished(bool status);
 
     virtual bool getSqlDeviceInfos();
-    virtual bool getSqlPlantLimits();
     virtual bool getSqlPlantData(int minutes);
+    virtual bool getSqlPlantBias();
+    virtual bool getSqlPlantLimits();
+    virtual bool getSqlSensorData(int minutes);
     virtual bool getSqlSensorBias();
     virtual bool getSqlSensorLimits();
-    virtual bool getSqlSensorData(int minutes);
 
     virtual bool hasData() const;
 
@@ -295,6 +296,11 @@ public:
     virtual void checkDataAvailability();
     virtual bool needsUpdateRt() const;
     virtual bool needsUpdateDb() const;
+
+    bool setSqlSensorBias();
+    //bool setSqlSensorLimits();
+    //bool setSqlPlantBias();
+    bool setSqlPlantLimits();
 
     // Plant sensor data
     int getSoilMoisture() const { return m_soilMoisture; }
@@ -341,26 +347,24 @@ public:
     float getRS() { return m_rs; }
 
     // Sensor bias
-    bool setDbBias();
     float getBiasSoilMoisture() const { return m_bias_soilMoisture; }
-    void setBiasSoilMoisture(float value) { m_bias_soilMoisture = value; setDbBias(); }
+    void setBiasSoilMoisture(float value) { m_bias_soilMoisture = value; setSqlSensorBias(); }
     float getBiasSoilCondu() const { return m_bias_soilConductivity; }
-    void setBiasSoilCondu(float value) { m_bias_soilConductivity = value; setDbBias(); }
+    void setBiasSoilCondu(float value) { m_bias_soilConductivity = value; setSqlSensorBias(); }
     float getBiasSoilTemp() const { return m_bias_soilTemperature; }
-    void setBiasSoilTemp(float value) { m_bias_soilTemperature = value; setDbBias(); }
+    void setBiasSoilTemp(float value) { m_bias_soilTemperature = value; setSqlSensorBias(); }
     float getBiasSoilPH() const { return m_bias_soilPH; }
-    void setBiasSoilPH(float value) { m_bias_soilPH = value; setDbBias(); }
+    void setBiasSoilPH(float value) { m_bias_soilPH = value; setSqlSensorBias(); }
     float getBiasTemperature() const { return m_bias_temperature; }
-    void setBiasTemperature(float value) { m_bias_temperature = value; setDbBias(); }
+    void setBiasTemperature(float value) { m_bias_temperature = value; setSqlSensorBias(); }
     float getBiasHumidity() const { return m_bias_humidity; }
-    void setBiasHumidity(float value) { m_bias_humidity = value; setDbBias(); }
+    void setBiasHumidity(float value) { m_bias_humidity = value; setSqlSensorBias(); }
     float getBiasPressure() const { return m_bias_pressure; }
-    void setBiasPressure(float value) { m_bias_pressure = value; setDbBias(); }
+    void setBiasPressure(float value) { m_bias_pressure = value; setSqlSensorBias(); }
     float getBiasLuminosity() const { return m_bias_luminosityLux; }
-    void setBiasLuminosity(float value) { m_bias_luminosityLux = value; setDbBias(); }
+    void setBiasLuminosity(float value) { m_bias_luminosityLux = value; setSqlSensorBias(); }
 
     // Sensor limits
-    bool setDbLimits();
     int getLimitSoilMoistureMin() const { return m_limit_soilMoistureMin; }
     int getLimitSoilMoistureMax() const { return m_limit_soilMoistureMax; }
     int getLimitSoilConduMin() const { return m_limit_soilConduMin; }
@@ -375,20 +379,20 @@ public:
     int getLimitLuxMax() const { return m_limit_luxMax; }
     int getLimitMmolMin() const { return m_limit_mmolMin; }
     int getLimitMmolMax() const { return m_limit_mmolMax; }
-    void setLimitSoilMoistureMin(int limitHygroMin) { if (m_limit_soilMoistureMin == limitHygroMin) return; m_limit_soilMoistureMin = limitHygroMin; setDbLimits(); }
-    void setLimitSoilMoistureMax(int limitHygroMax) { if (m_limit_soilMoistureMax == limitHygroMax) return; m_limit_soilMoistureMax = limitHygroMax; setDbLimits(); }
-    void setLimitSoilConduMin(int limitConduMin) { if (m_limit_soilConduMin == limitConduMin) return; m_limit_soilConduMin = limitConduMin; setDbLimits(); }
-    void setLimitSoilConduMax(int limitConduMax) { if (m_limit_soilConduMax == limitConduMax) return; m_limit_soilConduMax = limitConduMax; setDbLimits(); }
-    void setLimitSoilPhMin(float limitPhMin) { if (m_limit_soilPhMin == limitPhMin) return; m_limit_soilPhMin = limitPhMin; setDbLimits(); }
-    void setLimitSoilPhMax(float limitPhMax) { if (m_limit_soilPhMax == limitPhMax) return; m_limit_soilPhMax = limitPhMax; setDbLimits(); }
-    void setLimitTempMin(int limitTempMin) { if (m_limit_tempMin == limitTempMin) return; m_limit_tempMin = limitTempMin; setDbLimits(); }
-    void setLimitTempMax(int limitTempMax) { if (m_limit_tempMax == limitTempMax) return; m_limit_tempMax = limitTempMax; setDbLimits(); }
-    void setLimitHumiMin(int limitHumiMin) { if (m_limit_humiMin == limitHumiMin) return; m_limit_humiMin = limitHumiMin; setDbLimits(); }
-    void setLimitHumiMax(int limitHumiMax) { if (m_limit_humiMax == limitHumiMax) return; m_limit_humiMax = limitHumiMax; setDbLimits(); }
-    void setLimitLuxMin(int limitLuxMin) { if (m_limit_luxMin == limitLuxMin) return; m_limit_luxMin = limitLuxMin; setDbLimits(); }
-    void setLimitLuxMax(int limitLuxMax) { if (m_limit_luxMax == limitLuxMax) return; m_limit_luxMax = limitLuxMax; setDbLimits(); }
-    void setLimitMmolMin(int limitMmolMin) { if (m_limit_mmolMin == limitMmolMin) return; m_limit_mmolMin = limitMmolMin; setDbLimits(); }
-    void setLimitMmolMax(int limitMmolMax) { if (m_limit_mmolMax == limitMmolMax) return; m_limit_mmolMax = limitMmolMax; setDbLimits(); }
+    void setLimitSoilMoistureMin(int limitHygroMin) { if (m_limit_soilMoistureMin == limitHygroMin) return; m_limit_soilMoistureMin = limitHygroMin; setSqlPlantLimits(); }
+    void setLimitSoilMoistureMax(int limitHygroMax) { if (m_limit_soilMoistureMax == limitHygroMax) return; m_limit_soilMoistureMax = limitHygroMax; setSqlPlantLimits(); }
+    void setLimitSoilConduMin(int limitConduMin) { if (m_limit_soilConduMin == limitConduMin) return; m_limit_soilConduMin = limitConduMin; setSqlPlantLimits(); }
+    void setLimitSoilConduMax(int limitConduMax) { if (m_limit_soilConduMax == limitConduMax) return; m_limit_soilConduMax = limitConduMax; setSqlPlantLimits(); }
+    void setLimitSoilPhMin(float limitPhMin) { if (m_limit_soilPhMin == limitPhMin) return; m_limit_soilPhMin = limitPhMin; setSqlPlantLimits(); }
+    void setLimitSoilPhMax(float limitPhMax) { if (m_limit_soilPhMax == limitPhMax) return; m_limit_soilPhMax = limitPhMax; setSqlPlantLimits(); }
+    void setLimitTempMin(int limitTempMin) { if (m_limit_tempMin == limitTempMin) return; m_limit_tempMin = limitTempMin; setSqlPlantLimits(); }
+    void setLimitTempMax(int limitTempMax) { if (m_limit_tempMax == limitTempMax) return; m_limit_tempMax = limitTempMax; setSqlPlantLimits(); }
+    void setLimitHumiMin(int limitHumiMin) { if (m_limit_humiMin == limitHumiMin) return; m_limit_humiMin = limitHumiMin; setSqlPlantLimits(); }
+    void setLimitHumiMax(int limitHumiMax) { if (m_limit_humiMax == limitHumiMax) return; m_limit_humiMax = limitHumiMax; setSqlPlantLimits(); }
+    void setLimitLuxMin(int limitLuxMin) { if (m_limit_luxMin == limitLuxMin) return; m_limit_luxMin = limitLuxMin; setSqlPlantLimits(); }
+    void setLimitLuxMax(int limitLuxMax) { if (m_limit_luxMax == limitLuxMax) return; m_limit_luxMax = limitLuxMax; setSqlPlantLimits(); }
+    void setLimitMmolMin(int limitMmolMin) { if (m_limit_mmolMin == limitMmolMin) return; m_limit_mmolMin = limitMmolMin; setSqlPlantLimits(); }
+    void setLimitMmolMax(int limitMmolMax) { if (m_limit_mmolMax == limitMmolMax) return; m_limit_mmolMax = limitMmolMax; setSqlPlantLimits(); }
 
     // Data min/max
     int getSoilMoistureMin() const { return m_soilMoistureMin; }

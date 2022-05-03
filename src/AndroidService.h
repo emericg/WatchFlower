@@ -42,7 +42,7 @@ class AndroidService: public QObject
     Q_OBJECT
 
     QTimer m_workTimer;
-    void setWorkTimer(int workInterval = 60);
+    void setWorkTimer(int workInterval_mins = 5);
 
     DeviceManager *m_deviceManager = nullptr;
     SettingsManager *m_settingsManager = nullptr;

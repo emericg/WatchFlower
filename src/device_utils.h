@@ -142,7 +142,9 @@ public:
     Q_ENUM(DeviceSensors)
 
     enum DeviceStatus {
+        DEVICE_DISABLED             = -1, //!< Disabled by the user
         DEVICE_OFFLINE              =  0, //!< Not connected
+
         DEVICE_QUEUED               =  1, //!< In the update queue, not started
         DEVICE_CONNECTING           =  2, //!< Trying to connect to the device
         DEVICE_CONNECTED            =  3, //!< Connected

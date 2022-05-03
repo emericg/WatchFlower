@@ -46,12 +46,13 @@ DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName,
         m_dbExternal = db->hasDatabaseExternal();
     }
 
-    // Load device infos and limits
+    // Load device infos, bias, limits and initial data
     if (m_dbInternal || m_dbExternal)
     {
         getSqlDeviceInfos();
-        //getSqlSensorBias();
+        getSqlPlantBias();
         getSqlPlantLimits();
+
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
         if (!data) data = getSqlPlantData(12*60);
@@ -81,12 +82,13 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
         m_dbExternal = db->hasDatabaseExternal();
     }
 
-    // Load device infos and limits
+    // Load device infos, bias, limits and initial data
     if (m_dbInternal || m_dbExternal)
     {
         getSqlDeviceInfos();
         //getSqlSensorBias();
         getSqlPlantLimits();
+
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
         if (!data) data = getSqlPlantData(12*60);
@@ -282,6 +284,16 @@ bool DeviceSensor::getSqlDeviceInfos()
     return status;
 }
 
+bool DeviceSensor::getSqlPlantBias()
+{
+    //qDebug() << "DeviceSensor::getSqlPlantBias(" << m_deviceAddress << ")";
+    bool status = false;
+
+    // TODO
+
+    return status;
+}
+
 bool DeviceSensor::getSqlPlantLimits()
 {
     //qDebug() << "DeviceSensor::getSqlPlantLimits(" << m_deviceAddress << ")";
@@ -328,14 +340,18 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     {
         cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
-                           "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+                           "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes') " \
+                           "ORDER BY ts_full DESC " \
+                           "LIMIT 1;");
     }
     else if (m_dbExternal) // mysql
     {
         cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s')," \
                            " soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
-                           "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW());");
+                           "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
+                           "ORDER BY ts_full DESC " \
+                           "LIMIT 1;");
     }
     cachedData.bindValue(":deviceAddr", getAddress());
 
@@ -343,19 +359,15 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     {
         qWarning() << "> cachedDataPlant.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     }
-    else
-    {
-        //qDebug() << "* Device loaded:" << getAddress();
-    }
 
     while (cachedData.next())
     {
-        m_soilMoisture =  cachedData.value(1).toInt();
+        m_soilMoisture = cachedData.value(1).toInt();
         m_soilConductivity = cachedData.value(2).toInt();
         m_soilTemperature = cachedData.value(3).toFloat();
         m_soilPH = cachedData.value(4).toFloat();
         m_temperature = cachedData.value(5).toFloat();
-        m_humidity =  cachedData.value(6).toFloat();
+        m_humidity = cachedData.value(6).toFloat();
         m_luminosityLux = cachedData.value(7).toInt();
         m_watertank_level = cachedData.value(8).toFloat();
 
@@ -410,8 +422,9 @@ bool DeviceSensor::getSqlSensorBias()
     return status;
 }
 
-bool DeviceSensor::setDbBias()
+bool DeviceSensor::setSqlSensorBias()
 {
+    //qDebug() << "DeviceSensor::setSqlSensorBias(" << m_deviceAddress << ")";
     bool status = false;
 
     if (m_dbInternal || m_dbExternal)
@@ -455,7 +468,7 @@ bool DeviceSensor::getSqlSensorLimits()
     return status;
 }
 
-bool DeviceSensor::setDbLimits()
+bool DeviceSensor::setSqlPlantLimits()
 {
     bool status = false;
 
@@ -507,24 +520,24 @@ bool DeviceSensor::getSqlSensorData(int minutes)
         cachedData.prepare("SELECT timestamp, temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
                              "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
                            "FROM sensorData " \
-                           "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes');");
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes')" \
+                           "ORDER BY timestamp DESC " \
+                           "LIMIT 1;");
     }
     else if (m_dbExternal) // mysql
     {
         cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s'), temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
                              "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
                            "FROM sensorData " \
-                           "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW());");
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
+                           "ORDER BY timestamp DESC " \
+                           "LIMIT 1;");
     }
     cachedData.bindValue(":deviceAddr", getAddress());
 
     if (cachedData.exec() == false)
     {
         qWarning() << "> cachedDataSensor.exec() ERROR" << cachedData.lastError().type() << ":" << cachedData.lastError().text();
-    }
-    else
-    {
-        //qDebug() << "* Device loaded:" << getAddress();
     }
 
     while (cachedData.next())
@@ -598,7 +611,7 @@ void DeviceSensor::checkDataAvailability()
         SettingsManager *sm = SettingsManager::getInstance();
         int maxMin = isPlantSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo();
 
-        bool status =  (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
+        bool status = (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
 
         if (status != m_hasDataFresh)
         {
@@ -1049,7 +1062,7 @@ void DeviceSensor::updateChartData_history_day()
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                               "GROUP BY strftime('%d-%H', ts) " \
-                              "ORDER BY ts DESC "
+                              "ORDER BY ts DESC " \
                               "LIMIT 24;");
         }
         else if (m_dbExternal) // mysql
@@ -1060,7 +1073,7 @@ void DeviceSensor::updateChartData_history_day()
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -1 DAY) " \
                               "GROUP BY DATE_FORMAT(ts, '%d-%H') " \
-                              "ORDER BY ts DESC "
+                              "ORDER BY ts DESC " \
                               "LIMIT 24;");
         }
         graphData.bindValue(":deviceAddr", getAddress());
@@ -1769,11 +1782,13 @@ void DeviceSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
             }
             qint64 timecode = date.toMSecsSinceEpoch();
 
+            // data
             hygro->append(timecode, graphData.value(1).toReal());
             condu->append(timecode, graphData.value(2).toReal());
             temp->append(timecode, graphData.value(3).toReal());
             lumi->append(timecode, graphData.value(4).toReal());
 
+            // min/max
             if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
             if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
             if (graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }

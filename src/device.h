@@ -361,7 +361,9 @@ public slots:
     void deviceConnect();               //!< Initiate a BLE connection with a device
     void deviceDisconnect();
 
-    void refreshQueue();
+    void refreshQueued();
+    void refreshDequeued();
+
     void refreshStart();
     void refreshStartHistory();
     void refreshStartRealtime();

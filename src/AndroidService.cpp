@@ -45,8 +45,6 @@ AndroidService::AndroidService(QObject *parent) : QObject(parent)
     //m_notificationManager = NotificationManager::getInstance(); // DEBUG
     //m_notificationManager->setNotification2("AndroidService starting", QDateTime::currentDateTime().toString());
 
-    m_deviceManager = new DeviceManager(true);
-
     // Configure update timer
     connect(&m_workTimer, &QTimer::timeout, this, &AndroidService::gotowork);
     setWorkTimer(5);
@@ -67,27 +65,31 @@ void AndroidService::setWorkTimer(int workInterval_mins)
 
 void AndroidService::gotowork()
 {
-    if (m_deviceManager)
+    //m_notificationManager = NotificationManager::getInstance(); // DEBUG
+    //m_notificationManager->setNotification2("AndroidService gotowork", QDateTime::currentDateTime().toString());
+
+    // Reload settings, user might have changed them
+    m_settingsManager->reloadSettings();
+
+    // Is the background service enabled?
+    if (m_settingsManager->getSysTray())
     {
-        delete m_deviceManager;
+        // Reload the device manager, a new scan might have occured
+        if (m_deviceManager) delete m_deviceManager;
         m_deviceManager = new DeviceManager(true);
+
+        // Device manager is operational?
+        if (m_deviceManager &&
+            m_deviceManager->checkBluetooth() &&
+            m_deviceManager->areDevicesAvailable())
+        {
+            // Start background refresh process
+            m_deviceManager->refreshDevices_background();
+        }
     }
 
-    if (m_deviceManager && m_deviceManager->areDevicesAvailable())
-    {
-        // Restart timer
-        //setWorkTimer(m_settingsManager->getUpdateIntervalBackground());
-        setWorkTimer(15);
-
-        // Reload a few things
-        m_settingsManager->reloadSettings();
-
-        //m_notificationManager = NotificationManager::getInstance(); // DEBUG
-        //m_notificationManager->setNotification2("AndroidService gotowork", QDateTime::currentDateTime().toString());
-
-        // Start background refresh process
-        m_deviceManager->refreshDevices_background();
-    }
+    // Restart timer
+    setWorkTimer(5);
 }
 
 /* ************************************************************************** */

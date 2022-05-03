@@ -17,7 +17,7 @@ Item {
 
     function backAction() {
         deviceManager.scanNearby_stop()
-        deviceManager.listenDevices()
+        deviceManager.listenDevices_start()
     }
 
     Loader {

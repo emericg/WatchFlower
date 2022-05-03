@@ -37,10 +37,13 @@
 
 void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
-    //qDebug() << "updateBleDevice() " << info.address() /*<< info.deviceUuid()*/ << " updatedFields: " << updatedFields;
+    //qDebug() << "updateBleDevice() " << info.name() << info.address(); // << info.deviceUuid() // << " updatedFields: " << updatedFields
     Q_UNUSED(updatedFields)
+    bool status = false;
 
-    for (auto d: qAsConst(m_devices_model->m_devices))
+    if (info.address().toString() == info.name().replace('-', ':')) return; // skip beacons
+
+    for (auto d: qAsConst(m_devices_model->m_devices)) // KNOWN DEVICES ////////
     {
         Device *dd = qobject_cast<Device*>(d);
 
@@ -55,7 +58,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
                 //         << "ID" << id
-                //         << "data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
+                //         << "manufacturer data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
                 //         << "bytes:" << info.manufacturerData(id).toHex();
 
                 dd->parseAdvertisementData(info.manufacturerData(id));
@@ -66,7 +69,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
                 //         << "ID" << id
-                //         << "data" << Qt::dec << info.serviceData(id).count() << Qt::hex
+                //         << "service data" << Qt::dec << info.serviceData(id).count() << Qt::hex
                 //         << "bytes:" << info.serviceData(id).toHex();
 
                 dd->parseAdvertisementData(info.serviceData(id));
@@ -75,14 +78,20 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
             // Dynamic updates
             if (m_listening)
             {
+                if (!dd->isEnabled()) return;
+                if (!dd->hasBluetoothConnection()) return;
                 if (dd->getName() == "ThermoBeacon") return;
 
-                if (dd->needsUpdateRt())
+                // old or no data: go for refresh
+                // also, check if we didn't already fail to update in the last couple minutes
+                if (dd->needsUpdateRt() && !dd->isErrored())
                 {
-                    // old or no data: go for refresh
-                    m_devices_updating_queue.push_back(dd);
-                    dd->refreshQueue();
-                    refreshDevices_continue();
+                    if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
+                    {
+                        m_devices_updating_queue.push_back(dd);
+                        dd->refreshQueued();
+                        refreshDevices_continue();
+                    }
                 }
             }
 
@@ -90,8 +99,10 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
         }
     }
 
+    // Dynamic scanning
     if (m_scanning)
     {
+        //qDebug() << "addBleDevice() FROM DYNAMIC SCANNING";
         addBleDevice(info);
     }
 }

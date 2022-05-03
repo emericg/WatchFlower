@@ -61,13 +61,18 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
     m_deviceAddress = deviceAddr;
     m_deviceName = deviceName;
 
-    // Device name hack // Remove MAC address from device name
-    if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
-    else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-    else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
-
+    // Check address validity
     if (m_bleDevice.isValid() == false)
+    {
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+    }
+
+    // Device name hack // Remove MAC address from device name
+    {
+        if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
+        else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+        else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
+    }
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
@@ -76,6 +81,7 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 
+    // Configure RSSI timer
     m_rssiTimer.setSingleShot(true);
     m_rssiTimer.setInterval(12*1000); // 12s
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
@@ -86,19 +92,24 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     m_bleDevice = d;
     m_deviceName = m_bleDevice.name();
 
-    // Device name hack // Remove MAC address from device name
-    if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
-    else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-    else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
-
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();
 #else
     m_deviceAddress = m_bleDevice.address().toString();
 #endif
 
+    // Check address validity
     if (m_bleDevice.isValid() == false)
+    {
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+    }
+
+    // Device name hack // Remove MAC address from device name
+    {
+        if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
+        else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+        else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
+    }
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
@@ -107,6 +118,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     // Configure update timer (only started on desktop)
     connect(&m_updateTimer, &QTimer::timeout, this, &Device::refreshStart);
 
+    // Configure RSSI timer
     m_rssiTimer.setSingleShot(true);
     m_rssiTimer.setInterval(12*1000); // 12s
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
@@ -293,11 +305,20 @@ void Device::actionShutdown()
 
 /* ************************************************************************** */
 
-void Device::refreshQueue()
+void Device::refreshQueued()
 {
     if (m_ble_status == DeviceUtils::DEVICE_OFFLINE)
     {
         m_ble_status = DeviceUtils::DEVICE_QUEUED;
+        Q_EMIT statusUpdated();
+    }
+}
+
+void Device::refreshDequeued()
+{
+    if (m_ble_status == DeviceUtils::DEVICE_QUEUED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
     }
 }
@@ -426,17 +447,20 @@ void Device::refreshDataFinished(bool status, bool cached)
     }
     else
     {
-        // Set last error
-        m_lastError = QDateTime::currentDateTime();
-        Q_EMIT statusUpdated();
+        // Set last error (if coming from BLE)
+        if (!cached)
+        {
+            m_lastError = QDateTime::currentDateTime();
+            Q_EMIT statusUpdated();
 
-        // Set error timer value
-        setUpdateTimer(ERROR_UPDATE_INTERVAL);
+            // Set error timer value
+            setUpdateTimer(ERROR_UPDATE_INTERVAL);
+        }
     }
 
     checkDataAvailability();
 
-    // Inform device manager
+    // Inform device manager (if coming from BLE)
     if (!cached)
     {
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
@@ -585,7 +609,7 @@ bool Device::getSqlDeviceInfos()
 
 bool Device::isErrored() const
 {
-    return (getLastErrorInt() >= 0 && getLastErrorInt() <= 12*60);
+    return (getLastErrorInt() >= 0 && getLastErrorInt() <= 5);
 }
 
 bool Device::isBusy() const
