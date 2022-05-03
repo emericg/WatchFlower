@@ -80,7 +80,6 @@ Drawer {
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/assets/logos/logo.svg"
-                    //sourceSize: Qt.size(width, height)
                 }
                 Text {
                     id: textHeader

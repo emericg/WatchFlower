@@ -122,12 +122,9 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_LINUX)
     // NVIDIA suspend&resume hack
-    if (QLibraryInfo::version() >= QVersionNumber(5, 13, 0))
-    {
-        auto format = QSurfaceFormat::defaultFormat();
-        format.setOption(QSurfaceFormat::ResetNotification);
-        QSurfaceFormat::setDefaultFormat(format);
-    }
+    auto format = QSurfaceFormat::defaultFormat();
+    format.setOption(QSurfaceFormat::ResetNotification);
+    QSurfaceFormat::setDefaultFormat(format);
 #endif
 
     SingleApplication app(argc, argv);
@@ -144,7 +141,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 #endif
 
-    // Init WatchFlower components
+    // Init components
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
@@ -212,11 +209,7 @@ int main(int argc, char *argv[])
 
     // Set systray?
     st->initSettings(&app, window);
-    if (sm->getSysTray())
-    {
-        st->initSystray();
-        st->installSystray();
-    }
+    if (sm->getSysTray()) st->installSystray();
 
 #if defined(Q_OS_LINUX)
     // GNOME hack for the mysterious disappearences of the tray icon with TopIcon Plus

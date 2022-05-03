@@ -310,28 +310,25 @@ bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
         if (m_dbInternal || m_dbExternal)
         {
             // SQL date format YYYY-MM-DD HH:MM:SS
-            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
 
             QSqlQuery addData;
             addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, pressure, voc, co2)"
                             " VALUES (:deviceAddr, :ts, :temp, :humi, :pres, :voc, :co2)");
             addData.bindValue(":deviceAddr", getAddress());
-            addData.bindValue(":ts", tmcd);
+            addData.bindValue(":ts", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
             addData.bindValue(":temp", m_temperature);
             addData.bindValue(":humi", m_humidity);
             addData.bindValue(":pres", m_pressure);
             addData.bindValue(":voc", m_voc);
             addData.bindValue(":co2", m_co2);
+
             status = addData.exec();
 
             if (status)
-            {
-                m_lastUpdateDatabase = tmcd;
-            }
+                m_lastUpdateDatabase = m_lastUpdate;
             else
-            {
-                qWarning() << "> DeviceEsp32AirQualityMonitor addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
-            }
+                qWarning() << "> DeviceEsp32AirQualityMonitor addData.exec() ERROR"
+                           << addData.lastError().type() << ":" << addData.lastError().text();
         }
     }
     else

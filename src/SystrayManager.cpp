@@ -82,6 +82,10 @@ void SystrayManager::initSettings(QApplication *app, QQuickWindow *view)
 
 void SystrayManager::initSystray()
 {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    return;
+#endif
+
     if (!m_saved_app || !m_saved_view)
     {
         qWarning() << "SystrayManager::initSystray() no QApplication or QQuickWindow saved";
@@ -123,6 +127,10 @@ void SystrayManager::initSystray()
 
 bool SystrayManager::installSystray()
 {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    return false;
+#endif
+
     bool status = false;
 
     if (QSystemTrayIcon::isSystemTrayAvailable())
@@ -174,7 +182,7 @@ bool SystrayManager::installSystray()
 
 void SystrayManager::REinstallSystray()
 {
-    // Trying to launch a new WatchFlower instance will manually hide then show again the tray icon...
+    // Trying to launch a new instance will manually hide then show again the tray icon...
     // This hack helps in cases where the tray icon just disappears after some time, seen a lot on Gnome desktop with TopIcons Plus.
     // A different solution to this problem is to use gnome-shell-extension-appindicator instead of TopIcons Plus.
 

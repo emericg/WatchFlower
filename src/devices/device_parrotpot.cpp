@@ -270,7 +270,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
             if (cfw.value().size() > 0)
             {
                 m_deviceFirmware = cfw.value();
-                m_deviceFirmware =  m_deviceFirmware.split('_')[1].split('-')[1];
+                m_deviceFirmware = m_deviceFirmware.split('_')[1].split('-')[1];
             }
 
             if (m_deviceFirmware.size() == 6)

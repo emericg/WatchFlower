@@ -59,22 +59,20 @@ NotificationManager::~NotificationManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void NotificationManager::setNotification2(const QString &title, const QString &message)
+void NotificationManager::setNotification(const QString &message)
 {
-    //if (m_title == title && m_notification == notification)
-    //    return;
+    //if (m_notification == notification) return;
 
-    m_title = title;
     m_message = message;
 
     Q_EMIT notificationChanged();
 }
 
-void NotificationManager::setNotification(const QString &message)
+void NotificationManager::setNotification2(const QString &title, const QString &message)
 {
-    //if (m_notification == notification)
-    //    return;
+    //if (m_title == title && m_notification == notification) return;
 
+    m_title = title;
     m_message = message;
 
     Q_EMIT notificationChanged();

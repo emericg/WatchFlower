@@ -240,32 +240,34 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addData;
                 addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature, humidity, luminosity)"
                                 " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp, :humi, :lumi)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
+                addData.bindValue(":ts", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+                addData.bindValue(":ts_full", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":hygro", m_soilMoisture);
                 addData.bindValue(":condu", m_soilConductivity);
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":humi", m_humidity);
                 addData.bindValue(":lumi", m_luminosityLux);
-                if (addData.exec() == false)
-                    qWarning() << "> DeviceEsp32HiGrow addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                if (addData.exec())
+                    m_lastUpdateDatabase = m_lastUpdate;
+                else
+                    qWarning() << "> DeviceEsp32HiGrow addData.exec() ERROR"
+                               << addData.lastError().type() << ":" << addData.lastError().text();
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 updateDevice.bindValue(":firmware", m_deviceFirmware);
                 updateDevice.bindValue(":battery", m_deviceBattery);
                 updateDevice.bindValue(":deviceAddr", getAddress());
-                if (updateDevice.exec() == false)
-                    qWarning() << "> updateDevice.exec() ERROR" << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
 
-                m_lastUpdateDatabase = m_lastUpdate;
+                if (updateDevice.exec() == false)
+                    qWarning() << "> updateDevice.exec() ERROR"
+                               << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
