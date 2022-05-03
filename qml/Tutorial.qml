@@ -14,26 +14,21 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    function open() {
-        entryPoint = "DeviceList"
-
+    function loadScreen() {
+        // Load the tutorial
         if (!tutorialLoader.sourceComponent) {
             tutorialLoader.sourceComponent = componentTutorial
+        } else {
+            tutorialLoader.item.reset()
         }
 
+        // Change screen
         appContent.state = "Tutorial"
     }
 
-    function reopen() {
-        entryPoint = "About"
-
-        if (!tutorialLoader.sourceComponent) {
-            tutorialLoader.sourceComponent = componentTutorial
-        }
-
-        tutorialLoader.item.reset()
-
-        appContent.state = "Tutorial"
+    function loadScreenFrom(screenname) {
+        entryPoint = screenname
+        loadScreen()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -320,7 +315,7 @@ Rectangle {
                 anchors.rightMargin: 32
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                text: (tutorialPages.currentIndex === count-1) ? qsTr("All right!") : qsTr("Next")
+                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("All right!") : qsTr("Next")
                 textFormat: Text.PlainText
                 color: Theme.colorHeaderContent
                 font.bold: true

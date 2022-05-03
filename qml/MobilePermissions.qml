@@ -11,6 +11,8 @@ Item {
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
 
+    property string entryPoint: "About"
+
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
@@ -19,8 +21,13 @@ Item {
         button_location_background_test.validperm = utilsApp.checkMobileBackgroundLocationPermission()
         button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
 
-        // Load screen
+        // Change screen
         appContent.state = "Permissions"
+    }
+
+    function loadScreenFrom(screenname) {
+        entryPoint = screenname
+        loadScreen()
     }
 
     ////////////////////////////////////////////////////////////////////////////

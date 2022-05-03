@@ -166,7 +166,7 @@ ApplicationWindow {
                 if (appContent.state === "Tutorial")
                     appContent.state = screenTutorial.entryPoint
                 else if (appContent.state === "Permissions")
-                    appContent.state = "About"
+                    appContent.state = screenPermissions.entryPoint
                 else
                     appContent.state = "DeviceList"
             }
@@ -331,7 +331,7 @@ ApplicationWindow {
                     appContent.state = "DeviceList"
                 }
             } else if (appContent.state === "Permissions") {
-                appContent.state = "About"
+                appContent.state = screenPermissions.entryPoint
             } else if (appContent.state === "Tutorial") {
                 appContent.state = screenTutorial.entryPoint
             } else if (appContent.state === "PlantBrowser") {
@@ -391,7 +391,7 @@ ApplicationWindow {
         // Start on the tutorial?
         Component.onCompleted: {
             if (!deviceManager.areDevicesAvailable()) {
-                screenTutorial.open()
+                screenTutorial.loadScreen()
             }
         }
 

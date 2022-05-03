@@ -362,7 +362,7 @@ Item {
                     anchors.right: singleColumn ? parent.right : tutoTxt.right
                     anchors.rightMargin: singleColumn ? 0 : -24
                     anchors.bottom: parent.bottom
-                    onClicked: screenTutorial.reopen()
+                    onClicked: screenTutorial.loadScreenFrom("About")
                 }
             }
 
@@ -451,7 +451,6 @@ Item {
                 }
             }
 
-
             ////////
 
             Item {
@@ -500,7 +499,7 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("About permissions")
+                    text: qsTr("About app permissions")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -519,7 +518,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: screenPermissions.loadScreen()
+                    onClicked: screenPermissions.loadScreenFrom("About")
                 }
             }
 
@@ -760,6 +759,8 @@ Item {
                     }
                 }
             }
+
+            ////////
         }
     }
 }
