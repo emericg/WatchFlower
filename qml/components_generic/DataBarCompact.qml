@@ -146,19 +146,10 @@ Item {
                 y: -22
                 x: {
                     if (item_data.width < ((width / 2) + 8)) { // left
-                        if (item_data.width > 12)
-                            item_indicator_triangle.anchors.horizontalCenterOffset = (item_data.width - ((width / 2) + 8))
-                        else
-                            item_indicator_triangle.anchors.horizontalCenterOffset = -((width / 2) - 4)
-
                         return 4
                     } else if ((item_bg.width - item_data.width) < (width / 2)) { // right
-                        item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width / 2)) - 4
-
                         return item_bg.width - width - 4
                     } else { // whatever
-                        item_indicator_triangle.anchors.horizontalCenterOffset = 0
-
                         return item_data.width - (width / 2) - 4
                     }
                 }
@@ -198,7 +189,18 @@ Item {
                         anchors.top: parent.bottom
                         anchors.topMargin: -3
                         anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenterOffset: {
+                            if (item_data.width < ((textIndicator.width / 2) + 8)) { // left
+                                if (item_data.width > 12) {
+                                    return (item_data.width - ((textIndicator.width / 2) + 8))
+                                } else {
+                                    return -((textIndicator.width / 2) - 4)
+                                }
+                            } else if ((item_bg.width - item_data.width) < (textIndicator.width / 2)) { // right
+                                return -((item_bg.width - item_data.width) - (textIndicator.width / 2)) - 4
+                            }
+                            return 0
+                        }
 
                         radius: 1
                         rotation: 45

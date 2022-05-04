@@ -212,7 +212,7 @@ Item {
 
                         Text {
                             id: labelPlant
-                            width: dataIndicators.legendWidth
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -282,7 +282,7 @@ Item {
 
                         Text {
                             id: labelLocation
-                            width: dataIndicators.legendWidth
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -352,7 +352,7 @@ Item {
 
                         Text {
                             id: labelStatus
-                            width: dataIndicators.legendWidth
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
