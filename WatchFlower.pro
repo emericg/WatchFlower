@@ -109,11 +109,14 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc \
                assets/devices.qrc
 
-OTHER_FILES += .gitignore \
-               .github/workflows/builds.yml \
+OTHER_FILES += README.md \
                deploy_linux.sh \
                deploy_macos.sh \
-               deploy_windows.sh
+               deploy_windows.sh \
+               .github/workflows/builds_desktop.yml \
+               .github/workflows/builds_mobile.yml \
+               .github/workflows/flatpak.yml \
+               .gitignore
 
 TRANSLATIONS = i18n/watchflower_ca.ts \
                i18n/watchflower_da.ts \

@@ -52,7 +52,7 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v2
         with:
-          aqtversion: '==2.0.6'
+          aqtversion: '==2.1.0'
           version: '6.3.0'
           modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
@@ -61,7 +61,7 @@ jobs:
       - name: Install Qt (Android)
         uses: jurplel/install-qt-action@v2
         with:
-          aqtversion: '==2.0.6'
+          aqtversion: '==2.1.0'
           version: '6.3.0'
           host: 'linux'
           target: 'android'
@@ -92,7 +92,7 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v2
         with:
-          aqtversion: '==2.0.6'
+          aqtversion: '==2.1.0'
           version: '6.3.0'
           modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
@@ -101,7 +101,7 @@ jobs:
       - name: Install Qt (iOS)
         uses: jurplel/install-qt-action@v2
         with:
-          aqtversion: '==2.0.6'
+          aqtversion: '==2.1.0'
           version: '6.3.0'
           host: 'mac'
           target: 'ios'
