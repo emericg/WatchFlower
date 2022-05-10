@@ -352,7 +352,7 @@ Item {
         cellHeight: (bigWidget ? 144 : 100)
 
         ScrollBar.vertical: ScrollBar {
-            visible: isDesktop
+            visible: false
             anchors.right: parent.right
             anchors.rightMargin: -6
             policy: ScrollBar.AsNeeded

@@ -89,7 +89,7 @@ void AndroidService::gotowork()
     }
 
     // Restart timer
-    setWorkTimer(5);
+    setWorkTimer(10);
 }
 
 /* ************************************************************************** */
