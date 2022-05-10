@@ -215,7 +215,7 @@ macx {
     QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
     # Target architecture
-    #QMAKE_APPLE_DEVICE_ARCHS = "x86_64;arm64"
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
 
     # macOS utils
     SOURCES += src/utils/utils_os_macos.mm

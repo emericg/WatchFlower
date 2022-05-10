@@ -66,7 +66,7 @@ else
 fi
 
 echo '---- Running macdeployqt'
-macdeployqt bin/$APP_NAME.app -qmldir=qml/ -appstore-compliant;
+macdeployqt bin/$APP_NAME.app -qmldir=qml/ -hardened-runtime -timestamp -appstore-compliant;
 
 #echo '---- Installation directory content recap:'
 #find bin/;
