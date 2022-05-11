@@ -4,10 +4,6 @@ bin/*
 contribs/*
 appdir/*
 
-# Private signatures
-assets/ios/ios_signature.pri
-assets/macos/macos_signature.pri
-
 # QtCreator temporary project files
 WatchFlower.config
 WatchFlower.creator*
@@ -24,11 +20,18 @@ qml_*qml.cpp
 Makefile
 .qmake.stash
 
+# CMake temporary project files
+CMakeLists.txt.user
+
 # XCode related
 Debug/*
 Release/*
 WatchFlower.xcodeproj/*
 asset_catalog_compiler.Info.plist
+
+# XCode signatures
+assets/ios/ios_signature.pri
+assets/macos/macos_signature.pri
 
 # Others
 stash/*
