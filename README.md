@@ -58,11 +58,11 @@ Please note that most Chinese devices have many names, usually no official manuf
 | LYWSDCGQ | CGG1 | CGDK2 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
 
-| Miaomiaoce Digital Hygrometer Clock / Alarm | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer (EInk) |
-| :---------------------------: | :-------------------------------: | :------------------------------------: |
-| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) |
-| LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 |
-| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) |
+| Miaomiaoce Digital Hygrometer Clock / Alarm | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer (EInk) | Miaomiaoce Thermo-Hygrometer (EInk) |
+| :-----------------------------------------: | :----------------------------------: | :---------------------------------: | :---------------------------------: |
+| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) | ![XMWSDJO4MMC](docs/hygrotemp_xmwsdjo4mmc.svg) |
+| LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 | XMWSDJO4MMC |
+| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) | [shop](https://www.banggood.com/custlink/3DmR2A33n6) |
 
 | ThermoBeacon (keychain) | ThermoBeacon (LCD) |
 | :---------------------: | :----------------: |
@@ -70,11 +70,11 @@ Please note that most Chinese devices have many names, usually no official manuf
 | 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
 | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
-| Air Box WP6003 |
-| :------------: |
-| ![WP6003](docs/wp6003.svg) |
-| |
-| [shop](https://www.banggood.com/custlink/mK3yOI9teA) |
+| Air Box WP6003 | Honeywell HCHO detector|
+| :------------: | :--------------------: |
+| ![WP6003](docs/wp6003.svg) | ![JQJCY01YM](docs/jqjcy01ym.svg) |
+| | JQJCY01YM |
+| [shop](https://www.banggood.com/custlink/mK3yOI9teA) | |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
 | :-----------------------: | :-------------------: | :------------------: |

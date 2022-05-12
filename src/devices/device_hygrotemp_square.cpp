@@ -302,8 +302,16 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
                 addData.bindValue(":ts_full", tsFullStr);
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":humi", m_humidity);
-                if (addData.exec() == false)
-                    qWarning() << "> DeviceHygrotempSquare addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                if (addData.exec())
+                {
+                    m_lastUpdateDatabase = m_lastUpdate;
+                }
+                else
+                {
+                    qWarning() << "> DeviceHygrotempSquare addData.exec() ERROR"
+                               << addData.lastError().type() << ":" << addData.lastError().text();
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
@@ -340,3 +348,5 @@ void DeviceHygrotempSquare::confirmedDescriptorWrite(const QLowEnergyDescriptor 
         //m_service = nullptr;
     }
 }
+
+/* ************************************************************************** */

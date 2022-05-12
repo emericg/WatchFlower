@@ -254,10 +254,14 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
                 addData.bindValue(":lumi", m_luminosityLux);
 
                 if (addData.exec())
+                {
                     m_lastUpdateDatabase = m_lastUpdate;
+                }
                 else
+                {
                     qWarning() << "> DeviceEsp32HiGrow addData.exec() ERROR"
                                << addData.lastError().type() << ":" << addData.lastError().text();
+                }
 
                 QSqlQuery updateDevice;
                 updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware, deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
@@ -266,8 +270,10 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
                 updateDevice.bindValue(":deviceAddr", getAddress());
 
                 if (updateDevice.exec() == false)
+                {
                     qWarning() << "> updateDevice.exec() ERROR"
                                << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)

@@ -322,8 +322,16 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
                 addData.bindValue(":ts_full", tsFullStr);
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":humi", m_humidity);
-                if (addData.exec() == false)
-                    qWarning() << "> DeviceHygrotempClock addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                if (addData.exec())
+                {
+                    m_lastUpdateDatabase = m_lastUpdate;
+                }
+                else
+                {
+                    qWarning() << "> DeviceHygrotempClock addData.exec() ERROR"
+                               << addData.lastError().type() << ":" << addData.lastError().text();
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)

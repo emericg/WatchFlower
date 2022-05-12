@@ -101,7 +101,7 @@ Supported devices
 | FCC ID                               | 2AQ3F-CGD1                            |
 | <img src="hygrotemp_cgd1.svg" width="256">                                  ||
 | Screen                               | LCD                                   |
-| Battery                              | 2 x AA                                |
+| Battery                              | 2 x AAA                               |
 | Temperature                          | -9.9 ~ 49.9 °C                        |
 | Humidity                             | 0 ~ 100% RH                           |
 | BLE API                              | [link](cgd1-ble-api.md)               |
@@ -211,6 +211,17 @@ Supported devices
 | HCHO                                 | 0 ~ 1.999 mg/m3                       |
 | CO2 (estimated)                      | 400 ~ 2000 ppm                        |
 | BLE API                              | [link](wp6003-ble-api.md)             |
+
+| Formaldehyde HCHO Monitor            | Honeywell                             |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | JQJCY01YM                             |
+| <img src="jqjcy01ym.svg" width="256">                                       ||
+| Screen                               | OLED                                  |
+| Battery                              | 2 x AA                                |
+| Temperature                          | 0 ~ 50 °C                             |
+| Humidity                             | 0 ~ 99% RH                            |
+| HCHO                                 | 0 ~ 1.500 mg/m3                       |
+| BLE API                              | [link](jqjcy01ym-ble-api.md)          |
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 

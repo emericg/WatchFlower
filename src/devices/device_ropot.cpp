@@ -613,10 +613,10 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
         if (value.size() >= 16)
         {
             int batt = -99;
-            float temp = -99;
-            float humi = -99;
+            float temp = -99.f;
+            float humi = -99.f;
             int lumi = -99;
-            float form = -99;
+            float form = -99.f;
             int moist = -99;
             int fert = -99;
 
@@ -788,7 +788,8 @@ bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
             }
             else
             {
-                qWarning() << "> DeviceRopot addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceRopot addData.exec() ERROR"
+                           << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }
@@ -840,7 +841,8 @@ bool DeviceRopot::addDatabaseRecord2(const int64_t timestamp,
             }
             else
             {
-                qWarning() << "> DeviceRopot addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                qWarning() << "> DeviceRopot addData.exec() ERROR"
+                           << addData.lastError().type() << ":" << addData.lastError().text();
             }
         }
     }

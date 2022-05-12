@@ -34,8 +34,8 @@
 /* ************************************************************************** */
 
 /*!
- * Honeywell Formaldehyde detector
- * JQJCY01YM device / squared body / LCD
+ * Honeywell HCHO Formaldehyde detector
+ * JQJCY01YM device / squared body / OLED
  */
 class DeviceJQJCY01YM: public DeviceSensor
 {

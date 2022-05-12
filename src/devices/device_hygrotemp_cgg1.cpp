@@ -269,8 +269,16 @@ void DeviceHygrotempCGG1::bleReadNotify(const QLowEnergyCharacteristic &c, const
                 addData.bindValue(":ts_full", tsFullStr);
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":humi", m_humidity);
-                if (addData.exec() == false)
-                    qWarning() << "> DeviceHygrotempCGG1 addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+
+                if (addData.exec())
+                {
+                    m_lastUpdateDatabase = m_lastUpdate;
+                }
+                else
+                {
+                    qWarning() << "> DeviceHygrotempCGG1 addData.exec() ERROR"
+                               << addData.lastError().type() << ":" << addData.lastError().text();
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
@@ -307,3 +315,5 @@ void DeviceHygrotempCGG1::confirmedDescriptorWrite(const QLowEnergyDescriptor &d
         //m_service = nullptr;
     }
 }
+
+/* ************************************************************************** */

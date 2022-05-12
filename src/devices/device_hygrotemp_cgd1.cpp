@@ -40,7 +40,7 @@ DeviceHygrotempCGD1::DeviceHygrotempCGD1(const QString &deviceAddr, const QStrin
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
+    //m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -49,7 +49,7 @@ DeviceHygrotempCGD1::DeviceHygrotempCGD1(const QBluetoothDeviceInfo &d, QObject 
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
+    //m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -76,7 +76,84 @@ void DeviceHygrotempCGD1::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempCGD1::parseAdvertisementData(const QByteArray &value)
 {
-    Q_UNUSED(value)
+    //qDebug() << "DeviceHygrotempCGD1::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
+    // 28 bytes messages?
+    if (value.size() >= 28)
+    {
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+        float temp = -99.f;
+        float humi = -99.f;
+
+        // get data
+
+        temp = static_cast<int32_t>(data[20] + (data[21] << 8) + (data[22] << 16) + (data[23] << 24)) / 10.f;
+        if (temp != m_temperature)
+        {
+            if (temp > -20.f && temp < 100.f)
+            {
+                m_temperature = temp;
+                Q_EMIT dataUpdated();
+            }
+        }
+
+        humi = static_cast<int32_t>(data[24] + (data[25] << 8) + (data[26] << 16) + (data[27] << 24)) / 10.f;
+        if (humi != m_humidity)
+        {
+            if (humi >= 0.f && humi <= 100.f)
+            {
+                m_humidity = humi;
+                Q_EMIT dataUpdated();
+            }
+        }
+
+        if (m_temperature > -99.f && m_humidity > -99.f)
+        {
+            m_lastUpdate = QDateTime::currentDateTime();
+
+            if (needsUpdateDb())
+            {
+                if (m_dbInternal || m_dbExternal)
+                {
+                    // SQL date format YYYY-MM-DD HH:MM:SS
+                    QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+                    QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+
+                    QSqlQuery addData;
+                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
+                                    " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
+                    addData.bindValue(":deviceAddr", getAddress());
+                    addData.bindValue(":ts", tsStr);
+                    addData.bindValue(":ts_full", tsFullStr);
+                    addData.bindValue(":temp", m_temperature);
+                    addData.bindValue(":humi", m_humidity);
+
+                    if (addData.exec())
+                    {
+                        m_lastUpdateDatabase = m_lastUpdate;
+                    }
+                    else
+                    {
+                        qWarning() << "> DeviceCGD1 addData.exec() ERROR"
+                                   << addData.lastError().type() << ":" << addData.lastError().text();
+                    }
+                }
+
+                refreshDataFinished(true);
+            }
+        }
+/*
+        if (temp > -99 || humi > -99)
+        {
+            qDebug() << "* CGD1 service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
+            if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (humi > -99) qDebug() << "- humidity:" << humi;
+        }
+*/
+    }
 }
 
 /* ************************************************************************** */

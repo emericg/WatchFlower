@@ -112,12 +112,10 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
         if (value.size() >= 15)
         {
             int batt = -99;
-            float temp = -99;
-            float humi = -99;
-            int lumi = -99;
-            float form = -99;
-            int moist = -99;
-            int fert = -99;
+            float temp = -99.f;
+            float humi = -99.f;
+            float form = -99.f;
+
             // get data
             if (data[11] == 4 && value.size() >= 16)
             {
@@ -206,7 +204,8 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                         }
                         else
                         {
-                            qWarning() << "> DeviceJQJCY01YM addData.exec() ERROR" << addData.lastError().type() << ":" << addData.lastError().text();
+                            qWarning() << "> DeviceJQJCY01YM addData.exec() ERROR"
+                                       << addData.lastError().type() << ":" << addData.lastError().text();
                         }
                     }
 
@@ -214,17 +213,14 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                 }
             }
 /*
-            if (temp > -99 || humi > -99 || lumi > -99 || form > -99 || moist > -99 || fert > -99)
+            if (temp > -99.f || humi > -99.f || form > -99.f)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
                 if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
                 if (batt > -99) qDebug() << "- battery:" << batt;
                 if (temp > -99) qDebug() << "- temperature:" << temp;
                 if (humi > -99) qDebug() << "- humidity:" << humi;
-                if (lumi > -99) qDebug() << "- luminosity:" << lumi;
                 if (form > -99) qDebug() << "- formaldehyde:" << form;
-                if (moist > -99) qDebug() << "- soil moisture:" << moist;
-                if (fert > -99) qDebug() << "- soil fertility:" << fert;
             }
 */
         }

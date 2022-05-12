@@ -657,10 +657,10 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
         if (value.size() >= 16)
         {
             int batt = -99;
-            float temp = -99;
-            float humi = -99;
+            float temp = -99.f;
+            float humi = -99.f;
             int lumi = -99;
-            float form = -99;
+            float form = -99.f;
             int moist = -99;
             int fert = -99;
 
@@ -771,7 +771,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 }
             }
 */ /*
-            if (temp > -99 || humi > -99 || lumi > -99 || form > -99 || moist > -99 || fert > -99)
+            if (temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
                 if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;

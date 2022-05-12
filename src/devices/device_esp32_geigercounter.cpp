@@ -249,10 +249,14 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
                 addData.bindValue(":geiger", m_rm);
 
                 if (addData.exec())
+                {
                     m_lastUpdateDatabase = m_lastUpdate;
+                }
                 else
+                {
                     qWarning() << "> DeviceEsp32GeigerCounter addData.exec() ERROR"
                                << addData.lastError().type() << ":" << addData.lastError().text();
+                }
             }
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
@@ -294,7 +298,10 @@ bool DeviceEsp32GeigerCounter::hasData() const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec(Esp32Geiger) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+        {
+            qWarning() << "> hasData.exec(Esp32Geiger) ERROR"
+                       << hasData.lastError().type() << ":" << hasData.lastError().text();
+        }
 
         while (hasData.next())
         {
