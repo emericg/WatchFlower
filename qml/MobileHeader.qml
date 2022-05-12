@@ -74,7 +74,7 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
 
-        MouseArea {
+        MouseArea { // left button
             id: leftArea
             width: headerHeight
             height: headerHeight
@@ -97,7 +97,7 @@ Rectangle {
             }
         }
 
-        Text {
+        Text { // title
             height: parent.height
             anchors.left: parent.left
             anchors.leftMargin: 64
@@ -113,7 +113,7 @@ Rectangle {
 
         ////////////
 
-        Row {
+        Row { // right area
             id: menu
             anchors.top: parent.top
             anchors.right: parent.right
@@ -123,7 +123,7 @@ Rectangle {
             spacing: 4
             visible: true
 
-            Item {
+            Item { // right indicators
                 width: parent.height
                 height: width
                 anchors.verticalCenter: parent.verticalCenter
@@ -148,20 +148,18 @@ Rectangle {
                     opacity: 0
                     Behavior on opacity { OpacityAnimator { duration: 333 } }
 
-                    NumberAnimation on rotation {
-                        //id: refreshAnimation
+                    NumberAnimation on rotation { // refreshAnimation (rotate)
                         from: 0
                         to: 360
                         duration: 2000
                         loops: Animation.Infinite
                         easing.type: Easing.Linear
-                        running: deviceManager.updating
+                        running: (deviceManager.updating && !deviceManager.scanning && !deviceManager.syncing)
                         alwaysRunToEnd: true
                         onStarted: workingIndicator.opacity = 1
                         onStopped: workingIndicator.opacity = 0
                     }
-                    SequentialAnimation on opacity {
-                        //id: rescanAnimation
+                    SequentialAnimation on opacity { // rescanAnimation (fade)
                         loops: Animation.Infinite
                         running: (deviceManager.scanning || deviceManager.listening || deviceManager.syncing)
                         onStopped: workingIndicator.opacity = 0
@@ -173,15 +171,14 @@ Rectangle {
 
             ////////////
 
-            MouseArea {
-                id: rightMenu
+            MouseArea { // right button
                 width: headerHeight
                 height: headerHeight
 
                 visible: (deviceManager.bluetooth &&
                           (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceThermometer" ||
-                           appContent.state === "DeviceEnvironmental"))
+                           (appContent.state === "DeviceEnvironmental" && selectedDevice.hasBluetoothConnection)))
 
                 onClicked: {
                     rightMenuClicked()
@@ -189,11 +186,9 @@ Rectangle {
                 }
 
                 IconSvg {
-                    id: rightMenuImg
-                    width: (headerHeight/2)
-                    height: (headerHeight/2)
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: (headerHeight / 2)
+                    height: (headerHeight / 2)
+                    anchors.centerIn: parent
 
                     source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
                     color: Theme.colorHeaderContent

@@ -230,14 +230,10 @@ install(SCRIPT ${deploy_script})
 
 ################################################################################
 
-find_package(Git REQUIRED)
 if(WIN32)
     set(date_command "CMD")
     set(date_arg "/c date /t")
-elseif(APPLE)
-    set(date_command "date")
-    set(date_arg "")
-elseif(UNIX)
+else
     set(date_command "date")
     set(date_arg "")
 endif()
@@ -248,12 +244,13 @@ execute_process(
     OUTPUT_VARIABLE BUILD_DATE
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+find_package(Git REQUIRED)
+
 execute_process(
     COMMAND "${GIT_EXECUTABLE}" describe --always
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     OUTPUT_VARIABLE GIT_COMMIT_HASH
     OUTPUT_STRIP_TRAILING_WHITESPACE)
-
 
 message(STATUS "[SYSTEM] HOST SYSTEM                   = ${CMAKE_HOST_SYSTEM_NAME}")
 message(STATUS "[SYSTEM] TARGET PLATFORM               = ${CMAKE_SYSTEM_NAME}")
