@@ -25,7 +25,7 @@ Item {
         function onSensorsUpdated() { initBoxData() }
         function onCapabilitiesUpdated() { initBoxData() }
         function onStatusUpdated() { updateSensorStatus() }
-        function onSettingsUpdated() { updateSensorSettings() }
+        function onSettingsUpdated() { updateSensorStatus(); updateSensorSettings(); }
         function onDataUpdated() { updateSensorData() }
         function onRefreshUpdated() { updateSensorData() }
         function onLimitsUpdated() { updateSensorData() }
@@ -250,15 +250,17 @@ Item {
             } else if (boxDevice.isEnvironmentalSensor) {
 
                 alarmVentilate.visible = false
-                //alarmRadiation.visible = false
+                alarmRadiation.visible = false
                 //alarmWarning.visible = false
 
                 // Air warning
                 if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
+                    (boxDevice.hasHchoSensor && boxDevice.hcho > 1000) ||
                     (boxDevice.hasCo2Sensor && boxDevice.co2 > 1500)) {
                     alarmVentilate.visible = true
                     alarmVentilate.color = Theme.colorRed
                 } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
+                           (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
                            (boxDevice.hasCo2Sensor && boxDevice.co2 > 850)) {
                     alarmVentilate.visible = true
                     alarmVentilate.color = Theme.colorYellow
@@ -267,11 +269,11 @@ Item {
                 // Radiation warning
                 if (boxDevice.hasGeigerCounter) {
                     if (boxDevice.radioactivityM > 1) {
-                        //alarmRadiation.visible = true
-                        //if (boxDevice.radioactivityM > 10)
-                        //    alarmRadiation.color = Theme.colorRed
-                        //else
-                        //    alarmRadiation.color = Theme.colorYellow
+                        alarmRadiation.visible = true
+                        if (boxDevice.radioactivityM > 10)
+                            alarmRadiation.color = Theme.colorRed
+                        else
+                            alarmRadiation.color = Theme.colorYellow
                     }
                 }
             }
@@ -525,8 +527,25 @@ Item {
                 visible: false
                 source: "qrc:/assets/icons_material/baseline-air-24px.svg"
                 color: Theme.colorYellow
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width + 8
+                    height: width
+                    radius: width
+                    z: -1
+
+                    color: parent.color
+
+                    SequentialAnimation on opacity {
+                        running: alarmVentilate.visible
+                        loops: Animation.Infinite
+
+                        PropertyAnimation { to: 0; duration: 1000; }
+                        PropertyAnimation { to: 0.33; duration: 1000; }
+                    }
+                }
             }
-/*
             IconSvg {
                 id: alarmRadiation
                 width: bigAssMode ? 28 : 24
@@ -537,7 +556,27 @@ Item {
                 asynchronous: true
                 source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                 color: Theme.colorYellow
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: parent.width + 8
+                    height: width
+                    radius: width
+                    z: -1
+
+                    color: Qt.lighter(parent.color, 1.66)
+
+                    SequentialAnimation on opacity {
+                        running: alarmRadiation.visible
+                        alwaysRunToEnd: true
+                        loops: Animation.Infinite
+
+                        PropertyAnimation { to: 0; duration: 1000; }
+                        PropertyAnimation { to: 1; duration: 1000; }
+                    }
+                }
             }
+/*
             IconSvg {
                 id: alarmWarning
                 width: bigAssMode ? 28 : 24

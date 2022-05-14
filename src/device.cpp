@@ -477,12 +477,16 @@ void Device::refreshDataFinished(bool status, bool cached)
 void Device::refreshHistoryFinished(bool status)
 {
     //qDebug() << "Device::refreshHistoryFinished()" << getAddress() << getName();
-    Q_UNUSED(status)
 
     m_timeoutTimer.stop();
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
+
+    if (status == true)
+    {
+        // TODO // Update 'last' data on success
+    }
 
     // Even if the status is false, we probably have some new data
     Q_EMIT dataUpdated();

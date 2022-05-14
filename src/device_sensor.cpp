@@ -126,37 +126,64 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
 
     if (status == true)
     {
+        SettingsManager *sm = SettingsManager::getInstance();
+        NotificationManager *nm = NotificationManager::getInstance();
+        if (!sm || !nm) return;
+
         // Plant sensor?
         if (isPlantSensor())
         {
-            SettingsManager *sm = SettingsManager::getInstance();
-
             // Reorder the device list by water level, if needed
             if (sm->getOrderBy() == "waterlevel")
             {
                 if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
             }
+        }
 
-            // 'Water me' notification, if enabled
-            if (sm->getNotifs())
+        // Notifications enabled?
+        if (sm->getNotifs())
+        {
+            QString title;
+            QString message;
+
+            // 'water me' notification // Only if the sensor has a plant
+            if (isPlantSensor() &&
+                (m_soilMoisture > 0 && m_soilMoisture < m_limit_soilMoistureMin))
             {
-                // Only if the sensor has a plant
-                if (m_soilMoisture > 0 && m_soilMoisture < m_limit_soilMoistureMin)
-                {
-                    NotificationManager *nm = NotificationManager::getInstance();
-                    if (nm)
-                    {
-                        QString message;
-                        if (!m_associatedName.isEmpty())
-                            message = tr("You need to water your '%1' now!").arg(m_associatedName);
-                        else if (!m_locationName.isEmpty())
-                            message = tr("You need to water the plant near '%1'").arg(m_locationName);
-                        else
-                            message = tr("You need to water one of your plant!");
+                title = tr("Plant Alarm");
 
-                        nm->setNotification2("Plant Alarm", message);
-                    }
+                if (!m_associatedName.isEmpty())
+                    message = tr("You need to water your '%1' now!").arg(m_associatedName);
+                else if (!m_locationName.isEmpty())
+                    message = tr("You need to water the plant near '%1'").arg(m_locationName);
+                else
+                    message = tr("You need to water one of your plant!");
+            }
+
+            if (isEnvironmentalSensor())
+            {
+                // 'ventilate' notification
+                if ((hasVocSensor() && m_voc > 1000) ||
+                    (hasHchoSensor() && m_hcho > 1000) ||
+                    (hasCo2Sensor() && m_co2 > 1500))
+                {
+                    title = tr("Poor air quality");
+                    message = tr("You should ventilate your room now!");
                 }
+
+                // 'radiation' notification
+                if (hasGeigerCounter())
+                {
+                    title = tr("Radiation warning");
+                    if (m_rm > 1) message = tr("Radiation levels are high!");
+                    if (m_rm > 10) message = tr("Radiation levels are very high, please advise!");
+                }
+            }
+
+            // Send notification
+            if (!title.isEmpty() && !message.isEmpty())
+            {
+                nm->setNotification2(title, message);
             }
         }
     }
