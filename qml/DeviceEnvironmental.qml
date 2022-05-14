@@ -635,7 +635,7 @@ Loader {
                             anchors.right: parent.right
 
                             Rectangle {
-                                id: airBox
+                                id: airBoxes
                                 width: parent.width
                                 height: airFlow.height + (airFlow.anchors.topMargin*2)
 
@@ -824,7 +824,7 @@ Loader {
                             ////////////////////////////////////////////////////////////
 
                             Rectangle {
-                                id: radBox
+                                id: radBoxes
                                 width: parent.width
                                 height: radFlow.height + (radFlow.anchors.topMargin*2)
 
@@ -901,7 +901,7 @@ Loader {
                             ////////////////////////////////////////////////////////////
 
                             Rectangle {
-                                id: weatherBox
+                                id: weatherBoxes
 
                                 visible: isWeatherStation
 
@@ -1006,7 +1006,7 @@ Loader {
                                         value: currentDevice.uv
                                         precision: 0
                                     }
-        /*
+/*
                                     ItemWeatherBox {
                                         id: windd
                                         size: weatherFlow.www
@@ -1041,10 +1041,10 @@ Loader {
                                         value: 7
                                         precision: 0
                                     }
-        */
+*/
                                 }
                             }
-        /*
+/*
                             Rectangle {
                                 width: parent.width
 
@@ -1053,13 +1053,13 @@ Loader {
                                 opacity: 0.5
                                 color: Theme.colorSeparator
                             }
-        */
+*/
                             ////////////////////////////////////////////////////////////
 
                             Loader {
                                 id: chartEnvLoader
                                 width: parent.width
-                                height: (sensorFlick.height - airBox.height - weatherBox.height)
+                                height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
                                 //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
 
                                 asynchronous: true

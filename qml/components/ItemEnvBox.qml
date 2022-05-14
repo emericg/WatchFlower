@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Item {
     id: itemEnvBox
     width: 144
-    height: isPhone ? 64 : 72 // (width / 2)
+    height: isPhone ? 56 : 72 // (width / 2)
 
     property string title: ""
     property string legend: ""
