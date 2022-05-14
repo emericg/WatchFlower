@@ -638,7 +638,7 @@ Item {
                             }
                         }
                     }
-
+/*
                     Rectangle {
                         id: itemMacAddr
                         anchors.left: parent.left
@@ -750,6 +750,7 @@ Item {
                             }
                         }
                     }
+*/
                 }
             }
 

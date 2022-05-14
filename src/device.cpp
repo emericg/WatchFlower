@@ -599,6 +599,12 @@ bool Device::getSqlDeviceInfos()
         {
             qWarning() << "> getInfos.exec() ERROR" << getInfos.lastError().type() << ":" << getInfos.lastError().text();
         }
+
+        if (hasSetting("enabled"))
+        {
+            m_isEnabled = getSetting("enabled").toBool();
+            Q_EMIT settingsUpdated();
+        }
     }
 
     return status;
@@ -850,6 +856,8 @@ void Device::setEnabled(const bool enabled)
         m_isEnabled = enabled;
         Q_EMIT settingsUpdated();
 
+        setSetting("enabled", m_isEnabled);
+/*
         if (m_dbInternal || m_dbExternal)
         {
             QSqlQuery updateEnabled;
@@ -858,6 +866,7 @@ void Device::setEnabled(const bool enabled)
             updateEnabled.bindValue(":deviceAddr", getAddress());
             updateEnabled.exec();
         }
+*/
     }
 }
 
