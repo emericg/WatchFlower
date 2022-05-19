@@ -61,6 +61,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
                 //         << "bytes:" << info.manufacturerData(id).toHex();
 
                 dd->parseAdvertisementData(info.manufacturerData(id));
+                return;
             }
 
             const QList<QBluetoothUuid> &serviceIds = info.serviceIds();
@@ -72,6 +73,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info, QBluetooth
                 //         << "bytes:" << info.serviceData(id).toHex();
 
                 dd->parseAdvertisementData(info.serviceData(id));
+                return;
             }
 
             // Dynamic updates

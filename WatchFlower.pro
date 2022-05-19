@@ -36,6 +36,7 @@ SOURCES  += src/main.cpp \
             src/Journal.cpp \
             src/DeviceManager.cpp \
             src/DeviceManager_advertisement.cpp \
+            src/DeviceManager_nearby.cpp \
             src/DeviceManager_export.cpp \
             src/device.cpp \
             src/device_infos.cpp \

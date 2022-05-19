@@ -119,8 +119,9 @@ class DeviceSensor: public Device
     Q_PROPERTY(float biasSoilPH READ getBiasSoilPH WRITE setBiasSoilPH NOTIFY biasUpdated)
     Q_PROPERTY(float biasTemperature READ getBiasTemperature WRITE setBiasTemperature NOTIFY biasUpdated)
     Q_PROPERTY(float biasHumidity READ getBiasHumidity WRITE setBiasHumidity NOTIFY biasUpdated)
-    Q_PROPERTY(float biasPressure READ getBiasPressure WRITE setBiasPressure NOTIFY biasUpdated)
     Q_PROPERTY(float biasLuminosityLux READ getBiasLuminosity WRITE setBiasLuminosity NOTIFY biasUpdated)
+
+    Q_PROPERTY(float biasPressure READ getBiasPressure WRITE setBiasPressure NOTIFY biasUpdated)
 
     // sensor history
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
@@ -298,8 +299,8 @@ public:
     virtual bool needsUpdateDb() const;
 
     bool setSqlSensorBias();
-    //bool setSqlSensorLimits();
-    //bool setSqlPlantBias();
+    bool setSqlSensorLimits();
+    bool setSqlPlantBias();
     bool setSqlPlantLimits();
 
     // Plant sensor data
@@ -359,10 +360,11 @@ public:
     void setBiasTemperature(float value) { m_bias_temperature = value; setSqlSensorBias(); }
     float getBiasHumidity() const { return m_bias_humidity; }
     void setBiasHumidity(float value) { m_bias_humidity = value; setSqlSensorBias(); }
-    float getBiasPressure() const { return m_bias_pressure; }
-    void setBiasPressure(float value) { m_bias_pressure = value; setSqlSensorBias(); }
     float getBiasLuminosity() const { return m_bias_luminosityLux; }
     void setBiasLuminosity(float value) { m_bias_luminosityLux = value; setSqlSensorBias(); }
+
+    float getBiasPressure() const { return m_bias_pressure; }
+    void setBiasPressure(float value) { m_bias_pressure = value; setSqlSensorBias(); }
 
     // Sensor limits
     int getLimitSoilMoistureMin() const { return m_limit_soilMoistureMin; }

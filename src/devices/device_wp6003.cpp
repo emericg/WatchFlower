@@ -283,7 +283,10 @@ bool DeviceWP6003::hasData() const
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
-            qWarning() << "> hasData.exec(DeviceWP6003) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
+        {
+            qWarning() << "> hasData.exec(DeviceWP6003) ERROR"
+                       << hasData.lastError().type() << ":" << hasData.lastError().text();
+        }
 
         while (hasData.next())
         {

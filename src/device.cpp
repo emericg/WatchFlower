@@ -212,7 +212,8 @@ void Device::actionClearData()
         }
         else
         {
-            qWarning() << "> resetDeviceLastSync.exec() ERROR" << resetDeviceLastSync.lastError().type() << ":" << resetDeviceLastSync.lastError().text();
+            qWarning() << "> resetDeviceLastSync.exec() ERROR"
+                       << resetDeviceLastSync.lastError().type() << ":" << resetDeviceLastSync.lastError().text();
         }
 
         QSqlQuery deleteData;
@@ -226,7 +227,8 @@ void Device::actionClearData()
         }
         else
         {
-            qWarning() << "> deleteData.exec() ERROR" << deleteData.lastError().type() << ":" << deleteData.lastError().text();
+            qWarning() << "> deleteData.exec() ERROR"
+                       << deleteData.lastError().type() << ":" << deleteData.lastError().text();
         }
     }
 }
@@ -601,12 +603,13 @@ bool Device::getSqlDeviceInfos()
         }
         else
         {
-            qWarning() << "> getInfos.exec() ERROR" << getInfos.lastError().type() << ":" << getInfos.lastError().text();
+            qWarning() << "> getInfos.exec() ERROR"
+                       << getInfos.lastError().type() << ":" << getInfos.lastError().text();
         }
 
         if (hasSetting("enabled"))
         {
-            m_isEnabled = getSetting("enabled").toBool();
+            if (getSetting("enabled").toString() == "false") m_isEnabled = false;
             Q_EMIT settingsUpdated();
         }
     }
@@ -855,12 +858,15 @@ void Device::setAssociatedName(const QString &name)
 
 void Device::setEnabled(const bool enabled)
 {
+    //qDebug() << "setEnabled(" << enabled << ")";
+
     if (m_isEnabled != enabled)
     {
-        m_isEnabled = enabled;
-        Q_EMIT settingsUpdated();
-
-        setSetting("enabled", m_isEnabled);
+        if (setSetting("enabled", enabled))
+        {
+            m_isEnabled = enabled;
+            Q_EMIT settingsUpdated();
+        }
 /*
         if (m_dbInternal || m_dbExternal)
         {
@@ -876,6 +882,8 @@ void Device::setEnabled(const bool enabled)
 
 void Device::setOutside(const bool outside)
 {
+    //qDebug() << "setOutside(" << outside << ")";
+
     if (m_isOutside != outside)
     {
         m_isOutside = outside;
@@ -927,10 +935,14 @@ bool Device::setSetting(const QString &key, QVariant value)
             updateSettings.prepare("UPDATE devices SET settings = :settings WHERE deviceAddr = :deviceAddr");
             updateSettings.bindValue(":settings", json_str);
             updateSettings.bindValue(":deviceAddr", getAddress());
-            if (updateSettings.exec())
-                status = true;
-            else
-                qWarning() << "> updateSettings.exec() ERROR" << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
+
+            status = updateSettings.exec();
+
+            if (!status)
+            {
+                qWarning() << "> updateSettings.exec() ERROR"
+                           << updateSettings.lastError().type() << ":" << updateSettings.lastError().text();
+            }
         }
     }
 
@@ -952,8 +964,12 @@ void Device::setFirmware(const QString &firmware)
             setFirmware.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
             setFirmware.bindValue(":firmware", m_deviceFirmware);
             setFirmware.bindValue(":deviceAddr", getAddress());
+
             if (setFirmware.exec() == false)
-                qWarning() << "> setFirmware.exec() ERROR" << setFirmware.lastError().type() << ":" << setFirmware.lastError().text();
+            {
+                qWarning() << "> setFirmware.exec() ERROR"
+                           << setFirmware.lastError().type() << ":" << setFirmware.lastError().text();
+            }
         }
     }
 }
@@ -979,8 +995,12 @@ void Device::setBattery(const int battery)
                 setBattery.prepare("UPDATE devices SET deviceBattery = :battery WHERE deviceAddr = :deviceAddr");
                 setBattery.bindValue(":battery", m_deviceBattery);
                 setBattery.bindValue(":deviceAddr", getAddress());
+
                 if (setBattery.exec() == false)
-                    qWarning() << "> setBattery.exec() ERROR" << setBattery.lastError().type() << ":" << setBattery.lastError().text();
+                {
+                    qWarning() << "> setBattery.exec() ERROR"
+                               << setBattery.lastError().type() << ":" << setBattery.lastError().text();
+                }
             }
         }
     }
@@ -1010,8 +1030,12 @@ void Device::setBatteryFirmware(const int battery, const QString &firmware)
         setBatteryFirmware.bindValue(":battery", m_deviceBattery);
         setBatteryFirmware.bindValue(":firmware", m_deviceFirmware);
         setBatteryFirmware.bindValue(":deviceAddr", getAddress());
+
         if (setBatteryFirmware.exec() == false)
-            qWarning() << "> setBatteryFirmware.exec() ERROR" << setBatteryFirmware.lastError().type() << ":" << setBatteryFirmware.lastError().text();
+        {
+            qWarning() << "> setBatteryFirmware.exec() ERROR"
+                       << setBatteryFirmware.lastError().type() << ":" << setBatteryFirmware.lastError().text();
+        }
     }
 }
 
