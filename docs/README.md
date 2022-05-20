@@ -28,7 +28,7 @@ Supported devices
 | Temperature                          | -15 → 50 °C (± 0.5 °C)                |
 | Luminosity                           | 0 → 100k lux (± 100 lux)              |
 | IP Code                              | IPX6                                  |
-| BLE API                              |                                       |
+| BLE API                              | [link](flowercare-ble-api.md)         |
 
 | RoPot                                | HHCC Plant Technology                 |
 | ------------------------------------ | ------------------------------------- |

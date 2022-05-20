@@ -1,10 +1,15 @@
 
 ## About MiBeacon
 
-The MiBeacon protocol is used by various Xiaomi devices and affiliated device
-manufacturers to advertise data over Bluetooth Low Energy.
+The MiBeacon protocol is used by various Xiaomi (and affiliated) devices manufacturers to advertise data over Bluetooth Low Energy.  
 
-### Data structure
+MiBeacon protocol usually broadcast 12-20 bytes `service data` messages, over `0xFE95` 16 bits service UUID.  
+
+There seems to be at least two slightly different versions of the protocol.  
+
+<img src="endianness.png" width="400px" alt="Endianness" align="right" />
+
+## Data structure
 
 Bluetooth payload data typically uses little-endian byte order.  
 This means that the data is represented with the least significant byte first.  
@@ -13,27 +18,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Advertisement data
 
-MiBeacon protocol usually broadcast 12-20 bytes `service data` with 16 bits service UUID `0xFE95`.  
-
-##### Examples messages
-
-| Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
-| ------------ | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| HHCCJCY01    | Value >  | 71 | 20 | 98 | 00 | 71 | XX | XX | 66 | 8d | 7c | c4 | 0d | 08 | 10 | 01 | 1f | -  |
-| HHCCPOT002   |          | 71 | 20 | 5d | 01 | 83 | XX | XX | 6d | 8d | 7c | c4 | 0d | 08 | 10 | 01 | 03 | -  |
-| HHCCPOT002   |          | 71 | 20 | 5d | 01 | 83 | XX | XX | 6d | 8d | 7c | c4 | 0d | 09 | 10 | 02 | 01 | 01 |
-| LYWSD02      |          | 70 | 20 | 5b | 04 | fc | XX | XX | 83 | c8 | 59 | 3f | 09 | 04 | 10 | 02 | 19 | 01 |
-| MHO-C303     |          | 70 | 20 | d3 | 06 | 20 | XX | XX | 11 | 45 | 76 | e7 | 09 | 0a | 10 | 01 | 00 | -  |
-
-| Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-| ------------ | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| JQJCY01YM    | Value >  | 51 | 20 | df | 02 | 3e | XX | XX | 01 | 43 | 57 | 48 | 04 | 10 | 02 | c4 | 00 | -  | -  |
-| CGG1         |          | 50 | 30 | 47 | 03 | 41 | XX | XX | 10 | 34 | 2d | 58 | 04 | 10 | 02 | 12 | 01 | -  | -  |
-| CGG1         |          | 50 | 30 | 47 | 03 | 83 | XX | XX | 10 | 34 | 2d | 58 | 0d | 10 | 04 | 10 | 01 | 7e | 02 |
-| LYWSDCGQ     |          | 50 | 20 | aa | 01 | 37 | XX | XX | 33 | 34 | 2d | 58 | 0d | 10 | 04 | 04 | 01 | 66 | 02 |
-| LYWSDCGQ     |          | 50 | 20 | aa | 01 | ca | XX | XX | d0 | a8 | 65 | 4c | 0d | 10 | 04 | 18 | 01 | 24 | 02 |
-
-##### Protocol (version 0x70?)
+#### Protocol (version 0x70?)
 
 | Bytes | Type      | Value             | Description                          |
 | ----- | --------- | ----------------- | ------------------------------------ |
@@ -45,7 +30,7 @@ MiBeacon protocol usually broadcast 12-20 bytes `service data` with 16 bits serv
 | 12-13 | bytes     |                   | Type of measurement                  |
 | 14+   | data      |                   | Payload                              |
 
-##### Protocol (version 0x50?)
+#### Protocol (version 0x50?)
 
 | Bytes | Type      | Value             | Description                          |
 | ----- | --------- | ----------------- | ------------------------------------ |
@@ -56,7 +41,25 @@ MiBeacon protocol usually broadcast 12-20 bytes `service data` with 16 bits serv
 | 11-12 | bytes     |                   | Type of measurement                  |
 | 13+   | data      |                   | Payload                              |
 
-##### Device IDs
+#### Example data
+
+| Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+| ------------ | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| HHCCJCY01    | values > | 71 | 20 | 98 | 00 | 71 | XX | XX | 66 | 8d | 7c | c4 | 0d | 08 | 10 | 01 | 1f | -  |
+| HHCCPOT002   |          | 71 | 20 | 5d | 01 | 83 | XX | XX | 6d | 8d | 7c | c4 | 0d | 08 | 10 | 01 | 03 | -  |
+| HHCCPOT002   |          | 71 | 20 | 5d | 01 | 83 | XX | XX | 6d | 8d | 7c | c4 | 0d | 09 | 10 | 02 | 01 | 01 |
+| LYWSD02      |          | 70 | 20 | 5b | 04 | fc | XX | XX | 83 | c8 | 59 | 3f | 09 | 04 | 10 | 02 | 19 | 01 |
+| MHO-C303     |          | 70 | 20 | d3 | 06 | 20 | XX | XX | 11 | 45 | 76 | e7 | 09 | 0a | 10 | 01 | 00 | -  |
+
+| Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
+| ------------ | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| JQJCY01YM    | values > | 51 | 20 | df | 02 | 3e | XX | XX | 01 | 43 | 57 | 48 | 04 | 10 | 02 | c4 | 00 | -  | -  |
+| CGG1         |          | 50 | 30 | 47 | 03 | 41 | XX | XX | 10 | 34 | 2d | 58 | 04 | 10 | 02 | 12 | 01 | -  | -  |
+| CGG1         |          | 50 | 30 | 47 | 03 | 83 | XX | XX | 10 | 34 | 2d | 58 | 0d | 10 | 04 | 10 | 01 | 7e | 02 |
+| LYWSDCGQ     |          | 50 | 20 | aa | 01 | 37 | XX | XX | 33 | 34 | 2d | 58 | 0d | 10 | 04 | 04 | 01 | 66 | 02 |
+| LYWSDCGQ     |          | 50 | 20 | aa | 01 | ca | XX | XX | d0 | a8 | 65 | 4c | 0d | 10 | 04 | 18 | 01 | 24 | 02 |
+
+#### Device IDs
 
 | Device       | Product ID   |
 | ------------ | ------------ |
@@ -69,7 +72,7 @@ MiBeacon protocol usually broadcast 12-20 bytes `service data` with 16 bits serv
 | CGG1         | 0x4703       |
 | JQJCY01YM    | 0xDF02       |
 
-##### Type of measurement
+#### Type of measurement
 
 ```
 0x0210 = sleep state
@@ -92,7 +95,7 @@ MiBeacon protocol usually broadcast 12-20 bytes `service data` with 16 bits serv
 0x1610 = gas state
 ```
 
-##### Payload
+#### Payload format
 
 ###### Sleep state
 

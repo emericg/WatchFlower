@@ -181,7 +181,7 @@ TODO
 
 ## Advertisement data
 
-TODO
+Flower Power with firmware 1.0 doesn't seem to advertise data.  
 
 ## Reference
 
