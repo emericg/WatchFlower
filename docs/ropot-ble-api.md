@@ -37,14 +37,14 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ### Data structure
 
-The data is encoded in little-endian byte order.  
-This means that the data is represented with the least significant byte first.
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
 ## Services, characteristics and handles
 
-The name advertised by the device is `ropot`
+The name advertised by the device is `ropot`.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -115,13 +115,12 @@ A read request will return 10 bytes of data, for example `0xea0000ab00000015b200
 | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 | Value    | ea | 00 | 00 | 00 | 00 | 00 | 00 | 15 | b2 | 00 |
 
-| Bytes | Type       | Value | Description           |
-| ----- | ---------- | ----- | --------------------- |
-| 00-01 | uint16     | 234   | temperature in 0.1 °C |
-| 02    | ?          | ?     | ?                     |
-| 03-06 | uint32     | -     | -                     |
-| 07    | uint8      | 21    | moisture in %         |
-| 08-09 | uint16     | 178   | conductivity in µS/cm |
+| Bytes | Type       | Value | Description                |
+| ----- | ---------- | ----- | -------------------------- |
+| 00-01 | uint16     | 234   | temperature in 0.1 °C      |
+| 02-06 | -          | -     | -                          |
+| 07    | uint8      | 21    | soil moisture in %         |
+| 08-09 | uint16     | 178   | soil conductivity in µS/cm |
 
 #### Historical data
 
@@ -138,7 +137,7 @@ A read request to the `0x3831` handle will return 4 bytes of data, for example `
 
 | Bytes | Type       | Value   | Description                       |
 | ----- | ---------- | ------- | --------------------------------- |
-| 00-03 | uint32     | 2158345 | seconds since device epoch (boot) |
+| 00-03 | uint32_le  | 2158345 | seconds since device epoch (boot) |
 
 Considering the device's epoch as second 0, the value obtained is a delta from now from which we can determine the actual time.  
 We use this method while determining the datetime of historical entries.  
@@ -154,7 +153,7 @@ This will return 16 bytes of data, for example `0x2b007b04ba130800c8150800000000
 
 | Bytes | Type       | Value | Description                         |
 | ----- | ---------- | ----- | ----------------------------------- |
-| 00-01 | uint16     | 43    | number of stored historical records |
+| 00-01 | uint16_le  | 43    | number of stored historical records |
 | 02-15 | ?          | ?     | ?                                   |
 
 ##### Read entry
@@ -174,13 +173,11 @@ This will return 16 bytes of data, for example `0x70e72000eb00005a00000015b30000
 
 | Bytes | Type       | Value   | Description                                  |
 | ----- | ---------- | ------- | -------------------------------------------- |
-| 00-03 | uint32     | 2156400 | timestamp, seconds since device epoch (boot) |
-| 04-05 | uint16     | 235     | temperature in 0.1 °C                        |
-| 06    | ?          | ?       | ?                                            |
-| 07-10 | uint32     | -       | -                                            |
-| 11    | uint8      | 21      | moisture in %                                |
-| 12-13 | uint16     | 179     | conductivity in µS/cm                        |
-| 14-15 |            | ?       | ?                                            |
+| 00-03 | uint32_le  | 2156400 | timestamp, seconds since device epoch (boot) |
+| 04-10 | -          | -       | -                                            |
+| 11    | uint8      | 21      | soil moisture in %                           |
+| 12-13 | uint16_le  | 179     | soil conductivity in µS/cm                   |
+| 14-15 | ?          | ?       | ?                                            |
 
 ##### Clear entries
 
@@ -189,7 +186,12 @@ This can be achieved by writing 3 bytes (`0xa20000`) to the history control hand
 
 ## Advertisement data
 
-TODO
+Ropot broadcast `service data` with 16 bits service UUID `0xFE95`.  
+Only soil moisture and soil conductivity values are advertised, not the temperature.  
+
+##### UUID `0xFE95` 16-20 bytes messages
+
+Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 

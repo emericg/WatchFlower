@@ -27,9 +27,16 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
-The name advertised by the devices is `MJ_HT_V1`.
+The name advertised by the devices is `MJ_HT_V1`.  
 
 TODO
 
@@ -39,7 +46,22 @@ TODO
 
 ## Advertisement data
 
-TODO
+There seems to be two kind of advertisement data broadcasted.  
+LYWSDCGQ broadcast `service data` with 16 bits service UUID `0xFE95` and `0xFFFF`.  
+
+##### UUID `0xFE95` 16-20 bytes messages (with hygrometer data)
+
+Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
+
+##### UUID `0xFFFF` 6 bytes messages
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 |
+| -------- | -- | -- | -- | -- | -- | -- |
+| Value    | e7 | b9 | f8 | 86 | 54 | 48 |
+
+| Bytes | Type      | Value             | Description       |
+| ----- | --------- | ----------------- | ----------------- |
+| 00-05 | bytes     |                   | ?                 |
 
 ## Reference
 

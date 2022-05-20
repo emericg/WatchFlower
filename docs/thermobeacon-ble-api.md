@@ -31,14 +31,14 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ### Data structure
 
-The data is encoded in little-endian byte order.  
-This means that the data is represented with the least significant byte first.
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `ThermoBeacon`, for both keychain and LCD devices.
+The name advertised by the devices is `ThermoBeacon`, for both keychain and LCD devices.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -88,12 +88,12 @@ The response is as follow:
 | Bytes | Type      | Raw value         | Value             | Description           |
 | ----- | --------- | ----------------- | ----------------- | --------------------- |
 | 00-05 | bytes     | 0x07XXXX0000      |                   | command + idx         |
-| 06-07 | Int16     | 360               | 360/16 = 22.5°    | temperature °C (1)    |
-| 08-09 | Int16     |                   |                   | temperature (2)       |
-| 10-11 | Int16     |                   |                   | temperature (3)       |
-| 12-13 | Int16     | 652               | 652/16 = 40.75%   | humidity %RH (1)      |
-| 14-15 | Int16     |                   |                   | humidity (2)          |
-| 16-17 | Int16     |                   |                   | humidity (3)          |
+| 06-07 | int16_le  | 360               | 360/16 = 22.5°    | temperature °C (1)    |
+| 08-09 | int16_le  |                   |                   | temperature (2)       |
+| 10-11 | int16_le  |                   |                   | temperature (3)       |
+| 12-13 | int16_le  | 652               | 652/16 = 40.75%   | humidity %RH (1)      |
+| 14-15 | int16_le  |                   |                   | humidity (2)          |
+| 16-17 | int16_le  |                   |                   | humidity (3)          |
 
 ##### Clear entries
 
@@ -102,10 +102,10 @@ The onboard LED will also slowly blink three time.
 
 ## Advertisement data
 
-There seems to be two kind of advertisement message broadcasted.  
-One with 20 bytes of seemingly fixed content, and one of 18 bytes with hygrometer data.
+There seems to be two kind of advertisement data broadcasted.  
+They are `manufacturer data` with company identifier `0x0010`.  
 
-##### 20 bytes message
+##### 20 bytes message (with seemingly fixed content)
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 |
 | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -117,7 +117,7 @@ One with 20 bytes of seemingly fixed content, and one of 18 bytes with hygromete
 | 02-07 | bytes     | 91:20:00:00:XX:XX | mac address       |
 | 08-19 | bytes     |                   | unknown content   |
 
-##### 18 bytes message
+##### 18 bytes message (with hygrometer data)
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
 | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -127,10 +127,10 @@ One with 20 bytes of seemingly fixed content, and one of 18 bytes with hygromete
 | ----- | --------- | ----------------- | --------------------- | --------------------- |
 | 00-01 | bytes     |                   |                       | padding bytes?        |
 | 02-07 | bytes     |                   | 91:20:00:00:XX:XX     | mac address           |
-| 08-09 | Int16     | 3005              | 3005/1000 = 3.005V    | battery voltage?      |
-| 10-11 | Int16     | 360               | 360/16 = 22.5°        | temperature (°C)      |
-| 12-13 | Int16     | 652               | 652/16 = 40.75%       | humidity (%RH)        |
-| 14-17 | Int32     | 5881372           | 5881372/256 = 22974   | device time (s)       |
+| 08-09 | int16_be  | 3005              | 3005/1000 = 3.005V    | battery voltage       |
+| 10-11 | int16_be  | 360               | 360/16 = 22.5°        | temperature (°C)      |
+| 12-13 | int16_be  | 652               | 652/16 = 40.75%       | humidity (%RH)        |
+| 14-17 | int32_be  | 5881372           | 5881372/256 = 22974   | device time (s)       |
 
 ## Reference
 

@@ -27,9 +27,16 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
-The name advertised by the devices is `Qingping Temp RH Lite`.
+The name advertised by the devices is `Qingping Temp RH Lite`.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -46,7 +53,7 @@ The name advertised by the devices is `Qingping Temp RH Lite`.
 #### Communication with the device
 
 Register to get notification on the 'real time data' characteristic.  
-The device will send back 7 bytes data packets:
+The device will send back 7 bytes data packets:  
 
 | Bytes | Type      | Value                 | Description           |
 | ----- | --------- | --------------------- | --------------------- |

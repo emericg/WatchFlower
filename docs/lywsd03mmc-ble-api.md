@@ -27,9 +27,16 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
-The name advertised by the devices is `LYWSD03MMC`.
+The name advertised by the devices is `LYWSD03MMC`.  
 
 TODO
 
@@ -39,7 +46,18 @@ TODO
 
 ## Advertisement data
 
-TODO
+LYWSDO3MMC broadcast `service data` with 16 bits service UUID `0xFE95`.  
+These data are encrypted and thus not easily exploitable.  
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| Value    | 30 | 58 | 5b | 05 | 5d | b2 | 68 | c5 | 38 | c1 | a4 | 08 |
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-04 | bytes     |                   | -                                    |
+| 05-10 | bytes     | A4:C1:38:C5:68:B2 | MAC address                          |
+| 11    | bytes     |                   | -                                    |
 
 ## Reference
 

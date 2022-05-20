@@ -25,9 +25,16 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
-The name advertised by the devices is `MHO-C401`.
+The name advertised by the devices is `MHO-C401`.  
 
 TODO
 

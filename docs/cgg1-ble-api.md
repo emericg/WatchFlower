@@ -32,6 +32,13 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
 The name advertised by the devices (CGG1) is `ClearGrass Temp and RH`.  
@@ -50,9 +57,9 @@ The name advertised by the devices (CGG1-H) is unknown.
 
 ##### Data service (UUID 22210000-554a-4546-5542-46534450464d)
 
-| Characteristic UUID                  | Handle | Access      | Description                     |
-| ------------------------------------ | ------ | ----------- | ------------------------------- |
-| 00000100-0000-1000-8000-00805f9b34fb | -      | notify      | real time data                  |
+| Characteristic UUID                  | Access      | Description                     |
+| ------------------------------------ | ----------- | ------------------------------- |
+| 00000100-0000-1000-8000-00805f9b34fb | notify      | real time data                  |
 
 #### Communication with the device
 

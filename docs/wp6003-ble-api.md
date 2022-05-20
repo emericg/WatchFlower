@@ -32,31 +32,31 @@ In general you have to know about services and characteristics to talk to a BLE 
 ### Data structure
 
 The data is encoded in big-endian byte order.  
-This means that the data is represented with the most significant byte first.
+This means that the data is represented with the most significant byte first.  
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `WP6003#XXXXXXXXXXXX`, WP6003# followed by the MAC address of the device.
+The name advertised by the devices is `WP6003#XXXXXXXXXXXX`, WP6003# followed by the MAC address of the device.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                     |
-| ------------------------------------ | ------ | ----------- | ------------------------------- |
-| 00002a00-0000-1000-8000-00805f9b34fb | ?      | read,write  | device name                     |
-| 00002a01-0000-1000-8000-00805f9b34fb | ?      | read,write  | appearance                      |
-| 00002a02-0000-1000-8000-00805f9b34fb | ?      | read        | privacy flag                    |
-| 00002a04-0000-1000-8000-00805f9b34fb | ?      | read        | connection parameters           |
+| Characteristic UUID                  | Access      | Description                     |
+| ------------------------------------ | ----------- | ------------------------------- |
+| 00002a00-0000-1000-8000-00805f9b34fb | read,write  | device name                     |
+| 00002a01-0000-1000-8000-00805f9b34fb | read,write  | appearance                      |
+| 00002a02-0000-1000-8000-00805f9b34fb | read        | privacy flag                    |
+| 00002a04-0000-1000-8000-00805f9b34fb | read        | connection parameters           |
 
 ##### Generic attribute (UUID 00001801-0000-1000-8000-00805f9b34fb)
 
 ##### Communication service (UUID 0000fff0-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access        | Description                   |
-| ------------------------------------ | ------ | ------------- | ----------------------------- |
-| 0000fff1-0000-1000-8000-00805f9b34fb | ?      | write no resp | TX                            |
-| 0000fff4-0000-1000-8000-00805f9b34fb | ?      | read,notify   | RX                            |
+| Characteristic UUID                  | Access        | Description                   |
+| ------------------------------------ | ------------- | ----------------------------- |
+| 0000fff1-0000-1000-8000-00805f9b34fb | write no resp | TX                            |
+| 0000fff4-0000-1000-8000-00805f9b34fb | read,notify   | RX                            |
 
 #### Communication with the device
 
@@ -99,7 +99,7 @@ The sensor needs a couple of minutes to warm up and send valid data (VOC and HCH
 
 ## Advertisement data
 
-There seems to be no advertisement message broadcasted.  
+There seems to be no advertisement data broadcasted.  
 
 ## Reference
 

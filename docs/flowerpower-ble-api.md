@@ -36,14 +36,14 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ### Data structure
 
-The data is encoded in little-endian byte order.  
-This means that the data is represented with the least significant byte first.
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
 ## Services, characteristics and handles
 
-The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address).
+The name advertised by the device is `Flower power AABB` (the last 4 characters are the last characters of the device's MAC address).  
 
 ##### Generic Access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -59,7 +59,7 @@ The name advertised by the device is `Flower power AABB` (the last 4 characters 
 | 00002a25-0000-1000-8000-00805f9b34fb | 0x16   | read        | serial number string          |
 | 00002a26-0000-1000-8000-00805f9b34fb | 0x17   | read        | firmware revision string      |
 | 00002a27-0000-1000-8000-00805f9b34fb | 0x1a   | read        | hardware revision string      |
-| 00002a28-0000-1000-8000-00805f9b34fb |        | read        | software revision string      |
+| 00002a28-0000-1000-8000-00805f9b34fb | ?      | read        | software revision string      |
 | 00002a29-0000-1000-8000-00805f9b34fb | 0x1e   | read        | manufacturer name string      |
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
@@ -85,12 +85,12 @@ Firmware versions 1.1.0+ have some new characteristics:
 
 | Characteristic UUID                  | Handle | Access      | Description                   |
 | ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 39e1fa09-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | soil moisture (calibrated)    |
-| 39e1fa0a-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | air temperature (calibrated)  |
-| 39e1fa0b-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | sunlight (calibrated)         |
-| 39e1fa0c-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ea (calibrated)               |
-| 39e1fa0d-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ecb (calibrated)              |
-| 39e1fa0e-84a8-11e2-afba-0002a5d5c51b | 0x?    | read/notify | ecp (calibrated)              |
+| 39e1fa09-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | soil moisture (calibrated)    |
+| 39e1fa0a-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | air temperature (calibrated)  |
+| 39e1fa0b-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | sunlight (calibrated)         |
+| 39e1fa0c-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | ea (calibrated)               |
+| 39e1fa0d-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | ecb (calibrated)              |
+| 39e1fa0e-84a8-11e2-afba-0002a5d5c51b | ?      | read/notify | ecp (calibrated)              |
 
 ##### Upload service (UUID 39e1fb00-84a8-11e2-afba-0002a5d5c51b)
 

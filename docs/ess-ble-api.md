@@ -20,51 +20,51 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 ### Data structure
 
-The data is encoded in little-endian byte order.  
-This means that the data is represented with the least significant byte first.
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
 ## Services, characteristics and handles
 
-The name advertised will be dependent on the device used.
+The name advertised will be dependent on the device used.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                   |
-| ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 00002a00-0000-1000-8000-00805f9b34fb | n/a    | read        | device name                   |
+| Characteristic UUID                  | Access      | Description                   |
+| ------------------------------------ | ----------- | ----------------------------- |
+| 00002a00-0000-1000-8000-00805f9b34fb | read        | device name                   |
 
 ##### Battery service (UUID 0000180f-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                   |
-| ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 00002a19-0000-1000-8000-00805f9b34fb | n/a    | read        | battery level                 |
+| Characteristic UUID                  | Access      | Description                   |
+| ------------------------------------ | ----------- | ----------------------------- |
+| 00002a19-0000-1000-8000-00805f9b34fb | read        | battery level                 |
 
 ##### Environmental Sensing Service (UUID 0000181A-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                   |
-| ------------------------------------ | ------ | ----------- | ----------------------------- |
-| 00002a6c-0000-1000-8000-00805f9b34fb | n/a    | read/notify | elevation                     |
-| 00002a6d-0000-1000-8000-00805f9b34fb | n/a    | read/notify | pressure                      |
-| 00002a6e-0000-1000-8000-00805f9b34fb | n/a    | read/notify | temperature                   |
-| 00002a6f-0000-1000-8000-00805f9b34fb | n/a    | read/notify | humidity                      |
-| 00002a70-0000-1000-8000-00805f9b34fb | n/a    | read/notify | true wind speed               |
-| 00002a71-0000-1000-8000-00805f9b34fb | n/a    | read/notify | true wind direction           |
-| 00002a72-0000-1000-8000-00805f9b34fb | n/a    | read/notify | apparent wind speed           |
-| 00002a73-0000-1000-8000-00805f9b34fb | n/a    | read/notify | apparent wind direction       |
-| 00002a74-0000-1000-8000-00805f9b34fb | n/a    | read/notify | gust factor                   |
-| 00002a75-0000-1000-8000-00805f9b34fb | n/a    | read/notify | pollen concentration          |
-| 00002a76-0000-1000-8000-00805f9b34fb | n/a    | read/notify | UV index                      |
-| 00002a77-0000-1000-8000-00805f9b34fb | n/a    | read/notify | irradiance                    |
-| 00002a78-0000-1000-8000-00805f9b34fb | n/a    | read/notify | rainfall                      |
-| 00002a79-0000-1000-8000-00805f9b34fb | n/a    | read/notify | wind chill                    |
-| 00002a7a-0000-1000-8000-00805f9b34fb | n/a    | read/notify | heat index                    |
-| 00002a7b-0000-1000-8000-00805f9b34fb | n/a    | read/notify | dew point                     |
-| 00002aa3-0000-1000-8000-00805f9b34fb | n/a    | read/notify | barometric pressure trend     |
-| 00002a2c-0000-1000-8000-00805f9b34fb | n/a    | read/notify | magnetic declination          |
-| 00002aa0-0000-1000-8000-00805f9b34fb | n/a    | read/notify | magnetic flux density 2d      |
-| 00002aa1-0000-1000-8000-00805f9b34fb | n/a    | read/notify | magnetic flux density 3d      |
+| Characteristic UUID                  | Access      | Description                   |
+| ------------------------------------ | ----------- | ----------------------------- |
+| 00002a6c-0000-1000-8000-00805f9b34fb | read/notify | elevation                     |
+| 00002a6d-0000-1000-8000-00805f9b34fb | read/notify | pressure                      |
+| 00002a6e-0000-1000-8000-00805f9b34fb | read/notify | temperature                   |
+| 00002a6f-0000-1000-8000-00805f9b34fb | read/notify | humidity                      |
+| 00002a70-0000-1000-8000-00805f9b34fb | read/notify | true wind speed               |
+| 00002a71-0000-1000-8000-00805f9b34fb | read/notify | true wind direction           |
+| 00002a72-0000-1000-8000-00805f9b34fb | read/notify | apparent wind speed           |
+| 00002a73-0000-1000-8000-00805f9b34fb | read/notify | apparent wind direction       |
+| 00002a74-0000-1000-8000-00805f9b34fb | read/notify | gust factor                   |
+| 00002a75-0000-1000-8000-00805f9b34fb | read/notify | pollen concentration          |
+| 00002a76-0000-1000-8000-00805f9b34fb | read/notify | UV index                      |
+| 00002a77-0000-1000-8000-00805f9b34fb | read/notify | irradiance                    |
+| 00002a78-0000-1000-8000-00805f9b34fb | read/notify | rainfall                      |
+| 00002a79-0000-1000-8000-00805f9b34fb | read/notify | wind chill                    |
+| 00002a7a-0000-1000-8000-00805f9b34fb | read/notify | heat index                    |
+| 00002a7b-0000-1000-8000-00805f9b34fb | read/notify | dew point                     |
+| 00002aa3-0000-1000-8000-00805f9b34fb | read/notify | barometric pressure trend     |
+| 00002a2c-0000-1000-8000-00805f9b34fb | read/notify | magnetic declination          |
+| 00002aa0-0000-1000-8000-00805f9b34fb | read/notify | magnetic flux density 2d      |
+| 00002aa1-0000-1000-8000-00805f9b34fb | read/notify | magnetic flux density 3d      |
 
 #### Battery
 
@@ -82,27 +82,27 @@ A read request to the battery characteristic will return 4 bytes of data, for ex
 
 ##### Elevation
 
-| Type                         | Value (raw) | Value    | Description | Link |
-| ---------------------------- | ----------- | -------- | ----------- | ---- |
-| sint24 (decimal exponent -2) | 10000       | 100.00 m | Unit is in meters with a resolution of 0.01 m | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.elevation.xml) |
+| Type      | Value (raw) | Value     | Description                            | Link |
+| --------- | ----------- | --------- | -------------------------------------- | ---- |
+| int24_le  | 10000       | 100.00 m  | Unit is in meters with a resolution of 0.01 m | [link](https://github.com/oesmith/gatt-xml/blob/master/org.bluetooth.characteristic.elevation.xml) |
 
 ##### Barometric Pressure
 
-| Type                         | Value (raw) | Value    | Description | Link |
-| ---------------------------- | ----------- | -------- | ----------- | ---- |
-| uint32 (decimal exponent -1) | 10130       | 1013.0 Pa| Unit is in pascals with a resolution of 0.1 Pa | [link]() |
+| Type      | Value (raw) | Value     | Description                            | Link |
+| --------- | ----------- | --------- | -------------------------------------- | ---- |
+| uint32_le | 10130       | 1013.0 Pa | Unit is in pascals with a resolution of 0.1 Pa | [link](https://github.com/oesmith/gatt-xml/blob/master/org.bluetooth.characteristic.pressure.xml) |
 
 ##### Temperature
 
-| Type                         | Value (raw) | Value    | Description | Link |
-| ---------------------------- | ----------- | -------- | ----------- | ---- |
-| sint24 (decimal exponent -2) | -564        | -5.64 °C | Unit is in degrees Celsius with a resolution of 0.01 degrees Celsius | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature.xml) |
+| Type      | Value (raw) | Value     | Description                            | Link |
+| --------- | ----------- | --------- | -------------------------------------- | ---- |
+| int24_le  | -564        | -5.64 °C  | Unit is in degrees Celsius with a resolution of 0.01 °C | [link](https://github.com/oesmith/gatt-xml/blob/master/org.bluetooth.characteristic.temperature.xml) |
 
 ##### Humidity
 
-| Type                         | Value (raw) | Value    | Description | Link |
-| ---------------------------- | ----------- | -------- | ----------- | ---- |
-| sint24 (decimal exponent -2) | 5000        | 50.00 %  | Unit is in percent with a resolution of 0.01 percent | [link](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.humidity.xml) |
+| Type      | Value (raw) | Value     | Description                            | Link |
+| --------- | ----------- | --------- | -------------------------------------- | ---- |
+| int24_le  | 5000        | 50.00 %   | Unit is in percent with a resolution of 0.01 % | [link](https://github.com/oesmith/gatt-xml/blob/master/org.bluetooth.characteristic.humidity.xml) |
 
 ##### Others (todo)
 

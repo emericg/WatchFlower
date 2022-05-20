@@ -26,9 +26,16 @@ In general you have to know about services and characteristics to talk to a BLE 
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
+### Data structure
+
+Bluetooth payload data typically uses little-endian byte order.  
+This means that the data is represented with the least significant byte first.  
+
+To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
+
 ## Services, characteristics and handles
 
-The name advertised by the devices is `MHO-C303`.
+The name advertised by the devices is `MHO-C303`.  
 
 TODO
 
@@ -38,7 +45,8 @@ TODO
 
 ## Advertisement data
 
-TODO
+MHO-C303 broadcast `service data` with 16 bits service UUID `0xFE95` .  
+Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 
