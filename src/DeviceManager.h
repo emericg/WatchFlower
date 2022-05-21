@@ -190,8 +190,8 @@ private slots:
     void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
     void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void addBleDevice(const QBluetoothDeviceInfo &info);
-    void detectBleDevice(const QBluetoothDeviceInfo &info);
     void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+    void updateBleDevice_simple(const QBluetoothDeviceInfo &info);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
     void deviceDiscoveryFinished();
     void deviceDiscoveryStopped();

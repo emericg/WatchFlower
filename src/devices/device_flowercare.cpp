@@ -628,7 +628,8 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
     //qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    // 12-18 bytes messages
+    // MiBeacon protocol / 12-10 bytes messages
+
     if (value.size() >= 12)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
@@ -670,7 +671,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
                 if (temp != m_temperature)
                 {
-                    if (temp > -20.f && temp < 100.f)
+                    if (temp > -30.f && temp < 100.f)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -730,7 +731,7 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                 batt = static_cast<int8_t>(data[15]);
                 setBattery(batt);
             }
-            else if (data[12] == 11 && value.size() >= 19)
+            else if (data[12] == 13 && value.size() >= 19)
             {
                 temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
                 if (temp != m_temperature)
@@ -757,21 +758,22 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
                     }
                 }
             }
-/*
-            if (m_temperature > -99 && m_luminosityLux > -99 && m_soilMoisture > -99 && m_soilConductivity > -99)
+
+            if (m_soilMoisture > -99 && m_soilConductivity > -99 && m_temperature > -99.f && m_luminosityLux > -99)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
                 if (needsUpdateDb())
                 {
-                    // TODO // UPDATE DB
-
-                    Q_EMIT dataUpdated();
-                    Q_EMIT statusUpdated();
+                    addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                      m_soilMoisture, m_soilConductivity,
+                                      m_temperature, m_luminosityLux);
                 }
+
+                refreshDataFinished(true);
             }
-*/ /*
-            if (temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
+/*
+            if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
                 if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;

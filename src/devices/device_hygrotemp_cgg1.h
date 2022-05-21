@@ -34,7 +34,8 @@
 /* ************************************************************************** */
 
 /*!
- * ClearGrass "Digital Bluetooth Thermometer and Hygrometer"
+ * ClearGrass "Temp and RH Monitor"
+ * Qingping "Temp & RH Monitor M"
  * CGG1 device / round body / E-Ink
  *
  * Protocol infos:
@@ -48,6 +49,8 @@ public:
     DeviceHygrotempCGG1(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempCGG1(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGG1();
+
+    void parseAdvertisementData(const QByteArray &value);
 
 private:
     // QLowEnergyController related

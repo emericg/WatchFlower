@@ -79,34 +79,67 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const QByteArray &value)
     //qDebug() << "DeviceHygrotempCGD1::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    // 28 bytes messages?
-    if (value.size() >= 28)
-    {
-        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
+    // MiBeacon? // 12 bytes messages?
+    // MiBeacon? // 14 bytes messages?
+
+    if (value.size() == 17) // Qingping data? // 17 bytes messages
+    {
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        QString mac;
+        mac += value.mid(7,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(6,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(5,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(4,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(3,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(2,1).toHex().toUpper();
+
+        // Save mac address
+        setSetting("mac", mac);
+#else
+        QString mac;
+        Q_UNUSED(mac)
+#endif
+        int batt = -99;
         float temp = -99.f;
         float humi = -99.f;
 
         // get data
-
-        temp = static_cast<int32_t>(data[20] + (data[21] << 8) + (data[22] << 16) + (data[23] << 24)) / 10.f;
-        if (temp != m_temperature)
+        if ((data[0] == 0x88 && data[1] == 0x16) || // CGG1
+            (data[0] == 0x08 && data[1] == 0x07) || // CGG1
+            (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
+            (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
+            (data[0] == 0x08 && data[1] == 0x09) || // CGD1
+            (data[0] == 0x08 && data[1] == 0x0c))   // CGP1W
         {
-            if (temp > -20.f && temp < 100.f)
+            temp = static_cast<int32_t>(data[10] + (data[11] << 8)) / 10.f;
+            if (temp != m_temperature)
             {
-                m_temperature = temp;
-                Q_EMIT dataUpdated();
+                if (temp > -30.f && temp < 100.f)
+                {
+                    m_temperature = temp;
+                    Q_EMIT dataUpdated();
+                }
             }
-        }
 
-        humi = static_cast<int32_t>(data[24] + (data[25] << 8) + (data[26] << 16) + (data[27] << 24)) / 10.f;
-        if (humi != m_humidity)
-        {
-            if (humi >= 0.f && humi <= 100.f)
+            humi = static_cast<int32_t>(data[12] + (data[13] << 8)) / 10.f;
+            if (humi != m_humidity)
             {
-                m_humidity = humi;
-                Q_EMIT dataUpdated();
+                if (humi >= 0.f && humi <= 100.f)
+                {
+                    m_humidity = humi;
+                    Q_EMIT dataUpdated();
+                }
             }
+
+            batt = static_cast<int8_t>(data[16]);
+            setBattery(batt);
         }
 
         if (m_temperature > -99.f && m_humidity > -99.f)
@@ -136,16 +169,16 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const QByteArray &value)
                     }
                     else
                     {
-                        qWarning() << "> DeviceCGD1 addData.exec() ERROR"
+                        qWarning() << "> DeviceHygrotempCGD1 addData.exec() ERROR"
                                    << addData.lastError().type() << ":" << addData.lastError().text();
                     }
                 }
-
-                refreshDataFinished(true);
             }
+
+            refreshDataFinished(true);
         }
 /*
-        if (temp > -99 || humi > -99)
+        if (batt > -99 || temp > -99 || humi > -99)
         {
             qDebug() << "* CGD1 service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
             if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;

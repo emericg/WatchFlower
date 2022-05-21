@@ -78,7 +78,104 @@ void DeviceHygrotempCGP1W::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
 {
-    Q_UNUSED(value)
+    //qDebug() << "DeviceHygrotempCGP1W::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
+    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+    Q_UNUSED (data)
+
+    if (value.size() >= 17) // Qingping data? // xx bytes messages
+    {
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        QString mac;
+        mac += value.mid(7,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(6,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(5,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(4,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(3,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(2,1).toHex().toUpper();
+
+        // Save mac address
+        setSetting("mac", mac);
+#else
+        QString mac;
+        Q_UNUSED(mac)
+#endif
+        int batt = -99;
+        float temp = -99.f;
+        float humi = -99.f;
+        int pres = -99.f;
+
+        // get data
+        if ((data[0] == 0x88 && data[1] == 0x16) || // CGG1
+            (data[0] == 0x08 && data[1] == 0x07) || // CGG1
+            (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
+            (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
+            (data[0] == 0x08 && data[1] == 0x09) || // CGD1
+            (data[0] == 0x08 && data[1] == 0x0c))   // CGP1W
+        {
+            temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
+            if (temp != m_temperature)
+            {
+                if (temp > -30.f && temp < 100.f)
+                {
+                    m_temperature = temp;
+                    Q_EMIT dataUpdated();
+                }
+            }
+
+            humi = static_cast<int16_t>(data[12] + (data[13] << 8)) / 10.f;
+            if (humi != m_humidity)
+            {
+                if (humi >= 0.f && humi <= 100.f)
+                {
+                    m_humidity = humi;
+                    Q_EMIT dataUpdated();
+                }
+            }
+
+            //batt = static_cast<int8_t>(data[16]);
+            //setBattery(batt);
+
+            pres = static_cast<int16_t>(data[16] + (data[17] << 8)) / 10.f;
+            if (pres != m_pressure)
+            {
+                if (pres >= 0 && pres <= 2000)
+                {
+                    m_pressure = pres;
+                    Q_EMIT dataUpdated();
+                }
+            }
+        }
+
+        if (m_temperature > -99.f && m_humidity > -99.f && m_pressure > -99)
+        {
+            m_lastUpdate = QDateTime::currentDateTime();
+
+            if (needsUpdateDb())
+            {
+                // TODO
+            }
+
+            refreshDataFinished(true);
+        }
+/*
+        if (batt > -99 || temp > -99.f || humi > -99.f || pres > -99)
+        {
+            qDebug() << "* CGP1W service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
+            if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
+            if (batt > -99) qDebug() << "- battery:" << batt;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (humi > -99) qDebug() << "- humidity:" << humi;
+            if (pres > -99) qDebug() << "- pressure:" << pres;
+        }
+*/
+    }
 }
 
 /* ************************************************************************** */

@@ -83,7 +83,9 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
     //qDebug() << "DeviceJQJCY01YM::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    // 12-18 bytes messages
+    // MiBeacon protocol / 12-20 bytes messages
+    // JQJCY01YM uses 15, 16 and 18 bytes messages
+
     if (value.size() >= 12)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
@@ -122,7 +124,7 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                 temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
                 if (temp != m_temperature)
                 {
-                    if (temp > -20.f && temp < 100.f)
+                    if (temp > -30.f && temp < 100.f)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -146,7 +148,7 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                 batt = static_cast<int8_t>(data[14]);
                 setBattery(batt);
             }
-            else if (data[11] == 11 && value.size() >= 18)
+            else if (data[11] == 13 && value.size() >= 18)
             {
                 temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
                 if (temp != m_temperature)
@@ -178,7 +180,7 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                 qDebug() << "MiBeacon: unknown tag >" << data[11];
             }
 
-            if (m_temperature > -99 && m_humidity > -99 && m_hcho > -99)
+            if (m_temperature > -99.f && m_humidity > -99 && m_hcho > -99.f)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
@@ -213,7 +215,7 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
                 }
             }
 /*
-            if (temp > -99.f || humi > -99.f || form > -99.f)
+            if (batt > -99 || temp > -99.f || humi > -99.f || form > -99.f)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
                 if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;

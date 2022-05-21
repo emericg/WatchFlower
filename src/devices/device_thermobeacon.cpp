@@ -441,7 +441,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
 
         if (temp != m_temperature)
         {
-            if (temp > -20.f && temp < 100.f)
+            if (temp > -30.f && temp < 100.f)
             {
                 m_temperature = temp;
                 Q_EMIT dataUpdated();
@@ -456,24 +456,22 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
             }
         }
 
-        m_lastUpdate = QDateTime::currentDateTime();
-
-        int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
-        setBattery(battlvl);
-
-        if (needsUpdateDb())
+        if (m_temperature > -99.f && m_humidity > -99)
         {
-            addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
-        }
-        else
-        {
-            //qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
-            //qDebug() << "No need to save data" << getLastUpdateDbInt();
-        }
+            m_lastUpdate = QDateTime::currentDateTime();
 
-        refreshDataFinished(true);
+            int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
+            setBattery(battlvl);
+
+            if (needsUpdateDb())
+            {
+                addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
+            }
+
+            refreshDataFinished(true);
+        }
 /*
-        if (temp > -99 || humi > -99)
+        if (temp > -99.f || humi > -99)
         {
             qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
             qDebug() << "- battery:" << m_deviceBattery;

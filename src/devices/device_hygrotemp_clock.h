@@ -26,6 +26,7 @@
 #include "device_sensor.h"
 
 #include <QObject>
+#include <QByteArray>
 #include <QList>
 
 #include <QBluetoothDeviceInfo>
@@ -52,6 +53,8 @@ public:
     DeviceHygrotempClock(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempClock();
+
+    void parseAdvertisementData(const QByteArray &value);
 
 private:
     // QLowEnergyController related

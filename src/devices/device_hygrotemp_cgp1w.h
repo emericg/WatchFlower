@@ -44,12 +44,12 @@ class DeviceHygrotempCGP1W: public DeviceSensor
 {
     Q_OBJECT
 
-    void parseAdvertisementData(const QByteArray &value);
-
 public:
     DeviceHygrotempCGP1W(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGP1W();
+
+    void parseAdvertisementData(const QByteArray &value);
 
 private:
     // QLowEnergyController related

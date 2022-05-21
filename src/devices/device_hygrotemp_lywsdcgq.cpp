@@ -315,3 +315,139 @@ void DeviceHygrotempLYWSDCGQ::confirmedDescriptorWrite(const QLowEnergyDescripto
 }
 
 /* ************************************************************************** */
+
+void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const QByteArray &value)
+{
+    //qDebug() << "DeviceHygrotempLYWSDCGQ::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
+    //qDebug() << "DATA: 0x" << value.toHex();
+
+    // MiBeacon protocol / 12-20 bytes messages
+    // LYWSDCGQ uses 15 and 18 bytes messages
+
+    if (value.size() >= 12)
+    {
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+
+        QString mac;
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+        // Save mac address
+        mac += value.mid(10,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(9,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(8,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(7,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(6,1).toHex().toUpper();
+        mac += ':';
+        mac += value.mid(5,1).toHex().toUpper();
+
+        setSetting("mac", mac);
+#else
+        Q_UNUSED(mac)
+#endif
+
+        if (value.size() >= 15)
+        {
+            int batt = -99;
+            float temp = -99.f;
+            float humi = -99.f;
+
+            // get data
+            if (data[11] == 4 && value.size() >= 16)
+            {
+                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
+                if (temp != m_temperature)
+                {
+                    if (temp > -30.f && temp < 100.f)
+                    {
+                        m_temperature = temp;
+                        Q_EMIT dataUpdated();
+                    }
+                }
+            }
+            else if (data[11] == 6 && value.size() >= 16)
+            {
+                humi = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
+                if (humi != m_humidity)
+                {
+                    if (humi >= 0.f && humi <= 100.f)
+                    {
+                        m_humidity = humi;
+                        Q_EMIT dataUpdated();
+                    }
+                }
+            }
+            else if (data[11] == 13 && value.size() >= 18)
+            {
+                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
+                if (temp != m_temperature)
+                {
+                    m_temperature = temp;
+                    Q_EMIT dataUpdated();
+                }
+                humi = static_cast<int16_t>(data[16] + (data[17] << 8)) / 10.f;
+                if (humi != m_humidity)
+                {
+                    m_humidity = humi;
+                    Q_EMIT dataUpdated();
+                }
+            }
+            else if (data[11] == 10 && value.size() >= 15)
+            {
+                batt = static_cast<int8_t>(data[14]);
+                setBattery(batt);
+            }
+
+            if (m_temperature > -99.f && m_humidity > -99)
+            {
+                m_lastUpdate = QDateTime::currentDateTime();
+
+                if (needsUpdateDb())
+                {
+                    if (m_dbInternal || m_dbExternal)
+                    {
+                        // SQL date format YYYY-MM-DD HH:MM:SS
+                        QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
+                        QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+
+                        QSqlQuery addData;
+                        addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
+                                        " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
+                        addData.bindValue(":deviceAddr", getAddress());
+                        addData.bindValue(":ts", tsStr);
+                        addData.bindValue(":ts_full", tsFullStr);
+                        addData.bindValue(":temp", m_temperature);
+                        addData.bindValue(":humi", m_humidity);
+
+                        if (addData.exec())
+                        {
+                            m_lastUpdateDatabase = m_lastUpdate;
+                        }
+                        else
+                        {
+                            qWarning() << "> DeviceHygrotempLYWSDCGQ addData.exec() ERROR"
+                                       << addData.lastError().type() << ":" << addData.lastError().text();
+                        }
+                    }
+                }
+
+                refreshDataFinished(true);
+            }
+/*
+            if (batt > -99 || temp > -99.f || humi > -99.f)
+            {
+                qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
+                if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
+                if (batt > -99) qDebug() << "- battery:" << batt;
+                if (temp > -99) qDebug() << "- temperature:" << temp;
+                if (humi > -99) qDebug() << "- humidity:" << humi;
+            }
+*/
+        }
+    }
+}
+
+/* ************************************************************************** */

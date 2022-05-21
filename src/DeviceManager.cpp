@@ -131,7 +131,7 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceHygrotempCGD1(deviceAddr, deviceName, this);
             else if (deviceName == "Qingping Temp RH Lite")
                 d = new DeviceHygrotempCGDK2(deviceAddr, deviceName, this);
-            else if (deviceName == "ClearGrass Temp & RH")
+            else if (deviceName == "ClearGrass Temp & RH" || deviceName == "Qingping Temp & RH M")
                 d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
             else if (deviceName == "CGP1W")
                 d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
@@ -462,7 +462,7 @@ void DeviceManager::checkBluetoothIos()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                    this, &DeviceManager::addBleDevice);
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                   this, &DeviceManager::detectBleDevice);
+                   this, &DeviceManager::updateBleDevice_simple);
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
                    this, &DeviceManager::updateBleDevice);
 
@@ -708,8 +708,8 @@ void DeviceManager::listenDevices_start()
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
                     this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
-            //connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-            //        this, &DeviceManager::detectBleDevice, Qt::UniqueConnection);
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                    this, &DeviceManager::updateBleDevice_simple, Qt::UniqueConnection);
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
                     this, &DeviceManager::updateBleDevice, Qt::UniqueConnection);
 
@@ -733,45 +733,6 @@ void DeviceManager::listenDevices_start()
             {
                 qWarning() << "Cannot scan or listen without related Android permissions";
             }
-        }
-    }
-}
-
-void DeviceManager::detectBleDevice(const QBluetoothDeviceInfo &info)
-{
-    //qDebug() << "detectBleDevice() " << info.address() /*<< info.deviceUuid()*/;
-
-    for (auto d: qAsConst(m_devices_model->m_devices))
-    {
-        Device *dd = qobject_cast<Device*>(d);
-
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        if (dd && dd->getAddress() == info.deviceUuid().toString())
-#else
-        if (dd && dd->getAddress() == info.address().toString())
-#endif
-        {
-            if (!dd->isEnabled()) return;
-            if (!dd->hasBluetoothConnection()) return;
-            if (dd->getName() == "ThermoBeacon") return;
-
-            //qDebug() << "adding from detectBleDevice()";
-            //qDebug() << "last upd" << dd->getLastUpdateInt() << dd->needsUpdateRt();
-            //qDebug() << "last err" << dd->getLastErrorInt() << dd->isErrored();
-
-            // old or no data: go for refresh
-            // also, check if we didn't already fail to update in the last couple minutes
-            if (dd->needsUpdateRt() && !dd->isErrored())
-            {
-                if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
-                {
-                    m_devices_updating_queue.push_back(dd);
-                    dd->refreshQueued();
-                    refreshDevices_continue();
-                }
-            }
-
-            return;
         }
     }
 }
@@ -1348,7 +1309,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name().startsWith("Parrot pot") ||
         info.name() == "ropot" ||
         info.name() == "MJ_HT_V1" ||
-        info.name() == "ClearGrass Temp & RH" ||
+        info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M" ||
         info.name() == "Qingping Temp RH Lite" ||
         info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
         info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC" ||
@@ -1374,7 +1335,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             d = new DeviceHygrotempCGD1(info, this);
         else if (info.name() == "Qingping Temp RH Lite")
             d = new DeviceHygrotempCGDK2(info, this);
-        else if (info.name() == "ClearGrass Temp & RH")
+        else if (info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M")
             d = new DeviceHygrotempCGG1(info, this);
         else if (info.name() == "CGP1W")
             d = new DeviceHygrotempCGP1W(info, this);
