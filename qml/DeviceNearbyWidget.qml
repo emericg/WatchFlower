@@ -13,6 +13,23 @@ Rectangle {
     property var device: pointer
     property bool blacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
 
+    function isDeviceSupported() {
+        if (device.deviceName === "Flower care" || device.deviceName === "Flower power" ||
+                device.deviceName === "Flower mate" || device.deviceName === "Grow care garden" ||
+                device.deviceName === "ropot" || device.deviceName === "Parrot pot" ||
+                device.deviceName === "MJ_HT_V1" ||
+                device.deviceName === "ClearGrass Temp & RH" ||
+                device.deviceName === "Qingping Temp & RH M" || device.deviceName === "Qingping Temp & RH H" ||
+                device.deviceName === "Qingping Temp RH Lite" ||
+                device.deviceName === "ThermoBeacon" ||
+                device.deviceName === "LYWSD02" || device.deviceName === "MHO-C303" ||
+                device.deviceName === "LYWSD03MMC" || device.deviceName === "MHO-C401" ||
+                device.deviceName === "WP6003" || device.deviceName === "AirQualityMonitor" ||
+                device.deviceName === "GeigerCounter")
+            return true
+        return false
+    }
+
     Connections {
         target: deviceManager
         function onDevicesBlacklistUpdated() {
@@ -29,68 +46,25 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        id: col
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 4
+        spacing: 0
 
-        Row {
-            spacing: 8
-
-            Text {
-                id: deviceTitle
-                text: device.deviceName
-                textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeContent
-                color: Theme.colorText
-            }
-
-            IconSvg {
-                anchors.verticalCenter: parent.verticalCenter
-                visible: singleColumn
-
-                width: height
-                height: deviceTitle.height
-                color: Theme.colorGreen
-                opacity: 0.8
-                source: {
-                    if (device.deviceName === "Flower care" || device.deviceName === "Flower power" ||
-                        device.deviceName === "Flower mate" || device.deviceName === "Grow care garden" ||
-                        device.deviceName === "ropot" || device.deviceName === "Parrot pot" ||
-                        device.deviceName === "MJ_HT_V1" ||
-                        device.deviceName === "ClearGrass Temp & RH" ||
-                        device.deviceName === "Qingping Temp & RH M" || device.deviceName === "Qingping Temp & RH H" ||
-                        device.deviceName === "Qingping Temp RH Lite" ||
-                        device.deviceName === "ThermoBeacon" ||
-                        device.deviceName === "LYWSD02" || device.deviceName === "MHO-C303" ||
-                        device.deviceName === "LYWSD03MMC" || device.deviceName === "MHO-C401" ||
-                        device.deviceName === "WP6003" || device.deviceName === "AirQualityMonitor" ||
-                        device.deviceName === "GeigerCounter")
-                        return "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
-                    return ""
-                }
-            }
+        Text {
+            id: deviceTitle
+            text: device.deviceName
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContent
+            color: Theme.colorText
         }
 
-        Row {
-            spacing: 16
-
-            Text {
-                text: device.deviceAddress
-                textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeContentSmall
-                color: Theme.colorSubText
-                visible: !(Qt.platform.os === "osx" || Qt.platform.os === "ios")
-            }
-/*
-            Text {
-                text: qsTr("RSSI -%1 dB").arg(Math.abs(device.deviceRssi))
-                textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeContentSmall
-                color: Theme.colorSubText
-            }
-*/
+        Text {
+            text: device.deviceAddress
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentSmall
+            color: Theme.colorSubText
+            visible: !(Qt.platform.os === "osx" || Qt.platform.os === "ios")
         }
     }
 
@@ -107,18 +81,7 @@ Rectangle {
 
             width: 20
             height: 20
-            visible: (device.deviceName === "Flower care" || device.deviceName === "Flower power" ||
-                      device.deviceName === "Flower mate" || device.deviceName === "Grow care garden" ||
-                      device.deviceName === "ropot" || device.deviceName === "Parrot pot" ||
-                      device.deviceName === "MJ_HT_V1" ||
-                      device.deviceName === "ClearGrass Temp & RH" ||
-                      device.deviceName === "Qingping Temp & RH M" || device.deviceName === "Qingping Temp & RH H" ||
-                      device.deviceName === "Qingping Temp RH Lite" ||
-                      device.deviceName === "ThermoBeacon" ||
-                      device.deviceName === "LYWSD02" || device.deviceName === "MHO-C303" ||
-                      device.deviceName === "LYWSD03MMC" || device.deviceName === "MHO-C401" ||
-                      device.deviceName === "WP6003" || device.deviceName === "AirQualityMonitor" ||
-                      device.deviceName === "GeigerCounter")
+            visible: isDeviceSupported()
 
             source: blacklisted ? "qrc:/assets/icons_material/outline-remove_circle-24px.svg" : "qrc:/assets/icons_material/outline-add_circle-24px.svg"
             color: {
@@ -153,22 +116,10 @@ Rectangle {
 
             width: 20
             height: 20
-            color: Theme.colorIcon
+            color: isDeviceSupported() ? Theme.colorGreen : Theme.colorSubText
             source: {
-                if (device.deviceName === "Flower care" || device.deviceName === "Flower power" ||
-                    device.deviceName === "Flower mate" || device.deviceName === "Grow care garden" ||
-                    device.deviceName === "ropot" || device.deviceName === "Parrot pot" ||
-                    device.deviceName === "MJ_HT_V1" ||
-                    device.deviceName === "ClearGrass Temp & RH" ||
-                    device.deviceName === "Qingping Temp & RH M" || device.deviceName === "Qingping Temp & RH H" ||
-                    device.deviceName === "Qingping Temp RH Lite" ||
-                    device.deviceName === "ThermoBeacon" ||
-                    device.deviceName === "LYWSD02" || device.deviceName === "MHO-C303" ||
-                    device.deviceName === "LYWSD03MMC" || device.deviceName === "MHO-C401" ||
-                    device.deviceName === "WP6003" || device.deviceName === "AirQualityMonitor" ||
-                    device.deviceName === "GeigerCounter")
-                    return "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
-                return ""
+                if (isDeviceSupported()) return "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                return "qrc:/assets/icons_material/baseline-help-24px.svg"
             }
         }
 

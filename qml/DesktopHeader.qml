@@ -582,6 +582,8 @@ Rectangle {
             id: menuMain
 
             visible: (appContent.state === "DeviceList" ||
+                      appContent.state === "DeviceBrowser" ||
+                      appContent.state === "PlantBrowser" ||
                       appContent.state === "Settings" ||
                       appContent.state === "About")
             spacing: 0

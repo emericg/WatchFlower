@@ -127,7 +127,7 @@ Rectangle {
                 width: parent.height
                 height: width
                 anchors.verticalCenter: parent.verticalCenter
-                visible: (appContent.state === "DeviceList")
+                visible: (appContent.state === "DeviceList" || appContent.state === "DeviceBrowser")
 
                 IconSvg {
                     id: workingIndicator
