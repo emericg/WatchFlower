@@ -48,7 +48,7 @@ TODO
 
 ## Reference
 
-[1] TODO
+[1] -
 
 ## License
 

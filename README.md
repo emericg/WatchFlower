@@ -38,8 +38,8 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 WatchFlower has been built to be compatible with as many Bluetooth sensors as possible.  
 Various new Bluetooth devices and sensors can be added to WatchFlower. If you have one in mind, you can contact us and we'll see what can be done!  
 
-Checkout out this [page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
-You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howtwo-custom-sensor.md) to learn more about the process.  
+Checkout out the [device page](docs/README.md) to get more informations about the devices currently support, and get a peek at their Bluetooth APIs.  
+You can also create your own sensors and use them with WatchFlower! Checkout this [guide](docs/howto-custom-sensor.md) to learn more about the process.  
 
 > WatchFlower is NOT associated with Xiaomi, Parrot, or any device manufacturer.
 

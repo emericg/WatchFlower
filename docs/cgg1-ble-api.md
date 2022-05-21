@@ -3,14 +3,14 @@
 
 ## About CGG1
 
-* ClearGrass 'Temp & RH Monitor' [CGG1](https://www.qingping.co/temp-rh-monitor/overview) are hygrometers
+* ClearGrass / Qingping 'Temp & RH Monitor' [CGG1](https://www.qingping.co/temp-rh-monitor/overview) are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2430 coin cell battery is used as power source
 
 There are multiple variant of this device, sold under various names but the same product ID:
 - ClearGrass **Temp and RH Monitor** (CGG1)  
-- Qingping **Temp and RH M Monitor** (CGG1-M) (NOT COMPATIBLE)  
+- Qingping **Temp and RH M Monitor** (CGG1-M)  
 - Qingping **Temp and RH H Monitor** HomeKit edition (CGG1-H) (NOT COMPATIBLE)  
 
 ## Features
@@ -43,7 +43,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 The name advertised by the devices (CGG1) is `ClearGrass Temp and RH`.  
 The name advertised by the devices (CGG1-M) is `Qingping Temp and RH M`.  
-The name advertised by the devices (CGG1-H) is unknown.  
+The name advertised by the devices (CGG1-H) is `unknown`.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
@@ -66,11 +66,13 @@ The name advertised by the devices (CGG1-H) is unknown.
 Register to get notification on the 'real time data' characteristic.  
 The device will send back 6 bytes data packets:
 
-| Bytes | Type      | Value                 | Description           |
-| ----- | --------- | --------------------- | --------------------- |
-| 00-01 | bytes     |                       | unknown?              |
-| 02-03 | Int16     | 198 / 10 = 19.8       | temperature °C        |
-| 04-05 | Int16     | 578 / 10 = 57.8       | humidity %RH          |
+| Bytes | Type      | Value                 | Description                      |
+| ----- | --------- | --------------------- | -------------------------------- |
+| 00-01 | bytes     |                       | ?                                |
+| 02-03 | int16_le  | 198 / 10 = 19.8       | temperature in °C                |
+| 04-05 | int16_le  | 578 / 10 = 57.8       | humidity in % RH                 |
+
+(Qingping variants doesn't seem to send back any data)
 
 ## Historical data
 
@@ -78,11 +80,44 @@ TODO
 
 ## Advertisement data
 
-TODO
+There seems to be two kind of advertisement data broadcasted.  
+CGG1 broadcast `service data` with 16 bits service UUID `0xFE95` and `0xFDCD`.  
+
+##### UUID `0xFE95` 14 bytes messages
+
+Looks like MiBeacon data. Fixed content, no actionable data. Encrypted?
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| value    | 30 | 58 | 48 | 0b | 01 | XX | XX | 12 | 34 | 2d | 58 | 28 | 01 | 00 |
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x3058            | Frame control?                       |
+| 02-03 | bytes     | 0x480b            | Product ID?                          |
+| 04    | uint8     |                   | Frame count?                         |
+| 05-10 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
+| 11-13 | bytes     |                   | ?                                    |
+
+##### UUID `0xFDCD` 17 bytes messages
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| value    | 88 | 16 | XX | XX | 12 | 34 | 2d | 58 | 01 | 04 | 1d | 01 | d5 | 01 | 02 | 01 | 55 |
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x8816            | Product ID?                          |
+| 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
+| 08-09 | bytes     |                   | ?                                    |
+| 10-11 | int16_le  | 285 / 10 = 28.5   | temperature in °C                    |
+| 12-13 | int16_le  | 469 / 10 = 46.9   | humidity in % RH                     |
+| 14-15 | bytes     |                   | ?                                    |
+| 16    | byte      | 85                | battery level?                       |
 
 ## Reference
 
-[1] TODO
+[1] -
 
 ## License
 

@@ -51,7 +51,7 @@ Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more informat
 
 ## Reference
 
-[1] TODO
+[1] -
 
 ## License
 

@@ -1,13 +1,14 @@
 
 <img src="thermobeacon_square.svg" width="256px" alt="ThermoBeacon (LCD)" align="right" />
-<img src="thermobeacon_round.svg" width="256px" alt="ThermoBeacon (Keychain)" align="right" />
+<img src="thermobeacon_round.svg" width="256px" alt="ThermoBeacon (Keychain round)" align="right" />
+<img src="thermobeacon_diamond.svg" width="256px" alt="ThermoBeacon (Keychain diamond)" align="right" />
 
 ## About SensorBlue ThermoBeacon
 
 * SensorBlue [ThermoBeacon]() are hygrometers
 * Has sensors to relay temperature and hygrometry
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A CR2032 battery is used as power source
+* A CR2477 battery is used as power source
 
 ## Features
 
@@ -127,10 +128,10 @@ They are `manufacturer data` with company identifier `0x0010`.
 | ----- | --------- | ----------------- | --------------------- | --------------------- |
 | 00-01 | bytes     |                   |                       | padding bytes?        |
 | 02-07 | bytes     |                   | 91:20:00:00:XX:XX     | mac address           |
-| 08-09 | int16_be  | 3005              | 3005/1000 = 3.005V    | battery voltage       |
-| 10-11 | int16_be  | 360               | 360/16 = 22.5°        | temperature (°C)      |
-| 12-13 | int16_be  | 652               | 652/16 = 40.75%       | humidity (%RH)        |
-| 14-17 | int32_be  | 5881372           | 5881372/256 = 22974   | device time (s)       |
+| 08-09 | int16_le  | 3005              | 3005/1000 = 3.005V    | battery voltage       |
+| 10-11 | int16_le  | 360               | 360/16 = 22.5°        | temperature (°C)      |
+| 12-13 | int16_le  | 652               | 652/16 = 40.75%       | humidity (%RH)        |
+| 14-17 | int32_le  | 5881372           | 5881372/256 = 22974   | device time (s)       |
 
 ## Reference
 

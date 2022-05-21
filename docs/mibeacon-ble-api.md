@@ -5,7 +5,7 @@ The MiBeacon protocol is used by various Xiaomi (and affiliated) devices manufac
 
 MiBeacon protocol usually broadcast 12-20 bytes `service data` messages, over `0xFE95` 16 bits service UUID.  
 
-There seems to be at least two slightly different versions of the protocol.  
+There seems to be at least three (slightly) different versions of the protocol.  
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
@@ -41,6 +41,16 @@ To understand multi-byte integer representation, you can read the [endianness](h
 | 11-12 | bytes     |                   | Type of measurement                  |
 | 13+   | data      |                   | Payload                              |
 
+#### Protocol (version 0x30?)
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x3102            | Frame control                        |
+| 02-03 | bytes     | 0x9800            | Product ID                           |
+| 04    | uint8     |                   | Frame count                          |
+| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
+| 11+   | bytes     |                   | Usually no payload                   |
+
 #### Example data
 
 | Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
@@ -59,6 +69,12 @@ To understand multi-byte integer representation, you can read the [endianness](h
 | LYWSDCGQ     |          | 50 | 20 | aa | 01 | 37 | XX | XX | 33 | 34 | 2d | 58 | 0d | 10 | 04 | 04 | 01 | 66 | 02 |
 | LYWSDCGQ     |          | 50 | 20 | aa | 01 | ca | XX | XX | d0 | a8 | 65 | 4c | 0d | 10 | 04 | 18 | 01 | 24 | 02 |
 
+| Device       | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 |
+| ------------ | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| HHCCJCY01    | values > | 31 | 02 | 98 | 00 | A0 | XX | XX | 62 | 8d | 7c | c4 | 0d | -  | -  |
+| CGG1-M       |          | 30 | 58 | 48 | 0b | 01 | XX | XX | 12 | 34 | 2d | 58 | 28 | 01 | 00 |
+| CGDK2        |          | 30 | 58 | 6f | 06 | 02 | XX | XX | 12 | 34 | 2d | 58 | 08 | -  | -  |
+
 #### Device IDs
 
 | Device       | Product ID   |
@@ -67,9 +83,11 @@ To understand multi-byte integer representation, you can read the [endianness](h
 | HHCCJCY09    | 0xBC03       |
 | HHCCPOT002   | 0x5D01       |
 | LYWSDCGQ     | 0xAA01       |
-| LYWSD02      | 0x5B04       |
-| MHO-C303     | 0xD306       |
 | CGG1         | 0x4703       |
+| CGG1-M       | 0x480B       |
+| LYWSD02      | 0x5B04       |
+| CGDK2        | 0x6F06       |
+| MHO-C303     | 0xD306       |
 | JQJCY01YM    | 0xDF02       |
 
 #### Type of measurement
@@ -111,15 +129,22 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ###### Temperature
 
-| name           | length    | description                                     |
-| -------------- | --------- | ----------------------------------------------- |
-| temperature    | int16_le  | Temperature in °C (signed value, divide by 10)  |
+| name        | length    | description                                        |
+| ----------- | --------- | -------------------------------------------------- |
+| temperature | int16_le  | Temperature in °C (signed value, divide by 10)     |
 
 ###### Humidity
 
 | name       | length     | description                                        |
 | ---------- | ---------- | -------------------------------------------------- |
 | humidity   | uint16_le  | Humidity percentage (divide by 10), range is 0-100 |
+
+###### Temperature and humidity
+
+| name        | length    | description                                        |
+| ------------| --------- | -------------------------------------------------- |
+| temperature | int16_le  | Temperature in °C (signed value, divide by 10)     |
+| humidity    | uint16_le | Humidity percentage (divide by 10), range is 0-100 |
 
 ###### Luminosity
 

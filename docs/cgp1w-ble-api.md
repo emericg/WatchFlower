@@ -1,18 +1,19 @@
 
-<img src="hygrotemp_lywsd03mmc.svg" width="400px" alt="Thermo-Hygrometer 2" align="right" />
+<img src="hygrotemp_cgp1w.svg" width="400px" alt="Qingping Temp RH Barometer Pro S" align="right" />
 
-## About
+## About CGP1W
 
-* Miaomiaoce (MMC) 'Thermo-Hygrometer' [LYWSDO3MMC]() are hygrometers
-* Has sensors to relay temperature and humidity
+* Qingping 'Temp & RH Barometer Pro S' [CGP1W](https://www.qingping.co/temp-rh-barometer/overview) are alarm clock with hygrometers and pressure sensor
+* Has onboard clock and alarm
+* Has sensors to relay temperature, humidity and air pressure
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A CR2032 coin cell battery is used as power source
+* 1 * 18650 rechargeable battery is used as power source
 
 ## Features
 
 * Read real-time sensor values
 * Read historical sensor values
-* Temperature and humidity sensors
+* Temperature temperature, humidity and air pressure sensors
 
 ## Protocol
 
@@ -36,7 +37,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `LYWSD03MMC`.  
+The name advertised by the devices is `Qingping Temp RH Barometer`.  
 
 TODO
 
@@ -46,18 +47,18 @@ TODO
 
 ## Advertisement data
 
-LYWSDO3MMC broadcast `service data` with 16 bits service UUID `0xFE95`.  
-These data are encrypted and thus not easily exploitable.  
+TODO
 
-| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 |
-| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| Value    | 30 | 58 | 5b | 05 | 5d | b2 | 68 | c5 | 38 | c1 | a4 | 08 |
+##### UUID `0xFDCD` 22 bytes messages
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 18 | 19 | 20 | 21 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| value    | 08 | 09 | xx | xx | 12 | 34 | 2d | 58 | 01 | 04 | 0b | 01 | ce | 00 | 07 | 02 | ea | 26 | 02 | 01 | 5a |
 
 | Bytes | Type      | Value             | Description                          |
 | ----- | --------- | ----------------- | ------------------------------------ |
-| 00-04 | bytes     |                   | -                                    |
-| 05-10 | bytes     | A4:C1:38:C5:68:B2 | MAC address                          |
-| 11    | bytes     |                   | -                                    |
+| 00-01 | bytes     | 0x0809            | Product ID?                          |
+| 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
 
 ## Reference
 

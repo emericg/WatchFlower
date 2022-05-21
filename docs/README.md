@@ -106,6 +106,17 @@ Supported devices
 | Humidity                             | 0 ~ 100% RH                           |
 | BLE API                              | [link](cgd1-ble-api.md)               |
 
+| Temp & RH Barometer Pro S            | Qinping                               |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | CGP1W                                 |
+| <img src="hygrotemp_cgp1w.svg" width="256">                                  ||
+| Screen                               | LCD                                   |
+| Battery                              | 1 x 18650                             |
+| Temperature                          | -30 ~ 55 °C (± 0.2 °C)                |
+| Humidity                             | 0 ~ 100% RH (± 2% RH)                 |
+| Air pressure                         | 300~1250 hPa (±0.5 hPa)               |
+| BLE API                              | [link](cgp1w-ble-api.md)              |
+
 | Temp & RH Monitor                    | Qinping (formerly ClearGrass)         |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGG1                                  |
@@ -187,12 +198,22 @@ Supported devices
 | Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
 
-| ThermoBeacon (keychain)              | SensorBlue / Brifit / ORIA / ?        |
+| ThermoBeacon (round keychain)        | SensorBlue / Brifit / ORIA / ?        |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | 2ACD3-WS02 / 2ACD3-WS07               |
 | <img src="thermobeacon_round.svg" width="256">                              ||
 | Screen                               | N/A                                   |
-| Battery                              | 1 x CR2032 or CR2477                  |
+| Battery                              | 1 x CR2477                            |
+| Temperature                          | -20 ~ 65 °C (± 0.5 °C)                |
+| Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
+| BLE API                              | [link](thermobeacon-ble-api.md)       |
+
+| ThermoBeacon (diamond keychain)      | SensorBlue / Brifit / ORIA / ?        |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | ‎WA63-BR                               |
+| <img src="thermobeacon_diamond.svg" width="256">                            ||
+| Screen                               | N/A                                   |
+| Battery                              | 1 x CR2477                            |
 | Temperature                          | -20 ~ 65 °C (± 0.5 °C)                |
 | Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
