@@ -205,8 +205,6 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
                 m_deviceSensors += DeviceUtils::SENSOR_UV;
                 Q_EMIT sensorsUpdated();
             }
-
-            // TODO
         }
     }
 }

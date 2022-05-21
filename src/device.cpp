@@ -773,7 +773,7 @@ int Device::getLastUpdateDbInt() const
         if (mins < 0)
         {
             // this can happen if the computer clock is changed between two updates...
-            qWarning() << "getLastUpdateDbInt() has a negative value (" << mins << "). Clock mismatch?";
+            qWarning() << "getLastUpdateDbInt() has a negative value (" << mins << ") for device" << m_deviceName << ". Clock mismatch?";
 
             // TODO start by a modulo 60?
             mins = std::abs(mins);
@@ -794,7 +794,7 @@ int Device::getLastErrorInt() const
         if (mins < 0)
         {
             // this can happen if the computer clock is changed between two errors...
-            qWarning() << "getLastErrorInt() has a negative value (" << mins << "). Clock mismatch?";
+            qWarning() << "getLastErrorInt() has a negative value (" << mins << ") for device" << m_deviceName << ". Clock mismatch?";
 
             // TODO start by a modulo 60?
             mins = std::abs(mins);

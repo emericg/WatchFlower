@@ -18,6 +18,7 @@ qt_add_executable(WatchFlower
     src/DatabaseManager.cpp src/DatabaseManager.h
     src/DeviceManager.cpp src/DeviceManager.h
     src/DeviceManager_advertisement.cpp
+    src/DeviceManager_nearby.cpp
     src/DeviceManager_export.cpp
     src/Journal.cpp src/Journal.h
     src/NotificationManager.cpp src/NotificationManager.h

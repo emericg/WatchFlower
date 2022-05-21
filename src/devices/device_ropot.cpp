@@ -236,8 +236,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
         if (serviceData && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
-            // Make LED blink
-            // TODO
+            // TODO // Make LED blink // If that's even possible?
         }
     }
 }
@@ -780,6 +779,7 @@ bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
             addData.bindValue(":hygro", soilMoisture);
             addData.bindValue(":condu", soilConductivity);
             addData.bindValue(":temp", temperature);
+
             status = addData.exec();
 
             if (status)
