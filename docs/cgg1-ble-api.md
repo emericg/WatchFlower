@@ -83,9 +83,27 @@ TODO
 There seems to be two kind of advertisement data broadcasted.  
 CGG1 broadcast `service data` with 16 bits service UUID `0xFE95` and `0xFDCD`.  
 
-##### UUID `0xFE95` 14 bytes messages
+##### UUID `0xFE95` 14-16 bytes messages
 
-Looks like MiBeacon data. Fixed content, no actionable data. Encrypted?
+Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
+
+The CGG1 has 'regular' MiBeacon data.  
+
+| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 |
+| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| value    | 50 | 20 | 47 | 03 | 0F | XX | XX | 10 | 34 | 2d | 58 | 0d | 10 | 04 | 2B | 01 |
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x5020            | Frame control                        |
+| 02-03 | bytes     | 0x4703            | Product ID                           |
+| 04    | uint8     |                   | Frame count                          |
+| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
+| 11    | byte      |                   | ?                                    |
+| 12-13 | bytes     |                   | Type of mesurement (temperature)     |
+| 14-15 | int16_le  |                   | temperature in °C                    |
+
+The CGG1-M has 'fixed content' MiBeacon data. No actionable data. Encrypted?  
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 |
 | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -101,6 +119,10 @@ Looks like MiBeacon data. Fixed content, no actionable data. Encrypted?
 
 ##### UUID `0xFDCD` 17 bytes messages
 
+CGG1 and CGG1-M broadcast temperature, humidity, and battery over `service data` with the `0xFDCD` 16 bits service UUID.  
+
+Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
+
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 | -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 | value    | 88 | 16 | XX | XX | 12 | 34 | 2d | 58 | 01 | 04 | 1d | 01 | d5 | 01 | 02 | 01 | 55 |
@@ -109,15 +131,17 @@ Looks like MiBeacon data. Fixed content, no actionable data. Encrypted?
 | ----- | --------- | ----------------- | ------------------------------------ |
 | 00-01 | bytes     | 0x8816            | Product ID?                          |
 | 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
-| 08-09 | bytes     |                   | ?                                    |
+| 08    | byte      |                   | payload type (temperature+humidity)  |
+| 09    | uint8     |                   | payload size (2 bytes of data)       |
 | 10-11 | int16_le  | 285 / 10 = 28.5   | temperature in °C                    |
 | 12-13 | int16_le  | 469 / 10 = 46.9   | humidity in % RH                     |
-| 14-15 | bytes     |                   | ?                                    |
-| 16    | byte      | 85                | battery level?                       |
+| 14    | byte      |                   | payload type (battery level)         |
+| 15    | uint8     |                   | payload size (1 byte of data)        |
+| 16    | uint8     | 85                | battery level in %                   |
 
 ## Reference
 
-[1] -
+[1] -  
 
 ## License
 

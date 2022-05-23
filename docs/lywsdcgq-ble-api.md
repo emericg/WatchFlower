@@ -6,7 +6,7 @@
 * Xiaomi MiJia 'Bluetooth Hygrometer' [LYWSDCGQ]() are hygrometers
 * Has sensors to relay temperature and humidity
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* 1 * AA battery is used as power source
+* An AAA battery is used as power source
 
 ## Features
 

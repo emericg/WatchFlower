@@ -6,7 +6,7 @@
 * [Parrot Pot](https://support.parrot.com/fr/support/produits/parrot-pot) are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, light intensity, soil temperature, soil moisture and fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* An AAA battery is used as power source
+* 4 * AA batteries are used as power source
 
 ## Features
 

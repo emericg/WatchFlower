@@ -37,7 +37,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `unknown`.  
+The name advertised by the devices is `Qingping Alarm Clock`.  
 
 TODO
 
@@ -47,11 +47,15 @@ TODO
 
 ## Advertisement data
 
-TODO
+##### UUID `0xFDCD` 17 bytes messages
+
+CGD1 broadcast temperature, humidity, and battery over `service data` with the `0xFDCD` 16 bits service UUID.  
+
+Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 
-[1] -
+[1] -  
 
 ## License
 

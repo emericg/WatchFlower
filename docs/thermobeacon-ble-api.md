@@ -1,14 +1,19 @@
 
-<img src="thermobeacon_square.svg" width="256px" alt="ThermoBeacon (LCD)" align="right" />
-<img src="thermobeacon_round.svg" width="256px" alt="ThermoBeacon (Keychain round)" align="right" />
-<img src="thermobeacon_diamond.svg" width="256px" alt="ThermoBeacon (Keychain diamond)" align="right" />
-
 ## About SensorBlue ThermoBeacon
 
 * SensorBlue [ThermoBeacon]() are hygrometers
-* Has sensors to relay temperature and hygrometry
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2477 battery is used as power source
+
+<img src="thermobeacon_square.svg" width="220px" alt="ThermoBeacon (LCD)" align="right" />
+<img src="thermobeacon_round.svg" width="220px" alt="ThermoBeacon (Keychain round)" align="right" />
+<img src="thermobeacon_diamond.svg" width="220px" alt="ThermoBeacon (Keychain diamond)" align="right" />
+
+## Variants
+
+* LCD
+* Keychain round
+* Keychain diamond
 
 ## Features
 

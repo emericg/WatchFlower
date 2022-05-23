@@ -1,11 +1,7 @@
 
-## About MiBeacon
+## About MiBeacon advertisement
 
-The MiBeacon protocol is used by various Xiaomi (and affiliated) devices manufacturers to advertise data over Bluetooth Low Energy.  
-
-MiBeacon protocol usually broadcast 12-20 bytes `service data` messages, over `0xFE95` 16 bits service UUID.  
-
-There seems to be at least three (slightly) different versions of the protocol.  
+The MiBeacon protocol is used by various Xiaomi devices (and various affiliated manufacturers) to advertise data over Bluetooth Low Energy.  
 
 <img src="endianness.png" width="400px" alt="Endianness" align="right" />
 
@@ -18,38 +14,11 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Advertisement data
 
-#### Protocol (version 0x70?)
+MiBeacon protocol usually broadcast 12-20 bytes `service data` messages, over `0xFE95` 16 bits service UUID.  
 
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x7120            | Frame control                        |
-| 02-03 | bytes     | 0x9800            | Product ID                           |
-| 04    | uint8     |                   | Frame count                          |
-| 05-10 | bytes     | C4:7C:8D:66:XX:XX | MAC address                          |
-| 11    | bytes     |                   | ?                                    |
-| 12-13 | bytes     |                   | Type of measurement                  |
-| 14+   | data      |                   | Payload                              |
+There seems to be at least three (slightly) different versions of the protocol.  
 
-#### Protocol (version 0x50?)
-
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x5120            | Frame control                        |
-| 02-03 | bytes     | 0x4703            | Product ID                           |
-| 04    | uint8     |                   | Frame count                          |
-| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
-| 11-12 | bytes     |                   | Type of measurement                  |
-| 13+   | data      |                   | Payload                              |
-
-#### Protocol (version 0x30?)
-
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x3102            | Frame control                        |
-| 02-03 | bytes     | 0x9800            | Product ID                           |
-| 04    | uint8     |                   | Frame count                          |
-| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
-| 11+   | bytes     |                   | Usually no payload                   |
+Only one measurement is sent per advertisement message.  
 
 #### Example data
 
@@ -75,7 +44,40 @@ To understand multi-byte integer representation, you can read the [endianness](h
 | CGG1-M       |          | 30 | 58 | 48 | 0b | 01 | XX | XX | 12 | 34 | 2d | 58 | 28 | 01 | 00 |
 | CGDK2        |          | 30 | 58 | 6f | 06 | 02 | XX | XX | 12 | 34 | 2d | 58 | 08 | -  | -  |
 
-#### Device IDs
+#### Protocol (version 0x70?)
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x7120            | Frame control                        |
+| 02-03 | bytes     | 0x9800            | Product ID                           |
+| 04    | uint8     |                   | Frame count                          |
+| 05-10 | bytes     | C4:7C:8D:66:XX:XX | MAC address                          |
+| 11    | byte      |                   | ?                                    |
+| 12-13 | bytes     |                   | Type of measurement                  |
+| 14+   | data      |                   | Payload                              |
+
+#### Protocol (version 0x50?)
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x5120            | Frame control                        |
+| 02-03 | bytes     | 0x4703            | Product ID                           |
+| 04    | uint8     |                   | Frame count                          |
+| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
+| 11-12 | bytes     |                   | Type of measurement                  |
+| 13+   | data      |                   | Payload                              |
+
+#### Protocol (version 0x30?)
+
+| Bytes | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+| 00-01 | bytes     | 0x3102            | Frame control                        |
+| 02-03 | bytes     | 0x9800            | Product ID                           |
+| 04    | uint8     |                   | Frame count                          |
+| 05-10 | bytes     | 58:2D:34:10:XX:XX | MAC address                          |
+| 11+   | bytes     |                   | Usually no payload                   |
+
+#### Product IDs
 
 | Device       | Product ID   |
 | ------------ | ------------ |

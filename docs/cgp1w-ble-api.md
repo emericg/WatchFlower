@@ -7,7 +7,7 @@
 * Has onboard clock and alarm
 * Has sensors to relay temperature, humidity and air pressure
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* 1 * 18650 rechargeable battery is used as power source
+* A 18650 rechargeable battery is used as power source
 
 ## Features
 
@@ -47,22 +47,15 @@ TODO
 
 ## Advertisement data
 
-TODO
+##### UUID `0xFDCD` 21 bytes messages
 
-##### UUID `0xFDCD` 22 bytes messages
+CGP1W broadcast temperature, humidity, air pressure and battery over `service data` with the `0xFDCD` 16 bits service UUID.  
 
-| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 18 | 19 | 20 | 21 |
-| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| value    | 08 | 09 | xx | xx | 12 | 34 | 2d | 58 | 01 | 04 | 0b | 01 | ce | 00 | 07 | 02 | ea | 26 | 02 | 01 | 5a |
-
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x0809            | Product ID?                          |
-| 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
+Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 
-[1] -
+[1] -  
 
 ## License
 

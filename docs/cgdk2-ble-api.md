@@ -73,39 +73,19 @@ CGDK2 broadcast `service data` with 16 bits service UUID `0xFE95` and `0xFDCD`.
 
 ##### UUID `0xFE95` 12 bytes messages
 
-Looks like MiBeacon data. Fixed content, no actionable data. Encrypted?
+The CGDK2 has 'fixed content' MiBeacon data. No actionable data. Encrypted?  
 
-| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 |
-| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| value    | 30 | 58 | 6f | 06 | 02 | XX | XX | 12 | 34 | 2d | 58 | 08 |
-
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x3058            | Frame control?                       |
-| 02-03 | bytes     | 0x480b            | Product ID?                          |
-| 04    | uint8     |                   | Frame count?                         |
-| 05-10 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
-| 11    | byte      |                   | ?                                    |
+Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ##### UUID `0xFDCD` 17 bytes messages
 
-| Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
-| -------- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-| value    | 08 | 10 | 2d | c7 | 12 | 34 | 2d | 58 | 01 | 04 | 31 | 01 | c9 | 01 | 02 | 01 | 51 |
+CGDK2 broadcast temperature, humidity, and battery over `service data` with the `0xFDCD` 16 bits service UUID.  
 
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x0810            | Product ID?                          |
-| 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
-| 08-09 |           |                   | ?                                    |
-| 10-11 | int16_le  | 305 / 10 = 30.5   | temperature in °C                    |
-| 12-13 | int16_le  | 457 / 10 = 45.7   | humidity in % RH                     |
-| 14-15 | bytes     |                   | ?                                    |
-| 16    | byte      | 81                | battery level?                       |
+Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 
-[1] -
+[1] -  
 
 ## License
 
