@@ -711,6 +711,21 @@ void DeviceManager::listenDevices_start()
 
             if (hasBluetoothPermissions())
             {
+#if defined(Q_OS_ANDROID) && defined(QT_CONNECTIVITY_PATCHED)
+                // Build and apply Android BLE scan filter, otherwise we can't scan while the screen is off
+                // Needs a patched QtConnectivity (from https://github.com/emericg/qtconnectivity/tree/blescanfiltering_v1)
+                if (m_daemonMode)
+                {
+                    QStringList filteredAddr;
+                    for (auto d: qAsConst(m_devices_model->m_devices))
+                    {
+                        Device *dd = qobject_cast<Device*>(d);
+                        if (dd) filteredAddr += dd->getAddress();
+                    }
+                    m_discoveryAgent->setAndroidScanFilter(filteredAddr); // WIP
+                }
+#endif // Q_OS_ANDROID
+
                 m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
                 if (m_discoveryAgent->isActive())
@@ -772,10 +787,17 @@ void DeviceManager::refreshDevices_background()
         }
     }
 
-    // Background refresh (using advertising data) (if background location permission)
-    //listenDevices_start();
+#if defined(Q_OS_ANDROID) && defined(QT_CONNECTIVITY_PATCHED)
+    if (hasBluetoothPermissions())
+    {
+        // Background refresh (using scan detection)
+        // If background location permission and patched QtConnection
+        listenDevices_start();
+        return;
+    }
+#endif // Q_OS_ANDROID
 
-    // Background refresh (using connection data)
+    // Background refresh (using blind connections)
     m_devices_updating_queue.clear();
     m_devices_updating.clear();
 
