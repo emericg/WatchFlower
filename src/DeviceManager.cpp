@@ -788,7 +788,6 @@ void DeviceManager::refreshDevices_background()
         {
             if (!dd->isEnabled()) continue;
             if (!dd->hasBluetoothConnection()) continue;
-            if (dd->getName() == "ThermoBeacon") continue;
 
             // old or no data: go for refresh
             if (dd->needsUpdateRt())
@@ -1067,11 +1066,12 @@ void DeviceManager::syncDevices_check()
 
             if (dd)
             {
-                if (!(dd->getName() == "Flower care" || dd->getName() == "ThermoBeacon")) continue;
+                // We need history support
+                if (!dd->hasHistory()) continue;
 
+                // Old or no data: go for a sync
                 if (dd->getLastHistorySync_int() < 0 || dd->getLastHistorySync_int() > 6*60*60)
                 {
-                    // old or no data: go for sync
                     m_devices_syncing_queue.push_back(dd);
                     dd->refreshQueued();
                 }
@@ -1106,11 +1106,12 @@ void DeviceManager::syncDevices_start()
             Device *dd = qobject_cast<Device*>(d);
             if (dd)
             {
-                if (!(dd->getName() == "Flower care" || dd->getName() == "ThermoBeacon")) continue;
+                // We need history support
+                if (!dd->hasHistory()) continue;
 
+                // Old or no data: go for a sync
                 if (dd->getLastHistorySync_int() < 0 || dd->getLastHistorySync_int() > 6*60*60)
                 {
-                    // old or no data: go for sync
                     m_devices_syncing_queue.push_back(dd);
                     dd->refreshQueued();
                 }
