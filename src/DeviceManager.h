@@ -182,11 +182,11 @@ public:
 
 private slots:
     // QBluetoothLocalDevice related
-    void bluetoothModeChanged(QBluetoothLocalDevice::HostMode);
+    void bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMode);
     void bluetoothStatusChanged();
 
     // QBluetoothDeviceDiscoveryAgent related
-    void bluetoothModeChangedIos();
+    void bluetoothHostModeStateChangedIos();
     void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
     void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void addBleDevice(const QBluetoothDeviceInfo &info);

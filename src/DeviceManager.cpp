@@ -85,6 +85,8 @@ DeviceManager::DeviceManager(bool daemon)
     enableBluetooth(true); // Enables adapter // ONLY if off and permission given
     checkBluetooth();
 
+    connect(this, &DeviceManager::bluetoothChanged, this, &DeviceManager::bluetoothStatusChanged);
+
     // Database
     DatabaseManager *db = DatabaseManager::getInstance();
     if (db)
@@ -241,7 +243,7 @@ bool DeviceManager::checkBluetooth()
     {
         m_btA = true;
 
-        if (m_bluetoothAdapter->hostMode() > 0)
+        if (m_bluetoothAdapter->hostMode() > QBluetoothLocalDevice::HostMode::HostPoweredOff)
         {
             m_btE = true;
         }
@@ -309,13 +311,10 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
         m_bluetoothAdapter = new QBluetoothLocalDevice();
         if (m_bluetoothAdapter)
         {
-            // Keep us informed of availability changes
+            // Keep us informed of Bluetooth adapter state change
             // On some platform, this can only inform us about disconnection, not reconnection
             connect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
-                    this, &DeviceManager::bluetoothModeChanged);
-
-            connect(this, &DeviceManager::bluetoothChanged,
-                    this, &DeviceManager::bluetoothStatusChanged);
+                    this, &DeviceManager::bluetoothHostModeStateChanged);
         }
     }
 
@@ -323,13 +322,13 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     {
         m_btA = true;
 
-        if (m_bluetoothAdapter->hostMode() > 0)
+        if (m_bluetoothAdapter->hostMode() > QBluetoothLocalDevice::HostMode::HostPoweredOff)
         {
             m_btE = true; // was already activated
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
             // Already powered on? Power on again anyway. It helps on android...
-            m_bluetoothAdapter->powerOn();
+            //m_bluetoothAdapter->powerOn();
 #endif
         }
         else // Try to activate the adapter
@@ -393,23 +392,17 @@ bool DeviceManager::checkBluetoothPermissions()
 
 /* ************************************************************************** */
 
-void DeviceManager::bluetoothModeChanged(QBluetoothLocalDevice::HostMode state)
+void DeviceManager::bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMode state)
 {
-    qDebug() << "DeviceManager::bluetoothModeChanged() host mode now:" << state;
+    qDebug() << "DeviceManager::bluetoothHostModeStateChanged() host mode now:" << state;
 
     if (state > QBluetoothLocalDevice::HostPoweredOff)
     {
         m_btE = true;
-
-        // Bluetooth enabled, refresh devices
-        refreshDevices_check();
     }
     else
     {
         m_btE = false;
-
-        // Bluetooth disabled, force disconnection
-        refreshDevices_stop();
     }
 
     Q_EMIT bluetoothChanged();
@@ -421,7 +414,12 @@ void DeviceManager::bluetoothStatusChanged()
 
     if (m_btA && m_btE)
     {
-        refreshDevices_check();
+        refreshDevices_listen();
+    }
+    else
+    {
+        // Bluetooth disabled, force disconnection
+        refreshDevices_stop();
     }
 }
 
@@ -474,7 +472,7 @@ void DeviceManager::checkBluetoothIos()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                    this, &DeviceManager::deviceDiscoveryFinished);
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                this, &DeviceManager::bluetoothModeChangedIos, Qt::UniqueConnection);
+                this, &DeviceManager::bluetoothHostModeStateChangedIos, Qt::UniqueConnection);
 
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(8); // 8ms
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
@@ -553,9 +551,6 @@ void DeviceManager::deviceDiscoveryFinished()
         m_listening = false;
         Q_EMIT listeningChanged();
     }
-
-    // Now refresh devices data
-    //refreshDevices_check();
 }
 
 void DeviceManager::deviceDiscoveryStopped()
@@ -574,18 +569,14 @@ void DeviceManager::deviceDiscoveryStopped()
     }
 }
 
-void DeviceManager::bluetoothModeChangedIos()
+void DeviceManager::bluetoothHostModeStateChangedIos()
 {
-    //qDebug() << "DeviceManager::bluetoothModeChangedIos()";
+    //qDebug() << "DeviceManager::bluetoothHostModeStateChangedIos()";
 
     if (!m_btE)
     {
         m_btE = true;
         Q_EMIT bluetoothChanged();
-
-        // Now refresh devices data
-        //refreshDevices_check();
-        refreshDevices_listen();
     }
 }
 
@@ -867,7 +858,6 @@ void DeviceManager::refreshDevices_check()
             {
                 if (!dd->isEnabled()) continue;
                 if (!dd->hasBluetoothConnection()) continue;
-                if (dd->getName() == "ThermoBeacon") continue;
 
                 // old or no data: go for refresh
                 if (dd->needsUpdateRt())

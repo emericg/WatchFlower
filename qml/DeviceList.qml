@@ -182,7 +182,7 @@ Item {
                     text: {
                         if (Qt.platform.os === "android") {
                             if (!deviceManager.bluetooth) qsTr("Enable")
-                            if (!deviceManager.bluetoothPermissions) qsTr("Retry")
+                            else qsTr("Retry")
                         } else {
                             qsTr("Retry")
                         }
