@@ -44,7 +44,10 @@ Item {
 
             ListView {
                 id: devicesView
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: infoBox.visible ? infoBox.top : parent.bottom
 
                 topMargin: 6
                 bottomMargin: 6
@@ -57,6 +60,50 @@ Item {
 
                 ItemNoDeviceNearby {
                     visible: (devicesView.count <= 0)
+                }
+            }
+
+            Rectangle {
+                id: infoBox
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.margins: 12
+
+                height: infoText.contentHeight + 16
+                radius: 4
+                z: 2
+
+                color: Theme.colorComponentBackground
+                border.color: Theme.colorSeparator
+                border.width: 1
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    id: infoText
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8 + 44
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    text: qsTr("The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
                 }
             }
         }
@@ -79,7 +126,7 @@ Item {
                 id: devicesView
                 anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.bottom: parent.bottom
+                anchors.bottom: infoBox.visible ? infoBox.top : parent.bottom
                 width: (parent.width / 2)
 
                 topMargin: 6
@@ -93,6 +140,49 @@ Item {
 
                 ItemNoDeviceNearby {
                     visible: (devicesView.count <= 0)
+                }
+            }
+
+            Rectangle {
+                id: infoBox
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.margins: 12
+
+                width: (parent.width / 2) - 24
+                height: infoText.contentHeight + 16
+                radius: 4
+                z: 2
+
+                color: Theme.colorComponentBackground
+                border.color: Theme.colorSeparator
+                border.width: 1
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    id: infoText
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8 + 44
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    text: qsTr("The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
                 }
             }
 

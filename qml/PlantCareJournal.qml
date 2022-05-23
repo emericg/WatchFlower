@@ -96,7 +96,7 @@ Loader {
 
                 PopupDate {
                     id: popupDate
-                    onUpdateDate: {
+                    onUpdateDate: (newdate) => {
                         //console.log("onUpdateDate(" + newdate + ")")
                         newEntry.currentDateTime = newdate
                     }
@@ -123,7 +123,7 @@ Loader {
                         height: rowrowrow.height
                         visible: !singleColumn
 
-                        onUpdateDate: {
+                        onUpdateDate: (newdate) => {
                             //console.log("onUpdateDate(" + newdate + ")")
                             newEntry.currentDateTime = newdate
                         }
