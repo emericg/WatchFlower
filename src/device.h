@@ -31,6 +31,7 @@
 #include <QTimer>
 #include <QDate>
 #include <QDateTime>
+#include <QByteArray>
 #include <QJsonObject>
 
 #include <QBluetoothDeviceInfo>

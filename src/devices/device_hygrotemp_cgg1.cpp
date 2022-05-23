@@ -40,36 +40,22 @@ DeviceHygrotempCGG1::DeviceHygrotempCGG1(const QString &deviceAddr, const QStrin
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    if (deviceName == "ClearGrass Temp & RH") m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
-
-    if (deviceName == "Qingping Temp & RH M")
-        m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
-    else
-        m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
-
-    if (!hasBatteryLevel() && m_deviceBattery > 0)
-    {
-        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    }
 }
 
 DeviceHygrotempCGG1::DeviceHygrotempCGG1(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    if (d.name() == "ClearGrass Temp & RH") m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
-
-    if (d.name() == "Qingping Temp & RH M")
-        m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
-    else
-        m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
-
-    if (!hasBatteryLevel() && m_deviceBattery > 0)
-    {
-        m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
-    }
 }
 
 DeviceHygrotempCGG1::~DeviceHygrotempCGG1()
@@ -333,28 +319,7 @@ void DeviceHygrotempCGG1::parseAdvertisementData(const QByteArray &value)
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-    if (value.size() == 14) // MiBeacon? // 14 bytes messages
-    {
-        QString mac;
-        mac += value.mid(10,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(9,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(8,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
-
-        // Save mac address
-        setSetting("mac", mac);
-    }
-#endif
-
-    if (value.size() == 17) // Qingping data? // 17 bytes messages
+    if (value.size() == 17) // Qingping data protocol // 17 bytes messages
     {
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         QString mac;

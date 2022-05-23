@@ -24,7 +24,6 @@
 #include "utils/utils_app.h"
 
 #include <QBluetoothDeviceInfo>
-
 #include <QList>
 #include <QDebug>
 

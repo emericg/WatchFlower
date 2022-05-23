@@ -127,27 +127,27 @@ DeviceManager::DeviceManager(bool daemon)
             else if (deviceName == "HiGrow")
                 d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
 
-            else if (deviceName == "CGD1")
-                d = new DeviceHygrotempCGD1(deviceAddr, deviceName, this);
-            else if (deviceName == "Qingping Temp RH Lite")
-                d = new DeviceHygrotempCGDK2(deviceAddr, deviceName, this);
-            else if (deviceName == "ClearGrass Temp & RH" || deviceName == "Qingping Temp & RH M")
-                d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
-            else if (deviceName == "CGP1W")
-                d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
+            else if (deviceName == "ThermoBeacon")
+                d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401" || deviceName == "XMWSDJO4MMC")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
-            else if (deviceName == "ThermoBeacon")
-                d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
+            else if (deviceName == "ClearGrass Temp & RH" || deviceName == "Qingping Temp & RH M")
+                d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
+            else if (deviceName == "Qingping Temp RH Lite")
+                d = new DeviceHygrotempCGDK2(deviceAddr, deviceName, this);
+            else if (deviceName == "Qingping Alarm Clock")
+                d = new DeviceHygrotempCGD1(deviceAddr, deviceName, this);
+            else if (deviceName == "Qingping Temp RH Barometer")
+                d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
 
-            else if (deviceName.startsWith("JQJCY01YM"))
-                d = new DeviceJQJCY01YM(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
+            else if (deviceName == "JQJCY01YM")
+                d = new DeviceJQJCY01YM(deviceAddr, deviceName, this);
             else if (deviceName == "AirQualityMonitor")
                 d = new DeviceEsp32AirQualityMonitor(deviceAddr, deviceName, this);
             else if (deviceName == "GeigerCounter")
@@ -1305,19 +1305,22 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
     // Regular WatchFlower device
     if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden" ||
+        info.name() == "ropot" ||
         info.name().startsWith("Flower power") ||
         info.name().startsWith("Parrot pot") ||
-        info.name() == "ropot" ||
+        info.name() == "HiGrow" ||
+        info.name() == "ThermoBeacon" ||
         info.name() == "MJ_HT_V1" ||
-        info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M" ||
-        info.name() == "Qingping Temp RH Lite" ||
         info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
         info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC" ||
-        info.name() == "ThermoBeacon" ||
+        info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M" ||
+        info.name() == "Qingping Temp RH Lite" ||
+        info.name() == "Qingping Alarm Clock" ||
+        info.name() == "Qingping Temp RH Barometer" ||
         info.name().startsWith("6003#") ||
+        info.name() == "JQJCY01YM" ||
         info.name() == "AirQualityMonitor" ||
-        info.name() == "GeigerCounter" ||
-        info.name() == "HiGrow")
+        info.name() == "GeigerCounter")
     {
         // Create the device
         if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
@@ -1331,27 +1334,27 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         else if (info.name() == "HiGrow")
             d = new DeviceEsp32HiGrow(info, this);
 
-        else if (info.name() == "CGD1")
-            d = new DeviceHygrotempCGD1(info, this);
-        else if (info.name() == "Qingping Temp RH Lite")
-            d = new DeviceHygrotempCGDK2(info, this);
-        else if (info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M")
-            d = new DeviceHygrotempCGG1(info, this);
-        else if (info.name() == "CGP1W")
-            d = new DeviceHygrotempCGP1W(info, this);
+        else if (info.name() == "ThermoBeacon")
+            d = new DeviceThermoBeacon(info, this);
         else if (info.name() == "MJ_HT_V1")
             d = new DeviceHygrotempLYWSDCGQ(info, this);
         else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")
             d = new DeviceHygrotempClock(info, this);
         else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC")
             d = new DeviceHygrotempSquare(info, this);
-        else if (info.name() == "ThermoBeacon")
-            d = new DeviceThermoBeacon(info, this);
+        else if (info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M")
+            d = new DeviceHygrotempCGG1(info, this);
+        else if (info.name() == "Qingping Temp RH Lite")
+            d = new DeviceHygrotempCGDK2(info, this);
+        else if (info.name() == "Qingping Alarm Clock")
+            d = new DeviceHygrotempCGD1(info, this);
+        else if (info.name() == "Qingping Temp RH Barometer")
+            d = new DeviceHygrotempCGP1W(info, this);
 
-        else if (info.name().startsWith("JQJCY01YM"))
-            d = new DeviceJQJCY01YM(info, this);
         else if (info.name().startsWith("6003#"))
             d = new DeviceWP6003(info, this);
+        else if (info.name() == "JQJCY01YM")
+            d = new DeviceJQJCY01YM(info, this);
         else if (info.name() == "AirQualityMonitor")
             d = new DeviceEsp32AirQualityMonitor(info, this);
         else if (info.name() == "GeigerCounter")

@@ -41,7 +41,9 @@ DeviceHygrotempCGDK2::DeviceHygrotempCGDK2(const QString &deviceAddr, const QStr
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -51,7 +53,9 @@ DeviceHygrotempCGDK2::DeviceHygrotempCGDK2(const QBluetoothDeviceInfo &d, QObjec
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities += DeviceUtils::DEVICE_REALTIME;
+    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -274,28 +278,7 @@ void DeviceHygrotempCGDK2::parseAdvertisementData(const QByteArray &value)
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-    if (value.size() == 12) // MiBeacon? // 12 bytes messages
-    {
-        QString mac;
-        mac += value.mid(10,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(9,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(8,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
-
-        // Save mac address
-        setSetting("mac", mac);
-    }
-#endif
-
-    if (value.size() == 17) // Qingping data? // 17 bytes messages
+    if (value.size() == 17) // Qingping data protocol // 17 bytes messages
     {
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         QString mac;
@@ -326,8 +309,8 @@ void DeviceHygrotempCGDK2::parseAdvertisementData(const QByteArray &value)
             (data[0] == 0x08 && data[1] == 0x07) || // CGG1
             (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
             (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
-            (data[0] == 0x08 && data[1] == 0x09) || // CGD1
-            (data[0] == 0x08 && data[1] == 0x0c))   // CGP1W
+            (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
+            (data[0] == 0x08 && data[1] == 0x0c))   // CGD1
         {
             temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
             if (temp != m_temperature)

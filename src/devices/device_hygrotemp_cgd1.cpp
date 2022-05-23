@@ -40,7 +40,8 @@ DeviceHygrotempCGD1::DeviceHygrotempCGD1(const QString &deviceAddr, const QStrin
     DeviceSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    //m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
+    m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -49,7 +50,8 @@ DeviceHygrotempCGD1::DeviceHygrotempCGD1(const QBluetoothDeviceInfo &d, QObject 
     DeviceSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
-    //m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
+    m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
 }
@@ -84,7 +86,7 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const QByteArray &value)
     // MiBeacon? // 12 bytes messages?
     // MiBeacon? // 14 bytes messages?
 
-    if (value.size() == 17) // Qingping data? // 17 bytes messages
+    if (value.size() == 17) // Qingping data protocol // 17 bytes messages
     {
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         QString mac;
@@ -115,8 +117,8 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const QByteArray &value)
             (data[0] == 0x08 && data[1] == 0x07) || // CGG1
             (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
             (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
-            (data[0] == 0x08 && data[1] == 0x09) || // CGD1
-            (data[0] == 0x08 && data[1] == 0x0c))   // CGP1W
+            (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
+            (data[0] == 0x08 && data[1] == 0x0c))   // CGD1
         {
             temp = static_cast<int32_t>(data[10] + (data[11] << 8)) / 10.f;
             if (temp != m_temperature)

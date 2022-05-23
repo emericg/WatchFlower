@@ -584,7 +584,7 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value)
     //qDebug() << "DATA: 0x" << value.toHex();
 
     // MiBeacon protocol / 12-10 bytes messages
-    // RoPot uses 16 bytes message
+    // RoPot uses 16 bytes messages
 
     if (value.size() >= 12)
     {

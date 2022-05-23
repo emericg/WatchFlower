@@ -26,7 +26,6 @@
 #include "device_sensor.h"
 
 #include <QObject>
-#include <QByteArray>
 #include <QList>
 
 #include <QBluetoothDeviceInfo>

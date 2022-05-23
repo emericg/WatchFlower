@@ -143,26 +143,33 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "f";
             } else if (device->getName() == "MJ_HT_V1") {
                 return "g";
-            } else if (device->getName() == "ClearGrass Temp & RH" ||
-                       device->getName() == "Qingping Temp RH Lite" ||
-                       device->getName().startsWith("Qingping Temp & RH")) {
-                return "h";
             } else if (device->getName() == "LYWSD02") {
+                return "h";
+            } else if (device->getName() == "LYWSD03MMC") {
                 return "i";
             } else if (device->getName() == "MHO-C303") {
                 return "j";
-            } else if (device->getName() == "LYWSD03MMC") {
-                return "k";
             } else if (device->getName() == "MHO-C401") {
-                return "l";
+                return "k";
             } else if (device->getName() == "XMWSDJO4MMC") {
+                return "l";
+            } else if (device->getName() == "ClearGrass Temp & RH" ||
+                       device->getName().startsWith("Qingping Temp & RH")) {
                 return "m";
-            } else if (device->getName() == "AirQualityMonitor") { // other sensors
+            } else if (device->getName() == "Qingping Temp RH Lite" ) {
                 return "n";
-            } else if (device->getName().startsWith("6003#")) {
+            } else if (device->getName() == "Qingping Alarm Clock") {
                 return "o";
-            } else if (device->getName() == "GeigerCounter") {
+            } else if (device->getName() == "Qingping Temp RH Barometer") {
                 return "p";
+            } else if (device->getName().startsWith("6003#")) { // air quality
+                return "w";
+            } else if (device->getName() == "JQJCY01YM") {
+                return "x";
+            } else if (device->getName() == "AirQualityMonitor") {
+                return "y";
+            } else if (device->getName() == "GeigerCounter") {
+                return "z";
             } else {
                 return "zzz";
             }

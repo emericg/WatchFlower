@@ -39,7 +39,8 @@
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceSensor(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
@@ -49,7 +50,8 @@ DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QStr
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceSensor(d, parent)
 {
-    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
+    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
@@ -84,7 +86,7 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
     Q_UNUSED (data)
 
-    if (value.size() >= 17) // Qingping data? // xx bytes messages
+    if (value.size() >= 21) // Qingping data protocol // 21 bytes messages
     {
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
         QString mac;
@@ -116,8 +118,8 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
             (data[0] == 0x08 && data[1] == 0x07) || // CGG1
             (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
             (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
-            (data[0] == 0x08 && data[1] == 0x09) || // CGD1
-            (data[0] == 0x08 && data[1] == 0x0c))   // CGP1W
+            (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
+            (data[0] == 0x08 && data[1] == 0x0c))   // CGD1
         {
             temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
             if (temp != m_temperature)
@@ -139,9 +141,6 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
                 }
             }
 
-            //batt = static_cast<int8_t>(data[16]);
-            //setBattery(batt);
-
             pres = static_cast<int16_t>(data[16] + (data[17] << 8)) / 10.f;
             if (pres != m_pressure)
             {
@@ -151,6 +150,9 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
                     Q_EMIT dataUpdated();
                 }
             }
+
+            batt = static_cast<int8_t>(data[21]);
+            setBattery(batt);
         }
 
         if (m_temperature > -99.f && m_humidity > -99.f && m_pressure > -99)
@@ -159,7 +161,10 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
 
             if (needsUpdateDb())
             {
-                // TODO
+                if (m_dbInternal || m_dbExternal)
+                {
+                    // TODO
+                }
             }
 
             refreshDataFinished(true);
