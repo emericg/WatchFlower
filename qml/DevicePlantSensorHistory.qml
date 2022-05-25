@@ -289,8 +289,8 @@ Item {
 
             valueMax: currentDevice.hygroMax*1.2
             valueMin: currentDevice.hygroMin*0.8
-            limitMin: currentDevice.limitHygroMin
-            limitMax: currentDevice.limitHygroMax
+            limitMin: currentDevice.soilMoisture_limitMin
+            limitMax: currentDevice.soilMoisture_limitMax
         }
 
         ////////
@@ -310,8 +310,8 @@ Item {
 
             valueMax: currentDevice.conduMax*1.2
             valueMin: currentDevice.conduMin*0.8
-            limitMin: currentDevice.limitConduMin
-            limitMax: currentDevice.limitConduMax
+            limitMin: currentDevice.soilConductivity_limitMin
+            limitMax: currentDevice.soilConductivity_limitMax
         }
 
         ////////
@@ -331,8 +331,8 @@ Item {
 
             valueMax: currentDevice.tempMax*1.2
             valueMin: currentDevice.tempMin*0.8
-            limitMin: currentDevice.limitTempMin
-            limitMax: currentDevice.limitTempMax
+            limitMin: currentDevice.temperature_limitMin
+            limitMax: currentDevice.temperature_limitMax
         }
 
         ////////
@@ -352,8 +352,8 @@ Item {
 
             valueMax: currentDevice.luxMax*1.2
             valueMin: currentDevice.luxMin*0.8
-            limitMin: currentDevice.limitLuxMin
-            limitMax: currentDevice.limitLuxMax
+            limitMin: currentDevice.luminosityLux_limitMin
+            limitMax: currentDevice.luminosityLux_limitMax
         }
 
         ////////

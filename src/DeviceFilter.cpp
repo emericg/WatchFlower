@@ -19,7 +19,9 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#include "device_filter.h"
+#include "DeviceFilter.h"
+#include "device.h"
+#include "device_sensor.h"
 
 #include <cstdlib>
 #include <cmath>

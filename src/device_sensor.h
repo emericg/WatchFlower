@@ -24,7 +24,6 @@
 /* ************************************************************************** */
 
 #include "device.h"
-#include "Journal.h"
 
 #include <QObject>
 #include <QString>
@@ -58,7 +57,9 @@ class DeviceSensor: public Device
     Q_PROPERTY(float temperatureC READ getTempC NOTIFY dataUpdated)
     Q_PROPERTY(float temperatureF READ getTempF NOTIFY dataUpdated)
     Q_PROPERTY(float humidity READ getHumidity NOTIFY dataUpdated)
+    // hygrometer data (virtual)
     Q_PROPERTY(float heatIndex READ getHeatIndex NOTIFY dataUpdated)
+    Q_PROPERTY(float dewPoint READ getDewPoint NOTIFY dataUpdated)
     // environmental data
     Q_PROPERTY(int pressure READ getPressure NOTIFY dataUpdated)
     Q_PROPERTY(int luminosityLux READ getLuminosityLux NOTIFY dataUpdated)
@@ -75,6 +76,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float so2 READ getSO2 NOTIFY dataUpdated)
     Q_PROPERTY(float voc READ getVOC NOTIFY dataUpdated)
     Q_PROPERTY(float hcho READ getHCHO NOTIFY dataUpdated)
+    Q_PROPERTY(float radioactivity READ getRadioactivity NOTIFY dataUpdated)
     Q_PROPERTY(float radioactivityH READ getRH NOTIFY dataUpdated)
     Q_PROPERTY(float radioactivityM READ getRM NOTIFY dataUpdated)
     Q_PROPERTY(float radioactivityS READ getRS NOTIFY dataUpdated)
@@ -96,39 +98,35 @@ class DeviceSensor: public Device
     Q_PROPERTY(int mmolMax READ getMmolMax NOTIFY minmaxUpdated)
 
     // plant limits
-    Q_PROPERTY(int limitHygroMin READ getLimitSoilMoistureMin WRITE setLimitSoilMoistureMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitHygroMax READ getLimitSoilMoistureMax WRITE setLimitSoilMoistureMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitConduMin READ getLimitSoilConduMin WRITE setLimitSoilConduMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitConduMax READ getLimitSoilConduMax WRITE setLimitSoilConduMax NOTIFY limitsUpdated)
-    Q_PROPERTY(float limitSoilPhMin READ getLimitSoilPhMin WRITE setLimitSoilPhMin NOTIFY limitsUpdated)
-    Q_PROPERTY(float limitSoilPhMax READ getLimitSoilPhMax WRITE setLimitSoilPhMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int soilMoisture_limitMin READ getLimitSoilMoistureMin WRITE setLimitSoilMoistureMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int soilMoisture_limitMax READ getLimitSoilMoistureMax WRITE setLimitSoilMoistureMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int soilConductivity_limitMin READ getLimitSoilConduMin WRITE setLimitSoilConduMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int soilConductivity_limitMax READ getLimitSoilConduMax WRITE setLimitSoilConduMax NOTIFY limitsUpdated)
+    Q_PROPERTY(float soilPH_limitMin READ getLimitSoilPhMin WRITE setLimitSoilPhMin NOTIFY limitsUpdated)
+    Q_PROPERTY(float soilPH_limitMax READ getLimitSoilPhMax WRITE setLimitSoilPhMax NOTIFY limitsUpdated)
     // hygrometer limits
-    Q_PROPERTY(int limitTempMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitTempMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitHumiMin READ getLimitHumiMin WRITE setLimitHumiMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitHumiMax READ getLimitHumiMax WRITE setLimitHumiMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int temperature_limitMin READ getLimitTempMin WRITE setLimitTempMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int temperature_limitMax READ getLimitTempMax WRITE setLimitTempMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int humidity_limitMin READ getLimitHumiMin WRITE setLimitHumiMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int humidity_limitMax READ getLimitHumiMax WRITE setLimitHumiMax NOTIFY limitsUpdated)
     // environmental limits
-    Q_PROPERTY(int limitLuxMin READ getLimitLuxMin WRITE setLimitLuxMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitLuxMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitMmolMin READ getLimitMmolMin WRITE setLimitMmolMin NOTIFY limitsUpdated)
-    Q_PROPERTY(int limitMmolMax READ getLimitMmolMax WRITE setLimitMmolMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int luminosityLux_limitMin READ getLimitLuxMin WRITE setLimitLuxMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int luminosityLux_limitMax READ getLimitLuxMax WRITE setLimitLuxMax NOTIFY limitsUpdated)
+    Q_PROPERTY(int luminosityMmol_limitMin READ getLimitMmolMin WRITE setLimitMmolMin NOTIFY limitsUpdated)
+    Q_PROPERTY(int luminosityMmol_limitMax READ getLimitMmolMax WRITE setLimitMmolMax NOTIFY limitsUpdated)
 
     // sensor bias
-    Q_PROPERTY(float biasSoilMoisture READ getBiasSoilMoisture WRITE setBiasSoilMoisture NOTIFY biasUpdated)
-    Q_PROPERTY(float biasSoilConductivity READ getBiasSoilCondu WRITE setBiasSoilCondu NOTIFY biasUpdated)
-    Q_PROPERTY(float biasSoilTemperature READ getBiasSoilTemp WRITE setBiasSoilTemp NOTIFY biasUpdated)
-    Q_PROPERTY(float biasSoilPH READ getBiasSoilPH WRITE setBiasSoilPH NOTIFY biasUpdated)
-    Q_PROPERTY(float biasTemperature READ getBiasTemperature WRITE setBiasTemperature NOTIFY biasUpdated)
-    Q_PROPERTY(float biasHumidity READ getBiasHumidity WRITE setBiasHumidity NOTIFY biasUpdated)
-    Q_PROPERTY(float biasLuminosityLux READ getBiasLuminosity WRITE setBiasLuminosity NOTIFY biasUpdated)
-
-    Q_PROPERTY(float biasPressure READ getBiasPressure WRITE setBiasPressure NOTIFY biasUpdated)
+    Q_PROPERTY(float soilMoisture_bias READ getBiasSoilMoisture WRITE setBiasSoilMoisture NOTIFY biasUpdated)
+    Q_PROPERTY(float soilConductivity_bias READ getBiasSoilCondu WRITE setBiasSoilCondu NOTIFY biasUpdated)
+    Q_PROPERTY(float soilTemperature_bias READ getBiasSoilTemp WRITE setBiasSoilTemp NOTIFY biasUpdated)
+    Q_PROPERTY(float soilPH_bias READ getBiasSoilPH WRITE setBiasSoilPH NOTIFY biasUpdated)
+    Q_PROPERTY(float temperature_bias READ getBiasTemperature WRITE setBiasTemperature NOTIFY biasUpdated)
+    Q_PROPERTY(float humidity_bias READ getBiasHumidity WRITE setBiasHumidity NOTIFY biasUpdated)
+    Q_PROPERTY(float luminosity_bias READ getBiasLuminosity WRITE setBiasLuminosity NOTIFY biasUpdated)
+    Q_PROPERTY(float pressure_bias READ getBiasPressure WRITE setBiasPressure NOTIFY biasUpdated)
 
     // sensor history
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
-
-    // journal entries
-    Q_PROPERTY(QVariant journalEntries READ getJournalEntries NOTIFY journalUpdated)
 
     // graphs
     Q_PROPERTY(QVariant aioHistoryData_month READ getChartData_history_month NOTIFY chartDataHistoryMonthsUpdated)
@@ -142,7 +140,6 @@ Q_SIGNALS:
     void limitsUpdated();
     void minmaxUpdated();
     void progressUpdated();
-    void journalUpdated();
     void chartDataHistoryMonthsUpdated();
     void chartDataHistoryWeeksUpdated();
     void chartDataHistoryDaysUpdated();
@@ -188,39 +185,40 @@ protected:
     float m_so2 = -99.f;
     float m_voc = -99.f;
     float m_hcho = -99.f;
+    float m_radioactivity = -99.f;
     float m_rh = -99.f;
     float m_rm = -99.f;
     float m_rs = -99.f;
 
     // plant limits
-    int m_limit_soilMoistureMin = 15;
-    int m_limit_soilMoistureMax = 50;
-    int m_limit_soilConduMin = 100;
-    int m_limit_soilConduMax = 500;
-    float m_limit_soilPhMin = 6.5f;
-    float m_limit_soilPhMax = 7.5f;
+    int m_soilMoisture_limit_min = 15;
+    int m_soilMoisture_limit_max = 50;
+    int m_soilConductivity_limit_min = 100;
+    int m_soilConductivity_limit_max = 500;
+    float m_soilPH_limit_min = 6.5f;
+    float m_soilPH_limit_max = 7.5f;
     // hygrometer limits
-    int m_limit_tempMin = 14;
-    int m_limit_tempMax = 28;
-    int m_limit_humiMin = 40;
-    int m_limit_humiMax = 60;
+    int m_temperature_limit_min = 14;
+    int m_temperature_limit_max = 28;
+    int m_humidity_limit_min = 40;
+    int m_humidity_limit_max = 60;
     // environmental limits
-    int m_limit_luxMin = 1000;
-    int m_limit_luxMax = 3000;
-    int m_limit_mmolMin = 0;
-    int m_limit_mmolMax = 0;
+    int m_luminosityLux_limit_min = 1000;
+    int m_luminosityLux_limit_max = 3000;
+    int m_luminosityMmol_limit_min = 0;
+    int m_luminosityMmol_limit_max = 0;
 
     // sensor bias
-    float m_bias_soilMoisture = 0.f;
-    float m_bias_soilConductivity = 0.f;
-    float m_bias_soilTemperature = 0.f;
-    float m_bias_soilPH = 0.f;
-    float m_bias_temperature = 0.f;
-    float m_bias_humidity = 0.f;
-    float m_bias_pressure = 0.f;
-    float m_bias_luminosityLux = 0.f;
+    float m_soilMoisture_bias = 0.f;
+    float m_soilConductivity_bias = 0.f;
+    float m_soilTemperature_bias = 0.f;
+    float m_soilPH_bias = 0.f;
+    float m_temperature_bias = 0.f;
+    float m_humidity_bias = 0.f;
+    float m_luminosity_bias = 0.f;
+    float m_pressure_bias = 0.f;
 
-    // min/max data (30 days period)
+    // min/max data (generated - 30 days period)
     int m_soilMoistureMin = 999999;
     int m_soilMoistureMax = -99;
     int m_soilConduMin = 999999;
@@ -246,10 +244,6 @@ protected:
 
     // device clock
     int64_t m_device_lastmove = -1;
-
-    // journal entries
-    QList <QObject *> m_journal_entries;
-    QVariant getJournalEntries() const { return QVariant::fromValue(m_journal_entries); }
 
     // graphs data
     QList <QObject *> m_chartData_history_month;
@@ -299,10 +293,10 @@ public:
     virtual bool needsUpdateRt() const;
     virtual bool needsUpdateDb() const;
 
-    bool setSqlSensorBias();
-    bool setSqlSensorLimits();
     bool setSqlPlantBias();
     bool setSqlPlantLimits();
+    bool setSqlSensorBias();
+    bool setSqlSensorLimits();
 
     // Plant sensor data
     int getSoilMoisture() const { return m_soilMoisture; }
@@ -311,17 +305,10 @@ public:
     float getSoilPH() const { return m_soilPH; }
     float getWaterTankLevel() const { return m_watertank_level; }
     float getWaterTankCapacity() const { return m_watertank_capacity; }
-    QDateTime getLastMove() const;
-    float getLastMove_days() const;
     // Hygrometer
     float getTemp() const;
     float getTempC() const { return m_temperature; }
     float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
-    Q_INVOKABLE QString getTempString() const;
-    Q_INVOKABLE float getHeatIndex() const;
-    Q_INVOKABLE QString getHeatIndexString() const;
-    Q_INVOKABLE float getDewPoint() const;
-    Q_INVOKABLE QString getDewPointString() const;
     float getHumidity() const { return m_humidity; }
     // Environmental
     int getPressure() const { return m_pressure; }
@@ -344,58 +331,66 @@ public:
     float getVOC() { return m_voc; }
     float getHCHO() { return m_hcho; }
     // Geiger Counter
+    float getRadioactivity() { return m_radioactivity; }
     float getRH() { return m_rh; }
     float getRM() { return m_rm; }
     float getRS() { return m_rs; }
+    // others
+    Q_INVOKABLE QString getTempString() const;
+    Q_INVOKABLE float getHeatIndex() const;
+    Q_INVOKABLE QString getHeatIndexString() const;
+    Q_INVOKABLE float getDewPoint() const;
+    Q_INVOKABLE QString getDewPointString() const;
+    QDateTime getLastMove() const;
+    float getLastMove_days() const;
 
     // Sensor bias
-    float getBiasSoilMoisture() const { return m_bias_soilMoisture; }
-    void setBiasSoilMoisture(float value) { m_bias_soilMoisture = value; setSqlSensorBias(); }
-    float getBiasSoilCondu() const { return m_bias_soilConductivity; }
-    void setBiasSoilCondu(float value) { m_bias_soilConductivity = value; setSqlSensorBias(); }
-    float getBiasSoilTemp() const { return m_bias_soilTemperature; }
-    void setBiasSoilTemp(float value) { m_bias_soilTemperature = value; setSqlSensorBias(); }
-    float getBiasSoilPH() const { return m_bias_soilPH; }
-    void setBiasSoilPH(float value) { m_bias_soilPH = value; setSqlSensorBias(); }
-    float getBiasTemperature() const { return m_bias_temperature; }
-    void setBiasTemperature(float value) { m_bias_temperature = value; setSqlSensorBias(); }
-    float getBiasHumidity() const { return m_bias_humidity; }
-    void setBiasHumidity(float value) { m_bias_humidity = value; setSqlSensorBias(); }
-    float getBiasLuminosity() const { return m_bias_luminosityLux; }
-    void setBiasLuminosity(float value) { m_bias_luminosityLux = value; setSqlSensorBias(); }
-
-    float getBiasPressure() const { return m_bias_pressure; }
-    void setBiasPressure(float value) { m_bias_pressure = value; setSqlSensorBias(); }
+    float getBiasSoilMoisture() const { return m_soilMoisture_bias; }
+    void setBiasSoilMoisture(float value) { m_soilMoisture_bias = value; setSqlPlantBias(); }
+    float getBiasSoilCondu() const { return m_soilConductivity_bias; }
+    void setBiasSoilCondu(float value) { m_soilConductivity_bias = value; setSqlPlantBias(); }
+    float getBiasSoilTemp() const { return m_soilTemperature_bias; }
+    void setBiasSoilTemp(float value) { m_soilTemperature_bias = value; setSqlPlantBias(); }
+    float getBiasSoilPH() const { return m_soilPH_bias; }
+    void setBiasSoilPH(float value) { m_soilPH_bias = value; setSqlPlantBias(); }
+    float getBiasTemperature() const { return m_temperature_bias; }
+    void setBiasTemperature(float value) { m_temperature_bias = value; setSqlPlantBias(); }
+    float getBiasHumidity() const { return m_humidity_bias; }
+    void setBiasHumidity(float value) { m_humidity_bias = value; setSqlPlantBias(); }
+    float getBiasLuminosity() const { return m_luminosity_bias; }
+    void setBiasLuminosity(float value) { m_luminosity_bias = value; setSqlPlantBias(); }
+    float getBiasPressure() const { return m_pressure_bias; }
+    void setBiasPressure(float value) { m_pressure_bias = value; setSqlPlantBias(); }
 
     // Sensor limits
-    int getLimitSoilMoistureMin() const { return m_limit_soilMoistureMin; }
-    int getLimitSoilMoistureMax() const { return m_limit_soilMoistureMax; }
-    int getLimitSoilConduMin() const { return m_limit_soilConduMin; }
-    int getLimitSoilConduMax() const { return m_limit_soilConduMax; }
-    float getLimitSoilPhMin() const { return m_limit_soilPhMin; }
-    float getLimitSoilPhMax() const { return m_limit_soilPhMax; }
-    int getLimitTempMin() const { return m_limit_tempMin; }
-    int getLimitTempMax() const { return m_limit_tempMax; }
-    int getLimitHumiMin() const { return m_limit_humiMin; }
-    int getLimitHumiMax() const { return m_limit_humiMax; }
-    int getLimitLuxMin() const { return m_limit_luxMin; }
-    int getLimitLuxMax() const { return m_limit_luxMax; }
-    int getLimitMmolMin() const { return m_limit_mmolMin; }
-    int getLimitMmolMax() const { return m_limit_mmolMax; }
-    void setLimitSoilMoistureMin(int limitHygroMin) { if (m_limit_soilMoistureMin == limitHygroMin) return; m_limit_soilMoistureMin = limitHygroMin; setSqlPlantLimits(); }
-    void setLimitSoilMoistureMax(int limitHygroMax) { if (m_limit_soilMoistureMax == limitHygroMax) return; m_limit_soilMoistureMax = limitHygroMax; setSqlPlantLimits(); }
-    void setLimitSoilConduMin(int limitConduMin) { if (m_limit_soilConduMin == limitConduMin) return; m_limit_soilConduMin = limitConduMin; setSqlPlantLimits(); }
-    void setLimitSoilConduMax(int limitConduMax) { if (m_limit_soilConduMax == limitConduMax) return; m_limit_soilConduMax = limitConduMax; setSqlPlantLimits(); }
-    void setLimitSoilPhMin(float limitPhMin) { if (m_limit_soilPhMin == limitPhMin) return; m_limit_soilPhMin = limitPhMin; setSqlPlantLimits(); }
-    void setLimitSoilPhMax(float limitPhMax) { if (m_limit_soilPhMax == limitPhMax) return; m_limit_soilPhMax = limitPhMax; setSqlPlantLimits(); }
-    void setLimitTempMin(int limitTempMin) { if (m_limit_tempMin == limitTempMin) return; m_limit_tempMin = limitTempMin; setSqlPlantLimits(); }
-    void setLimitTempMax(int limitTempMax) { if (m_limit_tempMax == limitTempMax) return; m_limit_tempMax = limitTempMax; setSqlPlantLimits(); }
-    void setLimitHumiMin(int limitHumiMin) { if (m_limit_humiMin == limitHumiMin) return; m_limit_humiMin = limitHumiMin; setSqlPlantLimits(); }
-    void setLimitHumiMax(int limitHumiMax) { if (m_limit_humiMax == limitHumiMax) return; m_limit_humiMax = limitHumiMax; setSqlPlantLimits(); }
-    void setLimitLuxMin(int limitLuxMin) { if (m_limit_luxMin == limitLuxMin) return; m_limit_luxMin = limitLuxMin; setSqlPlantLimits(); }
-    void setLimitLuxMax(int limitLuxMax) { if (m_limit_luxMax == limitLuxMax) return; m_limit_luxMax = limitLuxMax; setSqlPlantLimits(); }
-    void setLimitMmolMin(int limitMmolMin) { if (m_limit_mmolMin == limitMmolMin) return; m_limit_mmolMin = limitMmolMin; setSqlPlantLimits(); }
-    void setLimitMmolMax(int limitMmolMax) { if (m_limit_mmolMax == limitMmolMax) return; m_limit_mmolMax = limitMmolMax; setSqlPlantLimits(); }
+    int getLimitSoilMoistureMin() const { return m_soilMoisture_limit_min; }
+    int getLimitSoilMoistureMax() const { return m_soilMoisture_limit_max; }
+    int getLimitSoilConduMin() const { return m_soilConductivity_limit_min; }
+    int getLimitSoilConduMax() const { return m_soilConductivity_limit_max; }
+    float getLimitSoilPhMin() const { return m_soilPH_limit_min; }
+    float getLimitSoilPhMax() const { return m_soilPH_limit_max; }
+    int getLimitTempMin() const { return m_temperature_limit_min; }
+    int getLimitTempMax() const { return m_temperature_limit_max; }
+    int getLimitHumiMin() const { return m_humidity_limit_min; }
+    int getLimitHumiMax() const { return m_humidity_limit_max; }
+    int getLimitLuxMin() const { return m_luminosityLux_limit_min; }
+    int getLimitLuxMax() const { return m_luminosityLux_limit_max; }
+    int getLimitMmolMin() const { return m_luminosityMmol_limit_min; }
+    int getLimitMmolMax() const { return m_luminosityMmol_limit_max; }
+    void setLimitSoilMoistureMin(int limitHygroMin) { if (m_soilMoisture_limit_min == limitHygroMin) return; m_soilMoisture_limit_min = limitHygroMin; setSqlPlantLimits(); }
+    void setLimitSoilMoistureMax(int limitHygroMax) { if (m_soilMoisture_limit_max == limitHygroMax) return; m_soilMoisture_limit_max = limitHygroMax; setSqlPlantLimits(); }
+    void setLimitSoilConduMin(int limitConduMin) { if (m_soilConductivity_limit_min == limitConduMin) return; m_soilConductivity_limit_min = limitConduMin; setSqlPlantLimits(); }
+    void setLimitSoilConduMax(int limitConduMax) { if (m_soilConductivity_limit_max == limitConduMax) return; m_soilConductivity_limit_max = limitConduMax; setSqlPlantLimits(); }
+    void setLimitSoilPhMin(float limitPhMin) { if (m_soilPH_limit_min == limitPhMin) return; m_soilPH_limit_min = limitPhMin; setSqlPlantLimits(); }
+    void setLimitSoilPhMax(float limitPhMax) { if (m_soilPH_limit_max == limitPhMax) return; m_soilPH_limit_max = limitPhMax; setSqlPlantLimits(); }
+    void setLimitTempMin(int limitTempMin) { if (m_temperature_limit_min == limitTempMin) return; m_temperature_limit_min = limitTempMin; setSqlPlantLimits(); }
+    void setLimitTempMax(int limitTempMax) { if (m_temperature_limit_max == limitTempMax) return; m_temperature_limit_max = limitTempMax; setSqlPlantLimits(); }
+    void setLimitHumiMin(int limitHumiMin) { if (m_humidity_limit_min == limitHumiMin) return; m_humidity_limit_min = limitHumiMin; setSqlPlantLimits(); }
+    void setLimitHumiMax(int limitHumiMax) { if (m_humidity_limit_max == limitHumiMax) return; m_humidity_limit_max = limitHumiMax; setSqlPlantLimits(); }
+    void setLimitLuxMin(int limitLuxMin) { if (m_luminosityLux_limit_min == limitLuxMin) return; m_luminosityLux_limit_min = limitLuxMin; setSqlPlantLimits(); }
+    void setLimitLuxMax(int limitLuxMax) { if (m_luminosityLux_limit_max == limitLuxMax) return; m_luminosityLux_limit_max = limitLuxMax; setSqlPlantLimits(); }
+    void setLimitMmolMin(int limitMmolMin) { if (m_luminosityMmol_limit_min == limitMmolMin) return; m_luminosityMmol_limit_min = limitMmolMin; setSqlPlantLimits(); }
+    void setLimitMmolMax(int limitMmolMax) { if (m_luminosityMmol_limit_max == limitMmolMax) return; m_luminosityMmol_limit_max = limitMmolMax; setSqlPlantLimits(); }
 
     // Data min/max
     int getSoilMoistureMin() const { return m_soilMoistureMin; }
@@ -417,9 +412,6 @@ public:
 
     // History sync
     int getHistoryUpdatePercent() const;
-
-    // Journal
-    Q_INVOKABLE void addJournalEntry(const int type, const QDateTime &date, const QString &comment);
 
     // Chart history
     Q_INVOKABLE void updateChartData_history_month(int maxDays);

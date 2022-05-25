@@ -52,6 +52,10 @@ DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName,
         getSqlDeviceInfos();
         getSqlPlantBias();
         getSqlPlantLimits();
+        getSqlSensorBias();
+        getSqlSensorLimits();
+
+        loadJournalEntries();
 
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
@@ -91,6 +95,8 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
         getSqlSensorBias();
         getSqlSensorLimits();
 
+        loadJournalEntries();
+
         // Load initial data into the GUI (if they are no more than 12h old)
         bool data = false;
         if (!data) data = getSqlPlantData(12*60);
@@ -111,9 +117,6 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
 
 DeviceSensor::~DeviceSensor()
 {
-    qDeleteAll(m_journal_entries);
-    m_journal_entries.clear();
-
     if (m_deviceInfos) delete m_deviceInfos;
 }
 
@@ -150,7 +153,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
 
             // 'water me' notification // Only if the sensor has a plant
             if (isPlantSensor() &&
-                (m_soilMoisture > 0 && m_soilMoisture < m_limit_soilMoistureMin))
+                (m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min))
             {
                 title = tr("Plant Alarm");
 
@@ -327,20 +330,20 @@ bool DeviceSensor::getSqlPlantBias()
     bool status = false;
 
     QSqlQuery getBias;
-    getBias.prepare("SELECT soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
-                    " tempBias, humiBias, luminosityBias " \
+    getBias.prepare("SELECT soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
+                    " temperature_bias, humidity_bias, luminosity_bias " \
                     "FROM plantBias WHERE deviceAddr = :deviceAddr");
     getBias.bindValue(":deviceAddr", getAddress());
     getBias.exec();
     while (getBias.next())
     {
-        m_bias_soilMoisture = getBias.value(0).toFloat();
-        m_bias_soilConductivity = getBias.value(1).toFloat();
-        m_bias_soilTemperature = getBias.value(2).toFloat();
-        m_bias_soilPH = getBias.value(3).toFloat();
-        m_bias_temperature = getBias.value(4).toFloat();
-        m_bias_humidity = getBias.value(5).toFloat();
-        m_bias_luminosityLux = getBias.value(6).toFloat();
+        m_soilMoisture_bias = getBias.value(0).toFloat();
+        m_soilConductivity_bias = getBias.value(1).toFloat();
+        m_soilTemperature_bias = getBias.value(2).toFloat();
+        m_soilPH_bias = getBias.value(3).toFloat();
+        m_temperature_bias = getBias.value(4).toFloat();
+        m_humidity_bias = getBias.value(5).toFloat();
+        m_luminosity_bias = getBias.value(6).toFloat();
 
         status = true;
         Q_EMIT biasUpdated();
@@ -358,19 +361,19 @@ bool DeviceSensor::setSqlPlantBias()
     {
         QSqlQuery updateBias;
         updateBias.prepare("REPLACE INTO plantBias (deviceAddr, " \
-                           " soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
-                           " tempBias, humiBias, luminosityBias)" \
+                           " soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
+                           " temperature_bias, humidity_bias, luminosity_bias)" \
                            " VALUES (:deviceAddr, " \
-                                    ":soilMoistureBias, :soilConduBias, :soilTempBias, :soilPhBias, " \
-                                    ":tempBias, :humiBias, :luminosityBias)");
+                                    ":soilMoist, :soilCondu, :soilTemp, :soilPH, " \
+                                    ":temp, :humi, :lumi)");
         updateBias.bindValue(":deviceAddr", getAddress());
-        updateBias.bindValue(":soilMoistureBias", m_bias_soilMoisture);
-        updateBias.bindValue(":soilConduBias", m_bias_soilConductivity);
-        updateBias.bindValue(":soilTempBias", m_bias_soilTemperature);
-        updateBias.bindValue(":soilPhBias", m_bias_soilPH);
-        updateBias.bindValue(":tempBias", m_bias_temperature);
-        updateBias.bindValue(":humiBias", m_bias_humidity);
-        updateBias.bindValue(":luminosityBias", m_bias_luminosityLux);
+        updateBias.bindValue(":soilMoist", m_soilMoisture_bias);
+        updateBias.bindValue(":soilCondu", m_soilConductivity_bias);
+        updateBias.bindValue(":soilTemp", m_soilTemperature_bias);
+        updateBias.bindValue(":soilPH", m_soilPH_bias);
+        updateBias.bindValue(":temp", m_temperature_bias);
+        updateBias.bindValue(":humi", m_humidity_bias);
+        updateBias.bindValue(":lumi", m_luminosity_bias);
 
         status = updateBias.exec();
         if (status == false)
@@ -401,20 +404,20 @@ bool DeviceSensor::getSqlPlantLimits()
     getLimits.exec();
     while (getLimits.next())
     {
-        m_limit_soilMoistureMin = getLimits.value(0).toInt();
-        m_limit_soilMoistureMax = getLimits.value(1).toInt();
-        m_limit_soilConduMin = getLimits.value(2).toInt();
-        m_limit_soilConduMax = getLimits.value(3).toInt();
-        m_limit_soilPhMin = getLimits.value(4).toInt();
-        m_limit_soilPhMax = getLimits.value(5).toInt();
-        m_limit_tempMin = getLimits.value(6).toInt();
-        m_limit_tempMax = getLimits.value(7).toInt();
-        m_limit_humiMin = getLimits.value(8).toInt();
-        m_limit_humiMax = getLimits.value(9).toInt();
-        m_limit_luxMin = getLimits.value(10).toInt();
-        m_limit_luxMax = getLimits.value(11).toInt();
-        m_limit_mmolMin = getLimits.value(12).toInt();
-        m_limit_mmolMax = getLimits.value(13).toInt();
+        m_soilMoisture_limit_min = getLimits.value(0).toInt();
+        m_soilMoisture_limit_max = getLimits.value(1).toInt();
+        m_soilConductivity_limit_min = getLimits.value(2).toInt();
+        m_soilConductivity_limit_max = getLimits.value(3).toInt();
+        m_soilPH_limit_min = getLimits.value(4).toInt();
+        m_soilPH_limit_max = getLimits.value(5).toInt();
+        m_temperature_limit_min = getLimits.value(6).toInt();
+        m_temperature_limit_max = getLimits.value(7).toInt();
+        m_humidity_limit_min = getLimits.value(8).toInt();
+        m_humidity_limit_max = getLimits.value(9).toInt();
+        m_luminosityLux_limit_min = getLimits.value(10).toInt();
+        m_luminosityLux_limit_max = getLimits.value(11).toInt();
+        m_luminosityMmol_limit_min = getLimits.value(12).toInt();
+        m_luminosityMmol_limit_max = getLimits.value(13).toInt();
 
         status = true;
         Q_EMIT limitsUpdated();
@@ -438,20 +441,20 @@ bool DeviceSensor::setSqlPlantLimits()
                                       ":hygroMin, :hygroMax, :conduMin, :conduMax, :phMin, :phMax, :tempMin, :tempMax, " \
                                       ":humiMin, :humiMax, :luxMin, :luxMax, :mmolMin, :mmolMax)");
         updateLimits.bindValue(":deviceAddr", getAddress());
-        updateLimits.bindValue(":hygroMin", m_limit_soilMoistureMin);
-        updateLimits.bindValue(":hygroMax", m_limit_soilMoistureMax);
-        updateLimits.bindValue(":conduMin", m_limit_soilConduMin);
-        updateLimits.bindValue(":conduMax", m_limit_soilConduMax);
-        updateLimits.bindValue(":phMin", m_limit_soilPhMin);
-        updateLimits.bindValue(":phMax", m_limit_soilPhMax);
-        updateLimits.bindValue(":tempMin", m_limit_tempMin);
-        updateLimits.bindValue(":tempMax", m_limit_tempMax);
-        updateLimits.bindValue(":humiMin", m_limit_humiMin);
-        updateLimits.bindValue(":humiMax", m_limit_humiMax);
-        updateLimits.bindValue(":luxMin", m_limit_luxMin);
-        updateLimits.bindValue(":luxMax", m_limit_luxMax);
-        updateLimits.bindValue(":mmolMin", m_limit_mmolMin);
-        updateLimits.bindValue(":mmolMax", m_limit_mmolMax);
+        updateLimits.bindValue(":hygroMin", m_soilMoisture_limit_min);
+        updateLimits.bindValue(":hygroMax", m_soilMoisture_limit_max);
+        updateLimits.bindValue(":conduMin", m_soilConductivity_limit_min);
+        updateLimits.bindValue(":conduMax", m_soilConductivity_limit_max);
+        updateLimits.bindValue(":phMin", m_soilPH_limit_min);
+        updateLimits.bindValue(":phMax", m_soilPH_limit_max);
+        updateLimits.bindValue(":tempMin", m_temperature_limit_min);
+        updateLimits.bindValue(":tempMax", m_temperature_limit_max);
+        updateLimits.bindValue(":humiMin", m_humidity_limit_min);
+        updateLimits.bindValue(":humiMax", m_humidity_limit_max);
+        updateLimits.bindValue(":luxMin", m_luminosityLux_limit_min);
+        updateLimits.bindValue(":luxMax", m_luminosityLux_limit_max);
+        updateLimits.bindValue(":mmolMin", m_luminosityMmol_limit_min);
+        updateLimits.bindValue(":mmolMax", m_luminosityMmol_limit_max);
 
         status = updateLimits.exec();
         if (status == false)
@@ -538,25 +541,9 @@ bool DeviceSensor::getSqlSensorBias()
     //qDebug() << "DeviceSensor::getSqlSensorBias(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery getBias;
-    getBias.prepare("SELECT soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
-                    " tempBias, humiBias, pressureBias, luminosityBias " \
-                    "FROM sensorBias WHERE deviceAddr = :deviceAddr");
-    getBias.bindValue(":deviceAddr", getAddress());
-    getBias.exec();
-    while (getBias.next())
+    if (m_dbInternal || m_dbExternal)
     {
-        m_bias_soilMoisture = getBias.value(0).toFloat();
-        m_bias_soilConductivity = getBias.value(1).toFloat();
-        m_bias_soilTemperature = getBias.value(2).toFloat();
-        m_bias_soilPH = getBias.value(3).toFloat();
-        m_bias_temperature = getBias.value(4).toFloat();
-        m_bias_humidity = getBias.value(5).toFloat();
-        m_bias_pressure = getBias.value(6).toFloat();
-        m_bias_luminosityLux = getBias.value(7).toFloat();
-
-        status = true;
-        Q_EMIT biasUpdated();
+        // TODO
     }
 
     return status;
@@ -569,31 +556,8 @@ bool DeviceSensor::setSqlSensorBias()
 
     if (m_dbInternal || m_dbExternal)
     {
-        QSqlQuery updateBias;
-        updateBias.prepare("REPLACE INTO sensorBias (deviceAddr, " \
-                           " soilMoistureBias, soilConduBias, soilTempBias, soilPhBias," \
-                           " tempBias, humiBias, pressureBias, luminosityBias)" \
-                           " VALUES (:deviceAddr, " \
-                                    ":soilMoistureBias, :soilConduBias, :soilTempBias, :soilPhBias, " \
-                                    ":tempBias, :humiBias, :pressureBias, :luminosityBias)");
-        updateBias.bindValue(":deviceAddr", getAddress());
-        updateBias.bindValue(":soilMoistureBias", m_bias_soilMoisture);
-        updateBias.bindValue(":soilConduBias", m_bias_soilConductivity);
-        updateBias.bindValue(":soilTempBias", m_bias_soilTemperature);
-        updateBias.bindValue(":soilPhBias", m_bias_soilPH);
-        updateBias.bindValue(":tempBias", m_bias_temperature);
-        updateBias.bindValue(":humiBias", m_bias_humidity);
-        updateBias.bindValue(":luminosityBias", m_bias_luminosityLux);
-
-        status = updateBias.exec();
-        if (status == false)
-        {
-            qWarning() << "> updateBias.exec() ERROR"
-                       << updateBias.lastError().type() << ":" << updateBias.lastError().text();
-        }
+        // TODO
     }
-
-    Q_EMIT biasUpdated();
 
     return status;
 }
@@ -605,7 +569,10 @@ bool DeviceSensor::getSqlSensorLimits()
     //qDebug() << "DeviceSensor::getSqlSensorLimits(" << m_deviceAddress << ")";
     bool status = false;
 
-    // TODO
+    if (m_dbInternal || m_dbExternal)
+    {
+        // TODO
+    }
 
     return status;
 }
@@ -619,8 +586,6 @@ bool DeviceSensor::setSqlSensorLimits()
     {
         // TODO
     }
-
-    Q_EMIT limitsUpdated();
 
     return status;
 }
@@ -1147,19 +1112,6 @@ float DeviceSensor::getLastMove_days() const
     if (days < 0.f) days = 0.f;
 
     return days;
-}
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-void DeviceSensor::addJournalEntry(const int type, const QDateTime &date, const QString &comment)
-{
-    JournalEntry *j = new JournalEntry(type, date, comment, this);
-    if (j)
-    {
-        m_journal_entries.push_back(j);
-        Q_EMIT journalUpdated();
-    }
 }
 
 /* ************************************************************************** */

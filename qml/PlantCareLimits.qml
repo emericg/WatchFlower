@@ -18,10 +18,10 @@ Flickable {
         itemTemp.visible = currentDevice.hasTemperatureSensor
         itemLumi.visible = currentDevice.hasLuminositySensor
 
-        rangeSlider_hygro.setValues(currentDevice.limitHygroMin, currentDevice.limitHygroMax)
-        rangeSlider_condu.setValues(currentDevice.limitConduMin, currentDevice.limitConduMax)
-        rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
-        rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
+        rangeSlider_hygro.setValues(currentDevice.soilMoisture_limitMin, currentDevice.soilMoisture_limitMax)
+        rangeSlider_condu.setValues(currentDevice.soilConductivity_limitMin, currentDevice.soilConductivity_limitMax)
+        rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
+        rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
     }
 
     Column {
@@ -86,10 +86,10 @@ Flickable {
                 stepSize: 1
 
                 first.onPressedChanged: plantSensorPages.interactive = !first.pressed
-                first.onMoved: if (currentDevice) currentDevice.limitHygroMin = first.value.toFixed(0)
+                first.onMoved: if (currentDevice) currentDevice.soilMoisture_limitMin = first.value.toFixed(0)
 
                 second.onPressedChanged: plantSensorPages.interactive = !second.pressed
-                second.onMoved: if (currentDevice) currentDevice.limitHygroMax = second.value.toFixed(0)
+                second.onMoved: if (currentDevice) currentDevice.soilMoisture_limitMax = second.value.toFixed(0)
             }
         }
         Text {
@@ -167,8 +167,8 @@ Flickable {
                     if (currentDevice) {
                         if ((first.value > rangeSlider_temp.from && first.value < rangeSlider_temp.to) ||
                             (first.value >= rangeSlider_temp.from && first.value <= rangeSlider_temp.to &&
-                             currentDevice.limitTempMin >= rangeSlider_temp.from && currentDevice.limitTempMin <= rangeSlider_temp.to)) {
-                            currentDevice.limitTempMin = first.value.toFixed(0)
+                             currentDevice.temperature_limitMin >= rangeSlider_temp.from && currentDevice.temperature_limitMin <= rangeSlider_temp.to)) {
+                            currentDevice.temperature_limitMin = first.value.toFixed(0)
                         }
                     }
                 }
@@ -178,8 +178,8 @@ Flickable {
                     if (currentDevice) {
                         if ((second.value > rangeSlider_temp.from && second.value < rangeSlider_temp.to) ||
                             (second.value >= rangeSlider_temp.from && second.value <= rangeSlider_temp.to &&
-                             currentDevice.limitTempMax >= rangeSlider_temp.from && currentDevice.limitTempMax <= rangeSlider_temp.to)) {
-                            currentDevice.limitTempMax = second.value.toFixed(0)
+                             currentDevice.temperature_limitMax >= rangeSlider_temp.from && currentDevice.temperature_limitMax <= rangeSlider_temp.to)) {
+                            currentDevice.temperature_limitMax = second.value.toFixed(0)
                         }
                     }
                 }
@@ -260,8 +260,8 @@ Flickable {
                 first.onMoved: {
                     if (currentDevice) {
                         if (first.value < rangeSlider_lumi.to ||
-                            (first.value <= rangeSlider_lumi.to && currentDevice.limitLuxMin <= rangeSlider_lumi.to)) {
-                            currentDevice.limitLuxMin = first.value.toFixed(0)
+                            (first.value <= rangeSlider_lumi.to && currentDevice.luminosityLux_limitMin <= rangeSlider_lumi.to)) {
+                            currentDevice.luminosityLux_limitMin = first.value.toFixed(0)
                         }
                     }
                 }
@@ -270,8 +270,8 @@ Flickable {
                 second.onMoved: {
                     if (currentDevice) {
                         if (second.value < rangeSlider_lumi.to ||
-                            (second.value <= rangeSlider_lumi.to && currentDevice.limitLuxMax <= rangeSlider_lumi.to)) {
-                            currentDevice.limitLuxMax = second.value.toFixed(0)
+                            (second.value <= rangeSlider_lumi.to && currentDevice.luminosityLux_limitMax <= rangeSlider_lumi.to)) {
+                            currentDevice.luminosityLux_limitMax = second.value.toFixed(0)
                         }
                     }
                 }
@@ -456,10 +456,10 @@ Flickable {
                 stepSize: 50
 
                 first.onPressedChanged: plantSensorPages.interactive = !first.pressed
-                first.onMoved: if (currentDevice) currentDevice.limitConduMin = first.value.toFixed(0)
+                first.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMin = first.value.toFixed(0)
 
                 second.onPressedChanged: plantSensorPages.interactive = !second.pressed
-                second.onMoved: if (currentDevice) currentDevice.limitConduMax = second.value.toFixed(0)
+                second.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMax = second.value.toFixed(0)
             }
         }
         Text {

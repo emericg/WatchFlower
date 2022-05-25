@@ -109,7 +109,7 @@ public:
     enum DeviceSensors {
         // plant data
         SENSOR_SOIL_MOISTURE        = (1 <<  0), //!< Has a soil moisture sensor
-        SENSOR_SOIL_CONDUCTIVITY    = (1 <<  1), //!< Has a soil conductivity/fertility sensor
+        SENSOR_SOIL_CONDUCTIVITY    = (1 <<  1), //!< Has a soil electrical conductivity / fertility sensor
         SENSOR_SOIL_TEMPERATURE     = (1 <<  2), //!< Has a soil temperature sensor
         SENSOR_SOIL_PH              = (1 <<  3), //!< Has a soil PH sensor
         // hygrometer data

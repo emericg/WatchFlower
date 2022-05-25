@@ -774,15 +774,15 @@ void DeviceManager::refreshDevices_background()
 {
     //qDebug() << "DeviceManager::refreshDevices_background()";
 
-    QSqlQuery readLastSync;
-    readLastSync.prepare("SELECT lastSync FROM lastSync");
-    readLastSync.exec();
-    if (readLastSync.first())
+    QSqlQuery readLastRun;
+    readLastRun.prepare("SELECT lastRun FROM lastRun");
+    readLastRun.exec();
+    if (readLastRun.first())
     {
-        QDateTime lastSync = readLastSync.value(0).toDateTime();
-        if (lastSync.isValid())
+        QDateTime lastRun = readLastRun.value(0).toDateTime();
+        if (lastRun.isValid())
         {
-            int mins = static_cast<int>(std::floor(lastSync.secsTo(QDateTime::currentDateTime()) / 60.0));
+            int mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
             if (mins < 60) return;
         }
     }
@@ -974,18 +974,18 @@ void DeviceManager::refreshDevices_continue()
             m_updating = false;
             Q_EMIT updatingChanged();
 
-            QSqlQuery updateLastSync;
-            updateLastSync.prepare("UPDATE lastSync SET lastSync=:lastSync");
-            updateLastSync.bindValue(":lastSync", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            QSqlQuery updateLastRun;
+            updateLastRun.prepare("UPDATE lastRun SET lastRun = :run");
+            updateLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
-            if (updateLastSync.exec() == false)
+            if (updateLastRun.exec() == false)
             {
-                qWarning() << "> updateLastSync.exec() ERROR" <<
-                              updateLastSync.lastError().type() << ":" << updateLastSync.lastError().text();
+                qWarning() << "> updateLastRun.exec() ERROR"
+                           << updateLastRun.lastError().type() << ":" << updateLastRun.lastError().text();
             }
-            if (updateLastSync.numRowsAffected() == 0)
+            if (updateLastRun.numRowsAffected() == 0)
             {
-                // addLastSync?
+                // addLastRun?
             }
         }
     }

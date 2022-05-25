@@ -38,9 +38,9 @@ SOURCES  += src/main.cpp \
             src/DeviceManager_advertisement.cpp \
             src/DeviceManager_nearby.cpp \
             src/DeviceManager_export.cpp \
+            src/DeviceFilter.cpp \
             src/device.cpp \
             src/device_infos.cpp \
-            src/device_filter.cpp \
             src/device_sensor.cpp \
             src/devices/device_flowercare.cpp \
             src/devices/device_flowerpower.cpp \
@@ -73,10 +73,10 @@ HEADERS  += src/SettingsManager.h \
             src/AndroidService.h \
             src/Journal.h \
             src/DeviceManager.h \
+            src/DeviceFilter.h \
             src/device.h \
             src/device_utils.h \
             src/device_infos.h \
-            src/device_filter.h \
             src/device_sensor.h \
             src/devices/device_flowercare.h \
             src/devices/device_flowerpower.h \

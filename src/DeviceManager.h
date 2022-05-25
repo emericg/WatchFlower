@@ -24,7 +24,7 @@
 /* ************************************************************************** */
 
 #include "SettingsManager.h"
-#include "device_filter.h"
+#include "DeviceFilter.h"
 #include "device_utils.h"
 
 #include <QObject>

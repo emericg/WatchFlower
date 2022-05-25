@@ -572,8 +572,8 @@ Item {
                                 anchors.fill: parent
                                 onClicked: {
                                     currentDevice.setOutside(false)
-                                    rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
-                                    rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
+                                    rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
+                                    rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
                                 }
                             }
 
@@ -614,8 +614,8 @@ Item {
                                 anchors.fill: parent
                                 onClicked: {
                                     currentDevice.setOutside(true)
-                                    rangeSlider_temp.setValues(currentDevice.limitTempMin, currentDevice.limitTempMax)
-                                    rangeSlider_lumi.setValues(currentDevice.limitLuxMin, currentDevice.limitLuxMax)
+                                    rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
+                                    rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
                                 }
                             }
 

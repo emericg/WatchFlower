@@ -64,21 +64,38 @@ class JournalEntry: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int type READ getType CONSTANT)
-    Q_PROPERTY(QDateTime date READ getDateTime CONSTANT)
-    Q_PROPERTY(QString comment READ getComment CONSTANT)
+    Q_PROPERTY(int id READ getEntryId NOTIFY entryChanged)
+    Q_PROPERTY(int type READ getEntryType NOTIFY entryChanged)
+    Q_PROPERTY(QDateTime date READ getEntryDateTime NOTIFY entryChanged)
+    Q_PROPERTY(QString comment READ getEntryComment NOTIFY entryChanged)
 
-    int m_type = -1;
-    QDateTime m_date;
-    QString m_comment;
+    QString m_deviceId;
+    int m_plantId = -1;
 
-    int getType() { return m_type; }
-    QDateTime getDateTime() { return m_date; }
-    QString getComment() { return m_comment; }
+    int m_entryId = -1;
+    int m_entryType = -1;
+    QDateTime m_entryDate;
+    QString m_entryComment;
+
+Q_SIGNALS:
+    void entryChanged();
 
 public:
-    JournalEntry(const int type, const QDateTime &date, const QString &comment, QObject *parent);
+    JournalEntry(QObject *parent);
+    JournalEntry(const QString &deviceAddr, const int plantId, const int entryId,
+                 const int type, const QDateTime &date, const QString &comment, QObject *parent);
     ~JournalEntry() = default;
+
+    bool addEntry(const QString &addr,
+                  const int type, const QDateTime &date, const QString &comment);
+    Q_INVOKABLE bool editEntry(const int type, const QDateTime &date, const QString &comment);
+    bool removeEntry();
+
+    int getEntryId() { return m_entryId; }
+    int getEntryType() { return m_entryType; }
+    QDateTime getEntryDateTime() { return m_entryDate; }
+    QString getEntryComment() { return m_entryComment; }
+
 };
 
 /* ************************************************************************** */

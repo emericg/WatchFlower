@@ -24,7 +24,6 @@
 /* ************************************************************************** */
 
 #include "device.h"
-#include "device_sensor.h"
 
 #include <QObject>
 #include <QByteArray>
