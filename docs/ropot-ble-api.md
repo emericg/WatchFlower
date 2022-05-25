@@ -6,7 +6,7 @@
 * Xiaomi [RoPot]() are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, soil moisture and soil fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* An internal battery is used as power source
+* An internal Li-Po battery is used as power source
 * Mostly works with the same API as the Flower Care
 
 Xiaomi MiJia **RoPot** / VegTrug **Grow Care Home** (HHCCPOT002)  

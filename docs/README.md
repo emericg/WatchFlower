@@ -22,7 +22,7 @@ Supported devices
 | Product ID                           | HHCCJCY09 / GCLS002                   |
 | FCC ID                               | 2AJEPHHCCJCY09 / 2AQPCGCLS002         |
 | <img src="flowercaremax.svg" width="256">                                   ||
-| Battery                              | Lithium Polymer (embeded)             |
+| Battery                              | Lithium Polymer (embedded)            |
 | Soil moisture                        | 0 → 100%                              |
 | Soil conductivity                    |                                       |
 | Temperature                          | -15 → 50 °C (± 0.5 °C)                |
@@ -35,7 +35,7 @@ Supported devices
 | Product ID                           | HHCCPOT002                            |
 | FCC ID                               | 2AJEPHHCCPOT002                       |
 | <img src="ropot.svg" width="256">                                           ||
-| Battery                              | Lithium Polymer (embeded)             |
+| Battery                              | Lithium Polymer (embedded)            |
 | Soil moisture                        | 0 → 100%                              |
 | Soil conductivity                    |                                       |
 | Temperature                          | -15 → 50 °C (± 0.5 °C)                |

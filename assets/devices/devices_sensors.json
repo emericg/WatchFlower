@@ -24,7 +24,7 @@
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCJCY09", "GCLS002"],
     "year": 2018,
-    "battery": "Lithium Polymer (embeded)",
+    "battery": "Lithium Polymer (embedded)",
     "ipx": "IPX6",
     "sensors": [
       ["Soil moisture", "0 → 100%"],
@@ -43,7 +43,7 @@
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCPOT002"],
     "year": 2016,
-    "battery": "Lithium Polymer (embeded)",
+    "battery": "Lithium Polymer (embedded)",
     "ipx": "IPX6",
     "sensors": [
       ["Soil moisture", "0 → 100%"],

@@ -7,7 +7,7 @@
 * Has onboard clock and alarm
 * Has sensors to relay temperature, humidity and air pressure
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* A 18650 rechargeable battery is used as power source
+* An internal 18650 battery is used as power source
 
 ## Features
 
