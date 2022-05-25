@@ -231,7 +231,7 @@ Item {
                             anchors.baseline: labelPlant.baseline
                             padding: 4
 
-                            font.pixelSize: 17
+                            font.pixelSize: Theme.fontSizeContentBig
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -301,7 +301,7 @@ Item {
                             anchors.baseline: labelLocation.baseline
                             padding: 4
 
-                            font.pixelSize: 17
+                            font.pixelSize: Theme.fontSizeContentBig
                             font.bold: false
                             color: Theme.colorHighContrast
 
@@ -375,7 +375,7 @@ Item {
 
                             text: qsTr("Loading...")
                             color: Theme.colorHighContrast
-                            font.pixelSize: 17
+                            font.pixelSize: Theme.fontSizeContentBig
                             font.bold: false
                             elide: Text.ElideRight
                         }

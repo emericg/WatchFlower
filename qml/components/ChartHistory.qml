@@ -12,7 +12,7 @@ Item {
     property string suffix: ""
     property int floatprecision: 0
     property string color: Theme.colorBlue
-    property bool animated: false
+    property bool animated: true
 
     property real valueMin: limitMin - (25 * ((limitMax-limitMin) / 50))
     property real valueMax: limitMax + (25 * ((limitMax-limitMin) / 50))
@@ -115,12 +115,13 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: 4
+                anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("max")
                 color: Theme.colorSubText
-                font.pixelSize: 10
+                font.pixelSize: 11
+                rotation: -90
             }
         }
         Shape {
@@ -141,12 +142,13 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: 4
+                anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("min")
                 color: Theme.colorSubText
-                font.pixelSize: 10
+                font.pixelSize: 11
+                rotation: -90
             }
         }
 
@@ -238,9 +240,9 @@ Item {
                                 return (graphGrid.barSelectionDays === modelData.day) ? "#fcea32" : Theme.colorForeground
                             }
                         }
-                        Behavior on color { ColorAnimation { duration: animated ? 233 : 0 } }
+                        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
 
-                        border.width: (graphRow.barSpacing/2)
+                        border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
                     }
 
@@ -254,7 +256,7 @@ Item {
                         width: parent.width
                         height: UtilsNumber.normalize(value2, valueMin, valueMax) * parent.height
 
-                        border.width: (graphRow.barSpacing/2)
+                        border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
 
                         clip: false
@@ -282,7 +284,8 @@ Item {
 
                         Loader {
                             id: legendLoader
-                            anchors.top: parent.top
+                            anchors.top: (ddd === ChartHistory.Span.Weekly) ? undefined : parent.top
+                            anchors.bottom: (ddd === ChartHistory.Span.Weekly) ? parent.bottom : undefined
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             asynchronous: true
@@ -387,8 +390,10 @@ Item {
         id: legendHorizontal
 
         Text {
-            anchors.top: parent.top
-            anchors.topMargin: 8
+            //anchors.top: parent.top // at the top
+            //anchors.topMargin: 8
+            anchors.bottom: parent.bottom // at the bottom
+            anchors.bottomMargin: isPhone ? 4 : 8
             anchors.horizontalCenter: parent.horizontalCenter
 
             property real value: _value
@@ -416,7 +421,7 @@ Item {
 
         Text {
             anchors.top: parent.top
-            anchors.topMargin: (contentWidth/2)
+            anchors.topMargin: (contentWidth / 2)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: 0
 
@@ -447,21 +452,9 @@ Item {
             width: 20
             height: 20
 
-            property real value: _value
-
             color: "white"
             opacity: 0.66
             source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-/*
-            source: {
-                if (value < -40) return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                else "qrc:/assets/icons_material/baseline-warning-24px.svg"
-            }
-            color: {
-                if (value < -40) return Theme.colorSubText
-                else return "white"
-            }
-*/
         }
     }
 }
