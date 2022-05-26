@@ -53,7 +53,7 @@ public:
     DeviceHygrotempClock(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempClock();
 
-    void parseAdvertisementData(const QByteArray &value);
+    void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
 private:
     // QLowEnergyController related

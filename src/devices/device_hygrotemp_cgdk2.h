@@ -49,7 +49,7 @@ public:
     DeviceHygrotempCGDK2(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGDK2();
 
-    void parseAdvertisementData(const QByteArray &value);
+    void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
 private:
     // QLowEnergyController related

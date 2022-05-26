@@ -78,7 +78,7 @@ void DeviceHygrotempCGP1W::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
-void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value)
+void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceHygrotempCGP1W::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

@@ -271,7 +271,7 @@ void DeviceHygrotempCGDK2::confirmedDescriptorWrite(const QLowEnergyDescriptor &
 
 /* ************************************************************************** */
 
-void DeviceHygrotempCGDK2::parseAdvertisementData(const QByteArray &value)
+void DeviceHygrotempCGDK2::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceHygrotempCGDK2::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

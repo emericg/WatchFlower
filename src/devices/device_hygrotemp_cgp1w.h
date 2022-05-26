@@ -49,7 +49,7 @@ public:
     DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceHygrotempCGP1W();
 
-    void parseAdvertisementData(const QByteArray &value);
+    void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
 private:
     // QLowEnergyController related

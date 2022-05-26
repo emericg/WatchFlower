@@ -48,7 +48,7 @@ public:
 
     Q_INVOKABLE bool hasData() const;
 
-    void parseAdvertisementData(const QByteArray &value);
+    void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
 private:
     // QLowEnergyController related

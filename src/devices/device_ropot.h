@@ -50,7 +50,7 @@ public:
     DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceRopot();
 
-    void parseAdvertisementData(const QByteArray &value);
+    void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
     Q_INVOKABLE virtual bool hasHistory() const;
 

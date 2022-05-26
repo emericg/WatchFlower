@@ -356,7 +356,7 @@ public:
     Q_INVOKABLE void actionShutdown();
 
     // BLE advertisement
-    virtual void parseAdvertisementData(const QByteArray &value);
+    virtual void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
 public slots:
     void deviceConnect();               //!< Initiate a BLE connection with a device

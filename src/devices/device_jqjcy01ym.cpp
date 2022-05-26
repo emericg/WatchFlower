@@ -78,7 +78,7 @@ void DeviceJQJCY01YM::addLowEnergyService(const QBluetoothUuid &uuid)
 
 /* ************************************************************************** */
 
-void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value)
+void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceJQJCY01YM::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

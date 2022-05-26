@@ -420,7 +420,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 
 /* ************************************************************************** */
 
-void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value)
+void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceThermoBeacon::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

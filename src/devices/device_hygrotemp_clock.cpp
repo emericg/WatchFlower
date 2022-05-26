@@ -371,7 +371,7 @@ void DeviceHygrotempClock::confirmedDescriptorWrite(const QLowEnergyDescriptor &
 
 /* ************************************************************************** */
 
-void DeviceHygrotempClock::parseAdvertisementData(const QByteArray &value)
+void DeviceHygrotempClock::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceHygrotempClock::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

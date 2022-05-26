@@ -623,7 +623,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
 /* ************************************************************************** */
 
-void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value)
+void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();

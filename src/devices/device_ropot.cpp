@@ -578,7 +578,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
 
 /* ************************************************************************** */
 
-void DeviceRopot::parseAdvertisementData(const QByteArray &value)
+void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
 {
     //qDebug() << "DeviceRopot::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
