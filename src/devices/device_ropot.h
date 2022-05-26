@@ -23,7 +23,7 @@
 #define DEVICE_ROPOT_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_plantsensor.h"
 
 #include <cstdint>
 
@@ -41,7 +41,7 @@
  * Protocol infos:
  * - WatchFlower/docs/ropot-ble-api.md
  */
-class DeviceRopot: public DeviceSensor
+class DeviceRopot: public DevicePlantSensor
 {
     Q_OBJECT
 

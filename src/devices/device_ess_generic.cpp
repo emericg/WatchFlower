@@ -37,21 +37,19 @@
 /* ************************************************************************** */
 
 DeviceEssGeneric::DeviceEssGeneric(const QString &deviceAddr, const QString &deviceName, QObject *parent):
-    DeviceSensor(deviceAddr, deviceName, parent)
+    DeviceEnvironmental(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
 }
 
 DeviceEssGeneric::DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensor(d, parent)
+    DeviceEnvironmental(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
 }
 
 DeviceEssGeneric::~DeviceEssGeneric()
 {
-    if (m_bleController) m_bleController->disconnectFromDevice();
-
     delete serviceInfos;
     delete serviceBattery;
     delete serviceEnvironmentalSensing;

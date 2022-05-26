@@ -37,7 +37,7 @@
 /* ************************************************************************** */
 
 DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QString &deviceAddr, const QString &deviceName, QObject *parent):
-    DeviceSensor(deviceAddr, deviceName, parent)
+    DeviceEnvironmental(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
@@ -52,7 +52,7 @@ DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QString &device
 }
 
 DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensor(d, parent)
+    DeviceEnvironmental(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
@@ -68,8 +68,6 @@ DeviceEsp32AirQualityMonitor::DeviceEsp32AirQualityMonitor(const QBluetoothDevic
 
 DeviceEsp32AirQualityMonitor::~DeviceEsp32AirQualityMonitor()
 {
-    if (m_bleController) m_bleController->disconnectFromDevice();
-
     delete serviceInfos;
     delete serviceBattery;
     delete serviceData;

@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_LYWSDCGQ_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
  * Protocol infos:
  * - WatchFlower/docs/lywsdcgq-ble-api.md
  */
-class DeviceHygrotempLYWSDCGQ: public DeviceSensor
+class DeviceHygrotempLYWSDCGQ: public DeviceThermometer
 {
     Q_OBJECT
 

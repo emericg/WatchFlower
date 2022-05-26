@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_CGP1W_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - WatchFlower/docs/cgp1w-ble-api.md
  */
-class DeviceHygrotempCGP1W: public DeviceSensor
+class DeviceHygrotempCGP1W: public DeviceThermometer
 {
     Q_OBJECT
 

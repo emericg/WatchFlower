@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_CGDK2_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - WatchFlower/docs/cgdk2-ble-api.md
  */
-class DeviceHygrotempCGDK2: public DeviceSensor
+class DeviceHygrotempCGDK2: public DeviceThermometer
 {
     Q_OBJECT
 

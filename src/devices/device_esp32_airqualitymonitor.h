@@ -23,7 +23,7 @@
 #define DEVICE_ESP32_AIRQUALITYMONITOR_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_environmental.h"
 
 #include <QObject>
 #include <QList>
@@ -40,7 +40,7 @@
  * Protocol infos:
  * - https://github.com/emericg/esp32-environmental-sensors/blob/master/AirQualityMonitor/doc/airqualitymonitor-ble-api.md
  */
-class DeviceEsp32AirQualityMonitor: public DeviceSensor
+class DeviceEsp32AirQualityMonitor: public DeviceEnvironmental
 {
     Q_OBJECT
 

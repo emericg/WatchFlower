@@ -37,7 +37,7 @@
 /* ************************************************************************** */
 
 DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QString &deviceAddr, const QString &deviceName, QObject *parent):
-    DeviceSensor(deviceAddr, deviceName, parent)
+    DeviceEnvironmental(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
@@ -46,7 +46,7 @@ DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QString &deviceAddr, co
 }
 
 DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensor(d, parent)
+    DeviceEnvironmental(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_CONNECTION;
@@ -56,8 +56,6 @@ DeviceEsp32GeigerCounter::DeviceEsp32GeigerCounter(const QBluetoothDeviceInfo &d
 
 DeviceEsp32GeigerCounter::~DeviceEsp32GeigerCounter()
 {
-    if (m_bleController) m_bleController->disconnectFromDevice();
-
     delete serviceInfos;
     delete serviceBattery;
     delete serviceData;

@@ -19,42 +19,32 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_JQJCY01YM_H
-#define DEVICE_JQJCY01YM_H
+#ifndef DEVICE_ENVIRONMENTAL_H
+#define DEVICE_ENVIRONMENTAL_H
 /* ************************************************************************** */
 
-#include "device_environmental.h"
+#include "device_sensor.h"
 
 #include <QObject>
-#include <QList>
-
-#include <QBluetoothDeviceInfo>
-#include <QLowEnergyController>
+#include <QString>
 
 /* ************************************************************************** */
 
 /*!
- * Honeywell HCHO Formaldehyde detector
- * JQJCY01YM device / squared body / OLED
+ * \brief The DeviceThermometer class
  */
-class DeviceJQJCY01YM: public DeviceEnvironmental
+class DeviceEnvironmental: public DeviceSensor
 {
     Q_OBJECT
 
 public:
-    DeviceJQJCY01YM(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceJQJCY01YM(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceJQJCY01YM();
+    DeviceEnvironmental(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    virtual ~DeviceEnvironmental();
 
-    Q_INVOKABLE bool hasData() const;
-
-    void parseAdvertisementData(const QByteArray &value);
-
-private:
-    // QLowEnergyController related
-    void serviceScanDone();
-    void addLowEnergyService(const QBluetoothUuid &uuid);
+    // Chart environmental histogram
+    Q_INVOKABLE void updateChartData_environmentalVoc(int maxDays);
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_JQJCY01YM_H
+#endif // DEVICE_ENVIRONMENTAL_H

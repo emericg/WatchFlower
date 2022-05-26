@@ -23,7 +23,7 @@
 #define DEVICE_ESS_GENERIC_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_environmental.h"
 
 #include <QObject>
 #include <QList>
@@ -42,7 +42,7 @@
  * - https://www.bluetooth.com/specifications/specs/environmental-sensing-service-1-0/
  * - https://www.bluetooth.com/specifications/assigned-numbers/environmental-sensing-service-characteristics/
  */
-class DeviceEssGeneric: public DeviceSensor
+class DeviceEssGeneric: public DeviceEnvironmental
 {
     Q_OBJECT
 

@@ -23,7 +23,7 @@
 #define DEVICE_WP6003_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_environmental.h"
 
 #include <QObject>
 #include <QList>
@@ -39,7 +39,7 @@
  * Protocol infos:
  * - WatchFlower/docs/wp6003.md
  */
-class DeviceWP6003: public DeviceSensor
+class DeviceWP6003: public DeviceEnvironmental
 {
     Q_OBJECT
 

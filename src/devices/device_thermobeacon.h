@@ -23,7 +23,7 @@
 #define DEVICE_THERMOBEACON_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QString>
@@ -43,7 +43,7 @@
  * Protocol infos:
  * - WatchFlower/docs/thermobeacon-ble-api.md
  */
-class DeviceThermoBeacon: public DeviceSensor
+class DeviceThermoBeacon: public DeviceThermometer
 {
 public:
     DeviceThermoBeacon(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);

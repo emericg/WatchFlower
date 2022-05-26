@@ -39,7 +39,7 @@
 /* ************************************************************************** */
 
 DeviceRopot::DeviceRopot(const QString &deviceAddr, const QString &deviceName, QObject *parent):
-    DeviceSensor(deviceAddr, deviceName, parent)
+    DevicePlantSensor(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;
@@ -53,7 +53,7 @@ DeviceRopot::DeviceRopot(const QString &deviceAddr, const QString &deviceName, Q
 }
 
 DeviceRopot::DeviceRopot(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensor(d, parent)
+    DevicePlantSensor(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_PLANTSENSOR;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_CONNECTION;

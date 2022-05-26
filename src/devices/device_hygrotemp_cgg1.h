@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_CGG1_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
  * Protocol infos:
  * - WatchFlower/docs/cgg1-ble-api.md
  */
-class DeviceHygrotempCGG1: public DeviceSensor
+class DeviceHygrotempCGG1: public DeviceThermometer
 {
     Q_OBJECT
 

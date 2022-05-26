@@ -89,8 +89,8 @@ class DeviceSensor: public Device
     // hygrometer data (min/max)
     Q_PROPERTY(float tempMin READ getTempMin NOTIFY minmaxUpdated)
     Q_PROPERTY(float tempMax READ getTempMax NOTIFY minmaxUpdated)
-    Q_PROPERTY(int humiMin READ getHumiMin NOTIFY minmaxUpdated)
-    Q_PROPERTY(int humiMax READ getHumiMax NOTIFY minmaxUpdated)
+    Q_PROPERTY(float humiMin READ getHumiMin NOTIFY minmaxUpdated)
+    Q_PROPERTY(float humiMax READ getHumiMax NOTIFY minmaxUpdated)
     // environmental data (min/max)
     Q_PROPERTY(int luxMin READ getLuxMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int luxMax READ getLuxMax NOTIFY minmaxUpdated)
@@ -227,10 +227,10 @@ protected:
     float m_soilTempMax = -99.f;
     float m_soilPhMin = 999.f;
     float m_soilPhMax = -99.f;
-    float m_tempMin = 99.f;
+    float m_tempMin = 999999.f;
     float m_tempMax = -99.f;
-    int m_humiMin = 999999;
-    int m_humiMax = -99;
+    float m_humiMin = 999999.f;
+    float m_humiMax = -99.f;
     int m_luxMin = 999999;
     int m_luxMax = -99;
     int m_mmolMin = 999999;
@@ -403,8 +403,8 @@ public:
     float getSoilPhMax() const { return m_soilPhMax; }
     float getTempMin() const { return m_tempMin; }
     float getTempMax() const { return m_tempMax; }
-    int getHumiMin() const { return m_humiMin; }
-    int getHumiMax() const { return m_humiMax; }
+    float getHumiMin() const { return m_humiMin; }
+    float getHumiMax() const { return m_humiMax; }
     int getLuxMin() const { return m_luxMin; }
     int getLuxMax() const { return m_luxMax; }
     int getMmolMin() const { return m_mmolMin; }
@@ -412,23 +412,6 @@ public:
 
     // History sync
     int getHistoryUpdatePercent() const;
-
-    // Chart history
-    Q_INVOKABLE void updateChartData_history_month(int maxDays);
-    Q_INVOKABLE void updateChartData_history_month(const QDateTime &f, const QDateTime &l);
-    Q_INVOKABLE void updateChartData_history_day();
-    Q_INVOKABLE void updateChartData_history_day(const QDateTime &d);
-
-    // Chart environmental histogram
-    Q_INVOKABLE void updateChartData_environmentalVoc(int maxDays);
-
-    // Chart temperature "min max"
-    Q_INVOKABLE void updateChartData_thermometerMinMax(int maxDays);
-
-    // Chart plant AIO
-    Q_INVOKABLE void getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
-                                           QLineSeries *hygro, QLineSeries *condu,
-                                           QLineSeries *temp, QLineSeries *lumi);
 };
 
 /* ************************************************************************** */

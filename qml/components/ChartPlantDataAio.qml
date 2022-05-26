@@ -18,8 +18,8 @@ Item {
 
         hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")
         conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasDataNamed("soilConductivity")
-        tempData.visible = currentDevice.hasTemperatureSensor
         hygroData.visible |= currentDevice.hasHumiditySensor && currentDevice.hasDataNamed("humidity")
+        tempData.visible = currentDevice.hasTemperatureSensor
         lumiData.visible = currentDevice.hasLuminositySensor
 
         dateIndicator.visible = false
@@ -52,7 +52,11 @@ Item {
         tempData.clear()
         lumiData.clear()
 
-        currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData);
+        if (currentDevice.isPlantSensor) {
+            currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData);
+        } else if (currentDevice.isThermometer) {
+            currentDevice.getChartData_thermometerAIO(days, axisTime, tempData, hygroData);
+        }
 
         //// AXIS
         axisHygro.min = 0

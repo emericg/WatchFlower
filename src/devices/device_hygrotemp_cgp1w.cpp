@@ -37,7 +37,7 @@
 /* ************************************************************************** */
 
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QString &deviceName, QObject *parent):
-    DeviceSensor(deviceAddr, deviceName, parent)
+    DeviceThermometer(deviceAddr, deviceName, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
@@ -48,7 +48,7 @@ DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QStr
 }
 
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent):
-    DeviceSensor(d, parent)
+    DeviceThermometer(d, parent)
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;

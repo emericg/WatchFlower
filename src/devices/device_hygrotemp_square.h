@@ -23,7 +23,7 @@
 #define DEVICE_HYGROTEMP_SQUARE_H
 /* ************************************************************************** */
 
-#include "device_sensor.h"
+#include "device_thermometer.h"
 
 #include <QObject>
 #include <QList>
@@ -48,7 +48,7 @@
  * - WatchFlower/docs/mchoh401-ble-api.md
  * - WatchFlower/docs/xmwsdjo4mmc-ble-api.md
  */
-class DeviceHygrotempSquare: public DeviceSensor
+class DeviceHygrotempSquare: public DeviceThermometer
 {
     Q_OBJECT
 
