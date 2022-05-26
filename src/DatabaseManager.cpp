@@ -33,8 +33,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#define CURRENT_DB_VERSION 2
-
 /* ************************************************************************** */
 
 DatabaseManager *DatabaseManager::instance = nullptr;
@@ -327,7 +325,7 @@ void DatabaseManager::createDatabase()
         {
             QSqlQuery writeDbVersion;
             writeDbVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
-            writeDbVersion.bindValue(":dbVersion", CURRENT_DB_VERSION);
+            writeDbVersion.bindValue(":dbVersion", m_dbCurrentVersion);
             writeDbVersion.exec();
         }
         else
@@ -363,8 +361,8 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createDevices;
         createDevices.prepare("CREATE TABLE devices (" \
-                              "deviceAddr CHAR(38) PRIMARY KEY," \
-                              "deviceAddrMAC CHAR(17)," \
+                              "deviceAddr VARCHAR(38) PRIMARY KEY," \
+                              "deviceAddrMAC VARCHAR(17)," \
                               "deviceName VARCHAR(255)," \
                               "deviceModel VARCHAR(255)," \
                               "deviceFirmware VARCHAR(255)," \
@@ -392,7 +390,7 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createDevicesBlacklist;
         createDevicesBlacklist.prepare("CREATE TABLE devicesBlacklist (" \
-                                       "deviceAddr CHAR(38)" \
+                                       "deviceAddr VARCHAR(38)" \
                                        ");");
 
         if (createDevicesBlacklist.exec() == false)
@@ -408,7 +406,7 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createPlantData;
         createPlantData.prepare("CREATE TABLE plantData (" \
-                                "deviceAddr CHAR(38)," \
+                                "deviceAddr VARCHAR(38)," \
                                 "ts DATETIME," \
                                 "ts_full DATETIME," \
                                   "soilMoisture INT," \
@@ -419,8 +417,8 @@ void DatabaseManager::createDatabase()
                                   "humidity FLOAT," \
                                   "luminosity INT," \
                                   "watertank FLOAT," \
-                                " PRIMARY KEY(deviceAddr, ts), " \
-                                " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                "PRIMARY KEY(deviceAddr, ts)," \
+                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
                                 ");");
 
         if (createPlantData.exec() == false)
@@ -435,7 +433,7 @@ void DatabaseManager::createDatabase()
         qDebug() << "+ Adding 'plantLimits' table to local database";
         QSqlQuery createPlantLimits;
         createPlantLimits.prepare("CREATE TABLE plantLimits (" \
-                                  "deviceAddr CHAR(38)," \
+                                  "deviceAddr VARCHAR(38)," \
                                     "soilMoisture_min INT," \
                                     "soilMoisture_max INT," \
                                     "soilConductivity_min INT," \
@@ -450,8 +448,8 @@ void DatabaseManager::createDatabase()
                                     "luminosityLux_max INT," \
                                     "luminosityMmol_min INT," \
                                     "luminosityMmol_max INT," \
-                                  " PRIMARY KEY(deviceAddr), " \
-                                  " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                  "PRIMARY KEY(deviceAddr)," \
+                                  "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
                                   ");");
 
         if (createPlantLimits.exec() == false)
@@ -466,7 +464,7 @@ void DatabaseManager::createDatabase()
         qDebug() << "+ Adding 'plantBias' table to local database";
         QSqlQuery createPlantBias;
         createPlantBias.prepare("CREATE TABLE plantBias (" \
-                                "deviceAddr CHAR(38)," \
+                                "deviceAddr VARCHAR(38)," \
                                   "soilMoisture_bias FLOAT," \
                                   "soilConductivity_bias FLOAT," \
                                   "soilTemperature_bias FLOAT," \
@@ -474,8 +472,8 @@ void DatabaseManager::createDatabase()
                                   "temperature_bias FLOAT," \
                                   "humidity_bias FLOAT," \
                                   "luminosity_bias FLOAT," \
-                                " PRIMARY KEY(deviceAddr), " \
-                                " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                "PRIMARY KEY(deviceAddr)," \
+                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
                                 ");");
 
         if (createPlantBias.exec() == false)
@@ -490,11 +488,11 @@ void DatabaseManager::createDatabase()
         qDebug() << "+ Adding 'plants' table to local database";
         QSqlQuery createPlants;
         createPlants.prepare("CREATE TABLE plants (" \
-                             "plantId PRIMARY KEY AUTOINCREMENT," \
-                              "plantName VARCHAR(255)," \
-                              "plantCache VARCHAR(1024)," \
-                             "deviceAddr CHAR(38)," \
-                             " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                             "plantId INTEGER PRIMARY KEY AUTOINCREMENT," \
+                               "plantName VARCHAR(255)," \
+                               "plantCache VARCHAR(1024)," \
+                             "deviceAddr VARCHAR(38)," \
+                             "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr)" \
                              ");");
 
         if (createPlants.exec() == false)
@@ -514,7 +512,7 @@ void DatabaseManager::createDatabase()
                                      "entryTimestamp DATETIME," \
                                      "entryComment VARCHAR(255)," \
                                    "plantId INT," \
-                                   " FOREIGN KEY(plantId) REFERENCES plants(plantId) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                   "FOREIGN KEY(plantId) REFERENCES plants(plantId) ON DELETE CASCADE ON UPDATE NO ACTION" \
                                    ");");
 
         if (createPlantJournal.exec() == false)
@@ -524,12 +522,74 @@ void DatabaseManager::createDatabase()
         }
     }
 
+    if (!tableExists("thermoData"))
+    {
+        qDebug() << "+ Adding 'thermoData' table to local database";
+
+        QSqlQuery createThermoData;
+        createThermoData.prepare("CREATE TABLE thermoData (" \
+                                 "deviceAddr VARCHAR(38)," \
+                                 "ts DATETIME," \
+                                   "temperature FLOAT," \
+                                   "humidity FLOAT," \
+                                   "pressure FLOAT," \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                 ");");
+
+        if (createThermoData.exec() == false)
+        {
+            qWarning() << "> createThermoData.exec() ERROR"
+                       << createThermoData.lastError().type() << ":" << createThermoData.lastError().text();
+        }
+    }
+
+    if (!tableExists("thermoLimits"))
+    {
+        qDebug() << "+ Adding 'thermoLimits' table to local database";
+        QSqlQuery createThermoLimits;
+        createThermoLimits.prepare("CREATE TABLE thermoLimits (" \
+                                   "deviceAddr VARCHAR(38)," \
+                                     "temperature_min INT," \
+                                     "temperature_max INT," \
+                                     "humidity_min INT," \
+                                     "humidity_max INT," \
+                                   "PRIMARY KEY(deviceAddr)," \
+                                   "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                   ");");
+
+        if (createThermoLimits.exec() == false)
+        {
+            qWarning() << "> createThermoLimits.exec() ERROR"
+                       << createThermoLimits.lastError().type() << ":" << createThermoLimits.lastError().text();
+        }
+    }
+
+    if (!tableExists("thermoBias"))
+    {
+        qDebug() << "+ Adding 'thermoBias' table to local database";
+        QSqlQuery createThermoBias;
+        createThermoBias.prepare("CREATE TABLE thermoBias (" \
+                                 "deviceAddr VARCHAR(38)," \
+                                   "temperature_bias FLOAT," \
+                                   "humidity_bias FLOAT," \
+                                   "pressure_bias FLOAT," \
+                                 "PRIMARY KEY(deviceAddr)," \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                 ");");
+
+        if (createThermoBias.exec() == false)
+        {
+            qWarning() << "> createThermoBias.exec() ERROR"
+                       << createThermoBias.lastError().type() << ":" << createThermoBias.lastError().text();
+        }
+    }
+
     if (!tableExists("sensorData"))
     {
         qDebug() << "+ Adding 'sensorData' table to local database";
         QSqlQuery createSensorData;
         createSensorData.prepare("CREATE TABLE sensorData (" \
-                                 "deviceAddr CHAR(38)," \
+                                 "deviceAddr VARCHAR(38)," \
                                    "timestamp DATETIME," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
@@ -551,8 +611,8 @@ void DatabaseManager::createDatabase()
                                    "so2 FLOAT," \
                                    "voc FLOAT," \
                                    "hcho FLOAT," \
-                                   "geiger FLOAT," \
-                                 " FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION " \
+                                   "radioactivity FLOAT," \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
                                  ");");
 
         if (createSensorData.exec() == false)
@@ -579,7 +639,7 @@ void DatabaseManager::migrateDatabase()
         //qDebug() << "dbVersion is #" << dbVersion;
     }
 
-    if (dbVersion > 0 && dbVersion != CURRENT_DB_VERSION)
+    if (dbVersion > 0 && dbVersion != m_dbCurrentVersion)
     {
         if (dbVersion == 1)
         {
@@ -589,13 +649,13 @@ void DatabaseManager::migrateDatabase()
             }
         }
 
-        //if (dbVersion == 2)
-        //{
-        //    if (migrate_v2v3())
-        //    {
-        //        QSqlQuery updateDbVersion("UPDATE version SET dbVersion=3");
-        //    }
-        //}
+        if (dbVersion == 2)
+        {
+            if (migrate_v2v3())
+            {
+                QSqlQuery updateDbVersion("UPDATE version SET dbVersion=3");
+            }
+        }
     }
 }
 
@@ -606,7 +666,6 @@ bool DatabaseManager::migrate_v1v2()
     qWarning() << "DatabaseManager::migrate_v1v2()";
 
     // TABLE devices
-    // FIELD add deviceAddrMAC
     // FIELD add deviceModel
     // FIELD plantName > associatedName
     // FIELD add (DATETIME) lastSync
@@ -661,18 +720,18 @@ bool DatabaseManager::migrate_v2v3()
 {
     qWarning() << "DatabaseManager::migrate_v2v3()";
 
-    QSqlQuery qmSync("DROP TABLE lastSync");
-
+    // TABLE devices
     QSqlQuery qmDev1("ALTER TABLE devices ADD deviceAddrMAC VARCHAR(17)");
     QSqlQuery qmDev2("ALTER TABLE devices ADD lastSeen DATETIME");
     QSqlQuery qmDev3("ALTER TABLE devices ADD isEnabled BOOLEAN");
     QSqlQuery qmDev4("ALTER TABLE devices ALTER isEnabled SET DEFAULT TRUE");
     QSqlQuery qmDev5("ALTER TABLE devices ALTER isOutside SET DEFAULT FALSE");
 
+    // TABLE plantLimits
     QSqlQuery qmLim1("ALTER TABLE plantLimits RENAME COLUMN hygroMin TO soilMoisture_min");
     QSqlQuery qmLim2("ALTER TABLE plantLimits RENAME COLUMN hygroMax TO soilMoisture_max");
     QSqlQuery qmLim3("ALTER TABLE plantLimits RENAME COLUMN conduMin TO soilConductivity_min");
-    QSqlQuery qmLim4("ALTER TABLE plantLimits RENAME COLUMN conduMin TO soilConductivity_max");
+    QSqlQuery qmLim4("ALTER TABLE plantLimits RENAME COLUMN conduMax TO soilConductivity_max");
     QSqlQuery qmLim5("ALTER TABLE plantLimits RENAME COLUMN phMin TO soilPH_min");
     QSqlQuery qmLim6("ALTER TABLE plantLimits RENAME COLUMN phMax TO soilPH_max");
     QSqlQuery qmLim7("ALTER TABLE plantLimits RENAME COLUMN tempMin TO temperature_min");
@@ -684,7 +743,11 @@ bool DatabaseManager::migrate_v2v3()
     QSqlQuery qmLim13("ALTER TABLE plantLimits RENAME COLUMN mmolMin TO luminosityMmol_min");
     QSqlQuery qmLim14("ALTER TABLE plantLimits RENAME COLUMN mmolMax TO luminosityMmol_max");
 
-    return false;
+    // TABLE sensorData
+    QSqlQuery qmSen1("ALTER TABLE sensorData DROP COLUMN deviceId");
+    QSqlQuery qmSen2("ALTER TABLE sensorData RENAME COLUMN geiger TO radioactivity");
+
+    return true;
 }
 
 /* ************************************************************************** */

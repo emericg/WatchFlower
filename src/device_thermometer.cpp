@@ -289,9 +289,9 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
-                              " min(temperature), avg(temperature), max(temperature), " \
-                              " min(humidity), max(humidity) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d', ts)," \
+                                "min(temperature), avg(temperature), max(temperature)," \
+                                "min(humidity), max(humidity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', ts) " \
@@ -300,9 +300,9 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
         }
         else if (m_dbExternal) // mysql
         {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d'), " \
-                              " min(temperature), avg(temperature), max(temperature), " \
-                              " min(humidity), max(humidity) " \
+            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d')," \
+                                "min(temperature), avg(temperature), max(temperature)," \
+                                "min(humidity), max(humidity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \

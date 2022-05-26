@@ -93,8 +93,8 @@ bool DevicePlantSensor::loadJournalEntries()
 
     QSqlQuery queryJournalEntries;
     queryJournalEntries.prepare("SELECT plantId, entryId," \
-                                " entryType, entryTimestamp, entryComment" \
-                                " FROM plantJournal WHERE deviceAddr = :deviceAddr");
+                                  "entryType, entryTimestamp, entryComment " \
+                                "FROM plantJournal WHERE deviceAddr = :deviceAddr");
     queryJournalEntries.bindValue(":deviceAddr", m_deviceAddress);
     status = queryJournalEntries.exec();
 
@@ -112,14 +112,14 @@ bool DevicePlantSensor::loadJournalEntries()
                                                entryType, entryDate, entryComment, this);
             if (j)
             {
-                // add product
+                // add entry
                 m_journal_entries.push_back(j);
             }
         }
     }
     else
     {
-        qWarning() << "DevicePlantSensor::loadJournalEntries() ERROR querying products";
+        qWarning() << "DevicePlantSensor::loadJournalEntries() ERROR querying entries";
     }
 
     if (m_journal_entries.size() > 0) Q_EMIT journalUpdated();
@@ -274,9 +274,9 @@ void DevicePlantSensor::updateChartData_history_day()
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts)," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
                               "GROUP BY strftime('%d-%H', ts) " \
@@ -285,9 +285,9 @@ void DevicePlantSensor::updateChartData_history_day()
         }
         else if (m_dbExternal) // mysql
         {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%M'), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%M')," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -1 DAY) " \
                               "GROUP BY DATE_FORMAT(ts, '%d-%H') " \
@@ -379,9 +379,9 @@ void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts)," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr " \
                                 "AND ts BETWEEN '" + d.toString("yyyy-MM-dd 00:00:00") + "' AND '" + d.toString("yyyy-MM-dd 23:59:59") + "' " \
@@ -476,10 +476,10 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays)
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity), " \
-                              " max(temperature), max(luminosity) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d', ts)," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity)," \
+                                "max(temperature), max(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', ts) " \
@@ -488,10 +488,10 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays)
         }
         else if (m_dbExternal) // mysql
         {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d'), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity), " \
-                              " max(temperature), max(luminosity) " \
+            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d')," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity)," \
+                                "max(temperature), max(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
@@ -624,9 +624,9 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', ts), " \
-                              " avg(soilMoisture), avg(soilConductivity), avg(soilTemperature), " \
-                              " avg(temperature), avg(humidity), avg(luminosity) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d', ts)," \
+                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                                "avg(temperature), avg(humidity), avg(luminosity) " \
                               "FROM plantData " \
                               "WHERE deviceAddr = :deviceAddr " \
                                 "AND ts BETWEEN '" + f.toString("yyyy-MM-dd 00:00:00") + "' AND '" + l.toString("yyyy-MM-dd 23:59:59") + "' " \

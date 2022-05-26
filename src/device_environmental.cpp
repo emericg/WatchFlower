@@ -83,10 +83,10 @@ void DeviceEnvironmental::updateChartData_environmentalVoc(int maxDays)
         QSqlQuery graphData;
         if (m_dbInternal) // sqlite
         {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', timestamp), " \
-                              " min(voc), avg(voc), max(voc), " \
-                              " min(hcho), avg(hcho), max(hcho), " \
-                              " min(co2), avg(co2), max(co2) " \
+            graphData.prepare("SELECT strftime('%Y-%m-%d', timestamp)," \
+                                "min(voc), avg(voc), max(voc)," \
+                                "min(hcho), avg(hcho), max(hcho)," \
+                                "min(co2), avg(co2), max(co2) " \
                               "FROM sensorData " \
                               "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-" + QString::number(maxMonths) + " month') " \
                               "GROUP BY strftime('%Y-%m-%d', timestamp) " \
@@ -95,10 +95,10 @@ void DeviceEnvironmental::updateChartData_environmentalVoc(int maxDays)
         }
         else if (m_dbExternal) // mysql
         {
-            graphData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%d'), " \
-                              " min(voc), avg(voc), max(voc), " \
-                              " min(hcho), avg(hcho), max(hcho), " \
-                              " min(co2), avg(co2), max(co2) " \
+            graphData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%d')," \
+                                "min(voc), avg(voc), max(voc)," \
+                                "min(hcho), avg(hcho), max(hcho)," \
+                                "min(co2), avg(co2), max(co2) " \
                               "FROM sensorData " \
                               "WHERE deviceAddr = :deviceAddr AND timestamp >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
                               "GROUP BY DATE_FORMAT(timestamp, '%Y-%m-%d') " \

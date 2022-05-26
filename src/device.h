@@ -162,12 +162,13 @@ protected:
 
     // Device data
     QString m_deviceAddress;
+    QString m_deviceAddressMAC;     //!< Used only on macOS and iOS, mostly to interact with other platforms
     QString m_deviceModel;
     QString m_deviceName;
     QString m_deviceFirmware = "UNKN";
     int m_deviceBattery = -1;
 
-    // Db
+    // Db availability shortcuts
     bool m_dbInternal = false;
     bool m_dbExternal = false;
 
@@ -184,6 +185,7 @@ protected:
     int m_ble_action = 0;           //!< See DeviceActions enum
     QDateTime m_lastUpdate;
     QDateTime m_lastUpdateDatabase;
+    QDateTime m_lastHistorySeen;
     QDateTime m_lastHistorySync;
     QDateTime m_lastError;
     bool m_firmware_uptodate = false;

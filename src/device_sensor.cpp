@@ -281,30 +281,42 @@ bool DeviceSensor::getSqlDeviceInfos()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool DeviceSensor::getSqlPlantBias()
 {
     //qDebug() << "DeviceSensor::getSqlPlantBias(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery getBias;
-    getBias.prepare("SELECT soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
-                    " temperature_bias, humidity_bias, luminosity_bias " \
-                    "FROM plantBias WHERE deviceAddr = :deviceAddr");
-    getBias.bindValue(":deviceAddr", getAddress());
-    getBias.exec();
-    while (getBias.next())
+    if (m_dbInternal || m_dbExternal)
     {
-        m_soilMoisture_bias = getBias.value(0).toFloat();
-        m_soilConductivity_bias = getBias.value(1).toFloat();
-        m_soilTemperature_bias = getBias.value(2).toFloat();
-        m_soilPH_bias = getBias.value(3).toFloat();
-        m_temperature_bias = getBias.value(4).toFloat();
-        m_humidity_bias = getBias.value(5).toFloat();
-        m_luminosity_bias = getBias.value(6).toFloat();
+        QSqlQuery getBias;
+        getBias.prepare("SELECT soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
+                        " temperature_bias, humidity_bias, luminosity_bias " \
+                        "FROM plantBias WHERE deviceAddr = :deviceAddr");
+        getBias.bindValue(":deviceAddr", getAddress());
 
-        status = true;
-        Q_EMIT biasUpdated();
+        if (getBias.exec())
+        {
+            while (getBias.next())
+            {
+                m_soilMoisture_bias = getBias.value(0).toFloat();
+                m_soilConductivity_bias = getBias.value(1).toFloat();
+                m_soilTemperature_bias = getBias.value(2).toFloat();
+                m_soilPH_bias = getBias.value(3).toFloat();
+                m_temperature_bias = getBias.value(4).toFloat();
+                m_humidity_bias = getBias.value(5).toFloat();
+                m_luminosity_bias = getBias.value(6).toFloat();
+
+                status = true;
+                Q_EMIT biasUpdated();
+            }
+        }
+        else
+        {
+            qWarning() << "> getBias.exec(plant) ERROR"
+                       << getBias.lastError().type() << ":" << getBias.lastError().text();
+        }
     }
 
     return status;
@@ -318,12 +330,12 @@ bool DeviceSensor::setSqlPlantBias()
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery updateBias;
-        updateBias.prepare("REPLACE INTO plantBias (deviceAddr, " \
-                           " soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
-                           " temperature_bias, humidity_bias, luminosity_bias)" \
-                           " VALUES (:deviceAddr, " \
-                                    ":soilMoist, :soilCondu, :soilTemp, :soilPH, " \
-                                    ":temp, :humi, :lumi)");
+        updateBias.prepare("REPLACE INTO plantBias (deviceAddr," \
+                             "soilMoisture_bias, soilConductivity_bias, soilTemperature_bias, soilPH_bias," \
+                             "temperature_bias, humidity_bias, luminosity_bias) " \
+                           "VALUES (:deviceAddr," \
+                                   ":soilMoist, :soilCondu, :soilTemp, :soilPH," \
+                                   ":temp, :humi, :lumi)");
         updateBias.bindValue(":deviceAddr", getAddress());
         updateBias.bindValue(":soilMoist", m_soilMoisture_bias);
         updateBias.bindValue(":soilCondu", m_soilConductivity_bias);
@@ -336,7 +348,7 @@ bool DeviceSensor::setSqlPlantBias()
         status = updateBias.exec();
         if (status == false)
         {
-            qWarning() << "> updateBias.exec() ERROR"
+            qWarning() << "> updateBias.exec(plant) ERROR"
                        << updateBias.lastError().type() << ":" << updateBias.lastError().text();
         }
     }
@@ -353,32 +365,45 @@ bool DeviceSensor::getSqlPlantLimits()
     //qDebug() << "DeviceSensor::getSqlPlantLimits(" << m_deviceAddress << ")";
     bool status = false;
 
-    QSqlQuery getLimits;
-    getLimits.prepare("SELECT hygroMin, hygroMax, conduMin, conduMax, phMin, phMax, " \
-                      " tempMin, tempMax, humiMin, humiMax, " \
-                      " luxMin, luxMax, mmolMin, mmolMax " \
-                      "FROM plantLimits WHERE deviceAddr = :deviceAddr");
-    getLimits.bindValue(":deviceAddr", getAddress());
-    getLimits.exec();
-    while (getLimits.next())
+    if (m_dbInternal || m_dbExternal)
     {
-        m_soilMoisture_limit_min = getLimits.value(0).toInt();
-        m_soilMoisture_limit_max = getLimits.value(1).toInt();
-        m_soilConductivity_limit_min = getLimits.value(2).toInt();
-        m_soilConductivity_limit_max = getLimits.value(3).toInt();
-        m_soilPH_limit_min = getLimits.value(4).toInt();
-        m_soilPH_limit_max = getLimits.value(5).toInt();
-        m_temperature_limit_min = getLimits.value(6).toInt();
-        m_temperature_limit_max = getLimits.value(7).toInt();
-        m_humidity_limit_min = getLimits.value(8).toInt();
-        m_humidity_limit_max = getLimits.value(9).toInt();
-        m_luminosityLux_limit_min = getLimits.value(10).toInt();
-        m_luminosityLux_limit_max = getLimits.value(11).toInt();
-        m_luminosityMmol_limit_min = getLimits.value(12).toInt();
-        m_luminosityMmol_limit_max = getLimits.value(13).toInt();
+        QSqlQuery getLimits;
+        getLimits.prepare("SELECT soilMoisture_min, soilMoisture_max," \
+                            "soilConductivity_min, soilConductivity_max," \
+                            "soilPH_min, soilPH_max," \
+                            "temperature_min, temperature_max, humidity_min, humidity_max," \
+                            "luminosityLux_min, luminosityLux_max, luminosityMmol_min, luminosityMmol_max " \
+                          "FROM plantLimits WHERE deviceAddr = :deviceAddr");
+        getLimits.bindValue(":deviceAddr", getAddress());
 
-        status = true;
-        Q_EMIT limitsUpdated();
+        if (getLimits.exec())
+        {
+            while (getLimits.next())
+            {
+                m_soilMoisture_limit_min = getLimits.value(0).toInt();
+                m_soilMoisture_limit_max = getLimits.value(1).toInt();
+                m_soilConductivity_limit_min = getLimits.value(2).toInt();
+                m_soilConductivity_limit_max = getLimits.value(3).toInt();
+                m_soilPH_limit_min = getLimits.value(4).toInt();
+                m_soilPH_limit_max = getLimits.value(5).toInt();
+                m_temperature_limit_min = getLimits.value(6).toInt();
+                m_temperature_limit_max = getLimits.value(7).toInt();
+                m_humidity_limit_min = getLimits.value(8).toInt();
+                m_humidity_limit_max = getLimits.value(9).toInt();
+                m_luminosityLux_limit_min = getLimits.value(10).toInt();
+                m_luminosityLux_limit_max = getLimits.value(11).toInt();
+                m_luminosityMmol_limit_min = getLimits.value(12).toInt();
+                m_luminosityMmol_limit_max = getLimits.value(13).toInt();
+
+                status = true;
+                Q_EMIT limitsUpdated();
+            }
+        }
+        else
+        {
+            qWarning() << "> getLimits.exec(plant) ERROR"
+                       << getLimits.lastError().type() << ":" << getLimits.lastError().text();
+        }
     }
 
     return status;
@@ -392,12 +417,15 @@ bool DeviceSensor::setSqlPlantLimits()
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery updateLimits;
-        updateLimits.prepare("REPLACE INTO plantLimits (deviceAddr, " \
-                             " hygroMin, hygroMax, conduMin, conduMax, phMin, phMax, tempMin, tempMax," \
-                             " humiMin, humiMax, luxMin, luxMax, mmolMin, mmolMax)" \
-                             " VALUES (:deviceAddr, " \
-                                      ":hygroMin, :hygroMax, :conduMin, :conduMax, :phMin, :phMax, :tempMin, :tempMax, " \
-                                      ":humiMin, :humiMax, :luxMin, :luxMax, :mmolMin, :mmolMax)");
+        updateLimits.prepare("REPLACE INTO plantLimits (deviceAddr," \
+                               "soilMoisture_min, soilMoisture_max," \
+                               "soilConductivity_min, soilConductivity_max," \
+                               "soilPH_min, soilPH_max,"
+                               "temperature_min, temperature_max, humidity_min, humidity_max," \
+                               "luminosityLux_min, luminosityLux_max, luminosityMmol_min, luminosityMmol_max) " \
+                             "VALUES (:deviceAddr," \
+                                     ":hygroMin, :hygroMax, :conduMin, :conduMax, :phMin, :phMax, :tempMin, :tempMax," \
+                                     ":humiMin, :humiMax, :luxMin, :luxMax, :mmolMin, :mmolMax)");
         updateLimits.bindValue(":deviceAddr", getAddress());
         updateLimits.bindValue(":hygroMin", m_soilMoisture_limit_min);
         updateLimits.bindValue(":hygroMax", m_soilMoisture_limit_max);
@@ -417,7 +445,7 @@ bool DeviceSensor::setSqlPlantLimits()
         status = updateLimits.exec();
         if (status == false)
         {
-            qWarning() << "> updateLimits.exec() ERROR"
+            qWarning() << "> updateLimits.exec(plant) ERROR"
                        << updateLimits.lastError().type() << ":" << updateLimits.lastError().text();
         }
     }
@@ -445,8 +473,7 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     }
     else if (m_dbExternal) // mysql
     {
-        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s')," \
-                           " soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
+        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
                            "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
                            "ORDER BY ts_full DESC " \
@@ -456,7 +483,7 @@ bool DeviceSensor::getSqlPlantData(int minutes)
 
     if (cachedData.exec() == false)
     {
-        qWarning() << "> cachedDataPlant.exec() ERROR"
+        qWarning() << "> cachedData.exec(plant) ERROR"
                    << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     }
 
@@ -483,6 +510,190 @@ bool DeviceSensor::getSqlPlantData(int minutes)
         qDebug() << "- m_humidity:" << m_humidity;
         qDebug() << "- m_luminosityLux:" << m_luminosityLux;
         qDebug() << "- m_watertank_level:" << m_watertank_level;
+*/
+        status = true;
+    }
+
+    refreshDataFinished(status, true);
+    return status;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+bool DeviceSensor::getSqlThermoBias()
+{
+    //qDebug() << "DeviceSensor::getSqlThermoBias(" << m_deviceAddress << ")";
+    bool status = false;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery getBias;
+        getBias.prepare("SELECT temperature_bias, humidity_bias, pressure_bias " \
+                        "FROM thermoBias WHERE deviceAddr = :deviceAddr");
+        getBias.bindValue(":deviceAddr", getAddress());
+
+        if (getBias.exec())
+        {
+            while (getBias.next())
+            {
+                m_temperature_bias = getBias.value(0).toFloat();
+                m_humidity_bias = getBias.value(1).toFloat();
+                m_pressure_bias = getBias.value(2).toFloat();
+
+                status = true;
+                Q_EMIT biasUpdated();
+            }
+        }
+        else
+        {
+            qWarning() << "> getBias.exec(thermo) ERROR"
+                       << getBias.lastError().type() << ":" << getBias.lastError().text();
+        }
+    }
+
+    return status;
+}
+
+bool DeviceSensor::setSqlThermoBias()
+{
+    //qDebug() << "DeviceSensor::setSqlThermoBias(" << m_deviceAddress << ")";
+    bool status = false;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery updateBias;
+        updateBias.prepare("REPLACE INTO thermoBias (deviceAddr, temperature_bias, humidity_bias, luminosity_bias) " \
+                           "VALUES (:deviceAddr, :temp, :humi, :pressure)");
+        updateBias.bindValue(":deviceAddr", getAddress());
+        updateBias.bindValue(":temp", m_temperature_bias);
+        updateBias.bindValue(":humi", m_humidity_bias);
+        updateBias.bindValue(":pressure", m_pressure_bias);
+
+        status = updateBias.exec();
+        if (status == false)
+        {
+            qWarning() << "> updateBias.exec(thermo) ERROR"
+                       << updateBias.lastError().type() << ":" << updateBias.lastError().text();
+        }
+    }
+
+    Q_EMIT biasUpdated();
+
+    return status;
+}
+
+/* ************************************************************************** */
+
+bool DeviceSensor::getSqlThermoLimits()
+{
+    //qDebug() << "DeviceSensor::getSqlThermoLimits(" << m_deviceAddress << ")";
+    bool status = false;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery getLimits;
+        getLimits.prepare("SELECT temperature_min, temperature_max, humidity_min, humidity_max " \
+                          "FROM thermoLimits WHERE deviceAddr = :deviceAddr");
+        getLimits.bindValue(":deviceAddr", getAddress());
+
+        if (getLimits.exec())
+        {
+            while (getLimits.next())
+            {
+                m_temperature_limit_min = getLimits.value(6).toInt();
+                m_temperature_limit_max = getLimits.value(7).toInt();
+                m_humidity_limit_min = getLimits.value(8).toInt();
+                m_humidity_limit_max = getLimits.value(9).toInt();
+
+                status = true;
+                Q_EMIT limitsUpdated();
+            }
+        }
+        else
+        {
+            qWarning() << "> getLimits.exec(thermo) ERROR"
+                       << getLimits.lastError().type() << ":" << getLimits.lastError().text();
+        }
+    }
+
+    return status;
+}
+
+bool DeviceSensor::setSqlThermoLimits()
+{
+    //qDebug() << "DeviceSensor::setSqlThermoLimits(" << m_deviceAddress << ")";
+    bool status = false;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery updateLimits;
+        updateLimits.prepare("REPLACE INTO thermoLimits (deviceAddr, temperature_min, temperature_max, humidity_min, humidity_max) " \
+                             "VALUES (:deviceAddr, :tempMin, :tempMax, :humiMin, :humiMax)");
+        updateLimits.bindValue(":deviceAddr", getAddress());
+        updateLimits.bindValue(":tempMin", m_temperature_limit_min);
+        updateLimits.bindValue(":tempMax", m_temperature_limit_max);
+        updateLimits.bindValue(":humiMin", m_humidity_limit_min);
+        updateLimits.bindValue(":humiMax", m_humidity_limit_max);
+
+        status = updateLimits.exec();
+        if (status == false)
+        {
+            qWarning() << "> updateLimits.exec(thermo) ERROR"
+                       << updateLimits.lastError().type() << ":" << updateLimits.lastError().text();
+        }
+    }
+
+    Q_EMIT limitsUpdated();
+
+    return status;
+}
+
+/* ************************************************************************** */
+
+bool DeviceSensor::getSqlThermoData(int minutes)
+{
+    //qDebug() << "DeviceSensor::getSqlThermoData(" << m_deviceAddress << ")";
+    bool status = false;
+
+    QSqlQuery cachedData;
+    if (m_dbInternal) // sqlite
+    {
+        cachedData.prepare("SELECT timestamp, temperature, humidity, pressure " \
+                           "FROM thermoData " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes') " \
+                           "ORDER BY timestamp DESC " \
+                           "LIMIT 1;");
+    }
+    else if (m_dbExternal) // mysql
+    {
+        cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s'), temperature, humidity, pressure " \
+                           "FROM thermoData " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
+                           "ORDER BY timestamp DESC " \
+                           "LIMIT 1;");
+    }
+    cachedData.bindValue(":deviceAddr", getAddress());
+
+    if (cachedData.exec() == false)
+    {
+        qWarning() << "> cachedData.exec(thermo) ERROR"
+                   << cachedData.lastError().type() << ":" << cachedData.lastError().text();
+    }
+
+    while (cachedData.next())
+    {
+        m_temperature = cachedData.value(1).toFloat();
+        m_humidity = cachedData.value(2).toFloat();
+        m_pressure = cachedData.value(3).toFloat();
+
+        QString datetime = cachedData.value(0).toString();
+        m_lastUpdateDatabase = m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");
+/*
+        qDebug() << ">> timestamp" << m_lastUpdate;
+        qDebug() << "- m_temperature:" << m_temperature;
+        qDebug() << "- m_humidity:" << m_humidity;
+        qDebug() << "- m_pressure:" << m_pressure;
 */
         status = true;
     }
@@ -558,8 +769,9 @@ bool DeviceSensor::getSqlSensorData(int minutes)
     QSqlQuery cachedData;
     if (m_dbInternal) // sqlite
     {
-        cachedData.prepare("SELECT timestamp, temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
-                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
+        cachedData.prepare("SELECT timestamp," \
+                             "temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed," \
+                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, radioactivity " \
                            "FROM sensorData " \
                            "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes')" \
                            "ORDER BY timestamp DESC " \
@@ -567,8 +779,9 @@ bool DeviceSensor::getSqlSensorData(int minutes)
     }
     else if (m_dbExternal) // mysql
     {
-        cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s'), temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed, " \
-                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, geiger " \
+        cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s')," \
+                             "temperature, humidity, pressure, luminosity, uv, sound, water, windDirection, windSpeed," \
+                             "pm1, pm25, pm10, o2, o3, co, co2, no2, so2, voc, hcho, radioactivity " \
                            "FROM sensorData " \
                            "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
                            "ORDER BY timestamp DESC " \
@@ -578,7 +791,7 @@ bool DeviceSensor::getSqlSensorData(int minutes)
 
     if (cachedData.exec() == false)
     {
-        qWarning() << "> cachedDataSensor.exec() ERROR"
+        qWarning() << "> cachedData.exec(sensor) ERROR"
                    << cachedData.lastError().type() << ":" << cachedData.lastError().text();
     }
 

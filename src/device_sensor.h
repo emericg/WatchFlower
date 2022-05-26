@@ -268,9 +268,15 @@ protected:
     virtual void refreshHistoryFinished(bool status);
 
     virtual bool getSqlDeviceInfos();
+
     virtual bool getSqlPlantData(int minutes);
     virtual bool getSqlPlantBias();
     virtual bool getSqlPlantLimits();
+
+    virtual bool getSqlThermoLimits();
+    virtual bool getSqlThermoBias();
+    virtual bool getSqlThermoData(int minutes);
+
     virtual bool getSqlSensorData(int minutes);
     virtual bool getSqlSensorBias();
     virtual bool getSqlSensorLimits();
@@ -295,6 +301,8 @@ public:
 
     bool setSqlPlantBias();
     bool setSqlPlantLimits();
+    bool setSqlThermoBias();
+    bool setSqlThermoLimits();
     bool setSqlSensorBias();
     bool setSqlSensorLimits();
 
