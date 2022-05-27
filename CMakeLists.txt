@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.19)
 
 project(WatchFlower VERSION 4.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 
@@ -16,20 +16,23 @@ qt_standard_project_setup()
 qt_add_executable(WatchFlower
     src/AndroidService.cpp src/AndroidService.h
     src/DatabaseManager.cpp src/DatabaseManager.h
+    src/SettingsManager.cpp src/SettingsManager.h
+    src/SystrayManager.cpp src/SystrayManager.h
+    src/NotificationManager.cpp src/NotificationManager.h
+    src/PlantDatabase.cpp src/PlantDatabase.h
+    src/Plant.cpp src/Plant.h
+    src/Journal.cpp src/Journal.h
+    src/device.cpp src/device.h
+    src/device_infos.cpp src/device_infos.h
+    src/device_sensor.cpp src/device_sensor.h
+    src/device_plantsensor.cpp src/device_plantsensor.h
+    src/device_thermometer.cpp src/device_thermometer.h
+    src/device_environmental.cpp src/device_environmental.h
     src/DeviceManager.cpp src/DeviceManager.h
     src/DeviceManager_advertisement.cpp
     src/DeviceManager_nearby.cpp
     src/DeviceManager_export.cpp
-    src/Journal.cpp src/Journal.h
-    src/NotificationManager.cpp src/NotificationManager.h
-    src/Plant.cpp src/Plant.h
-    src/PlantDatabase.cpp src/PlantDatabase.h
-    src/SettingsManager.cpp src/SettingsManager.h
-    src/SystrayManager.cpp src/SystrayManager.h
-    src/device.cpp src/device.h
-    src/device_filter.cpp src/device_filter.h
-    src/device_infos.cpp src/device_infos.h
-    src/device_sensor.cpp src/device_sensor.h
+    src/DeviceFilter.cpp src/DeviceFilter.h
     src/device_utils.h
     src/devices/device_esp32_airqualitymonitor.cpp src/devices/device_esp32_airqualitymonitor.h
     src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
@@ -69,9 +72,9 @@ qt_add_executable(WatchFlower
 
 target_include_directories(WatchFlower PRIVATE
     src
+    src/thirdparty/SingleApplication
     src/thirdparty/MobileSharing
     src/thirdparty/MobileUI
-    src/thirdparty/SingleApplication
 )
 
 ################################################################################
@@ -117,13 +120,7 @@ if(LINUX)
     target_link_libraries(WatchFlower PRIVATE Qt::DBus)
 endif()
 
-######## ANDROID
-#https://www.qt.io/blog/android-multi-abi-builds-are-back
-
-#-DQT_ANDROID_ABIS="armeabi-v7a;arm64-v8a"
-#-DQT_ANDROID_BUILD_ALL_ABIS=ON \
-#-DQT_PATH_ANDROID_ABI_armeabi-v7a="<Qt/for/armeabi-v7a>" \
-#-DQT_PATH_ANDROID_ABI_arm64-v8a="<Qt/for/arm64-v8a>" \
+## ANDROID
 
 if(ANDROID)
     target_sources(WatchFlower PUBLIC
@@ -234,7 +231,7 @@ install(SCRIPT ${deploy_script})
 if(WIN32)
     set(date_command "CMD")
     set(date_arg "/c date /t")
-else
+else()
     set(date_command "date")
     set(date_arg "")
 endif()
