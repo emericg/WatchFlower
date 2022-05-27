@@ -155,7 +155,7 @@ Item {
             legend: qsTr("Soil temp.")
             legendWidth: indicatorsSolid.legendWidth
             suffix: "°" + settingsManager.tempUnit
-            colorForeground: Theme.colorGreen
+            colorForeground: Qt.darker(Theme.colorGreen, 1.1)
             colorBackground: indicatorsSolid.colorBackground
 
             floatprecision: 1
@@ -175,7 +175,7 @@ Item {
             legend: qsTr("Water tank")
             legendWidth: indicatorsSolid.legendWidth
             suffix: "L"
-            colorForeground: Theme.colorBlue
+            colorForeground: Qt.lighter(Theme.colorBlue, 1.1)
             colorBackground: indicatorsSolid.colorBackground
 
             floatprecision: 1

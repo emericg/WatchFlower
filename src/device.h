@@ -57,6 +57,7 @@ class Device: public QObject
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceAddressMAC READ getAddressMAC WRITE setAddressMAC NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
 
@@ -112,8 +113,8 @@ class Device: public QObject
     Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated)
     Q_PROPERTY(QString devicePlantName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated) // legacy
     Q_PROPERTY(bool deviceEnabled READ isEnabled WRITE setEnabled NOTIFY settingsUpdated)
-    Q_PROPERTY(bool deviceIsInside READ isInside NOTIFY settingsUpdated)
-    Q_PROPERTY(bool deviceIsOutside READ isOutside NOTIFY settingsUpdated)
+    Q_PROPERTY(bool deviceIsInside READ isInside WRITE setInside NOTIFY settingsUpdated)
+    Q_PROPERTY(bool deviceIsOutside READ isOutside WRITE setOutside NOTIFY settingsUpdated)
 
     Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
@@ -333,16 +334,20 @@ public:
     virtual bool needsSync() const;
 
     // Device associated data
-    QString getLocationName() { return m_locationName; }
+    QString getLocationName() const { return m_locationName; }
     void setLocationName(const QString &name);
-    QString getAssociatedName() { return m_associatedName; }
+    QString getAssociatedName() const { return m_associatedName; }
     void setAssociatedName(const QString &name);
+    bool hasAddressMAC() const;
+    QString getAddressMAC() const;
+    void setAddressMAC(const QString &mac);
     int getManualIndex() const { return m_manualOrderIndex; }
     bool isEnabled() const { return m_isEnabled; }
     void setEnabled(const bool enabled);
     bool isInside() const { return !m_isOutside; }
+    void setInside(const bool inside);
     bool isOutside() const { return m_isOutside; }
-    Q_INVOKABLE void setOutside(const bool outside);
+    void setOutside(const bool outside);
     // Device additional settings
     Q_INVOKABLE bool hasSetting(const QString &key) const;
     Q_INVOKABLE QVariant getSetting(const QString &key) const;

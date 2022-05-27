@@ -11,22 +11,6 @@ Item {
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("devicePlantSensorSettings // updateHeader() >> " + currentDevice)
-
-        // MAC Address
-        if ((Qt.platform.os === "osx" || Qt.platform.os === "ios") &&
-            (currentDevice.deviceName === "Flower care" ||
-             currentDevice.deviceName === "ropot" ||
-             currentDevice.deviceName === "Grow care garden")) {
-            itemMacAddr.visible = true
-            if (currentDevice.getSetting("mac")) {
-                textInputMacAddr.text = currentDevice.getSetting("mac")
-            } else {
-                textInputMacAddr.text = ""
-            }
-        } else {
-            itemMacAddr.visible = false
-            textInputMacAddr.text = ""
-        }
     }
 
     property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
@@ -551,7 +535,7 @@ Item {
 
                     Row {
                         id: itemInOut
-                        spacing: 12
+                        spacing: 16
 
                         Rectangle {
                             id: rectangleInside
@@ -569,11 +553,7 @@ Item {
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
-                                    currentDevice.setOutside(false)
-                                    rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
-                                    rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
-                                }
+                                onClicked: currentDevice.deviceIsInside = true
                             }
 
                             Column {
@@ -611,11 +591,7 @@ Item {
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
-                                    currentDevice.setOutside(true)
-                                    rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
-                                    rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
-                                }
+                                onClicked: currentDevice.deviceIsOutside = true
                             }
 
                             Column {
@@ -638,114 +614,110 @@ Item {
                         }
                     }
 /*
-                    Rectangle {
+                    Column {
                         id: itemMacAddr
                         anchors.left: parent.left
-                        anchors.leftMargin: 0
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
 
-                        visible: false
-                        color: Theme.colorBackground
-                        height: rowMacAddr.height + 16 + legendMacAddr.contentHeight
+                        visible: (Qt.platform.os === "osx" || Qt.platform.os === "ios")
+                        topPadding: 8
+                        spacing: 6
 
-                        IconSvg {
-                            anchors.top: parent.top
-                            anchors.topMargin: 8
-                            anchors.right: parent.right
-                            anchors.rightMargin: 8
-                            width: 24
-                            height: 24
-
+                        Text {
+                            text: qsTr("MAC Address")
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentVerySmall
+                            font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
-                            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                         }
 
-                        Column {
-                            id: columnMacAddr
-                            anchors.top: parent.top
-                            anchors.topMargin: 8
+                        Text {
                             anchors.left: parent.left
-                            anchors.leftMargin: 12
                             anchors.right: parent.right
-                            anchors.rightMargin: 12
-                            spacing: 0
 
-                            Row {
-                                id: rowMacAddr
-                                anchors.left: parent.left
+                            text: "The MAC address of the sensor must be set in order for some features (like history synchronization) to work."
+                            color: Theme.colorSubText
+                            wrapMode: Text.WordWrap
+                        }
+
+                        Text {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            text: "Sorry for the inconvenience."
+                            color: Theme.colorSubText
+                            wrapMode: Text.WordWrap
+                        }
+
+                        Rectangle {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            height: 36
+                            radius: Theme.componentRadius
+
+                            IconSvg {
                                 anchors.right: parent.right
-                                spacing: 8
+                                anchors.rightMargin: 8
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 24
+                                height: 24
 
-                                Text {
-                                    id: labelMacAddr
-                                    anchors.verticalCenter: parent.verticalCenter
-
-                                    text: qsTr("MAC Address")
-                                    font.bold: true
-                                    font.pixelSize: Theme.fontSizeContentVerySmall
-                                    font.capitalization: Font.AllUppercase
-                                    color: Theme.colorSubText
-                                }
-
-                                TextInput {
-                                    id: textInputMacAddr
-                                    anchors.baseline: labelMacAddr.baseline
-                                    padding: 4
-
-                                    font.pixelSize: 17
-                                    font.bold: false
-                                    color: Theme.colorHighContrast
-
-                                    inputMask: "HH:HH:HH:HH:HH:HH"
-                                    onEditingFinished: {
-                                        if (text) currentDevice.setSetting("mac", text)
-                                        focus = false
-                                    }
-
-                                    MouseArea {
-                                        id: textInputMacAddrArea
-                                        anchors.fill: parent
-                                        anchors.topMargin: -4
-                                        anchors.leftMargin: -4
-                                        anchors.rightMargin: -24
-                                        anchors.bottomMargin: -4
-
-                                        hoverEnabled: true
-                                        propagateComposedEvents: true
-
-                                        onPressed: (mouse) => {
-                                            textInputMacAddr.forceActiveFocus()
-                                            mouse.accepted = false
-                                        }
-                                    }
-
-                                    IconSvg {
-                                        id: imageEditMacAddr
-                                        width: 20
-                                        height: 20
-                                        anchors.left: parent.right
-                                        anchors.leftMargin: 8
-                                        anchors.verticalCenter: textInputMacAddr.verticalCenter
-
-                                        source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
-                                        color: Theme.colorSubText
-
-                                        //visible: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputArea.containsMouse)
-                                        opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
-                                        Behavior on opacity { OpacityAnimator { duration: 133 } }
-                                    }
-                                }
+                                color: Theme.colorSubText
+                                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                             }
 
-                            Text {
-                                id: legendMacAddr
+                            TextInput {
+                                id: textInputMacAddr
                                 anchors.left: parent.left
-                                anchors.right: parent.right
+                                anchors.leftMargin: 4
+                                anchors.verticalCenter: parent.verticalCenter
+                                padding: 8
 
-                                text: "The MAC address of the sensor must be set in order for the history synchronization to work. Sorry for the inconvenience."
-                                color: Theme.colorSubText
-                                wrapMode: Text.WordWrap
+                                font.pixelSize: 17
+                                font.bold: false
+                                color: Theme.colorHighContrast
+
+                                text: currentDevice.deviceAddressMAC
+
+                                inputMask: "HH:HH:HH:HH:HH:HH"
+                                onEditingFinished: {
+                                    if (text) currentDevice.deviceAddressMAC = text
+                                    focus = false
+                                }
+
+                                MouseArea {
+                                    id: textInputMacAddrArea
+                                    anchors.fill: parent
+                                    anchors.topMargin: -4
+                                    anchors.leftMargin: -4
+                                    anchors.rightMargin: -24
+                                    anchors.bottomMargin: -4
+
+                                    hoverEnabled: true
+                                    propagateComposedEvents: true
+
+                                    onPressed: (mouse) => {
+                                        textInputMacAddr.forceActiveFocus()
+                                        mouse.accepted = false
+                                    }
+                                }
+
+                                IconSvg {
+                                    id: imageEditMacAddr
+                                    width: 20
+                                    height: 20
+                                    anchors.left: parent.right
+                                    anchors.leftMargin: 8
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                                    color: Theme.colorSubText
+
+                                    //visible: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputArea.containsMouse)
+                                    opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
+                                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+                                }
                             }
                         }
                     }

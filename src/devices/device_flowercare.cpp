@@ -27,7 +27,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
 #include <QSqlQuery>
@@ -529,8 +528,8 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
 
             addDatabaseRecord(m_device_wall_time + tmcd,
-                              soil_moisture, soil_conductivity,
-                              temperature, luminosity);
+                              soil_moisture, soil_conductivity, -99.f, -99.f,
+                              temperature, -99.f, luminosity);
 /*
             qDebug() << "* History entry" << m_history_entryIndex-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
             qDebug() << "- soil_moisture:" << soil_moisture;
@@ -594,14 +593,15 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshRealtime();
+
                 // Ask for a new data reading, but not too often...
                 QTimer::singleShot(1000, this, SLOT(askForReading()));
             }
             else
             {
-                bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity,
-                                                m_temperature, m_luminosityLux);
+                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                                m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                                m_temperature, -99.f, m_luminosityLux);
 
                 refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
@@ -634,26 +634,25 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uin
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-        QString mac;
+        // Save mac address (for macOS and iOS)
+        if (!hasAddressMAC())
+        {
+            QString mac;
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        // Save mac address
-        mac += value.mid(10,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(9,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(8,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
+            mac += value.mid(10,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(9,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(8,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(7,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(6,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(5,1).toHex().toUpper();
 
-        setSetting("mac", mac);
-#else
-        Q_UNUSED(mac)
-#endif
+            setAddressMAC(mac);
+        }
 
         if (value.size() >= 16)
         {
@@ -766,8 +765,8 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uin
                 if (needsUpdateDb())
                 {
                     addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                      m_soilMoisture, m_soilConductivity,
-                                      m_temperature, m_luminosityLux);
+                                      m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                      m_temperature, -99.f, m_luminosityLux);
                 }
 
                 refreshDataFinished(true);
@@ -776,7 +775,6 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uin
             if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-                if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
                 if (batt > -99) qDebug() << "- battery:" << batt;
                 if (temp > -99) qDebug() << "- temperature:" << temp;
                 if (humi > -99) qDebug() << "- humidity:" << humi;
@@ -788,66 +786,6 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uin
 */
         }
     }
-}
-
-/* ************************************************************************** */
-
-bool DeviceFlowerCare::areValuesValid(const int soilMoisture, const int soilConductivity,
-                                      const float temperature, const int luminosity) const
-{
-    if (soilMoisture < 0 || soilMoisture > 100) return false;
-    if (soilConductivity < 0 || soilConductivity > 20000) return false;
-    if (temperature < -20.f || temperature > 100.f) return false;
-    if (luminosity < 0 || luminosity > 150000) return false;
-
-    return true;
-}
-
-bool DeviceFlowerCare::addDatabaseRecord(const int64_t timestamp,
-                                         const int soilMoisture, const int soilConductivity,
-                                         const float temperature, const int luminosity)
-{
-    bool status = false;
-
-    if (areValuesValid(soilMoisture, soilConductivity, temperature, luminosity))
-    {
-        if (m_dbInternal || m_dbExternal)
-        {
-            // SQL date format YYYY-MM-DD HH:MM:SS
-            // We only save one record every 60m
-
-            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
-
-            QSqlQuery addData;
-            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature, luminosity)"
-                            " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp, :lumi)");
-            addData.bindValue(":deviceAddr", getAddress());
-            addData.bindValue(":ts", tmcd.toString("yyyy-MM-dd hh:00:00"));
-            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
-            addData.bindValue(":hygro", soilMoisture);
-            addData.bindValue(":condu", soilConductivity);
-            addData.bindValue(":temp", temperature);
-            addData.bindValue(":lumi", luminosity);
-
-            status = addData.exec();
-
-            if (status)
-            {
-                m_lastUpdateDatabase = tmcd;
-            }
-            else
-            {
-                qWarning() << "> DeviceFlowerCare addData.exec() ERROR"
-                           << addData.lastError().type() << ":" << addData.lastError().text();
-            }
-        }
-    }
-    else
-    {
-        qWarning() << "DeviceFlowerCare values are INVALID";
-    }
-
-    return status;
 }
 
 /* ************************************************************************** */

@@ -28,15 +28,9 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
-#include <QSqlQuery>
-#include <QSqlError>
-
 #include <QDateTime>
-#include <QTimeZone>
-
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -358,9 +352,10 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 m_lastHistorySync.setSecsSinceEpoch(tmcd);
 
                 // Save these values in db?
-                addDatabaseRecord(tmcd + 0, temp1, hygro1);
-                //addDatabaseRecord(tmcd + 600, temp2, hygro2);
-                //addDatabaseRecord(tmcd + 1200, temp3, hygro3);
+
+                addDatabaseRecord_hygrometer(tmcd + 0, temp1, hygro1);
+                //addDatabaseRecord_hygrometer(tmcd + 600, temp2, hygro2);
+                //addDatabaseRecord_hygrometer(tmcd + 1200, temp3, hygro3);
 
                 // Update progress
                 m_history_entryIndex += 3;
@@ -407,7 +402,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                     qDebug() << "- temperature:" << m_temperature;
                     qDebug() << "- humidity:" << m_humidity;
 */
-                    addDatabaseRecord(tmcd, temp3, hygro3);
+                    addDatabaseRecord_hygrometer(tmcd, temp3, hygro3);
                 }
 
                 refreshDataFinished(true);
@@ -455,23 +450,22 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value, const u
                 Q_EMIT dataUpdated();
             }
         }
+        int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
+        setBattery(battlvl);
 
         if (m_temperature > -99.f && m_humidity > -99)
         {
             m_lastUpdate = QDateTime::currentDateTime();
 
-            int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
-            setBattery(battlvl);
-
             if (needsUpdateDb())
             {
-                addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
+                addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
             }
 
             refreshDataFinished(true);
         }
 /*
-        if (temp > -99.f || humi > -99)
+        if (temp > -99.f || humi > -99.f)
         {
             qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
             qDebug() << "- battery:" << m_deviceBattery;
@@ -481,60 +475,6 @@ void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value, const u
         }
 */
     }
-}
-
-/* ************************************************************************** */
-
-bool DeviceThermoBeacon::areValuesValid(const float t, const float h) const
-{
-    if (t <= 0.f && h <= 0.f) return false;
-    if (t < -20.f || t > 100.f) return false;
-    if (h < 0.f || t > 100.f) return false;
-
-    return true;
-}
-
-bool DeviceThermoBeacon::addDatabaseRecord(const int64_t timestamp, const float t, const float h)
-{
-    bool status = false;
-
-    if (areValuesValid(t, h))
-    {
-        if (m_dbInternal || m_dbExternal)
-        {
-            // SQL date format YYYY-MM-DD HH:MM:SS
-            // We only save one record every 30m
-
-            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
-            QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (1800 - timestamp % 1800) - 1800);
-
-            QSqlQuery addData;
-            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                            " VALUES (:deviceAddr, :ts, :ts_full, :temp, :hygro)");
-            addData.bindValue(":deviceAddr", getAddress());
-            addData.bindValue(":ts", tmcd_rounded.toString("yyyy-MM-dd hh:mm:00"));
-            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
-            addData.bindValue(":temp", t);
-            addData.bindValue(":hygro", h);
-            status = addData.exec();
-
-            if (status)
-            {
-                m_lastUpdateDatabase = tmcd;
-            }
-            else
-            {
-                qWarning() << "> DeviceThermoBeacon addData.exec() ERROR"
-                           << addData.lastError().type() << ":" << addData.lastError().text();
-            }
-        }
-    }
-    else
-    {
-        qWarning() << "DeviceThermoBeacon values are INVALID";
-    }
-
-    return status;
 }
 
 /* ************************************************************************** */

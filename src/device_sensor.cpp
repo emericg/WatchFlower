@@ -465,18 +465,18 @@ bool DeviceSensor::getSqlPlantData(int minutes)
     QSqlQuery cachedData;
     if (m_dbInternal) // sqlite
     {
-        cachedData.prepare("SELECT ts_full, soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
+        cachedData.prepare("SELECT timestamp, soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
-                           "WHERE deviceAddr = :deviceAddr AND ts_full >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes') " \
-                           "ORDER BY ts_full DESC " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(minutes) + " minutes') " \
+                           "ORDER BY timestamp DESC " \
                            "LIMIT 1;");
     }
     else if (m_dbExternal) // mysql
     {
-        cachedData.prepare("SELECT DATE_FORMAT(ts_full, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
+        cachedData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%e %H:%i:%s'), soilMoisture, soilConductivity, soilTemperature, soilPH, temperature, humidity, luminosity, watertank " \
                            "FROM plantData " \
-                           "WHERE deviceAddr = :deviceAddr AND ts_full >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
-                           "ORDER BY ts_full DESC " \
+                           "WHERE deviceAddr = :deviceAddr AND timestamp >= TIMESTAMPADD(MINUTE,-" + QString::number(minutes) + ",NOW()) " \
+                           "ORDER BY timestamp DESC " \
                            "LIMIT 1;");
     }
     cachedData.bindValue(":deviceAddr", getAddress());
@@ -1023,14 +1023,14 @@ int DeviceSensor::countDataNamed(const QString &dataName, int days) const
             dataCount.prepare("SELECT COUNT(" + dataName + ")" \
                               "FROM " + tableName + " " \
                               "WHERE deviceAddr = :deviceAddr " \
-                                "AND " + dataName + " > -20 AND ts >= datetime('now','-" + QString::number(days) + " day');");
+                                "AND " + dataName + " > -20 AND timestamp >= datetime('now','-" + QString::number(days) + " day');");
         }
         else if (m_dbExternal) // mysql
         {
             dataCount.prepare("SELECT COUNT(" + dataName + ")" \
                               "FROM " + tableName + " " \
                               "WHERE deviceAddr = :deviceAddr " \
-                                "AND " + dataName + " > -20 AND ts >= DATE_SUB(NOW(), INTERVAL " + QString::number(days) + " DAY);");
+                                "AND " + dataName + " > -20 AND timestamp >= DATE_SUB(NOW(), INTERVAL " + QString::number(days) + " DAY);");
         }
         dataCount.bindValue(":deviceAddr", getAddress());
 

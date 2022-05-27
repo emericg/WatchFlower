@@ -27,11 +27,7 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
-
-#include <QSqlQuery>
-#include <QSqlError>
 
 #include <QDebug>
 
@@ -269,8 +265,9 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
             if (cfw.value().size() > 0)
             {
-                m_deviceFirmware = cfw.value();
-                m_deviceFirmware = m_deviceFirmware.split('_')[1].split('-')[1];
+                QString fw = cfw.value();
+                fw = fw.split('_')[1].split('-')[1];
+                setFirmware(fw);
             }
 
             if (m_deviceFirmware.size() == 6)
@@ -278,24 +275,9 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
                 if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
             }
-
-            if (m_dbInternal || m_dbExternal)
-            {
-                QSqlQuery updateDevice;
-                updateDevice.prepare("UPDATE devices SET deviceFirmware = :firmware WHERE deviceAddr = :deviceAddr");
-                updateDevice.bindValue(":firmware", m_deviceFirmware);
-                updateDevice.bindValue(":deviceAddr", getAddress());
-
-                if (updateDevice.exec() == false)
-                {
-                    qWarning() << "> updateDevice.exec() ERROR"
-                               << updateDevice.lastError().type() << ":" << updateDevice.lastError().text();
-                }
-            }
-
-            Q_EMIT sensorUpdated();
         }
     }
 }
@@ -419,56 +401,27 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 
-            m_lastUpdate = QDateTime::currentDateTime();
-
             // Sometimes, Parrot devices send obviously wrong data over BLE (while they are warming up?)
             if (m_soilTemperature > -10.f && m_soilTemperature < 100.f &&
                 m_temperature > -10.f && m_temperature < 100.f &&
                 m_luminosityLux >= 0 && m_luminosityLux < 200000)
             {
-                if (m_dbInternal || m_dbExternal)
-                {
-                    // SQL date format YYYY-MM-DD HH:MM:SS
-                    QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                    QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                    QSqlQuery addData;
-                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, soilTemperature, temperature, luminosity, watertank)"
-                                    " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :stemp, :atemp, :lumi, :tank)");
-                    addData.bindValue(":deviceAddr", getAddress());
-                    addData.bindValue(":ts", tsStr);
-                    addData.bindValue(":ts_full", tsFullStr);
-                    addData.bindValue(":hygro", m_soilMoisture);
-                    addData.bindValue(":condu", m_soilConductivity);
-                    addData.bindValue(":stemp", m_soilTemperature);
-                    addData.bindValue(":atemp", m_temperature);
-                    addData.bindValue(":lumi", m_luminosityLux);
-                    addData.bindValue(":tank", m_watertank_level);
-
-                    if (addData.exec())
-                    {
-                        m_lastUpdateDatabase = m_lastUpdate;
-                    }
-                    else
-                    {
-                        qWarning() << "> DeviceParrotPot addData.exec() ERROR"
-                                   << addData.lastError().type() << ":" << addData.lastError().text();
-                    }
-                }
+                // Sometimes, Parrot devices send obviously wrong data over BLE (while they are warming up?)
             }
-            else
-            {
-                qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_live() values reported are wrong and won't be saved";
-            }
+
+            m_lastUpdate = QDateTime::currentDateTime();
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
-                refreshRealtime();
-                // TODO // ask for new values?
+                refreshRealtime(); // TODO // ask for new values?
             }
             else
             {
-                refreshDataFinished(true);
+                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                                m_soilMoisture, m_soilConductivity, m_soilTemperature, m_watertank_level,
+                                                m_temperature, -99.f, m_luminosityLux);
+
+                refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
             }
 /*

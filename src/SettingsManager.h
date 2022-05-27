@@ -115,6 +115,7 @@ class SettingsManager: public QObject
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
     QString m_orderBy = "model";
+    unsigned m_dataRetentionDays = 90;
 
     bool m_mysql = false;
     QString m_mysqlHost;
@@ -237,6 +238,8 @@ public:
 
     QString getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);
+
+    unsigned getDataRetentionDays() const { return m_dataRetentionDays; }
 
     bool getMySQL() const { return m_mysql; }
     void setMySQL(const bool value);

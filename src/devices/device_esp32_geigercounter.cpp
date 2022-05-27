@@ -26,7 +26,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
 #include <QSqlQuery>
@@ -241,9 +240,9 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 
                 QSqlQuery addData;
                 addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, radioactivity)"
-                                " VALUES (:deviceAddr, :ts, :radioactivity)");
+                                " VALUES (:deviceAddr, :timestamp, :radioactivity)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
+                addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":radioactivity", m_rm);
 
                 if (addData.exec())

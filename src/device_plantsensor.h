@@ -52,6 +52,13 @@ class DevicePlantSensor: public DeviceSensor
 Q_SIGNALS:
     void journalUpdated();
 
+protected:
+    bool areValuesValid(const int sm, const int sc, const float st, const float w,
+                        const float t, const float h, const int l) const;
+    bool addDatabaseRecord(const int64_t timestamp,
+                           const int sm, const int sc, const float st, const float w,
+                           const float t, const float h, const int l);
+
 public:
     DevicePlantSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);

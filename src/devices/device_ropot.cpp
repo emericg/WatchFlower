@@ -27,7 +27,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
 #include <QSqlQuery>
@@ -488,7 +487,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             int soil_moisture = data[11];
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
 
-            addDatabaseRecord2(m_device_wall_time + tmcd, soil_moisture, soil_conductivity);
+            addDatabaseRecord_history(m_device_wall_time + tmcd, soil_moisture, soil_conductivity);
 /*
             qDebug() << "* History entry" << m_history_entryIndex-1 << " at " << tmcd << " / or" << QDateTime::fromSecsSinceEpoch(m_device_wall_time+tmcd);
             qDebug() << "DATA: 0x" << value.toHex();
@@ -551,13 +550,15 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshRealtime();
+
                 // Ask for a new data reading, but not too often...
                 QTimer::singleShot(1000, this, SLOT(askForReading()));
             }
             else
             {
                 bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity, m_temperature);
+                                                m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                                m_temperature, -99.f, -99.f);
 
                 refreshDataFinished(status);
                 m_bleController->disconnectFromDevice();
@@ -590,26 +591,25 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-        QString mac;
+        // Save mac address (for macOS and iOS)
+        if (!hasAddressMAC())
+        {
+            QString mac;
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        // Save mac address
-        mac += value.mid(10,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(9,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(8,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
+            mac += value.mid(10,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(9,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(8,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(7,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(6,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(5,1).toHex().toUpper();
 
-        setSetting("mac", mac);
-#else
-        Q_UNUSED(mac)
-#endif
+            setAddressMAC(mac);
+        }
 
         if (value.size() >= 16)
         {
@@ -722,7 +722,8 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
                 if (needsUpdateDb())
                 {
                     addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                      m_soilMoisture, m_soilConductivity, m_temperature);
+                                      m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                      m_temperature, -99.f, -99.f);
                 }
 
                 refreshDataFinished(true);
@@ -731,7 +732,6 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
             if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
             {
                 qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-                if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
                 if (batt > -99) qDebug() << "- battery:" << batt;
                 if (temp > -99) qDebug() << "- temperature:" << temp;
                 if (humi > -99) qDebug() << "- humidity:" << humi;
@@ -747,23 +747,20 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
 
 /* ************************************************************************** */
 
-bool DeviceRopot::areValuesValid(const int soilMoisture, const int soilConductivity,
-                                 const float temperature) const
+bool DeviceRopot::areValuesValid_history(const int soilMoisture, const int soilConductivity) const
 {
     if (soilMoisture < 0 || soilMoisture > 100) return false;
     if (soilConductivity < 0 || soilConductivity > 20000) return false;
-    if (temperature < -20.f || temperature > 100.f) return false;
 
     return true;
 }
 
-bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
-                                    const int soilMoisture, const int soilConductivity,
-                                    const float temperature)
+bool DeviceRopot::addDatabaseRecord_history(const int64_t timestamp,
+                                            const int soilMoisture, const int soilConductivity)
 {
     bool status = false;
 
-    if (areValuesValid(soilMoisture, soilConductivity, temperature))
+    if (areValuesValid_history(soilMoisture, soilConductivity))
     {
         if (m_dbInternal || m_dbExternal)
         {
@@ -773,66 +770,11 @@ bool DeviceRopot::addDatabaseRecord(const int64_t timestamp,
             QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
 
             QSqlQuery addData;
-            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity, temperature)"
-                            " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu, :temp)");
+            addData.prepare("REPLACE INTO plantData (deviceAddr, timestamp_rounded, timestamp, soilMoisture, soilConductivity)"
+                            " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :hygro, :condu)");
             addData.bindValue(":deviceAddr", getAddress());
-            addData.bindValue(":ts", tmcd.toString("yyyy-MM-dd hh:00:00"));
-            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
-            addData.bindValue(":hygro", soilMoisture);
-            addData.bindValue(":condu", soilConductivity);
-            addData.bindValue(":temp", temperature);
-
-            status = addData.exec();
-
-            if (status)
-            {
-                m_lastUpdateDatabase = tmcd;
-            }
-            else
-            {
-                qWarning() << "> DeviceRopot addData.exec() ERROR"
-                           << addData.lastError().type() << ":" << addData.lastError().text();
-            }
-        }
-    }
-    else
-    {
-        qWarning() << "DeviceRopot values are INVALID";
-    }
-
-    return status;
-}
-
-/* ************************************************************************** */
-
-bool DeviceRopot::areValuesValid2(const int soilMoisture, const int soilConductivity) const
-{
-    if (soilMoisture < 0 || soilMoisture > 100) return false;
-    if (soilConductivity < 0 || soilConductivity > 20000) return false;
-
-    return true;
-}
-
-bool DeviceRopot::addDatabaseRecord2(const int64_t timestamp,
-                                     const int soilMoisture, const int soilConductivity)
-{
-    bool status = false;
-
-    if (areValuesValid2(soilMoisture, soilConductivity))
-    {
-        if (m_dbInternal || m_dbExternal)
-        {
-            // SQL date format YYYY-MM-DD HH:MM:SS
-            // We only save one record every 60m
-
-            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
-
-            QSqlQuery addData;
-            addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, soilMoisture, soilConductivity)"
-                            " VALUES (:deviceAddr, :ts, :ts_full, :hygro, :condu)");
-            addData.bindValue(":deviceAddr", getAddress());
-            addData.bindValue(":ts", tmcd.toString("yyyy-MM-dd hh:00:00"));
-            addData.bindValue(":ts_full", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
+            addData.bindValue(":timestamp_rounded", tmcd.toString("yyyy-MM-dd hh:00:00"));
+            addData.bindValue(":timestamp", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
             addData.bindValue(":hygro", soilMoisture);
             addData.bindValue(":condu", soilConductivity);
             status = addData.exec();

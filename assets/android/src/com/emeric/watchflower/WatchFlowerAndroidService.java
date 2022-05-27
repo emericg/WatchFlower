@@ -36,21 +36,21 @@ public class WatchFlowerAndroidService extends QtService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "Creating Service --------------------------------------- ");
+        //Log.i(TAG, ">>>> Creating Service >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
     public void onResume() {
-        Log.i(TAG, "Resuming Service --------------------------------------- ");
+        //Log.i(TAG, ">>>> Resuming Service >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
     public void onPause() {
-        Log.i(TAG, "Pausing Service ---------------------------------------- ");
+        //Log.i(TAG, ">>>> Pausing Service >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "Destroying Service ------------------------------------- ");
+        //Log.i(TAG, ">>>> Destroying Service >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class WatchFlowerAndroidService extends QtService {
     ////////////////////////////////////////////////////////////////////////////
 
     public static void serviceStart(android.content.Context context) {
-        Log.i(TAG, "serviceStart() ----------------------------------------- ");
+        //Log.i(TAG, ">>>> serviceStart() >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         android.content.Intent pQtAndroidService = new android.content.Intent(context, WatchFlowerAndroidService.class);
         pQtAndroidService.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -71,7 +71,7 @@ public class WatchFlowerAndroidService extends QtService {
     }
 
     public static void serviceStop(android.content.Context context) {
-        Log.i(TAG, "serviceStop() ------------------------------------------- ");
+        //Log.i(TAG, ">>>> serviceStop() >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         android.content.Intent pQtAndroidService = new android.content.Intent(context, WatchFlowerAndroidService.class);
         context.stopService(pQtAndroidService);

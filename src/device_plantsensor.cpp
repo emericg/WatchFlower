@@ -83,6 +83,94 @@ DevicePlantSensor::~DevicePlantSensor()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+bool DevicePlantSensor::areValuesValid(const int sm, const int sc, const float st, const float w,
+                                       const float t, const float h, const int l) const
+{
+    if (sm < 0 || sm > 100) return false;
+    if (sc < 0 || sc > 10000) return false;
+    if (t < -30.f || t > 100.f) return false;
+
+    if (hasSoilTemperatureSensor())
+    {
+        if (st < -10.f || t > 100.f) return false;
+    }
+
+    if (hasHumiditySensor())
+    {
+        if (h < 0.f || h > 100.f) return false;
+    }
+
+    if (hasLuminositySensor())
+    {
+        if (l < 0 || l > 200000) return false;
+    }
+
+    if (hasWaterTank())
+    {
+        if (w < 0.f || w > 10.f) return false;
+    }
+
+    return true;
+}
+
+bool DevicePlantSensor::addDatabaseRecord(const int64_t timestamp,
+                                          const int sm, const int sc, const float st, const float w,
+                                          const float t, const float h, const int l)
+{
+    bool status = false;
+
+    if (areValuesValid(sm, sc, st, w, t, h, l))
+    {
+        if (m_dbInternal || m_dbExternal)
+        {
+            // SQL date format YYYY-MM-DD HH:MM:SS
+
+            // We only save one record every x minutes
+            int round_seconds = 1800; // 30 mins
+            QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (round_seconds - timestamp % round_seconds) - round_seconds);
+            QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+
+            QSqlQuery addData;
+            addData.prepare("REPLACE INTO plantData (deviceAddr, timestamp_rounded, timestamp,"
+                              "soilMoisture, soilConductivity, soilTemperature,"
+                              "temperature, humidity, luminosity, watertank) "
+                            "VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :sm, :sc, :st, :temp, :humi, :lumi, :tank)");
+            addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":timestamp_rounded", tmcd_rounded.toString("yyyy-MM-dd hh:mm:00"));
+            addData.bindValue(":timestamp", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
+            addData.bindValue(":sm", sm);
+            addData.bindValue(":sc", sc);
+            addData.bindValue(":st", hasSoilTemperatureSensor() ? st : QVariant());
+            addData.bindValue(":temp", t);
+            addData.bindValue(":humi", hasHumiditySensor() ? h : QVariant());
+            addData.bindValue(":lumi", hasLuminositySensor() ? l : QVariant());
+            addData.bindValue(":tank", hasWaterTank() ? w : QVariant());
+
+            status = addData.exec();
+            if (status)
+            {
+                m_lastUpdateDatabase = tmcd;
+            }
+            else
+            {
+                qWarning() << "> addDatabaseRecord_plants(" << m_deviceName << ") ERROR"
+                           << addData.lastError().type() << ":" << addData.lastError().text();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "addDatabaseRecord_plants(" << m_deviceName << ") values are INVALID";
+    }
+
+    return status;
+}
+
+
+/* ************************************************************************** */
+/* ************************************************************************** */
 
 bool DevicePlantSensor::loadJournalEntries()
 {
@@ -174,6 +262,7 @@ bool DevicePlantSensor::removeJournalEntry(const int id)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
                                               QLineSeries *hygro, QLineSeries *condu,
@@ -187,9 +276,9 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
         if (m_dbExternal) time = "DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY)";
 
         QSqlQuery graphData;
-        graphData.prepare("SELECT ts_full, soilMoisture, soilConductivity, temperature, luminosity " \
+        graphData.prepare("SELECT timestamp, soilMoisture, soilConductivity, temperature, luminosity " \
                           "FROM plantData " \
-                          "WHERE deviceAddr = :deviceAddr AND ts_full >= " + time + ";");
+                          "WHERE deviceAddr = :deviceAddr AND timestamp >= " + time + ";");
         graphData.bindValue(":deviceAddr", getAddress());
 
         if (graphData.exec() == false)
@@ -271,30 +360,26 @@ void DevicePlantSensor::updateChartData_history_day()
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString strftime_long = "strftime('%Y-%m-%d %H:%M', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_long = "DATE_FORMAT(timestamp, '%Y-%m-%d %H:%M')"; // mysql
+
+        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+
+        QString datetime_day = "datetime('now','-1 day')"; // sqlite
+        if (m_dbExternal) datetime_day = "DATE_SUB(NOW(), INTERVAL -1 DAY)"; // mysql
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts)," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-1 day') " \
-                              "GROUP BY strftime('%d-%H', ts) " \
-                              "ORDER BY ts DESC " \
-                              "LIMIT 24;");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d %H:%M')," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -1 DAY) " \
-                              "GROUP BY DATE_FORMAT(ts, '%d-%H') " \
-                              "ORDER BY ts DESC " \
-                              "LIMIT 24;");
-        }
+        graphData.prepare("SELECT " + strftime_long + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_day + " " \
+                          "GROUP BY " + strftime_short + " " \
+                          "ORDER BY timestamp DESC " \
+                          "LIMIT :maxHours;");
         graphData.bindValue(":deviceAddr", getAddress());
+        graphData.bindValue(":maxHours", maxHours);
 
         if (graphData.exec() == false)
         {
@@ -376,22 +461,21 @@ void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString strftime_long = "strftime('%Y-%m-%d %H:%M', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_long = "DATE_FORMAT(timestamp, '%Y-%m-%d %H:%M')"; // mysql
+
+        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT strftime('%Y-%m-%d %H:%M', ts)," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr " \
-                                "AND ts BETWEEN '" + d.toString("yyyy-MM-dd 00:00:00") + "' AND '" + d.toString("yyyy-MM-dd 23:59:59") + "' " \
-                              "GROUP BY strftime('%d-%H', ts) " \
-                              "ORDER BY ts DESC;");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            // TODO
-        }
+        graphData.prepare("SELECT " + strftime_long +"," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND timestamp BETWEEN '" + d.toString("yyyy-MM-dd 00:00:00") + "' AND '" + d.toString("yyyy-MM-dd 23:59:59") + "' " \
+                          "GROUP BY " + strftime_short + " " \
+                          "ORDER BY timestamp DESC;");
         graphData.bindValue(":deviceAddr", getAddress());
 
         if (graphData.exec() == false)
@@ -473,31 +557,25 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays)
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
+
+        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+
+        QString datatime_months = "datetime('now','-" + QString::number(maxMonths) + " month')"; // sqlite
+        if (m_dbExternal) datatime_months = "DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH)"; // mysql
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', ts)," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity)," \
-                                "max(temperature), max(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= datetime('now','-" + QString::number(maxMonths) + " month') " \
-                              "GROUP BY strftime('%Y-%m-%d', ts) " \
-                              "ORDER BY ts DESC "
-                              "LIMIT :maxDays;");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            graphData.prepare("SELECT DATE_FORMAT(ts, '%Y-%m-%d')," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity)," \
-                                "max(temperature), max(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr AND ts >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
-                              "GROUP BY DATE_FORMAT(ts, '%Y-%m-%d') " \
-                              "ORDER BY ts DESC "
-                              "LIMIT :maxDays;");
-        }
+        graphData.prepare("SELECT " + strftime_mid + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
+                            "max(temperature), max(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datatime_months + " " \
+                          "GROUP BY " + strftime_mid + " " \
+                          "ORDER BY timestamp DESC "
+                          "LIMIT :maxDays;");
         graphData.bindValue(":deviceAddr", getAddress());
         graphData.bindValue(":maxDays", maxDays);
 
@@ -621,22 +699,18 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', ts)," \
-                                "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
-                                "avg(temperature), avg(humidity), avg(luminosity) " \
-                              "FROM plantData " \
-                              "WHERE deviceAddr = :deviceAddr " \
-                                "AND ts BETWEEN '" + f.toString("yyyy-MM-dd 00:00:00") + "' AND '" + l.toString("yyyy-MM-dd 23:59:59") + "' " \
-                              "GROUP BY strftime('%Y-%m-%d', ts) " \
-                              "ORDER BY ts DESC;");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            // TODO
-        }
+        graphData.prepare("SELECT " + strftime_mid + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND timestamp BETWEEN '" + f.toString("yyyy-MM-dd 00:00:00") + "' AND '" + l.toString("yyyy-MM-dd 23:59:59") + "' " \
+                          "GROUP BY " + strftime_mid + " " \
+                          "ORDER BY timestamp DESC;");
         graphData.bindValue(":deviceAddr", getAddress());
 
         if (graphData.exec() == false)

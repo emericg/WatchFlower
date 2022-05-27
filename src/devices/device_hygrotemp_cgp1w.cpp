@@ -25,11 +25,7 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
-
-#include <QSqlQuery>
-#include <QSqlError>
 
 #include <QDateTime>
 #include <QDebug>
@@ -39,7 +35,7 @@
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DeviceThermometer(deviceAddr, deviceName, parent)
 {
-    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
@@ -50,7 +46,7 @@ DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QString &deviceAddr, const QStr
 DeviceHygrotempCGP1W::DeviceHygrotempCGP1W(const QBluetoothDeviceInfo &d, QObject *parent):
     DeviceThermometer(d, parent)
 {
-    m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
+    m_deviceType = DeviceUtils::DEVICE_THERMOMETER;
     m_deviceBluetoothMode += DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
     m_deviceCapabilities = DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
@@ -83,31 +79,30 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value, const
     //qDebug() << "DeviceHygrotempCGP1W::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-    Q_UNUSED (data)
-
     if (value.size() >= 21) // Qingping data protocol // 21 bytes messages
     {
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        QString mac;
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(4,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(3,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(2,1).toHex().toUpper();
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-        // Save mac address
-        setSetting("mac", mac);
-#else
-        QString mac;
-        Q_UNUSED(mac)
-#endif
+        // Save mac address (for macOS and iOS)
+        if (!hasAddressMAC())
+        {
+            QString mac;
+
+            mac += value.mid(10,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(9,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(8,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(7,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(6,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(5,1).toHex().toUpper();
+
+            setAddressMAC(mac);
+        }
+
         int batt = -99;
         float temp = -99.f;
         float humi = -99.f;
@@ -161,10 +156,8 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value, const
 
             if (needsUpdateDb())
             {
-                if (m_dbInternal || m_dbExternal)
-                {
-                    // TODO
-                }
+                addDatabaseRecord_weatherstation(m_lastUpdate.toSecsSinceEpoch(),
+                                                 m_temperature, m_humidity, m_pressure);
             }
 
             refreshDataFinished(true);
@@ -173,7 +166,6 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value, const
         if (batt > -99 || temp > -99.f || humi > -99.f || pres > -99)
         {
             qDebug() << "* CGP1W service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-            if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
             if (batt > -99) qDebug() << "- battery:" << batt;
             if (temp > -99) qDebug() << "- temperature:" << temp;
             if (humi > -99) qDebug() << "- humidity:" << humi;

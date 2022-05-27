@@ -27,15 +27,9 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
-#include <QSqlQuery>
-#include <QSqlError>
-
 #include <QDateTime>
-#include <QTimeZone>
-
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -287,32 +281,7 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
             setBattery(battery);
 
             m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_dbInternal || m_dbExternal)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":humi", m_humidity);
-
-                if (addData.exec())
-                {
-                    m_lastUpdateDatabase = m_lastUpdate;
-                }
-                else
-                {
-                    qWarning() << "> DeviceHygrotempSquare addData.exec() ERROR"
-                               << addData.lastError().type() << ":" << addData.lastError().text();
-                }
-            }
+            addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {

@@ -26,7 +26,6 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
 #include <QSqlQuery>
@@ -230,9 +229,9 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
 
                 QSqlQuery addData;
                 addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, co2, voc, hcho)"
-                                " VALUES (:deviceAddr, :ts, :temp, :co2, :voc, :hcho)");
+                                " VALUES (:deviceAddr, :timestamp, :temp, :co2, :voc, :hcho)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
+                addData.bindValue(":timestamp", tsStr);
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":co2", m_co2);
                 addData.bindValue(":voc", m_voc);

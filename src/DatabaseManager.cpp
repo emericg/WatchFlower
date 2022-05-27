@@ -121,27 +121,21 @@ bool DatabaseManager::openDatabase_sqlite()
 
                         // Sanitize database ///////////////////////////////////
 
-                        if (QDate::currentDate().year() >= 2021)
+                        int maxDays = SettingsManager::getInstance()->getDataRetentionDays();
+                        if (maxDays < 30) maxDays = 30;
+
+                        // Delete everything xx days old
+                        QSqlQuery sanitizePastData1("DELETE FROM plantData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+                        QSqlQuery sanitizePastData2("DELETE FROM thermoData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+                        QSqlQuery sanitizePastData3("DELETE FROM sensorData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+
+                        // Basic check to see if the device clock is correctly set
+                        if (QDate::currentDate().year() >= 2022)
                         {
-                            // DATETIME: YYY-MM-JJ HH:MM:SS
-
-                            // Delete everything 90+ days old
-                            QSqlQuery sanitizePlantDataPast;
-                            sanitizePlantDataPast.prepare("DELETE FROM plantData WHERE ts < DATE('now', '-90 days')");
-                            if (sanitizePlantDataPast.exec() == false)
-                            {
-                                qWarning() << "> sanitizeDataPast.exec() ERROR"
-                                           << sanitizePlantDataPast.lastError().type() << ":" << sanitizePlantDataPast.lastError().text();
-                            }
-
                             // Delete everything that's in the future
-                            QSqlQuery sanitizePlantDataFuture;
-                            sanitizePlantDataFuture.prepare("DELETE FROM plantData WHERE ts > DATE('now', '+1 days')");
-                            if (sanitizePlantDataFuture.exec() == false)
-                            {
-                                qWarning() << "> sanitizeDataFuture.exec() ERROR"
-                                           << sanitizePlantDataFuture.lastError().type() << ":" << sanitizePlantDataFuture.lastError().text();
-                            }
+                            QSqlQuery sanitizeFuruteData1("DELETE FROM plantData WHERE timestamp > DATE('now', '+1 days')");
+                            QSqlQuery sanitizeFuruteData2("DELETE FROM thermoData WHERE timestamp > DATE('now', '+1 days')");
+                            QSqlQuery sanitizeFuruteData3("DELETE FROM sensorData WHERE timestamp > DATE('now', '+1 days')");
                         }
                     }
                     else
@@ -390,7 +384,7 @@ void DatabaseManager::createDatabase()
 
         QSqlQuery createDevicesBlacklist;
         createDevicesBlacklist.prepare("CREATE TABLE devicesBlacklist (" \
-                                       "deviceAddr VARCHAR(38)" \
+                                       "deviceAddr VARCHAR(38) PRIMARY KEY" \
                                        ");");
 
         if (createDevicesBlacklist.exec() == false)
@@ -407,8 +401,8 @@ void DatabaseManager::createDatabase()
         QSqlQuery createPlantData;
         createPlantData.prepare("CREATE TABLE plantData (" \
                                 "deviceAddr VARCHAR(38)," \
-                                "ts DATETIME," \
-                                "ts_full DATETIME," \
+                                "timestamp_rounded DATETIME," \
+                                "timestamp DATETIME," \
                                   "soilMoisture INT," \
                                   "soilConductivity INT," \
                                   "soilTemperature FLOAT," \
@@ -417,8 +411,8 @@ void DatabaseManager::createDatabase()
                                   "humidity FLOAT," \
                                   "luminosity INT," \
                                   "watertank FLOAT," \
-                                "PRIMARY KEY(deviceAddr, ts)," \
-                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                "PRIMARY KEY(deviceAddr, timestamp_rounded)," \
+                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                 ");");
 
         if (createPlantData.exec() == false)
@@ -449,7 +443,7 @@ void DatabaseManager::createDatabase()
                                     "luminosityMmol_min INT," \
                                     "luminosityMmol_max INT," \
                                   "PRIMARY KEY(deviceAddr)," \
-                                  "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                  "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                   ");");
 
         if (createPlantLimits.exec() == false)
@@ -473,7 +467,7 @@ void DatabaseManager::createDatabase()
                                   "humidity_bias FLOAT," \
                                   "luminosity_bias FLOAT," \
                                 "PRIMARY KEY(deviceAddr)," \
-                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                 ");");
 
         if (createPlantBias.exec() == false)
@@ -512,7 +506,7 @@ void DatabaseManager::createDatabase()
                                      "entryTimestamp DATETIME," \
                                      "entryComment VARCHAR(255)," \
                                    "plantId INT," \
-                                   "FOREIGN KEY(plantId) REFERENCES plants(plantId) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                   "FOREIGN KEY(plantId) REFERENCES plants(plantId) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                    ");");
 
         if (createPlantJournal.exec() == false)
@@ -529,11 +523,13 @@ void DatabaseManager::createDatabase()
         QSqlQuery createThermoData;
         createThermoData.prepare("CREATE TABLE thermoData (" \
                                  "deviceAddr VARCHAR(38)," \
-                                 "ts DATETIME," \
+                                 "timestamp_rounded DATETIME," \
+                                 "timestamp DATETIME," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
                                    "pressure FLOAT," \
-                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                 "PRIMARY KEY(deviceAddr, timestamp_rounded)," \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                  ");");
 
         if (createThermoData.exec() == false)
@@ -554,7 +550,7 @@ void DatabaseManager::createDatabase()
                                      "humidity_min INT," \
                                      "humidity_max INT," \
                                    "PRIMARY KEY(deviceAddr)," \
-                                   "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                   "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                    ");");
 
         if (createThermoLimits.exec() == false)
@@ -574,7 +570,7 @@ void DatabaseManager::createDatabase()
                                    "humidity_bias FLOAT," \
                                    "pressure_bias FLOAT," \
                                  "PRIMARY KEY(deviceAddr)," \
-                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                  ");");
 
         if (createThermoBias.exec() == false)
@@ -590,7 +586,8 @@ void DatabaseManager::createDatabase()
         QSqlQuery createSensorData;
         createSensorData.prepare("CREATE TABLE sensorData (" \
                                  "deviceAddr VARCHAR(38)," \
-                                   "timestamp DATETIME," \
+                                 "timestamp_rounded DATETIME," \
+                                 "timestamp DATETIME," \
                                    "temperature FLOAT," \
                                    "humidity FLOAT," \
                                    "pressure FLOAT," \
@@ -612,7 +609,8 @@ void DatabaseManager::createDatabase()
                                    "voc FLOAT," \
                                    "hcho FLOAT," \
                                    "radioactivity FLOAT," \
-                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE CASCADE ON UPDATE NO ACTION" \
+                                 "PRIMARY KEY(deviceAddr, timestamp_rounded)," \
+                                 "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr) ON DELETE NO ACTION ON UPDATE NO ACTION" \
                                  ");");
 
         if (createSensorData.exec() == false)
@@ -638,6 +636,7 @@ void DatabaseManager::migrateDatabase()
         dbVersion = readVersion.value(0).toInt();
         //qDebug() << "dbVersion is #" << dbVersion;
     }
+    readVersion.finish();
 
     if (dbVersion > 0 && dbVersion != m_dbCurrentVersion)
     {
@@ -666,12 +665,6 @@ bool DatabaseManager::migrate_v1v2()
     qWarning() << "DatabaseManager::migrate_v1v2()";
 
     // TABLE devices
-    // FIELD add deviceModel
-    // FIELD plantName > associatedName
-    // FIELD add (DATETIME) lastSync
-    // FIELD add (bool) isOutside
-    // FIELD add (int) manualOrderIndex
-    // FIELD add (str) settings
     QSqlQuery qmDev1("ALTER TABLE devices ADD deviceModel VARCHAR(255)");
     QSqlQuery qmDev2("ALTER TABLE devices RENAME COLUMN plantName TO associatedName");
     QSqlQuery qmDev3("ALTER TABLE devices ADD lastSync DATETIME");
@@ -680,13 +673,6 @@ bool DatabaseManager::migrate_v1v2()
     QSqlQuery qmDev6("ALTER TABLE devices ADD settings VARCHAR(255)");
 
     // TABLE datas > plantData
-    // FIELD hygro > soilMoisture (change type??)
-    // FIELD conductivity > soilConductivity
-    // FIELD temp > temperature
-    // FIELD add soilTemperature
-    // FIELD add soilPH
-    // FIELD add humidity
-    // FIELD add watertank
     QSqlQuery qmDat1("ALTER TABLE datas RENAME TO plantData");
     QSqlQuery qmDat2("ALTER TABLE plantData RENAME COLUMN hygro TO soilMoisture");
     QSqlQuery qmDat3("ALTER TABLE plantData RENAME COLUMN conductivity TO soilConductivity");
@@ -697,8 +683,6 @@ bool DatabaseManager::migrate_v1v2()
     QSqlQuery qmDat8("ALTER TABLE plantData ADD watertank FLOAT");
 
     // TABLE limits > plantLimits
-    // FIELD lumiMin > luxMin
-    // FIELD add mmolMin & mmolMax
     QSqlQuery qmLim1("ALTER TABLE limits RENAME TO plantLimits");
     QSqlQuery qmLim2("ALTER TABLE plantLimits RENAME COLUMN lumiMin TO luxMin");
     QSqlQuery qmLim3("ALTER TABLE plantLimits RENAME COLUMN lumiMax TO luxMax");
@@ -727,6 +711,10 @@ bool DatabaseManager::migrate_v2v3()
     QSqlQuery qmDev4("ALTER TABLE devices ALTER isEnabled SET DEFAULT TRUE");
     QSqlQuery qmDev5("ALTER TABLE devices ALTER isOutside SET DEFAULT FALSE");
 
+    // TABLE plantData
+    QSqlQuery qmPlt1("ALTER TABLE plantData RENAME COLUMN ts TO timestamp_rounded");
+    QSqlQuery qmPlt2("ALTER TABLE plantData RENAME COLUMN ts_full TO timestamp");
+
     // TABLE plantLimits
     QSqlQuery qmLim1("ALTER TABLE plantLimits RENAME COLUMN hygroMin TO soilMoisture_min");
     QSqlQuery qmLim2("ALTER TABLE plantLimits RENAME COLUMN hygroMax TO soilMoisture_max");
@@ -743,9 +731,8 @@ bool DatabaseManager::migrate_v2v3()
     QSqlQuery qmLim13("ALTER TABLE plantLimits RENAME COLUMN mmolMin TO luminosityMmol_min");
     QSqlQuery qmLim14("ALTER TABLE plantLimits RENAME COLUMN mmolMax TO luminosityMmol_max");
 
-    // TABLE sensorData
-    QSqlQuery qmSen1("ALTER TABLE sensorData DROP COLUMN deviceId");
-    QSqlQuery qmSen2("ALTER TABLE sensorData RENAME COLUMN geiger TO radioactivity");
+    // DROP TABLES
+    QSqlQuery dropSensor("DROP TABLE sensorData");
 
     return true;
 }

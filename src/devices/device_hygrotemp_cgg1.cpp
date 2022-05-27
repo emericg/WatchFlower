@@ -26,12 +26,9 @@
 #include <cmath>
 
 #include <QBluetoothUuid>
-#include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
-#include <QSqlQuery>
-#include <QSqlError>
-
+#include <QDateTime>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -248,32 +245,7 @@ void DeviceHygrotempCGG1::bleReadNotify(const QLowEnergyCharacteristic &c, const
             m_humidity = static_cast<int16_t>(data[4] + (data[5] << 8)) / 10;
 
             m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_dbInternal || m_dbExternal)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:00:00");
-                QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                                " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":ts", tsStr);
-                addData.bindValue(":ts_full", tsFullStr);
-                addData.bindValue(":temp", m_temperature);
-                addData.bindValue(":humi", m_humidity);
-
-                if (addData.exec())
-                {
-                    m_lastUpdateDatabase = m_lastUpdate;
-                }
-                else
-                {
-                    qWarning() << "> DeviceHygrotempCGG1 addData.exec() ERROR"
-                               << addData.lastError().type() << ":" << addData.lastError().text();
-                }
-            }
+            addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
@@ -317,30 +289,30 @@ void DeviceHygrotempCGG1::parseAdvertisementData(const QByteArray &value, const 
     //qDebug() << "DeviceHygrotempCGG1::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
     if (value.size() == 17) // Qingping data protocol // 17 bytes messages
     {
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        QString mac;
-        mac += value.mid(7,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(6,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(5,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(4,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(3,1).toHex().toUpper();
-        mac += ':';
-        mac += value.mid(2,1).toHex().toUpper();
+        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-        // Save mac address
-        setSetting("mac", mac);
-#else
-        QString mac;
-        Q_UNUSED(mac)
-#endif
+        // Save mac address (for macOS and iOS)
+        if (!hasAddressMAC())
+        {
+            QString mac;
+
+            mac += value.mid(10,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(9,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(8,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(7,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(6,1).toHex().toUpper();
+            mac += ':';
+            mac += value.mid(5,1).toHex().toUpper();
+
+            setAddressMAC(mac);
+        }
+
         int batt = -99;
         float temp = -99.f;
         float humi = -99.f;
@@ -383,31 +355,7 @@ void DeviceHygrotempCGG1::parseAdvertisementData(const QByteArray &value, const 
 
             if (needsUpdateDb())
             {
-                if (m_dbInternal || m_dbExternal)
-                {
-                    // SQL date format YYYY-MM-DD HH:MM:SS
-                    QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-                    QString tsFullStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-
-                    QSqlQuery addData;
-                    addData.prepare("REPLACE INTO plantData (deviceAddr, ts, ts_full, temperature, humidity)"
-                                    " VALUES (:deviceAddr, :ts, :ts_full, :temp, :humi)");
-                    addData.bindValue(":deviceAddr", getAddress());
-                    addData.bindValue(":ts", tsStr);
-                    addData.bindValue(":ts_full", tsFullStr);
-                    addData.bindValue(":temp", m_temperature);
-                    addData.bindValue(":humi", m_humidity);
-
-                    if (addData.exec())
-                    {
-                        m_lastUpdateDatabase = m_lastUpdate;
-                    }
-                    else
-                    {
-                        qWarning() << "> DeviceHygrotempCGG1 addData.exec() ERROR"
-                                   << addData.lastError().type() << ":" << addData.lastError().text();
-                    }
-                }
+                addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
             }
 
             refreshDataFinished(true);
@@ -416,7 +364,6 @@ void DeviceHygrotempCGG1::parseAdvertisementData(const QByteArray &value, const 
         if (batt > -99 || temp > -99.f || humi > -99.f)
         {
             qDebug() << "* CGG1 service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-            if (!mac.isEmpty()) qDebug() << "- MAC:" << mac;
             if (batt > -99) qDebug() << "- battery:" << batt;
             if (temp > -99) qDebug() << "- temperature:" << temp;
             if (humi > -99) qDebug() << "- humidity:" << humi;

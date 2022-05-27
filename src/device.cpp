@@ -867,6 +867,47 @@ void Device::setAssociatedName(const QString &name)
     }
 }
 
+bool Device::hasAddressMAC() const
+{
+#if defined(Q_OS_UNIX) || defined(Q_OS_WINDOWS)
+    return true;
+#endif
+
+    if (m_deviceAddressMAC.isEmpty())
+        return false;
+
+    return true;
+}
+
+QString Device::getAddressMAC() const
+{
+#if defined(Q_OS_UNIX) || defined(Q_OS_WINDOWS)
+    return m_deviceAddress;
+#endif
+
+    return m_deviceAddressMAC;
+}
+
+void Device::setAddressMAC(const QString &mac)
+{
+    //qDebug() << "setAddressMAC(" << mac << ")";
+
+    if (m_deviceAddressMAC != mac)
+    {
+        m_deviceAddressMAC = mac;
+        Q_EMIT settingsUpdated();
+
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery updateMAC;
+            updateMAC.prepare("UPDATE devices SET deviceAddrMAC = :mac WHERE deviceAddr = :deviceAddr");
+            updateMAC.bindValue(":mac", mac);
+            updateMAC.bindValue(":deviceAddr", getAddress());
+            updateMAC.exec();
+        }
+    }
+}
+
 void Device::setEnabled(const bool enabled)
 {
     //qDebug() << "setEnabled(" << enabled << ")";
@@ -885,6 +926,11 @@ void Device::setEnabled(const bool enabled)
             updateEnabled.exec();
         }
     }
+}
+
+void Device::setInside(const bool inside)
+{
+    setOutside(!inside);
 }
 
 void Device::setOutside(const bool outside)
