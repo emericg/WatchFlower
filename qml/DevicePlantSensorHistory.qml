@@ -280,7 +280,7 @@ Item {
             height: graphHeight
             property int duo: 1
 
-            title: qsTr("Moisture")
+            title: qsTr("Soil moisture")
             ddd: graphGrid.mode
             uuu: ChartHistory.Data.SoilMoisture
             color: Theme.colorBlue
@@ -301,7 +301,7 @@ Item {
             height: graphHeight
             property int duo: 1
 
-            title: qsTr("Fertility")
+            title: qsTr("Soil conductivity")
             ddd: graphGrid.mode
             uuu: ChartHistory.Data.SoilConductivity
             color: Theme.colorRed

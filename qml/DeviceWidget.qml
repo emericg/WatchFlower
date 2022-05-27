@@ -863,7 +863,6 @@ Item {
                 color: Theme.colorText
                 font.letterSpacing: -1.4
                 font.pixelSize: bigAssMode ? 32 : 28
-                //font.family: "Tahoma"
             }
 
             Text {
@@ -873,7 +872,6 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: bigAssMode ? 26 : 22
-                //font.family: "Tahoma"
             }
         }
     }
@@ -976,36 +974,6 @@ Item {
 
                 background: true
                 backgroundOpacity: 0.33
-/*
-                Item {
-                    anchors.fill:parent
-                    rotation: 45 + UtilsNumber.mapNumber(limitMin, gaugeValue.from, gaugeValue.to, 0, 270)
-
-                    Rectangle {
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: gaugeValue.arcWidth
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: 3
-                        height: 3
-                        color: Theme.colorSubText
-                        antialiasing: true
-                    }
-                }
-                Item {
-                    anchors.fill:parent
-                    rotation: 45 + UtilsNumber.mapNumber(limitMax, gaugeValue.from, gaugeValue.to, 0, 270)
-
-                    Rectangle {
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: gaugeValue.arcWidth
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: 3
-                        height: 3
-                        color: Theme.colorSubText
-                        antialiasing: true
-                    }
-                }
-*/
             }
         }
     }

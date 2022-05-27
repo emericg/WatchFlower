@@ -59,9 +59,9 @@ Flickable {
                 anchors.left: imageHygro.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageHygro.verticalCenter
-                anchors.verticalCenterOffset: 2
+                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
-                text: currentDevice.hasSoilMoistureSensor ? qsTr("Moisture") : qsTr("Humidity")
+                text: qsTr("Soil moisture")
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -113,6 +113,82 @@ Flickable {
         ////////
 
         Item {
+            id: itemCondu
+            height: 40
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            IconSvg {
+                id: imageCondu
+                width: 24
+                height: 24
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 8
+
+                rotation: 90
+                color: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+            }
+            Text {
+                anchors.left: imageCondu.right
+                anchors.leftMargin: 8
+                anchors.verticalCenter: imageCondu.verticalCenter
+                anchors.verticalCenterOffset: isDesktop ? 1 : 0
+
+                text: qsTr("Soil conductivity")
+                color: Theme.colorText
+                font.bold: true
+                font.pixelSize: Theme.fontSizeContentSmall
+                font.capitalization: Font.AllUppercase
+            }
+
+            RangeSliderValueSolid {
+                id: rangeSlider_condu
+                height: 24
+                anchors.top: imageCondu.bottom
+                anchors.topMargin: 2
+                anchors.left: parent.left
+                anchors.leftMargin: 32
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+
+                colorBg: Theme.colorYellow
+                colorFg: Theme.colorGreen
+                from: 0
+                to: 2000
+                stepSize: 50
+
+                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
+                first.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMin = first.value.toFixed(0)
+
+                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
+                second.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMax = second.value.toFixed(0)
+            }
+        }
+        Text {
+            id: legendCondu
+            anchors.left: parent.left
+            anchors.leftMargin: 40
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+
+            visible: itemCondu.visible
+
+            text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
+                  qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
+            textFormat: Text.StyledText
+            wrapMode: Text.WordWrap
+            color: Theme.colorSubText
+            font.pixelSize: Theme.fontSizeContentSmall
+        }
+
+        ////////
+
+        Item {
             id: itemTemp
             height: 40
             anchors.right: parent.right
@@ -136,7 +212,7 @@ Flickable {
                 anchors.left: imageTemp.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageTemp.verticalCenter
-                anchors.verticalCenterOffset: 1
+                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Temperature")
                 color: Theme.colorText
@@ -229,7 +305,7 @@ Flickable {
                 anchors.left: imageLumi.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageLumi.verticalCenter
-                anchors.verticalCenterOffset: 1
+                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Luminosity")
                 color: Theme.colorText
@@ -242,7 +318,7 @@ Flickable {
                 id: rangeSlider_lumi
                 height: 24
                 anchors.top: imageLumi.bottom
-                anchors.topMargin: 0
+                anchors.topMargin: 2
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.right: parent.right
@@ -404,79 +480,5 @@ Flickable {
         }
 
         ////////
-
-        Item {
-            id: itemCondu
-            height: 40
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-
-            IconSvg {
-                id: imageCondu
-                width: 24
-                height: 24
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-
-                rotation: 90
-                color: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
-            }
-            Text {
-                anchors.left: imageCondu.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: imageCondu.verticalCenter
-                anchors.verticalCenterOffset: 0
-
-                text: qsTr("Fertility")
-                color: Theme.colorText
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
-            }
-
-            RangeSliderValueSolid {
-                id: rangeSlider_condu
-                height: 24
-                anchors.top: imageCondu.bottom
-                anchors.topMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 32
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-
-                colorBg: Theme.colorYellow
-                colorFg: Theme.colorGreen
-                from: 0
-                to: 2000
-                stepSize: 50
-
-                first.onPressedChanged: plantSensorPages.interactive = !first.pressed
-                first.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMin = first.value.toFixed(0)
-
-                second.onPressedChanged: plantSensorPages.interactive = !second.pressed
-                second.onMoved: if (currentDevice) currentDevice.soilConductivity_limitMax = second.value.toFixed(0)
-            }
-        }
-        Text {
-            id: legendCondu
-            anchors.left: parent.left
-            anchors.leftMargin: 40
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-
-            visible: itemCondu.visible
-
-            text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
-            textFormat: Text.StyledText
-            wrapMode: Text.WordWrap
-            color: Theme.colorSubText
-            font.pixelSize: Theme.fontSizeContentSmall
-        }
     }
 }

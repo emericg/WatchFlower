@@ -83,7 +83,6 @@ Item {
                     asynchronous: true
                     smooth: true
                     opacity: 0.15
-                    //rotation: 45
                     color: Theme.colorSubText
                     fillMode: Image.PreserveAspectFit
 

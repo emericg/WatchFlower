@@ -40,45 +40,46 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Text { // title
+    Row {
         id: titleArea
         anchors.top: chartHistory.top
         anchors.topMargin: singleColumn ? 8 : 16
         anchors.left: chartArea.left
-        anchors.leftMargin: singleColumn ? 8 : 0
+        anchors.leftMargin: singleColumn ? 1 : 2
+        spacing: 12
 
-        text: title
-        color: Theme.colorIcon
-        font.bold: true
-        font.pixelSize: Theme.fontSizeContentSmall
-        font.capitalization: Font.AllUppercase
-        verticalAlignment: Text.AlignBottom
-    }
+        Text {
+            id: textTitle
 
-    Text {
-        id: dataArea
-        anchors.top: chartHistory.top
-        anchors.topMargin: singleColumn ? 8 : 16
-        anchors.left: titleArea.right
-        anchors.leftMargin: 16
+            text: title
+            color: Theme.colorText
+            font.bold: true
+            font.pixelSize: singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
+            font.capitalization: Font.AllUppercase
+            verticalAlignment: Text.AlignBottom
+        }
 
-        text: ""
-        color: Theme.colorIcon
-        font.bold: false
-        font.pixelSize: Theme.fontSizeContentSmall
-        verticalAlignment: Text.AlignBottom
+        Text {
+            id: textLegend
 
-        Connections {
-            target: graphGrid
-            function onBarSelectionIndexChanged() {
-                var txt = ""
-                if (graphGrid.barSelectionIndex >= 0) {
-                    if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
-                        txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
-                        txt += suffix.replace("<br>", "")
+            text: ""
+            color: Theme.colorIcon
+            font.bold: false
+            font.pixelSize: singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
+            verticalAlignment: Text.AlignBottom
+
+            Connections {
+                target: graphGrid
+                function onBarSelectionIndexChanged() {
+                    var txt = ""
+                    if (graphGrid.barSelectionIndex >= 0) {
+                        if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
+                            txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
+                            txt += suffix.replace("<br>", "")
+                        }
                     }
+                    textLegend.text = txt
                 }
-                dataArea.text = txt
             }
         }
     }
@@ -87,13 +88,13 @@ Item {
 
     Item { // chart area
         id: chartArea
-        width: parent.width - (singleColumn ? 8 : 32)
+        width: parent.width - (singleColumn ? 8 : 24)
 
         anchors.top: titleArea.bottom
         anchors.bottom: parent.bottom
         anchors.bottomMargin: isPhone ? 12 : 24
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: singleColumn ? 0 : 12
+        anchors.right: parent.right
+        anchors.rightMargin: 4
 
         ////////////////
 
@@ -106,7 +107,7 @@ Item {
 
             ShapePath {
                 strokeColor: Theme.colorSubText
-                strokeWidth: isPhone ? 1 : 2
+                strokeWidth: singleColumn ? 1 : 2
                 strokeStyle: ShapePath.DashLine
                 dashPattern: [ 1, 4 ]
                 startX: 0
@@ -115,13 +116,14 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: 0
+                anchors.rightMargin: singleColumn ? -contentWidth : 0
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: singleColumn ? +6 : 0
 
                 text: qsTr("max")
                 color: Theme.colorSubText
                 font.pixelSize: 11
-                rotation: -90
+                rotation: singleColumn ? 0 : -90
             }
         }
         Shape {
@@ -133,7 +135,7 @@ Item {
 
             ShapePath {
                 strokeColor: Theme.colorSubText
-                strokeWidth: isPhone ? 1 : 2
+                strokeWidth: singleColumn ? 1 : 2
                 strokeStyle: ShapePath.DashLine
                 dashPattern: [ 1, 4 ]
                 startX: 0
@@ -142,13 +144,14 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: 0
+                anchors.rightMargin: singleColumn ? -contentWidth : 0
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: singleColumn ? -6 : 0
 
                 text: qsTr("min")
                 color: Theme.colorSubText
                 font.pixelSize: 11
-                rotation: -90
+                rotation: singleColumn ? 0 : -90
             }
         }
 
@@ -163,7 +166,7 @@ Item {
 
             property real barWidth: ((width - ((barCount-1) * spacing)) / (barCount))
             property int barHeight: height
-            property int barRadius: isPhone ? 0 : 4
+            property int barRadius: singleColumn ? 2 : 4
             property int barSpacing: {
                 if (ddd === ChartHistory.Span.Daily) return 1
                 if (ddd === ChartHistory.Span.Weekly) return 4
@@ -409,7 +412,7 @@ Item {
             }
             color: "white"
             font.bold: true
-            font.pixelSize: isPhone ? 13 : 14
+            font.pixelSize: 12
             horizontalAlignment: Text.AlignHCenter
         }
     }

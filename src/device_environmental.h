@@ -31,7 +31,7 @@
 /* ************************************************************************** */
 
 /*!
- * \brief The DeviceThermometer class
+ * \brief The DeviceEnvironmental class
  */
 class DeviceEnvironmental: public DeviceSensor
 {
