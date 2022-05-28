@@ -68,6 +68,7 @@ DeviceEnvironmental::~DeviceEnvironmental()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 void DeviceEnvironmental::updateChartData_environmentalVoc(int maxDays)
 {
@@ -80,31 +81,22 @@ void DeviceEnvironmental::updateChartData_environmentalVoc(int maxDays)
 
     if (m_dbInternal || m_dbExternal)
     {
+        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
+
+        QString datetime_months = "datetime('now','-" + QString::number(maxMonths) + " month')"; // sqlite
+        if (m_dbExternal) datetime_months = "DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH)"; // mysql
+
         QSqlQuery graphData;
-        if (m_dbInternal) // sqlite
-        {
-            graphData.prepare("SELECT strftime('%Y-%m-%d', timestamp)," \
-                                "min(voc), avg(voc), max(voc)," \
-                                "min(hcho), avg(hcho), max(hcho)," \
-                                "min(co2), avg(co2), max(co2) " \
-                              "FROM sensorData " \
-                              "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now','-" + QString::number(maxMonths) + " month') " \
-                              "GROUP BY strftime('%Y-%m-%d', timestamp) " \
-                              "ORDER BY timestamp DESC "
-                              "LIMIT :maxDays;");
-        }
-        else if (m_dbExternal) // mysql
-        {
-            graphData.prepare("SELECT DATE_FORMAT(timestamp, '%Y-%m-%d')," \
-                                "min(voc), avg(voc), max(voc)," \
-                                "min(hcho), avg(hcho), max(hcho)," \
-                                "min(co2), avg(co2), max(co2) " \
-                              "FROM sensorData " \
-                              "WHERE deviceAddr = :deviceAddr AND timestamp >= DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH) " \
-                              "GROUP BY DATE_FORMAT(timestamp, '%Y-%m-%d') " \
-                              "ORDER BY timestamp DESC "
-                              "LIMIT :maxDays;");
-        }
+        graphData.prepare("SELECT " + strftime_mid + "," \
+                            "min(voc), avg(voc), max(voc)," \
+                            "min(hcho), avg(hcho), max(hcho)," \
+                            "min(co2), avg(co2), max(co2) " \
+                          "FROM sensorData " \
+                          "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
+                          "GROUP BY " + strftime_mid + " " \
+                          "ORDER BY timestamp DESC "
+                          "LIMIT :maxDays;");
         graphData.bindValue(":deviceAddr", getAddress());
         graphData.bindValue(":maxDays", maxDays);
 

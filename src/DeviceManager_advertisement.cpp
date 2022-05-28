@@ -86,7 +86,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
             {
                 // old or no data: go for refresh
                 // also, check if we didn't already fail to update in the last couple minutes
-                if (dd->needsUpdateRt() && !dd->isErrored())
+                if (dd->needsUpdateDb() && !dd->isErrored())
                 {
                     if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
                     {

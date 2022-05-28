@@ -188,7 +188,7 @@ Loader {
                 textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
 
                 if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-                    (currentDevice.isDataFresh() || currentDevice.isDataToday())) {
+                    (currentDevice.isDataFresh_rt() || currentDevice.isDataToday())) {
                     if (currentDevice.lastUpdateMin <= 1)
                         textStatus.text = qsTr("Synced")
                     else

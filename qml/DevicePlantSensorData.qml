@@ -90,7 +90,7 @@ Item {
         textStatus.font.bold = false
 
         if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (currentDevice.isDataFresh() || currentDevice.isDataToday()) {
+            if (currentDevice.isDataFresh_rt() || currentDevice.isDataToday()) {
                 if (currentDevice.lastUpdateMin <= 1)
                     textStatus.text = qsTr("Synced")
                 else

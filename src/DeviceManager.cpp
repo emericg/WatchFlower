@@ -776,15 +776,18 @@ void DeviceManager::refreshDevices_background()
 
     QSqlQuery readLastRun;
     readLastRun.prepare("SELECT lastRun FROM lastRun");
-    readLastRun.exec();
-    if (readLastRun.first())
+    if (readLastRun.exec())
     {
-        QDateTime lastRun = readLastRun.value(0).toDateTime();
-        if (lastRun.isValid())
+        if (readLastRun.first())
         {
-            int mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
-            if (mins < 60) return;
+            QDateTime lastRun = readLastRun.value(0).toDateTime();
+            if (lastRun.isValid())
+            {
+                int mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
+                if (mins < 60) return;
+            }
         }
+        readLastRun.finish();
     }
 
 #if defined(Q_OS_ANDROID) && defined(QT_CONNECTIVITY_PATCHED)
@@ -812,7 +815,7 @@ void DeviceManager::refreshDevices_background()
             if (!dd->hasBluetoothConnection()) continue;
 
             // old or no data: go for refresh
-            if (dd->needsUpdateRt())
+            if (dd->needsUpdateDb())
             {
                 if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
                 {
@@ -881,7 +884,7 @@ void DeviceManager::refreshDevices_check()
                 if (!dd->hasBluetoothConnection()) continue;
 
                 // old or no data: go for refresh
-                if (dd->needsUpdateRt())
+                if (dd->needsUpdateDb())
                 {
                     if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
                     {

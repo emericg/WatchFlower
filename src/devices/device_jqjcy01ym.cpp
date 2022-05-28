@@ -182,18 +182,18 @@ void DeviceJQJCY01YM::parseAdvertisementData(const QByteArray &value, const uint
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
-                if (needsUpdateDb())
+                if (needsUpdateDb_mini())
                 {
                     if (m_dbInternal || m_dbExternal)
                     {
                         // SQL date format YYYY-MM-DD HH:MM:SS
-                        QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                         QSqlQuery addData;
-                        addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, hcho)"
-                                        " VALUES (:deviceAddr, :timestamp, :temp, :humi, :hcho)");
+                        addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, hcho)"
+                                        " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :hcho)");
                         addData.bindValue(":deviceAddr", getAddress());
-                        addData.bindValue(":timestamp", tsStr);
+                        addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+                        addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
                         addData.bindValue(":temp", m_temperature);
                         addData.bindValue(":humi", m_humidity);
                         addData.bindValue(":hcho", m_hcho);

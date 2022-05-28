@@ -154,7 +154,7 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const QByteArray &value, const
         {
             m_lastUpdate = QDateTime::currentDateTime();
 
-            if (needsUpdateDb())
+            if (needsUpdateDb_mini())
             {
                 addDatabaseRecord_weatherstation(m_lastUpdate.toSecsSinceEpoch(),
                                                  m_temperature, m_humidity, m_pressure);

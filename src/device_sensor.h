@@ -291,13 +291,15 @@ public:
     Q_INVOKABLE bool hasDataNamed(const QString &dataName) const;
     Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
 
-    Q_INVOKABLE bool isDataFresh() const;           //!< Has at most Xh (user set) old data
+    Q_INVOKABLE bool isDataAvailable() const;       //!< Has data, fresh or from history
     Q_INVOKABLE bool isDataToday() const;           //!< Has at most 12h old data
-    Q_INVOKABLE bool isDataAvailable() const;       //!< Has data, immediate or from history
+    Q_INVOKABLE bool isDataFresh_rt() const;        //!< Has at most Xh (user defined) old data (from immediate records)
+    Q_INVOKABLE bool isDataFresh_db() const;        //!< Has at most Xh (user defined) old data (from database records)
 
     virtual void checkDataAvailability();
-    virtual bool needsUpdateRt() const;
-    virtual bool needsUpdateDb() const;
+    virtual bool needsUpdateRt() const;             //!< Does this sensor has 'immediate' (but possibly incomplete) record
+    virtual bool needsUpdateDb() const;             //!< Does this sensor has a recent record in the database
+    virtual bool needsUpdateDb_mini() const;        //!< Does this sensor can save a new record in the database (instead of overwriting the current one)
 
     bool setSqlPlantBias();
     bool setSqlPlantLimits();

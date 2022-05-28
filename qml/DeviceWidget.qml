@@ -128,7 +128,7 @@ Item {
         textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
         if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
-            if (boxDevice.isDataFresh()) {
+            if (boxDevice.isDataFresh_rt()) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
             } else if (boxDevice.isDataToday()) {

@@ -331,6 +331,7 @@ public:
     virtual void checkDataAvailability();
     virtual bool needsUpdateRt() const;
     virtual bool needsUpdateDb() const;
+    virtual bool needsUpdateDb_mini() const;
     virtual bool needsSync() const;
 
     // Device associated data

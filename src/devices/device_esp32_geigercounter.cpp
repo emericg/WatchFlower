@@ -239,9 +239,10 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
                 // SQL date format YYYY-MM-DD HH:MM:SS
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, radioactivity)"
-                                " VALUES (:deviceAddr, :timestamp, :radioactivity)");
+                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, radioactivity)"
+                                " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :radioactivity)");
                 addData.bindValue(":deviceAddr", getAddress());
+                addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
                 addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":radioactivity", m_rm);
 

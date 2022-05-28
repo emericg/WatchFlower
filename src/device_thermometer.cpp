@@ -199,9 +199,9 @@ bool DeviceThermometer::addDatabaseRecord_weatherstation(const int64_t timestamp
             // SQL date format YYYY-MM-DD HH:MM:SS
 
             // We only save one record every x minutes
-            int round_seconds = 1800; // 30 mins
-            QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (round_seconds - timestamp % round_seconds) - round_seconds);
+            int round_seconds = 1200; // 20 mins
             QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
+            QDateTime tmcd_rounded = QDateTime::fromSecsSinceEpoch(timestamp + (round_seconds - timestamp % round_seconds) - round_seconds);
 
             QSqlQuery addData;
             addData.prepare("REPLACE INTO thermoData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, pressure) "
@@ -323,12 +323,12 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
         if (m_dbExternal) datetime_months = "DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH)"; // mysql
 
         QSqlQuery graphData;
-        graphData.prepare("SELECT " + strftime_d + ",min(temperature), avg(temperature), max(temperature),min(humidity), max(humidity) " \
+        graphData.prepare("SELECT " + strftime_d + ", min(temperature), avg(temperature), max(temperature), min(humidity), max(humidity) " \
                           "FROM plantData " \
                           "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
                           "GROUP BY " + strftime_d + " " \
                           " UNION ALL " \
-                          "SELECT " + strftime_d + ",min(temperature), avg(temperature), max(temperature),min(humidity), max(humidity) " \
+                          "SELECT " + strftime_d + ", min(temperature), avg(temperature), max(temperature), min(humidity), max(humidity) " \
                           "FROM thermoData " \
                           "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
                           "GROUP BY " + strftime_d + " " \

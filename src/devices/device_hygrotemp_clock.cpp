@@ -480,7 +480,7 @@ void DeviceHygrotempClock::parseAdvertisementData(const QByteArray &value, const
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
-                if (needsUpdateDb())
+                if (needsUpdateDb_mini())
                 {
                     addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
                 }

@@ -1106,11 +1106,26 @@ bool DeviceSensor::hasData() const
     return false;
 }
 
-bool DeviceSensor::isDataFresh() const
+bool DeviceSensor::isDataFresh_rt() const
 {
     SettingsManager *sm = SettingsManager::getInstance();
-    int maxMin = hasSoilMoistureSensor() ? sm->getUpdateIntervalPlant() : sm->getUpdateIntervalThermo();
+    int maxMin = 120;
+    if (isPlantSensor()) maxMin = sm->getUpdateIntervalPlant();
+    else if (isThermometer()) maxMin = sm->getUpdateIntervalThermo();
+    else if (isEnvironmentalSensor()) maxMin = sm->getUpdateIntervalEnv();
+
     return (getLastUpdateInt() >= 0 && getLastUpdateInt() < maxMin);
+}
+
+bool DeviceSensor::isDataFresh_db() const
+{
+    SettingsManager *sm = SettingsManager::getInstance();
+    int maxMin = 120;
+    if (isPlantSensor()) maxMin = sm->getUpdateIntervalPlant();
+    else if (isThermometer()) maxMin = sm->getUpdateIntervalThermo();
+    else if (isEnvironmentalSensor()) maxMin = sm->getUpdateIntervalEnv();
+
+    return (getLastUpdateDbInt() >= 0 && getLastUpdateDbInt() < maxMin);
 }
 
 bool DeviceSensor::isDataToday() const
@@ -1125,12 +1140,22 @@ bool DeviceSensor::isDataAvailable() const
 
 bool DeviceSensor::needsUpdateRt() const
 {
-    return !isDataFresh();
+    return !isDataFresh_rt();
 }
 
 bool DeviceSensor::needsUpdateDb() const
 {
-    return (getLastUpdateDbInt() < 0 || getLastUpdateDbInt() > 60);
+    return !isDataFresh_db();
+}
+
+bool DeviceSensor::needsUpdateDb_mini() const
+{
+    int minInterval = 60;
+    if (isPlantSensor()) minInterval = 60;
+    else if (isThermometer()) minInterval = 20;
+    else if (isEnvironmentalSensor()) minInterval = 20;
+
+    return (getLastUpdateDbInt() < 0 || getLastUpdateDbInt() > minInterval);
 }
 
 /* ************************************************************************** */

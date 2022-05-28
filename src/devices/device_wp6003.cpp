@@ -225,13 +225,13 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             if (m_dbInternal || m_dbExternal)
             {
                 // SQL date format YYYY-MM-DD HH:MM:SS
-                QString tsStr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
                 QSqlQuery addData;
-                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, co2, voc, hcho)"
-                                " VALUES (:deviceAddr, :timestamp, :temp, :co2, :voc, :hcho)");
+                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, co2, voc, hcho)"
+                                " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :co2, :voc, :hcho)");
                 addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":timestamp", tsStr);
+                addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+                addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
                 addData.bindValue(":temp", m_temperature);
                 addData.bindValue(":co2", m_co2);
                 addData.bindValue(":voc", m_voc);

@@ -719,7 +719,7 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 
-                if (needsUpdateDb())
+                if (needsUpdateDb_mini())
                 {
                     //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
                     //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,

@@ -140,9 +140,15 @@ bool DeviceManager::exportData(const QString &exportFilePath)
     if (!m_devices_model->hasDevices()) return status;
     if (!m_dbInternal && !m_dbExternal) return status;
 
+    // Settings
     SettingsManager *sm = SettingsManager::getInstance();
     bool isCelcius = (sm->getTempUnit() == "C");
+    int maxDays = sm->getDataRetentionDays();
 
+    QString datetime = "datetime('now', 'localtime', '-" + QString::number(maxDays) + " days')"; // sqlite
+    if (m_dbExternal) datetime = "DATE_SUB(NOW(), INTERVAL " + QString::number(maxDays) + " DAY)"; // mysql
+
+    // Open file
     QFile efile;
     efile.setFileName(exportFilePath);
     if (efile.open(QIODevice::WriteOnly))
@@ -164,18 +170,9 @@ bool DeviceManager::exportData(const QString &exportFilePath)
                 eout << l << Qt::endl;
 
                 QSqlQuery data;
-                if (m_dbInternal) // sqlite
-                {
-                    data.prepare("SELECT timestamp, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
-                                 "FROM plantData " \
-                                 "WHERE deviceAddr = :deviceAddr AND timestamp >= datetime('now', 'localtime', '-" + QString::number(90) + " days');");
-                }
-                else if (m_dbExternal) // mysql
-                {
-                    data.prepare("SELECT timestamp, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
-                                 "FROM plantData " \
-                                 "WHERE deviceAddr = :deviceAddr AND timestamp >= DATE_SUB(NOW(), INTERVAL " + QString::number(90) + " DAY);");
-                }
+                data.prepare("SELECT timestamp, soilMoisture, soilConductivity, soilTemperature, temperature, humidity, luminosity " \
+                             "FROM plantData " \
+                             "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime + ";");
                 data.bindValue(":deviceAddr", dd->getAddress());
 
                 if (data.exec() == true)
@@ -184,7 +181,7 @@ bool DeviceManager::exportData(const QString &exportFilePath)
                     {
                         eout << data.value(0).toString() << ",";
 
-                        if (dd->hasSoilMoistureSensor()) eout<< data.value(1).toString();
+                        if (dd->hasSoilMoistureSensor()) eout << data.value(1).toString();
                         eout << ",";
 
                         if (dd->hasSoilConductivitySensor()) eout << data.value(2).toString();

@@ -319,7 +319,7 @@ void DatabaseManager::createDatabase()
         {
             QSqlQuery writeDbVersion;
             writeDbVersion.prepare("INSERT INTO version (dbVersion) VALUES (:dbVersion)");
-            writeDbVersion.bindValue(":dbVersion", m_dbCurrentVersion);
+            writeDbVersion.bindValue(":dbVersion", s_dbCurrentVersion);
             writeDbVersion.exec();
         }
         else
@@ -638,7 +638,7 @@ void DatabaseManager::migrateDatabase()
     }
     readVersion.finish();
 
-    if (dbVersion > 0 && dbVersion != m_dbCurrentVersion)
+    if (dbVersion > 0 && dbVersion != s_dbCurrentVersion)
     {
         if (dbVersion == 1)
         {

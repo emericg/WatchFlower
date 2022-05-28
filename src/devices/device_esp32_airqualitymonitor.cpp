@@ -312,9 +312,10 @@ bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
             // SQL date format YYYY-MM-DD HH:MM:SS
 
             QSqlQuery addData;
-            addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp, temperature, humidity, pressure, voc, co2)"
-                            " VALUES (:deviceAddr, :timestamp, :temp, :humi, :pres, :voc, :co2)");
+            addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, pressure, voc, co2)"
+                            " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :pres, :voc, :co2)");
             addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
             addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
             addData.bindValue(":temp", m_temperature);
             addData.bindValue(":humi", m_humidity);

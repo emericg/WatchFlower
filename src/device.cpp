@@ -456,7 +456,7 @@ void Device::refreshDataFinished(bool status, bool cached)
             Q_EMIT statusUpdated();
 
             // Set error timer value
-            setUpdateTimer(ERROR_UPDATE_INTERVAL);
+            setUpdateTimer(SettingsManager::s_intervalErrorUpdate);
         }
     }
 
@@ -542,9 +542,11 @@ void Device::setUpdateTimer(int updateIntervalMin)
     if (updateIntervalMin < 5 || updateIntervalMin > 120)
     {
         if (getDeviceType() == DeviceUtils::DEVICE_PLANTSENSOR)
-            updateIntervalMin = PLANT_UPDATE_INTERVAL;
+            updateIntervalMin = SettingsManager::s_intervalPlantUpdate;
+        else if (getDeviceType() == DeviceUtils::DEVICE_THERMOMETER)
+            updateIntervalMin = SettingsManager::s_intervalThermometerUpdate;
         else
-            updateIntervalMin = THERMO_UPDATE_INTERVAL;
+            updateIntervalMin = SettingsManager::s_intervalEnvironmentalUpdate;
     }
 
     // Is our timer already set to this particular interval?
@@ -717,6 +719,11 @@ bool Device::needsUpdateRt() const
 }
 
 bool Device::needsUpdateDb() const
+{
+    return false;
+}
+
+bool Device::needsUpdateDb_mini() const
 {
     return false;
 }
