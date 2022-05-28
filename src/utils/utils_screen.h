@@ -36,9 +36,11 @@ class UtilsScreen: public QObject
     Q_OBJECT
 
     Q_PROPERTY(int screenDpi READ getScreenDpi NOTIFY screenChanged)
-    Q_PROPERTY(double screenSize READ getScreenSize NOTIFY screenChanged)
+    Q_PROPERTY(double screenPar READ getScreenPar NOTIFY screenChanged)
+    Q_PROPERTY(double screenSize READ getScreenSize_inch NOTIFY screenChanged)
 
     int m_screenDpi = -1;
+    double m_screenPar = -1.0;
     double m_screenSize = -1.0;
 
     uint32_t m_screensaverId = 0;
@@ -56,9 +58,11 @@ public:
 
     Q_INVOKABLE void getScreenInfos();
 
-    Q_INVOKABLE double getScreenSize();
+    Q_INVOKABLE double getScreenSize_inch();
 
     Q_INVOKABLE int getScreenDpi();
+
+    Q_INVOKABLE double getScreenPar();
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);
 

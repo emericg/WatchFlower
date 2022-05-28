@@ -92,7 +92,7 @@ void UtilsScreen::getScreenInfos()
         }
 
         // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
-        qDebug() << "- inches count: " << getScreenSize();
+        qDebug() << "- inches count: " << getScreenSize_inch();
     }
     else
     {
@@ -100,7 +100,7 @@ void UtilsScreen::getScreenInfos()
     }
 }
 
-double UtilsScreen::getScreenSize()
+double UtilsScreen::getScreenSize_inch()
 {
     if (m_screenSize <= 0)
     {
@@ -127,6 +127,20 @@ int UtilsScreen::getScreenDpi()
     }
 
     return m_screenDpi;
+}
+
+double UtilsScreen::getScreenPar()
+{
+    if (m_screenPar <= 0)
+    {
+        QScreen *scr = QGuiApplication::primaryScreen();
+        if (scr)
+        {
+            m_screenPar = scr->devicePixelRatio();
+        }
+    }
+
+    return m_screenPar;
 }
 
 /* ************************************************************************** */

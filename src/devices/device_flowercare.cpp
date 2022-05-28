@@ -764,9 +764,9 @@ void DeviceFlowerCare::parseAdvertisementData(const QByteArray &value, const uin
 
                 if (needsUpdateDb())
                 {
-                    addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                      m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                                      m_temperature, -99.f, m_luminosityLux);
+                    //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                    //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                    //                  m_temperature, -99.f, m_luminosityLux);
                 }
 
                 refreshDataFinished(true);

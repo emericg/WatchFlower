@@ -9,7 +9,7 @@ Rectangle {
     z: 10
     color: Theme.colorHeader
 
-    property int headerHeight: 64
+    property int headerHeight: isHdpi ? 60 : 64
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -153,7 +153,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
 
-        spacing: 12
+        spacing: isHdpi ? 4 : 12
         visible: true
 
         // DEVICE ACTIONS //////////

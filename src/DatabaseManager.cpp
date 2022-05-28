@@ -645,6 +645,7 @@ void DatabaseManager::migrateDatabase()
             if (migrate_v1v2())
             {
                 QSqlQuery updateDbVersion("UPDATE version SET dbVersion=2");
+                dbVersion = 2;
             }
         }
 
@@ -653,6 +654,7 @@ void DatabaseManager::migrateDatabase()
             if (migrate_v2v3())
             {
                 QSqlQuery updateDbVersion("UPDATE version SET dbVersion=3");
+                dbVersion = 3;
             }
         }
     }

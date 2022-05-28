@@ -50,6 +50,7 @@ SystrayManager::SystrayManager()
 SystrayManager::~SystrayManager()
 {
     delete m_actionShow;
+    delete m_actionDeviceList;
     delete m_actionSettings;
     delete m_actionExit;
     m_actionShow = nullptr;
@@ -106,13 +107,16 @@ void SystrayManager::initSystray()
                 m_actionShow->setText(tr("Show"));
             }
 
+            m_actionDeviceList = new QAction(tr("Device list"));
             m_actionSettings = new QAction(tr("Settings"));
             m_actionExit = new QAction(tr("Exit"));
             m_sysTrayMenu->addAction(m_actionShow);
+            m_sysTrayMenu->addAction(m_actionDeviceList);
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
 
             connect(m_actionShow, &QAction::triggered, this, &SystrayManager::showHideButton);
+            connect(m_actionDeviceList, &QAction::triggered, this, &SystrayManager::devicesButton);
             connect(m_actionSettings, &QAction::triggered, this, &SystrayManager::settingsButton);
             connect(m_actionExit, &QAction::triggered, m_saved_app, &QApplication::exit);
         }
@@ -255,6 +259,13 @@ void SystrayManager::showHideButton()
         m_saved_view->show();
         m_saved_view->raise();
     }
+}
+
+void SystrayManager::devicesButton()
+{
+    m_saved_view->show();
+    m_saved_view->raise();
+    Q_EMIT devicesClicked();
 }
 
 void SystrayManager::settingsButton()

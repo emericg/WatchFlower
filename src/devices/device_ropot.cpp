@@ -721,9 +721,9 @@ void DeviceRopot::parseAdvertisementData(const QByteArray &value, const uint16_t
 
                 if (needsUpdateDb())
                 {
-                    addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                      m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                                      m_temperature, -99.f, -99.f);
+                    //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                    //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                    //                  m_temperature, -99.f, -99.f);
                 }
 
                 refreshDataFinished(true);

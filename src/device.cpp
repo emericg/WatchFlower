@@ -869,7 +869,7 @@ void Device::setAssociatedName(const QString &name)
 
 bool Device::hasAddressMAC() const
 {
-#if defined(Q_OS_UNIX) || defined(Q_OS_WINDOWS)
+#if !defined(Q_OS_MACOS) && !defined(Q_OS_IOS)
     return true;
 #endif
 
@@ -881,7 +881,7 @@ bool Device::hasAddressMAC() const
 
 QString Device::getAddressMAC() const
 {
-#if defined(Q_OS_UNIX) || defined(Q_OS_WINDOWS)
+#if !defined(Q_OS_MACOS) && !defined(Q_OS_IOS)
     return m_deviceAddress;
 #endif
 

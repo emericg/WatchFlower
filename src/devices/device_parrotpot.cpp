@@ -453,7 +453,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
                 int water_percent = static_cast<uint8_t>(cwt.value().constData()[0]);
                 m_watertank_level = (water_percent * m_watertank_capacity) / 100.0;
 
-                qDebug() << "* DeviceParrotPot water tank: " << m_water_level;
+                //qDebug() << "* DeviceParrotPot water tank: " << m_watertank_level;
             }
         }
 

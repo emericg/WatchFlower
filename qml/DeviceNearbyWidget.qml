@@ -53,10 +53,10 @@ Rectangle {
 
         Text {
             id: deviceTitle
-            text: device.deviceName
+            text: (device.deviceName.length ? device.deviceName : "No name")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContent
-            color: Theme.colorText
+            color: (device.deviceName.length ? Theme.colorText : Theme.colorSubText)
         }
 
         Text {

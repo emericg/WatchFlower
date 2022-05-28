@@ -38,7 +38,7 @@ Item {
 
         // graph visibility
         aioGraph.visible = (count > 1)
-        noDataIndicator.visible = (count <= 0)
+        noDataIndicator.visible = (count <= 1)
         showGraphDots = (settingsManager.graphShowDots && count < 16)
 
         //// DATA

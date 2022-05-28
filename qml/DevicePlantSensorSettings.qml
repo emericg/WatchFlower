@@ -126,6 +126,24 @@ Item {
                         }
                     }
 
+                    Column {
+                        visible: currentDevice.deviceAddressMAC.length && (Qt.platform.os === "osx" || Qt.platform.os === "ios")
+
+                        Text {
+                            text: qsTr("MAC Address")
+                            color: Theme.colorSubText
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentVerySmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            text: "[" + currentDevice.deviceAddressMAC + "]"
+                            color: Theme.colorHighContrast
+                            font.pixelSize: Theme.fontSizeContentBig
+                            font.capitalization: Font.AllUppercase
+                        }
+                    }
+
                     Row {
                         spacing: 32
 
@@ -613,7 +631,7 @@ Item {
                             }
                         }
                     }
-/*
+
                     Column {
                         id: itemMacAddr
                         anchors.left: parent.left
@@ -714,14 +732,12 @@ Item {
                                     source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                                     color: Theme.colorSubText
 
-                                    //visible: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputArea.containsMouse)
                                     opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
                                     Behavior on opacity { OpacityAnimator { duration: 133 } }
                                 }
                             }
                         }
                     }
-*/
                 }
             }
 

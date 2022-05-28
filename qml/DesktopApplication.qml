@@ -14,14 +14,14 @@ ApplicationWindow {
     property bool isMobile: false
     property bool isPhone: false
     property bool isTablet: false
-    property bool isHdpi: (utilsScreen.screenDpi > 128)
+    property bool isHdpi: (utilsScreen.screenDpi > 128 || utilsScreen.screenPar > 1.0)
 
     property var selectedDevice: null
 
     // Desktop stuff ///////////////////////////////////////////////////////////
 
-    minimumWidth: 480
-    minimumHeight: 560
+    minimumWidth: isHdpi ? 400 : 480
+    minimumHeight: isHdpi ? 480 : 560
 
     width: {
         if (settingsManager.initialSize.width > 0)
@@ -165,6 +165,7 @@ ApplicationWindow {
 
     Connections {
         target: systrayManager
+        function onDevicesClicked() { appContent.state = "DeviceList" }
         function onSettingsClicked() { appContent.state = "Settings" }
     }
 
