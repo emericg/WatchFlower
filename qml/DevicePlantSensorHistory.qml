@@ -122,11 +122,11 @@ Item {
                 graphGrid.columns = 2
             }
             if (graphGrid.width < 575) {
-                buttonPanel.anchors.topMargin = 52
+                buttonPanel.anchors.topMargin = 8
                 buttonPanel.anchors.rightMargin = 0
                 buttonPanel.anchors.right = undefined
                 buttonPanel.anchors.horizontalCenter = subHeader.horizontalCenter
-                subHeader.height = 96
+                subHeader.height = 48
             } else {
                 buttonPanel.anchors.topMargin = 8
                 buttonPanel.anchors.rightMargin = 8
@@ -173,9 +173,13 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 12
 
-            visible: isDesktop
+            visible: (isDesktop && graphGrid.width >= 575)
 
-            text: currentDevice.deviceName + " - " + currentDevice.devicePlantName
+            text: {
+                if (currentDevice.devicePlantName.length)
+                    return currentDevice.deviceName + " - " + currentDevice.devicePlantName
+                return currentDevice.deviceName
+            }
             color: Theme.colorText
             font.pixelSize: 22
             font.capitalization: Font.Capitalize

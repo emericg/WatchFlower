@@ -34,41 +34,25 @@ Item {
     function updateSize() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.hasSoilMoistureSensor) return
-        //console.log("width: " + graphGrid.width)
-        //console.log("height: " + graphGrid.height)
 
         // grid geometry
         if (isMobile) {
             if (isPhone) {
                 if (screenOrientation === Qt.PortraitOrientation) {
-                    //graphGrid.columns = 1
                     subHeader.visible = true
                     subHeader.height = 48
                 } else {
-                    //graphGrid.columns = 2
                     subHeader.visible = false
                     subHeader.height = 0
                 }
             }
-            //if (isTablet) {
-            //    if (screenOrientation === Qt.PortraitOrientation || width < 480) {
-            //        graphGrid.columns = 1
-            //    } else {
-            //        graphGrid.columns = 2
-            //    }
-            //}
         } else {
-            //if (graphGrid.width < 1080) {
-            //    graphGrid.columns = 1
-            //} else {
-            //    graphGrid.columns = 2
-            //}
             if (devicePlantSensorCare.width < 575) {
-                buttonPanel.anchors.topMargin = 52
+                buttonPanel.anchors.topMargin = 8
                 buttonPanel.anchors.rightMargin = 0
                 buttonPanel.anchors.right = undefined
                 buttonPanel.anchors.horizontalCenter = subHeader.horizontalCenter
-                subHeader.height = 96
+                subHeader.height = 48
             } else {
                 buttonPanel.anchors.topMargin = 8
                 buttonPanel.anchors.rightMargin = 8
@@ -101,9 +85,13 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 12
 
-            visible: isDesktop
+            visible: (isDesktop && devicePlantSensorCare.width >= 575)
 
-            text: currentDevice.deviceName + " - " + currentDevice.devicePlantName
+            text: {
+                if (currentDevice.devicePlantName.length)
+                    return currentDevice.deviceName + " - " + currentDevice.devicePlantName
+                return currentDevice.deviceName
+            }
             color: Theme.colorText
             font.pixelSize: 22
             font.capitalization: Font.Capitalize

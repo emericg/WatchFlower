@@ -61,7 +61,7 @@ Loader {
 
             property var historyChart: chartEnvLoader.item
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             Connections {
                 target: currentDevice
@@ -351,7 +351,7 @@ Loader {
                 }
             }
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             property real fakeAQI: 25
             //   0- 50 (good)
@@ -361,7 +361,7 @@ Loader {
             // 201-300 (Very Unhealthy)
             // 301-500 (Hazardous)
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             Flow {
                 anchors.fill: parent
@@ -600,7 +600,7 @@ Loader {
                     }
                 }
 
-                ////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////
 
                 Item {
                     id: sensorBox
@@ -614,7 +614,7 @@ Loader {
                         anchors.right: parent.right
                     }
 
-                    ////////////////////////////////////////////////////////////////////
+                    ////////////////
 
                     Flickable {
                         id: sensorFlick
@@ -646,12 +646,12 @@ Loader {
                                 Flow {
                                     id: airFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 24 : 16
+                                    anchors.topMargin: isDesktop ? 20 : 12
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 24 : 16
+                                    anchors.leftMargin: isDesktop ? 20 : 12
                                     anchors.right: parent.right
                                     anchors.rightMargin: 0
-                                    spacing: isDesktop ? 16 : 12
+                                    spacing: 12
 
                                     onWidthChanged: {
                                         var itemcount = 3
@@ -821,7 +821,7 @@ Loader {
                                 }
                             }
 
-                            ////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////
 
                             Rectangle {
                                 id: radBoxes
@@ -835,12 +835,12 @@ Loader {
                                 Flow {
                                     id: radFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 24 : 16
+                                    anchors.topMargin: isDesktop ? 20 : 12
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 24 : 16
+                                    anchors.leftMargin: isDesktop ? 20 : 12
                                     anchors.right: parent.right
                                     anchors.rightMargin: 0
-                                    spacing: isDesktop ? 16 : 12
+                                    spacing: 12
 
                                     onWidthChanged: {
                                         var itemcount = 2
@@ -898,7 +898,7 @@ Loader {
                                 }
                             }
 
-                            ////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////
 
                             Rectangle {
                                 id: weatherBoxes
@@ -913,16 +913,16 @@ Loader {
                                 Flow {
                                     id: weatherFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 16 : 12
+                                    anchors.topMargin: isDesktop ? 16 : 10
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 16 : 12
+                                    anchors.leftMargin: isDesktop ? 16 : 10
                                     anchors.right: parent.right
-                                    anchors.rightMargin: isDesktop ? 8 : 6
-                                    spacing: isDesktop ? 16 : 12
+                                    anchors.rightMargin: isDesktop ? 8 : 5
+                                    spacing: isDesktop ? 16 : 10
 
                                     onWidthChanged: {
                                         var itemcount = 3
-                                        var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
+                                        var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin - 5)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
                                         if (cellColumnsTarget >= itemcount) {
                                             www = (availableWidth - (spacing * itemcount)) / itemcount
@@ -934,18 +934,19 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 96 : 112
-                                    property int wwwMax: isPhone ? 112 : 128
+                                    property int wwwTarget: isPhone ? 80 : 112
+                                    property int wwwMax: 140
                                     property int www: wwwTarget
 
                                     ItemWeatherBox {
                                         id: temp
                                         size: weatherFlow.www
                                         visible: currentDevice.hasTemperatureSensor
+                                        duo: false
 
                                         title: qsTr("Temperature")
                                         legend: "°" + settingsManager.tempUnit
-                                        icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
+                                        icon: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                                         value: currentDevice.temperature
                                         precision: 1
                                     }
@@ -953,6 +954,7 @@ Loader {
                                         id: hum
                                         size: weatherFlow.www
                                         visible: currentDevice.hasHumiditySensor
+                                        duo: false
 
                                         title: qsTr("Humidity")
                                         legend: qsTr("°RH")
@@ -964,6 +966,7 @@ Loader {
                                         id: press
                                         size: weatherFlow.www
                                         visible: currentDevice.hasPressureSensor
+                                        duo: false
 
                                         title: qsTr("Pressure")
                                         legend: qsTr("hPa")
@@ -1054,7 +1057,7 @@ Loader {
                                 color: Theme.colorSeparator
                             }
 */
-                            ////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////
 
                             Loader {
                                 id: chartEnvLoader
@@ -1069,7 +1072,7 @@ Loader {
                                 }
                             }
 
-                            ////////////////////////////////////////////////////////////
+                            ////////////////////////////////////////////////////
                         }
                     }
                 }

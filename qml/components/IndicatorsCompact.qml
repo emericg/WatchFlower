@@ -73,7 +73,7 @@ Item {
         temp.value = tempHelper(tempD)
         humi.value = humiD
         lumi.value = lumiD
-        water_tank.value =  -99
+        water_tank.value = -99
 
         soil_moisture.warning = false
         temp.warning = false

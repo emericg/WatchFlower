@@ -5,8 +5,8 @@ import ThemeEngine 1.0
 Rectangle {
     id: itemWeatherBox
     width: (duo) ? size*2 : size
-    height: column.height + column.anchors.topMargin*2
-    radius: 10
+    height: columnContent.height + columnContent.anchors.topMargin*2
+    radius: Theme.componentRadius
 
     property string title: ""
     property string legend: ""
@@ -36,56 +36,65 @@ Rectangle {
     ////////
 
     Column {
-        id: column
+        id: columnContent
         anchors.top: parent.top
         anchors.topMargin: isDesktop ? 12 : 10
         anchors.left: parent.left
         anchors.leftMargin: isDesktop ? 12 : 10
         anchors.right: parent.right
-        anchors.rightMargin: 6
-        spacing: 6
-
-        IconSvg {
-            width: isDesktop ? 32 : 24
-            height: isDesktop ? 32 : 24
-            source: icon
-            color: Theme.colorIcon
-        }
+        anchors.rightMargin: isDesktop ? 6 : 5
+        spacing: isDesktop ? 6 : 5
 
         Text {
             width: parent.width
             text: itemWeatherBox.title
             wrapMode: Text.WordWrap
-            color: Theme.colorText
+            color: Theme.colorSubText
             font.bold: false
             font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
+            font.capitalization: Font.AllUppercase
         }
 
         Row {
-            spacing: 2
+            anchors.left: parent.left
+            anchors.leftMargin: -4
+            spacing: 4
+
+            IconSvg {
+                anchors.verticalCenter: parent.verticalCenter
+                width: isDesktop ? 32 : 24
+                height: isDesktop ? 32 : 24
+
+                source: icon
+                color: Theme.colorIcon
+            }
 
             Text {
+                anchors.verticalCenter: parent.verticalCenter
+
                 text: (itemWeatherBox.value > -99) ? itemWeatherBox.value.toFixed(itemWeatherBox.precision) : "?"
                 color: Theme.colorText
                 font.bold: false
                 font.pixelSize: {
                     if (itemWeatherBox.value >= 10000)
-                        return 20
+                        return isDesktop ? 20 : 18
                     else if (itemWeatherBox.value >= 1000)
-                        return 22
+                        return isDesktop ? 22 : 20
                     else if (itemWeatherBox.precision > 1)
-                        return 24
+                        return isDesktop ? 24 : 22
                     else
-                        return 26
+                        return isDesktop ? 26 : 24
                 }
             }
 
             Text {
+                anchors.verticalCenter: parent.verticalCenter
+
                 text: itemWeatherBox.legend
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.bold: false
-                font.pixelSize: Theme.fontSizeContent
+                font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
             }
         }
     }

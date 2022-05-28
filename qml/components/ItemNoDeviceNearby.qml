@@ -21,7 +21,24 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
         opacity: 0.9
+
+        NumberAnimation on rotation {
+            loops: Animation.Infinite
+            running: visible
+
+            duration: 2000
+            from: 0
+            to: 360
+        }
+        SequentialAnimation on opacity {
+            loops: Animation.Infinite
+            running: visible
+
+            PropertyAnimation { to: 0.66; duration: 1000; }
+            PropertyAnimation { to: 1; duration: 1000; }
+        }
     }
+
     Text {
         anchors.top: parent.bottom
         anchors.topMargin: 24
