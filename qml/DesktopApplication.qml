@@ -217,7 +217,10 @@ ApplicationWindow {
     // User generated events handling //////////////////////////////////////////
 
     function backAction() {
-        if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") return; // do nothing
+        if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
+            // do nothing
+            return
+        }
 
         if (appContent.state === "DeviceList") {
             // do nothing

@@ -31,6 +31,10 @@ Loader {
 
     ////////
 
+    function backAction() {
+        if (sourceComponent) return deviceThermometer.item.backAction()
+    }
+
     function isHistoryMode() {
         if (sourceComponent) return deviceThermometer.item.isHistoryMode()
         return false
@@ -215,6 +219,14 @@ Loader {
             }
             function updateGraph() {
                 if (graphLoader.status == Loader.Ready) thermoChart.updateGraph()
+            }
+
+            function backAction() {
+                if (isHistoryMode()) {
+                    resetHistoryMode()
+                } else {
+                    appContent.state = "DeviceList"
+                }
             }
 
             function isHistoryMode() {

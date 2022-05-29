@@ -18,10 +18,25 @@ Loader {
         }
     }
 
+    function isEditMode() {
+        if (sourceComponent) return plantCareJournal.item.isEditMode()
+        return false
+    }
+    function closeEditMode() {
+        if (sourceComponent) plantCareJournal.item.closeEditMode()
+    }
+
 Component {
     id: componentCareJournal
 
 Item {
+
+    function isEditMode() {
+        return entryEditor.visible
+    }
+    function closeEditMode() {
+        entryEditor.close()
+    }
 
     ////////////////////////////////////////////////////////////////////
 
@@ -38,6 +53,8 @@ Item {
         anchors.margins: 16
 
         visible: (entriesView.count > 0)
+        enabled: !entryEditor.visible
+
         topMargin: isPhone ? 8 : 12
         bottomMargin: isPhone ? 8 : 12
         spacing: 16
@@ -161,6 +178,11 @@ Item {
             entryComment.text = eee.comment
 
             entryEditor.visible = true
+        }
+
+        function close() {
+            entryComment.focus = false
+            entryEditor.visible = false
         }
 
         PopupDate {
@@ -300,7 +322,7 @@ Item {
                 primaryColor: "grey"
 
                 text: qsTr("Cancel")
-                onClicked: entryEditor.visible = false
+                onClicked: entryEditor.close()
             }
 
             ButtonWireframeIcon {
@@ -315,10 +337,8 @@ Item {
 
                 onClicked: {
                     //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
-                    entryComment.focus = false
-
                     entryEditor.entry.editEntry(entryEditor.entryType, entryEditor.currentDateTime, entryComment.text)
-                    entryEditor.visible = false
+                    entryEditor.close()
                 }
             }
 
@@ -334,9 +354,8 @@ Item {
 
                 onClicked: {
                     //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
-                    entryComment.focus = false
                     currentDevice.addJournalEntry(entryEditor.entryType, entryEditor.currentDateTime, entryComment.text)
-                    entryEditor.visible = false
+                    entryEditor.close()
                 }
             }
         }

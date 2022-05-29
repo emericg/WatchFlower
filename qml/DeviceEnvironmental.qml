@@ -31,6 +31,9 @@ Loader {
 
     ////////
 
+    function backAction() {
+        if (sourceComponent) deviceEnvironmental.item.backAction()
+    }
     function isHistoryMode() {
         if (sourceComponent) return deviceEnvironmental.item.isHistoryMode()
         return false
@@ -136,6 +139,10 @@ Loader {
             }
 
             ////////
+
+            function backAction() {
+                appContent.state = "DeviceList"
+            }
 
             function isHistoryMode() {
                 return false

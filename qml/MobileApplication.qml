@@ -310,7 +310,15 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") return // do nothing
+            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
+                // do nothing
+                return
+            }
+
+            if (appHeader.rightMenuIsOpen()) {
+                appHeader.rightMenuClose()
+                return
+            }
 
             if (appContent.state === "DeviceList") {
                 if (screenDeviceList.selectionList.length !== 0) {
@@ -322,27 +330,11 @@ ApplicationWindow {
                         exitTimer.start()
                 }
             } else if (appContent.state === "DevicePlantSensor") {
-                if (appHeader.rightMenuIsOpen()) {
-                    appHeader.rightMenuClose()
-                } else if (screenDevicePlantSensor.isHistoryMode()) {
-                    screenDevicePlantSensor.resetHistoryMode()
-                } else {
-                    appContent.state = "DeviceList"
-                }
+                screenDevicePlantSensor.backAction()
             } else if (appContent.state === "DeviceThermometer") {
-                if (appHeader.rightMenuIsOpen()) {
-                    appHeader.rightMenuClose()
-                } else if (screenDeviceThermometer.isHistoryMode()) {
-                    screenDeviceThermometer.resetHistoryMode()
-                } else {
-                    appContent.state = "DeviceList"
-                }
+                screenDeviceThermometer.backAction()
             } else if (appContent.state === "DeviceEnvironmental") {
-                if (appHeader.rightMenuIsOpen()) {
-                    appHeader.rightMenuClose()
-                } else {
-                    appContent.state = "DeviceList"
-                }
+                screenDeviceEnvironmental.backAction()
             } else if (appContent.state === "Permissions") {
                 appContent.state = screenPermissions.entryPoint
             } else if (appContent.state === "Tutorial") {

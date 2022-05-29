@@ -26,7 +26,12 @@ Item {
         plantLimits.updateLimits()
     }
 
-    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
+    function isEditMode() {
+        return plantJournal.isEditMode()
+    }
+    function closeEditMode() {
+        plantJournal.closeEditMode()
+    }
 
     onWidthChanged: updateSize()
     //onHeightChanged: updateSize()
