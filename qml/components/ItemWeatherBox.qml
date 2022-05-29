@@ -4,15 +4,15 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: itemWeatherBox
-    width: (duo) ? size*2 : size
-    height: columnContent.height + columnContent.anchors.topMargin*2
-    radius: Theme.componentRadius
+    width: (duo) ? sz*2 : sz
+    height: columnContent.height + 20
+    radius: 4
 
     property string title: ""
     property string legend: ""
     property string icon: ""
 
-    property int size: 96
+    property int sz: 96
     property bool duo: false
 
     property real value
@@ -35,31 +35,44 @@ Rectangle {
 
     ////////
 
+    IconSvg {
+        anchors.right: parent.right
+        anchors.rightMargin: isDesktop ? 6 : 4
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: isDesktop ? 6 : 4
+        width: isDesktop ? 48 : 32
+        height: isDesktop ? 48 : 32
+
+        source: icon
+        color: Theme.colorIcon
+        opacity: 0.1
+    }
+
     Column {
         id: columnContent
-        anchors.top: parent.top
-        anchors.topMargin: isDesktop ? 12 : 10
         anchors.left: parent.left
         anchors.leftMargin: isDesktop ? 12 : 10
         anchors.right: parent.right
-        anchors.rightMargin: isDesktop ? 6 : 5
-        spacing: isDesktop ? 6 : 5
+        anchors.rightMargin: isDesktop ? 6 : 4
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 2
+        spacing: isDesktop ? 4 : 0
 
         Text {
             width: parent.width
             text: itemWeatherBox.title
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
-            font.bold: false
-            font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
+            font.bold: true
+            font.pixelSize: isDesktop ? Theme.fontSizeContentVerySmall+1 : Theme.fontSizeContentVerySmall
             font.capitalization: Font.AllUppercase
         }
 
         Row {
             anchors.left: parent.left
-            anchors.leftMargin: -4
-            spacing: 4
-
+            anchors.leftMargin: 0
+            spacing: 2
+/*
             IconSvg {
                 anchors.verticalCenter: parent.verticalCenter
                 width: isDesktop ? 32 : 24
@@ -68,7 +81,7 @@ Rectangle {
                 source: icon
                 color: Theme.colorIcon
             }
-
+*/
             Text {
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -85,16 +98,19 @@ Rectangle {
                     else
                         return isDesktop ? 26 : 24
                 }
-            }
 
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    anchors.top: parent.top
+                    anchors.topMargin: 2
+                    anchors.left: parent.right
+                    anchors.rightMargin: 2
 
-                text: itemWeatherBox.legend
-                textFormat: Text.PlainText
-                color: Theme.colorSubText
-                font.bold: false
-                font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
+                    text: itemWeatherBox.legend
+                    textFormat: Text.PlainText
+                    color: Theme.colorSubText
+                    font.bold: false
+                    font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
+                }
             }
         }
     }

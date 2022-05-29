@@ -303,7 +303,7 @@ Item {
                         opacity: (boxDevice.deviceRssi < 0) ? 1 : 0.66
 
                         border.width: boxDevice.selected ? 6 : 2
-                        border.color: boxDevice.selected ? Theme.colorPrimary : Qt.darker(color, 1.2)
+                        border.color: boxDevice.selected ? Theme.colorSecondary : Qt.darker(color, 1.2)
 
                         color: {
                             if (boxDevice.deviceRssi < 0) {

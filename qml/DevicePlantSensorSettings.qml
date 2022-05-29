@@ -8,13 +8,15 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 Item {
     id: devicePlantSensorSettings
 
+    property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
+    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
+
+    ////////////////////////////////////////////////////////////////////////////
+
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("devicePlantSensorSettings // updateHeader() >> " + currentDevice)
     }
-
-    property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
-    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
 
     ////////////////////////////////////////////////////////////////////////////
 

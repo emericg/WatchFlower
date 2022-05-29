@@ -96,12 +96,6 @@ Item {
             height: 52
             z: 2
 
-            MouseArea {
-                anchors.fill: parent
-                anchors.margins: 0
-                onClicked: entryEditor.open()
-            }
-
             RoundButtonIcon {
                 id: add
                 width: 40
@@ -117,14 +111,17 @@ Item {
 
                 onClicked: entryEditor.open()
 
-                Text {
+                ButtonWireframe {
+                    height: 36
                     anchors.left: parent.right
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
-                    font.pixelSize: Theme.fontSizeContentBig
+                    fullColor: true
+                    primaryColor: Theme.colorSecondary
                     text: qsTr("Add a new entry")
+
+                    onClicked: entryEditor.open()
                 }
             }
         }
@@ -179,9 +176,9 @@ Item {
         Row {
             id: rowrowrow
             anchors.fill: parent
-            anchors.topMargin: 16
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.topMargin: isPhone ? 12 : 16
+            anchors.leftMargin: isPhone ? 8 : 16
+            anchors.rightMargin: isPhone ? 8 : 16
             anchors.bottomMargin: 80
             spacing: 20
 
@@ -205,7 +202,7 @@ Item {
 
             Column {
                 width: singleColumn ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
-                spacing: 20
+                spacing: isPhone ? 12 : 20
 
                 ButtonWireframe {
                     anchors.left: parent.left
@@ -281,7 +278,7 @@ Item {
                 TextAreaThemed {
                     id: entryComment
                     width: parent.width
-                    height: 160
+                    height: isPhone ? 128 : 160
 
                     colorBackground: Theme.colorBackground
                     placeholderText: qsTr("Add a comment")

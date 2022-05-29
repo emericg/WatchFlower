@@ -61,6 +61,10 @@ Loader {
 
             property var historyChart: chartEnvLoader.item
 
+            property int itemCount_AirMonitor: 3
+            property int itemCount_GeigerCounter: 2
+            property int itemCount_WeatherStation: 3
+
             ////////////////////////////////////////////////////////////////////
 
             Connections {
@@ -179,6 +183,28 @@ Loader {
                 } else {
                     isWeatherStation = false
                 }
+
+                //
+                itemCount_AirMonitor = 0
+                if (currentDevice.hasPM1Sensor) itemCount_AirMonitor++
+                if (currentDevice.hasPM25Sensor) itemCount_AirMonitor++
+                if (currentDevice.hasPM100Sensor) itemCount_AirMonitor++
+                if (currentDevice.hasVocSensor) itemCount_AirMonitor++
+                if (currentDevice.hasHchoSensor) itemCount_AirMonitor++
+                if (currentDevice.hasCo2Sensor) itemCount_AirMonitor++
+                if (itemCount_AirMonitor > 3) itemCount_AirMonitor = 3
+                airFlow.updateSize()
+
+                itemCount_WeatherStation = 0
+                if (currentDevice.hasTemperatureSensor) itemCount_WeatherStation++
+                if (currentDevice.hasHumiditySensor) itemCount_WeatherStation++
+                if (currentDevice.hasPressureSensor) itemCount_WeatherStation++
+                if (currentDevice.hasSoundSensor) itemCount_WeatherStation++
+                if (currentDevice.hasLuminositySensor) itemCount_WeatherStation++
+                if (currentDevice.hasUvSensor) itemCount_WeatherStation++
+                weatherFlow.updateSize()
+
+                //updateSize
 
                 // demo?
                 //isAirMonitor = true
@@ -653,12 +679,12 @@ Loader {
                                     anchors.rightMargin: 0
                                     spacing: 12
 
-                                    onWidthChanged: {
-                                        var itemcount = 3
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
                                         var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemcount) {
-                                            www = (availableWidth - (spacing * itemcount)) / itemcount
+                                        if (cellColumnsTarget >= itemCount_AirMonitor) {
+                                            www = (availableWidth - (spacing * itemCount_AirMonitor)) / itemCount_AirMonitor
                                             if (www > wwwMax) www = wwwMax
                                         } else {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
@@ -666,7 +692,7 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 128 : 160
+                                    property int wwwTarget: isPhone ? 96 : 160
                                     property int wwwMax: 200
                                     property int www: wwwTarget
 
@@ -814,7 +840,7 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: (isDesktop && singleColumn && !headerUnicolor)
+                                    visible: (singleColumn && !headerUnicolor)
                                     height: 2
                                     opacity: 0.5
                                     color: Theme.colorSeparator
@@ -842,12 +868,12 @@ Loader {
                                     anchors.rightMargin: 0
                                     spacing: 12
 
-                                    onWidthChanged: {
-                                        var itemcount = 2
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
                                         var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemcount) {
-                                            www = (availableWidth - (spacing * itemcount)) / itemcount
+                                        if (cellColumnsTarget >= itemCount_GeigerCounter) {
+                                            www = (availableWidth - (spacing * itemCount_GeigerCounter)) / itemCount_GeigerCounter
                                             if (www > wwwMax) www = wwwMax
                                         } else {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
@@ -855,7 +881,7 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 180 : 200
+                                    property int wwwTarget: isPhone ? 160 : 200
                                     property int wwwMax: 256
                                     property int www: wwwTarget
 
@@ -891,7 +917,7 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: (isDesktop && singleColumn && !headerUnicolor)
+                                    visible: (singleColumn && !headerUnicolor)
                                     height: 2
                                     opacity: 0.5
                                     color: Theme.colorSeparator
@@ -913,19 +939,19 @@ Loader {
                                 Flow {
                                     id: weatherFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 16 : 10
+                                    anchors.topMargin: isDesktop ? 14 : 10
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 16 : 10
+                                    anchors.leftMargin: isDesktop ? 14 : 8
                                     anchors.right: parent.right
-                                    anchors.rightMargin: isDesktop ? 8 : 5
-                                    spacing: isDesktop ? 16 : 10
+                                    anchors.rightMargin: isDesktop ? 7 : 4
+                                    spacing: isDesktop ? 14 : 8
 
-                                    onWidthChanged: {
-                                        var itemcount = 3
-                                        var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin - 5)
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
+                                        var availableWidth = sensorBox.width - (anchors.leftMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemcount) {
-                                            www = (availableWidth - (spacing * itemcount)) / itemcount
+                                        if (cellColumnsTarget >= itemCount_WeatherStation) {
+                                            www = (availableWidth - (spacing * itemCount_WeatherStation)) / itemCount_WeatherStation
                                             if (www > wwwMax) www = wwwMax
                                         } else {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
@@ -934,26 +960,27 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 80 : 112
-                                    property int wwwMax: 140
+                                    property int wwwTarget: isPhone ? 92 : 128
+                                    property int wwwMax: 160
                                     property int www: wwwTarget
 
                                     ItemWeatherBox {
                                         id: temp
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasTemperatureSensor
+                                        sz: weatherFlow.www
                                         duo: false
 
                                         title: qsTr("Temperature")
                                         legend: "°" + settingsManager.tempUnit
-                                        icon: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
+                                        icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
                                         value: currentDevice.temperature
                                         precision: 1
+                                        //onSensorSelection: primary = "temperature"
                                     }
                                     ItemWeatherBox {
                                         id: hum
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasHumiditySensor
+                                        sz: weatherFlow.www
                                         duo: false
 
                                         title: qsTr("Humidity")
@@ -961,11 +988,12 @@ Loader {
                                         icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                                         value: currentDevice.humidity
                                         precision: 0
+                                        //onSensorSelection: primary = "humidity"
                                     }
                                     ItemWeatherBox {
                                         id: press
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasPressureSensor
+                                        sz: weatherFlow.www
                                         duo: false
 
                                         title: qsTr("Pressure")
@@ -977,8 +1005,8 @@ Loader {
 
                                     ItemWeatherBox {
                                         id: sound
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasSoundSensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("Sound level")
                                         legend: qsTr("db")
@@ -989,8 +1017,8 @@ Loader {
 
                                     ItemWeatherBox {
                                         id: light
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasLuminositySensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("Luminosity")
                                         legend: qsTr("lux")
@@ -1000,8 +1028,8 @@ Loader {
                                     }
                                     ItemWeatherBox {
                                         id: uv
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasUvSensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("UV index")
                                         legend: ""
@@ -1012,8 +1040,8 @@ Loader {
 /*
                                     ItemWeatherBox {
                                         id: windd
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasWindDirectionSensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("Wind direction")
                                         legend: "north"
@@ -1023,8 +1051,8 @@ Loader {
                                     }
                                     ItemWeatherBox {
                                         id: winds
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasWindSpeedSensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("Wind speed")
                                         legend: qsTr("km/h")
@@ -1035,8 +1063,8 @@ Loader {
 
                                     ItemWeatherBox {
                                         id: rain
-                                        size: weatherFlow.www
                                         visible: currentDevice.hasWaterLevelSensor
+                                        sz: weatherFlow.www
 
                                         title: qsTr("Rain")
                                         legend: qsTr("mm")

@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Item {
     id: itemEnvBox
     width: 144
-    height: isPhone ? 56 : 72 // (width / 2)
+    height: isPhone ? 60 : 72 // (width / 2)
 
     property string title: ""
     property string legend: ""
@@ -65,10 +65,11 @@ Item {
             }
 
             Text {
+                anchors.top: parent.top
                 text: itemEnvBox.legend
                 color: Theme.colorSubText
                 font.bold: false
-                font.pixelSize: Theme.fontSizeContent
+                font.pixelSize: Theme.fontSizeContentSmall
             }
         }
 
@@ -76,7 +77,7 @@ Item {
             text: (itemEnvBox.value > -99) ? itemEnvBox.value.toFixed(itemEnvBox.precision) : "?"
             color: Theme.colorSubText
             font.bold: false
-            font.pixelSize: isPhone ? 25 : 26
+            font.pixelSize: isPhone ? 24 : 26
         }
     }
 }

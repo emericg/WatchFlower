@@ -9,6 +9,8 @@ Flickable {
     contentWidth: -1
     contentHeight: column.height
 
+    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
+
     function updateLimits() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("PlantCareLimits // updateLimits() >> " + currentDevice)
@@ -23,6 +25,8 @@ Flickable {
         rangeSlider_temp.setValues(currentDevice.temperature_limitMin, currentDevice.temperature_limitMax)
         rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: column
@@ -48,7 +52,6 @@ Flickable {
                 width: 24
                 height: 24
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 8
 
@@ -70,14 +73,15 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_hygro
-                height: 24
+                height: 32
                 anchors.top: imageHygro.bottom
-                anchors.topMargin: 2
+                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
+                hhh: isMobile ? 22 : 20
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "%"
@@ -125,7 +129,6 @@ Flickable {
                 width: 24
                 height: 24
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 8
 
@@ -148,14 +151,15 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_condu
-                height: 24
+                height: 32
                 anchors.top: imageCondu.bottom
-                anchors.topMargin: 2
+                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
+                hhh: isMobile ? 22 : 20
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 from: 0
@@ -201,7 +205,6 @@ Flickable {
                 width: 24
                 height: 24
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 8
 
@@ -223,14 +226,15 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_temp
-                height: 24
+                height: 32
                 anchors.top: imageTemp.bottom
-                anchors.topMargin: 2
+                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
+                hhh: isMobile ? 22 : 20
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "°"
@@ -294,7 +298,6 @@ Flickable {
                 width: 24
                 height: 24
                 anchors.top: parent.top
-                anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 8
 
@@ -316,14 +319,15 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_lumi
-                height: 24
+                height: 32
                 anchors.top: imageLumi.bottom
-                anchors.topMargin: 2
+                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
+                hhh: isMobile ? 22 : 20
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "k"
@@ -354,18 +358,18 @@ Flickable {
 
                 Row {
                     id: lumiScale
+                    anchors.top: rangeSlider_lumi.bottom
+                    anchors.topMargin: 2
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: 24
 
                     spacing: 2
 
                     Rectangle {
                         id: lux_1
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 4) * 0.1 // 0 to 1k
                         visible: !outsideMode
                         color: Theme.colorGrey
@@ -381,7 +385,7 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_2
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 8) * 0.2 // 1k to 3k
                         visible: !outsideMode
                         color: "grey"
@@ -397,7 +401,7 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_3
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 16) * 0.5 // 3k to 8k
                         visible: !outsideMode
                         color: Theme.colorYellow
@@ -413,7 +417,7 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_4
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 0) * 0.2 // 8k+
                         visible: !outsideMode
                         color: "orange"
@@ -430,7 +434,7 @@ Flickable {
 
                     Rectangle {
                         id: lux_5
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 6) * 0.16 // 0-15k
                         visible: outsideMode
                         color: "grey"
@@ -446,7 +450,7 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_6
-                        height: 16
+                        height: 18
                         width: (lumiScale.width - 6) * 0.84 // 15k+
                         visible: outsideMode
                         color: Theme.colorYellow
