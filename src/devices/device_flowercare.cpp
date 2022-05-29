@@ -256,11 +256,11 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             else
             {
                 // Make sure the LED is OFF
-                if (chl.value().size() == 2 && (chl.value().at(0) != 0 || chl.value().at(1) != 0))
-                {
-                    serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
-                    qWarning() << "FlowerCare LED was ON!";
-                }
+                //if (chl.value().size() == 2 && (chl.value().at(0) != 0 || chl.value().at(1) != 0))
+                //{
+                //    serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
+                //    qWarning() << "FlowerCare LED was ON!";
+                //}
             }
         }
     }
