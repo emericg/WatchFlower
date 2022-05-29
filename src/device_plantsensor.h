@@ -32,6 +32,8 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
 
+class Plant;
+
 /* ************************************************************************** */
 
 /*!
@@ -41,11 +43,18 @@ class DevicePlantSensor: public DeviceSensor
 {
     Q_OBJECT
 
-    // journal entries
     Q_PROPERTY(QVariant journalEntries READ getJournalEntries NOTIFY journalUpdated)
+
+    // plant
+    int m_plantId = -1;
+    QString m_plantName;
+    QString m_plantCache;
+    QDateTime m_plantStart;
+    Plant *m_plant = nullptr;
 
     // journal entries
     QList <QObject *> m_journal_entries;
+    bool loadPlant();
     bool loadJournalEntries();
     QVariant getJournalEntries() const { return QVariant::fromValue(m_journal_entries); }
 

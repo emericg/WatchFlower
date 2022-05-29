@@ -45,7 +45,7 @@ DevicePlantSensor::DevicePlantSensor(const QString &deviceAddr, const QString &d
         getSqlPlantData(12*60);
 
         // Load journal entries
-        loadJournalEntries();
+        loadPlant();
     }
 
     // Device infos
@@ -67,8 +67,8 @@ DevicePlantSensor::DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *par
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlPlantData(12*60);
 
-        // Load journal entries
-        loadJournalEntries();
+        // Load journal
+        loadPlant();
     }
 
     // Device infos
@@ -172,31 +172,105 @@ bool DevicePlantSensor::addDatabaseRecord(const int64_t timestamp,
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DevicePlantSensor::loadPlant()
+{
+    qDebug() << "DevicePlantSensor::loadPlant()";
+    bool status = false;
+
+    QSqlQuery queryPlant;
+    queryPlant.prepare("SELECT plantId, plantName, plantCache, plantStart " \
+                       "FROM plants WHERE deviceAddr = :deviceAddr");
+    queryPlant.bindValue(":deviceAddr", m_deviceAddress);
+
+    status = queryPlant.exec();
+    if (status)
+    {
+        if (queryPlant.first())
+        {
+            if (queryPlant.value(0).toInt() >= 0)
+            {
+                m_plantId = queryPlant.value(0).toInt();
+                m_plantName = queryPlant.value(1).toString();
+                m_plantCache = queryPlant.value(2).toString();
+                m_plantStart = queryPlant.value(3).toDateTime();
+
+                if (m_plantId >= 0)
+                {
+                    loadJournalEntries();
+                }
+                if (m_plantCache.isEmpty() == false)
+                {
+                    // TODO
+                }
+            }
+        }
+
+        if (m_plantId < 0)
+        {
+            QSqlQuery createPlant;
+            createPlant.prepare("INSERT INTO plants (plantStart, deviceAddr) VALUES (:date, :addr)");
+            createPlant.bindValue(":date", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            createPlant.bindValue(":addr", m_deviceAddress);
+
+            if (createPlant.exec())
+            {
+                m_plantId = createPlant.lastInsertId().toInt();
+            }
+            else
+            {
+                qWarning() << "> createPlant.exec() ERROR"
+                           << createPlant.lastError().type() << ":" << createPlant.lastError().text();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "> queryPlant() ERROR querying plant associated with device:" << m_deviceAddress
+                   << queryPlant.lastError().type() << ":" << queryPlant.lastError().text();
+    }
+
+    return status;
+}
+
 bool DevicePlantSensor::loadJournalEntries()
 {
     //qDebug() << "DevicePlantSensor::loadJournalEntries()";
     bool status = false;
 
     m_journal_entries.clear();
+    if (!m_plantId) return status;
 
     QSqlQuery queryJournalEntries;
-    queryJournalEntries.prepare("SELECT plantId, entryId," \
-                                  "entryType, entryTimestamp, entryComment " \
-                                "FROM plantJournal WHERE deviceAddr = :deviceAddr");
-    queryJournalEntries.bindValue(":deviceAddr", m_deviceAddress);
-    status = queryJournalEntries.exec();
+    queryJournalEntries.prepare("SELECT entryId, entryType, entryTimestamp, entryComment " \
+                                "FROM plantJournal WHERE plantId = :plantId");
+    queryJournalEntries.bindValue(":plantId", m_plantId);
 
+
+/*
+    queryTimeplayed.prepare("SELECT SUM(ex_duration) FROM sessions "
+                            "INNER JOIN exercises ON sessions.id = exercises.session_id "
+                            "WHERE student_id = :sid");
+
+    // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN
+    queryJournalEntries.prepare("SELECT entryId, entryType, entryTimestamp, entryComment " \
+                                "FROM plantJournal
+                                "INNER JOIN exercises ON sessions.id = exercises.session_id "
+                                "WHERE deviceAddr = :deviceAddr");
+    queryJournalEntries.bindValue(":deviceAddr", m_deviceAddress);
+*/
+
+
+    status = queryJournalEntries.exec();
     if (status)
     {
         while (queryJournalEntries.next())
         {
-            int plantId = queryJournalEntries.value(0).toInt();
-            int entryId = queryJournalEntries.value(1).toInt();
-            int entryType = queryJournalEntries.value(2).toInt();
-            QDateTime entryDate = queryJournalEntries.value(3).toDateTime();
-            QString entryComment = queryJournalEntries.value(4).toString();
+            int entryId = queryJournalEntries.value(0).toInt();
+            int entryType = queryJournalEntries.value(1).toInt();
+            QDateTime entryDate = queryJournalEntries.value(2).toDateTime();
+            QString entryComment = queryJournalEntries.value(3).toString();
 
-            JournalEntry *j = new JournalEntry(m_deviceAddress, plantId, entryId,
+            JournalEntry *j = new JournalEntry(m_plantId, entryId,
                                                entryType, entryDate, entryComment, this);
             if (j)
             {
@@ -222,7 +296,7 @@ bool DevicePlantSensor::addJournalEntry(const int type, const QDateTime &date, c
     JournalEntry *j = new JournalEntry(this);
     if (j)
     {
-        if (j->addEntry(m_deviceAddress, type, date, comment))
+        if (j->addEntry(m_plantId, type, date, comment))
         {
             m_journal_entries.push_back(j);
             Q_EMIT journalUpdated();

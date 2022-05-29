@@ -4,45 +4,134 @@ import ThemeEngine 1.0
 import JournalUtils 1.0
 import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
-Rectangle {
+Item {
     id: journalWidget
+
     implicitWidth: 640
-    implicitHeight: 80
+    implicitHeight: 32
 
-    radius: 4
-    color: Qt.lighter(UtilsPlantJournal.getJournalEntryColor(modelData.type), 1.2)
-    border.width: 2
-    border.color: UtilsPlantJournal.getJournalEntryColor(modelData.type)
+    height: rowheader.height + (modelData.comment.length > 0 ? ccccc.contentHeight : 8) + 16
 
-    RoundButtonIcon {
+    property bool selected: (entriesView.entrySelected === index)
+
+    ////////
+
+    Row {
+        id: rowheader
         anchors.left: parent.left
+        anchors.leftMargin: isPhone ? 8 : 12
+
+        layoutDirection: isPhone ? Qt.RightToLeft : Qt.LeftToRight
+        spacing: 12
+
+        Text {
+            anchors.verticalCenter: parent.verticalCenter
+            width: isPhone ? 48 : 72
+
+            text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM")
+            horizontalAlignment: isPhone ? Text.AlignLeft : Text.AlignRight
+            color: Theme.colorSubText
+            font.bold: false
+            font.pixelSize: isPhone ? Theme.fontSizeContent : Theme.fontSizeContentBig
+        }
+
+        Rectangle {
+            width: 24
+            height: 24
+            radius: 24
+            anchors.verticalCenter: parent.verticalCenter
+
+            color: UtilsPlantJournal.getJournalEntryColor(modelData.type)
+            border.color: selected ? Theme.colorSecondary : Theme.colorSeparator
+            border.width: 4
+
+            Rectangle {
+                anchors.top: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: 3
+                height: journalWidget.height - 8
+                z: -1
+                color: Theme.colorSeparator
+            }
+        }
+    }
+
+    ////////
+
+    Text {
+        id: ttttt
+        anchors.left: rowheader.right
         anchors.leftMargin: 12
-        anchors.verticalCenter: parent.verticalCenter
-        width: 56; height: 56;
+        anchors.right: parent.right
+        anchors.rightMargin: 12
+        anchors.verticalCenter: rowheader.verticalCenter
 
-        border: true
-        background: true
-        backgroundColor: Theme.colorBackground
-        iconColor: Qt.darker(UtilsPlantJournal.getJournalEntryColor(modelData.type), 1.1)
-        source: UtilsPlantJournal.getJournalEntryIcon(modelData.type)
+        text: UtilsPlantJournal.getJournalEntryName2(modelData.type)
+        wrapMode: Text.WordWrap
+        color: Theme.colorText
+        font.pixelSize: Theme.fontSizeContentBig
     }
 
-    Column {
-        anchors.left: parent.left
-        anchors.leftMargin: 80
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: 0
+    Text {
+        id: ccccc
+        anchors.top: ttttt.bottom
+        anchors.topMargin: 8
+        anchors.left: ttttt.left
+        anchors.right: parent.right
+        anchors.rightMargin: 12
 
-        Text {
-            text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM yyyy")
-            color: Theme.colorLowContrast
-            font.pixelSize: Theme.fontSizeContentVeryBig
-        }
+        visible: (modelData.comment.length > 0)
+        text: modelData.comment
+        color: Theme.colorSubText
+        font.pixelSize: Theme.fontSizeContentBig
+    }
 
-        Text {
-            text: modelData.comment
-            color: Qt.darker(Theme.colorLowContrast, 1.1)
-            font.pixelSize: Theme.fontSizeContentBig
+    ////////
+
+    MouseArea {
+        anchors.fill: parent
+        anchors.margins: -8
+/*
+        propagateComposedEvents: true
+        hoverEnabled: false
+        onEntered: buttonrow.opacity = 1
+        onExited: buttonrow.opacity = 0
+*/
+        onClicked: {
+            utilsApp.vibrate(25)
+
+            if (selected)
+                entriesView.entrySelected = -1
+            else
+                entriesView.entrySelected = index
         }
     }
+
+    Row {
+        anchors.right: parent.right
+        anchors.verticalCenter: rowheader.verticalCenter
+
+        spacing: 8
+        enabled: selected
+        opacity: selected ? 1 : 0
+        Behavior on opacity { OpacityAnimator { duration: 200 } }
+
+        RoundButtonIcon {
+            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+
+            onClicked: {
+                entryEditor.edit(modelData)
+            }
+        }
+        RoundButtonIcon {
+            source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
+
+            onClicked: {
+                currentDevice.removeJournalEntry(modelData.id)
+            }
+        }
+    }
+
+    ////////
 }

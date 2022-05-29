@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 Popup {
     id: popupDate
-    width: appWindow.width * 0.85
+    width: appWindow.width * 0.9
     x: (appWindow.width / 2) - (width / 2)
     y: (appWindow.height / 2) - (height / 2) // - (appHeader.height / 2)
 
@@ -18,6 +18,8 @@ Popup {
     parent: Overlay.overlay
 
     ////////////////////////////////////////////////////////////////////////////
+
+    //property var locale: Qt.locale()
 
     property var today: new Date()
     property bool isToday: false
@@ -204,6 +206,7 @@ Popup {
                 delegate: Text {
                     text: model.shortName.substring(0, 1).toUpperCase()
                     color: Theme.colorText
+                    font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -227,6 +230,7 @@ Popup {
                     opacity: (model.month === grid.month ? 1 : 0.2)
                     text: model.day
                     font: grid.font
+                    //font.bold: model.today
                     color: selected ? "white" : Theme.colorSubText
 
                     property bool selected: (model.day === currentDate.getDate() &&
@@ -238,7 +242,7 @@ Popup {
                         radius: parent.width
                         color: selected ? Theme.colorSecondary : "transparent"
                         border.color: Theme.colorSecondary
-                        border.width: (model.today) ? 1 : 0
+                        border.width: (model.today) ? Theme.componentBorderWidth : 0
                     }
                 }
 
@@ -309,5 +313,7 @@ Popup {
                 }
             }
         }
+
+        ////////
     }
 }

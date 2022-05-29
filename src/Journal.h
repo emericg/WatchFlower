@@ -45,15 +45,15 @@ public:
     enum JournalType {
         JOURNAL_UNKNOWN          = 0,
 
-        JOURNAL_COMMENT,
-        JOURNAL_PHOTO,
-
         JOURNAL_WATER,
         JOURNAL_FERTILIZE,
         JOURNAL_PRUNE,
         JOURNAL_ROTATE,
         JOURNAL_MOVE,
         JOURNAL_REPOT,
+
+        JOURNAL_PHOTO,
+        JOURNAL_COMMENT,
     };
     Q_ENUM(JournalType)
 };
@@ -82,11 +82,11 @@ Q_SIGNALS:
 
 public:
     JournalEntry(QObject *parent);
-    JournalEntry(const QString &deviceAddr, const int plantId, const int entryId,
+    JournalEntry(const int plantId, const int entryId,
                  const int type, const QDateTime &date, const QString &comment, QObject *parent);
     ~JournalEntry() = default;
 
-    bool addEntry(const QString &addr,
+    bool addEntry(const int plantId,
                   const int type, const QDateTime &date, const QString &comment);
     Q_INVOKABLE bool editEntry(const int type, const QDateTime &date, const QString &comment);
     bool removeEntry();

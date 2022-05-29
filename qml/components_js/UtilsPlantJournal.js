@@ -33,6 +33,32 @@ function getJournalEntryName(entryType) {
     return txt
 }
 
+function getJournalEntryName2(entryType) {
+    var txt = ""
+
+    if (entryType === JournalUtils.JournalUtils.JOURNAL_UNKNOWN) {
+        txt = qsTr("Unknown")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_COMMENT) {
+        txt = qsTr("Comment")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_PHOTO) {
+        txt = qsTr("Photo")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_WATER) {
+        txt = qsTr("Watered")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_FERTILIZE) {
+        txt = qsTr("Fertilized")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_PRUNE) {
+        txt = qsTr("Pruned")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_ROTATE) {
+        txt = qsTr("Rotated")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_MOVE) {
+        txt = qsTr("Moved")
+    } else if (entryType === JournalUtils.JournalUtils.JOURNAL_REPOT) {
+        txt = qsTr("Repoted")
+    }
+
+    return txt
+}
+
 function getJournalEntryIcon(entryType) {
     var src = ""
 

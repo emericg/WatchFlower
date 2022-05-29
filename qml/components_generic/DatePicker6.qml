@@ -33,6 +33,10 @@ Item {
         today = new Date()
 
         printDate()
+
+        // visual hacks
+        //dow.width = dow.width - 8
+        grid.width = dow.width - 8
     }
 
     function openDate_limits(datetime, min, max) {
@@ -59,7 +63,7 @@ Item {
         id: background
         anchors.fill: parent
 
-        clip: true
+        clip: false
         radius: Theme.componentRadius*2
         color: Theme.colorBackground
         border.width: Theme.componentBorderWidth
@@ -140,11 +144,13 @@ Item {
 
             z: 2
             height: 48
-            color: Qt.lighter(Theme.colorSeparator, 1.05)
+            color: Qt.lighter(Theme.colorSeparator, 1.1)
 
             DayOfWeekRow {
                 anchors.left: parent.left
+                anchors.leftMargin: 4
                 anchors.right: parent.right
+                anchors.rightMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 //locale: datePicker.locale
@@ -174,7 +180,7 @@ Item {
             //locale: datePicker.locale
 
             delegate: Text {
-                width: (grid.width / 7)
+                width: ((grid.width - 8) / 7)
                 height: (grid.height / 6)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -182,6 +188,7 @@ Item {
                 opacity: (model.month === grid.month ? 1 : 0.2)
                 text: model.day
                 font: grid.font
+                //font.bold: model.today
                 color: selected ? "white" : Theme.colorSubText
 
                 property bool selected: (model.day === currentDate.getDate() &&
@@ -196,7 +203,7 @@ Item {
                     radius: parent.width
                     color: selected ? Theme.colorSecondary : "transparent" //Theme.colorBackground
                     border.color: Theme.colorSecondary
-                    border.width: (model.today) ? 1 : 0
+                    border.width: (model.today) ? Theme.componentBorderWidth : 0
                 }
             }
 

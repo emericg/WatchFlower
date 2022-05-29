@@ -18,424 +18,334 @@ Loader {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+Component {
+    id: componentCareJournal
 
-    Component {
-        id: componentCareJournal
+Item {
 
-        Item {
-            ListView {
-                id: entriesView
-                anchors.fill: parent
-                anchors.margins: 16
-                spacing: 16
+    ////////////////////////////////////////////////////////////////////
 
-                model: currentDevice.journalEntries
-                delegate: JournalWidget {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+    ItemNoJournalEntry {
+        visible: (entriesView.count <= 0)
+        onClicked: entryEditor.open()
+    }
+
+    ////////////
+
+    ListView {
+        id: entriesView
+        anchors.fill: parent
+        anchors.margins: 16
+
+        visible: (entriesView.count > 0)
+        topMargin: isPhone ? 8 : 12
+        bottomMargin: isPhone ? 8 : 12
+        spacing: 16
+
+        property int entrySelected: -1
+        onCountChanged: {
+            entrySelected = -1
+            Qt.callLater(entriesView.positionViewAtEnd)
+        }
+
+        header: Item {
+            height: 80
+
+            RoundButtonIcon {
+                width: 40
+                height: 40
+                anchors.left: parent.left
+                anchors.leftMargin: isPhone ? 0 : 88
+                anchors.top: parent.top
+
+                source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                iconColor: "white"
+                background: true
+                backgroundColor: Theme.colorGreen
+
+                Text {
+                    anchors.left: parent.right
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    font.pixelSize: Theme.fontSizeContentBig
+                    text: qsTr("Plant tracked since %1").arg(currentDevice.plantStart)
                 }
 
-                ItemNoJournalEntry {
-                    visible: (entriesView.count <= 0)
+                Rectangle {
+                    anchors.top: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    width: 3
+                    height: 40
+                    z: -1
+                    color: Theme.colorSeparator
                 }
             }
+        }
 
-            ////////////////////////////////////////////////////////////////////////////
+        model: currentDevice.journalEntries
+        delegate: JournalWidget {
+            width: entriesView.width
+        }
+
+        footer: Item {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 52
+            z: 2
+
+            MouseArea {
+                anchors.fill: parent
+                anchors.margins: 0
+                onClicked: entryEditor.open()
+            }
 
             RoundButtonIcon {
                 id: add
-                width: 48
-                height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 20
+                width: 40
+                height: 40
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 20
+                anchors.left: parent.left
+                anchors.leftMargin: isPhone ? 0 : 88
 
                 source: "qrc:/assets/icons_material/baseline-add-24px.svg"
                 iconColor: "white"
                 background: true
                 backgroundColor: Theme.colorPrimary
 
-                onClicked: newEntry.visible = true
+                onClicked: entryEditor.open()
 
                 Text {
-                    anchors.right: parent.left
-                    anchors.rightMargin: 32
+                    anchors.left: parent.right
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: (isDesktop && !singleColumn && entriesView.count <= 0)
                     color: Theme.colorText
-                    font.pixelSize: Theme.fontSizeComponent
-                    text: qsTr("You can add new entries here!")
-
-                    Rectangle {
-                        anchors.fill: parent
-                        anchors.margins: -12
-                        z: -1
-                        radius: Theme.componentRadius
-                        color: Theme.colorForeground
-                        border.width: Theme.componentBorderWidth
-                        border.color: Theme.colorSeparator
-                    }
-                }
-            }
-
-            ////////////////////////////////////////////////////////////////////////////
-
-            Rectangle {
-                id: newEntry
-                anchors.fill: parent
-
-                visible: false
-                color: Theme.colorForeground
-                //height: parent.height * 0.66
-
-                property var currentDateTime: new Date()
-                property int entryType: JournalUtils.JOURNAL_WATER
-
-                PopupDate {
-                    id: popupDate
-                    onUpdateDate: (newdate) => {
-                        //console.log("onUpdateDate(" + newdate + ")")
-                        newEntry.currentDateTime = newdate
-                    }
-                }
-
-                onVisibleChanged: {
-                    datePicker.openDate(currentDateTime)
-                    entryType = JournalUtils.JOURNAL_WATER
-                    entryComment.text = ""
-                }
-
-                ////////////////
-
-                Row {
-                    id: rowrowrow
-                    anchors.fill: parent
-                    anchors.margins: 24
-                    anchors.bottomMargin: 80
-                    spacing: singleColumn ? 16 : 20
-
-                    DatePicker {
-                        id: datePicker
-                        width: (newEntry.width * 0.4) - (24+10)
-                        height: rowrowrow.height
-                        visible: !singleColumn
-
-                        onUpdateDate: (newdate) => {
-                            //console.log("onUpdateDate(" + newdate + ")")
-                            newEntry.currentDateTime = newdate
-                        }
-                    }
-
-                    ////
-
-                    Column {
-                        width: singleColumn ? parent.width : ((newEntry.width * 0.6) - (24+10))
-                        spacing: 24
-
-                        ButtonWireframe {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            height: singleColumn ? 40 : 44
-
-                            //visible: singleColumn
-                            fullColor: true
-                            text: newEntry.currentDateTime.toLocaleDateString(Qt.locale())
-                            primaryColor: Theme.colorSecondary
-                            onClicked: {
-                                if (singleColumn)
-                                    popupDate.openDate(newEntry.currentDateTime)
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            height: singleColumn ? colEntryType.height : colEntryType.height + 24
-
-                            radius: Theme.componentRadius
-                            color: Theme.colorForeground
-                            border.width: singleColumn ? 0 : 2
-                            border.color: Theme.colorSeparator
-
-                            Grid {
-                                id: colEntryType
-                                anchors.centerIn: parent
-
-                                //property bool doubletrouble: (parent.width < (6*52 + 5*24))
-                                rows: singleColumn ? 2 : 1
-                                columns: singleColumn ? 1 : 2
-                                spacing: singleColumn ? 16 : 20
-
-                                Row {
-                                    spacing: 24
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_WATER)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_WATER)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_WATER
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_WATER)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_FERTILIZE)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_FERTILIZE)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_FERTILIZE
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_FERTILIZE)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            sourceSize: 32
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_PRUNE)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_PRUNE)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_PRUNE
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_PRUNE)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-                                }
-        /*
-                                Row {
-                                    visible: false // disabled
-                                    spacing: 24
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            sourceSize: 32
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_COMMENT)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_COMMENT)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_COMMENT
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_COMMENT)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_PHOTO)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_PHOTO)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_PHOTO
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_PHOTO)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-                                }
-        */
-                                Row {
-                                    spacing: 24
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_ROTATE)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_ROTATE)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_ROTATE
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_ROTATE)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_MOVE)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_MOVE)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_MOVE
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_MOVE)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-
-                                    Column {
-                                        width: 52
-                                        spacing: 4
-
-                                        RoundButtonIcon {
-                                            width: 52
-                                            height: 52
-                                            source: UtilsPlantJournal.getJournalEntryIcon(JournalUtils.JOURNAL_REPOT)
-                                            iconColor: Theme.colorSubText
-                                            background: true
-                                            backgroundColor: Theme.colorBackground
-                                            border: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
-                                            highlightMode: "border"
-
-                                            selected: (newEntry.entryType === JournalUtils.JOURNAL_REPOT)
-                                            onClicked: newEntry.entryType = JournalUtils.JOURNAL_REPOT
-                                        }
-                                        Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
-                                            text: UtilsPlantJournal.getJournalEntryName(JournalUtils.JOURNAL_REPOT)
-                                            color: Theme.colorText
-                                            font.pixelSize: Theme.fontSizeContentSmall
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        TextAreaThemed {
-                            id: entryComment
-                            width: parent.width
-                            height: 160
-
-                            colorBackground: Theme.colorBackground
-                            placeholderText: qsTr("Add a comment")
-                        }
-                    }
-                }
-
-                ////////////////
-
-                Row {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 20
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 20
-                    spacing: 20
-
-                    ButtonWireframe {
-                        fullColor: true
-                        primaryColor: "grey"
-
-                        text: qsTr("Cancel")
-                        onClicked: newEntry.visible = false
-                    }
-
-                    ButtonWireframeIcon {
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/baseline-add-24px.svg"
-
-                        text: qsTr("Add")
-                        onClicked: {
-                            //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
-                            entryComment.focus = false
-                            currentDevice.addJournalEntry(newEntry.entryType, newEntry.currentDateTime, entryComment.text)
-                            newEntry.visible = false
-                        }
-                    }
+                    font.pixelSize: Theme.fontSizeContentBig
+                    text: qsTr("Add a new entry")
                 }
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: entryEditor
+        anchors.fill: parent
+
+        visible: false
+        color: Theme.colorBackground // Theme.colorForeground
+        //height: parent.height * 0.66
+
+        property var currentDateTime: new Date()
+
+        property var entry: null
+        property int entryType: JournalUtils.JOURNAL_WATER
+
+        function open() {
+            datePicker.openDate(currentDateTime) // to keep date
+            //datePicker.openDate(new Date()) // to reset date
+
+            entry = null
+            entryType = JournalUtils.JOURNAL_WATER
+            entryComment.text = ""
+
+            entryEditor.visible = true
+        }
+
+        function edit(eee) {
+            datePicker.openDate(eee.date)
+
+            entry = eee
+            entryType = eee.type
+            entryComment.text = eee.comment
+
+            entryEditor.visible = true
+        }
+
+        PopupDate {
+            id: popupDate
+            onUpdateDate: (newdate) => {
+                //console.log("onUpdateDate(" + newdate + ")")
+                entryEditor.currentDateTime = newdate
+            }
+        }
+
+        ////////////
+
+        Row {
+            id: rowrowrow
+            anchors.fill: parent
+            anchors.topMargin: 16
+            anchors.leftMargin: 16
+            anchors.rightMargin: 16
+            anchors.bottomMargin: 80
+            spacing: 20
+
+            Item {
+                width: (rowrowrow.width * 0.4) - (rowrowrow.spacing / 2)
+                height: rowrowrow.height
+                visible: !singleColumn
+
+                DatePicker {
+                    id: datePicker
+                    anchors.fill: parent
+
+                    onUpdateDate: (newdate) => {
+                        //console.log("onUpdateDate(" + newdate + ")")
+                        entryEditor.currentDateTime = newdate
+                    }
+                }
+            }
+
+            ////
+
+            Column {
+                width: singleColumn ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
+                spacing: 20
+
+                ButtonWireframe {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: singleColumn ? 40 : 44
+
+                    //visible: singleColumn
+                    fullColor: true
+                    text: entryEditor.currentDateTime.toLocaleDateString(Qt.locale())
+                    primaryColor: Theme.colorSecondary
+                    onClicked: {
+                        if (singleColumn)
+                            popupDate.openDate(entryEditor.currentDateTime)
+                    }
+                }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: colEntryType.height + 20
+
+                    radius: Theme.componentRadius
+                    color: Theme.colorForeground
+                    border.width: singleColumn ? 0 : 2
+                    border.color: Theme.colorSeparator
+
+                    Grid {
+                        id: colEntryType
+                        anchors.centerIn: parent
+
+                        //property bool doubletrouble: (parent.width < (6*52 + 5*24))
+                        rows: singleColumn ? 2 : 1
+                        columns: singleColumn ? 3 : 6
+                        spacing: singleColumn ? 16 : 20
+
+                        Repeater {
+                            model: [JournalUtils.JOURNAL_WATER, JournalUtils.JOURNAL_FERTILIZE, JournalUtils.JOURNAL_PRUNE,
+                                    JournalUtils.JOURNAL_ROTATE, JournalUtils.JOURNAL_MOVE, JournalUtils.JOURNAL_REPOT]
+
+                            Column {
+                                spacing: 4
+                                width: btn.width
+
+                                RoundButtonIcon {
+                                    id: btn
+                                    width: 52
+                                    height: 52
+
+                                    source: UtilsPlantJournal.getJournalEntryIcon(modelData)
+                                    iconColor: Theme.colorSubText
+                                    background: true
+                                    backgroundColor: Theme.colorBackground
+                                    border: true
+                                    borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
+                                    highlightMode: "border"
+
+                                    selected: (entryEditor.entryType === modelData)
+                                    onClicked: entryEditor.entryType = modelData
+                                }
+                                Text {
+                                    anchors.horizontalCenter: parent.horizontalCenter
+
+                                    text: UtilsPlantJournal.getJournalEntryName(modelData)
+                                    color: btn.selected ? Theme.colorPrimary : Theme.colorText
+                                    //font.bold: btn.selected
+                                    font.pixelSize: Theme.fontSizeContentSmall
+                                }
+                            }
+                        }
+                    }
+                }
+
+                TextAreaThemed {
+                    id: entryComment
+                    width: parent.width
+                    height: 160
+
+                    colorBackground: Theme.colorBackground
+                    placeholderText: qsTr("Add a comment")
+                }
+            }
+        }
+
+        ////////////////
+
+        Row {
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 16
+            spacing: 16
+
+            ButtonWireframe {
+                fullColor: true
+                primaryColor: "grey"
+
+                text: qsTr("Cancel")
+                onClicked: entryEditor.visible = false
+            }
+
+            ButtonWireframeIcon {
+                id: buttonEdit
+
+                visible: entryEditor.entry
+
+                text: qsTr("Edit entry")
+                fullColor: true
+                primaryColor: Theme.colorPrimary
+                source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+
+                onClicked: {
+                    //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
+                    entryComment.focus = false
+
+                    entryEditor.entry.editEntry(entryEditor.entryType, entryEditor.currentDateTime, entryComment.text)
+                    entryEditor.visible = false
+                }
+            }
+
+            ButtonWireframeIcon {
+                id: buttonAdd
+
+                visible: !entryEditor.entry
+
+                text: qsTr("Add entry")
+                fullColor: true
+                primaryColor: Theme.colorPrimary
+                source: "qrc:/assets/icons_material/baseline-add-24px.svg"
+
+                onClicked: {
+                    //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
+                    entryComment.focus = false
+                    currentDevice.addJournalEntry(entryEditor.entryType, entryEditor.currentDateTime, entryComment.text)
+                    entryEditor.visible = false
+                }
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////
+}
+}
 }

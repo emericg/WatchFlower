@@ -485,6 +485,7 @@ void DatabaseManager::createDatabase()
                              "plantId INTEGER PRIMARY KEY AUTOINCREMENT," \
                                "plantName VARCHAR(255)," \
                                "plantCache VARCHAR(1024)," \
+                               "plantStart DATETIME," \
                              "deviceAddr VARCHAR(38)," \
                              "FOREIGN KEY(deviceAddr) REFERENCES devices(deviceAddr)" \
                              ");");

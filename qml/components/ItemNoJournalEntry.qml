@@ -4,13 +4,16 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 
 Rectangle {
+    id: itemNoEntry
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: -32
+    anchors.verticalCenterOffset: -40
 
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.5)
     height: width
     radius: width
     color: Theme.colorForeground
+
+    signal clicked()
 
     IconSvg {
         anchors.centerIn: parent
@@ -22,6 +25,7 @@ Rectangle {
         color: Theme.colorSubText
         opacity: 0.9
     }
+
     Text {
         anchors.top: parent.bottom
         anchors.topMargin: 24
@@ -31,5 +35,15 @@ Rectangle {
         textFormat: Text.PlainText
         font.pixelSize: Theme.fontSizeContent
         color: Theme.colorText
+
+        ButtonWireframe {
+            anchors.top: parent.bottom
+            anchors.topMargin: 12
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            fullColor: true
+            text: qsTr("Let's start!")
+            onClicked: itemNoEntry.clicked()
+        }
     }
 }

@@ -304,7 +304,7 @@ Item {
             colorText = "#333333"
             colorSubText = "#666666"
             colorIcon = "#333333"
-            colorSeparator = colorMaterialDarkGrey
+            colorSeparator = "#e8e8e8"
             colorLowContrast = "white"
             colorHighContrast = "black"
 
