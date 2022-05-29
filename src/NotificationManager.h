@@ -44,8 +44,8 @@ class NotificationManager : public QObject
 public:
     static NotificationManager *getInstance();
 
-    void setNotification(const QString &message);
-    void setNotification2(const QString &title, const QString &message);
+    void setNotification(const QString &message, int channel = 0);
+    void setNotification2(const QString &title, const QString &message, int channel = 0);
     QString getNotification() const;
 
 signals:
@@ -59,6 +59,7 @@ private slots:
 private:
     QString m_title;
     QString m_message;
+    int m_channel = 0;
 };
 
 /* ************************************************************************** */

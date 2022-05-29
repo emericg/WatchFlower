@@ -74,22 +74,26 @@ void AndroidService::gotowork()
     // Is the background service enabled?
     if (m_settingsManager->getSysTray())
     {
-        // Reload the device manager, a new scan might have occured
-        if (m_deviceManager) delete m_deviceManager;
-        m_deviceManager = new DeviceManager(true);
-
-        // Device manager is operational?
-        if (m_deviceManager &&
-            m_deviceManager->checkBluetooth() &&
-            m_deviceManager->areDevicesAvailable())
+        // Check when was the last run, to be sure we need an update
+        if (DeviceManager::getLastRun() > 60)
         {
-            // Start background refresh process
-            m_deviceManager->refreshDevices_background();
+            // Reload the device manager, a new scan might have occured
+            if (m_deviceManager) delete m_deviceManager;
+            m_deviceManager = new DeviceManager(true);
+
+            // Device manager is operational?
+            if (m_deviceManager &&
+                m_deviceManager->checkBluetooth() &&
+                m_deviceManager->areDevicesAvailable())
+            {
+                // Start background refresh process
+                m_deviceManager->refreshDevices_background();
+            }
         }
     }
 
     // Restart timer
-    setWorkTimer(10);
+    setWorkTimer(5);
 }
 
 /* ************************************************************************** */

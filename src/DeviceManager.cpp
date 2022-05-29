@@ -580,6 +580,53 @@ void DeviceManager::bluetoothHostModeStateChangedIos()
     }
 }
 
+void DeviceManager::setLastRun()
+{
+    QSqlQuery setLastRun;
+    setLastRun.prepare("UPDATE lastRun SET lastRun = :run");
+    setLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
+    if (setLastRun.exec())
+    {
+        if (setLastRun.numRowsAffected() == 0)
+        {
+            // addLastRun?
+        }
+    }
+    else
+    {
+        qWarning() << "> setLastRun.exec() ERROR"
+                   << setLastRun.lastError().type() << ":" << setLastRun.lastError().text();
+    }
+}
+
+int DeviceManager::getLastRun()
+{
+    int mins = -1;
+
+    QSqlQuery getLastRun;
+    getLastRun.prepare("SELECT lastRun FROM lastRun");
+
+    if (getLastRun.exec())
+    {
+        if (getLastRun.first())
+        {
+            QDateTime lastRun = getLastRun.value(0).toDateTime();
+            if (lastRun.isValid())
+            {
+                mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "> getLastRun.exec() ERROR"
+                   << getLastRun.lastError().type() << ":" << getLastRun.lastError().text();
+    }
+
+    return mins;
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 
@@ -733,6 +780,9 @@ void DeviceManager::listenDevices_start()
                     m_listening = true;
                     Q_EMIT listeningChanged();
                     //qDebug() << "Listening for BLE advertisement devices...";
+
+                    // Update lastRun
+                    setLastRun();
                 }
             }
             else
@@ -774,22 +824,6 @@ void DeviceManager::refreshDevices_background()
 {
     //qDebug() << "DeviceManager::refreshDevices_background()";
 
-    QSqlQuery readLastRun;
-    readLastRun.prepare("SELECT lastRun FROM lastRun");
-    if (readLastRun.exec())
-    {
-        if (readLastRun.first())
-        {
-            QDateTime lastRun = readLastRun.value(0).toDateTime();
-            if (lastRun.isValid())
-            {
-                int mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
-                if (mins < 60) return;
-            }
-        }
-        readLastRun.finish();
-    }
-
 #if defined(Q_OS_ANDROID) && defined(QT_CONNECTIVITY_PATCHED)
     if (hasBluetoothPermissions())
     {
@@ -799,6 +833,9 @@ void DeviceManager::refreshDevices_background()
         return;
     }
 #endif // Q_OS_ANDROID
+
+    // Update lastRun
+    setLastRun();
 
     // Background refresh (using blind connections)
     m_devices_updating_queue.clear();
@@ -976,20 +1013,6 @@ void DeviceManager::refreshDevices_continue()
         {
             m_updating = false;
             Q_EMIT updatingChanged();
-
-            QSqlQuery updateLastRun;
-            updateLastRun.prepare("UPDATE lastRun SET lastRun = :run");
-            updateLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
-
-            if (updateLastRun.exec() == false)
-            {
-                qWarning() << "> updateLastRun.exec() ERROR"
-                           << updateLastRun.lastError().type() << ":" << updateLastRun.lastError().text();
-            }
-            if (updateLastRun.numRowsAffected() == 0)
-            {
-                // addLastRun?
-            }
         }
     }
 }
