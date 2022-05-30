@@ -340,11 +340,7 @@ ApplicationWindow {
             } else if (appContent.state === "Tutorial") {
                 appContent.state = screenTutorial.entryPoint
             } else if (appContent.state === "PlantBrowser") {
-                if (screenPlantBrowser.isPlantClicked()) {
-                    screenPlantBrowser.backAction()
-                } else {
-                    appContent.state = "DeviceList"
-                }
+                screenPlantBrowser.backAction()
             } else {
                 appContent.state = "DeviceList"
             }

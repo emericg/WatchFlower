@@ -35,14 +35,6 @@ Loader {
         if (sourceComponent) return deviceThermometer.item.backAction()
     }
 
-    function isHistoryMode() {
-        if (sourceComponent) return deviceThermometer.item.isHistoryMode()
-        return false
-    }
-    function resetHistoryMode() {
-        if (sourceComponent) deviceThermometer.item.resetHistoryMode()
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     Component {
@@ -59,7 +51,7 @@ Loader {
 
             property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////
 
             Connections {
                 target: currentDevice
@@ -221,6 +213,8 @@ Loader {
                 if (graphLoader.status == Loader.Ready) thermoChart.updateGraph()
             }
 
+            ////////
+
             function backAction() {
                 if (isHistoryMode()) {
                     resetHistoryMode()
@@ -237,7 +231,7 @@ Loader {
                 if (graphLoader.status == Loader.Ready) thermoChart.resetIndicator()
             }
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             Flow {
                 anchors.fill: parent

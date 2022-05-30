@@ -394,7 +394,7 @@ Item {
             text: "devices"
             fullColor: true
             primaryColor: Theme.colorSecondary
-            onClicked: screenDeviceBrowser.open()
+            onClicked: screenDeviceBrowser.loadScreen()
         }
     }
 }

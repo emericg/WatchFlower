@@ -30,12 +30,8 @@ Loader {
 
     ////////
 
-    function isHistoryMode() {
-        if (sourceComponent) return devicePlantSensor.item.isHistoryMode()
-        return false
-    }
-    function resetHistoryMode() {
-        if (sourceComponent) devicePlantSensor.item.resetHistoryMode()
+    function backAction() {
+        if (sourceComponent) devicePlantSensor.item.backAction()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -49,6 +45,8 @@ Loader {
             height: 720
 
             focus: parent.focus
+
+            ////////
 
             Connections {
                 target: currentDevice
@@ -144,6 +142,8 @@ Loader {
                 }
             }
 
+            ////////
+
             Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Left) {
                     event.accepted = true
@@ -162,7 +162,31 @@ Loader {
                 }
             }
 
-            ////////////////////////////////////////////////////////////////////////////
+            function backAction() {
+                if (plantSensorPages.currentIndex === 0) { // data
+                     if (plantSensorData.isHistoryMode()) {
+                        plantSensorData.resetHistoryMode()
+                        return
+                     }
+                }
+                if (plantSensorPages.currentIndex === 1) { // history
+                     if (plantSensorHistory.isHistoryMode()) {
+                        plantSensorHistory.resetHistoryMode()
+                        return
+                     }
+                }
+                if (plantSensorPages.currentIndex === 2) { // plant care
+                     if (plantSensorCare.isEditMode()) {
+                        plantSensorCare.closeEditMode()
+                        return
+                     }
+                }
+
+                // else...
+                appContent.state = "DeviceList"
+            }
+
+            ////////
 
             function isHistoryMode() {
                 return (plantSensorData.isHistoryMode() || plantSensorHistory.isHistoryMode())
@@ -191,7 +215,7 @@ Loader {
                 if (isDesktop) appHeader.setActiveDeviceData()
             }
 
-            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////
 
             ItemBannerSync {
                 id: bannerSync

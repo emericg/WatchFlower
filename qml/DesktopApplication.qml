@@ -221,61 +221,48 @@ ApplicationWindow {
             // do nothing
             return
         }
-
         if (appContent.state === "DeviceList") {
-            // do nothing
+            if (screenDeviceList.selectionList.length !== 0) {
+                screenDeviceList.exitSelectionMode()
+            }
         } else if (appContent.state === "DevicePlantSensor") {
-            if (screenDevicePlantSensor.isHistoryMode()) {
-                screenDevicePlantSensor.resetHistoryMode()
-            } else {
-                appContent.previousStates.pop()
-                appContent.state = "DeviceList"
-            }
+            screenDevicePlantSensor.backAction()
         } else if (appContent.state === "DeviceThermometer") {
-            if (screenDeviceThermometer.isHistoryMode()) {
-                screenDeviceThermometer.resetHistoryMode()
-            } else {
-                appContent.previousStates.pop()
-                appContent.state = "DeviceList"
-            }
+            screenDeviceThermometer.backAction()
         } else if (appContent.state === "DeviceEnvironmental") {
-            appContent.previousStates.pop()
-            appContent.state = "DeviceList"
-        } else if (appContent.state === "PlantBrowser") {
-            if (screenPlantBrowser.isPlantClicked()) {
-                screenPlantBrowser.backAction()
-            } else {
-                appContent.previousStates.pop()
-                appContent.state = "DeviceList"
-            }
+            screenDeviceEnvironmental.backAction()
         } else if (appContent.state === "DeviceBrowser") {
             screenDeviceBrowser.backAction()
-            appContent.previousStates.pop()
-            appContent.state = "DeviceList"
+        } else if (appContent.state === "PlantBrowser") {
+            screenPlantBrowser.backAction()
+        } else if (appContent.state === "Permissions") { // simple
+            appContent.state = screenPermissions.entryPoint
         } else if (appContent.state === "Tutorial") {
-            appContent.previousStates.pop()
             appContent.state = screenTutorial.entryPoint
-        } else {
-            appContent.previousStates.pop()
-            if (appContent.previousStates.length)
+        } else { // default
+            if (appContent.previousStates.length) {
+                appContent.previousStates.pop()
                 appContent.state = appContent.previousStates[appContent.previousStates.length-1]
-            else
+            } else {
                 appContent.state = "DeviceList"
+            }
         }
     }
     function forwardAction() {
-        if (appContent.state === "Tutorial") return; // do nothing
-
         if (appContent.state === "DeviceList") {
-            if (selectedDevice) {
-                if (selectedDevice.deviceType === DeviceUtils.DEVICE_PLANTSENSOR)
-                    appContent.state = "DevicePlantSensor"
-                else if (selectedDevice.deviceType === DeviceUtils.DEVICE_THERMOMETER)
-                    appContent.state = "DeviceThermometer"
-                else if (selectedDevice.deviceType === DeviceUtils.DEVICE_ENVIRONMENTAL) {
-                    appContent.state = "DeviceEnvironmental"
-                }
-            }
+            //if (appContent.previousStates[appContent.previousStates.length-1] === appContent.state) appContent.previousStates.pop()
+            appContent.previousStates.pop()
+
+            if (appContent.previousStates[appContent.previousStates.length-1] === "DevicePlantSensor")
+                appContent.state = "DevicePlantSensor"
+            else if (appContent.previousStates[appContent.previousStates.length-1] === "DeviceThermometer")
+                appContent.state = "DeviceThermometer"
+            else if (appContent.previousStates[appContent.previousStates.length-1] === "DeviceEnvironmental")
+                appContent.state = "DeviceEnvironmental"
+            else if (appContent.previousStates[appContent.previousStates.length-1] === "DeviceBrowser")
+                appContent.state = "DeviceBrowser"
+            else if (appContent.previousStates[appContent.previousStates.length-1] === "PlantBrowser")
+                appContent.state = "PlantBrowser"
         }
     }
     function deselectAction() {

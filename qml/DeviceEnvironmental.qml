@@ -34,13 +34,6 @@ Loader {
     function backAction() {
         if (sourceComponent) deviceEnvironmental.item.backAction()
     }
-    function isHistoryMode() {
-        if (sourceComponent) return deviceEnvironmental.item.isHistoryMode()
-        return false
-    }
-    function resetHistoryMode() {
-        if (sourceComponent) deviceEnvironmental.item.resetHistoryMode()
-    }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +61,7 @@ Loader {
             property int itemCount_GeigerCounter: 2
             property int itemCount_WeatherStation: 3
 
-            ////////////////////////////////////////////////////////////////////
+            ////////
 
             Connections {
                 target: currentDevice
@@ -122,6 +115,8 @@ Loader {
                 onTriggered: updateStatusText()
             }
 
+            ////////
+
             Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_F5) {
                     event.accepted = true
@@ -141,7 +136,11 @@ Loader {
             ////////
 
             function backAction() {
-                appContent.state = "DeviceList"
+                if (isHistoryMode()) {
+                    resetHistoryMode()
+                } else {
+                    appContent.state = "DeviceList"
+                }
             }
 
             function isHistoryMode() {

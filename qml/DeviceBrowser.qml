@@ -10,14 +10,15 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    function open() {
+    function loadScreen() {
         deviceManager.scanNearby_start()
         appContent.state = "DeviceBrowser"
     }
 
     function backAction() {
-        deviceManager.scanNearby_stop()
-        deviceManager.listenDevices_start()
+        if (loaderDeviceBrowser.sourceComponent) {
+            loaderDeviceBrowser.item.backAction()
+        }
     }
 
     Loader {
@@ -34,9 +35,26 @@ Item {
     Component {
         id: componentDeviceBrowser_mobile
 
-        Item {
-            id: itemDeviceBrowser
+        Item { // itemDeviceBrowser mobile
             anchors.fill: parent
+
+            ////////
+
+            function backAction() {
+                if (areDeviceClicked()) {
+                    //
+                } else {
+                    deviceManager.scanNearby_stop()
+                    deviceManager.listenDevices_start()
+                    appContent.state = "DeviceList"
+                }
+            }
+
+            function areDeviceClicked() {
+                return false
+            }
+
+            ////////
 
             PopupBlacklistDevice {
                 id: confirmBlacklistDevice
@@ -114,9 +132,26 @@ Item {
     Component {
         id: componentDeviceBrowser_desktop
 
-        Item {
-            id: itemDeviceBrowser
+        Item { // itemDeviceBrowser desktop
             anchors.fill: parent
+
+            ////////
+
+            function backAction() {
+                if (areDeviceClicked()) {
+                    //
+                } else {
+                    deviceManager.scanNearby_stop()
+                    deviceManager.listenDevices_start()
+                    appContent.state = "DeviceList"
+                }
+            }
+
+            function areDeviceClicked() {
+                return false
+            }
+
+            ////////
 
             PopupBlacklistDevice {
                 id: confirmBlacklistDevice
