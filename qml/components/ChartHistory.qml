@@ -43,44 +43,35 @@ Item {
     Row {
         id: titleArea
         anchors.top: chartHistory.top
-        anchors.topMargin: singleColumn ? 8 : 16
+        anchors.topMargin: singleColumn ? 6 : 12
         anchors.left: chartArea.left
-        anchors.leftMargin: singleColumn ? 1 : 2
+        anchors.leftMargin: singleColumn ? 2 : 3
         spacing: 12
 
-        Text {
-            id: textTitle
-
+        Text { // textTitle
             text: title
             color: Theme.colorText
             font.bold: true
-            font.pixelSize: singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
+            font.pixelSize: Theme.fontSizeContentSmall
             font.capitalization: Font.AllUppercase
             verticalAlignment: Text.AlignBottom
         }
 
-        Text {
-            id: textLegend
-
-            text: ""
+        Text { // textLegend
+            text: {
+                var txt = ""
+                if (graphGrid.barSelectionIndex >= 0) {
+                    if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
+                        txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
+                        txt += suffix.replace("<br>", "")
+                    }
+                }
+                return txt
+            }
             color: Theme.colorIcon
             font.bold: false
             font.pixelSize: singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
             verticalAlignment: Text.AlignBottom
-
-            Connections {
-                target: graphGrid
-                function onBarSelectionIndexChanged() {
-                    var txt = ""
-                    if (graphGrid.barSelectionIndex >= 0) {
-                        if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
-                            txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
-                            txt += suffix.replace("<br>", "")
-                        }
-                    }
-                    textLegend.text = txt
-                }
-            }
         }
     }
 

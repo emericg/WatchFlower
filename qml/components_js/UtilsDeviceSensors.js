@@ -1,8 +1,88 @@
 // UtilsDeviceSensors.js
-// Version 2
+// Version 3
 
 .import DeviceUtils 1.0 as DeviceUtils
 .import ThemeEngine 1.0 as ThemeEngine
+
+/* ************************************************************************** */
+
+function isDeviceSupported(deviceName) {
+    if (deviceName === "Flower care" || deviceName === "Flower power" ||
+        deviceName === "Flower mate" || deviceName === "Grow care garden" ||
+        deviceName === "ropot" || deviceName === "Parrot pot" ||
+        deviceName === "HiGrow" ||
+        deviceName === "ThermoBeacon" ||
+        deviceName === "MJ_HT_V1" ||
+        deviceName === "LYWSD02" || deviceName === "MHO-C303" ||
+        deviceName === "LYWSD03MMC" || deviceName === "MHO-C401" || deviceName === "XMWSDJO4MMC" ||
+        deviceName === "ClearGrass Temp & RH" || deviceName === "Qingping Temp & RH M" ||
+        deviceName === "Qingping Temp RH Lite" ||
+        deviceName === "Qingping Alarm Clock" || deviceName === "Qingping Temp RH Barometer" ||
+        deviceName === "WP6003" || deviceName === "JQJCY01YM" || deviceName === "AirQualityMonitor" ||
+        deviceName === "GeigerCounter")
+        return true
+    return false
+}
+
+/* ************************************************************************** */
+
+function getDeviceImage(deviceName) {
+    if (deviceName === "Flower care") return "qrc:/devices/flowercare.svg"
+    if (deviceName === "Grow care garden") return "qrc:/devices/flowercaremax.svg"
+    if (deviceName === "Flower power") return "qrc:/devices/flowerpower.svg"
+    if (deviceName === "Parrot pot") return "qrc:/devices/parrotpot.svg"
+    if (deviceName === "ropot") return "qrc:/devices/ropot.svg"
+    if (deviceName === "HiGrow") return "qrc:/devices/higrow.svg"
+    return ""
+}
+
+function getDeviceIcon(device, devicePlanted) {
+    var src = ""
+    var deviceName = device.deviceName
+
+    if (device.isPlantSensor) {
+        if (devicePlanted) {
+            if (deviceName === "ropot" || deviceName === "Parrot pot")
+                src = "qrc:/assets/icons_custom/pot_flower-24px.svg"
+            else
+                src = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+        } else {
+            if (deviceName === "ropot" || deviceName === "Parrot pot")
+                src = "qrc:/assets/icons_custom/pot_empty-24px.svg"
+            else
+                src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+        }
+    } else if (device.isThermometer) {
+        if (deviceName === "ThermoBeacon" ||
+            deviceName === "MJ_HT_V1" ||
+            deviceName === "ClearGrass Temp & RH" || deviceName === "Qingping Temp & RH M" ||
+            deviceName === "Qingping Temp RH Lite") {
+            src = "qrc:/assets/icons_material/baseline-trip_origin-24px.svg"
+        } else if (deviceName === "LYWSD02" ||
+                   deviceName === "MHO-C303") {
+            src = "qrc:/assets/icons_material/baseline-crop_16_9-24px.svg"
+        } else if (deviceName === "LYWSD03MMC" ||
+                   deviceName === "MHO-C401" ||
+                   deviceName === "XMWSDJO4MMC") {
+            src = "qrc:/assets/icons_material/baseline-crop_square-24px.svg"
+        } else if (deviceName === "Qingping Alarm Clock" ||
+                   deviceName === "Qingping Temp RH Barometer") {
+            src = "qrc:/assets/icons_material/duotone-timer-24px.svg"
+        } else {
+            src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+        }
+    } else if (device.isEnvironmentalSensor) {
+        if (deviceName === "GeigerCounter") {
+            src = "qrc:/assets/icons_custom/nuclear_icon.svg"
+        } else {
+            src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+        }
+    } else {
+        src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+    }
+
+    return src
+}
 
 /* ************************************************************************** */
 

@@ -85,16 +85,19 @@ Item {
         opacity: 0.66
     }
 
-    IconSvg {
-        id: nodata
-        width: 20; height: 20;
+    Loader { // 'no data' indicator
         anchors.bottom: dayoftheweek.top
         anchors.bottomMargin: isPhone ? 12 : 16
         anchors.horizontalCenter: parent.horizontalCenter
 
+        active: (modelData.tempMean < -40)
         asynchronous: true
-        color: Theme.colorSubText
-        source: (modelData.tempMean < -40) ? "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg" : ""
+
+        sourceComponent: IconSvg {
+            width: 20; height: 20;
+            color: Theme.colorSubText
+            source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+        }
     }
 
     Text {

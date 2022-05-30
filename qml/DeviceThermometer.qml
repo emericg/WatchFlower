@@ -422,7 +422,6 @@ Loader {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
 
-                        visible: ((isDesktop || headerUnicolor) && !singleColumn)
                         width: 2
                         opacity: 0.33
                         color: Theme.colorHeaderHighlight
@@ -432,7 +431,7 @@ Loader {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
 
-                        visible: ((isDesktop || headerUnicolor) && singleColumn)
+                        visible: singleColumn
                         height: 2
                         opacity: 0.33
                         color: Theme.colorHeaderHighlight

@@ -1,6 +1,7 @@
 import QtQuick 2.15
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Rectangle {
     id: deviceNearbyWidget
@@ -11,29 +12,13 @@ Rectangle {
     color: (device.selected) ? Theme.colorForeground : Theme.colorBackground
 
     property var device: pointer
-    property bool blacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
-
-    function isDeviceSupported() {
-        if (device.deviceName === "Flower care" || device.deviceName === "Flower power" ||
-                device.deviceName === "Flower mate" || device.deviceName === "Grow care garden" ||
-                device.deviceName === "ropot" || device.deviceName === "Parrot pot" ||
-                device.deviceName === "MJ_HT_V1" ||
-                device.deviceName === "ClearGrass Temp & RH" ||
-                device.deviceName === "Qingping Temp & RH M" || device.deviceName === "Qingping Temp & RH H" ||
-                device.deviceName === "Qingping Temp RH Lite" ||
-                device.deviceName === "ThermoBeacon" ||
-                device.deviceName === "LYWSD02" || device.deviceName === "MHO-C303" ||
-                device.deviceName === "LYWSD03MMC" || device.deviceName === "MHO-C401" ||
-                device.deviceName === "WP6003" || device.deviceName === "AirQualityMonitor" ||
-                device.deviceName === "GeigerCounter")
-            return true
-        return false
-    }
+    property bool deviceSupported: UtilsDeviceSensors.isDeviceSupported(device.deviceName)
+    property bool deviceBlacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
 
     Connections {
         target: deviceManager
         function onDevicesBlacklistUpdated() {
-            deviceNearbyWidget.blacklisted = deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
+            deviceNearbyWidget.deviceBlacklisted = deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
         }
     }
 
@@ -81,12 +66,14 @@ Rectangle {
 
             width: 20
             height: 20
-            visible: isDeviceSupported()
+            visible: deviceSupported
+            enabled: true
 
-            source: blacklisted ? "qrc:/assets/icons_material/outline-remove_circle-24px.svg" : "qrc:/assets/icons_material/outline-add_circle-24px.svg"
+            source: deviceBlacklisted ? "qrc:/assets/icons_material/outline-remove_circle-24px.svg"
+                                      : "qrc:/assets/icons_material/outline-add_circle-24px.svg"
             color: {
                 if (ma.hovered) return Theme.colorPrimary
-                if (blacklisted) return Theme.colorRed
+                if (deviceBlacklisted) return Theme.colorRed
                 return Theme.colorIcon
             }
 
@@ -96,7 +83,7 @@ Rectangle {
 
                 hoverEnabled: true
                 property bool hovered: false
-                onEntered:hovered = true
+                onEntered: hovered = true
                 onExited: hovered = false
                 onCanceled: hovered = false
 
@@ -116,11 +103,9 @@ Rectangle {
 
             width: 20
             height: 20
-            color: isDeviceSupported() ? Theme.colorGreen : Theme.colorSubText
-            source: {
-                if (isDeviceSupported()) return "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
-                return "qrc:/assets/icons_material/baseline-help-24px.svg"
-            }
+            color: deviceSupported ? Theme.colorGreen : Theme.colorSubText
+            source: deviceSupported ? "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                                    : "qrc:/assets/icons_material/baseline-help-24px.svg"
         }
 
         ////////

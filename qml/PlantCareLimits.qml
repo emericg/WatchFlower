@@ -65,6 +65,7 @@ Flickable {
                 anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Soil moisture")
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -143,6 +144,7 @@ Flickable {
                 anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Soil conductivity")
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -182,7 +184,7 @@ Flickable {
 
             visible: itemCondu.visible
 
-            text: qsTr("Soil fertility value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
+            text: qsTr("Soil 'Electrical Conductivity' value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
                   qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
             textFormat: Text.StyledText
             wrapMode: Text.WordWrap
@@ -218,6 +220,7 @@ Flickable {
                 anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Temperature")
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -311,6 +314,7 @@ Flickable {
                 anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Luminosity")
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -376,6 +380,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("low")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter
@@ -392,6 +397,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("indirect")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter
@@ -408,6 +414,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("direct light (indoor)")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter
@@ -424,6 +431,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("sunlight")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter
@@ -441,6 +449,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("indirect")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter
@@ -457,6 +466,7 @@ Flickable {
                         Text {
                             anchors.fill: parent
                             text: qsTr("sunlight")
+                            textFormat: Text.PlainText
                             color: "white"
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             verticalAlignment: Text.AlignVCenter

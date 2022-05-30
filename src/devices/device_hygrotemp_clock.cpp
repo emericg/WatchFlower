@@ -496,8 +496,8 @@ void DeviceHygrotempClock::parseAdvertisementData(const QByteArray &value, const
                 if (humi > -99) qDebug() << "- humidity:" << humi;
                 if (lumi > -99) qDebug() << "- luminosity:" << lumi;
                 if (form > -99) qDebug() << "- formaldehyde:" << form;
-                if (moist > -99) qDebug() << "- soil moisture:" << moist;
-                if (fert > -99) qDebug() << "- soil fertility:" << fert;
+                if (moist > -99)qDebug() << "- soil moisture:" << moist;
+                if (fert > -99) qDebug() << "- soil conductivity:" << fert;
             }
 */
         }

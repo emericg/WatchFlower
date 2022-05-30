@@ -6,7 +6,7 @@ import ThemeEngine 1.0
 Rectangle {
     id: itemNoEntry
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: -40
+    anchors.verticalCenterOffset: -48
 
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.5)
     height: width

@@ -616,7 +616,6 @@ Loader {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
 
-                        visible: ((isDesktop || headerUnicolor) && !singleColumn)
                         width: 2
                         opacity: 0.33
                         color: Theme.colorHeaderHighlight
@@ -626,7 +625,7 @@ Loader {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
 
-                        visible: ((isDesktop || headerUnicolor) && singleColumn)
+                        visible: singleColumn
                         height: 2
                         opacity: 0.33
                         color: Theme.colorHeaderHighlight
@@ -699,7 +698,7 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 96 : 160
+                                    property int wwwTarget: isPhone ? 96 : 140
                                     property int wwwMax: 200
                                     property int www: wwwTarget
 
@@ -847,9 +846,8 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: (singleColumn && !headerUnicolor)
+                                    visible: !headerUnicolor
                                     height: 2
-                                    opacity: 0.5
                                     color: Theme.colorSeparator
                                 }
                             }
@@ -888,7 +886,7 @@ Loader {
                                         //console.log("--- wwww: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 160 : 200
+                                    property int wwwTarget: 128
                                     property int wwwMax: 256
                                     property int www: wwwTarget
 
@@ -924,7 +922,7 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: (singleColumn && !headerUnicolor)
+                                    visible: !headerUnicolor
                                     height: 2
                                     opacity: 0.5
                                     color: Theme.colorSeparator

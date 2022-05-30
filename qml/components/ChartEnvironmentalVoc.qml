@@ -70,7 +70,7 @@ Item {
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
-                    opacity: 0.25
+                    opacity: 1
                     ShapePath {
                         strokeColor: Theme.colorSeparator
                         strokeWidth: isPhone ? 1 : 2
@@ -91,7 +91,7 @@ Item {
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
-                    opacity: 0.25
+                    opacity: 1
                     ShapePath {
                         strokeColor: Theme.colorSeparator
                         strokeWidth: isPhone ? 1 : 2
@@ -150,6 +150,7 @@ Item {
                         model: currentDevice.aioEnvData
 
                         Item {
+                            id: barItem
                             height: parent.height
                             width: 16
 
@@ -157,6 +158,7 @@ Item {
                             property int valueMean
                             property int valueMax
 
+                            Component.onCompleted: loadValues()
                             function loadValues() {
                                 if (itemDeviceEnvironmental.primary === "voc" ||
                                     itemDeviceEnvironmental.primary === "hcho") {
@@ -168,9 +170,10 @@ Item {
                                     valueMean = modelData.co2Mean
                                     valueMax = modelData.co2Max
                                 }
-                            }
 
-                            Component.onCompleted: loadValues()
+                                if (valueMax > scaleMax) valueMax = scaleMax
+                                if (valueMean > scaleMax) valueMean = scaleMax
+                            }
 
                             Connections {
                                 target: itemDeviceEnvironmental
@@ -178,7 +181,7 @@ Item {
                             }
 
                             Rectangle {
-                                height: parent.height
+                                height: barItem.height
                                 width: 2
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: Theme.colorSeparator
@@ -192,7 +195,7 @@ Item {
                                 clip: true
                                 radius: 13
                                 width: 13
-                                height: (valueMax / scaleMax) * parent.height
+                                height: (valueMax / scaleMax) * barItem.height
                                 Behavior on height { NumberAnimation { duration: 333 } }
 
                                 color: {
@@ -206,11 +209,13 @@ Item {
                                 Behavior on color { ColorAnimation { duration: 333 } }
 
                                 Rectangle {
-                                    y: (valueMean / scaleMax) * parent.height
                                     anchors.horizontalCenter: parent.horizontalCenter
 
-                                    visible: (width*1.5 < parent.height)
-
+                                    y: {
+                                        if (valueMean >= scaleMax) return 1
+                                        return barItem.height - ((valueMean / scaleMax) * barItem.height)
+                                    }
+                                    visible: valueMean > 0
                                     width: parent.width - 2
                                     height: width
                                     radius: width
@@ -223,7 +228,7 @@ Item {
                                     anchors.topMargin: 1
                                     anchors.horizontalCenter: parent.horizontalCenter
 
-                                    height: (modelData.hchoMax / scaleMax) * parent.height
+                                    height: (modelData.hchoMax / scaleMax) * barItem.height
                                     width: 9
                                     radius: 9
                                     color: "white"
