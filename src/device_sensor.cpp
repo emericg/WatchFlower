@@ -109,18 +109,20 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             QString title;
             QString message;
 
-            // 'water me' notification // Only if the sensor has a plant
-            if (isPlantSensor() &&
-                (m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min))
+            if (isPlantSensor())
             {
-                title = tr("Plant Alarm");
+                // 'water me' notification // Only if the sensor has a plant
+                if (m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min)
+                {
+                    title = tr("Plant Alarm");
 
-                if (!m_associatedName.isEmpty())
-                    message = tr("You need to water your '%1' now!").arg(m_associatedName);
-                else if (!m_locationName.isEmpty())
-                    message = tr("You need to water the plant near '%1'").arg(m_locationName);
-                else
-                    message = tr("You need to water one of your plant!");
+                    if (!m_associatedName.isEmpty())
+                        message = tr("You need to water your '%1' now!").arg(m_associatedName);
+                    else if (!m_locationName.isEmpty())
+                        message = tr("You need to water the plant near '%1'").arg(m_locationName);
+                    else
+                        message = tr("You need to water one of your plant!");
+                }
             }
 
             if (isEnvironmentalSensor())

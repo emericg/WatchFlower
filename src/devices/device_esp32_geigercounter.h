@@ -66,6 +66,10 @@ private:
 
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
+    bool areValuesValid(const float rad_m) const;
+
+    bool addDatabaseRecord(const int64_t timestamp, const float rad_m);
 };
 
 /* ************************************************************************** */

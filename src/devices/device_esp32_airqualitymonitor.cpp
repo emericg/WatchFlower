@@ -232,11 +232,10 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
             }
             else
             {
-                bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
-                                                m_temperature, m_humidity, m_pressure,
-                                                m_voc, m_co2);
+                addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                  m_temperature, m_humidity, m_pressure, m_voc, m_co2);
 
-                refreshDataFinished(status);
+                refreshDataFinished(true);
                 m_bleController->disconnectFromDevice();
             }
 /*
@@ -285,6 +284,8 @@ bool DeviceEsp32AirQualityMonitor::hasData() const
 
     return false;
 }
+
+/* ************************************************************************** */
 
 bool DeviceEsp32AirQualityMonitor::areValuesValid(const float temperature, const float humidity,
                                                   const float pressure, const float voc, const float co2) const

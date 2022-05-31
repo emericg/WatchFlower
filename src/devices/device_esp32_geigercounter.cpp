@@ -234,35 +234,14 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
 
             m_lastUpdate = QDateTime::currentDateTime();
 
-            if (m_dbInternal || m_dbExternal)
-            {
-                // SQL date format YYYY-MM-DD HH:MM:SS
-
-                QSqlQuery addData;
-                addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, radioactivity)"
-                                " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :radioactivity)");
-                addData.bindValue(":deviceAddr", getAddress());
-                addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
-                addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
-                addData.bindValue(":radioactivity", m_rm);
-
-                if (addData.exec())
-                {
-                    m_lastUpdateDatabase = m_lastUpdate;
-                }
-                else
-                {
-                    qWarning() << "> DeviceEsp32GeigerCounter addData.exec() ERROR"
-                               << addData.lastError().type() << ":" << addData.lastError().text();
-                }
-            }
-
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 refreshRealtime();
             }
             else
             {
+                addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_rm);
+
                 refreshDataFinished(true);
                 m_bleController->disconnectFromDevice();
             }
@@ -309,6 +288,54 @@ bool DeviceEsp32GeigerCounter::hasData() const
     }
 
     return false;
+}
+
+/* ************************************************************************** */
+
+bool DeviceEsp32GeigerCounter::areValuesValid(const float rad_m) const
+{
+    if (rad_m < 0.f || rad_m > 10000.f) return false;
+
+    return true;
+}
+
+bool DeviceEsp32GeigerCounter::addDatabaseRecord(const int64_t timestamp, const float rad_m)
+{
+    bool status = false;
+
+    if (areValuesValid(rad_m))
+    {
+        if (m_dbInternal || m_dbExternal)
+        {
+            // SQL date format YYYY-MM-DD HH:MM:SS
+
+            QSqlQuery addData;
+            addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, radioactivity)"
+                            " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :radioactivity)");
+            addData.bindValue(":deviceAddr", getAddress());
+            addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+            addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
+            addData.bindValue(":radioactivity", rad_m);
+
+            status = addData.exec();
+
+            if (status)
+            {
+                m_lastUpdateDatabase = m_lastUpdate;
+            }
+            else
+            {
+                qWarning() << "> DeviceEsp32GeigerCounter addData.exec() ERROR"
+                           << addData.lastError().type() << ":" << addData.lastError().text();
+            }
+        }
+    }
+    else
+    {
+        qWarning() << "DeviceEsp32GeigerCounter values are INVALID";
+    }
+
+    return status;
 }
 
 /* ************************************************************************** */

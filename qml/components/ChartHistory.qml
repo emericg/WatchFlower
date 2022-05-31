@@ -282,14 +282,14 @@ Item {
                             anchors.bottom: (ddd === ChartHistory.Span.Weekly) ? parent.bottom : undefined
                             anchors.horizontalCenter: parent.horizontalCenter
 
+                            active: (value > -80)
+
                             asynchronous: true
                             sourceComponent: {
-                                if (value > -80) {
-                                    if (ddd === ChartHistory.Span.Weekly)
-                                        return legendHorizontal
-                                    if (ddd !== ChartHistory.Span.Weekly && !isPhone)
-                                        return legendVertical
-                                }
+                                if (ddd === ChartHistory.Span.Weekly)
+                                    return legendHorizontal
+                                if (ddd !== ChartHistory.Span.Weekly && !isPhone)
+                                    return legendVertical
                             }
 
                             property real _value: value
@@ -306,15 +306,15 @@ Item {
                         anchors.bottomMargin: 2
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        enabled: {
+                        active: {
                             if (isPhone) return false
                             //if (value < -40) return true
                             else if ((value < limitMin || value > limitMax) && (graphBarFg.height > height*1.5)) return true
                             else return false
                         }
 
-                        sourceComponent: (enabled) ? legendImage : null
                         asynchronous: true
+                        sourceComponent: legendImage
 
                         property real _value: value
                     }

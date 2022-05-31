@@ -15,20 +15,13 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
-        // Load the tutorial
-        if (!tutorialLoader.sourceComponent) {
-            tutorialLoader.sourceComponent = componentTutorial
-        } else {
-            tutorialLoader.item.reset()
-        }
-
-        // Change screen
+        entryPoint = "DeviceList"
         appContent.state = "Tutorial"
     }
 
     function loadScreenFrom(screenname) {
         entryPoint = screenname
-        loadScreen()
+        appContent.state = "Tutorial"
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -37,16 +30,10 @@ Rectangle {
         id: tutorialLoader
         anchors.fill: parent
 
-        sourceComponent: null
-        asynchronous: false
-    }
+        active: (appContent.state === "Tutorial")
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    Component {
-        id: componentTutorial
-
-        Item {
+        asynchronous: true
+        sourceComponent: Item {
             id: itemTutorial
 
             function reset() {

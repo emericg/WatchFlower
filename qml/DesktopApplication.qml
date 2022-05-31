@@ -221,6 +221,7 @@ ApplicationWindow {
             // do nothing
             return
         }
+
         if (appContent.state === "DeviceList") {
             if (screenDeviceList.selectionList.length !== 0) {
                 screenDeviceList.exitSelectionMode()
@@ -250,7 +251,6 @@ ApplicationWindow {
     }
     function forwardAction() {
         if (appContent.state === "DeviceList") {
-            //if (appContent.previousStates[appContent.previousStates.length-1] === appContent.state) appContent.previousStates.pop()
             appContent.previousStates.pop()
 
             if (appContent.previousStates[appContent.previousStates.length-1] === "DevicePlantSensor")

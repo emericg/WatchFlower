@@ -237,11 +237,11 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
             }
             else
             {
-                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                                                m_temperature, m_humidity, m_luminosityLux);
+                addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                  m_temperature, m_humidity, m_luminosityLux);
 
-                refreshDataFinished(status);
+                refreshDataFinished(true);
                 m_bleController->disconnectFromDevice();
             }
 /*

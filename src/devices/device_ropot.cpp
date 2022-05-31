@@ -556,7 +556,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
             else
             {
-                bool status = addDatabaseRecord(QDateTime::currentDateTime().toSecsSinceEpoch(),
+                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
                                                 m_soilMoisture, m_soilConductivity, -99.f, -99.f,
                                                 m_temperature, -99.f, -99.f);
 
