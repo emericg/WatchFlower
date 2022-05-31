@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plants">
+        <file alias="watchflower_plantdb.csv">plants/watchflower_plantdb.csv</file>
+    </qresource>
+</RCC>

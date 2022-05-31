@@ -101,10 +101,10 @@ void DeviceInfos::load(const QString &model)
     if (file.open(QIODevice::ReadOnly))
     {
         QJsonDocument capsDoc = QJsonDocument().fromJson(file.readAll());
-        QJsonObject capsObject = capsDoc.object();
+        QJsonObject capsObj = capsDoc.object();
         file.close();
 
-        QJsonArray deviceArray = capsObject["devices"].toArray();
+        QJsonArray deviceArray = capsObj["devices"].toArray();
         for (const auto &value: deviceArray)
         {
             QJsonObject obj = value.toObject();

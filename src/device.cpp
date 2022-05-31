@@ -428,6 +428,7 @@ void Device::refreshDataFinished(bool status, bool cached)
     if (status == true)
     {
         // Only update data on success
+        Q_EMIT dataUpdated();
 
         // Reset update timer
         setUpdateTimer();
@@ -435,8 +436,6 @@ void Device::refreshDataFinished(bool status, bool cached)
         // Reset last error
         m_lastError = QDateTime();
         Q_EMIT statusUpdated();
-
-        Q_EMIT dataUpdated();
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {

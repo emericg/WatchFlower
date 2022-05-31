@@ -20,10 +20,16 @@
  */
 
 #include "device_plantsensor.h"
+
+#include "PlantDatabase.h"
+#include "Plant.h"
 #include "Journal.h"
 
 #include <QSqlQuery>
 #include <QSqlError>
+
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include <QString>
 #include <QByteArray>
@@ -44,7 +50,7 @@ DevicePlantSensor::DevicePlantSensor(const QString &deviceAddr, const QString &d
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlPlantData(12*60);
 
-        // Load journal entries
+        // Load plant & journal entries
         loadPlant();
     }
 
@@ -67,7 +73,7 @@ DevicePlantSensor::DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *par
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlPlantData(12*60);
 
-        // Load journal
+        // Load plant & journal entries
         loadPlant();
     }
 
@@ -80,6 +86,9 @@ DevicePlantSensor::~DevicePlantSensor()
 {
     qDeleteAll(m_journal_entries);
     m_journal_entries.clear();
+
+    delete m_plant;
+    m_plant = nullptr;
 }
 
 /* ************************************************************************** */
@@ -136,7 +145,7 @@ bool DevicePlantSensor::addDatabaseRecord(const int64_t timestamp,
             addData.prepare("REPLACE INTO plantData (deviceAddr, timestamp_rounded, timestamp,"
                               "soilMoisture, soilConductivity, soilTemperature,"
                               "temperature, humidity, luminosity, watertank) "
-                            "VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :sm, :sc, :st, :temp, :humi, :lumi, :tank)");
+                            "VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :sm, :sc, :st, :temp, :humi, :lumi, :tank);");
             addData.bindValue(":deviceAddr", getAddress());
             addData.bindValue(":timestamp_rounded", tmcd_rounded.toString("yyyy-MM-dd hh:00:00"));
             addData.bindValue(":timestamp", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
@@ -179,7 +188,7 @@ bool DevicePlantSensor::loadPlant()
 
     QSqlQuery queryPlant;
     queryPlant.prepare("SELECT plantId, plantName, plantCache, plantStart " \
-                       "FROM plants WHERE deviceAddr = :deviceAddr");
+                       "FROM plants WHERE deviceAddr = :deviceAddr;");
     queryPlant.bindValue(":deviceAddr", m_deviceAddress);
 
     status = queryPlant.exec();
@@ -193,22 +202,37 @@ bool DevicePlantSensor::loadPlant()
                 m_plantName = queryPlant.value(1).toString();
                 m_plantCache = queryPlant.value(2).toString();
                 m_plantStart = queryPlant.value(3).toDateTime();
-
-                if (m_plantId >= 0)
-                {
-                    loadJournalEntries();
-                }
-                if (m_plantCache.isEmpty() == false)
-                {
-                    // TODO
-                }
             }
         }
 
-        if (m_plantId < 0)
+        if (m_plantId >= 0)
+        {
+            // Plant
+            if (!m_plantName.isEmpty())
+            {
+                if (m_plantCache.isEmpty())
+                {
+                    setPlantName(m_plantName);
+                }
+                else
+                {
+                    QJsonDocument plantDoc = QJsonDocument().fromJson(m_plantCache.toUtf8());
+                    QJsonObject plantObj = plantDoc.object();
+
+                    m_plant = new Plant(this);
+                    m_plant->read_json_watchflower(plantObj);
+                    m_plant->print();
+                    Q_EMIT plantUpdated();
+                }
+            }
+
+            // Journal
+            loadJournalEntries();
+        }
+        else
         {
             QSqlQuery createPlant;
-            createPlant.prepare("INSERT INTO plants (plantStart, deviceAddr) VALUES (:date, :addr)");
+            createPlant.prepare("INSERT INTO plants (plantStart, deviceAddr) VALUES (:date, :addr);");
             createPlant.bindValue(":date", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
             createPlant.bindValue(":addr", m_deviceAddress);
 
@@ -242,23 +266,8 @@ bool DevicePlantSensor::loadJournalEntries()
 
     QSqlQuery queryJournalEntries;
     queryJournalEntries.prepare("SELECT entryId, entryType, entryTimestamp, entryComment " \
-                                "FROM plantJournal WHERE plantId = :plantId");
+                                "FROM plantJournal WHERE plantId = :plantId;");
     queryJournalEntries.bindValue(":plantId", m_plantId);
-
-
-/*
-    queryTimeplayed.prepare("SELECT SUM(ex_duration) FROM sessions "
-                            "INNER JOIN exercises ON sessions.id = exercises.session_id "
-                            "WHERE student_id = :sid");
-
-    // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN // WITH JOIN
-    queryJournalEntries.prepare("SELECT entryId, entryType, entryTimestamp, entryComment " \
-                                "FROM plantJournal
-                                "INNER JOIN exercises ON sessions.id = exercises.session_id "
-                                "WHERE deviceAddr = :deviceAddr");
-    queryJournalEntries.bindValue(":deviceAddr", m_deviceAddress);
-*/
-
 
     status = queryJournalEntries.exec();
     if (status)
@@ -333,6 +342,49 @@ bool DevicePlantSensor::removeJournalEntry(const int id)
     }
 
     return status;
+}
+
+/* ************************************************************************** */
+
+void DevicePlantSensor::setPlantName(const QString &plant)
+{
+    if (!plant.isEmpty())
+    {
+        if (m_plant)
+        {
+            delete m_plant;
+            m_plant = nullptr;
+        }
+
+        // Get plant from the database
+        PlantDatabase *pdb = PlantDatabase::getInstance();
+        const Plant *temp = pdb->getPlant_p(plant);
+        if (temp)
+        {
+            QJsonObject plantObj;
+            temp->write_json_watchflower(plantObj);
+
+            m_plant = new Plant(this);
+            m_plant->read_json_watchflower(plantObj);
+
+            m_plantName = plant;
+            m_plantCache = QJsonDocument(plantObj).toJson(QJsonDocument::Compact);
+            Q_EMIT plantUpdated();
+
+            QSqlQuery setPlant;
+            setPlant.prepare("UPDATE  plants SET plantName = :plantName, plantCache = :plantCache "
+                             "WHERE deviceAddr = :deviceAddr;");
+            setPlant.bindValue(":plantName", m_plantName);
+            setPlant.bindValue(":plantCache", m_plantCache);
+            setPlant.bindValue(":deviceAddr", getAddress());
+
+            if (!setPlant.exec())
+            {
+                qWarning() << "> setPlant.exec() ERROR"
+                           << setPlant.lastError().type() << ":" << setPlant.lastError().text();
+            }
+        }
+    }
 }
 
 /* ************************************************************************** */

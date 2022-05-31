@@ -122,6 +122,7 @@ Item {
                 text: qsTr("Plant")
                 onClicked: {
                     plantInfos.visible = true
+                    plantInfos.load()
                     plantLimits.visible = false
                     plantJournal.visible = false
                 }

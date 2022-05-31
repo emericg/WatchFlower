@@ -24,6 +24,7 @@
 /* ************************************************************************** */
 
 #include "device_sensor.h"
+#include "Plant.h"
 
 #include <QObject>
 #include <QString>
@@ -31,8 +32,6 @@
 
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QDateTimeAxis>
-
-class Plant;
 
 /* ************************************************************************** */
 
@@ -43,6 +42,17 @@ class DevicePlantSensor: public DeviceSensor
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool hasPlant READ hasPlant NOTIFY plantUpdated)
+    Q_PROPERTY(bool hasJournal READ hasJournal NOTIFY journalUpdated)
+
+    Q_PROPERTY(QString plantName READ getPlantName WRITE setPlantName NOTIFY plantUpdated)
+    Q_PROPERTY(QString plantNameDisplay READ getPlantNameDisplay NOTIFY plantUpdated)
+    Q_PROPERTY(QString plantCache READ getPlantCache NOTIFY plantUpdated)
+    Q_PROPERTY(QDateTime plantStart READ getPlantStart NOTIFY plantUpdated)
+
+    //Q_PROPERTY(Plant plant READ getPlant_p NOTIFY plantUpdated)
+    Q_PROPERTY(QVariant plant READ getPlant_v NOTIFY plantUpdated)
+
     Q_PROPERTY(QVariant journalEntries READ getJournalEntries NOTIFY journalUpdated)
 
     // plant
@@ -52,13 +62,29 @@ class DevicePlantSensor: public DeviceSensor
     QDateTime m_plantStart;
     Plant *m_plant = nullptr;
 
+    bool hasPlant() { return m_plant; }
+    bool hasJournal() { return !m_journal_entries.isEmpty(); }
+
     // journal entries
     QList <QObject *> m_journal_entries;
     bool loadPlant();
     bool loadJournalEntries();
     QVariant getJournalEntries() const { return QVariant::fromValue(m_journal_entries); }
 
+    QString getPlantName() const { return m_plantName; }
+    QString getPlantNameDisplay() const {
+        if (!m_plantName.isEmpty()) return m_plantName;
+        if (!m_associatedName.isEmpty()) return m_associatedName;
+        return QString();
+    }
+    QString getPlantCache() const { return m_plantCache; }
+    QDateTime getPlantStart() const { return m_plantStart; }
+
+    QVariant getPlant_v() const { return QVariant::fromValue(m_plant); }
+    Plant *getPlant_p() const { return m_plant; }
+
 Q_SIGNALS:
+    void plantUpdated();
     void journalUpdated();
 
 protected:
@@ -72,6 +98,9 @@ public:
     DevicePlantSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DevicePlantSensor();
+
+    // Plant
+    Q_INVOKABLE void setPlantName(const QString &plant);
 
     // Journal
     Q_INVOKABLE bool addJournalEntry(const int type, const QDateTime &date, const QString &comment);

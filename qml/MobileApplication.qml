@@ -557,7 +557,7 @@ ApplicationWindow {
 
         color: Theme.colorComponentBackground
         border.color: Theme.colorSeparator
-        border.width: Theme.componentRadius
+        border.width: Theme.componentBorderWidth
 
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 233 } }

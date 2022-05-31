@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 
 Rectangle {
-    id: itemNoEntry
+    id: itemNoPlant
     anchors.centerIn: parent
     anchors.verticalCenterOffset: -48
 
@@ -20,7 +20,7 @@ Rectangle {
         width: parent.height*0.66
         height: width
 
-        source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+        source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
         opacity: 0.9
@@ -31,7 +31,7 @@ Rectangle {
         anchors.topMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
 
-        text: qsTr("There is no entry in the journal...")
+        text: qsTr("No plant has been set.")
         textFormat: Text.PlainText
         font.pixelSize: Theme.fontSizeContent
         color: Theme.colorText
@@ -42,8 +42,8 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
 
             fullColor: true
-            text: qsTr("Let's start!")
-            onClicked: itemNoEntry.clicked()
+            text: qsTr("Let's find one!")
+            onClicked: itemNoPlant.clicked()
         }
     }
 }

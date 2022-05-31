@@ -24,6 +24,7 @@
 #include "SystrayManager.h"
 #include "NotificationManager.h"
 #include "DeviceManager.h"
+#include "PlantDatabase.h"
 #include "Journal.h"
 #include "utils/utils_app.h"
 #include "utils/utils_screen.h"
@@ -152,6 +153,9 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    // Plant database
+    PlantDatabase *pdb = PlantDatabase::getInstance();
+
     // Init generic utils
     UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsApp *utilsApp = UtilsApp::getInstance();
@@ -179,6 +183,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
+    engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
     engine_context->setContextProperty("utilsScreen", utilsScreen);

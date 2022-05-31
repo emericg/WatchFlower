@@ -35,11 +35,6 @@ class DatabaseManager: public QObject
 {
     Q_OBJECT
 
-    // Singleton
-    static DatabaseManager *instance;
-    DatabaseManager();
-    ~DatabaseManager();
-
     const static int s_dbCurrentVersion = 3;
 
     bool m_dbInternalAvailable = false;
@@ -59,6 +54,11 @@ class DatabaseManager: public QObject
     void migrateDatabase();
     bool migrate_v1v2();
     bool migrate_v2v3();
+
+    // Singleton
+    static DatabaseManager *instance;
+    DatabaseManager();
+    ~DatabaseManager();
 
 public:
     static DatabaseManager *getInstance();

@@ -3,17 +3,37 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
-Flickable {
+Item {
     id: plantCareInfos
 
-    contentWidth: -1
-    contentHeight: column.height
+    function load() {
+        if (currentDevice.hasPlant) {
+            plantScreenLoader.active = true
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Column {
-        id: column
-        anchors.left: parent.left
-        anchors.right: parent.right
+    ItemNoPlant {
+        visible: !currentDevice.hasPlant
+        onClicked: {
+            plantScreenLoader.active = true
+            screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Loader {
+        id: plantScreenLoader
+        anchors.fill: parent
+
+        active: false
+        visible: currentDevice.hasPlant
+
+        asynchronous: true
+        sourceComponent: Flickable {
+            anchors.fill: parent
+        }
     }
 }

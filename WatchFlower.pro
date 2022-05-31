@@ -33,6 +33,8 @@ SOURCES  += src/main.cpp \
             src/SystrayManager.cpp \
             src/NotificationManager.cpp \
             src/AndroidService.cpp \
+            src/PlantDatabase.cpp \
+            src/Plant.cpp \
             src/Journal.cpp \
             src/DeviceManager.cpp \
             src/DeviceManager_advertisement.cpp \
@@ -74,6 +76,8 @@ HEADERS  += src/SettingsManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
             src/AndroidService.h \
+            src/PlantDatabase.h \
+            src/Plant.h \
             src/Journal.h \
             src/DeviceManager.h \
             src/DeviceFilter.h \
@@ -114,7 +118,8 @@ INCLUDEPATH += src/
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc \
-               assets/devices.qrc
+               assets/devices.qrc \
+               assets/plants.qrc
 
 OTHER_FILES += README.md \
                deploy_linux.sh \
