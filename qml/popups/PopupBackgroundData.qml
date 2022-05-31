@@ -34,16 +34,18 @@ Popup {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     contentItem: Item {
         Column {
             id: columnContent
             width: parent.width
-            spacing: 20
+            spacing: 8
 
             Text {
                 width: parent.width
 
-                text: qsTr("You are about to enable background sensor refresh.")
+                text: qsTr("About background updates.")
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
@@ -57,7 +59,8 @@ Popup {
                 Text {
                     width: parent.width
 
-                    text: qsTr("Several Android features will prevent this application from running in the background and need <b>manual intervention</b> from you:")
+                    text: qsTr("Android will prevent this application from running in the background.<br>
+                                Some settings needs to be switched <b>manually</b> from the <b>application info panel</b>:")
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorSubText
@@ -80,7 +83,6 @@ Popup {
             Flow {
                 id: flowContent
                 width: parent.width
-                height: singleColumn ? 80+24 : 40
 
                 property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
                 spacing: 16
@@ -88,11 +90,12 @@ Popup {
                 ButtonWireframeIconCentered {
                     width: parent.btnSize
 
-                    text: qsTr("Device specific information")
-                    primaryColor: Theme.colorSubText
                     fullColor: true
-                    layoutDirection: Qt.RightToLeft
-                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    primaryColor: Theme.colorSubText
+
+                    text: qsTr("Unofficial information")
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    sourceSize: 20
 
                     onClicked: {
                         Qt.openUrlExternally("https://dontkillmyapp.com/")
@@ -100,13 +103,28 @@ Popup {
                         popupBackgroundData.close()
                     }
                 }
+
                 ButtonWireframeIconCentered {
                     width: parent.btnSize
 
-                    text: qsTr("I understand")
-                    primaryColor: Theme.colorGreen
                     fullColor: true
+                    primaryColor: Theme.colorPrimary
+
+                    text: qsTr("Application info panel")
+                    source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                    sourceSize: 20
+
+                    onClicked: utilsApp.openAndroidAppInfo("com.emeric.watchflower")
+                }
+
+                ButtonWireframeIconCentered {
+                    width: parent.btnSize
+
+                    fullColor: true
+                    primaryColor: Theme.colorGreen
                     layoutDirection: Qt.RightToLeft
+
+                    text: qsTr("I understand")
                     source: "qrc:/assets/icons_material/baseline-check-24px.svg"
 
                     onClicked: {

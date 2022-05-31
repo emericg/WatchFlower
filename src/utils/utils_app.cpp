@@ -215,6 +215,13 @@ int UtilsApp::getAndroidSdkVersion()
 #endif
 }
 
+void UtilsApp::openAndroidAppInfo(const QString &packageName)
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::openApplicationInfo(packageName);
+#endif
+}
+
 bool UtilsApp::checkMobileLocationPermission()
 {
 #if defined(Q_OS_ANDROID)

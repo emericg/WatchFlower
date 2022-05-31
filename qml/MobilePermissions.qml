@@ -17,9 +17,7 @@ Item {
 
     function loadScreen() {
         // Refresh permissions
-        button_location_test.validperm = utilsApp.checkMobileBleLocationPermission()
-        button_location_background_test.validperm = utilsApp.checkMobileBackgroundLocationPermission()
-        button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
+        refreshPermissions()
 
         // Change screen
         appContent.state = "Permissions"
@@ -28,6 +26,20 @@ Item {
     function loadScreenFrom(screenname) {
         entryPoint = screenname
         loadScreen()
+    }
+
+    function refreshPermissions() {
+        // Refresh permissions
+        button_location_test.validperm = utilsApp.checkMobileBleLocationPermission()
+        button_location_background_test.validperm = utilsApp.checkMobileBackgroundLocationPermission()
+        button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
+    }
+
+    Timer {
+        id: retryPermissions
+        interval: 1000
+        repeat: false
+        onTriggered: refreshPermissions()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -143,7 +155,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileBleLocationPermission()
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        validperm = utilsApp.getMobileBleLocationPermission()
+                        retryPermissions.start()
+                    }
                 }
 
                 Text {
@@ -182,11 +198,13 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 64
 
-                sourceSize: 20
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
-                source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+
                 text: qsTr("Official information")
+                source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                sourceSize: 20
+
                 onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
             }
 
@@ -231,7 +249,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileBackgroundLocationPermission()
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        validperm = utilsApp.getMobileBackgroundLocationPermission()
+                        retryPermissions.start()
+                    }
                 }
 
                 Text {
@@ -306,7 +328,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.isMobileGpsEnabled()
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        validperm = utilsApp.isMobileGpsEnabled()
+                        retryPermissions.start()
+                    }
                 }
 
                 Text {
@@ -390,11 +416,27 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("If it has no effect, you may have previously clicked on \"don't ask again\". Go to Android application settings to fix that.")
+                text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".<br>" +
+                            "You can go to the Android \"application info\" panel to change a permission manually.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ButtonWireframeIcon {
+                height: 36
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+
+                primaryColor: Theme.colorPrimary
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Application info")
+                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                sourceSize: 20
+
+                onClicked: utilsApp.openAndroidAppInfo("com.emeric.watchflower")
             }
 
             ////////

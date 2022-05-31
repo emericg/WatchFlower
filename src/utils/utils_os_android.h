@@ -113,6 +113,11 @@ public:
      */
     static bool getPermission_phonestate();
 
+    /*!
+     * \return True if device GPS is turned on.
+     */
+    static bool isGpsEnabled();
+
     /* ********************************************************************** */
 
     /*!
@@ -165,20 +170,7 @@ public:
      */
     static QString getDeviceSerial();
 
-    /*!
-     * \param milliseconds: vibration duration.
-     *
-     * Need VIBRATE permission.
-     *
-     * - 25 is a small 'keyboard like' vibration
-     * - 100 is a regular 'notification' vibration
-     */
-    static void vibrate(int milliseconds);
-
-    /*!
-     * \return True if device GPS is turned on.
-     */
-    static bool isGpsEnabled();
+    /* ********************************************************************** */
 
     /*!
      * \param on: screen on or off.
@@ -201,6 +193,27 @@ public:
      * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
      */
     static void screenLockOrientation(int orientation, bool autoRotate);
+
+    /* ********************************************************************** */
+
+    /*!
+     * \param milliseconds: vibration duration.
+     *
+     * Need VIBRATE permission.
+     *
+     * - 25 is a small 'keyboard like' vibration
+     * - 100 is a regular 'notification' vibration
+     */
+    static void vibrate(int milliseconds);
+
+    /* ********************************************************************** */
+
+    /*!
+     * \param packageName: the application package, for instance 'com.application.identifier'.
+     *
+     * Open the Android application info intent for the given package name.
+     */
+    static void openApplicationInfo(const QString &packageName);
 };
 
 /* ************************************************************************** */

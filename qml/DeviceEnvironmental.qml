@@ -667,12 +667,12 @@ Loader {
                             Flow {
                                 id: airFlow
                                 anchors.top: parent.top
-                                anchors.topMargin: isDesktop ? 20 : 12
+                                anchors.topMargin: isDesktop ? 20 : 14
                                 anchors.left: parent.left
-                                anchors.leftMargin: isDesktop ? 20 : 12
+                                anchors.leftMargin: isDesktop ? 20 : 14
                                 anchors.right: parent.right
                                 anchors.rightMargin: 0
-                                spacing: 12
+                                spacing: 8
 
                                 onWidthChanged: updateSize()
                                 function updateSize() {
@@ -933,12 +933,12 @@ Loader {
                             Flow {
                                 id: weatherFlow
                                 anchors.top: parent.top
-                                anchors.topMargin: isDesktop ? 14 : 10
+                                anchors.topMargin: isPhone ? 8 : 14
                                 anchors.left: parent.left
-                                anchors.leftMargin: isDesktop ? 14 : 8
+                                anchors.leftMargin: isPhone ? 8 : 14
                                 anchors.right: parent.right
-                                anchors.rightMargin: isDesktop ? 7 : 4
-                                spacing: isDesktop ? 14 : 8
+                                anchors.rightMargin: 0
+                                spacing: isPhone ? 8 : 14
 
                                 onWidthChanged: updateSize()
                                 function updateSize() {

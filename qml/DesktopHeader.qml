@@ -508,7 +508,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: (!deviceManager.updating && !deviceManager.syncing)
+            enabled: (!deviceManager.syncing)
 
             text: qsTr("Search for new sensors")
             tooltipText: text
@@ -548,7 +548,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: (!deviceManager.scanning)
+            enabled: (!deviceManager.syncing)
 
             text: qsTr("Refresh sensors data")
             tooltipText: text

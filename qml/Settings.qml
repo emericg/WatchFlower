@@ -636,7 +636,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorSeparator
-                visible: (Qt.platform.os !== "ios")
+                visible: isDesktop
             }
 
             ////////
@@ -689,6 +689,59 @@ Item {
 
                     checked: settingsManager.minimized
                     onClicked: settingsManager.minimized = checked
+                }
+            }
+
+            ////////////////
+
+            Rectangle {
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                color: Theme.colorForeground
+                visible: (Qt.platform.os === "android")
+
+                IconSvg {
+                    id: image_androidservice
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-android-24px.svg"
+                }
+
+                Text {
+                    id: text_androidservice
+                    anchors.left: image_androidservice.right
+                    anchors.leftMargin: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Background updates")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ButtonExperimental {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: 32
+
+                    visible: (Qt.platform.os === "android")
+
+                    text: qsTr("experimental")
+                    primaryColor: Theme.colorRed
+                    borderColor: Theme.colorRed
+
+                    onClicked: popupBackgroundData.open()
                 }
             }
 
@@ -748,9 +801,8 @@ Item {
                         if (isMobile) {
                             if (settingsManager.systray) {
                                 popupBackgroundData.open()
+                                utilsApp.getMobileBackgroundLocationPermission()
                             }
-
-                            utilsApp.getMobileBackgroundLocationPermission()
                         }
                     }
                 }

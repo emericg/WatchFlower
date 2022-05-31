@@ -37,6 +37,7 @@
 
         <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
+        <file alias="ButtonExperimental.qml">components/ButtonExperimental.qml</file>
         <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>
         <file alias="ChartHistory.qml">components/ChartHistory.qml</file>
         <file alias="ChartPlantDataAio.qml">components/ChartPlantDataAio.qml</file>

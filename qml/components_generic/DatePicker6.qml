@@ -198,9 +198,9 @@ Item {
                 Rectangle {
                     z: -1
                     anchors.centerIn: parent
-                    width: parent.width
-                    height: parent.width
-                    radius: parent.width
+                    width: Math.min(parent.width, parent.height)
+                    height: width
+                    radius: width
                     color: selected ? Theme.colorSecondary : "transparent" //Theme.colorBackground
                     border.color: Theme.colorSecondary
                     border.width: (model.today) ? Theme.componentBorderWidth : 0

@@ -66,6 +66,8 @@ public:
 
     static Q_INVOKABLE int getAndroidSdkVersion();
 
+    static Q_INVOKABLE void openAndroidAppInfo(const QString &packageName);
+
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
     static Q_INVOKABLE bool checkMobileStorageReadPermission();
