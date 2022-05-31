@@ -23,7 +23,8 @@ Item {
         if (!currentDevice.hasSoilMoistureSensor) return
         //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
-        indicatorsLoader.source = "" // force graph reload
+        chartAioLoader.source = "" // force graph reload
+        chartAioLoader.visible = false
 
         loadIndicators()
         loadGraph()
@@ -417,6 +418,7 @@ Item {
                 onLoaded: {
                     dataChart.loadGraph()
                     dataChart.updateGraph()
+                    visible = true
                 }
             }
         }

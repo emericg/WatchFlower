@@ -62,9 +62,8 @@ T.RangeSlider {
 
         Text {
             id: t1
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 1
-            anchors.horizontalCenter: parent.horizontalCenter
+            height: hhh
+            anchors.centerIn: parent
 
             text: {
                 var vvalue = first.value
@@ -73,7 +72,7 @@ T.RangeSlider {
                 return ((control.kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            font.pixelSize: 10
+            fontSizeMode: Text.VerticalFit
             font.bold: true
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
@@ -97,9 +96,8 @@ T.RangeSlider {
 
         Text {
             id: t2
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 1
-            anchors.horizontalCenter: parent.horizontalCenter
+            height: hhh
+            anchors.centerIn: parent
 
             text: {
                 var vvalue = second.value
@@ -108,7 +106,7 @@ T.RangeSlider {
                 return ((control.kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            font.pixelSize: 10
+            fontSizeMode: Text.VerticalFit
             font.bold: true
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter

@@ -50,7 +50,6 @@ Item {
             text: legend
             textFormat: Text.PlainText
             font.bold: true
-            font.pixelSize: 12
             font.capitalization: Font.AllUppercase
             color: Theme.colorSubText
             horizontalAlignment: Text.AlignRight
@@ -221,10 +220,9 @@ Item {
             Rectangle {
                 id: indicator
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 0
 
-                height: hhh
                 width: textIndicator.width + 12
+                height: hhh
                 radius: (value <= 0 || item_data.width > indicator.width) ? hhh : 0
                 color: {
                     if (value <= 0)
@@ -244,9 +242,8 @@ Item {
 
                 Text {
                     id: textIndicator
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: 1
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: hhh
+                    anchors.centerIn: parent
 
                     color: (item_data.width > indicator.width) ? "white" : Theme.colorText
 
@@ -262,7 +259,7 @@ Item {
                     }
                     textFormat: Text.PlainText
                     font.bold: true
-                    font.pixelSize: 12
+                    fontSizeMode: Text.VerticalFit
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }

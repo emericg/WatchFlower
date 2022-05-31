@@ -19,14 +19,14 @@ Item {
     Row {
         id: rowheader
         anchors.left: parent.left
-        anchors.leftMargin: isPhone ? 8 : 12
+        anchors.leftMargin: singleColumn ? 8 : 12
 
-        layoutDirection: isPhone ? Qt.RightToLeft : Qt.LeftToRight
+        layoutDirection: singleColumn ? Qt.RightToLeft : Qt.LeftToRight
         spacing: 12
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
-            width: isPhone ? 48 : 72
+            width: singleColumn ? 48 : 72
 
             text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM")
             horizontalAlignment: isPhone ? Text.AlignLeft : Text.AlignRight

@@ -52,7 +52,7 @@ T.Slider {
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         implicitWidth: hhh
         implicitHeight: hhh
-        width: t2.width + 16
+        width: t1.width + 16
 
         radius: hhh
         color: control.colorFg
@@ -60,10 +60,9 @@ T.Slider {
         opacity: control.pressed ? 1 : 1
 
         Text {
-            id: t2
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 1
-            anchors.horizontalCenter: parent.horizontalCenter
+            id: t1
+            height: hhh
+            anchors.centerIn: parent
 
             text: {
                 var vvalue = control.value
@@ -72,7 +71,7 @@ T.Slider {
                 return ((control.kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            font.pixelSize: 10
+            fontSizeMode: Text.VerticalFit
             font.bold: true
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
