@@ -7,6 +7,8 @@
         <file>MobilePermissions.qml</file>
         <file>DesktopApplication.qml</file>
         <file>DesktopHeader.qml</file>
+        <file>PlantBrowser.qml</file>
+        <file>PlantScreen.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
         <file>Tutorial.qml</file>

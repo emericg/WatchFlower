@@ -148,20 +148,85 @@ void Plant::read_json_watchflower(QJsonObject &json)
             size_diameter = infos["size_diameter"].toString();
 
         // TODO // periods
-        // TODO // colors
-        // TODO // tags
+
+        if (infos.contains("colors_leaf") && infos["colors_leaf"].isArray())
+        {
+            for (const auto &c: infos["colors_leaf"].toArray().toVariantList())
+            {
+                colors_leaf.push_back(c.toString());
+            }
+        }
+        if (infos.contains("colors_bract") && infos["colors_bract"].isArray())
+        {
+            for (const auto &c: infos["colors_bract"].toArray().toVariantList())
+            {
+                colors_bract.push_back(c.toString());
+            }
+        }
+        if (infos.contains("colors_flower") && infos["colors_flower"].isArray())
+        {
+            for (const auto &c: infos["colors_flower"].toArray().toVariantList())
+            {
+                colors_flower.push_back(c.toString());
+            }
+        }
+        if (infos.contains("colors_fruit") && infos["colors_fruit"].isArray())
+        {
+            for (const auto &c: infos["colors_fruit"].toArray().toVariantList())
+            {
+                colors_fruit.push_back(c.toString());
+            }
+        }
+
+        if (infos.contains("tags") && infos["tags"].isArray())
+        {
+            for (const auto &t:infos["tags"].toArray().toVariantList())
+            {
+                tags.push_back(t.toString());
+            }
+        }
     }
 
     ///
     if (json.contains("care") && json["care"].isObject())
     {
         QJsonObject care = json["care"].toObject();
+
+        if (care.contains("soil") && care["soil"].isString())
+            soil = care["soil"].toString();
+        if (care.contains("sunlight") && care["sunlight"].isString())
+            sunlight = care["sunlight"].toString();
+        if (care.contains("watering") && care["watering"].isString())
+            watering = care["watering"].toString();
+        if (care.contains("pruning") && care["pruning"].isString())
+            pruning = care["pruning"].toString();
+        if (care.contains("fertilization") && care["fertilization"].isString())
+            fertilization = care["fertilization"].toString();
     }
 
     ///
     if (json.contains("metrics") && json["metrics"].isObject())
     {
         QJsonObject metrics = json["metrics"].toObject();
+
+        if (metrics.contains("soil_moisture_min")) soilRH_min = metrics["soil_moisture_min"].toInt();
+        if (metrics.contains("soil_moisture_max")) soilRH_max = metrics["soil_moisture_max"].toInt();
+        if (metrics.contains("soil_conductivity_min")) soilEC_min = metrics["soil_conductivity_min"].toInt();
+        if (metrics.contains("soil_conductivity_max")) soilEC_max = metrics["soil_conductivity_max"].toInt();
+        if (metrics.contains("soil_ph_min")) soilPH_min = metrics["soil_ph_min"].toDouble();
+        if (metrics.contains("soil_ph_max")) soilPH_max = metrics["soil_ph_max"].toDouble();
+
+        if (metrics.contains("env_temperature_min")) envTemp_min = metrics["env_temperature_min"].toInt();
+        if (metrics.contains("env_temperature_max")) envTemp_max = metrics["env_temperature_max"].toInt();
+        if (metrics.contains("env_temperature_ideal_min")) envTempIdeal_min = metrics["env_temperature_ideal_min"].toInt();
+        if (metrics.contains("env_temperature_ideal_max")) envTempIdeal_max = metrics["env_temperature_ideal_max"].toInt();
+        if (metrics.contains("env_humidity_min")) envHumi_min = metrics["env_humidity_min"].toInt();
+        if (metrics.contains("env_humidity_max")) envHumi_max = metrics["env_humidity_max"].toInt();
+
+        if (metrics.contains("light_lux_min")) lightLux_min = metrics["light_lux_min"].toInt();
+        if (metrics.contains("light_lux_max")) lightLux_max = metrics["light_lux_max"].toInt();
+        if (metrics.contains("light_mmol_min")) lightMmol_min = metrics["light_mmol_min"].toInt();
+        if (metrics.contains("light_mmol_max")) lightMmol_max = metrics["light_mmol_max"].toInt();
     }
 }
 
@@ -181,13 +246,15 @@ void Plant::write_json_watchflower(QJsonObject &jsonObject) const
     infosObject.insert("period_growth", QJsonValue::fromVariant(period_growth));
     infosObject.insert("period_blooming", QJsonValue::fromVariant(period_blooming));
     infosObject.insert("period_fruiting", QJsonValue::fromVariant(period_fruiting));
+    infosObject.insert("colors_leaf", QJsonValue::fromVariant(colors_leaf).toArray());
+    infosObject.insert("colors_bract", QJsonValue::fromVariant(colors_bract).toArray());
+    infosObject.insert("colors_flower", QJsonValue::fromVariant(colors_flower).toArray());
+    infosObject.insert("colors_fruit", QJsonValue::fromVariant(colors_fruit).toArray());
+    infosObject.insert("tags", QJsonValue::fromVariant(tags).toArray());
     jsonObject.insert("infos", infosObject);
 
-    // TODO // colors
-    // TODO // tags
-
     QJsonObject careObject; ////////////////////////////////////////////////////
-    if (!soil.isEmpty()) careObject.insert("soil", QJsonValue::fromVariant(origin));
+    if (!soil.isEmpty()) careObject.insert("soil", QJsonValue::fromVariant(soil));
     if (!sunlight.isEmpty()) careObject.insert("sunlight", QJsonValue::fromVariant(sunlight));
     if (!watering.isEmpty()) careObject.insert("watering", QJsonValue::fromVariant(watering));
     if (!pruning.isEmpty()) careObject.insert("pruning", QJsonValue::fromVariant(pruning));

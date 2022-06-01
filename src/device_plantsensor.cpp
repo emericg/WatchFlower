@@ -183,7 +183,7 @@ bool DevicePlantSensor::addDatabaseRecord(const int64_t timestamp,
 
 bool DevicePlantSensor::loadPlant()
 {
-    qDebug() << "DevicePlantSensor::loadPlant()";
+    //qDebug() << "DevicePlantSensor::loadPlant()";
     bool status = false;
 
     QSqlQuery queryPlant;
@@ -221,7 +221,7 @@ bool DevicePlantSensor::loadPlant()
 
                     m_plant = new Plant(this);
                     m_plant->read_json_watchflower(plantObj);
-                    m_plant->print();
+                    //m_plant->print();
                     Q_EMIT plantUpdated();
                 }
             }
@@ -299,7 +299,7 @@ bool DevicePlantSensor::loadJournalEntries()
 
 bool DevicePlantSensor::addJournalEntry(const int type, const QDateTime &date, const QString &comment)
 {
-    qDebug() << "DevicePlantSensor::addJournalEntry()" << m_deviceAddress << type << date << comment;
+    //qDebug() << "DevicePlantSensor::addJournalEntry()" << m_deviceAddress << type << date << comment;
     bool status = false;
 
     JournalEntry *j = new JournalEntry(this);
@@ -322,7 +322,7 @@ bool DevicePlantSensor::addJournalEntry(const int type, const QDateTime &date, c
 
 bool DevicePlantSensor::removeJournalEntry(const int id)
 {
-    qDebug() << "DevicePlantSensor::removeJournalEntry() id:" << id;
+    //qDebug() << "DevicePlantSensor::removeJournalEntry() id #" << id;
     bool status = false;
 
     for (auto jj: qAsConst(m_journal_entries))
@@ -348,6 +348,8 @@ bool DevicePlantSensor::removeJournalEntry(const int id)
 
 void DevicePlantSensor::setPlantName(const QString &plant)
 {
+    //qDebug() << "DevicePlantSensor::setPlantName()" << plant;
+
     if (!plant.isEmpty())
     {
         if (m_plant)
@@ -363,6 +365,7 @@ void DevicePlantSensor::setPlantName(const QString &plant)
         {
             QJsonObject plantObj;
             temp->write_json_watchflower(plantObj);
+            //qDebug() << "json> " << plantObj;
 
             m_plant = new Plant(this);
             m_plant->read_json_watchflower(plantObj);
@@ -384,6 +387,32 @@ void DevicePlantSensor::setPlantName(const QString &plant)
                            << setPlant.lastError().type() << ":" << setPlant.lastError().text();
             }
         }
+    }
+}
+
+void DevicePlantSensor::resetPlant()
+{
+    if (m_plant)
+    {
+        delete m_plant;
+        m_plant = nullptr;
+    }
+
+    m_plantName = "";
+    m_plantCache = "";
+    Q_EMIT plantUpdated();
+
+    QSqlQuery setPlant;
+    setPlant.prepare("UPDATE  plants SET plantName = :plantName, plantCache = :plantCache "
+                     "WHERE deviceAddr = :deviceAddr;");
+    setPlant.bindValue(":plantName", m_plantName);
+    setPlant.bindValue(":plantCache", m_plantCache);
+    setPlant.bindValue(":deviceAddr", getAddress());
+
+    if (!setPlant.exec())
+    {
+        qWarning() << "> setPlant.exec() ERROR"
+                   << setPlant.lastError().type() << ":" << setPlant.lastError().text();
     }
 }
 

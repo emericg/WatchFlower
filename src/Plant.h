@@ -100,6 +100,9 @@ class Plant: public QObject
     QString period_blooming;
     QString period_fruiting;
 
+    // tags
+    QStringList tags;
+
     // maintenance infos
     QString soil;
     QString sunlight;
@@ -107,10 +110,7 @@ class Plant: public QObject
     QString fertilization;
     QString pruning;
 
-    // tags
-    QStringList tags;
-
-    // sensor parameters
+    // sensor limits
     int soilRH_min = -99;
     int soilRH_max = -99;
     int soilEC_min = -99;

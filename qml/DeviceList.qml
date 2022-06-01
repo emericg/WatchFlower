@@ -391,10 +391,16 @@ Item {
         visible: isDesktop
 
         ButtonWireframe {
-            text: "devices"
+            text: qsTr("devices")
             fullColor: true
             primaryColor: Theme.colorSecondary
             onClicked: screenDeviceBrowser.loadScreen()
+        }
+        ButtonWireframe {
+            text: qsTr("plants")
+            fullColor: true
+            primaryColor: Theme.colorPrimary
+            onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
         }
     }
 }

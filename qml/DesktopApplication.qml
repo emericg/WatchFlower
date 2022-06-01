@@ -263,6 +263,8 @@ ApplicationWindow {
                 appContent.state = "DeviceBrowser"
             else if (appContent.previousStates[appContent.previousStates.length-1] === "PlantBrowser")
                 appContent.state = "PlantBrowser"
+        } else if (appContent.state === "PlantBrowser") {
+            screenPlantBrowser.forwardAction()
         }
     }
     function deselectAction() {
@@ -396,6 +398,10 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        PlantBrowser {
+            anchors.fill: parent
+            id: screenPlantBrowser
+        }
         DeviceBrowser {
             anchors.fill: parent
             id: screenDeviceBrowser
@@ -432,6 +438,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -443,6 +450,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -454,6 +462,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -465,6 +474,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -476,6 +486,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: true; enabled: true; focus: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -487,6 +498,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; focus: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -498,6 +510,19 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; focus: true; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
+            },
+            State {
+                name: "PlantBrowser"
+                PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: true; enabled: true; focus: true; }
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
@@ -509,6 +534,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceBrowser; visible: true; enabled: true; focus: true; }
             }
         ]
