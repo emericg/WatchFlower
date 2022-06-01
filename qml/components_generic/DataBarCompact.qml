@@ -50,7 +50,7 @@ Item {
             text: legend
             textFormat: Text.PlainText
             font.bold: true
-            font.pixelSize: 12
+            font.pixelSize: Theme.fontSizeContentVerySmall
             font.capitalization: Font.AllUppercase
             color: Theme.colorSubText
             horizontalAlignment: Text.AlignRight
@@ -167,7 +167,7 @@ Item {
                 textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeContentVerySmall
                 horizontalAlignment: Text.AlignHCenter
 
                 Rectangle {

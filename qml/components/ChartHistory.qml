@@ -403,7 +403,7 @@ Item {
             }
             color: "white"
             font.bold: true
-            font.pixelSize: 12
+            font.pixelSize: Theme.fontSizeContentVerySmall
             horizontalAlignment: Text.AlignHCenter
         }
     }
@@ -433,7 +433,7 @@ Item {
                 return value.toFixed(floatprecision) + suffix.replace("<br>", "")
             }
             font.bold: true
-            font.pixelSize: 10
+            font.pixelSize: Theme.fontSizeContentVeryVerySmall
         }
     }
 

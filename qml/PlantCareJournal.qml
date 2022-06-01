@@ -10,17 +10,22 @@ Item {
     id: plantCareJournal
 
     function load() {
-        //
+        journalEntries.active = true
     }
 
-    function isEditMode() {
-        if (journalEditorLoader.status === Loader.Ready)
-            return journalEditorLoader.item.isEditorOpen()
-        return false
-    }
-    function closeEditor() {
-        if (journalEditorLoader.status === Loader.Ready)
-            journalEditorLoader.item.closeEditor()
+    function backAction() {
+        if (journalEditorLoader.status === Loader.Ready) {
+            if (journalEditorLoader.item.isEditing()) {
+                journalEditorLoader.item.stopEditing()
+                return
+            }
+            if (journalEditorLoader.item.isEditorOpen()) {
+                journalEditorLoader.item.closeEditor()
+                return
+            }
+        }
+
+        appContent.state = "DeviceList"
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -36,110 +41,118 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ListView {
-        id: entriesView
+    Loader {
+        id: journalEntries
         anchors.fill: parent
-        anchors.margins: 16
 
-        visible: currentDevice.hasJournal
-        enabled: currentDevice.hasJournal
+        active: false
 
-        topMargin: isPhone ? 8 : 12
-        bottomMargin: isPhone ? 8 : 12
-        spacing: 16
+        asynchronous: true
+        sourceComponent: ListView {
+            id: entriesView
+            anchors.fill: parent
+            anchors.margins: 16
 
-        property int entrySelected: -1
-        onCountChanged: {
-            entrySelected = -1
-            Qt.callLater(entriesView.positionViewAtEnd)
-        }
+            visible: currentDevice.hasJournal
+            enabled: currentDevice.hasJournal
 
-        header: Item {
-            height: 80
-            anchors.left: parent.left
-            anchors.right: parent.right
+            topMargin: isPhone ? 8 : 12
+            bottomMargin: isPhone ? 8 : 12
+            spacing: 16
 
-            RoundButtonIcon {
-                id: startPlantIcon
-                width: 40
-                height: 40
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.leftMargin: singleColumn ? 0 : 88
-
-                source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
-                iconColor: "white"
-                background: true
-                backgroundColor: Theme.colorGreen
-
-                Rectangle {
-                    anchors.top: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    width: 3
-                    height: 40
-                    z: -1
-                    color: Theme.colorSeparator
-                }
+            property int entrySelected: -1
+            onCountChanged: {
+                entrySelected = -1
+                Qt.callLater(entriesView.positionViewAtEnd)
             }
 
-            Text {
-                anchors.left: startPlantIcon.right
-                anchors.leftMargin: 16
+            header: Item {
+                height: 80
+                anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.verticalCenter: startPlantIcon.verticalCenter
 
-                text: {
-                    if (currentDevice.plantNameDisplay.length)
-                        qsTr("%1 tracked since %2").arg(currentDevice.plantNameDisplay).arg(currentDevice.plantStart.toLocaleString(Locale.ShortFormat))
-                    else
-                        qsTr("Plant tracked since %1").arg(currentDevice.plantStart.toLocaleString(Locale.ShortFormat))
+                RoundButtonIcon {
+                    id: startPlantIcon
+                    width: 40
+                    height: 40
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 88
+
+                    source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                    iconColor: "white"
+                    background: true
+                    backgroundColor: Theme.colorGreen
+
+                    Rectangle {
+                        anchors.top: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        width: 3
+                        height: 40
+                        z: -1
+                        color: Theme.colorSeparator
+                    }
                 }
-                color: Theme.colorText
-                wrapMode: Text.WordWrap
-                font.pixelSize: Theme.fontSizeContentBig
-            }
-        }
 
-        model: currentDevice.journalEntries
-        delegate: JournalWidget {
-            width: entriesView.width
-        }
-
-        footer: Item {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 52
-            z: 2
-
-            RoundButtonIcon {
-                id: add
-                width: 40
-                height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: singleColumn ? 0 : 88
-                anchors.bottom: parent.bottom
-
-                source: "qrc:/assets/icons_material/baseline-add-24px.svg"
-                iconColor: "white"
-                background: true
-                backgroundColor: Theme.colorPrimary
-
-                onClicked: entryEditor.open()
-
-                ButtonWireframe {
-                    height: 36
-                    anchors.left: parent.right
+                Text {
+                    anchors.left: startPlantIcon.right
                     anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.verticalCenter: startPlantIcon.verticalCenter
 
-                    fullColor: true
-                    primaryColor: Theme.colorSecondary
-                    text: qsTr("Add a new entry")
+                    text: {
+                        if (currentDevice.plantNameDisplay.length)
+                            qsTr("%1 tracked since %2").arg(currentDevice.plantNameDisplay).arg(currentDevice.plantStart.toLocaleString(Locale.ShortFormat))
+                        else
+                            qsTr("Plant tracked since %1").arg(currentDevice.plantStart.toLocaleString(Locale.ShortFormat))
+                    }
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeContentBig
+                }
+            }
 
-                    onClicked: {
-                        journalEditorLoader.active = true
-                        journalEditorLoader.item.openEditor()
+            model: currentDevice.journalEntries
+            delegate: JournalWidget {
+                width: entriesView.width
+            }
+
+            footer: Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 52
+                z: 2
+
+                RoundButtonIcon {
+                    id: add
+                    width: 40
+                    height: 40
+                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 88
+                    anchors.bottom: parent.bottom
+
+                    source: "qrc:/assets/icons_material/baseline-add-24px.svg"
+                    iconColor: "white"
+                    background: true
+                    backgroundColor: Theme.colorPrimary
+
+                    onClicked: entryEditor.open()
+
+                    ButtonWireframe {
+                        height: 36
+                        anchors.left: parent.right
+                        anchors.leftMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        fullColor: true
+                        primaryColor: Theme.colorSecondary
+                        text: qsTr("Add a new entry")
+
+                        onClicked: {
+                            journalEditorLoader.active = true
+                            journalEditorLoader.item.openEditor()
+                        }
                     }
                 }
             }
@@ -165,6 +178,13 @@ Item {
             }
             function closeEditor() {
                 entryEditor.close()
+            }
+
+            function isEditing() {
+                return entryComment.focus
+            }
+            function stopEditing() {
+                entryComment.focus = false
             }
 
             Rectangle {

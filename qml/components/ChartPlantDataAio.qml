@@ -34,24 +34,17 @@ Item {
         //console.log("chartPlantDataAio // updateGraph() >> " + currentDevice)
 
         var days = 14
-        var count = currentDevice.countDataNamed("temperature", days)
-
-        // graph visibility
-        aioGraph.visible = (count > 1)
-        noDataIndicator.visible = (count <= 1)
-        showGraphDots = (settingsManager.graphShowDots && count < 16)
 
         //// DATA
-        hygroData.clear()
-        conduData.clear()
-        tempData.clear()
-        lumiData.clear()
-
         if (currentDevice.isPlantSensor) {
             currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData);
         } else if (currentDevice.isThermometer) {
             currentDevice.getChartData_thermometerAIO(days, axisTime, tempData, hygroData);
         }
+
+        // graph visibility
+        aioGraph.visible = (hygroData.count > 1)
+        showGraphDots = (settingsManager.graphShowDots && hygroData.count < 16)
 
         //// AXIS
         axisHygro.min = 0
@@ -91,23 +84,6 @@ Item {
             // not planted? don't show hygro and condu
             hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")
             conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasDataNamed("soilConductivity")
-
-            // Flower Care without hygro & conductivity data
-            if (!hygroData.visible && !conduData.visible) {
-                // Show luminosity and make temperature primary
-                lumiData.visible = true
-                //tempData.width = 3
-
-                // Luminosity can have min/max, cause values have a very wide range
-                axisLumi.max = currentDevice.luxMax*1.5
-            } else {
-                //hygroData.width = 3 // Soil moisture is primary
-            }
-
-            // Pots
-            if (currentDevice.deviceName === "ropot" || currentDevice.deviceName === "Parrot pot") {
-                //hygroData.width = 3 // Humidity is primary
-            }
         }
 
         // Update indicator (only works if data are changed in database though...)
@@ -128,8 +104,9 @@ Item {
 
         antialiasing: true
         legend.visible: false
-        backgroundRoundness: 0
         backgroundColor: Theme.colorBackground
+        backgroundRoundness: 0
+        dropShadowEnabled: false
         animationOptions: ChartView.NoAnimation
 
         ValueAxis { id: axisHygro; visible: false; gridVisible: false; }
@@ -232,15 +209,6 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-
-    ItemNoData {
-        id: noDataIndicator
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-    }
-
-    ////////////////
 
     Rectangle {
         id: verticalIndicator
@@ -422,13 +390,13 @@ Item {
     }
 
     function resetIndicator() {
+        if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
+        if (appContent.state === "DevicePlantSensor") dataIndicators.resetDataBars()
+
         dateIndicator.visible = false
         dataIndicator.visible = false
         verticalIndicator.visible = false
         verticalIndicator.clickedCoordinates = null
-
-        if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
-        if (appContent.state === "DevicePlantSensor") dataIndicators.resetDataBars()
     }
 
     function updateIndicator() {

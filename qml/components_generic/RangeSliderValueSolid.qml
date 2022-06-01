@@ -72,8 +72,9 @@ T.RangeSlider {
                 return ((control.kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            fontSizeMode: Text.VerticalFit
             font.bold: true
+            font.pixelSize: isDesktop ? 12 : 13
+            fontSizeMode: Text.VerticalFit
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -106,8 +107,9 @@ T.RangeSlider {
                 return ((control.kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            fontSizeMode: Text.VerticalFit
             font.bold: true
+            font.pixelSize: isDesktop ? 12 : 13
+            fontSizeMode: Text.VerticalFit
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

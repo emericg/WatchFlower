@@ -396,6 +396,11 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
 {
     if (!axis || !hygro || !condu || !temp || !lumi) return;
 
+    hygro->clear();
+    condu->clear();
+    temp->clear();
+    lumi->clear();
+
     if (m_dbInternal || m_dbExternal)
     {
         QString time = "datetime('now', 'localtime', '-" + QString::number(maxDays) + " days')";
@@ -433,7 +438,7 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
             hygro->append(timecode, graphData.value(1).toReal());
             condu->append(timecode, graphData.value(2).toReal());
             temp->append(timecode, graphData.value(3).toReal());
-            lumi->append(timecode, graphData.value(4).toReal());
+            if (hasLuminositySensor()) lumi->append(timecode, graphData.value(4).toReal());
 
             // min/max
             if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }

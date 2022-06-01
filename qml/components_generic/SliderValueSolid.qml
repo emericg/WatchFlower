@@ -71,8 +71,9 @@ T.Slider {
                 return ((control.kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
-            fontSizeMode: Text.VerticalFit
             font.bold: true
+            fontSizeMode: Text.VerticalFit
+            font.pixelSize: isDesktop ? 12 : 13
             color: control.colorTxt
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

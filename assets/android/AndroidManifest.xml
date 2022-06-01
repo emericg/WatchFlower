@@ -30,7 +30,8 @@
 
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
                   android:name="org.qtproject.qt.android.bindings.QtActivity" android:label="WatchFlower"
-                  android:screenOrientation="unspecified" android:launchMode="singleTop">
+                  android:screenOrientation="unspecified" android:launchMode="singleTop"
+                  android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

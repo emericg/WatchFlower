@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -8,7 +7,7 @@ Rectangle {
     anchors.centerIn: parent
     anchors.verticalCenterOffset: -48
 
-    width: singleColumn ? (parent.width*0.5) : (parent.height*0.5)
+    width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
     radius: width
     color: Theme.colorForeground
@@ -17,7 +16,7 @@ Rectangle {
 
     IconSvg {
         anchors.centerIn: parent
-        width: parent.height*0.66
+        width: parent.width*0.66
         height: width
 
         source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
@@ -31,9 +30,9 @@ Rectangle {
         anchors.topMargin: 24
         anchors.horizontalCenter: parent.horizontalCenter
 
-        text: qsTr("No plant has been set.")
+        text: qsTr("No plant set...")
         textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeContent
+        font.pixelSize: Theme.fontSizeContentBig
         color: Theme.colorText
 
         ButtonWireframe {

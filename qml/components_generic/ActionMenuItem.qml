@@ -83,7 +83,7 @@ Rectangle {
         },
         State {
             name: "hovered";
-            PropertyChanges { target: actionMenuItem; color: Theme.colorSeparator; }
+            PropertyChanges { target: actionMenuItem; color: Theme.colorForeground; }
         }
     ]
 

@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -14,8 +13,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -20
 
-        IconSvg {
-            id: imageSearch
+        IconSvg { // imageSearch
             width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
@@ -25,7 +23,7 @@ Item {
             color: Theme.colorIcon
 
             SequentialAnimation on opacity {
-                id: rescanAnimation
+                id: scanAnimation
                 loops: Animation.Infinite
                 running: deviceManager.scanning
                 alwaysRunToEnd: true
@@ -102,7 +100,6 @@ Item {
             ////////
 
             Row {
-                id: row
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 16
 

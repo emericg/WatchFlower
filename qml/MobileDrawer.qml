@@ -140,7 +140,7 @@ Drawer {
                         source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                         color: Theme.colorText
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -179,7 +179,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
                         color: Theme.colorText
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -217,7 +217,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-info-24px.svg"
                         color: Theme.colorText
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -301,7 +301,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/baseline-sort-24px.svg"
                         color: Theme.colorText
                     }
-                    Label {
+                    Text {
                         id: textOrderBy
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
@@ -410,7 +410,7 @@ Drawer {
                             alwaysRunToEnd: true
                         }
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -479,7 +479,7 @@ Drawer {
                             PropertyAnimation { to: 1; duration: 750; }
                         }
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -548,7 +548,7 @@ Drawer {
                             PropertyAnimation { to: 1; duration: 750; }
                         }
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -596,7 +596,7 @@ Drawer {
                     source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
                     color: Theme.colorText
                 }
-                Label {
+                Text {
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + 56
                     anchors.verticalCenter: parent.verticalCenter

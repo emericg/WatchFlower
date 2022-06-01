@@ -50,7 +50,7 @@ Item {
         text: control.legend
         textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
+        font.pixelSize: Theme.fontSizeContentVerySmall
     }
 
     Text {
@@ -65,7 +65,7 @@ Item {
         text: control.text
         textFormat: Text.PlainText
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 12
+        font.pixelSize: Theme.fontSizeContentVerySmall
         font.bold: true
     }
 

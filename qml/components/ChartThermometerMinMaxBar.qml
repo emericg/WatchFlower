@@ -5,8 +5,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: chartThermometerMinMaxBar
-    width: 64
-    height: parent.height
+    implicitWidth: 32
+    implicitHeight: 128
 
     property int www: 20
 
@@ -154,7 +154,7 @@ Item {
                 anchors.horizontalCenterOffset: 2
 
                 color: Theme.colorSubText
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeContentVerySmall
             }
 
             Text {
@@ -165,7 +165,7 @@ Item {
                 anchors.horizontalCenterOffset: 2
 
                 color: Theme.colorSubText
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeContentVerySmall
             }
         }
 
@@ -194,7 +194,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
                     text: modelData.hygroMax
-                    font.pixelSize: 12
+                    font.pixelSize: Theme.fontSizeContentVerySmall
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
@@ -228,7 +228,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
                     text: modelData.hygroMin
-                    font.pixelSize: 12
+                    font.pixelSize: Theme.fontSizeContentVerySmall
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter

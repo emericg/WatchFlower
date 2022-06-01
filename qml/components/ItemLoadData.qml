@@ -3,9 +3,8 @@ import QtQuick 2.15
 import ThemeEngine 1.0
 
 Rectangle {
-    id: itemNoData
+    id: itemLoadData
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: -32
 
     width: singleColumn ? (parent.width*0.4) : (parent.height*0.33)
     height: width
@@ -18,19 +17,8 @@ Rectangle {
         width: parent.width*0.66
         height: width
 
-        source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
+        source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
-    }
-
-    Text {
-        anchors.top: parent.bottom
-        anchors.topMargin: 16
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        text: qsTr("Not enough data...")
-        textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeContent
-        color: Theme.colorText
     }
 }

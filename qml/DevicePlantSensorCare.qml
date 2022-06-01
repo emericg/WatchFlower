@@ -26,11 +26,13 @@ Item {
         plantLimits.updateLimits()
     }
 
-    function isEditMode() {
-        return plantJournal.isEditMode()
-    }
-    function closeEditMode() {
-        plantJournal.closeEditMode()
+    function backAction() {
+        if (plantJournal.visible) {
+            plantJournal.backAction()
+            return
+        }
+
+        appContent.state = "DeviceList"
     }
 
     onWidthChanged: updateSize()

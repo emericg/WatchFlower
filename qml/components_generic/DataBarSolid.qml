@@ -49,6 +49,7 @@ Item {
 
             text: legend
             textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentVerySmall
             font.bold: true
             font.capitalization: Font.AllUppercase
             color: Theme.colorSubText
@@ -135,7 +136,7 @@ Item {
                 text: qsTr("min")
                 textFormat: Text.PlainText
 
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeContentVerySmall
                 color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMin <= value) ? 0.75 : 0.25
                 Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
@@ -192,7 +193,7 @@ Item {
                 text: qsTr("max")
                 textFormat: Text.PlainText
 
-                font.pixelSize: 12
+                font.pixelSize: Theme.fontSizeContentVerySmall
                 color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMax < value) ? 0.75 : 0.25
                 Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
@@ -259,6 +260,7 @@ Item {
                     }
                     textFormat: Text.PlainText
                     font.bold: true
+                    font.pixelSize: isDesktop ? 12 : 13
                     fontSizeMode: Text.VerticalFit
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter

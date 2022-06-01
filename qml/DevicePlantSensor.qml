@@ -159,26 +159,19 @@ Loader {
 
         function backAction() {
             if (plantSensorPages.currentIndex === 0) { // data
-                 if (plantSensorData.isHistoryMode()) {
-                    plantSensorData.resetHistoryMode()
-                    return
-                 }
+                plantSensorData.backAction()
             }
             if (plantSensorPages.currentIndex === 1) { // history
                  if (plantSensorHistory.isHistoryMode()) {
                     plantSensorHistory.resetHistoryMode()
                     return
                  }
+
+                 appContent.state = "DeviceList"
             }
             if (plantSensorPages.currentIndex === 2) { // plant care
-                 if (plantSensorCare.isEditMode()) {
-                    plantSensorCare.closeEditMode()
-                    return
-                 }
+                plantSensorCare.backAction()
             }
-
-            // else...
-            appContent.state = "DeviceList"
         }
 
         ////////

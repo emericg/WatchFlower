@@ -6,7 +6,6 @@ import ThemeEngine 1.0
 Item {
     id: chartThermometerMinMax
     anchors.fill: parent
-    anchors.margins: 0
 
     property int widgetWidthTarget: (isPhone ? 48 : 64)
     property int widgetWidth: 48
@@ -27,14 +26,7 @@ Item {
         widgetWidth = Math.floor(width / daysVisible)
         currentDevice.updateChartData_thermometerMinMax(daysMax)
 
-        if (currentDevice.countDataNamed("temperature", daysMax) > 1) {
-            mmGraph.visible = true
-            noDataIndicator.visible = false
-        } else {
-            mmGraph.visible = false
-            noDataIndicator.visible = true
-        }
-
+        mmGraph.visible = (currentDevice.countDataNamed("temperature", daysMax) > 1)
         //mmGraphFlick.contentX = mmGraphFlick.width // WIP
     }
 
@@ -45,12 +37,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ItemNoData {
-        id: noDataIndicator
-        anchors.fill: parent
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-    }
 /*
     Flickable {
         id: mmGraphFlick
@@ -70,7 +56,7 @@ Item {
 
             Repeater {
                 model: currentDevice.aioMinMaxData
-                ChartThermometerMinMaxBar { width: widgetWidth; }
+                ChartThermometerMinMaxBar { width: widgetWidth; height: mmGraph.height }
             }
         }
     //}

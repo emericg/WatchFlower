@@ -4,23 +4,25 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 
 Rectangle {
+    id: itemNoDeviceNearby
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: -24
+    anchors.verticalCenterOffset: 0
 
-    width: singleColumn ? (parent.width*0.4) : (parent.height*0.4)
+    width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
     radius: width
     color: Theme.colorForeground
 
     IconSvg {
         anchors.centerIn: parent
-        width: parent.height*0.8
+        width: parent.width*0.8
         height: width
 
         source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
         opacity: 0.9
+        smooth: true
 
         NumberAnimation on rotation {
             loops: Animation.Infinite
@@ -41,12 +43,12 @@ Rectangle {
 
     Text {
         anchors.top: parent.bottom
-        anchors.topMargin: 24
+        anchors.topMargin: 16
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("Looking for nearby devices...")
         textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeContent
+        font.pixelSize: Theme.fontSizeContentBig
         color: Theme.colorText
     }
 }

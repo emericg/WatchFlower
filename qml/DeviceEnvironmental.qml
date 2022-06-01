@@ -126,17 +126,22 @@ Loader {
         onPrimaryChanged: {
             currentDevice.setSetting("primary", primary)
             loadIndicator()
-            if (chartEnvLoader.status == Loader.Ready) historyChart.updateGraph()
+            if (chartEnvLoader.status === Loader.Ready) historyChart.updateGraph()
         }
 
         ////////
 
         function backAction() {
+            if (textInputLocation.focus) {
+                textInputLocation.focus = false
+                return
+            }
             if (isHistoryMode()) {
                 resetHistoryMode()
-            } else {
-                appContent.state = "DeviceList"
+                return
             }
+
+            appContent.state = "DeviceList"
         }
 
         function isHistoryMode() {
@@ -349,7 +354,7 @@ Loader {
 
             if (isAirMonitor) {
                 if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
-                    if (chartEnvLoader.status != Loader.Ready) {
+                    if (chartEnvLoader.status !== Loader.Ready) {
                         chartEnvLoader.source = "ChartEnvironmentalVoc.qml"
                     } else {
                         historyChart.loadGraph()

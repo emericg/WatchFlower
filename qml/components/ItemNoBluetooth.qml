@@ -1,35 +1,52 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
 Item {
-    anchors.fill: parent
+    id: itemNoBluetooth
 
-    Column {
-        anchors.left: parent.left
-        anchors.leftMargin: 32
-        anchors.right: parent.right
-        anchors.rightMargin: 32
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -20
-        spacing: 16
+    Rectangle {
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: -48
+
+        width: appWindow.singleColumn ? (parent.width*0.5) : (parent.height*0.4)
+        height: width
+        radius: width
+        color: Theme.colorForeground
+
+        signal clicked()
 
         IconSvg {
-            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+            anchors.centerIn: parent
+            width: parent.width*0.8
             height: width
-            anchors.horizontalCenter: parent.horizontalCenter
 
             source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
             fillMode: Image.PreserveAspectFit
-            color: Theme.colorIcon
+            color: Theme.colorSubText
+            opacity: 0.9
+            smooth: true
         }
 
-        ButtonWireframe {
+        Text {
+            anchors.top: parent.bottom
+            anchors.topMargin: 24
             anchors.horizontalCenter: parent.horizontalCenter
-            fullColor: true
-            text: (Qt.platform.os === "android") ? qsTr("Enable Bluetooth") : qsTr("Retry detection")
-            onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
+
+            text: qsTr("Bluetooth is disabled...")
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContentBig
+            color: Theme.colorText
+
+            ButtonWireframe {
+                anchors.top: parent.bottom
+                anchors.topMargin: 12
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                fullColor: true
+                text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
+                onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
+            }
         }
     }
 }

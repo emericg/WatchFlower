@@ -241,6 +241,9 @@ void DeviceThermometer::getChartData_thermometerAIO(int maxDays, QDateTimeAxis *
 {
     if (!axis || !temp || !humi) return;
 
+    temp->clear();
+    humi->clear();
+
     if (m_dbInternal || m_dbExternal)
     {
         QString datetime_days = "datetime('now', 'localtime', '-" + QString::number(maxDays) + " days')";

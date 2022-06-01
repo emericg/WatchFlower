@@ -197,7 +197,7 @@ Loader {
             var reload = !(settingsManager.graphThermometer === "lines" && graphLoader.source === "ChartPlantDataAio.qml") ||
                          !(settingsManager.graphThermometer === "minmax" && graphLoader.source === "ChartThermometerMinMax.qml")
 
-            if (graphLoader.status != Loader.Ready || reload) {
+            if (graphLoader.status !== Loader.Ready || reload) {
                 if (settingsManager.graphThermometer === "lines") {
                     graphLoader.source = "ChartPlantDataAio.qml"
                 } else {
@@ -205,31 +205,36 @@ Loader {
                 }
             }
 
-            if (graphLoader.status == Loader.Ready) {
+            if (graphLoader.status === Loader.Ready) {
                 thermoChart.loadGraph()
                 thermoChart.updateGraph()
             }
         }
         function updateGraph() {
-            if (graphLoader.status == Loader.Ready) thermoChart.updateGraph()
+            if (graphLoader.status === Loader.Ready) thermoChart.updateGraph()
         }
 
         ////////
 
         function backAction() {
+            if (textInputLocation.focus) {
+                textInputLocation.focus = false
+                return
+            }
             if (isHistoryMode()) {
                 resetHistoryMode()
-            } else {
-                appContent.state = "DeviceList"
+                return
             }
+
+            appContent.state = "DeviceList"
         }
 
         function isHistoryMode() {
-            if (graphLoader.status == Loader.Ready) return thermoChart.isIndicator()
+            if (graphLoader.status === Loader.Ready) return thermoChart.isIndicator()
             return false
         }
         function resetHistoryMode() {
-            if (graphLoader.status == Loader.Ready) thermoChart.resetIndicator()
+            if (graphLoader.status === Loader.Ready) thermoChart.resetIndicator()
         }
 
         ////////////////////////////////////////////////////////////////////
@@ -444,6 +449,11 @@ Loader {
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.right: parent.right
+                }
+
+                ItemNoData {
+                    id: noDataIndicator
+                    visible: (currentDevice.countDataNamed("temperature", 14) <= 1)
                 }
 
                 Loader {
