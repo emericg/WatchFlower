@@ -19,6 +19,33 @@ Item {
     property int legendWidth: 92
     Component.onCompleted: updateLegendSize()
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    function loadIndicators() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        if (!currentDevice.isPlantSensor) return
+        //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
+
+        soil_moisture.animated = false
+        soil_conductivity.animated = false
+        soil_temperature.animated = false
+        temp.animated = false
+        humi.animated = false
+        lumi.animated = false
+        water_tank.animated = false
+
+        updateLegendSize()
+        updateData()
+
+        soil_moisture.animated = true
+        soil_conductivity.animated = true
+        soil_temperature.animated = true
+        temp.animated = true
+        humi.animated = true
+        lumi.animated = true
+        water_tank.animated = true
+    }
+
     function updateLegendSize() {
         legendWidth = 0
         if (legendWidth < soil_moisture.legendContentWidth) legendWidth = soil_moisture.legendContentWidth
@@ -30,15 +57,13 @@ Item {
         if (legendWidth < water_tank.legendContentWidth) legendWidth = water_tank.legendContentWidth
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
     function tempHelper(tempDeg) {
         return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
     }
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
 
         // Has data? always display them

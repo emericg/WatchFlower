@@ -17,6 +17,8 @@ Rectangle {
 
     visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceList" ||
+                           appContent.state === "DeviceBrowser" ||
+                           appContent.state === "PlantBrowser" ||
                            appContent.state === "Settings" ||
                            appContent.state === "About")) ||
              (isPhone && screenOrientation === Qt.PortraitOrientation &&
@@ -75,9 +77,11 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -screenPaddingBottom
-        spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
+        spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
         visible: (appContent.state === "DeviceList" ||
+                  appContent.state === "DeviceBrowser" ||
+                  appContent.state === "PlantBrowser" ||
                   appContent.state === "Settings" ||
                   appContent.state === "About")
 
@@ -93,6 +97,32 @@ Rectangle {
 
             selected: (appContent.state === "DeviceList")
             onClicked: appContent.state = "DeviceList"
+        }
+        MobileMenuItem_horizontal {
+            id: menuPlantBrowser
+            height: mobileMenu.hhh
+
+            text: qsTr("Plant browser")
+            source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+            sourceSize: mobileMenu.hhi
+            colorContent: Theme.colorTabletmenuContent
+            colorHighlight: Theme.colorTabletmenuHighlight
+
+            selected: (appContent.state === "PlantBrowser")
+            onClicked: screenPlantBrowser.loadScreen("DeviceList")
+        }
+        MobileMenuItem_horizontal {
+            id: menuDeviceBrowseer
+            height: mobileMenu.hhh
+
+            text: qsTr("Device browser")
+            source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+            sourceSize: mobileMenu.hhi
+            colorContent: Theme.colorTabletmenuContent
+            colorHighlight: Theme.colorTabletmenuHighlight
+
+            selected: (appContent.state === "DeviceBrowser")
+            onClicked: screenDeviceBrowser.loadScreen()
         }
         MobileMenuItem_horizontal {
             id: menuSettings
@@ -128,7 +158,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -screenPaddingBottom
-        spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
+        spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
         visible: (appContent.state === "DevicePlantSensor")
 

@@ -40,7 +40,7 @@ Item {
 
     function updateSize() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
 
         // grid geometry
         if (isMobile) {
@@ -51,6 +51,19 @@ Item {
                 } else {
                     subHeader.visible = false
                     subHeader.height = 0
+                }
+            }
+            else if (isTablet) {
+                if (devicePlantSensorCare.width < 575) {
+                    buttonPanel.anchors.rightMargin = 0
+                    buttonPanel.anchors.right = undefined
+                    buttonPanel.anchors.horizontalCenter = subHeader.horizontalCenter
+                    subHeader.height = 52
+                } else {
+                    buttonPanel.anchors.rightMargin = 12
+                    buttonPanel.anchors.horizontalCenter = undefined
+                    buttonPanel.anchors.right = subHeader.right
+                    subHeader.height = 52
                 }
             }
         } else {
@@ -88,7 +101,7 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (isDesktop && devicePlantSensorCare.width >= 575)
+            visible: (!isPhone && devicePlantSensorCare.width >= 575)
 
             text: {
                 if (currentDevice.devicePlantName.length)

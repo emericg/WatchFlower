@@ -7,7 +7,7 @@ Item {
 
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorHistory // loadData() >> " + currentDevice)
 
         // graph visibility
@@ -55,13 +55,13 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorHistory // updateHeader() >> " + currentDevice)
     }
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
 
         currentDevice.updateChartData_history_month(31)
@@ -91,7 +91,7 @@ Item {
 
     function updateSize() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("width: " + graphGrid.width)
         //console.log("height: " + graphGrid.height)
 
@@ -113,6 +113,17 @@ Item {
                     graphGrid.columns = 1
                 } else {
                     graphGrid.columns = 2
+                }
+                if (graphGrid.width < 575) {
+                    buttonPanel.anchors.rightMargin = 0
+                    buttonPanel.anchors.right = undefined
+                    buttonPanel.anchors.horizontalCenter = subHeader.horizontalCenter
+                    subHeader.height = 52
+                } else {
+                    buttonPanel.anchors.rightMargin = 12
+                    buttonPanel.anchors.horizontalCenter = undefined
+                    buttonPanel.anchors.right = subHeader.right
+                    subHeader.height = 52
                 }
             }
         } else {
@@ -169,7 +180,7 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (isDesktop && graphGrid.width >= 575)
+            visible: (!isPhone && graphGrid.width >= 575)
 
             text: {
                 if (currentDevice.devicePlantName.length)

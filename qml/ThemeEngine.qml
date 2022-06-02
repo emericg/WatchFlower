@@ -321,7 +321,7 @@ Item {
             colorComponentContent = "black"
             colorComponentBorder = "#E3E3E3"
             colorComponentDown = "#D0D0D0"
-            colorComponentBackground = "#EAEAEA"
+            colorComponentBackground = "#F1F1F1"
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
 

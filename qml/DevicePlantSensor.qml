@@ -36,8 +36,8 @@ Loader {
     asynchronous: false
     sourceComponent: Item {
         id: itemDevicePlantSensor
-        width: 480
-        height: 720
+        implicitWidth: 480
+        implicitHeight: 720
 
         focus: parent.focus
 

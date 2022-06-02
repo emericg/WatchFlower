@@ -11,7 +11,7 @@ Item {
     // 1: single column
     // 2: wide mode (two main rows)
     // 3: wide mode for phones (two main columns)
-    property int uiMode: singleColumn ? 1 : (isPhone ? 3 : 2)
+    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : (isPhone ? 3 : 2)
 
     property var dataIndicators: indicatorsLoader.item
     property var dataChart: chartAioLoader.item
@@ -20,7 +20,7 @@ Item {
 
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
         chartAioLoader.opacity = 0
@@ -49,8 +49,7 @@ Item {
             else
                 indicatorsLoader.source = "IndicatorsCompact.qml"
         } else {
-            dataIndicators.updateLegendSize()
-            dataIndicators.updateData()
+            dataIndicators.loadIndicators()
         }
     }
     function reloadIndicators() {
@@ -60,8 +59,7 @@ Item {
             indicatorsLoader.source = "IndicatorsCompact.qml"
 
         if (indicatorsLoader.status === Loader.Ready) {
-            dataIndicators.updateLegendSize()
-            dataIndicators.updateData()
+            dataIndicators.loadIndicators()
         }
     }
 
@@ -69,7 +67,7 @@ Item {
 
     function updateHeader() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // updateHeader() >> " + currentDevice)
 
         // Status
@@ -83,7 +81,7 @@ Item {
 
     function updateStatusText() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // updateStatusText() >> " + currentDevice)
 
         textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
@@ -104,7 +102,7 @@ Item {
 
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.hasSoilMoistureSensor) return
+        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // updateData() >> " + currentDevice)
     }
 
@@ -410,11 +408,12 @@ Item {
 
                 Loader {
                     id: indicatorsLoader
-                    width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width
+
+                    asynchronous: true
                     onLoaded: {
-                        dataIndicators.updateLegendSize()
-                        dataIndicators.updateData()
+                        dataIndicators.loadIndicators()
                     }
                 }
             }
