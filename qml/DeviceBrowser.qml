@@ -113,7 +113,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 8 + 44
+                    anchors.leftMargin: 52
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -209,7 +209,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 8 + 44
+                    anchors.leftMargin: 52
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 

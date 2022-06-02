@@ -9,13 +9,11 @@ Flickable {
     contentWidth: -1
     contentHeight: column.height
 
-    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
-
     function updateLimits() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("PlantCareLimits // updateLimits() >> " + currentDevice)
 
-        itemHygro.visible = currentDevice.hasHumiditySensor || currentDevice.hasSoilMoistureSensor
+        itemHygro.visible = currentDevice.hasSoilMoistureSensor
         itemCondu.visible = currentDevice.hasSoilConductivitySensor
         itemTemp.visible = currentDevice.hasTemperatureSensor
         itemLumi.visible = currentDevice.hasLuminositySensor
@@ -241,8 +239,8 @@ Flickable {
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "°"
-                from: outsideMode ? 0 : 12
-                to: outsideMode ? 50 : 32
+                from: currentDevice.deviceIsOutside ? 0 : 12
+                to: currentDevice.deviceIsOutside ? 50 : 32
                 stepSize: 1
 
                 first.onPressedChanged: plantSensorPages.interactive = !first.pressed
@@ -337,8 +335,8 @@ Flickable {
                 unit: "k"
                 kshort: true
                 from: 0
-                to: outsideMode ? 100000 : 10000
-                stepSize: outsideMode ? 5000 : 1000
+                to: currentDevice.deviceIsOutside ? 100000 : 10000
+                stepSize: currentDevice.deviceIsOutside ? 5000 : 1000
 
                 first.onPressedChanged: plantSensorPages.interactive = !first.pressed
                 first.onMoved: {
@@ -375,7 +373,7 @@ Flickable {
                         id: lux_1
                         height: 18
                         width: (lumiScale.width - 4) * 0.1 // 0 to 1k
-                        visible: !outsideMode
+                        visible: currentDevice.deviceIsInside
                         color: Theme.colorGrey
                         Text {
                             anchors.fill: parent
@@ -392,7 +390,7 @@ Flickable {
                         id: lux_2
                         height: 18
                         width: (lumiScale.width - 8) * 0.2 // 1k to 3k
-                        visible: !outsideMode
+                        visible: currentDevice.deviceIsInside
                         color: "grey"
                         Text {
                             anchors.fill: parent
@@ -409,7 +407,7 @@ Flickable {
                         id: lux_3
                         height: 18
                         width: (lumiScale.width - 16) * 0.5 // 3k to 8k
-                        visible: !outsideMode
+                        visible: currentDevice.deviceIsInside
                         color: Theme.colorYellow
                         Text {
                             anchors.fill: parent
@@ -426,7 +424,7 @@ Flickable {
                         id: lux_4
                         height: 18
                         width: (lumiScale.width - 0) * 0.2 // 8k+
-                        visible: !outsideMode
+                        visible: currentDevice.deviceIsInside
                         color: "orange"
                         Text {
                             anchors.fill: parent
@@ -444,7 +442,7 @@ Flickable {
                         id: lux_5
                         height: 18
                         width: (lumiScale.width - 6) * 0.16 // 0-15k
-                        visible: outsideMode
+                        visible: currentDevice.deviceIsOutside
                         color: "grey"
                         Text {
                             anchors.fill: parent
@@ -461,7 +459,7 @@ Flickable {
                         id: lux_6
                         height: 18
                         width: (lumiScale.width - 6) * 0.84 // 15k+
-                        visible: outsideMode
+                        visible: currentDevice.deviceIsOutside
                         color: Theme.colorYellow
                         Text {
                             anchors.fill: parent

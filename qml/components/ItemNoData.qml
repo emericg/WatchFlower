@@ -15,12 +15,13 @@ Rectangle {
 
     IconSvg {
         anchors.centerIn: parent
-        width: parent.width*0.66
+        width: parent.width*0.8
         height: width
 
         source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
+        smooth: true
     }
 
     Text {

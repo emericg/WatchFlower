@@ -28,7 +28,7 @@ Loader {
 
     function backAction() {
         if (deviceThermometer.status === Loader.Ready)
-            return deviceThermometer.item.backAction()
+            deviceThermometer.item.backAction()
     }
 
     ////////////////////////////////////////////////////////////////////////////

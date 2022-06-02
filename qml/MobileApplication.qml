@@ -172,6 +172,8 @@ ApplicationWindow {
             } else {
                 if (appContent.state === "Tutorial")
                     appContent.state = screenTutorial.entryPoint
+                 else if (appContent.state === "PlantBrowser")
+                    appContent.state = screenPlantBrowser.entryPoint
                 else if (appContent.state === "Permissions")
                     appContent.state = screenPermissions.entryPoint
                 else

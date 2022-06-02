@@ -8,9 +8,6 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 Item {
     id: devicePlantSensorSettings
 
-    property bool insideMode: (currentDevice && currentDevice.deviceIsInside)
-    property bool outsideMode: (currentDevice && currentDevice.deviceIsOutside)
-
     ////////////////////////////////////////////////////////////////////////////
 
     function updateHeader() {
@@ -593,10 +590,10 @@ Item {
                             anchors.bottom: parent.bottom
 
                             color: Theme.colorBackground
-                            border.width: (insideMode) ? 2 : 0
+                            border.width: (currentDevice && currentDevice.deviceIsInside) ? 2 : 0
                             border.color: Theme.colorSeparator
 
-                            opacity: insideMode ? 1 : 0.5
+                            opacity: (currentDevice && currentDevice.deviceIsInside) ? 1 : 0.5
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                             MouseArea {
@@ -632,10 +629,10 @@ Item {
                             anchors.bottom: parent.bottom
 
                             color: Theme.colorBackground
-                            border.width: (outsideMode) ? 2 : 0
+                            border.width: (currentDevice && currentDevice.deviceIsOutside) ? 2 : 0
                             border.color: Theme.colorSeparator
 
-                            opacity: outsideMode ? 1 : 0.5
+                            opacity: (currentDevice && currentDevice.deviceIsOutside) ? 1 : 0.5
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                             MouseArea {

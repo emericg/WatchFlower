@@ -159,7 +159,7 @@ Rectangle {
                         onStarted: workingIndicator.opacity = 1
                         onStopped: workingIndicator.opacity = 0
                     }
-                    SequentialAnimation on opacity { // rescanAnimation (fade)
+                    SequentialAnimation on opacity { // scanAnimation (fade)
                         loops: Animation.Infinite
                         running: (deviceManager.scanning || deviceManager.listening || deviceManager.syncing)
                         onStopped: workingIndicator.opacity = 0

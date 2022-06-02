@@ -136,4 +136,18 @@ function tempCelsiusToFahrenheit(temp_c) {
     return (temp_c * 1.8 + 32);
 }
 
+/*!
+ * Kilogramme to Pound conversion
+ */
+function weightKiloToPound(weight_kg) {
+    return (weight_kg * 2.20462262185);
+}
+
+/*!
+ * Pound to Kilogramme conversion
+ */
+function weightPoundToKilog(weight_lbs) {
+    return (weight_lbs / 2.20462262185);
+}
+
 /* ************************************************************************** */

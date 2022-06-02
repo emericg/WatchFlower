@@ -109,7 +109,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (plantInfos.visible)
                 primaryColor: Theme.colorPrimary
@@ -126,7 +126,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (plantLimits.visible)
                 primaryColor: Theme.colorPrimary
@@ -142,7 +142,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (plantJournal.visible)
                 primaryColor: Theme.colorPrimary

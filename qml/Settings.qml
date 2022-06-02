@@ -763,7 +763,7 @@ Item {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: screenPaddingLeft + 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon

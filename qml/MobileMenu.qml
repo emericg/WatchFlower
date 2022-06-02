@@ -104,7 +104,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "Settings" || appContent.state === "Permissions")
+            selected: (appContent.state === "Settings")
             onClicked: appContent.state = "Settings"
         }
         MobileMenuItem_horizontal {
@@ -117,7 +117,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "About")
+            selected: (appContent.state === "About" || appContent.state === "Permissions")
             onClicked: appContent.state = "About"
         }
     }

@@ -361,7 +361,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions) && !deviceManager.syncing
+                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions) && !deviceManager.scanning
 
                     MouseArea {
                         anchors.fill: parent
@@ -469,8 +469,7 @@ Drawer {
                         source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
                         color: buttonSync.enabled ? Theme.colorText : Theme.colorSubText
 
-                        SequentialAnimation on opacity {
-                            id: syncAnimation
+                        SequentialAnimation on opacity { // syncAnimation (fade)
                             loops: Animation.Infinite
                             running: deviceManager.syncing
                             alwaysRunToEnd: true
@@ -499,20 +498,18 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions) && !deviceManager.syncing
+                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
 
                     MouseArea {
                         anchors.fill: parent
 
                         onClicked: {
-                            if (!deviceManager.updating) {
-                                if (deviceManager.scanning) {
-                                    deviceManager.scanDevices_stop()
-                                } else {
-                                    deviceManager.scanDevices_start()
-                                }
-                                appDrawer.close()
+                            if (deviceManager.scanning) {
+                                deviceManager.scanDevices_stop()
+                            } else {
+                                deviceManager.scanDevices_start()
                             }
+                            appDrawer.close()
                         }
 
                         Rectangle {
@@ -538,8 +535,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/baseline-search-24px.svg"
                         color: buttonScan.enabled ? Theme.colorText : Theme.colorSubText
 
-                        SequentialAnimation on opacity {
-                            id: rescanAnimation
+                        SequentialAnimation on opacity { // scanAnimation (fade)
                             loops: Animation.Infinite
                             running: deviceManager.scanning
                             alwaysRunToEnd: true

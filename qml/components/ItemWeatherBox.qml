@@ -71,17 +71,8 @@ Rectangle {
         Row {
             anchors.left: parent.left
             anchors.leftMargin: 0
-            spacing: 2
-/*
-            IconSvg {
-                anchors.verticalCenter: parent.verticalCenter
-                width: isDesktop ? 32 : 24
-                height: isDesktop ? 32 : 24
+            spacing: 4
 
-                source: icon
-                color: Theme.colorIcon
-            }
-*/
             Text {
                 anchors.verticalCenter: parent.verticalCenter
 

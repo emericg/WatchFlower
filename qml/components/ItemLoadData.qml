@@ -6,7 +6,7 @@ Rectangle {
     id: itemLoadData
     anchors.centerIn: parent
 
-    width: singleColumn ? (parent.width*0.4) : (parent.height*0.33)
+    width: singleColumn ? (parent.width*0.26) : (parent.height*0.26)
     height: width
     radius: width
     color: Theme.colorForeground
@@ -14,11 +14,12 @@ Rectangle {
 
     IconSvg {
         anchors.centerIn: parent
-        width: parent.width*0.66
+        width: parent.width*0.8
         height: width
 
         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
+        smooth: true
     }
 }

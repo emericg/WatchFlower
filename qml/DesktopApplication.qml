@@ -83,6 +83,8 @@ ApplicationWindow {
         function onBackButtonClicked() {
             if (appContent.state === "Tutorial") {
                 appContent.state = screenTutorial.entryPoint
+            } else if (appContent.state === "PlantBrowser") {
+                appContent.state = screenPlantBrowser.entryPoint
             } else if (appContent.state !== "DeviceList") {
                 appContent.state = "DeviceList"
             }
@@ -148,13 +150,11 @@ ApplicationWindow {
                 }
             }
         }
-        function onRescanButtonClicked() {
-            if (!deviceManager.updating) {
-                if (deviceManager.scanning) {
-                    deviceManager.scanDevices_stop()
-                } else {
-                    deviceManager.scanDevices_start()
-                }
+        function onScanButtonClicked() {
+            if (deviceManager.scanning) {
+                deviceManager.scanDevices_stop()
+            } else {
+                deviceManager.scanDevices_start()
             }
         }
 
@@ -218,8 +218,7 @@ ApplicationWindow {
 
     function backAction() {
         if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
-            // do nothing
-            return
+            return // do nothing
         }
 
         if (appContent.state === "DeviceList") {
@@ -236,8 +235,6 @@ ApplicationWindow {
             screenDeviceBrowser.backAction()
         } else if (appContent.state === "PlantBrowser") {
             screenPlantBrowser.backAction()
-        } else if (appContent.state === "Permissions") { // simple
-            appContent.state = screenPermissions.entryPoint
         } else if (appContent.state === "Tutorial") {
             appContent.state = screenTutorial.entryPoint
         } else { // default
@@ -265,15 +262,6 @@ ApplicationWindow {
                 appContent.state = "PlantBrowser"
         } else if (appContent.state === "PlantBrowser") {
             screenPlantBrowser.forwardAction()
-        }
-    }
-    function deselectAction() {
-        if (appContent.state === "DeviceList") {
-            screenDeviceList.exitSelectionMode()
-        } else if (appContent.state === "DevicePlantSensor" && screenDevicePlantSensor.isHistoryMode()) {
-            screenDevicePlantSensor.resetHistoryMode()
-        } else if (appContent.state === "DeviceThermometer" && screenDeviceThermometer.isHistoryMode()) {
-            screenDeviceThermometer.resetHistoryMode()
         }
     }
 
@@ -305,10 +293,6 @@ ApplicationWindow {
     Shortcut {
         sequence: "Ctrl+F5"
         onActivated: deviceManager.refreshDevices_start()
-    }
-    Shortcut {
-        sequences: [StandardKey.Deselect, StandardKey.Cancel]
-        onActivated: deselectAction()
     }
     Shortcut {
         sequence: StandardKey.Preferences

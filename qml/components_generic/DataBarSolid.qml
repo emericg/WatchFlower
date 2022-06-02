@@ -30,7 +30,6 @@ Item {
     property int legendContentWidth: item_legend.contentWidth
 
     // colors
-    property string colorText: Theme.colorText
     property string colorForeground: Theme.colorPrimary
     property string colorBackground: Theme.colorForeground
 
@@ -246,7 +245,7 @@ Item {
                     height: hhh
                     anchors.centerIn: parent
 
-                    color: (item_data.width > indicator.width) ? "white" : Theme.colorText
+                    color: (item_data.width > indicator.width) ? "white" : Theme.colorSubText
 
                     text: {
                         if (value < -20)

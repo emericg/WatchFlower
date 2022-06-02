@@ -190,7 +190,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (settingsManager.graphHistory === "monthly")
                 primaryColor: Theme.colorPrimary
@@ -202,7 +202,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (settingsManager.graphHistory === "weekly")
                 primaryColor: Theme.colorPrimary
@@ -214,7 +214,7 @@ Item {
 
             ButtonWireframe {
                 width: 100
-                height: 32
+                height: isPhone ? 32 : 36
 
                 fullColor: (settingsManager.graphHistory === "daily")
                 primaryColor: Theme.colorPrimary

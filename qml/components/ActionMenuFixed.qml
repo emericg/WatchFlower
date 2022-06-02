@@ -51,7 +51,7 @@ Popup {
             text: qsTr("Update data")
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             layoutDirection: actionMenu.layoutDirection
-            visible: (deviceManager.bluetooth && selectedDevice)
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasBluetoothConnection))
 
             onClicked: {
                 deviceRefreshButtonClicked()

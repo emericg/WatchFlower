@@ -32,7 +32,7 @@ Rectangle {
 
     signal refreshButtonClicked()
     signal syncButtonClicked()
-    signal rescanButtonClicked()
+    signal scanButtonClicked()
     signal plantsButtonClicked()
     signal settingsButtonClicked()
     signal aboutButtonClicked()
@@ -517,7 +517,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: rescanButtonClicked()
+            onClicked: scanButtonClicked()
 
             animation: "fade"
             animationRunning: deviceManager.scanning
