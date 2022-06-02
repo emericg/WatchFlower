@@ -54,6 +54,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
     Q_PROPERTY(bool bluetoothLimitScanningRange READ getBluetoothLimitScanningRange WRITE setBluetoothLimitScanningRange NOTIFY bluetoothLimitScanningRangeChanged)
     Q_PROPERTY(uint bluetoothSimUpdates READ getBluetoothSimUpdates WRITE setBluetoothSimUpdates NOTIFY bluetoothSimUpdatesChanged)
+    Q_PROPERTY(uint updateIntervalBackground READ getUpdateIntervalBackground WRITE setUpdateIntervalBackground NOTIFY updateIntervalBackgroundChanged)
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
     Q_PROPERTY(uint updateIntervalEnv READ getUpdateIntervalEnv WRITE setUpdateIntervalEnv NOTIFY updateIntervalEnvChanged)
@@ -102,6 +103,7 @@ class SettingsManager: public QObject
     bool m_bluetoothLimitScanningRange = false;
     unsigned m_bluetoothSimUpdates = 2;
 
+    unsigned m_updateIntervalBackground = s_intervalBackgroundUpdate;
     unsigned m_updateIntervalPlant = s_intervalPlantUpdate;
     unsigned m_updateIntervalThermometer = s_intervalThermometerUpdate;
     unsigned m_updateIntervalEnvironmental = s_intervalEnvironmentalUpdate;
@@ -153,6 +155,7 @@ Q_SIGNALS:
     void bluetoothControlChanged();
     void bluetoothSimUpdatesChanged();
     void bluetoothLimitScanningRangeChanged();
+    void updateIntervalBackgroundChanged();
     void updateIntervalPlantChanged();
     void updateIntervalThermoChanged();
     void updateIntervalEnvChanged();
@@ -168,10 +171,12 @@ Q_SIGNALS:
     void mqttChanged();
 
 public:
+    static const unsigned s_intervalBackgroundUpdate = 60;
+    static const unsigned s_intervalErrorUpdate = 30;
+
     static const unsigned s_intervalPlantUpdate = 240;
     static const unsigned s_intervalThermometerUpdate = 120;
     static const unsigned s_intervalEnvironmentalUpdate = 60;
-    static const unsigned s_intervalErrorUpdate = 30;
 
 public:
     static SettingsManager *getInstance();
@@ -214,6 +219,9 @@ public:
 
     unsigned getBluetoothSimUpdates() const { return m_bluetoothSimUpdates; }
     void setBluetoothSimUpdates(const unsigned value);
+
+    unsigned getUpdateIntervalBackground() const { return m_updateIntervalBackground; }
+    void setUpdateIntervalBackground(const unsigned value);
 
     unsigned getUpdateIntervalPlant() const { return m_updateIntervalPlant; }
     void setUpdateIntervalPlant(const unsigned value);

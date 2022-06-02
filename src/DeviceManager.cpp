@@ -870,11 +870,11 @@ void DeviceManager::refreshDevices_listen()
     //qDebug() << "DeviceManager::refreshDevices_listen()";
 
     // Already updating?
-    if (isScanning() || isUpdating())
+    if (isListening() || isUpdating() || isScanning())
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh
-        return;                     // > (or) bail
+        //return;                     // > (or) bail
     }
 
     // Make sure we have Bluetooth and devices
@@ -893,7 +893,7 @@ void DeviceManager::refreshDevices_check()
     //qDebug() << "DeviceManager::refreshDevices_check()";
 
     // Already updating?
-    if (isScanning() || isUpdating())
+    if (isUpdating() || isScanning())
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh
@@ -940,7 +940,7 @@ void DeviceManager::refreshDevices_start()
     //qDebug() << "DeviceManager::refreshDevices_start()";
 
     // Already updating?
-    if (isScanning() || isUpdating())
+    if (isUpdating() || isScanning())
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh

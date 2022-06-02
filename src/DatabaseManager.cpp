@@ -93,7 +93,11 @@ bool DatabaseManager::openDatabase_sqlite()
 
             if (dbDirectory.exists())
             {
-                dbPath += "/datas.db";
+                // pre-migration
+                QFile::copy(dbPath+"/datas.db", dbPath+"/data_save_v2.db");
+                QFile::rename(dbPath+"/datas.db", dbPath+"/data.db");
+
+                dbPath += "/data.db";
 
                 QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
                 dbFile.setDatabaseName(dbPath);
