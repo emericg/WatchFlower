@@ -61,7 +61,6 @@ Grid {
         plantNameBotanical.text = currentPlant.nameBotanical
         plantNameVariety.text = currentPlant.nameVariety
         plantNameCommon.text = currentPlant.nameCommon
-        //plantName2.text = currentPlant.name
         plantCategory.text = currentPlant.category
         plantOrigin.text = currentPlant.origin
 
@@ -170,6 +169,7 @@ Grid {
         rangeSlider_temp.setValues(currentPlant.envTemp_min, currentPlant.envTemp_max)
         rangeSlider_humi.setValues(currentPlant.envHumi_min, currentPlant.envHumi_max)
         rangeSlider_lumi_lux.setValues(currentPlant.lightLux_min, currentPlant.lightLux_max)
+        itemLumiMmol.visible = (currentPlant.lightMmol_min > 0)
         rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, currentPlant.lightMmol_max)
     }
 
@@ -184,92 +184,262 @@ Grid {
             id: columnPlant
             width: plantScreen.www1
             spacing: 24
+
+            topPadding: singleColumn ? -plantScreen.padding : 0
 /*
             Image {
                 id: plantPicture
                 anchors.left: parent.left
+                anchors.leftMargin: singleColumn ? -plantScreen.padding : 0
                 anchors.right: parent.right
-                anchors.rightMargin: 12
-                height: width
+                anchors.rightMargin: singleColumn ? -plantScreen.padding : 0
+                height: width * 0.75
 
                 source: "file:/home/emeric/Dev/perso/WatchFlower/stash/plants_db/aloe.jpg"
+                sourceSize: Qt.size(width, width)
                 fillMode: Image.PreserveAspectCrop
 
                 ////
 
                 Rectangle {
-                    id: plantSpace
+                    id: rectangleHeader
+                    //anchors.top: parent.top // top
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    height: 48
+                    height: columnHeader.height
+                    anchors.bottom: parent.bottom // bottom
 
                     color: "white"
                     opacity: 0.33
                 }
-                Text {
-                    id: plantName2
+
+                Column {
+                    id: columnHeader
                     anchors.left: parent.left
                     anchors.leftMargin: 16
-                    anchors.verticalCenter: plantSpace.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: rectangleHeader.verticalCenter
 
-                    font.pixelSize: 24
-                    color: "white"
-                }
+                    topPadding: 16
+                    bottomPadding: 16
+                    spacing: 16
 
-                ////
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameBotanical.text
 
-                layer.enabled: true
-                layer.effect: OpacityMask {
-                    maskSource: Rectangle {
-                        x: plantPicture.x
-                        y: plantPicture.y
-                        width: plantPicture.width
-                        height: plantPicture.height
-                        radius: 16
+                        Text {
+                            text: qsTr("plant")
+                            textFormat: Text.PlainText
+
+                            color: "white"
+                            opacity: 0.8
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameBotanical
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 8
+                            wrapMode: Text.WordWrap
+                            color: "white"
+                        }
+                    }
+
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameVariety.text
+
+                        Text {
+                            text: qsTr("variety")
+                            textFormat: Text.PlainText
+
+                            color: "white"
+                            opacity: 0.8
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameVariety
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 4
+                            wrapMode: Text.WordWrap
+                            color: "white"
+                        }
+                    }
+
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameCommon.text
+
+                        Text {
+                            text: qsTr("common name")
+                            textFormat: Text.PlainText
+
+                            color: "white"
+                            opacity: 0.8
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameCommon
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 2
+                            wrapMode: Text.WordWrap
+                            color: "white"
+                        }
                     }
                 }
             }
 */
-            RowLayout {
+            ////////
+
+            Rectangle {
                 anchors.left: parent.left
+                anchors.leftMargin: singleColumn ? -plantScreen.padding : 0
                 anchors.right: parent.right
-                spacing: 16
+                anchors.rightMargin: singleColumn ? -plantScreen.padding : 0
+                height: columnHeader.height
 
-                visible: (!singleColumn &&
-                          appContent.state === "PlantBrowser" &&
-                          screenPlantBrowser.entryPoint === "DevicePlantSensor")
+                color: singleColumn ? Theme.colorForeground : Theme.colorBackground
 
-                ButtonWireframeIcon {
-                    id: buttonChoose
-                    fullColor: true
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 128
-                    Layout.maximumWidth: 999
+                Column {
+                    id: columnHeader
+                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? plantScreen.padding : 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: singleColumn ? plantScreen.padding : 0
 
-                    text: qsTr("Choose this plant")
-                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                    topPadding: singleColumn ? 16 : 0
+                    bottomPadding: singleColumn ? 16 : 0
+                    spacing: 16
 
-                    onClicked: {
-                         selectedDevice.setPlantName(currentPlant.name)
-                         appContent.state = "DevicePlantSensor"
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameBotanical.text
+
+                        Text {
+                            text: qsTr("plant")
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameBotanical
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 4
+                            wrapMode: Text.WordWrap
+                            color: Theme.colorText
+                        }
                     }
-                }
-                ButtonWireframe {
-                    id: buttonCancel
 
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
-                    Layout.fillWidth: false
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameVariety.text
 
-                    text: qsTr("Cancel")
+                        Text {
+                            text: qsTr("variety")
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameVariety
+                            anchors.left: parent.left
+                            anchors.right: parent.right
 
-                    onClicked: {
-                        appContent.state = "DevicePlantSensor"
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 2
+                            wrapMode: Text.WordWrap
+                            color: Theme.colorText
+                        }
+                    }
+
+                    Column {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        visible: plantNameCommon.text
+
+                        Text {
+                            text: qsTr("common name")
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            id: plantNameCommon
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            font.pixelSize: Theme.fontSizeContentVeryBig + 2
+                            wrapMode: Text.WordWrap
+                            color: Theme.colorText
+                        }
+                    }
+
+                    Flow {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: 16
+
+                        Column {
+                            Text {
+                                text: qsTr("category")
+                                textFormat: Text.PlainText
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentSmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                id: plantCategory
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorText
+                            }
+                        }
+
+                        Column {
+                            Text {
+                                text: qsTr("origin")
+                                textFormat: Text.PlainText
+                                color: Theme.colorSubText
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentSmall
+                                font.capitalization: Font.AllUppercase
+                            }
+                            Text {
+                                id: plantOrigin
+                                font.pixelSize: Theme.fontSizeContentBig
+                                color: Theme.colorText
+                            }
+                        }
                     }
                 }
             }
+
+            ////////
 
             RowLayout {
                 anchors.left: parent.left
@@ -284,7 +454,7 @@ Grid {
                     Layout.minimumWidth: 128
                     Layout.maximumWidth: 999
 
-                    text: qsTr("Change the selected plant")
+                    text: qsTr("Change the associated plant")
                     source: "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
 
                     onClicked: {
@@ -303,110 +473,7 @@ Grid {
                 }
             }
 
-            Column {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: plantNameBotanical.text
-
-                Text {
-                    text: qsTr("plant")
-                    color: Theme.colorSubText
-                    font.bold: true
-                    font.pixelSize: Theme.fontSizeContentSmall
-                    font.capitalization: Font.AllUppercase
-                }
-                Text {
-                    id: plantNameBotanical
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    font.pixelSize: Theme.fontSizeContentVeryBig + 4
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorText
-                }
-            }
-
-            Column {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: plantNameVariety.text
-
-                Text {
-                    text: qsTr("variety")
-                    color: Theme.colorSubText
-                    font.bold: true
-                    font.pixelSize: Theme.fontSizeContentSmall
-                    font.capitalization: Font.AllUppercase
-                }
-                Text {
-                    id: plantNameVariety
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    font.pixelSize: Theme.fontSizeContentVeryBig + 2
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorText
-                }
-            }
-
-            Column {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: plantNameCommon.text
-
-                Text {
-                    text: qsTr("common name")
-                    color: Theme.colorSubText
-                    font.bold: true
-                    font.pixelSize: Theme.fontSizeContentSmall
-                    font.capitalization: Font.AllUppercase
-                }
-                Text {
-                    id: plantNameCommon
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    font.pixelSize: Theme.fontSizeContentVeryBig + 2
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorText
-                }
-            }
-
-            Flow {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                spacing: 16
-
-                Column {
-                    Text {
-                        text: qsTr("category")
-                        color: Theme.colorSubText
-                        font.bold: true
-                        font.pixelSize: Theme.fontSizeContentSmall
-                        font.capitalization: Font.AllUppercase
-                    }
-                    Text {
-                        id: plantCategory
-                        font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorText
-                    }
-                }
-
-                Column {
-                    Text {
-                        text: qsTr("origin")
-                        color: Theme.colorSubText
-                        font.bold: true
-                        font.pixelSize: Theme.fontSizeContentSmall
-                        font.capitalization: Font.AllUppercase
-                    }
-                    Text {
-                        id: plantOrigin
-                        font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorText
-                    }
-                }
-            }
+            ////////
 
             Flow {
                 id: itemTags
@@ -448,6 +515,7 @@ Grid {
 
                 Text {
                     text: qsTr("COLORS TEST")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -492,6 +560,7 @@ Grid {
 
                     Text {
                         text: qsTr("leaf color")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -523,6 +592,7 @@ Grid {
 
                     Text {
                         text: qsTr("bract color")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -554,6 +624,7 @@ Grid {
 
                     Text {
                         text: qsTr("flower color")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -585,6 +656,7 @@ Grid {
 
                     Text {
                         text: qsTr("fruit color")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -622,6 +694,7 @@ Grid {
 
                     Text {
                         text: qsTr("height")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -641,6 +714,7 @@ Grid {
 
                     Text {
                         text: qsTr("diameter")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentSmall
@@ -662,6 +736,7 @@ Grid {
 
                 Text {
                     text: qsTr("size")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -733,7 +808,6 @@ Grid {
                 }
             }
 */
-
             Column {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -741,6 +815,7 @@ Grid {
 
                 Text {
                     text: qsTr("Learn more")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -751,9 +826,11 @@ Grid {
                     spacing: 12
 
                     ButtonWireframeIcon {
-                        text: qsTr("wikipedia")
                         layoutDirection: Qt.RightToLeft
-                        //fullColor: true
+                        primaryColor: Theme.colorPrimary
+                        secondaryColor: Theme.colorBackground
+
+                        text: qsTr("wikipedia")
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
@@ -761,9 +838,11 @@ Grid {
                     }
 
                     ButtonWireframeIcon {
-                        text: qsTr("hortipedia")
                         layoutDirection: Qt.RightToLeft
-                        //fullColor: true
+                        primaryColor: Theme.colorPrimary
+                        secondaryColor: Theme.colorBackground
+
+                        text: qsTr("hortipedia")
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
@@ -785,6 +864,58 @@ Grid {
             id: columnCare
             width: plantScreen.www2
             spacing: 16
+
+            Text {
+                text: qsTr("Plant care")
+                textFormat: Text.PlainText
+                color: Theme.colorSubText
+                font.bold: true
+                font.pixelSize: Theme.fontSizeContentSmall
+                font.capitalization: Font.AllUppercase
+            }
+
+            Rectangle {
+                id: infoBox
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                width: (parent.width / 2) - 24
+                height: infoText.contentHeight + 16
+                radius: 4
+                z: 2
+
+                color: Theme.colorComponentBackground
+                border.color: Theme.colorSeparator
+                border.width: 1
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    id: infoText
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 52
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContent
+                }
+            }
 
             Row {
                 spacing: 16
@@ -1111,6 +1242,7 @@ Grid {
 
                 Text {
                     text: qsTr("calendar")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1138,6 +1270,15 @@ Grid {
             id: columnLimits
             width: plantScreen.www2
             spacing: 24
+
+            Text {
+                text: qsTr("sensor metrics")
+                textFormat: Text.PlainText
+                color: Theme.colorSubText
+                font.bold: true
+                font.pixelSize: Theme.fontSizeContentSmall
+                font.capitalization: Font.AllUppercase
+            }
 
             Item {
                 id: itemHygro
@@ -1438,7 +1579,7 @@ Grid {
                     anchors.verticalCenter: imageLumi.verticalCenter
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
-                    text: qsTr("Luminosity")
+                    text: qsTr("Luminosity (lux)")
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1454,7 +1595,7 @@ Grid {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    height: 22
+                    height: 24
                     hhh: 22
 
                     enabled: false
@@ -1604,7 +1745,7 @@ Grid {
                     anchors.verticalCenter: imageLumiMmol.verticalCenter
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
-                    text: qsTr("Luminosity")
+                    text: qsTr("Luminosity (mmol)")
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall

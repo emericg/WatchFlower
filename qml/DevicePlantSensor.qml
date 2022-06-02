@@ -162,15 +162,18 @@ Loader {
                 plantSensorData.backAction()
             }
             if (plantSensorPages.currentIndex === 1) { // history
-                 if (plantSensorHistory.isHistoryMode()) {
+                if (plantSensorHistory.isHistoryMode()) {
                     plantSensorHistory.resetHistoryMode()
                     return
-                 }
+                }
 
-                 appContent.state = "DeviceList"
+                appContent.state = "DeviceList"
             }
             if (plantSensorPages.currentIndex === 2) { // plant care
                 plantSensorCare.backAction()
+            }
+            if (plantSensorPages.currentIndex === 3) { // sensor settings
+                appContent.state = "DeviceList"
             }
         }
 

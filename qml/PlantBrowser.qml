@@ -6,10 +6,8 @@ import Qt5Compat.GraphicalEffects
 
 import ThemeEngine 1.0
 
-Item {
+Loader {
     id: plantBrowser
-    implicitWidth: 480
-    implicitHeight: 800
 
     property string entryPoint: "DeviceList"
 
@@ -20,12 +18,12 @@ Item {
         plantDatabase.load()
         plantDatabase.filter("")
 
-        if (loaderPlantBrowser.status === Loader.Ready) {
+        if (status === Loader.Ready) {
             // Reset state
-            loaderPlantBrowser.item.resetPlantClicked()
+            item.resetPlantClicked()
         } else {
             // Load the plant browser
-            loaderPlantBrowser.active = true
+            active = true
         }
 
         // Change screen
@@ -38,363 +36,359 @@ Item {
     }
 
     function backAction() {
-        if (loaderPlantBrowser.status === Loader.Ready) {
-            loaderPlantBrowser.item.backAction()
+        if (status === Loader.Ready) {
+            item.backAction()
         }
     }
 
     function forwardAction() {
-        if (loaderPlantBrowser.status === Loader.Ready) {
-            loaderPlantBrowser.item.forwardAction()
+        if (status === Loader.Ready) {
+            item.forwardAction()
         }
     }
 
-
     ////////////////////////////////////////////////////////////////////////////
 
-    Loader {
-        id: loaderPlantBrowser
-        anchors.fill: parent
+    active: false
 
-        active: false
-        asynchronous: true
-        sourceComponent: Item {
-            function backAction() {
-                if (isPlantClicked()) {
-                    itemPlantBrowser.visible = true
-                    itemPlantBrowser.enabled = true
-                    itemPlantViewer.visible = false
-                    itemPlantViewer.enabled = false
-                    return
-                }
-
-                if (plantSearchBox.focus) {
-                    plantSearchBox.focus = false
-                    return
-                }
-
-                appContent.state = entryPoint
-            }
-
-            function forwardAction() {
-                if (appContent.state === "PlantBrowser") {
-                    if (typeof plantScreen.currentPlant !== "undefined" && plantScreen.currentPlant) {
-                        plantSearchBox.focus = false
-                        itemPlantBrowser.visible = false
-                        itemPlantBrowser.enabled = false
-                        itemPlantViewer.visible = true
-                        itemPlantViewer.enabled = true
-                    }
-                } else {
-                    appContent.state = "PlantBrowser"
-                }
-            }
-
-            function isPlantClicked() {
-                if (itemPlantViewer.visible) return true
-                return false
-            }
-
-            function resetPlantClicked() {
-                plantScreen.currentPlant = null
-                plantSearchBox.text = ""
-                plantSearchBox.focus = false
+    asynchronous: true
+    sourceComponent: Item {
+        function backAction() {
+            if (isPlantClicked()) {
                 itemPlantBrowser.visible = true
                 itemPlantBrowser.enabled = true
                 itemPlantViewer.visible = false
                 itemPlantViewer.enabled = false
-                itemPlantViewer.contentY = 0
+                return
             }
 
-            ////////////////
-
-            Item {
-                id: itemPlantBrowser
-                anchors.fill: parent
-
-                Rectangle {
-                    anchors.fill: plantSearchBox
-                    anchors.margins: -12
-                    z: 4
-                    color: Theme.colorBackground
-                }
-
-                TextFieldThemed {
-                    id: plantSearchBox
-                    anchors.top: parent.top
-                    anchors.topMargin: 14
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-
-                    z: 5
-                    height: 40
-                    placeholderText: qsTr("Search for plants")
-
-                    onDisplayTextChanged: plantDatabase.filter(displayText)
-
-                    Row {
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 12
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
-                            font.pixelSize: Theme.fontSizeContentSmall
-                            color: Theme.colorSubText
-                        }
-
-                        RoundButtonIcon {
-                            width: 24
-                            height: 24
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            visible: plantSearchBox.text.length
-                            highlightMode: "color"
-                            source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
-
-                            onClicked: plantSearchBox.text = ""
-                        }
-
-                        IconSvg {
-                            width: 24
-                            height: 24
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                            color: Theme.colorText
-                        }
-                    }
-                }
-
-                ListView {
-                    id: plantList
-                    anchors.fill: parent
-                    anchors.topMargin: 64
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
-
-                    topMargin: 0
-                    bottomMargin: 12
-                    spacing: 0
-
-                    ScrollBar.vertical: ScrollBar {
-                        visible: true
-                        anchors.right: parent.right
-                        anchors.rightMargin: -12
-                        policy: ScrollBar.AsNeeded
-                    }
-
-                    model: plantDatabase.plantsFiltered
-                    delegate: Rectangle {
-                        width: plantList.width
-                        height: 40
-
-                        color: (index % 2) ? Theme.colorForeground :Theme.colorBackground
-
-                        Row {
-                            anchors.left: parent.left
-                            anchors.leftMargin: 16
-                            anchors.verticalCenter: parent.verticalCenter
-                            spacing: 16
-
-                            Text {
-                                text: modelData.name
-                                color: Theme.colorText
-                                fontSizeMode: Text.Fit
-                                font.pixelSize: Theme.fontSizeContent
-                                minimumPixelSize: Theme.fontSizeContentSmall
-                            }
-                            Text {
-                                visible: modelData.nameCommon
-                                text: "\"" + modelData.nameCommon + "\""
-                                color: Theme.colorSubText
-                                fontSizeMode: Text.Fit
-                                font.pixelSize: Theme.fontSizeContent
-                                minimumPixelSize: Theme.fontSizeContentSmall
-                            }
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                plantScreen.currentPlant = modelData
-                                plantSearchBox.focus = false
-
-                                itemPlantBrowser.visible = false
-                                itemPlantBrowser.enabled = false
-                                itemPlantViewer.visible = true
-                                itemPlantViewer.enabled = true
-                                itemPlantViewer.contentY = 0
-                            }
-                        }
-                    }
-
-                    ItemNoPlants {
-                        visible: (plantList.count <= 0)
-                    }
-                }
+            if (plantSearchBox.focus) {
+                plantSearchBox.focus = false
+                return
             }
 
-            ////////////////////////////////////////////////////////////////////
+            appContent.state = entryPoint
+        }
 
-            Flickable {
-                id: itemPlantViewer
-                anchors.fill: parent
-                anchors.topMargin: plantSelector_desktop.visible ? plantSelector_desktop.height : 0
-                anchors.bottomMargin: plantSelector_mobile.visible ? plantSelector_mobile.height : 0
-
-                visible: false
-
-                contentWidth: singleColumn ? -1 : plantScreen.width
-                contentHeight: singleColumn ? plantScreen.height : -1
-
-                boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
-                ScrollBar.vertical: ScrollBar { visible: false }
-
-                PlantScreen {
-                    id: plantScreen
+        function forwardAction() {
+            if (appContent.state === "PlantBrowser") {
+                if (typeof plantScreen.currentPlant !== "undefined" && plantScreen.currentPlant) {
+                    plantSearchBox.focus = false
+                    itemPlantBrowser.visible = false
+                    itemPlantBrowser.enabled = false
+                    itemPlantViewer.visible = true
+                    itemPlantViewer.enabled = true
                 }
+            } else {
+                appContent.state = "PlantBrowser"
             }
+        }
 
-            ////////////////////////////////////////////////////////////////////
+        function isPlantClicked() {
+            if (itemPlantViewer.visible) return true
+            return false
+        }
+
+        function resetPlantClicked() {
+            plantScreen.currentPlant = null
+            plantSearchBox.text = ""
+            plantSearchBox.focus = false
+            itemPlantBrowser.visible = true
+            itemPlantBrowser.enabled = true
+            itemPlantViewer.visible = false
+            itemPlantViewer.enabled = false
+            itemPlantViewer.contentY = 0
+        }
+
+        ////////////////
+
+        Item {
+            id: itemPlantBrowser
+            anchors.fill: parent
 
             Rectangle {
-                id: plantSelector_desktop
+                anchors.fill: plantSearchBox
+                anchors.margins: -12
+                z: 4
+                color: Theme.colorBackground
+            }
+
+            TextFieldThemed {
+                id: plantSearchBox
                 anchors.top: parent.top
+                anchors.topMargin: 14
                 anchors.left: parent.left
+                anchors.leftMargin: 12
                 anchors.right: parent.right
+                anchors.rightMargin: 12
 
                 z: 5
-                height: 52
-                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                height: 40
+                placeholderText: qsTr("Search for plants")
 
-                visible: (!singleColumn &&
-                          appContent.state === "PlantBrowser" &&
-                          screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
-                          isPlantClicked())
+                onDisplayTextChanged: plantDatabase.filter(displayText)
 
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: "You are previewing a plant."
-                    textFormat: Text.PlainText
-                    color: Theme.colorText
-                    font.pixelSize: 22
-                }
-
-                RowLayout {
+                Row {
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 12
 
-                    ButtonWireframeIcon {
-                        height: 36
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
 
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: 128
-                        Layout.maximumWidth: 320
+                        text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
+                        font.pixelSize: Theme.fontSizeContentSmall
+                        color: Theme.colorSubText
+                    }
 
-                        text: qsTr("Choose this plant")
-                        source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                    RoundButtonIcon {
+                        width: 24
+                        height: 24
+                        anchors.verticalCenter: parent.verticalCenter
 
-                        onClicked: {
-                             selectedDevice.setPlantName(plantScreen.currentPlant.name)
-                             appContent.state = "DevicePlantSensor"
+                        visible: plantSearchBox.text.length
+                        highlightMode: "color"
+                        source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+
+                        onClicked: plantSearchBox.text = ""
+                    }
+
+                    IconSvg {
+                        width: 24
+                        height: 24
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                        color: Theme.colorText
+                    }
+                }
+            }
+
+            ListView {
+                id: plantList
+                anchors.fill: parent
+                anchors.topMargin: 64
+                anchors.leftMargin: 0
+                anchors.rightMargin: 0
+
+                topMargin: 0
+                bottomMargin: 12
+                spacing: 0
+
+                ScrollBar.vertical: ScrollBar {
+                    visible: true
+                    anchors.right: parent.right
+                    anchors.rightMargin: -12
+                    policy: ScrollBar.AsNeeded
+                }
+
+                model: plantDatabase.plantsFiltered
+                delegate: Rectangle {
+                    width: plantList.width
+                    height: 40
+
+                    color: (index % 2) ? Theme.colorForeground :Theme.colorBackground
+
+                    Row {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 16
+
+                        Text {
+                            text: modelData.name
+                            color: Theme.colorText
+                            fontSizeMode: Text.Fit
+                            font.pixelSize: Theme.fontSizeContent
+                            minimumPixelSize: Theme.fontSizeContentSmall
+                        }
+                        Text {
+                            visible: modelData.nameCommon
+                            text: "\"" + modelData.nameCommon + "\""
+                            color: Theme.colorSubText
+                            fontSizeMode: Text.Fit
+                            font.pixelSize: Theme.fontSizeContent
+                            minimumPixelSize: Theme.fontSizeContentSmall
                         }
                     }
-                    ButtonWireframe {
-                        height: 36
 
-                        fullColor: true
-                        primaryColor: Theme.colorSubText
-                        Layout.fillWidth: false
-
-                        text: qsTr("Cancel")
-
+                    MouseArea {
+                        anchors.fill: parent
                         onClicked: {
-                            appContent.state = "DevicePlantSensor"
+                            plantScreen.currentPlant = modelData
+                            plantSearchBox.focus = false
+
+                            itemPlantBrowser.visible = false
+                            itemPlantBrowser.enabled = false
+                            itemPlantViewer.visible = true
+                            itemPlantViewer.enabled = true
+                            itemPlantViewer.contentY = 0
                         }
                     }
                 }
 
-                Rectangle {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
+                ItemNoPlants {
+                    visible: (plantList.count <= 0)
+                }
+            }
+        }
 
-                    visible: (isDesktop && !headerUnicolor)
-                    height: 2
-                    opacity: 0.5
-                    color: Theme.colorSeparator
+        ////////////////////////////////////////////////////////////////////
+
+        Flickable {
+            id: itemPlantViewer
+            anchors.fill: parent
+            anchors.topMargin: plantSelector_desktop.visible ? plantSelector_desktop.height : 0
+            anchors.bottomMargin: plantSelector_mobile.visible ? plantSelector_mobile.height : 0
+
+            visible: false
+
+            contentWidth: singleColumn ? -1 : plantScreen.width
+            contentHeight: singleColumn ? plantScreen.height : -1
+
+            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            ScrollBar.vertical: ScrollBar { visible: false }
+
+            PlantScreen {
+                id: plantScreen
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////
+
+        Rectangle {
+            id: plantSelector_desktop
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            z: 5
+            height: 52
+            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+
+            visible: (!singleColumn &&
+                      appContent.state === "PlantBrowser" &&
+                      screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
+                      isPlantClicked())
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                text: "You are previewing a plant."
+                textFormat: Text.PlainText
+                color: Theme.colorText
+                font.pixelSize: 22
+            }
+
+            RowLayout {
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 12
+
+                ButtonWireframeIcon {
+                    height: 36
+
+                    fullColor: true
+                    primaryColor: Theme.colorPrimary
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 128
+                    Layout.maximumWidth: 320
+
+                    text: qsTr("Choose this plant")
+                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+
+                    onClicked: {
+                         selectedDevice.setPlantName(plantScreen.currentPlant.name)
+                         appContent.state = "DevicePlantSensor"
+                    }
+                }
+                ButtonWireframe {
+                    height: 36
+
+                    fullColor: true
+                    primaryColor: Theme.colorSubText
+                    Layout.fillWidth: false
+
+                    text: qsTr("Cancel")
+
+                    onClicked: {
+                        appContent.state = "DevicePlantSensor"
+                    }
                 }
             }
 
             Rectangle {
-                id: plantSelector_mobile
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                z: 5
-                height: 52
-                color: Theme.colorForeground
-                visible: (singleColumn &&
-                          appContent.state === "PlantBrowser" &&
-                          screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
-                          isPlantClicked())
+                visible: (isDesktop && !headerUnicolor)
+                height: 2
+                opacity: 0.5
+                color: Theme.colorSeparator
+            }
+        }
 
-                RowLayout {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 8
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
+        Rectangle {
+            id: plantSelector_mobile
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
 
-                    ButtonWireframeIcon {
-                        height: 36
+            z: 5
+            height: 52
+            color: Theme.colorForeground
+            visible: (singleColumn &&
+                      appContent.state === "PlantBrowser" &&
+                      screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
+                      isPlantClicked())
 
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: 128
-                        Layout.maximumWidth: 999
+            RowLayout {
+                anchors.left: parent.left
+                anchors.leftMargin: 8
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
 
-                        text: qsTr("Choose this plant")
-                        source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                ButtonWireframeIcon {
+                    height: 36
 
-                        onClicked: {
-                             selectedDevice.setPlantName(plantScreen.currentPlant.name)
-                             appContent.state = "DevicePlantSensor"
-                        }
+                    fullColor: true
+                    primaryColor: Theme.colorPrimary
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 128
+                    Layout.maximumWidth: 999
+
+                    text: qsTr("Choose this plant")
+                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+
+                    onClicked: {
+                         selectedDevice.setPlantName(plantScreen.currentPlant.name)
+                         appContent.state = "DevicePlantSensor"
                     }
-                    ButtonWireframe {
-                        height: 36
+                }
+                ButtonWireframe {
+                    height: 36
 
-                        fullColor: true
-                        primaryColor: Theme.colorSubText
-                        Layout.fillWidth: false
+                    fullColor: true
+                    primaryColor: Theme.colorSubText
+                    Layout.fillWidth: false
 
-                        text: qsTr("Cancel")
+                    text: qsTr("Cancel")
 
-                        onClicked: {
-                            appContent.state = "DevicePlantSensor"
-                        }
+                    onClicked: {
+                        appContent.state = "DevicePlantSensor"
                     }
                 }
             }
-
-            ////////////////////////////////////////////////////////////////////
         }
+
+        ////////////////////////////////////////////////////////////////////
     }
 }
+
