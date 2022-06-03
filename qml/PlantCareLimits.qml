@@ -42,7 +42,7 @@ Flickable {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        topPadding: 16
+        topPadding: isPhone ? 12 : 16
         bottomPadding: 16
         spacing: 16
 
@@ -64,7 +64,7 @@ Flickable {
                 color: currentDevice.deviceIsInside ? Theme.colorForeground : Theme.colorBackground
                 Behavior on color { ColorAnimation { duration: 133 } }
 
-                border.width: 2
+                border.width: currentDevice.deviceIsInside ? 2 : 1
                 border.color: Theme.colorSeparator
 
                 MouseArea {
@@ -105,7 +105,7 @@ Flickable {
                 color: currentDevice.deviceIsOutside ? Theme.colorForeground : Theme.colorBackground
                 Behavior on color { ColorAnimation { duration: 133 } }
 
-                border.width: 2
+                border.width: currentDevice.deviceIsOutside ? 2 : 1
                 border.color: Theme.colorSeparator
 
                 //opacity: currentDevice.deviceIsOutside ? 0.8 : 0.25

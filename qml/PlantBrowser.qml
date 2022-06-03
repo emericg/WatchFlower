@@ -179,7 +179,7 @@ Loader {
                 ScrollBar.vertical: ScrollBar {
                     visible: true
                     anchors.right: parent.right
-                    anchors.rightMargin: -12
+                    anchors.rightMargin: 0
                     policy: ScrollBar.AsNeeded
                 }
 
@@ -332,6 +332,8 @@ Loader {
                 color: Theme.colorSeparator
             }
         }
+
+        ////////
 
         Rectangle {
             id: plantSelector_mobile

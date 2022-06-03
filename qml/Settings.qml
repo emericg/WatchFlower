@@ -257,7 +257,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_appThemeAuto
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -436,7 +436,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_bluetoothControl
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -504,7 +504,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_bluetoothRange
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -680,7 +680,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_minimized
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -787,7 +787,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_worker
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -884,7 +884,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_notifications
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
@@ -1110,7 +1110,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_dynascale
                     anchors.right: parent.right
                     anchors.rightMargin: 0
@@ -1340,7 +1340,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_database_enabled
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight

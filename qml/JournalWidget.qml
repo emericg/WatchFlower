@@ -6,9 +6,8 @@ import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
 Item {
     id: journalWidget
-
-    implicitWidth: 640
-    implicitHeight: 32
+    implicitWidth: 480
+    implicitHeight: 720
 
     height: rowheader.height + (modelData.comment.length > 0 ? ccccc.contentHeight : 8) + 16
 

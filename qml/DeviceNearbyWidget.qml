@@ -5,7 +5,7 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Rectangle {
     id: deviceNearbyWidget
-    implicitWidth: 640
+    implicitWidth: 480
     implicitHeight: 48
 
     opacity: (device.deviceRssi < 0) ? 1 : 0.66

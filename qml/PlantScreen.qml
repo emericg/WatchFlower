@@ -8,17 +8,17 @@ import ThemeEngine 1.0
 
 Grid {
     id: plantScreen
-    width: parent.width
 
     rows: singleColumn ? 3 : 1
     columns: singleColumn ? 1 : 3
     spacing: isPhone ? 12 : 16
     padding: isPhone ? 12 : 16
 
-    property int parentHeight: appContent.height // default
+    property int parentWidth: appContent.width // default
+    property int parentHeight: parent.height // default
 
-    property int www1: singleColumn ? (plantScreen.width - plantScreen.padding*2) : 480
-    property int www2: singleColumn ? (plantScreen.width - plantScreen.padding*2) : 600
+    property int www1: singleColumn ? (parentWidth - plantScreen.padding*2) : 480
+    property int www2: singleColumn ? (parentWidth - plantScreen.padding*2) : 600
     property int insidemargins: singleColumn ? 8 : 16
 
     ////////

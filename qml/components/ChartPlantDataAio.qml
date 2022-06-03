@@ -391,7 +391,7 @@ Item {
 
     function resetIndicator() {
         if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
-        if (appContent.state === "DevicePlantSensor") dataIndicators.resetDataBars()
+        if (appContent.state === "DevicePlantSensor" && indicatorsLoader.status === Loader.Ready) dataIndicators.resetDataBars()
 
         dateIndicator.visible = false
         dataIndicator.visible = false

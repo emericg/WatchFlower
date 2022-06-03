@@ -7,7 +7,7 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: deviceWidget
-    implicitWidth: 640
+    implicitWidth: 480
     implicitHeight: 128
 
     property var boxDevice: pointer

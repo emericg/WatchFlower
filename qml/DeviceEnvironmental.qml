@@ -618,6 +618,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
+                    visible: !singleColumn
                     width: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight

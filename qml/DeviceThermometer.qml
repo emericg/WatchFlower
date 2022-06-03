@@ -250,12 +250,10 @@ Loader {
 
                 width: {
                     if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
-                    //if (isTablet && screenOrientation == Qt.LandscapeOrientation) return parent.width
                     return singleColumn ? parent.width : dimboxw
                 }
                 height: {
                     if (isTablet && screenOrientation == Qt.PortraitOrientation) return dimboxh
-                    //if (isTablet && screenOrientation == Qt.LandscapeOrientation) return dimboxh
                     return singleColumn ? dimboxh : parent.height
                 }
 
@@ -430,6 +428,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
+                    visible: !singleColumn
                     width: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight

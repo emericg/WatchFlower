@@ -123,7 +123,6 @@ Rectangle {
             height: width
             anchors.centerIn: parent
 
-            asynchronous: true
             source: "qrc:/assets/menus/menu_logo_large.svg"
             color: Theme.colorHeaderContent
         }
@@ -133,13 +132,17 @@ Rectangle {
         id: title
         anchors.left: parent.left
         anchors.leftMargin: 64
+        anchors.right: menus.left
+        anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
 
         visible: wideMode
+
         text: "WatchFlower"
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader
         color: Theme.colorHeaderContent
+        elide: Text.ElideRight
     }
 
     ////////////////////////////////////////////////////////////////////////////
