@@ -70,6 +70,7 @@
         <file alias="DatePicker.qml">components_generic/DatePicker6.qml</file>
         <file alias="DesktopHeaderItem.qml">components_generic/DesktopHeaderItem.qml</file>
         <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
+        <file alias="ItemTag.qml">components_generic/ItemTag.qml</file>
         <file alias="MobileMenuItem_horizontal.qml">components_generic/MobileMenuItem_horizontal.qml</file>
         <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
         <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
@@ -91,6 +92,7 @@
     <qresource prefix="/js">
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>
         <file alias="UtilsDeviceSensors.js">components_js/UtilsDeviceSensors.js</file>
+        <file alias="UtilsPlantDatabase.js">components_js/UtilsPlantDatabase.js</file>
         <file alias="UtilsPlantJournal.js">components_js/UtilsPlantJournal.js</file>
     </qresource>
 </RCC>

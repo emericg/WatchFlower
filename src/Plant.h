@@ -35,7 +35,7 @@ class Plant: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString name READ getNameFull CONSTANT)
+    Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(QString nameBotanical READ getNameBotanical CONSTANT)
     Q_PROPERTY(QString nameBotanical_url READ getNameBotanical_url CONSTANT)
     Q_PROPERTY(QString nameVariety READ getNameVariety CONSTANT)
@@ -107,7 +107,7 @@ class Plant: public QObject
     QString soil;
     QString sunlight;
     QString watering;
-    QString fertilization;
+    QString fertilizing;
     QString pruning;
 
     // sensor limits
@@ -153,7 +153,7 @@ class Plant: public QObject
     QString getSoil() { return soil; }
     QString getSunlight() { return sunlight; }
     QString getWatering() { return watering; }
-    QString getFertilization() { return fertilization; }
+    QString getFertilization() { return fertilizing; }
     QString getPruning() { return pruning; }
 
     int getSoilMoist_min() { return soilRH_min; }
@@ -180,8 +180,8 @@ public:
     Plant(QObject *parent = nullptr);
     ~Plant();
 
-    const QString getNameFull() { return name; }
-    const QString getNameFilter() { return name_botanical + " - " + name_common; }
+    const QString &getName() { return name; }
+    QString getNameFilter() { return name + " - " + name_common; }
 
     void read_csv_watchflower(const QStringList &plantSections);
     void read_json_watchflower(QJsonObject &json);

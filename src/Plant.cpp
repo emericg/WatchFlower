@@ -59,6 +59,8 @@ void Plant::computeNames()
     name_botanical_url = name_botanical_url.replace(' ', '_');
 }
 
+/* ************************************************************************** */
+
 void Plant::read_csv_watchflower(const QStringList &plantSections)
 {
     //qDebug() << "Plant::read_csv_watchflower(" << pid_display << ")";
@@ -93,11 +95,11 @@ void Plant::read_csv_watchflower(const QStringList &plantSections)
 
         // maintenance infos
         startAt = 15;
-        soil = plantSections.at(startAt + 0);
-        sunlight = plantSections.at(startAt + 1);
-        watering = plantSections.at(startAt + 2);
-        fertilization = plantSections.at(startAt + 3);
-        pruning = plantSections.at(startAt + 4);
+        sunlight = plantSections.at(startAt + 0);
+        watering = plantSections.at(startAt + 1);
+        fertilizing = plantSections.at(startAt + 2);
+        pruning = plantSections.at(startAt + 3);
+        soil = plantSections.at(startAt + 4);
 
         // sensor parameters
         startAt = 20;
@@ -192,16 +194,16 @@ void Plant::read_json_watchflower(QJsonObject &json)
     {
         QJsonObject care = json["care"].toObject();
 
-        if (care.contains("soil") && care["soil"].isString())
-            soil = care["soil"].toString();
         if (care.contains("sunlight") && care["sunlight"].isString())
             sunlight = care["sunlight"].toString();
         if (care.contains("watering") && care["watering"].isString())
             watering = care["watering"].toString();
+        if (care.contains("fertilizing") && care["fertilizing"].isString())
+            fertilizing = care["fertilizing"].toString();
         if (care.contains("pruning") && care["pruning"].isString())
             pruning = care["pruning"].toString();
-        if (care.contains("fertilization") && care["fertilization"].isString())
-            fertilization = care["fertilization"].toString();
+        if (care.contains("soil") && care["soil"].isString())
+            soil = care["soil"].toString();
     }
 
     ///
@@ -209,10 +211,10 @@ void Plant::read_json_watchflower(QJsonObject &json)
     {
         QJsonObject metrics = json["metrics"].toObject();
 
-        if (metrics.contains("soil_moisture_min")) soilRH_min = metrics["soil_moisture_min"].toInt();
-        if (metrics.contains("soil_moisture_max")) soilRH_max = metrics["soil_moisture_max"].toInt();
-        if (metrics.contains("soil_conductivity_min")) soilEC_min = metrics["soil_conductivity_min"].toInt();
-        if (metrics.contains("soil_conductivity_max")) soilEC_max = metrics["soil_conductivity_max"].toInt();
+        if (metrics.contains("soil_rh_min")) soilRH_min = metrics["soil_rh_min"].toInt();
+        if (metrics.contains("soil_rh_max")) soilRH_max = metrics["soil_rh_max"].toInt();
+        if (metrics.contains("soil_ec_min")) soilEC_min = metrics["soil_ec_min"].toInt();
+        if (metrics.contains("soil_ec_max")) soilEC_max = metrics["soil_ec_max"].toInt();
         if (metrics.contains("soil_ph_min")) soilPH_min = metrics["soil_ph_min"].toDouble();
         if (metrics.contains("soil_ph_max")) soilPH_max = metrics["soil_ph_max"].toDouble();
 
@@ -254,23 +256,23 @@ void Plant::write_json_watchflower(QJsonObject &jsonObject) const
     jsonObject.insert("infos", infosObject);
 
     QJsonObject careObject; ////////////////////////////////////////////////////
-    if (!soil.isEmpty()) careObject.insert("soil", QJsonValue::fromVariant(soil));
     if (!sunlight.isEmpty()) careObject.insert("sunlight", QJsonValue::fromVariant(sunlight));
     if (!watering.isEmpty()) careObject.insert("watering", QJsonValue::fromVariant(watering));
+    if (!fertilizing.isEmpty()) careObject.insert("fertilizing", QJsonValue::fromVariant(fertilizing));
     if (!pruning.isEmpty()) careObject.insert("pruning", QJsonValue::fromVariant(pruning));
-    if (!fertilization.isEmpty()) careObject.insert("fertilization", QJsonValue::fromVariant(fertilization));
+    if (!soil.isEmpty()) careObject.insert("soil", QJsonValue::fromVariant(soil));
     jsonObject.insert("care", careObject);
 
     QJsonObject metricsObject; /////////////////////////////////////////////////
     if (soilRH_min > -99 && soilRH_max > -99)
     {
-        metricsObject.insert("soil_moisture_min", QJsonValue::fromVariant(soilRH_min));
-        metricsObject.insert("soil_moisture_max", QJsonValue::fromVariant(soilRH_max));
+        metricsObject.insert("soil_rh_min", QJsonValue::fromVariant(soilRH_min));
+        metricsObject.insert("soil_rh_max", QJsonValue::fromVariant(soilRH_max));
     }
     if (soilEC_min > -99 && soilEC_max > -99)
     {
-        metricsObject.insert("soil_conductivity_min", QJsonValue::fromVariant(soilEC_min));
-        metricsObject.insert("soil_conductivity_max", QJsonValue::fromVariant(soilEC_max));
+        metricsObject.insert("soil_ec_min", QJsonValue::fromVariant(soilEC_min));
+        metricsObject.insert("soil_ec_max", QJsonValue::fromVariant(soilEC_max));
     }
     if (soilPH_min > -99.f && soilPH_max > -99.f)
     {
@@ -337,13 +339,13 @@ void Plant::print() const
     qDebug() << "-" << tags;
 
     qDebug() << "* maintenance infos";
-    qDebug() << "-" << soil;
     qDebug() << "-" << sunlight;
     qDebug() << "-" << watering;
-    qDebug() << "-" << fertilization;
+    qDebug() << "-" << fertilizing;
     qDebug() << "-" << pruning;
+    qDebug() << "-" << soil;
 
-    qDebug() << "* metrics";
+    qDebug() << "* sensor metrics";
     qDebug() << "- soil RH " << soilRH_min << " -> " << soilRH_max;
     qDebug() << "- soil EC " << soilEC_min << " -> " << soilEC_max;
     qDebug() << "- soil PH " << soilPH_min << " -> " << soilPH_max;
@@ -352,6 +354,8 @@ void Plant::print() const
     qDebug() << "- air RH  " << envHumi_min << " -> " << envHumi_max;
     qDebug() << "- light (lux)  " << lightLux_min << " -> " << lightLux_max;
     qDebug() << "- light (mmol) " << lightMmol_min << " -> " << lightMmol_max;
+
+    qDebug() << Qt::endl;
 }
 
 bool Plant::stats() const

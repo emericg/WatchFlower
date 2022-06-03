@@ -108,7 +108,7 @@ Plant *PlantDatabase::getPlant_p(const QString &name)
     for (auto pp: qAsConst(m_plants))
     {
         Plant *p = qobject_cast<Plant *>(pp);
-        if (p->getNameFull() == name)
+        if (p->getName() == name)
         {
             return p;
         }

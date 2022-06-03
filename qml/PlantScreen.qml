@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 
 import ThemeEngine 1.0
 //import PlantUtils 1.0
-//import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
+import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 
 Grid {
     id: plantScreen
@@ -169,8 +169,9 @@ Grid {
         rangeSlider_temp.setValues(currentPlant.envTemp_min, currentPlant.envTemp_max)
         rangeSlider_humi.setValues(currentPlant.envHumi_min, currentPlant.envHumi_max)
         rangeSlider_lumi_lux.setValues(currentPlant.lightLux_min, currentPlant.lightLux_max)
+
         itemLumiMmol.visible = (currentPlant.lightMmol_min > 0)
-        rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, currentPlant.lightMmol_max)
+        rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, Math.max(currentPlant.lightMmol_min, currentPlant.lightMmol_max))
     }
 
     Flickable { ////////////////////////////////////////////////////////
@@ -478,32 +479,17 @@ Grid {
             Flow {
                 id: itemTags
                 anchors.left: parent.left
-                anchors.leftMargin: 4
                 anchors.right: parent.right
-                anchors.rightMargin: 4
-                spacing: 20
+                spacing: 16
 
                 Repeater {
                     id: plantTags
 
-                    Text {
-                        text: modelData
-                        color: "white"
-                        font.bold: true
-                        font.pixelSize: Theme.fontSizeContentVerySmall
-                        font.capitalization: Font.AllUppercase
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.topMargin: -4
-                            anchors.leftMargin: -8
-                            anchors.rightMargin: -8
-                            anchors.bottomMargin: -4
-                            z: -1
-
-                            color: Theme.colorBlue
-                            radius: Theme.componentRadius
-                        }
+                    ItemTag {
+                        text: UtilsPlantDatabase.getPlantTagText(modelData)
+                        textColor: "white"
+                        textSize: Theme.fontSizeContentSmall
+                        backgroundColor: UtilsPlantDatabase.getPlantTagColor(modelData)
                     }
                 }
             }
@@ -874,49 +860,6 @@ Grid {
                 font.capitalization: Font.AllUppercase
             }
 
-            Rectangle {
-                id: infoBox
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                width: (parent.width / 2) - 24
-                height: infoText.contentHeight + 16
-                radius: 4
-                z: 2
-
-                color: Theme.colorComponentBackground
-                border.color: Theme.colorSeparator
-                border.width: 1
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorSubText
-                }
-
-                Text {
-                    id: infoText
-                    anchors.top: parent.top
-                    anchors.topMargin: 8
-                    anchors.left: parent.left
-                    anchors.leftMargin: 52
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
-                    textFormat: Text.StyledText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContent
-                }
-            }
-
             Row {
                 spacing: 16
 
@@ -1233,6 +1176,49 @@ Grid {
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
                     }
+                }
+            }
+
+            Rectangle {
+                id: infoBox
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                width: (parent.width / 2) - 24
+                height: infoText.contentHeight + 16
+                radius: 4
+                z: 2
+
+                color: Theme.colorComponentBackground
+                border.color: Theme.colorSeparator
+                border.width: 1
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    id: infoText
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 52
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContent
                 }
             }
 /*
@@ -1579,7 +1565,7 @@ Grid {
                     anchors.verticalCenter: imageLumi.verticalCenter
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
-                    text: qsTr("Luminosity (lux)")
+                    text: qsTr("Luminosity") +  " (lux)"
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1745,7 +1731,7 @@ Grid {
                     anchors.verticalCenter: imageLumiMmol.verticalCenter
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
-                    text: qsTr("Luminosity (mmol)")
+                    text: qsTr("Luminosity")+ " (mmol)"
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1770,8 +1756,8 @@ Grid {
                     unit: "k"
                     kshort: true
                     from: 0
-                    to: 10000
-                    stepSize: 1000
+                    to: 25000
+                    stepSize: 100
                 }
             }
 
