@@ -397,7 +397,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_luminosityLux = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93;
+            m_luminosityLux = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93 * 10.0;
 
             /////////
 
