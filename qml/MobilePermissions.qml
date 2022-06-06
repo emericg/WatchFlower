@@ -280,7 +280,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("Background location is needed if you want to get infos from sensors in the background.")
+                text: qsTr("Similarly, background location permission is needed if you want the application to get data from the sensors in the background.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

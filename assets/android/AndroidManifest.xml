@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.emeric.watchflower" android:installLocation="auto"
-          android:versionCode="03920002" android:versionName="4.0">
+          android:versionCode="03930002" android:versionName="4.0">
 
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
 
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- android:maxSdkVersion="30" -->
 
     <!-- Request new Bluetooth permissions (Android 12+ / SDK 31) -->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:minSdkVersion="31" android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:minSdkVersion="31" android:usesPermissionFlags="neverForLocation"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:minSdkVersion="31"/>
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28"/>
@@ -77,7 +77,7 @@
         <!-- Android service(s) -->
         <receiver android:name=".WatchFlowerBootServiceBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
