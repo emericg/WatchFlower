@@ -66,7 +66,7 @@ Item {
                     asynchronous: true
                     smooth: true
                     opacity: 0.15
-                    color: Theme.colorSubText
+                    color: Theme.colorIcon
                     fillMode: Image.PreserveAspectFit
 
                     source: UtilsDeviceSensors.getDeviceImage(currentDevice.deviceName)
@@ -169,7 +169,7 @@ Item {
                                     anchors.verticalCenter: parent.verticalCenter
 
                                     source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                                    color: Theme.colorSubText
+                                    color: Theme.colorIcon
                                     visible: !currentDevice.deviceFirmwareUpToDate
                                 }
                             }
@@ -472,7 +472,7 @@ Item {
                                 border: true
                                 background: true
                                 backgroundColor: Theme.colorBackground
-                                iconColor: Theme.colorText
+                                iconColor: Theme.colorIcon
                                 source: UtilsDeviceSensors.getDeviceSensorIcon(modelData.sensorId)
                             }
                             Column {
@@ -518,7 +518,7 @@ Item {
                                 border: true
                                 background: true
                                 backgroundColor: Theme.colorBackground
-                                iconColor: Theme.colorText
+                                iconColor: Theme.colorIcon
                                 source: UtilsDeviceSensors.getDeviceCapabilityIcon(modelData.capabilityId)
                             }
                             Column {
@@ -608,7 +608,7 @@ Item {
                                     id: insideImage
                                     width: 40; height: 40;
                                     anchors.horizontalCenter: parent.horizontalCenter
-                                    color: Theme.colorText
+                                    color: Theme.colorIcon
                                     source: "qrc:/assets/icons_custom/inside-24px.svg"
                                 }
                                 Text {
@@ -648,7 +648,7 @@ Item {
                                     width: 40; height: 40;
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     source: "qrc:/assets/icons_custom/outside-24px.svg"
-                                    color: Theme.colorText
+                                    color: Theme.colorIcon
                                 }
                                 Text {
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -713,7 +713,7 @@ Item {
                                 width: 24
                                 height: 24
 
-                                color: Theme.colorSubText
+                                color: Theme.colorIcon
                                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                             }
 

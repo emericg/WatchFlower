@@ -109,7 +109,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             selected: (appContent.state === "PlantBrowser")
-            onClicked: screenPlantBrowser.loadScreen("DeviceList")
+            onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
         }
         MobileMenuItem_horizontal {
             id: menuDeviceBrowseer

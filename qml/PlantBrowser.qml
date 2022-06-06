@@ -205,7 +205,7 @@ Loader {
                         }
                         Text {
                             visible: modelData.nameCommon
-                            text: "«" + modelData.nameCommon + "»"
+                            text: "« " + modelData.nameCommon + " »"
                             color: Theme.colorSubText
                             fontSizeMode: Text.Fit
                             font.pixelSize: Theme.fontSizeContent

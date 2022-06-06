@@ -105,7 +105,7 @@ Item {
                     anchors.leftMargin: 12
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorSubText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -201,7 +201,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorSubText
+                    color: Theme.colorIcon
                 }
 
                 Text {

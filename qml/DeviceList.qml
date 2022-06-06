@@ -27,11 +27,10 @@ Item {
         if (!utilsApp.checkMobileBleLocationPermission()) {
             utilsApp.getMobileBleLocationPermission()
         }
+
         if (!deviceManager.hasDevices) {
             rectangleStatus.setDeviceWarning()
-        }
-
-        if (deviceManager.bluetooth) {
+        } else if (deviceManager.bluetooth) {
             if (deviceManager.bluetoothPermissions) {
                 if (deviceManager.hasDevices) {
                     rectangleStatus.hide()

@@ -577,7 +577,7 @@ Drawer {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        screenPlantBrowser.loadScreen("DeviceList")
+                        screenPlantBrowser.loadScreenFrom("DeviceList")
                         appDrawer.close()
                     }
                 }
