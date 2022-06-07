@@ -12,6 +12,16 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    PopupBackgroundData {
+        id: popupBackgroundData
+        onConfirmed: {
+            utilsApp.getMobileBackgroundLocationPermission()
+            settingsManager.systray = true
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Flickable {
         anchors.fill: parent
 
@@ -797,13 +807,14 @@ Item {
 
                     checked: settingsManager.systray
                     onClicked: {
-                        settingsManager.systray = checked
-
                         if (isMobile) {
-                            if (settingsManager.systray) {
+                            if (checked) {
                                 popupBackgroundData.open()
-                                utilsApp.getMobileBackgroundLocationPermission()
+                            } else {
+                                settingsManager.systray = checked
                             }
+                        } else {
+                            settingsManager.systray = checked
                         }
                     }
                 }
