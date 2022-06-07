@@ -6,18 +6,19 @@
   <name>WatchFlower</name>
   <launchable type="desktop-id">watchflower.desktop</launchable>
 
-  <summary>A plant monitoring application for Bluetooth sensors and thermometers</summary>
+  <summary>A plant monitoring application for Bluetooth Low Energy sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'</summary>
   <description>
-    <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth sensors like Xiaomi "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many Bluetooth thermometers!</p>
+    <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth Low Energy sensors like Xiaomi "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many thermometers and air quality sensors!</p>
     <p>It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!</p>
     <p>Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!</p>
     <p>Features:</p>
     <ul>
-      <li>Support many plant sensors and thermometers</li>
-      <li>Support a couple of environmental sensors</li>
+      <li>Support many different plant sensors and thermometers</li>
+      <li>Support a couple of environmental and air quality sensors</li>
       <li>Name your plants and set your own limits for optimal care</li>
-      <li>Background updates and notifications (desktop ONLY for now)</li>
-      <li>Synchronize sensors history (FlowerCare and ThermoBeacon ONLY for now)</li>
+      <li>Plant database with over 3400 plants</li>
+      <li>Background updates and notifications (excluding iOS)</li>
+      <li>Synchronize sensors history (FlowerCare, RoPot and ThermoBeacon ONLY for now)</li>
       <li>Configurable update intervals</li>
       <li>Clickable two-week graphs</li>
       <li>Monthly/weekly/daily data histograms</li>
@@ -27,7 +28,7 @@
   </description>
 
   <releases>
-    <release version="4.0" date="2022-03-01" />
+    <release version="4.0" date="2022-06-10" />
     <release version="3.2" date="2022-01-07" />
     <release version="3.1" date="2021-11-02" />
     <release version="3.0" date="2021-10-14" />

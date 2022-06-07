@@ -18,8 +18,9 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 
 ### Features
 
-* Support many plant sensors and thermometers
-* Support a couple of environmental sensors
+* Support many different plant sensors and thermometers
+* Support a couple of environmental and air quality sensors
+* Plant database with over 3400 plants
 * Name your plants and set your own limits for optimal care
 * Background updates and notifications (excluding iOS)
 * Synchronize sensors history (FlowerCare, RoPot and ThermoBeacon ONLY for now)
@@ -45,12 +46,12 @@ You can also create your own sensors and use them with WatchFlower! Checkout thi
 
 Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
 
-| Flower Care | RoPot | Flower Power | Parrot Pot | HiGrow |
-| :---------: | :---: | :----------: | :--------: | :----: |
-| ![FlowerCare](docs/flowercare.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) | ![HiGrow](docs/higrow.svg) |
-| HHCCJCY01<br>GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT | |
-| Xiaomi / VegTrug / WANFEI<br>(International and Chinese versions) | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
+| Flower Care |  Flower Care Max | RoPot | Flower Power | Parrot Pot | HiGrow |
+| :---------: | :--------------: | :---: | :----------: | :--------: | :----: |
+| ![FlowerCare](docs/flowercare.svg) | ![FlowerCare Max](docs/flowercaremax.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) | ![HiGrow](docs/higrow.svg) |
+| HHCCJCY01<br>HHCCJCY10 | HHCCJCY09 <br> GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT | |
+| Xiaomi / VegTrug / ...<br>(International and Chinese versions) | Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
+| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | QingPing Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
@@ -58,17 +59,23 @@ Please note that most Chinese devices have many names, usually no official manuf
 | LYWSDCGQ | CGG1 | CGDK2 |
 | [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
 
-| Miaomiaoce Digital Hygrometer Clock / Alarm | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer (EInk) | Miaomiaoce Thermo-Hygrometer (EInk) |
-| :-----------------------------------------: | :----------------------------------: | :---------------------------------: | :---------------------------------: |
-| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) | ![XMWSDJO4MMC](docs/hygrotemp_xmwsdjo4mmc.svg) |
-| LYWSD02<br>MHO-C303 | LYWSD03MMC | MHO-C401 | XMWSDJO4MMC |
-| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) / [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) | [shop](https://www.banggood.com/custlink/3DmR2A33n6) |
+| Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer 2 (EInk) | Miaomiaoce Thermo-Hygrometer (EInk) |
+| :----------------------------------: | :---------------------------------: | :---------------------------------: |
+| ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) | ![XMWSDJO4MMC](docs/hygrotemp_xmwsdjo4mmc.svg) |
+| LYWSD03MMC | MHO-C401 | XMWSDJO4MMC |
+| [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) | [shop](https://www.banggood.com/custlink/3DmR2A33n6) |
 
-| ThermoBeacon (keychain) | ThermoBeacon (LCD) |
-| :---------------------: | :----------------: |
-| ![ThermoBeacon](docs/thermobeacon_round.svg) | ![ThermoBeacon](docs/thermobeacon_square.svg) |
-| 2ACD3-WS02<br>2ACD3-WS07 | 2ACD3-WS08<br>KEU-WA59D |
-| | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
+| Miaomiaoce Digital Hygrometer Clock (EInk) | Miaomiaoce Digital Hygrometer Alarm (EInk) | Qingping Bluetooth Alarm Clock (LCD) | Qingping Temp & RH Barometer Pro S (LCD) |
+| :----------------------------------------: | :----------------------------------------: | :----------------------------------: | :--------------------------------------: |
+| ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTempAlarm](docs/hygrotemp_alarm.svg) | ![CGD1](docs/hygrotemp_cgd1.svg) | ![CGP1W](docs/hygrotemp_cgp1w.svg) |
+| LYWSD02 | MHO-C303 | CGD1 | CGP1W |
+| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | | | |
+
+| ThermoBeacon (round keychain) | ThermoBeacon (diamond keychain) | ThermoBeacon (LCD) |
+| :---------------------------: | :-----------------------------: | :----------------: |
+| ![ThermoBeacon](docs/thermobeacon_round.svg) | ![ThermoBeacon](docs/thermobeacon_diamond.svg) | ![ThermoBeacon](docs/thermobeacon_square.svg) |
+| 2ACD3-WS02<br>2ACD3-WS07 |  2ACD3-WS02 | 2ACD3-WS08<br>KEU-WA59D |
+| | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
 | Air Box WP6003 | Honeywell HCHO detector|
 | :------------: | :--------------------: |

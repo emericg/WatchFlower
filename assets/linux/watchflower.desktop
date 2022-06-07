@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=WatchFlower
-Comment=A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'
+Comment=A plant monitoring application for Bluetooth Low Energy sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'
 Exec=watchflower
 Icon=watchflower
 Categories=Utility;DataVisualization;Qt;

@@ -130,6 +130,10 @@ if(ANDROID)
         src/utils/utils_os_android.h src/utils/utils_os_android_qt6.cpp
     )
 
+    set_target_properties(WatchFlower PROPERTIES
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
+    )
+
     target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
 endif()
 
@@ -140,7 +144,8 @@ if(MACOS)
         src/utils/utils_os_macosdock.h src/utils/utils_os_macosdock.mm
     )
 
-    #-DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+    #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+    #set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
 
     target_link_libraries(WatchFlower PRIVATE
         "-framework AppKit"
