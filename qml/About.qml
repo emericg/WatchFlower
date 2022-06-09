@@ -39,7 +39,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: -(screenPaddingRight + 16)
 
-                height: 88
+                height: 92
                 color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
                 Row {
@@ -48,13 +48,13 @@ Item {
                     anchors.leftMargin: 16
 
                     z: 2
-                    height: 88
-                    spacing: 24
+                    height: 92
+                    spacing: 16
 
                     Image {
                         id: imageLogo
-                        width: 88
-                        height: 88
+                        width: 92
+                        height: 92
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/logos/logo.svg"

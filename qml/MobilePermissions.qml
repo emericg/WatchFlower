@@ -416,8 +416,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".<br>" +
-                            "You can go to the Android \"application info\" panel to change a permission manually.")
+                text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".") + "<br>" +
+                      qsTr("You can go to the Android \"application info\" panel to change a permission manually.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

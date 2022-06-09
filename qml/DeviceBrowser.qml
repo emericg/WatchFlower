@@ -97,12 +97,12 @@ Item {
                 border.width: 1
 
                 IconSvg {
-                    width: 32
-                    height: 32
+                    width: 28
+                    height: 28
                     anchors.top: parent.top
-                    anchors.topMargin: 12
+                    anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorIcon
@@ -113,7 +113,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 52
+                    anchors.leftMargin: 42
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -194,10 +194,10 @@ Item {
                 border.width: 1
 
                 IconSvg {
-                    width: 32
-                    height: 32
+                    width: 28
+                    height: 28
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
@@ -209,7 +209,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 52
+                    anchors.leftMargin: 42
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 

@@ -442,40 +442,6 @@ Grid {
 
             ////////
 
-            RowLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                spacing: 16
-
-                visible: (appContent.state === "DevicePlantSensor")
-
-                ButtonWireframeIcon {
-                    fullColor: true
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 128
-                    Layout.maximumWidth: 999
-
-                    text: qsTr("Change the associated plant")
-                    source: "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
-
-                    onClicked: {
-                        screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
-                    }
-                }
-                ButtonWireframeIcon {
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
-                    Layout.fillWidth: false
-
-                    text: qsTr("Reset")
-
-                    onClicked: currentDevice.resetPlant()
-                }
-            }
-
-            ////////
-
             Flow {
                 id: itemTags
                 anchors.left: parent.left
@@ -816,7 +782,7 @@ Grid {
                         primaryColor: Theme.colorPrimary
                         secondaryColor: Theme.colorBackground
 
-                        text: qsTr("wikipedia")
+                        text: "Wikipedia"
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
@@ -828,7 +794,7 @@ Grid {
                         primaryColor: Theme.colorPrimary
                         secondaryColor: Theme.colorBackground
 
-                        text: qsTr("hortipedia")
+                        text: "Hortipedia"
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
@@ -836,6 +802,44 @@ Grid {
                     }
                 }
             }
+
+            ////////
+
+            RowLayout {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                spacing: 16
+
+                visible: (appContent.state === "DevicePlantSensor")
+
+                ButtonWireframeIcon {
+                    height: 36
+                    fullColor: true
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: 128
+                    Layout.maximumWidth: 999
+
+                    text: qsTr("Change the associated plant")
+                    source: "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
+
+                    onClicked: {
+                        screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
+                    }
+                }
+                ButtonWireframeIcon {
+                    height: 36
+                    fullColor: true
+                    primaryColor: Theme.colorSubText
+                    secondaryColor: Theme.colorForeground
+                    Layout.fillWidth: false
+
+                    text: qsTr("Reset")
+
+                    onClicked: currentDevice.resetPlant()
+                }
+            }
+
+            ////////
         }
     }
 
@@ -1194,12 +1198,12 @@ Grid {
                 border.width: 1
 
                 IconSvg {
-                    width: 32
-                    height: 32
+                    width: 28
+                    height: 28
                     anchors.top: parent.top
-                    anchors.topMargin: 12
+                    anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 8
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorIcon
@@ -1210,7 +1214,7 @@ Grid {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 52
+                    anchors.leftMargin: 42
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 

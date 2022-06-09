@@ -12,11 +12,12 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    PopupBackgroundData {
-        id: popupBackgroundData
-        onConfirmed: {
-            utilsApp.getMobileBackgroundLocationPermission()
-            settingsManager.systray = true
+    PopupBackgroundUpdates {
+        id: popupBackgroundUpdates
+
+        onClosed: {
+            settingsManager.systray = utilsApp.checkMobileBackgroundLocationPermission()
+            switch_worker.checked = settingsManager.systray
         }
     }
 
@@ -287,9 +288,9 @@ Item {
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-
                 topPadding: -12
-                bottomPadding: isMobile ? 12 : 0
+                bottomPadding: 12
+
                 visible: element_appThemeAuto.visible
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
@@ -752,7 +753,7 @@ Item {
                     primaryColor: Theme.colorRed
                     borderColor: Theme.colorRed
 
-                    onClicked: popupBackgroundData.open()
+                    onClicked: popupBackgroundUpdates.open()
                 }
             }
 
@@ -809,9 +810,10 @@ Item {
                     onClicked: {
                         if (isMobile) {
                             if (checked) {
-                                popupBackgroundData.open()
+                                checked = false
+                                popupBackgroundUpdates.open()
                             } else {
-                                settingsManager.systray = checked
+                                settingsManager.systray = false
                             }
                         } else {
                             settingsManager.systray = checked
@@ -826,7 +828,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 topPadding: -12
-                bottomPadding: 0
+                bottomPadding: element_notifications.visible ? 0 : 12
 
                 visible: (element_worker.visible && Qt.platform.os === "android")
 
@@ -843,7 +845,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 topPadding: -12
-                bottomPadding: 12
+                bottomPadding: element_notifications.visible ? 0 : 12
 
                 visible: (element_worker.visible && isDesktop)
 
