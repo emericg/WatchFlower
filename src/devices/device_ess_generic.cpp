@@ -20,7 +20,6 @@
  */
 
 #include "device_ess_generic.h"
-#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

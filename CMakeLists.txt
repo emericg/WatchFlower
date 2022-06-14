@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.19)
 
 project(WatchFlower VERSION 4.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Bluetooth Charts Gui Network Qml Quick QuickControls2 Sql Svg Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Network Sql)
+find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Svg Widgets Charts)
 
 qt_standard_project_setup()
 
@@ -52,16 +53,7 @@ qt_add_executable(WatchFlower
     src/devices/device_ropot.cpp src/devices/device_ropot.h
     src/devices/device_thermobeacon.cpp src/devices/device_thermobeacon.h
     src/devices/device_wp6003.cpp src/devices/device_wp6003.h
-    src/thirdparty/MobileSharing/SharingApplication.cpp src/thirdparty/MobileSharing/SharingApplication.h
-    src/thirdparty/MobileSharing/SharingUtils.cpp src/thirdparty/MobileSharing/SharingUtils.h
-    src/thirdparty/MobileUI/MobileUI.cpp src/thirdparty/MobileUI/MobileUI.h
     src/thirdparty/RC4/rc4.cpp src/thirdparty/RC4/rc4.h
-    src/thirdparty/SingleApplication/singleapplication.cpp src/thirdparty/SingleApplication/singleapplication.h src/thirdparty/SingleApplication/singleapplication_p.cpp src/thirdparty/SingleApplication/singleapplication_p.h
-    src/utils/utils_app.cpp src/utils/utils_app.h
-    src/utils/utils_language.cpp src/utils/utils_language.h
-    src/utils/utils_maths.cpp src/utils/utils_maths.h
-    src/utils/utils_screen.cpp src/utils/utils_screen.h
-    src/utils/utils_versionchecker.h
     src/main.cpp
     qml/qml.qrc
     i18n/i18n.qrc
@@ -70,127 +62,72 @@ qt_add_executable(WatchFlower
     assets/plants.qrc
 )
 
-target_include_directories(WatchFlower PRIVATE
-    src
-    src/thirdparty/SingleApplication
-    src/thirdparty/MobileSharing
-    src/thirdparty/MobileUI
-)
-
-################################################################################
-
-set_target_properties(WatchFlower PROPERTIES
-    WIN32_EXECUTABLE ON
-    MACOSX_BUNDLE ON
-)
-
-target_compile_definitions(WatchFlower PRIVATE
-    APP_VERSION=\"4.0\"
-    QAPPLICATION_CLASS=QApplication
-    QT_DEPRECATED_WARNINGS
-)
+target_include_directories(WatchFlower PRIVATE src)
 
 target_link_libraries(WatchFlower PRIVATE
-    Qt::Bluetooth
-    Qt::Charts
     Qt::Core
-    Qt::Gui
+    Qt::Bluetooth
     Qt::Network
+    Qt::Sql
+    Qt::Gui
     Qt::Qml
     Qt::Quick
     Qt::QuickControls2
-    Qt::Sql
     Qt::Svg
     Qt::Widgets
+    Qt::Charts
 )
 
 ################################################################################
 
-## LINUX
-if(UNIX AND NOT APPLE AND NOT ANDROID)
-    set(LINUX TRUE)
-endif()
+# AppUtils
+set(APP_NAME ${CMAKE_PROJECT_NAME})
+set(APP_VERSION ${CMAKE_PROJECT_VERSION})
+add_subdirectory(src/thirdparty/AppUtils)
+target_link_libraries(WatchFlower PRIVATE AppUtils)
 
-if(LINUX)
-    target_sources(WatchFlower PUBLIC
-        src/utils/utils_os_linux.cpp src/utils/utils_os_linux.h
-    )
+# MobileUI
+add_subdirectory(src/thirdparty/MobileUI)
+target_link_libraries(WatchFlower PRIVATE MobileUI)
 
-    find_package(Qt6 OPTIONAL_COMPONENTS DBus)
-    target_link_libraries(WatchFlower PRIVATE Qt::DBus)
-endif()
+# MobileSharing
+add_subdirectory(src/thirdparty/MobileSharing)
+target_link_libraries(WatchFlower PRIVATE MobileSharing)
+
+# SingleApplication
+set(QAPPLICATION_CLASS QApplication)
+add_subdirectory(src/thirdparty/SingleApplication)
+target_link_libraries(WatchFlower PRIVATE SingleApplication)
+
+################################################################################
 
 ## ANDROID
-
 if(ANDROID)
-    target_sources(WatchFlower PUBLIC
-        src/thirdparty/MobileSharing/SharingUtils_android.h
-        src/thirdparty/MobileSharing/SharingUtils_android_qt6.cpp
-        src/thirdparty/MobileUI/MobileUI_android_qt6.cpp
-        src/utils/utils_os_android.h src/utils/utils_os_android_qt6.cpp
-    )
-
     set_target_properties(WatchFlower PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
     )
 
-    target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
+    #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
+    #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
 endif()
 
 ## macOS
 if(MACOS)
-    target_sources(WatchFlower PUBLIC
-        src/utils/utils_os_macos.h src/utils/utils_os_macos.mm
-        src/utils/utils_os_macosdock.h src/utils/utils_os_macosdock.mm
-    )
-
     #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     #set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
-
-    target_link_libraries(WatchFlower PRIVATE
-        "-framework AppKit"
-        "-framework IOKit"
-    )
 endif()
 
 ## iOS
 if(IOS)
-    target_link_libraries(WatchFlower PRIVATE
-        "-framework Qt::GuiPrivate"
-        "-framework UIKit"
-    )
-
-    target_sources(WatchFlower PUBLIC
-        src/thirdparty/MobileSharing/SharingUtils_ios.h src/thirdparty/MobileSharing/SharingUtils_ios.mm
-        src/thirdparty/MobileSharing/docviewcontroller_ios.h src/thirdparty/MobileSharing/docviewcontroller_ios.mm
-        src/thirdparty/MobileUI/MobileUI_ios.mm
-        src/utils/utils_os_ios.h src/utils/utils_os_ios.mm
-    )
+    #
 endif()
 
 ## Windows
 if(WIN32)
-    target_sources(WatchFlower PUBLIC
-        src/utils/utils_os_windows.cpp src/utils/utils_os_windows.h
-    )
-
     target_compile_definitions(WatchFlower PRIVATE _USE_MATH_DEFINES)
-
-    if(MSVC)
-        target_link_libraries(WatchFlower PRIVATE Advapi32.lib )
-    endif()
-    if(GCC)
-        target_link_libraries(WatchFlower PRIVATE advapi32 )
-    endif()
 endif()
 
-
-
-
-
-
-
-
+################################################################################
 
 if(lupdate_only)
     target_sources(WatchFlower PUBLIC
@@ -209,11 +146,10 @@ if(CMAKE_BUILD_TYPE STREQUAL Release)
     )
 endif()
 
-if(NOT ANDROID AND NOT IOS)
-    target_sources(WatchFlower PUBLIC
-        src/thirdparty/MobileUI/MobileUI_dummy.cpp
-    )
-endif()
+set_target_properties(WatchFlower PROPERTIES
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+)
 
 install(TARGETS WatchFlower
     BUNDLE DESTINATION .    # used by macOS
@@ -233,34 +169,10 @@ install(SCRIPT ${deploy_script})
 
 ################################################################################
 
-if(WIN32)
-    set(date_command "CMD")
-    set(date_arg "/c date /t")
-else()
-    set(date_command "date")
-    set(date_arg "")
-endif()
-
-execute_process(
-    COMMAND ${date_command} ${date_arg}
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-    OUTPUT_VARIABLE BUILD_DATE
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-find_package(Git REQUIRED)
-
-execute_process(
-    COMMAND "${GIT_EXECUTABLE}" describe --always
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-    OUTPUT_VARIABLE GIT_COMMIT_HASH
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-message(STATUS "[SYSTEM] HOST SYSTEM                   = ${CMAKE_HOST_SYSTEM_NAME}")
-message(STATUS "[SYSTEM] TARGET PLATFORM               = ${CMAKE_SYSTEM_NAME}")
-message(STATUS "[DEFINE] SOURCE_DIR                    = ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "[DEFINE] BUILD_TYPE                    = ${CMAKE_BUILD_TYPE}")
-message(STATUS "[DEFINE] BUILD_DATE                    = ${BUILD_DATE}")
-message(STATUS "[DEFINE] GIT_COMMIT_HASH               = ${GIT_COMMIT_HASH}")
-message(STATUS "[PROJECT] CMAKE_TOOLCHAIN_FILE         = ${CMAKE_TOOLCHAIN_FILE}")
-message(STATUS "[PROJECT] CMAKE_PREFIX_PATH            = ${CMAKE_PREFIX_PATH}")
-message(STATUS "[PROJECT] CMAKE_VERSION                = ${CMAKE_VERSION}")
+#message(STATUS "[DEFINE] SOURCE_DIR                    = ${CMAKE_CURRENT_SOURCE_DIR}")
+#message(STATUS "[DEFINE] BUILD_TYPE                    = ${CMAKE_BUILD_TYPE}")
+#message(STATUS "[SYSTEM] HOST SYSTEM                   = ${CMAKE_HOST_SYSTEM_NAME}")
+#message(STATUS "[SYSTEM] TARGET PLATFORM               = ${CMAKE_SYSTEM_NAME}")
+#message(STATUS "[PROJECT] CMAKE_VERSION                = ${CMAKE_VERSION}")
+#message(STATUS "[PROJECT] CMAKE_PREFIX_PATH            = ${CMAKE_PREFIX_PATH}")
+#message(STATUS "[PROJECT] CMAKE_TOOLCHAIN_FILE         = ${CMAKE_TOOLCHAIN_FILE}")

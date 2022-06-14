@@ -20,8 +20,8 @@
  */
 
 #include "device_parrotpot.h"
-#include "utils/utils_maths.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_maths.h"
+#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
@@ -272,7 +272,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
             if (m_deviceFirmware.size() == 6)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

@@ -26,14 +26,15 @@
 #include "DeviceManager.h"
 #include "PlantDatabase.h"
 #include "Journal.h"
-#include "utils/utils_app.h"
-#include "utils/utils_screen.h"
-#include "utils/utils_language.h"
-#include "utils/utils_os_macosdock.h"
 
-#include <MobileUI.h>
-#include <SharingUtils.h>
-#include <singleapplication.h>
+#include "utils_app.h"
+#include "utils_screen.h"
+#include "utils_language.h"
+#include "utils_os_macosdock.h"
+
+#include <MobileUI>
+#include <MobileSharing>
+#include <SingleApplication>
 
 #include <QtGlobal>
 #include <QLibraryInfo>

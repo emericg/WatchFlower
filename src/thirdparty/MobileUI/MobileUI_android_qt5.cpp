@@ -64,12 +64,12 @@ static QAndroidJniObject getAndroidWindow()
     return window;
 }
 
-/* ************************************************************************** */
-
 bool MobileUIPrivate::isAvailable_sys()
 {
     return QtAndroid::androidSdkVersion() >= 21;
 }
+
+/* ************************************************************************** */
 
 void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
@@ -110,6 +110,8 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
     });
 }
 
+/* ************************************************************************** */
+
 void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
     if (QtAndroid::androidSdkVersion() < 21) return;
@@ -148,3 +150,5 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
 }
+
+/* ************************************************************************** */

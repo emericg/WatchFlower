@@ -20,7 +20,6 @@
  */
 
 #include "device_esp32_higrow.h"
-#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

@@ -21,8 +21,7 @@
 
 #include "device_thermobeacon.h"
 #include "SettingsManager.h"
-#include "utils/utils_maths.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_maths.h"
 
 #include <cstdint>
 #include <cmath>

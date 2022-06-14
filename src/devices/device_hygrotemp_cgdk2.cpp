@@ -20,7 +20,7 @@
  */
 
 #include "device_hygrotemp_cgdk2.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
@@ -145,7 +145,7 @@ void DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 
             if (m_deviceFirmware.size() == 10)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

@@ -27,12 +27,12 @@
 
 #include <SharingUtils.h>
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQmlContext>
 
 /* ************************************************************************** */
 
-class SharingApplication : public QApplication
+class SharingApplication : public QGuiApplication
 {
     Q_OBJECT
 

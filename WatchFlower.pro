@@ -1,6 +1,7 @@
 TARGET  = WatchFlower
 
 VERSION = 4.0
+DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
@@ -22,8 +23,11 @@ include(src/thirdparty/MobileUI/MobileUI.pri)
 include(src/thirdparty/MobileSharing/MobileSharing.pri)
 
 # SingleApplication for desktop OS
-include(src/thirdparty/SingleApplication/singleapplication.pri)
+include(src/thirdparty/SingleApplication/SingleApplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
+
+# Various utils
+include(src/thirdparty/AppUtils/AppUtils.pri)
 
 # Project files ################################################################
 
@@ -65,10 +69,6 @@ SOURCES  += src/main.cpp \
             src/devices/device_esp32_geigercounter.cpp \
             src/devices/device_esp32_higrow.cpp \
             src/devices/device_ess_generic.cpp \
-            src/utils/utils_app.cpp \
-            src/utils/utils_language.cpp \
-            src/utils/utils_maths.cpp \
-            src/utils/utils_screen.cpp \
             src/thirdparty/RC4/rc4.cpp
 
 HEADERS  += src/SettingsManager.h \
@@ -106,11 +106,6 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_esp32_geigercounter.h \
             src/devices/device_esp32_higrow.h \
             src/devices/device_ess_generic.h \
-            src/utils/utils_app.h \
-            src/utils/utils_language.h \
-            src/utils/utils_maths.h \
-            src/utils/utils_screen.h \
-            src/utils/utils_versionchecker.h \
             src/thirdparty/RC4/rc4.h
 
 INCLUDEPATH += src/
@@ -179,11 +174,6 @@ DESTDIR     = bin/
 linux:!android {
     TARGET = $$lower($${TARGET})
 
-    # Linux utils
-    SOURCES += src/utils/utils_os_linux.cpp
-    HEADERS += src/utils/utils_os_linux.h
-    QT += dbus
-
     # Automatic application packaging # Needs linuxdeployqt installed
     #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/)
 
@@ -229,15 +219,6 @@ macx {
 
     # Target architecture
     QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
-
-    # macOS utils
-    SOURCES += src/utils/utils_os_macos.mm
-    HEADERS += src/utils/utils_os_macos.h
-    LIBS    += -framework IOKit
-    # macOS dock click handler
-    SOURCES += src/utils/utils_os_macosdock.mm
-    HEADERS += src/utils/utils_os_macosdock.h
-    LIBS    += -framework AppKit
 
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
@@ -323,10 +304,6 @@ macx {
 }
 
 win32 {
-    # Windows utils
-    SOURCES += src/utils/utils_os_windows.cpp
-    HEADERS += src/utils/utils_os_windows.h
-
     # OS icon
     RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
 
@@ -350,11 +327,6 @@ android {
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
 
-    # android utils
-    QT += core-private
-    SOURCES += src/utils/utils_os_android_qt6.cpp
-    HEADERS += src/utils/utils_os_android.h
-
     OTHER_FILES += $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerBootServiceBroadcastReceiver.java \
                    $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidService.java \
                    $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidNotifier.java \
@@ -373,11 +345,6 @@ ios {
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
     CONFIG += no_autoqmake
-
-    # iOS utils
-    SOURCES += src/utils/utils_os_ios.mm
-    HEADERS += src/utils/utils_os_ios.h
-    LIBS    += -framework UIKit
 
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios

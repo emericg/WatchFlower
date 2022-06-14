@@ -20,7 +20,7 @@
  */
 
 #include "device_ropot.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_versionchecker.h"
 #include "thirdparty/RC4/rc4.h"
 
 #include <cstdint>
@@ -214,7 +214,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_ROPOT))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

@@ -42,7 +42,7 @@
 #include "devices/device_esp32_geigercounter.h"
 #include "devices/device_ess_generic.h"
 
-#include "utils/utils_app.h"
+#include "utils_app.h"
 
 #include <QList>
 #include <QDateTime>

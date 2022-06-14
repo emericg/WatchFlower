@@ -66,6 +66,11 @@ UtilsApp::~UtilsApp()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+QString UtilsApp::appName()
+{
+    return QString::fromLatin1(APP_NAME);
+}
+
 QString UtilsApp::appVersion()
 {
     return QString::fromLatin1(APP_VERSION);
@@ -83,8 +88,17 @@ QString UtilsApp::appBuildDateTime()
 
 QString UtilsApp::appBuildMode()
 {
-#if defined(QT_NO_DEBUG) || defined(NDEBUG)
+#if !defined(QT_NO_DEBUG) && !defined(NDEBUG)
+    return "DEBUG";
+#endif
+
     return "";
+}
+
+QString UtilsApp::appBuildModeFull()
+{
+#if defined(QT_NO_DEBUG) || defined(NDEBUG)
+    return "RELEASE";
 #endif
 
     return "DEBUG";
@@ -220,6 +234,8 @@ void UtilsApp::openAndroidAppInfo(const QString &packageName)
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::openApplicationInfo(packageName);
 #endif
+
+    Q_UNUSED(packageName)
 }
 
 bool UtilsApp::checkMobileLocationPermission()

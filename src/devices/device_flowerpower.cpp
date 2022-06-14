@@ -20,7 +20,7 @@
  */
 
 #include "device_flowerpower.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
@@ -242,7 +242,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
             if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();
@@ -295,7 +295,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
             /////////
 /*
-            if (Version(m_firmware) >= Version("1.1.0"))
+            if (VersionChecker(m_firmware) >= Version("1.1.0"))
             {
                 QBluetoothUuid sm_calibrated(QString("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
                 QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp

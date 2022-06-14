@@ -23,6 +23,7 @@
 #include <cmath>
 
 #include <QGuiApplication>
+#include <QQuickWindow>
 #include <QScreen>
 #include <QWindow>
 #include <QDebug>
@@ -48,19 +49,19 @@
 
 UtilsScreen *UtilsScreen::instance = nullptr;
 
-UtilsScreen *UtilsScreen::getInstance()
+UtilsScreen *UtilsScreen::getInstance(QGuiApplication *app)
 {
     if (instance == nullptr)
     {
-        instance = new UtilsScreen();
+        instance = new UtilsScreen(app);
     }
 
     return instance;
 }
 
-UtilsScreen::UtilsScreen()
+UtilsScreen::UtilsScreen(QGuiApplication *app)
 {
-    //
+    setAppWindow(app);
 }
 
 UtilsScreen::~UtilsScreen()
@@ -70,25 +71,64 @@ UtilsScreen::~UtilsScreen()
 
 /* ************************************************************************** */
 
-void UtilsScreen::getScreenInfos()
+void UtilsScreen::setAppWindow(QGuiApplication *app)
 {
-    qDebug() << "UtilsScreen::getScreenInfos()";
+    if (!app) return;
 
-    QScreen *scr = QGuiApplication::primaryScreen();
+    m_app = app;
+    connect(m_app, &QGuiApplication::primaryScreenChanged, this, &UtilsScreen::getScreenInfos);
+
+    getScreenInfos(m_app->primaryScreen());
+}
+
+/* ************************************************************************** */
+
+void UtilsScreen::getScreenInfos(QScreen *scr)
+{
+    //qDebug() << "UtilsScreen::getScreenInfos()";
+
     if (scr)
     {
-        qDebug() << "- physicalSize (mm) " << scr->physicalSize();
-        qDebug() << "- dpi " << scr->physicalDotsPerInch();
-        qDebug() << "- pixel ratio " << scr->devicePixelRatio();
-
-        if (scr->devicePixelRatio() == 1.0)
+        m_scr = scr;
+        if (m_scr)
         {
-            qDebug() << "- pixel size" << scr->size();
+            m_screenWidth = m_scr->size().width();
+            m_screenHeight = m_scr->size().height();
+            m_screenDepth = m_scr->depth();
+            m_screenRefreshRate = m_scr->refreshRate();
+
+            m_screenDpi = m_scr->physicalDotsPerInch();
+            m_screenPar = m_scr->devicePixelRatio();
+            m_screenSizeInch = std::sqrt(std::pow(m_scr->physicalSize().width(), 2.0) +
+                                         std::pow(m_scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+        }
+
+        Q_EMIT screenChanged();
+    }
+    else
+    {
+        qWarning() << "UtilsScreen::getScreenInfos() Unable to get screen infos, NULL QScreen";
+    }
+}
+
+void UtilsScreen::printScreenInfos()
+{
+    qDebug() << "UtilsScreen::printScreenInfos()";
+
+    if (m_scr)
+    {
+        qDebug() << "- physicalSize (mm) " << m_scr->physicalSize();
+        qDebug() << "- dpi " << m_scr->physicalDotsPerInch();
+        qDebug() << "- pixel ratio " << m_scr->devicePixelRatio();
+
+        if (m_scr->devicePixelRatio() == 1.0)
+        {
+            qDebug() << "- pixel size" << m_scr->size();
         }
         else
         {
-            qDebug() << "- pixel size (hdpi corrected)" << scr->size();
-            qDebug() << "- pixel size (physical) " << scr->size() * scr->devicePixelRatio();
+            qDebug() << "- pixel size (hdpi corrected)" << m_scr->size() * m_scr->devicePixelRatio();
+            qDebug() << "- screen size (physical) " << std::sqrt(std::pow(m_scr->physicalSize().width(), 2.0) + std::pow(m_scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
         }
 
         // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
@@ -96,51 +136,8 @@ void UtilsScreen::getScreenInfos()
     }
     else
     {
-        qDebug() << "- Unable to get screen infos :-(";
+        qWarning() << "UtilsScreen::printScreenInfos() Unable to get screen infos, NULL QScreen";
     }
-}
-
-double UtilsScreen::getScreenSize_inch()
-{
-    if (m_screenSize <= 0)
-    {
-        QScreen *scr = QGuiApplication::primaryScreen();
-        if (scr)
-        {
-            // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
-            m_screenSize = std::sqrt(std::pow(scr->physicalSize().width(), 2.0) + std::pow(scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
-        }
-    }
-
-    return m_screenSize;
-}
-
-int UtilsScreen::getScreenDpi()
-{
-    if (m_screenDpi <= 0)
-    {
-        QScreen *scr = QGuiApplication::primaryScreen();
-        if (scr)
-        {
-            m_screenDpi = static_cast<int>(std::round(scr->physicalDotsPerInch()));
-        }
-    }
-
-    return m_screenDpi;
-}
-
-double UtilsScreen::getScreenPar()
-{
-    if (m_screenPar <= 0)
-    {
-        QScreen *scr = QGuiApplication::primaryScreen();
-        if (scr)
-        {
-            m_screenPar = scr->devicePixelRatio();
-        }
-    }
-
-    return m_screenPar;
 }
 
 /* ************************************************************************** */

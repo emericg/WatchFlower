@@ -24,7 +24,7 @@
 #include "SharingApplication.h"
 
 #include <QtQml>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileOpenEvent>
@@ -33,7 +33,7 @@
 
 /* ************************************************************************** */
 
-SharingApplication::SharingApplication(int &argc, char **argv) : QApplication(argc, argv)
+SharingApplication::SharingApplication(int &argc, char **argv) : QGuiApplication(argc, argv)
 {
     mShareUtils = new ShareUtils(this);
 
@@ -69,7 +69,7 @@ bool SharingApplication::event(QEvent *e)
         }
     }
 
-    return QApplication::event(e);
+    return QGuiApplication::event(e);
 }
 
 void SharingApplication::onApplicationStateChanged(Qt::ApplicationState appState)

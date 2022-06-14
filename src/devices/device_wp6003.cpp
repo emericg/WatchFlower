@@ -20,7 +20,6 @@
  */
 
 #include "device_wp6003.h"
-#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

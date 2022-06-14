@@ -21,7 +21,7 @@
 
 #include "device_hygrotemp_square.h"
 #include "SettingsManager.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
@@ -205,7 +205,7 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_infos(QLowEnergyService::Se
 
             if (m_deviceFirmware.size() == 10)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

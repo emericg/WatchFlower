@@ -48,11 +48,13 @@ public:
 
     // app related
 
+    static Q_INVOKABLE QString appName();
     static Q_INVOKABLE QString appVersion();
+
     static Q_INVOKABLE QString appBuildDate();
     static Q_INVOKABLE QString appBuildDateTime();
     static Q_INVOKABLE QString appBuildMode();
-
+    static Q_INVOKABLE QString appBuildModeFull();
     static Q_INVOKABLE bool isDebugBuild();
 
     static Q_INVOKABLE void vibrate(int ms);

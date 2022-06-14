@@ -1,11 +1,11 @@
-QT += core
-
-MOBILESHARING_VERSION = 0.3
+QT += core gui qml
 
 SOURCES += $${PWD}/SharingUtils.cpp \
            $${PWD}/SharingApplication.cpp
+
 HEADERS += $${PWD}/SharingUtils.h \
            $${PWD}/SharingApplication.h
+
 INCLUDEPATH += $${PWD}
 
 android {
@@ -40,6 +40,8 @@ android {
 }
 
 ios {
+    LIBS += -framework UIKit
+
     OBJECTIVE_SOURCES += $${PWD}/SharingUtils_ios.mm \
                          $${PWD}/docviewcontroller_ios.mm
 

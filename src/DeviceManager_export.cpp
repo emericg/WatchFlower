@@ -22,7 +22,7 @@
 #include "DeviceManager.h"
 #include "DatabaseManager.h"
 
-#include "utils/utils_app.h"
+#include "utils_app.h"
 
 #include <QList>
 #include <QDateTime>

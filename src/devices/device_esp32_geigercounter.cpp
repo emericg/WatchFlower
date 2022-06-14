@@ -20,7 +20,6 @@
  */
 
 #include "device_esp32_geigercounter.h"
-#include "utils/utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>

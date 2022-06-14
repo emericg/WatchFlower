@@ -10,6 +10,6 @@ SOURCES += $${PWD}/singleapplication.cpp \
            $${PWD}/singleapplication_p.cpp
 
 win32 {
-    msvc:LIBS += Advapi32.lib
-    gcc:LIBS += -ladvapi32
+    msvc: LIBS += Advapi32.lib
+    gcc: LIBS += -ladvapi32
 }

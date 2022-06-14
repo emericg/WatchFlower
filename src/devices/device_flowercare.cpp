@@ -20,7 +20,7 @@
  */
 
 #include "device_flowercare.h"
-#include "utils/utils_versionchecker.h"
+#include "utils_versionchecker.h"
 #include "thirdparty/RC4/rc4.h"
 
 #include <cstdint>
@@ -218,12 +218,12 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
-                if (Version(m_deviceFirmware) >= Version(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();
                 }
-                if (Version(m_deviceFirmware) <= Version("2.6.6"))
+                if (VersionChecker(m_deviceFirmware) <= VersionChecker("2.6.6"))
                 {
                     need_modechange = false;
                 }
