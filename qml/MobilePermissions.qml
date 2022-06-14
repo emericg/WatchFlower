@@ -360,7 +360,7 @@ Item {
                 anchors.rightMargin: 12
 
                 text: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
-                textFormat: Text.StyledText
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall

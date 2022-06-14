@@ -7,6 +7,7 @@ import ThemeEngine 1.0
 Popup {
     id: actionMenu
     width: parent.width
+    y: appWindow.height
 
     padding: 0
     margins: 0
@@ -24,68 +25,16 @@ Popup {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int yHidden: appWindow.height + actionMenu.height
-    property int yTarget: appWindow.height - actionMenu.height
+    property real realHeight: 0
+    Component.onCompleted: realHeight = height
 
     enter: Transition {
-        //NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; }
-        NumberAnimation { property: "y"; from: actionMenu.yHidden; to: actionMenu.yTarget; duration: 233; }
+        NumberAnimation { duration: 233; property: "height"; from: 0; to: realHeight }
     }
     exit: Transition {
-        //NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; }
-        NumberAnimation { property: "y"; from: actionMenu.yTarget; to: actionMenu.yHidden; duration: 233; }
+        NumberAnimation { duration: 233; property: "height"; from: realHeight; to: 0 }
     }
 
-    ////////
-/*
-    states: [
-        State {
-            name: "visible"
-            PropertyChanges { target: background; opacity: 1 }
-        },
-        State {
-            name: "hidden"
-            PropertyChanges { target: background; opacity: 0 }
-        }
-    ]
-
-    enter: Transition {
-        //NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; }
-        NumberAnimation { property: "y"; from: actionMenu.yHidden; to: actionMenu.yTarget; duration: 233; }
-    }
-    exit: Transition {
-        //NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; }
-        NumberAnimation { property: "y"; from: actionMenu.yTarget; to: actionMenu.yHidden; duration: 233; }
-    }
-
-/*
-    transitions: [
-        Transition {
-            from: "hidden"; to: "visible"
-            SequentialAnimation {
-                PropertyAction { target: popup; property: "visible"; value: true }
-                NumberAnimation {
-                    target: background
-                    property: "opacity"
-                    duration: 200
-                    easing.type: Easing.Bezier; easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
-                }
-            }
-        },
-        Transition {
-            from: "visible"; to: "hidden"
-            SequentialAnimation {
-                NumberAnimation {
-                    target: background
-                    property: "opacity"
-                    duration: 200
-                    easing.type: Easing.Bezier; easing.bezierCurve: [0.4, 0, 0.2, 1, 1, 1]
-                }
-                PropertyAction { target: popup; property: "visible"; value: false }
-            }
-        }
-    ]
-*/
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {

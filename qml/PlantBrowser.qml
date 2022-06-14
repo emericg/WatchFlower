@@ -185,7 +185,7 @@ Loader {
 
                 model: plantDatabase.plantsFiltered
                 delegate: Rectangle {
-                    width: plantList.width
+                    width: ListView.view.width
                     height: 40
 
                     color: (index % 2) ? Theme.colorForeground :Theme.colorBackground
