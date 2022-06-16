@@ -24,17 +24,6 @@ Flickable {
         rangeSlider_lumi.setValues(currentDevice.luminosityLux_limitMin, currentDevice.luminosityLux_limitMax)
     }
 
-    function resetLimits() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (typeof currentDevice.plant === "undefined" || !currentDevice.plant) return
-        //console.log("PlantCareLimits // resetLimits() >> " + currentDevice)
-
-        rangeSlider_hygro.setValues(currentDevice.plant.soilMoist_min, currentDevice.plant.soilMoist_max)
-        rangeSlider_condu.setValues(currentDevice.plant.soilCondu_min, currentDevice.plant.soilCondu_max)
-        rangeSlider_temp.setValues(currentDevice.plant.envTemp_min, currentDevice.plant.envTemp_max)
-        rangeSlider_lumi.setValues(currentDevice.plant.lightLux_min, currentDevice.plant.lightLux_max)
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
@@ -45,119 +34,6 @@ Flickable {
         topPadding: isPhone ? 12 : 16
         bottomPadding: 16
         spacing: 16
-
-        ////////////////
-
-        Row {
-            anchors.left: parent.left
-            anchors.leftMargin: isPhone ? 12 : 16
-            anchors.right: parent.right
-            anchors.rightMargin: isPhone ? 12 : 16
-            spacing: isPhone ? 12 : 16
-
-            Rectangle {
-                id: rectangleInside
-                width: (parent.width - parent.spacing) / 2
-                height: Math.min(width, 140)
-                radius: Theme.componentRadius
-
-                color: currentDevice.deviceIsInside ? Theme.colorForeground : Theme.colorBackground
-                Behavior on color { ColorAnimation { duration: 133 } }
-
-                border.width: currentDevice.deviceIsInside ? 2 : 1
-                border.color: Theme.colorSeparator
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: currentDevice.deviceIsInside = true
-                }
-
-                Column {
-                    anchors.centerIn: parent
-                    spacing: 4
-
-                    opacity: currentDevice.deviceIsInside ? 0.85 : 0.33
-                    Behavior on opacity { OpacityAnimator { duration: 133 } }
-
-                    IconSvg {
-                        id: insideImage
-                        width: 72; height: 72;
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        color: Theme.colorText
-                        source: "qrc:/assets/icons_custom/inside-24px.svg"
-                    }
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("inside")
-                        textFormat: Text.PlainText
-                        color: Theme.colorText
-                        font.pixelSize: Theme.fontSizeContent
-                    }
-                }
-            }
-
-            Rectangle {
-                id: rectangleOutside
-                width: (parent.width - parent.spacing) / 2
-                height: Math.min(width, 140)
-                radius: Theme.componentRadius
-
-                color: currentDevice.deviceIsOutside ? Theme.colorForeground : Theme.colorBackground
-                Behavior on color { ColorAnimation { duration: 133 } }
-
-                border.width: currentDevice.deviceIsOutside ? 2 : 1
-                border.color: Theme.colorSeparator
-
-                //opacity: currentDevice.deviceIsOutside ? 0.8 : 0.25
-                //Behavior on opacity { OpacityAnimator { duration: 133 } }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: currentDevice.deviceIsOutside = true
-                }
-
-                Column {
-                    anchors.centerIn: parent
-                    spacing: 4
-
-                    opacity: currentDevice.deviceIsOutside ? 0.85 : 0.33
-                    Behavior on opacity { OpacityAnimator { duration: 133 } }
-
-                    IconSvg {
-                        id: outsideImage
-                        width: 72; height: 72;
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        source: "qrc:/assets/icons_custom/outside-24px.svg"
-                        color: Theme.colorText
-                    }
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("outside")
-                        textFormat: Text.PlainText
-                        color: Theme.colorText
-                        font.pixelSize: Theme.fontSizeContent
-                    }
-                }
-            }
-        }
-
-        ////////////////
-
-        ButtonWireframeIcon {
-            anchors.left: parent.left
-            anchors.leftMargin: isPhone ? 12 : 16
-            anchors.right: parent.right
-            anchors.rightMargin: isPhone ? 12 : 16
-
-            visible: currentDevice.hasPlant
-            primaryColor: Theme.colorPrimary
-            secondaryColor: Theme.colorBackground
-
-            text: qsTr("Reset limits from the associated plant")
-            source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-
-            onClicked: resetLimits()
-        }
 
         ////////////////
 
@@ -613,6 +489,119 @@ Flickable {
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
             font.pixelSize: Theme.fontSizeContentSmall
+        }
+
+        ////////
+
+        Row {
+            anchors.left: parent.left
+            anchors.leftMargin: isPhone ? 12 : 16
+            anchors.right: parent.right
+            anchors.rightMargin: isPhone ? 12 : 16
+            spacing: isPhone ? 12 : 16
+
+            Rectangle {
+                id: rectangleInside
+                width: (parent.width - parent.spacing) / 2
+                height: Math.min(width, 140)
+                radius: Theme.componentRadius
+
+                color: currentDevice.deviceIsInside ? Theme.colorForeground : Theme.colorBackground
+                Behavior on color { ColorAnimation { duration: 133 } }
+
+                border.width: currentDevice.deviceIsInside ? 2 : 1
+                border.color: Theme.colorSeparator
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: currentDevice.deviceIsInside = true
+                }
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 4
+
+                    opacity: currentDevice.deviceIsInside ? 0.85 : 0.33
+                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                    IconSvg {
+                        id: insideImage
+                        width: 72; height: 72;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        color: Theme.colorText
+                        source: "qrc:/assets/icons_custom/inside-24px.svg"
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("inside")
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                }
+            }
+
+            Rectangle {
+                id: rectangleOutside
+                width: (parent.width - parent.spacing) / 2
+                height: Math.min(width, 140)
+                radius: Theme.componentRadius
+
+                color: currentDevice.deviceIsOutside ? Theme.colorForeground : Theme.colorBackground
+                Behavior on color { ColorAnimation { duration: 133 } }
+
+                border.width: currentDevice.deviceIsOutside ? 2 : 1
+                border.color: Theme.colorSeparator
+
+                //opacity: currentDevice.deviceIsOutside ? 0.8 : 0.25
+                //Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: currentDevice.deviceIsOutside = true
+                }
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 4
+
+                    opacity: currentDevice.deviceIsOutside ? 0.85 : 0.33
+                    Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                    IconSvg {
+                        id: outsideImage
+                        width: 72; height: 72;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        source: "qrc:/assets/icons_custom/outside-24px.svg"
+                        color: Theme.colorText
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: qsTr("outside")
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                }
+            }
+        }
+
+        ////////
+
+        ButtonWireframeIcon {
+            anchors.left: parent.left
+            anchors.leftMargin: isPhone ? 12 : 16
+            anchors.right: parent.right
+            anchors.rightMargin: isPhone ? 12 : 16
+
+            visible: currentDevice.hasPlant
+            primaryColor: Theme.colorPrimary
+            secondaryColor: Theme.colorBackground
+
+            text: qsTr("Reset limits from the associated plant")
+            source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+
+            onClicked: currentDevice.resetLimits()
         }
 
         ////////

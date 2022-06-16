@@ -128,6 +128,8 @@ class Plant: public QObject
     int lightMmol_min = -99;
     int lightMmol_max = -99;
 
+    void computeNames();
+
     const QString &getNameBotanical() { return name_botanical; }
     const QString &getNameBotanical_url() { return name_botanical_url; }
     const QString &getNameVariety() { return name_variety; }
@@ -156,6 +158,7 @@ class Plant: public QObject
     QString getFertilization() { return fertilizing; }
     QString getPruning() { return pruning; }
 
+public:
     int getSoilMoist_min() { return soilRH_min; }
     int getSoilMoist_max() { return soilRH_max; }
     int getSoilCondu_min() { return soilEC_min; }
@@ -172,8 +175,6 @@ class Plant: public QObject
     int getLightLux_max() { return lightLux_max; }
     int getLightMmol_min() { return lightMmol_min; }
     int getLightMmol_max() { return lightMmol_max; }
-
-    void computeNames();
 
 public:
     Plant(const QString &name, QObject *parent = nullptr);

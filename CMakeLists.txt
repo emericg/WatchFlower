@@ -107,6 +107,12 @@ if(ANDROID)
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
     )
 
+    target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
+
+    target_compile_definitions(WatchFlower PRIVATE
+        QT_CONNECTIVITY_PATCHED
+    )
+
     #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
     #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
 endif()

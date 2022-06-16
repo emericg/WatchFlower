@@ -372,7 +372,6 @@ void DevicePlantSensor::setPlantName(const QString &plant)
 
             m_plantName = plant;
             m_plantCache = QJsonDocument(plantObj).toJson(QJsonDocument::Compact);
-            Q_EMIT plantUpdated();
 
             QSqlQuery setPlant;
             setPlant.prepare("UPDATE  plants SET plantName = :plantName, plantCache = :plantCache "
@@ -386,6 +385,28 @@ void DevicePlantSensor::setPlantName(const QString &plant)
                 qWarning() << "> setPlant.exec() ERROR"
                            << setPlant.lastError().type() << ":" << setPlant.lastError().text();
             }
+
+            // plant limits
+            if (m_plant->getSoilMoist_min() > 0) m_soilMoisture_limit_min = m_plant->getSoilMoist_min();
+            if (m_plant->getSoilMoist_max() > 0) m_soilMoisture_limit_max = m_plant->getSoilMoist_max();
+            if (m_plant->getSoilCondu_min() > 0) m_soilConductivity_limit_min = m_plant->getSoilCondu_min();
+            if (m_plant->getSoilCondu_max() > 0) m_soilConductivity_limit_max = m_plant->getSoilCondu_max();
+            if (m_plant->getSoilPH_min() > 0) m_soilPH_limit_min = m_plant->getSoilPH_min();
+            if (m_plant->getSoilPH_max() > 0) m_soilPH_limit_max = m_plant->getSoilPH_max();
+            // hygrometer limits
+            if (m_plant->getEnvTemp_min() > 0) m_temperature_limit_min = m_plant->getEnvTemp_min();;
+            if (m_plant->getEnvTemp_max() > 0) m_temperature_limit_max = m_plant->getEnvTemp_max();
+            if (m_plant->getEnvHumi_min() > 0) m_humidity_limit_min = m_plant->getEnvHumi_min();
+            if (m_plant->getEnvHumi_max() > 0) m_humidity_limit_max = m_plant->getEnvHumi_max();
+            // environmental limits
+            if (m_plant->getLightLux_min() > 0) m_luminosityLux_limit_min = m_plant->getLightLux_min();
+            if (m_plant->getLightLux_max() > 0) m_luminosityLux_limit_max = m_plant->getLightLux_max();
+            if (m_plant->getLightMmol_min() > 0) m_luminosityMmol_limit_min = m_plant->getLightMmol_min();
+            if (m_plant->getLightMmol_max() > 0) m_luminosityMmol_limit_max = m_plant->getLightMmol_max();
+
+            Q_EMIT plantUpdated();
+            Q_EMIT limitsUpdated();
+            setSqlPlantLimits();
         }
     }
 }
@@ -414,6 +435,27 @@ void DevicePlantSensor::resetPlant()
         qWarning() << "> setPlant.exec() ERROR"
                    << setPlant.lastError().type() << ":" << setPlant.lastError().text();
     }
+}
+
+void DevicePlantSensor::resetLimits()
+{
+    // plant limits
+    m_soilMoisture_limit_min = 15;
+    m_soilMoisture_limit_max = 50;
+    m_soilConductivity_limit_min = 100;
+    m_soilConductivity_limit_max = 500;
+    m_soilPH_limit_min = 6.5f;
+    m_soilPH_limit_max = 7.5f;
+    // hygrometer limits
+    m_temperature_limit_min = 14;
+    m_temperature_limit_max = 28;
+    m_humidity_limit_min = 40;
+    m_humidity_limit_max = 60;
+    // environmental limits
+    m_luminosityLux_limit_min = 1000;
+    m_luminosityLux_limit_max = 3000;
+    m_luminosityMmol_limit_min = 0;
+    m_luminosityMmol_limit_max = 0;
 }
 
 /* ************************************************************************** */

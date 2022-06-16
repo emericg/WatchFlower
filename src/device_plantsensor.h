@@ -102,6 +102,7 @@ public:
     // Plant
     Q_INVOKABLE void setPlantName(const QString &plant);
     Q_INVOKABLE void resetPlant();
+    Q_INVOKABLE void resetLimits();
 
     // Journal
     Q_INVOKABLE bool addJournalEntry(const int type, const QDateTime &date, const QString &comment);

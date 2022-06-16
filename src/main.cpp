@@ -158,8 +158,8 @@ int main(int argc, char *argv[])
     PlantDatabase *pdb = PlantDatabase::getInstance();
 
     // Init generic utils
-    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsApp *utilsApp = UtilsApp::getInstance();
+    UtilsScreen *utilsScreen = UtilsScreen::getInstance(&app);
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
     if (!utilsScreen || !utilsApp || !utilsLanguage)
     {
@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
 
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    ShareUtils *mShareUtils = new ShareUtils();
-    engine_context->setContextProperty("utilsShare", mShareUtils);
+    ShareUtils *utilsShare = new ShareUtils();
+    engine_context->setContextProperty("utilsShare", utilsShare);
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
 #else
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));

@@ -148,6 +148,7 @@ ApplicationWindow {
         id: appDrawer
         width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
         height: appWindow.height
+        interactive: (state !== "Tutorial")
     }
 
     // Events handling /////////////////////////////////////////////////////////
@@ -411,11 +412,6 @@ ApplicationWindow {
                 appHeader.leftMenuMode = "close"
             else
                 appHeader.leftMenuMode = "back"
-
-            if (state === "Tutorial")
-                appDrawer.interactive = false
-            else
-                appDrawer.interactive = true
         }
 
         states: [

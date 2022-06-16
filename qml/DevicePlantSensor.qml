@@ -66,6 +66,9 @@ Loader {
                 plantSensorData.updateGraph()
                 plantSensorHistory.updateData()
             }
+            function onPlantUpdated() {
+                plantSensorCare.updateLimits()
+            }
         }
 
         Connections {

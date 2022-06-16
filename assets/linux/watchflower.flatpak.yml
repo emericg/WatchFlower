@@ -40,7 +40,6 @@ build-options:
   append-ld-library-path: /app/lib
 
 modules:
-
 - name: bluez # required by qtconnectivity
   buildsystem: autotools
   config-opts:
