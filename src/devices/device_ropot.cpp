@@ -482,8 +482,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
             m_lastHistorySync.setSecsSinceEpoch(m_device_wall_time + tmcd);
 
-            float temperature = static_cast<int16_t>(data[4]  + (data[5] << 8)) / 10.f;
-            if (temperature > 100.f) temperature = 0.f; // FIXME negative temperatures aren't properly coded?
             int soil_moisture = data[11];
             int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
 
@@ -493,7 +491,6 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             qDebug() << "DATA: 0x" << value.toHex();
             qDebug() << "- soil_moisture:" << soil_moisture;
             qDebug() << "- soil_conductivity:" << soil_conductivity;
-            qDebug() << "- temperature:" << temperature;
 */
             // Update progress
             m_history_entryIndex--;

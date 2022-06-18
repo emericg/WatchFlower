@@ -148,7 +148,7 @@ ApplicationWindow {
         id: appDrawer
         width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
         height: appWindow.height
-        interactive: (state !== "Tutorial")
+        interactive: (appContent.state !== "Tutorial")
     }
 
     // Events handling /////////////////////////////////////////////////////////
