@@ -500,10 +500,17 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
     else if (error == QBluetoothDeviceDiscoveryAgent::InputOutputError)
     {
         qWarning() << "deviceDiscoveryError() Writing or reading from the device resulted in an error.";
+
+        m_btA = false;
+        m_btE = false;
+        refreshDevices_stop();
+        Q_EMIT bluetoothChanged();
     }
     else if (error == QBluetoothDeviceDiscoveryAgent::InvalidBluetoothAdapterError)
     {
         qWarning() << "deviceDiscoveryError() Invalid Bluetooth adapter.";
+
+        m_btA = false;
 
         if (m_btE)
         {
@@ -524,10 +531,20 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
     else if (error == QBluetoothDeviceDiscoveryAgent::UnsupportedDiscoveryMethod)
     {
         qWarning() << "deviceDiscoveryError() Unsupported Discovery Method.";
+
+        m_btE = false;
+        m_btP = false;
+        refreshDevices_stop();
+        Q_EMIT bluetoothChanged();
     }
     else
     {
         qWarning() << "An unknown error has occurred.";
+
+        m_btA = false;
+        m_btE = false;
+        refreshDevices_stop();
+        Q_EMIT bluetoothChanged();
     }
 
     if (m_scanning)
