@@ -53,7 +53,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           aqtversion: '==2.1.0'
-          version: '6.3.0'
+          version: '6.3.1'
           modules: qtconnectivity qtcharts qtimageformats qt5compat
           cached: 'false'
 
@@ -62,7 +62,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           aqtversion: '==2.1.0'
-          version: '6.3.0'
+          version: '6.3.1'
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'

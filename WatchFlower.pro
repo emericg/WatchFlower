@@ -202,9 +202,6 @@ linux:!android {
 }
 
 macx {
-    #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
-    #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
-
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
@@ -217,13 +214,16 @@ macx {
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
-    # Target architecture
-    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
-
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
     ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
     QMAKE_MAC_XCODE_SETTINGS += ENTITLEMENTS
+
+    # Target architecture(s)
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+
+    # Target OS
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
 
     #======== Automatic bundle packaging
 
