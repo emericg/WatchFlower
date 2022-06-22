@@ -24,7 +24,6 @@
 /* ************************************************************************** */
 
 #include "device_utils.h"
-#include "device_infos.h"
 
 #include <QObject>
 #include <QList>
@@ -232,15 +231,17 @@ protected:
     virtual bool getSqlDeviceInfos();
 
     // helpers
-    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
-    void setFirmware(const QString &firmware);
     void setBattery(const int battery);
     void setBatteryFirmware(const int battery, const QString &firmware);
+    void setFirmware(const QString &firmware);
+    bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
 
 public:
     Device(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
+
+    void setName(const QString &name);
 
     // Device infos
     QString getModel() const { return m_deviceModel; }

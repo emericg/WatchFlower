@@ -1099,6 +1099,18 @@ void Device::setBatteryFirmware(const int battery, const QString &firmware)
 
 /* ************************************************************************** */
 
+void Device::setName(const QString &name)
+{
+    if (!name.isEmpty())
+    {
+        if (m_deviceName != name)
+        {
+            m_deviceName = name;
+            Q_EMIT sensorUpdated();
+        }
+    }
+}
+
 void Device::setRssi(const int rssi)
 {
     if (m_rssi != rssi)

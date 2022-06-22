@@ -64,19 +64,33 @@ qt_add_executable(WatchFlower
 
 target_include_directories(WatchFlower PRIVATE src)
 
-target_link_libraries(WatchFlower PRIVATE
-    Qt::Core
-    Qt::Bluetooth
-    Qt::Network
-    Qt::Sql
-    Qt::Gui
-    Qt::Qml
-    Qt::Quick
-    Qt::QuickControls2
-    Qt::Svg
-    Qt::Widgets
-    Qt::Charts
-)
+################################################################################
+
+## ANDROID
+if(ANDROID)
+    #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
+    #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
+
+    set_target_properties(WatchFlower PROPERTIES
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
+    )
+endif()
+
+## macOS
+if(APPLE AND NOT IOS)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14")
+endif()
+
+## iOS
+if(IOS)
+    #
+endif()
+
+## Windows
+if(WIN32)
+    target_compile_definitions(WatchFlower PRIVATE _USE_MATH_DEFINES)
+endif()
 
 ################################################################################
 
@@ -99,39 +113,20 @@ set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(src/thirdparty/SingleApplication)
 target_link_libraries(WatchFlower PRIVATE SingleApplication)
 
-################################################################################
-
-## ANDROID
-if(ANDROID)
-    set_target_properties(WatchFlower PROPERTIES
-        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
-    )
-
-    target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
-
-    target_compile_definitions(WatchFlower PRIVATE
-        QT_CONNECTIVITY_PATCHED
-    )
-
-    #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
-    #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
-endif()
-
-## macOS
-if(APPLE AND NOT IOS)
-    #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
-    #set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
-endif()
-
-## iOS
-if(IOS)
-    #
-endif()
-
-## Windows
-if(WIN32)
-    target_compile_definitions(WatchFlower PRIVATE _USE_MATH_DEFINES)
-endif()
+# Qt
+target_link_libraries(WatchFlower PRIVATE
+    Qt::Core
+    Qt::Bluetooth
+    Qt::Network
+    Qt::Sql
+    Qt::Gui
+    Qt::Qml
+    Qt::Quick
+    Qt::QuickControls2
+    Qt::Svg
+    Qt::Widgets
+    Qt::Charts
+)
 
 ################################################################################
 

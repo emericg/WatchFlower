@@ -180,6 +180,7 @@ void DeviceManager::updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBlu
         if (dd && dd->getAddress() == info.address().toString())
 #endif
         {
+            dd->setName(info.name());
             dd->setRssi(info.rssi());
             return;
         }

@@ -76,7 +76,7 @@ Grid {
         plantColorFlower.model = currentPlant.colorsFlower
         itemColorFruit.visible = (currentPlant.colorsFruit.length > 0)
         plantColorFruit.model = currentPlant.colorsFruit
-
+/*
         // sizes
         if (currentPlant.diameter) {
             plantDiameterTxt.text = currentPlant.diameter + " cm"
@@ -106,7 +106,7 @@ Grid {
         //currentPlant.calendarGrowing
         //currentPlant.calendarBlooming
         //currentPlant.calendarFruiting
-
+*/
         // sunlight
         rectangleSunlight.visible = currentPlant.sunlight
         if (currentPlant.sunlight) {
@@ -442,6 +442,42 @@ Grid {
 
             ////////
 
+            RowLayout {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                spacing: 16
+
+                visible: (appContent.state === "DevicePlantSensor")
+
+                ButtonWireframeIcon {
+                    fullColor: true
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    Layout.minimumWidth: 128
+                    Layout.maximumWidth: 999
+                    Layout.maximumHeight: 36
+
+                    text: qsTr("Swap plant")
+                    source: "qrc:/assets/icons_material/baseline-swap_horiz-24px.svg"
+
+                    onClicked: screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
+                }
+                ButtonWireframeIcon {
+                    fullColor: true
+                    primaryColor: Theme.colorSubText
+                    secondaryColor: Theme.colorForeground
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+                    Layout.maximumHeight: 36
+
+                    text: qsTr("Remove")
+
+                    onClicked: currentDevice.resetPlant()
+                }
+            }
+
+            ////////
+
             Flow {
                 id: itemTags
                 anchors.left: parent.left
@@ -635,6 +671,8 @@ Grid {
                 }
             }
 
+            ////////
+/*
             Row {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -680,6 +718,7 @@ Grid {
                     }
                 }
             }
+*/
 /*
             Column {
                 anchors.left: parent.left
@@ -760,6 +799,8 @@ Grid {
                 }
             }
 */
+            ////////
+
             Column {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -800,42 +841,6 @@ Grid {
 
                         onClicked: Qt.openUrlExternally("https://hortipedia.com/" + plantScreen.currentPlantNameClean)
                     }
-                }
-            }
-
-            ////////
-
-            RowLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                spacing: 16
-
-                visible: (appContent.state === "DevicePlantSensor")
-
-                ButtonWireframeIcon {
-                    height: 36
-                    fullColor: true
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: 128
-                    Layout.maximumWidth: 999
-
-                    text: qsTr("Change the associated plant")
-                    source: "qrc:/assets/icons_material/duotone-touch_app-24px.svg"
-
-                    onClicked: {
-                        screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
-                    }
-                }
-                ButtonWireframeIcon {
-                    height: 36
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
-                    Layout.fillWidth: false
-
-                    text: qsTr("Reset")
-
-                    onClicked: currentDevice.resetPlant()
                 }
             }
 
