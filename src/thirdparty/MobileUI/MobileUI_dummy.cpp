@@ -55,4 +55,9 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
     Q_UNUSED(theme)
 }
 
+void MobileUIPrivate::keepScreenOn(bool on)
+{
+    Q_UNUSED(on)
+}
+
 /* ************************************************************************** */

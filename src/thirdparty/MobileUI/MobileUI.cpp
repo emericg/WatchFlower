@@ -42,7 +42,6 @@ MobileUI::Theme MobileUIPrivate::navbarTheme = MobileUI::Light;
 void MobileUI::registerQML()
 {
     qRegisterMetaType<MobileUI::Theme>("MobileUI::Theme");
-    qRegisterMetaType<MobileUI::Orientation>("MobileUI::Orientation");
 
     qmlRegisterType<MobileUI>("MobileUI", 1, 0, "MobileUI");
 }
@@ -112,11 +111,6 @@ void MobileUI::setNavbarTheme(Theme theme)
 void MobileUI::keepScreenOn(bool on)
 {
     MobileUIPrivate::keepScreenOn(on);
-}
-
-void MobileUI::lockScreenOrientation(Orientation orientation, bool autoRotation)
-{
-    //MobileUIPrivate::lockScreenOrientation(orientation, autoRotation);
 }
 
 /* ************************************************************************** */

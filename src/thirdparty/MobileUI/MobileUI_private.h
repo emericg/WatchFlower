@@ -53,8 +53,6 @@ public:
     static MobileUI::Theme navbarTheme;
 
     static void keepScreenOn(bool on);
-
-    static void lockScreenOrientation(MobileUI::Orientation orientation, bool autoRotation);
 };
 
 /* ************************************************************************** */
