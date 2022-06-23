@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2022 Emeric Grange
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,12 @@
  */
 
 #include "SharingApplication.h"
+#include "SharingUtils.h"
 
-#include <QtQml>
 #include <QGuiApplication>
+#include <QQmlContext>
+#include <QtQml>
+
 #include <QDir>
 #include <QFile>
 #include <QFileOpenEvent>

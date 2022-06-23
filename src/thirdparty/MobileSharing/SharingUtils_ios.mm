@@ -25,13 +25,13 @@
 #import "docviewcontroller_ios.h"
 
 #import <UIKit/UIKit.h>
+#import <UIKit/UIDocumentInteractionController.h>
+
 #import <QGuiApplication>
 #import <QQuickWindow>
 #import <QDesktopServices>
 #import <QUrl>
 #import <QFileInfo>
-
-#import <UIKit/UIDocumentInteractionController.h>
 
 /* ************************************************************************** */
 

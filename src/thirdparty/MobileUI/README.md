@@ -1,12 +1,12 @@
 # MobileUI
 
-MobileUI allows mobile QML applications to interacts with Android and iOS `status bar` and Android `navigation bar`.
+MobileUI allows mobile QML applications to interacts with Android and iOS `status bar` and Android `navigation bar`. Works with Qt5 and Qt6.
 
 MobileUI module is based on qtstatusbar by jpnurmi, with several improvements and additions.
 
 > https://github.com/jpnurmi/qtstatusbar  
 
-## Quick Documentation
+## Quick start
 
 ### Build
 
@@ -22,18 +22,20 @@ add_subdirectory(src/thirdparty/MobileUI)
 target_link_libraries(${PROJECT_NAME} MobileUI::MobileUI)
 ```
 
-### Register
+### Usage
 
-Register the MobileUI QML module in your C++ main.cpp file:
+First, you need to register the MobileUI QML module in your C++ main.cpp file.  
+You can also use MobileUI directly in the code if you want to.  
 
 ```cpp
 #include <MobileUI>
 
-int main(int argc, char* argv[])
-{
-    QGuiApplication app(argc, argv);
+int main() {
+    QGuiApplication app();
 
     MobileUI::registerQML();
+
+    MobileUI::setStatusbarColor("white");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
@@ -42,17 +44,17 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Usage
-
 Example usage in QML:
 
-```
+```qml
 import MobileUI 1.0
 
-MobileUI {
-    statusbarTheme: MobileUI.Dark
-    statusbarColor: "white"
-    navbarColor: "white"
+ApplicationWindow {
+    MobileUI {
+        statusbarTheme: MobileUI.Dark
+        statusbarColor: "white"
+        navbarColor: "white"
+    }
 }
 ```
 

@@ -29,6 +29,7 @@
 /* ************************************************************************** */
 
 // WindowManager.LayoutParams
+#define FLAG_KEEP_SCREEN_ON                     0x00000080
 #define FLAG_TRANSLUCENT_STATUS                 0x04000000
 #define FLAG_TRANSLUCENT_NAVIGATION             0x08000000
 #define FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS       0x80000000
@@ -39,36 +40,57 @@
 #define SYSTEM_UI_FLAG_LIGHT_STATUS_BAR         0x00002000
 #define SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR     0x00000010
 
+// UI modes
+#define UI_MODE_NIGHT_UNDEFINED                 0x00000000
+#define UI_MODE_NIGHT_NO                        0x00000010
+#define UI_MODE_NIGHT_YES                       0x00000020
+#define UI_MODE_NIGHT_MASK                      0x00000030
+
 /* ************************************************************************** */
 
-static bool isColorLight(int color)
+bool MobileUIPrivate::isAvailable_sys()
+{
+    return true; // Qt6 must be built with Android SDK 23 anyway, enough for everything MobileUI use
+}
+
+[[maybe_unused]] static bool isColorLight(int color)
 {
     int r = (color & 0x00FF0000) >> 16;
     int g = (color & 0x0000FF00) >> 8;
     int b = (color & 0x000000FF);
 
     double darkness = 1.0 - (0.299 * r + 0.587 * g + 0.114 * b) / 255.0;
-    return darkness < 0.2;
+    return (darkness < 0.2);
 }
 
-static bool isQColorLight(QColor color)
+[[maybe_unused]] static bool isQColorLight(QColor color)
 {
     double darkness = 1.0 - (0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()) / 255.0;
-    return darkness < 0.2;
+    return (darkness < 0.2);
 }
 
 static QJniObject getAndroidWindow()
 {
     QJniObject activity = QNativeInterface::QAndroidApplication::context();
     QJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
+
     window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
     window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
+
     return window;
 }
 
-bool MobileUIPrivate::isAvailable_sys()
+/* ************************************************************************** */
+
+int MobileUIPrivate::getDeviceTheme_sys()
 {
-    return true; // Qt6 must be built with Android SDK 23 anyway, enough for everything MobileUI use
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject rsc = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+    QJniObject conf = rsc.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;");
+
+    int uiMode = (conf.getField<int>("uiMode") & UI_MODE_NIGHT_MASK);
+
+    return (uiMode == UI_MODE_NIGHT_YES) ? MobileUI::Theme::Dark : MobileUI::Theme::Light;
 }
 
 /* ************************************************************************** */
@@ -77,12 +99,10 @@ void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
      QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
-        window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
-    });
-
-     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
-        QJniObject window = getAndroidWindow();
         QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+
+        window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
+
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
         if (isQColorLight(color))
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -97,6 +117,7 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
         QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
         if (theme == MobileUI::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -112,12 +133,10 @@ void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
-        window.callMethod<void>("setNavigationBarColor", "(I)V", color.rgba());
-    });
-
-    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
-        QJniObject window = getAndroidWindow();
         QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+
+        window.callMethod<void>("setNavigationBarColor", "(I)V", color.rgba());
+
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
         if (isQColorLight(color))
             visibility |= SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
@@ -132,12 +151,27 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
         QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+
         int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
         if (theme == MobileUI::Theme::Light)
             visibility |= SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+    });
+}
+
+/* ************************************************************************** */
+
+void MobileUIPrivate::keepScreenOn(bool on)
+{
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
+
+        if (on)
+            window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+        else
+            window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
     });
 }
 

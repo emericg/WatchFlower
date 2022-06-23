@@ -15,10 +15,7 @@ endif()
 set(CORE_COMPONENTS Core Gui Qml)
 find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS})
 
-set(CORE_LIBRARIES
-    Qt::Core
-    Qt::Gui
-    Qt::Qml)
+set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
 
 # Generic sources
 set(CORE_SOURCES
@@ -26,7 +23,7 @@ set(CORE_SOURCES
     MobileUI.cpp)
 
 # OS specific sources & dependencies
-if (ANDROID)
+if(ANDROID)
     if(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
         set(PLATFORM_SOURCES MobileUI_android_qt5.cpp)
 

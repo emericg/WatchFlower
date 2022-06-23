@@ -30,6 +30,11 @@ bool MobileUIPrivate::isAvailable_sys()
     return false;
 }
 
+int MobileUIPrivate::getDeviceTheme_sys()
+{
+    return MobileUI::Theme::Light;
+}
+
 void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
     Q_UNUSED(color)
@@ -49,3 +54,5 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 {
     Q_UNUSED(theme)
 }
+
+/* ************************************************************************** */

@@ -34,17 +34,27 @@ class MobileUIPrivate
 public:
     static bool isAvailable_sys();
 
+    static int getDeviceTheme_sys();
+
     static void setColor_statusbar(const QColor &color);
     static void setTheme_statusbar(MobileUI::Theme theme);
 
     static void setColor_navbar(const QColor &color);
     static void setTheme_navbar(MobileUI::Theme theme);
 
+    static bool areIosSlotsConnected;
+
+    static MobileUI::Theme deviceTheme;
+
     static QColor statusbarColor;
     static MobileUI::Theme statusbarTheme;
 
     static QColor navbarColor;
     static MobileUI::Theme navbarTheme;
+
+    static void keepScreenOn(bool on);
+
+    static void lockScreenOrientation(MobileUI::Orientation orientation, bool autoRotation);
 };
 
 /* ************************************************************************** */

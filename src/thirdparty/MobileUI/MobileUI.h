@@ -35,43 +35,55 @@ class MobileUI : public QObject
     Q_OBJECT
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
 
-    Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
-    Q_PROPERTY(Theme statusbarTheme READ statusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
+    Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY devicethemeUpdated)
 
-    Q_PROPERTY(QColor navbarColor READ navbarColor WRITE setNavbarColor NOTIFY navbarUpdated)
-    Q_PROPERTY(Theme navbarTheme READ navbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated)
+    Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
+    Q_PROPERTY(Theme statusbarTheme READ getStatusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
+
+    Q_PROPERTY(QColor navbarColor READ getNavbarColor WRITE setNavbarColor NOTIFY navbarUpdated)
+    Q_PROPERTY(Theme navbarTheme READ getNavbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated)
 
 Q_SIGNALS:
+    void devicethemeUpdated();
     void statusbarUpdated();
     void navbarUpdated();
 
 public:
     explicit MobileUI(QObject *parent = nullptr) : QObject(parent) {}
 
-    static bool isAvailable();
     static void registerQML();
 
+    static bool isAvailable();
+
     enum Theme {
-        Light,  //!< DARK TEXT (assumes LIGHT application theme/background)
-        Dark    //!< LIGHT TEXT (assumes DARK application theme/background)
+        Light,  //!< Light application theme, usually light background and dark texts.
+        Dark    //!< Dark application theme, usually dark background and light texts.
     };
     Q_ENUM(Theme)
 
+    /*!
+     * \brief G the device UI theme
+     * \return
+     */
+    static Theme getDeviceTheme();
+
     // Status bar
-    static QColor statusbarColor();
+    static QColor getStatusbarColor();
     static void setStatusbarColor(const QColor &color);
 
-    static Theme statusbarTheme();
+    static Theme getStatusbarTheme();
     static void setStatusbarTheme(Theme theme);
 
     // Navigation bar
-    static QColor navbarColor();
+    static QColor getNavbarColor();
     static void setNavbarColor(const QColor &color);
 
-    static Theme navbarTheme();
+    static Theme getNavbarTheme();
     static void setNavbarTheme(Theme theme);
 
     // Screen helpers
+    Q_INVOKABLE static void keepScreenOn(bool on);
+
     enum Orientation {
         SCREEN_ORIENTATION_UNSET,
         SCREEN_ORIENTATION_UNSPECIFIED,
@@ -93,8 +105,7 @@ public:
     };
     Q_ENUM(Orientation)
 
-    //void screen_keepOn(bool on);
-    //void screen_lockOrientation(Orientation orientation);
+    Q_INVOKABLE static void lockScreenOrientation(Orientation orientation, bool autoRotation = false);
 };
 
 /* ************************************************************************** */

@@ -74,6 +74,10 @@ if(ANDROID)
     set_target_properties(WatchFlower PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
     )
+
+    #target_compile_definitions(WatchFlower PRIVATE QT_CONNECTIVITY_PATCHED)
+
+    target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
 endif()
 
 ## macOS

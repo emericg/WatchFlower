@@ -37,7 +37,7 @@
 @property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyle;
 @end
 
-static UIStatusBarStyle statusBarStyle(MobileUI::Theme theme)
+UIStatusBarStyle statusBarStyle(MobileUI::Theme theme)
 {
     if (theme == MobileUI::Dark)
         return UIStatusBarStyleLightContent;
@@ -46,6 +46,18 @@ static UIStatusBarStyle statusBarStyle(MobileUI::Theme theme)
     else
         return UIStatusBarStyleDefault;
 }
+
+bool MobileUIPrivate::isAvailable_sys()
+{
+    return true;
+}
+
+int MobileUIPrivate::getDeviceTheme_sys()
+{
+    return 0;
+}
+
+/* ************************************************************************** */
 
 static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 {
@@ -57,60 +69,47 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
     [viewController setNeedsStatusBarAppearanceUpdate];
 }
 
-void togglePreferredStatusBarStyle()
-{
-    UIStatusBarStyle style = statusBarStyle(MobileUI::Light);
-    if (MobileUIPrivate::statusbarTheme == MobileUI::Light) {
-        style = statusBarStyle(MobileUI::Dark);
-    }
-
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    if (keyWindow) setPreferredStatusBarStyle(keyWindow, style);
-
-    QTimer::singleShot(200, []() {
-        UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
-        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-        if (keyWindow) setPreferredStatusBarStyle(keyWindow, style);
-    });
-}
-
-static void updatePreferredStatusBarStyle()
+void updatePreferredStatusBarStyle()
 {
     UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow) setPreferredStatusBarStyle(keyWindow, style);
 }
 
-/* ************************************************************************** */
-
-bool MobileUIPrivate::isAvailable_sys()
+void togglePreferredStatusBarStyle()
 {
-    return true;
+    updatePreferredStatusBarStyle();
+
+    QTimer::singleShot(200, []() { updatePreferredStatusBarStyle(); });
 }
+
+/* ************************************************************************** */
 
 void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
-void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme)
+void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
 {
     updatePreferredStatusBarStyle();
 
-    QObject::connect(qApp, &QGuiApplication::applicationStateChanged,
-                     qApp, [](Qt::ApplicationState state) { if (state == Qt::ApplicationActive) updatePreferredStatusBarStyle(); },
-                     Qt::UniqueConnection);
+    if (!MobileUIPrivate::areIosSlotsConnected)
+    {
+        QObject::connect(qApp, &QGuiApplication::applicationStateChanged,
+                         qApp, [](Qt::ApplicationState state) { if (state == Qt::ApplicationActive) updatePreferredStatusBarStyle(); });
 
-#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
-    QScreen *screen = qApp->primaryScreen();
-    if (screen) {
-        screen->setOrientationUpdateMask(Qt::PortraitOrientation | Qt::LandscapeOrientation | Qt::InvertedPortraitOrientation | Qt::InvertedLandscapeOrientation);
-        QObject::connect(screen, &QScreen::orientationChanged,
-                         qApp, [](Qt::ScreenOrientation) { togglePreferredStatusBarStyle(); },
-                         Qt::UniqueConnection);
+        QScreen *screen = qApp->primaryScreen();
+        if (screen) {
+            QObject::connect(screen, &QScreen::orientationChanged,
+                             qApp, [](Qt::ScreenOrientation) { togglePreferredStatusBarStyle(); });
+        }
+
+        MobileUIPrivate::areIosSlotsConnected = true;
     }
-#endif
 }
+
+/* ************************************************************************** */
 
 void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
@@ -120,6 +119,33 @@ void MobileUIPrivate::setColor_navbar(const QColor &color)
 void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 {
     Q_UNUSED(theme)
+}
+
+/* ************************************************************************** */
+
+void MobileUIPrivate::screenKeepOn(bool on)
+{
+    if (on)
+    {
+        [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setIdleTimerDisabled: NO];
+    }
+}
+
+void MobileUIPrivate::screenLockOrientation(int orientation, bool autoRotate)
+{
+    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+
+    if (orientation == 0 || autoRotate) value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    else if (orientation == 1) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    else if (orientation == 2) value = [NSNumber numberWithInt:UIInterfaceOrientationPortraitUpsideDown];
+    else if (orientation == 4) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+    else if (orientation == 8) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
+
+    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
 /* ************************************************************************** */
