@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,9 +23,9 @@
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wK0-ji-Iok" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" constant="-20" id="2P0-od-EcY"/>
+                            <constraint firstItem="wK0-ji-Iok" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" multiplier="0.2" id="2P0-od-EcY"/>
                             <constraint firstItem="wK0-ji-Iok" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="cLk-qb-LoS"/>
-                            <constraint firstItem="wK0-ji-Iok" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="hIs-fX-QFh"/>
+                            <constraint firstItem="wK0-ji-Iok" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="centerXWithinMargins" multiplier="1.8" id="hIs-fX-QFh"/>
                         </constraints>
                     </view>
                 </viewController>
