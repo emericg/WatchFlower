@@ -46,7 +46,7 @@ Item {
             if (!deviceManager.bluetooth) {
                 itemStatus.source = "ItemNoBluetooth.qml"
             } else if (!deviceManager.bluetoothPermissions) {
-                itemStatus.source = "ItemNoPermissions.qml"
+                itemStatus.source = "ItemNoPermission.qml"
             } else {
                 itemStatus.source = "ItemNoDevice.qml"
             }

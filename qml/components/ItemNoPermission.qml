@@ -7,7 +7,7 @@ Item {
 
     Rectangle {
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: -appHeader.height
+        anchors.verticalCenterOffset: -32
 
         width: appWindow.singleColumn ? (parent.width*0.5) : (parent.height*0.4)
         height: width

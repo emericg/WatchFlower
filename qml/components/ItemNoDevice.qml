@@ -6,12 +6,13 @@ Item {
     anchors.fill: parent
 
     Column {
+        id: column
         anchors.left: parent.left
         anchors.leftMargin: 32
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -20
+        anchors.verticalCenterOffset: -32
 
         IconSvg { // imageSearch
             width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
@@ -99,37 +100,56 @@ Item {
 
             ////////
 
-            Row {
+            Grid {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 16
 
-                ButtonWireframeIcon {
-                    visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                rows: 2
+                columns: singleColumn ? 1 : 2
 
-                    text: qsTr("Official information")
-                    primaryColor: Theme.colorSubText
-                    sourceSize: 20
-                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                Item {
+                    width: singleColumn ? column.width : btn1.width
+                    height: 40
 
-                    onClicked: {
-                        if (Qt.platform.os === "android") {
-                            Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
-                        } else if (Qt.platform.os === "ios") {
-                            Qt.openUrlExternally("https://support.apple.com/HT210578")
+                    ButtonWireframeIcon {
+                        id: btn1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        //visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                        text: qsTr("Official information")
+                        primaryColor: Theme.colorSubText
+                        sourceSize: 20
+                        source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+
+                        onClicked: {
+                            if (Qt.platform.os === "android") {
+                                Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+                            } else if (Qt.platform.os === "ios") {
+                                Qt.openUrlExternally("https://support.apple.com/HT210578")
+                            }
                         }
                     }
                 }
 
-                ButtonWireframe {
-                    text: qsTr("Launch detection")
-                    fullColor: true
-                    primaryColor: Theme.colorPrimary
-                    onClicked: {
-                        if (!deviceManager.updating) {
-                            if (deviceManager.scanning) {
-                                deviceManager.scanDevices_stop()
-                            } else {
-                                deviceManager.scanDevices_start()
+                Item {
+                    width: singleColumn ? column.width : btn2.width
+                    height: 40
+
+                    ButtonWireframe {
+                        id: btn2
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        text: qsTr("Launch detection")
+                        fullColor: true
+                        primaryColor: Theme.colorPrimary
+
+                        onClicked: {
+                            if (!deviceManager.updating) {
+                                if (deviceManager.scanning) {
+                                    deviceManager.scanDevices_stop()
+                                } else {
+                                    deviceManager.scanDevices_start()
+                                }
                             }
                         }
                     }

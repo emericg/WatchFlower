@@ -55,6 +55,7 @@
         <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
         <file alias="ItemNoDeviceNearby.qml">components/ItemNoDeviceNearby.qml</file>
+        <file alias="ItemNoPermission.qml">components/ItemNoPermission.qml</file>
         <file alias="ItemNoPlant.qml">components/ItemNoPlant.qml</file>
         <file alias="ItemNoPlants.qml">components/ItemNoPlants.qml</file>
         <file alias="ItemNoJournal.qml">components/ItemNoJournal.qml</file>
