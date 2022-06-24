@@ -143,6 +143,8 @@ int main(int argc, char *argv[])
     app.setWindowIcon(appIcon);
 #endif
 
+    MobileUI::setNavbarColor("white");
+
     // Init components
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();

@@ -61,10 +61,6 @@ public:
     };
     Q_ENUM(Theme)
 
-    /*!
-     * \brief G the device UI theme
-     * \return
-     */
     static Theme getDeviceTheme();
 
     // Status bar

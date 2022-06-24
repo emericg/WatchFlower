@@ -379,7 +379,6 @@ Item {
             }
 
             Column {
-                id: column
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
@@ -389,7 +388,7 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: bigAssMode ? 22 : 20
-                    font.capitalization: Font.Capitalize
+                    //font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
@@ -401,7 +400,7 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: bigAssMode ? 20 : 18
-                    font.capitalization: Font.Capitalize
+                    //font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }

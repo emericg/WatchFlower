@@ -135,17 +135,4 @@ void MobileUIPrivate::screenKeepOn(bool on)
     }
 }
 
-void MobileUIPrivate::screenLockOrientation(int orientation, bool autoRotate)
-{
-    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
-
-    if (orientation == 0 || autoRotate) value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
-    else if (orientation == 1) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-    else if (orientation == 2) value = [NSNumber numberWithInt:UIInterfaceOrientationPortraitUpsideDown];
-    else if (orientation == 4) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    else if (orientation == 8) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
-
-    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
-}
-
 /* ************************************************************************** */

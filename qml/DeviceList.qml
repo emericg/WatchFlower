@@ -28,23 +28,27 @@ Item {
             utilsApp.getMobileBleLocationPermission()
         }
 
-        if (!deviceManager.hasDevices) {
-            rectangleStatus.setDeviceWarning()
-        } else if (deviceManager.bluetooth) {
-            if (deviceManager.bluetoothPermissions) {
-                if (deviceManager.hasDevices) {
-                    rectangleStatus.hide()
-                } else {
-                    rectangleStatus.setDeviceWarning()
-                }
-            } else {
+        if (deviceManager.hasDevices) {
+            // The device list is shown
+            itemStatus.source = ""
+
+            if (!deviceManager.bluetooth) {
+                rectangleStatus.setBluetoothWarning()
+            } else if (!deviceManager.bluetoothPermissions) {
                 rectangleStatus.setPermissionWarning()
+            } else {
+                itemStatus.source = ""
             }
         } else {
-            if (deviceManager.bluetoothPermissions) {
-                rectangleStatus.setBluetoothWarning()
+            // The device list is not populated
+            rectangleStatus.hide()
+
+            if (!deviceManager.bluetooth) {
+                itemStatus.source = "ItemNoBluetooth.qml"
+            } else if (!deviceManager.bluetoothPermissions) {
+                itemStatus.source = "ItemNoPermissions.qml"
             } else {
-                rectangleStatus.setPermissionWarning()
+                itemStatus.source = "ItemNoDevice.qml"
             }
         }
     }
@@ -207,28 +211,16 @@ Item {
 
             function hide() {
                 rectangleStatus.height = 0
-                itemStatus.source = ""
             }
             function setBluetoothWarning() {
-                if (deviceManager.hasDevices) {
-                    textStatus.text = qsTr("Bluetooth disabled...")
-                    rectangleStatus.height = 48
-                    buttonBluetoothRetry.visible = true
-                } else {
-                    itemStatus.source = "ItemNoBluetooth.qml"
-                }
+                textStatus.text = qsTr("Bluetooth disabled...")
+                rectangleStatus.height = 48
+                buttonBluetoothRetry.visible = true
             }
             function setPermissionWarning() {
-                if (deviceManager.hasDevices) {
-                    textStatus.text = qsTr("Bluetooth permissions missing...")
-                    rectangleStatus.height = 48
-                    buttonBluetoothRetry.visible = false
-                } else {
-                    itemStatus.source = "ItemNoPermissions.qml"
-                }
-            }
-            function setDeviceWarning() {
-                itemStatus.source = "ItemNoDevice.qml"
+                textStatus.text = qsTr("Bluetooth permissions missing...")
+                rectangleStatus.height = 48
+                buttonBluetoothRetry.visible = false
             }
         }
 

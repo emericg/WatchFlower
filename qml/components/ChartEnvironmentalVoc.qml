@@ -192,7 +192,6 @@ Item {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: parent.bottom
 
-                                clip: true
                                 radius: 13
                                 width: 13
                                 height: (valueMax / scaleMax) * barItem.height

@@ -267,11 +267,11 @@ Loader {
                     id: plantSensorData
                 }
                 DevicePlantSensorHistory {
-                    clip: true
+                    clip: false
                     id: plantSensorHistory
                 }
                 DevicePlantSensorCare {
-                    clip: false
+                    clip: true
                     id: plantSensorCare
                 }
                 DevicePlantSensorSettings {

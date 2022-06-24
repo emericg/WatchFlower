@@ -877,7 +877,6 @@ Grid {
                     width: ((plantScreen.www2 - 16) / 2)
                     height: width
                     radius: 8
-                    clip: true
                     color: Theme.colorForeground
                     border.width: 2
                     border.color: Theme.colorSeparator
@@ -973,7 +972,6 @@ Grid {
                     width: ((plantScreen.www2 - 16) / 2)
                     height: width
                     radius: 8
-                    clip: true
                     color: Theme.colorForeground
                     border.width: 2
                     border.color: Theme.colorSeparator
